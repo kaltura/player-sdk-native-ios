@@ -128,24 +128,15 @@
     
     if ( isFullScreen ) {
         fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
-        
-        if ([self isIpad]) {
-            fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
-            self.view.center  = CGPointMake (384.0, 512.0);
-        }else{
-            if (angle == 90) {
-                fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 80, 80);
-            }else{
-                fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, -80, -80);
-            }
-        }
-        
+        fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
+        self.view.center = [[UIApplication sharedApplication] delegate].window.center;
         [self.view setTransform: fullScreenPlayerTransform];
         self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
         self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
     }else{
         [self.view setTransform: CGAffineTransformIdentity];
     }
+    
     
     NSLog( @"setOrientationTransform Exit" );
 }
@@ -178,7 +169,9 @@
             }
         }
     }else{
-        if (deviceOrientation == UIDeviceOrientationUnknown) {
+        if (deviceOrientation == UIDeviceOrientationUnknown ||
+            deviceOrientation == UIDeviceOrientationPortrait ||
+            deviceOrientation == UIDeviceOrientationPortraitUpsideDown) {
             [self setOrientationTransform: 90];
         }else{
             if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
