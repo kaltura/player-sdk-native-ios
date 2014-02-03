@@ -251,7 +251,6 @@
     }
     
     [self.view setFrame: mainFrame];
-    [UIApplication sharedApplication].statusBarHidden = YES;
     [player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.webView setFrame: player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
@@ -275,7 +274,6 @@
     self.player.view.frame = originalFrame;
     self.webView.frame = self.player.view.frame;
     
-    [UIApplication sharedApplication].statusBarHidden = NO;
     [self triggerEventsJavaScript:@"exitfullscreen" WithValue:nil];
     
     [self UpdatePlayerLayout];
