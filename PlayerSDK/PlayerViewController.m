@@ -251,6 +251,11 @@
     }
     
     [self.view setFrame: mainFrame];
+    
+    if ( ![self isIOS7] ) {
+        [UIApplication sharedApplication].statusBarHidden = YES;
+    }
+    
     [player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.webView setFrame: player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
@@ -273,6 +278,10 @@
     self.view.frame = originalViewControllerFrame;
     self.player.view.frame = originalFrame;
     self.webView.frame = self.player.view.frame;
+    
+    if ( ![self isIOS7] ) {
+       [UIApplication sharedApplication].statusBarHidden = NO;
+    }
     
     [self triggerEventsJavaScript:@"exitfullscreen" WithValue:nil];
     
@@ -564,8 +573,18 @@
     NSLog(@"stopAndRemovePlayer Exit");
 }
 
--(BOOL)isIpad{
+- (BOOL)isIpad{
+    
     return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
+}
+
+- (BOOL)isIOS7{
+    
+    if ( floor( NSFoundationVersionNumber ) <= NSFoundationVersionNumber_iOS_6_1 ) {
+        return NO;
+    }
+    
+    return YES;
 }
 
 @end
