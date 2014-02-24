@@ -484,6 +484,10 @@
             attributeVal = [args objectAtIndex:1];
             [self visible:attributeVal];
             break;
+        case wvServerKey:
+            attributeVal = [args objectAtIndex:1];
+            [self visible:attributeVal];
+            break;
             
         default:
             break;

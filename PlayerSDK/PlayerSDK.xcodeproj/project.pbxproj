@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BFA6F0D718BB795A00F7C78F /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA6F0D318BB795A00F7C78F /* libWViPhoneAPI.a */; };
+		BFA6F0D818BB795A00F7C78F /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA6F0D618BB795A00F7C78F /* WVSettings.m */; };
 		BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
 		BFFFA730182F9E31005B3B24 /* PlayerSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA72F182F9E31005B3B24 /* PlayerSDK.h */; };
 		BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA731182F9E31005B3B24 /* PlayerSDK.m */; };
@@ -76,6 +78,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BFA6F0D318BB795A00F7C78F /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = "<group>"; };
+		BFA6F0D418BB795A00F7C78F /* WViPhoneAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WViPhoneAPI.h; sourceTree = "<group>"; };
+		BFA6F0D518BB795A00F7C78F /* WVSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WVSettings.h; sourceTree = "<group>"; };
+		BFA6F0D618BB795A00F7C78F /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -114,6 +120,7 @@
 			files = (
 				BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */,
 				BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */,
+				BFA6F0D718BB795A00F7C78F /* libWViPhoneAPI.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +137,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BFA6F0D918BB796500F7C78F /* WideVine */ = {
+			isa = PBXGroup;
+			children = (
+				BFA6F0D318BB795A00F7C78F /* libWViPhoneAPI.a */,
+				BFA6F0D418BB795A00F7C78F /* WViPhoneAPI.h */,
+				BFA6F0D518BB795A00F7C78F /* WVSettings.h */,
+				BFA6F0D618BB795A00F7C78F /* WVSettings.m */,
+			);
+			name = WideVine;
+			sourceTree = "<group>";
+		};
 		BFFFA71E182F9E31005B3B24 = {
 			isa = PBXGroup;
 			children = (
@@ -162,6 +180,7 @@
 		BFFFA72C182F9E31005B3B24 /* PlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				BFA6F0D918BB796500F7C78F /* WideVine */,
 				BFFFA877182FB8E4005B3B24 /* PlayerViewController */,
 				BFFFA773182F9ECF005B3B24 /* JSON */,
 				BFFFA774182F9F10005B3B24 /* PlayerControlsWebView */,
@@ -345,6 +364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */,
+				BFA6F0D818BB795A00F7C78F /* WVSettings.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */,
 				BFFFA766182F9EB7005B3B24 /* NSObject+SBJSON.m in Sources */,
 				BFFFA768182F9EB7005B3B24 /* NSString+SBJSON.m in Sources */,
@@ -472,6 +492,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/PlayerSDK",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -494,6 +518,10 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/PlayerSDK",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

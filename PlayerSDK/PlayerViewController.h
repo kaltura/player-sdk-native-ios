@@ -20,6 +20,7 @@ typedef enum{
     src = 0,
     currentTime,
     visible,
+    wvServerKey,
 } Attribute;
 
 @class NativeComponentPlugin;
