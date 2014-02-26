@@ -47,8 +47,6 @@ static NSArray *sBitRates;
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchInOut:)];
     [self.view addGestureRecognizer:pinch];
     
-    //    UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)
-    
     NSLog( @"View Did Load Exit" );
 }
 
@@ -198,11 +196,8 @@ static NSArray *sBitRates;
     
     // Handle rotation issues when player is playing
     if ( isPlaying ) {
-        //        if ( !isFullScreen ) {
         [self closeFullScreen];
         [self openFullScreen];
-        //        }
-        //        TO:DO e.g: player.goFullScreen(landscapeLeft); and!! player.goFullScreen(portrait);
         if ( isFullScreen ) {
             [self checkDeviceStatus];
         }
@@ -235,11 +230,7 @@ static NSArray *sBitRates;
     
     //    if ( !isFullScreen ) {
     isFullScreen = YES;
-    
-    //        if ( CGRectIsEmpty( originalViewControllerFrame ) ) {
-    //            originalViewControllerFrame = self.view.frame;
-    //        }
-    
+   
     CGRect mainFrame;
     
     if ([self isIpad]) {
@@ -479,22 +470,21 @@ static NSArray *sBitRates;
     Attribute attributeValue = [attributeName attributeNameEnumFromString];
     NSString *attributeVal;
     
-    switch (attributeValue) {
+    switch ( attributeValue ) {
         case src:
             attributeVal = [args objectAtIndex:1];
             playerSource = attributeVal;
-            [player setContentURL: [NSURL URLWithString: playerSource]];
-//            [self setPlayerSource:attributeVal];
+            [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
             break;
         case currentTime:
             attributeVal = [args objectAtIndex:1];
-            if([player isPreparedToPlay]){
-                [player setCurrentPlaybackTime:[attributeVal doubleValue]];
+            if( [player isPreparedToPlay] ){
+                [ player setCurrentPlaybackTime: [attributeVal doubleValue] ];
             }
             break;
         case visible:
             attributeVal = [args objectAtIndex:1];
-            [self visible:attributeVal];
+            [self visible: attributeVal];
             break;
         case wvServerKey:
             attributeVal = [args objectAtIndex:1];
@@ -618,20 +608,31 @@ static NSArray *sBitRates;
     }
 }
 
-- (void)playMovieFromUrl:(NSString *)videoUrlString
-{
+- (void)playMovieFromUrl: (NSString *)videoUrlString{
+    NSLog(@"playMovieFromUrl Enter");
+
+    float wait = 0.1;
+    
     if ( player ) {
         [self stop];
+        // Stop any previously playing asset
         WV_Stop();
+        wait = 2.0;  // wait a bit longer between destruction of old player and creation of new one (chicken bones)
         [NSThread sleepForTimeInterval: 1.0];
     }
 
-    [[NSRunLoop mainRunLoop] addTimer:[NSTimer timerWithTimeInterval:2 target:self selector:@selector(playMovieFromUrlLater) userInfo:nil repeats:NO] forMode:NSDefaultRunLoopMode];
+    [[NSRunLoop mainRunLoop] addTimer:[NSTimer timerWithTimeInterval: wait
+                                                              target: self
+                                                            selector: @selector(playMovieFromUrlLater)
+                                                            userInfo: nil
+                                                             repeats: NO]
+                              forMode:NSDefaultRunLoopMode];
     
+    NSLog(@"playMovieFromUrl Exit");
 }
 
-- (void)playMovieFromUrlLater
-{
+- (void)playMovieFromUrlLater{
+    NSLog(@"playMovieFromUrlLater Enter");
     
     NSMutableString *responseUrl = [NSMutableString string];
 
@@ -639,21 +640,22 @@ static NSArray *sBitRates;
     playerSource = [arr objectAtIndex: 0];
     
     WViOsApiStatus status = WV_Play(playerSource, responseUrl, 0 );
-    NSLog(@"%@", responseUrl);
+    NSLog(@"widevine response url: %@", responseUrl);
     
-    if (status != WViOsApiStatus_OK) {
-        NSLog(@"%u",status);
+    if ( status != WViOsApiStatus_OK ) {
+        NSLog(@"ERROR: %u",status);
+        
         return;
     }
     
-    [self setPlayerSource: [NSURL URLWithString: responseUrl]];
+    [ self setPlayerSource: [NSURL URLWithString: responseUrl] ];
     
-    NSLog(@"play later");
+    NSLog(@"playMovieFromUrlLater Exit");
 }
 
-- (void) initializeWVDictionary:(NSString *)src andKey:(NSString *)key{
-//    [self terminateWV];
-    WViOsApiStatus *wvInitStatus = WV_Initialize(WVCallback, [wvSettings initializeDictionary:src andKS:key]);
+- (void) initializeWVDictionary:(NSString *)src andKey:(NSString *)key {
+    [self terminateWV];
+    WViOsApiStatus *wvInitStatus = WV_Initialize( WVCallback, [wvSettings initializeDictionary: src andKS: key] );
     
     if (wvInitStatus == WViOsApiStatus_OK) {
         NSLog(@"widevine was inited");
@@ -662,7 +664,7 @@ static NSArray *sBitRates;
     [self playMovieFromUrl: src];
 }
 
-- (void) terminateWV{
+- (void) terminateWV {
     WViOsApiStatus *wvTerminateStatus = WV_Terminate();
     
     if (wvTerminateStatus == WViOsApiStatus_OK) {
@@ -673,107 +675,25 @@ static NSArray *sBitRates;
 WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ){
     NSLog( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
     
-    SEL selector = 0;
     switch ( event ) {
-        case WViOsApiEvent_SetCurrentBitrate:
-            selector = NSSelectorFromString(@"HandleCurrentBitrate:");
-            break;
-        case WViOsApiEvent_Bitrates:
-            selector = NSSelectorFromString(@"HandleBitrates:");
-            break;
-        case WViOsApiEvent_ChapterTitle:
-            selector = NSSelectorFromString(@"HandleChapterTitle:");
-            break;
-        case WViOsApiEvent_ChapterImage:
-            selector = NSSelectorFromString(@"HandleChapterImage:");
-            break;
-        case WViOsApiEvent_ChapterSetup:
-            selector = NSSelectorFromString(@"HandleChapterSetup:");
-            break;
-    }
+        case WViOsApiEvent_Stopped:
+			break;
+		case WViOsApiEvent_StoppingOnError:
 
-    
-    
-    if ( selector ) {
-        [[PlayerViewController sharedInstance] performSelectorOnMainThread:selector withObject:attributes waitUntilDone:NO];
+			break;
+		case WViOsApiEvent_EMMFailed:
+			break;
+		case WViOsApiEvent_EMMReceived:
+			break;
+            
+        default:
+            break;
     }
     
     NSLog(@"widvine callback");
     
     return WViOsApiStatus_OK;
 }
-
-+ (PlayerViewController *)sharedInstance {
-    // Singleton implementation
-    static PlayerViewController* instance;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        instance = [[PlayerViewController alloc] init];
-    });
-    return instance;
-}
-
--(void)selectBitrate:(int)ind
-{
-    NSLog( @"Selecting track %d", ind );
-    if( WV_SelectBitrateTrack( ind ) == WViOsApiStatus_OK )
-    {
-        NSLog(@"WV_SelectBitrateTrack was ok");
-    }
-}
-
--(void)HandleCurrentBitrate:(NSDictionary *)attributes{
-    if (sBitRates == nil) {
-
-        return;
-    }
-    NSNumber *number = [attributes objectForKey:WVCurrentBitrateKey];
-    if ( number == nil) {
-
-        return;
-    }
-    
-    mSettingBitRateButton = true;
-    long curBitRate = [number longValue];
-    
-    int idx, end;
-    end = [sBitRates count];
-    for ( idx = 0; idx < end; ++idx ) {
-        if ( [[sBitRates objectAtIndex:idx] longValue] >= curBitRate) {
-            mBitrates.selectedSegmentIndex = idx;
-            break;
-        }
-    }
-    
-    mBitrates.selectedSegmentIndex = [number intValue];
-    mSettingBitRateButton = false;
-}
-
--(void)HandleBitrates:(NSDictionary *)attributes{
-    NSArray *bitrates = [attributes objectForKey:WVBitratesKey];
-    [mBitrates removeAllSegments];
-    if ( bitrates ) {
-        sBitRates = bitrates;
-        int count, end;
-        end = [bitrates count];
-        for ( count = 0; count < end; ++count ) {
-            NSString *label;
-            long bps = [[bitrates objectAtIndex:count] longLongValue] * 8;
-            if ( bps < 1000 ) {
-                label = [NSString stringWithFormat:@"%ldbps",bps,NULL];
-            } else if ( bps < 1000000 ) {
-                label = [NSString stringWithFormat:@"%2.1fkbs",(float)bps/1000,NULL];
-			} else {
-                label = [NSString stringWithFormat:@"%2.1fmbs",(float)bps/1000000,NULL];
-			}
-            
-			[mBitrates insertSegmentWithTitle:label atIndex:count animated:NO];
-        }
-    }
-}
-
-
-
 
 @end
 
