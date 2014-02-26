@@ -22,25 +22,27 @@
     UIDeviceOrientation prevOrientation,deviceOrientation;
     NSString *playerSource;
     
-    UISegmentedControl *mBitrates;
-    bool mSettingBitRateButton;
+    BOOL isWideVineReady, isDoPlay;
 }
 
 static NSArray *sBitRates;
 
 @synthesize  webView, player;
+@synthesize isWideVine;
 @synthesize delegate;
 
 - (void)viewDidLoad
 {
     NSLog( @"View Did Load Enter" );
     
+    isWideVine = NO;
+    isWideVineReady = NO;
+    isDoPlay = NO;
+    
     isFullScreen = NO;
     isPlaying = NO;
     isResumePlayer = NO;
     [super viewDidLoad];
-    
-    wvSettings = [[WVSettings alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( pause ) name:@"videoPauseNotification" object:nil];
     
@@ -109,6 +111,12 @@ static NSArray *sBitRates;
 
 - (void)play{
     NSLog( @"Play Player Enter" );
+    
+    isDoPlay = YES;
+    
+    if ( isWideVine  && !isWideVineReady ) {
+        return;
+    }
     
     if( !( player.playbackState == MPMoviePlaybackStatePlaying ) ) {
         [player prepareToPlay];
@@ -294,6 +302,8 @@ static NSArray *sBitRates;
 - (void)pause{
     NSLog(@"Pause Player Enter");
     
+    isDoPlay = NO;
+    
     [player pause];
     
     NSLog(@"Pause Player Exit");
@@ -301,6 +311,8 @@ static NSArray *sBitRates;
 
 - (void)stop{
     NSLog(@"Stop Player Enter");
+    
+    isDoPlay = NO;
     
     [player stop];
     
@@ -487,6 +499,8 @@ static NSArray *sBitRates;
             [self visible: attributeVal];
             break;
         case wvServerKey:
+            wvSettings = [[WVSettings alloc] init];
+            isWideVine = YES;
             attributeVal = [args objectAtIndex:1];
             [self setWideVine: playerSource andKey: attributeVal];
             break;
@@ -612,14 +626,6 @@ static NSArray *sBitRates;
     NSLog(@"playMovieFromUrl Enter");
 
     float wait = 0.1;
-    
-    if ( player ) {
-        [self stop];
-        // Stop any previously playing asset
-        WV_Stop();
-        wait = 2.0;  // wait a bit longer between destruction of old player and creation of new one (chicken bones)
-        [NSThread sleepForTimeInterval: 1.0];
-    }
 
     [[NSRunLoop mainRunLoop] addTimer:[NSTimer timerWithTimeInterval: wait
                                                               target: self
@@ -649,6 +655,11 @@ static NSArray *sBitRates;
     }
     
     [ self setPlayerSource: [NSURL URLWithString: responseUrl] ];
+    isWideVineReady = YES;
+    
+    if ( isDoPlay ) {
+        [self play];
+    }
     
     NSLog(@"playMovieFromUrlLater Exit");
 }
