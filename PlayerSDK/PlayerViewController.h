@@ -16,6 +16,8 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "PlayerSDK/PlayerControlsWebView.h"
 
+@class WVSettings;
+
 typedef enum{
     src = 0,
     currentTime,
@@ -27,6 +29,7 @@ typedef enum{
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
+    WVSettings* wvSettings;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;

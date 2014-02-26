@@ -11,6 +11,9 @@
 //
 
 #import "PlayerViewController.h"
+#import "WVSettings.h"
+#import "WViPhoneAPI.h"
+#import "wideWineMethods.h"
 
 @implementation PlayerViewController{
     BOOL isSeeking;
@@ -18,7 +21,13 @@
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation,deviceOrientation;
+    NSString *playerSource;
+    
+    UISegmentedControl *mBitrates;
+    bool mSettingBitRateButton;
 }
+
+static NSArray *sBitRates;
 
 @synthesize  webView, player;
 @synthesize delegate;
@@ -31,6 +40,8 @@
     isPlaying = NO;
     isResumePlayer = NO;
     [super viewDidLoad];
+    
+    wvSettings = [[WVSettings alloc] init];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( pause ) name:@"videoPauseNotification" object:nil];
     
@@ -465,28 +476,29 @@
 - (void)setAttribute: (NSArray*)args{
     NSLog(@"setAttribute Enter");
     
-    NSString *attributeName = [args objectAtIndex:0];
+    NSString *attributeName = [args objectAtIndex: 0];
     Attribute attributeValue = [attributeName attributeNameEnumFromString];
     NSString *attributeVal;
     
     switch (attributeValue) {
         case src:
-            attributeVal = [args objectAtIndex:1];
-            [self setPlayerSource:attributeVal];
+            attributeVal = [args objectAtIndex: 1];
+            [ player setContentURL: [NSURL URLWithString: attributeVal] ];
             break;
         case currentTime:
-            attributeVal = [args objectAtIndex:1];
-            if([player isPreparedToPlay]){
-                [player setCurrentPlaybackTime:[attributeVal doubleValue]];
+            attributeVal = [args objectAtIndex: 1];
+            
+            if( [player isPreparedToPlay] ){
+                [ player setCurrentPlaybackTime: [attributeVal doubleValue] ];
             }
             break;
         case visible:
-            attributeVal = [args objectAtIndex:1];
-            [self visible:attributeVal];
+            attributeVal = [args objectAtIndex: 1];
+            [self visible: attributeVal];
             break;
         case wvServerKey:
-            attributeVal = [args objectAtIndex:1];
-            [self visible:attributeVal];
+            attributeVal = [args objectAtIndex: 1];
+            [self setWideVine: playerSource andKey: attributeVal];
             break;
             
         default:
@@ -496,10 +508,13 @@
     NSLog(@"setAttribute Exit");
 }
 
-- (void)setPlayerSource: (NSString *)src{
+- (void)setWideVine:(NSString *)src andKey:(NSString*)key{
+    [self initializeWVDictionary:src andKey: key];
+}
+
+- (void)setPlayerSource: (NSURL *)src{
     NSLog(@"setPlayerSource Enter");
-    
-    [player setContentURL:[NSURL URLWithString: src]];
+    [player setContentURL:src];
     
     NSLog(@"setPlayerSource Exit");
 }
@@ -591,6 +606,105 @@
     return YES;
 }
 
+#pragma widevine support methods
+
+- (void)donePlayingMovieWithWV
+{
+    [self stop];
+    WViOsApiStatus* wvStopStatus = WV_Stop();
+    
+    if (wvStopStatus == WViOsApiStatus_OK ) {
+        NSLog(@"widevine was stopped");
+    }
+}
+
+- (void)playMovieFromUrl:(NSString *)videoUrlString
+{
+    if ( player ) {
+        [self stop];
+        WV_Stop();
+        [NSThread sleepForTimeInterval: 1.0];
+    }
+
+    [[NSRunLoop mainRunLoop] addTimer:[NSTimer timerWithTimeInterval:2 target:self selector:@selector(playMovieFromUrlLater) userInfo:nil repeats:NO] forMode:NSDefaultRunLoopMode];
+    
+}
+
+- (void)playMovieFromUrlLater
+{
+    
+    NSMutableString *responseUrl = [NSMutableString string];
+
+    NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
+    playerSource = [arr objectAtIndex: 0];
+    
+    WViOsApiStatus status = WV_Play(playerSource, responseUrl, 0 );
+    NSLog(@"%@", responseUrl);
+    
+    if (status != WViOsApiStatus_OK) {
+        NSLog(@"%u",status);
+        return;
+    }
+    
+    [self setPlayerSource: [NSURL URLWithString: responseUrl]];
+    
+    NSLog(@"play later");
+}
+
+- (void) initializeWVDictionary:(NSString *)src andKey:(NSString *)key{
+//    [self terminateWV];
+    WViOsApiStatus *wvInitStatus = WV_Initialize(WVCallback, [wvSettings initializeDictionary:src andKS:key]);
+    
+    if (wvInitStatus == WViOsApiStatus_OK) {
+        NSLog(@"widevine was inited");
+    }
+    
+    [self playMovieFromUrl: src];
+}
+
+- (void) terminateWV{
+    WViOsApiStatus *wvTerminateStatus = WV_Terminate();
+    
+    if (wvTerminateStatus == WViOsApiStatus_OK) {
+        NSLog(@"widevine was terminated");
+    }
+}
+
+WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ){
+    NSLog( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
+    
+//    SEL selector = 0;
+//    switch ( event ) {
+//        case WViOsApiEvent_SetCurrentBitrate:
+//            selector = NSSelectorFromString(@"HandleCurrentBitrate:");
+//            break;
+//        case WViOsApiEvent_Bitrates:
+//            selector = NSSelectorFromString(@"HandleBitrates:");
+//            break;
+//        case WViOsApiEvent_ChapterTitle:
+//            selector = NSSelectorFromString(@"HandleChapterTitle:");
+//            break;
+//        case WViOsApiEvent_ChapterImage:
+//            selector = NSSelectorFromString(@"HandleChapterImage:");
+//            break;
+//        case WViOsApiEvent_ChapterSetup:
+//            selector = NSSelectorFromString(@"HandleChapterSetup:");
+//            break;
+//    }
+//
+//    
+//    
+//    if ( selector ) {
+//        [[PlayerViewController sharedInstance] performSelectorOnMainThread:selector withObject:attributes waitUntilDone:NO];
+//    }
+    
+    NSLog(@"widvine callback");
+    
+    return WViOsApiStatus_OK;
+}
+
+
+
 @end
 
 @implementation NSString (EnumParser)
@@ -600,6 +714,7 @@
     NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithInteger:src], @"src",
                                 [NSNumber numberWithInteger:currentTime], @"currentTime",
+                                [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");

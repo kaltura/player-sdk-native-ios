@@ -17,21 +17,12 @@
     return nativeAdapting;
 }
 
--(NSDictionary*) initializeDictionary:(NSString *)flavorId andKS: (NSString*) ks{
-    NSString* hostName = @"http://www.kaltura.com";
-//    NSString* portalId, *drmServer;
+-(NSDictionary*) initializeDictionary:(NSString *)src andKS: (NSString*) key{
     self.portalId = @"kaltura";
 
-    //EMM
-    self.drmServer = [[NSString alloc] initWithFormat: @"%@/api_v3/index.php?service=widevine_widevinedrm&action=getLicense&format=widevine&flavorAssetId=%@&ks=%@" , hostName, flavorId, ks];
-    
-//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    nativeAdapting = [defaults boolForKey:@"native_adapting"];
-
     NSDictionary* dictionary = [NSDictionary dictionaryWithObjectsAndKeys:
-                                self.drmServer, WVDRMServerKey,
+                                key, WVDRMServerKey,
                                 self.portalId, WVPortalKey,
-//                                ((nativeAdapting == YES)?@"1":@"0"), WVPlayerDrivenAdaptationKey,
                                 NULL];
     
     return dictionary;
