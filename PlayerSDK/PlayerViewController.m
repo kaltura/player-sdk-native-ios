@@ -13,7 +13,6 @@
 #import "PlayerViewController.h"
 #import "WVSettings.h"
 #import "WViPhoneAPI.h"
-#import "wideWineMethods.h"
 
 @implementation PlayerViewController{
     BOOL isSeeking;
