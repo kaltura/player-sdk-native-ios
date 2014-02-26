@@ -475,28 +475,29 @@ static NSArray *sBitRates;
 - (void)setAttribute: (NSArray*)args{
     NSLog(@"setAttribute Enter");
     
-    NSString *attributeName = [args objectAtIndex: 0];
+    NSString *attributeName = [args objectAtIndex:0];
     Attribute attributeValue = [attributeName attributeNameEnumFromString];
     NSString *attributeVal;
     
     switch (attributeValue) {
         case src:
-            attributeVal = [args objectAtIndex: 1];
-            [ player setContentURL: [NSURL URLWithString: attributeVal] ];
+            attributeVal = [args objectAtIndex:1];
+            playerSource = attributeVal;
+            [player setContentURL: [NSURL URLWithString: playerSource]];
+//            [self setPlayerSource:attributeVal];
             break;
         case currentTime:
-            attributeVal = [args objectAtIndex: 1];
-            
-            if( [player isPreparedToPlay] ){
-                [ player setCurrentPlaybackTime: [attributeVal doubleValue] ];
+            attributeVal = [args objectAtIndex:1];
+            if([player isPreparedToPlay]){
+                [player setCurrentPlaybackTime:[attributeVal doubleValue]];
             }
             break;
         case visible:
-            attributeVal = [args objectAtIndex: 1];
-            [self visible: attributeVal];
+            attributeVal = [args objectAtIndex:1];
+            [self visible:attributeVal];
             break;
         case wvServerKey:
-            attributeVal = [args objectAtIndex: 1];
+            attributeVal = [args objectAtIndex:1];
             [self setWideVine: playerSource andKey: attributeVal];
             break;
             
@@ -672,35 +673,105 @@ static NSArray *sBitRates;
 WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ){
     NSLog( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
     
-//    SEL selector = 0;
-//    switch ( event ) {
-//        case WViOsApiEvent_SetCurrentBitrate:
-//            selector = NSSelectorFromString(@"HandleCurrentBitrate:");
-//            break;
-//        case WViOsApiEvent_Bitrates:
-//            selector = NSSelectorFromString(@"HandleBitrates:");
-//            break;
-//        case WViOsApiEvent_ChapterTitle:
-//            selector = NSSelectorFromString(@"HandleChapterTitle:");
-//            break;
-//        case WViOsApiEvent_ChapterImage:
-//            selector = NSSelectorFromString(@"HandleChapterImage:");
-//            break;
-//        case WViOsApiEvent_ChapterSetup:
-//            selector = NSSelectorFromString(@"HandleChapterSetup:");
-//            break;
-//    }
-//
-//    
-//    
-//    if ( selector ) {
-//        [[PlayerViewController sharedInstance] performSelectorOnMainThread:selector withObject:attributes waitUntilDone:NO];
-//    }
+    SEL selector = 0;
+    switch ( event ) {
+        case WViOsApiEvent_SetCurrentBitrate:
+            selector = NSSelectorFromString(@"HandleCurrentBitrate:");
+            break;
+        case WViOsApiEvent_Bitrates:
+            selector = NSSelectorFromString(@"HandleBitrates:");
+            break;
+        case WViOsApiEvent_ChapterTitle:
+            selector = NSSelectorFromString(@"HandleChapterTitle:");
+            break;
+        case WViOsApiEvent_ChapterImage:
+            selector = NSSelectorFromString(@"HandleChapterImage:");
+            break;
+        case WViOsApiEvent_ChapterSetup:
+            selector = NSSelectorFromString(@"HandleChapterSetup:");
+            break;
+    }
+
+    
+    
+    if ( selector ) {
+        [[PlayerViewController sharedInstance] performSelectorOnMainThread:selector withObject:attributes waitUntilDone:NO];
+    }
     
     NSLog(@"widvine callback");
     
     return WViOsApiStatus_OK;
 }
+
++ (PlayerViewController *)sharedInstance {
+    // Singleton implementation
+    static PlayerViewController* instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[PlayerViewController alloc] init];
+    });
+    return instance;
+}
+
+-(void)selectBitrate:(int)ind
+{
+    NSLog( @"Selecting track %d", ind );
+    if( WV_SelectBitrateTrack( ind ) == WViOsApiStatus_OK )
+    {
+        NSLog(@"WV_SelectBitrateTrack was ok");
+    }
+}
+
+-(void)HandleCurrentBitrate:(NSDictionary *)attributes{
+    if (sBitRates == nil) {
+
+        return;
+    }
+    NSNumber *number = [attributes objectForKey:WVCurrentBitrateKey];
+    if ( number == nil) {
+
+        return;
+    }
+    
+    mSettingBitRateButton = true;
+    long curBitRate = [number longValue];
+    
+    int idx, end;
+    end = [sBitRates count];
+    for ( idx = 0; idx < end; ++idx ) {
+        if ( [[sBitRates objectAtIndex:idx] longValue] >= curBitRate) {
+            mBitrates.selectedSegmentIndex = idx;
+            break;
+        }
+    }
+    
+    mBitrates.selectedSegmentIndex = [number intValue];
+    mSettingBitRateButton = false;
+}
+
+-(void)HandleBitrates:(NSDictionary *)attributes{
+    NSArray *bitrates = [attributes objectForKey:WVBitratesKey];
+    [mBitrates removeAllSegments];
+    if ( bitrates ) {
+        sBitRates = bitrates;
+        int count, end;
+        end = [bitrates count];
+        for ( count = 0; count < end; ++count ) {
+            NSString *label;
+            long bps = [[bitrates objectAtIndex:count] longLongValue] * 8;
+            if ( bps < 1000 ) {
+                label = [NSString stringWithFormat:@"%ldbps",bps,NULL];
+            } else if ( bps < 1000000 ) {
+                label = [NSString stringWithFormat:@"%2.1fkbs",(float)bps/1000,NULL];
+			} else {
+                label = [NSString stringWithFormat:@"%2.1fmbs",(float)bps/1000000,NULL];
+			}
+            
+			[mBitrates insertSegmentWithTitle:label atIndex:count animated:NO];
+        }
+    }
+}
+
 
 
 
