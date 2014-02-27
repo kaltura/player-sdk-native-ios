@@ -645,7 +645,7 @@ static NSArray *sBitRates;
     NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
     playerSource = [arr objectAtIndex: 0];
     
-    WViOsApiStatus status = WV_Play(playerSource, responseUrl, 0 );
+    WViOsApiStatus status = WV_Play(playerSource, responseUrl, 0);
     NSLog(@"widevine response url: %@", responseUrl);
     
     if ( status != WViOsApiStatus_OK ) {

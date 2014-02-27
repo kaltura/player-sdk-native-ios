@@ -90,10 +90,6 @@
 		BF927ECB18BCEA39006667CA /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = "<group>"; };
 		BF927ECD18BCEB62006667CA /* WVSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WVSettings.h; path = ../WVSettings.h; sourceTree = "<group>"; };
 		BF927ECF18BD021A006667CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		BFA6F0D318BB795A00F7C78F /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = "<group>"; };
-		BFA6F0D418BB795A00F7C78F /* WViPhoneAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WViPhoneAPI.h; sourceTree = "<group>"; };
-		BFA6F0D518BB795A00F7C78F /* WVSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WVSettings.h; sourceTree = "<group>"; };
-		BFA6F0D618BB795A00F7C78F /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -155,10 +151,10 @@
 		BFA6F0D918BB796500F7C78F /* WideVine */ = {
 			isa = PBXGroup;
 			children = (
-				BFA6F0D318BB795A00F7C78F /* libWViPhoneAPI.a */,
-				BFA6F0D418BB795A00F7C78F /* WViPhoneAPI.h */,
-				BFA6F0D518BB795A00F7C78F /* WVSettings.h */,
-				BFA6F0D618BB795A00F7C78F /* WVSettings.m */,
+				BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */,
+				BF927ECD18BCEB62006667CA /* WVSettings.h */,
+				BF927ECB18BCEA39006667CA /* WVSettings.m */,
+				BF927EC518BCDB07006667CA /* libWViPhoneAPI.a */,
 			);
 			name = WideVine;
 			sourceTree = "<group>";
@@ -198,10 +194,6 @@
 		BFFFA72C182F9E31005B3B24 /* PlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
-				BF927ECD18BCEB62006667CA /* WVSettings.h */,
-				BF927ECB18BCEA39006667CA /* WVSettings.m */,
-				BF927EC518BCDB07006667CA /* libWViPhoneAPI.a */,
-				BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */,
 				BFA6F0D918BB796500F7C78F /* WideVine */,
 				BFFFA877182FB8E4005B3B24 /* PlayerViewController */,
 				BFFFA773182F9ECF005B3B24 /* JSON */,
@@ -471,6 +463,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -500,6 +493,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
