@@ -14,7 +14,8 @@
 #import "WVSettings.h"
 #import "WViPhoneAPI.h"
 
-@implementation PlayerViewController{
+@implementation PlayerViewController {
+    // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
     CGRect originalViewControllerFrame;
@@ -22,72 +23,58 @@
     UIDeviceOrientation prevOrientation,deviceOrientation;
     NSString *playerSource;
     
-    BOOL isWideVineReady, isDoPlay;
+    // WideVine Params
+    BOOL isWideVine, isWideVineReady, isFirstPlay;
 }
-
-static NSArray *sBitRates;
 
 @synthesize  webView, player;
-@synthesize isWideVine;
 @synthesize delegate;
 
-- (void)viewDidLoad
-{
-    NSLog( @"View Did Load Enter" );
+- (void)viewDidLoad {
+    NSLog(@"View Did Load Enter");
     
-    isWideVine = NO;
-    isWideVineReady = NO;
-    isDoPlay = NO;
+    [self initWideVineParams];
+    [self initPlayerParams];
     
-    isFullScreen = NO;
-    isPlaying = NO;
-    isResumePlayer = NO;
-    [super viewDidLoad];
+    // Observer for pause player notifications
+    [ [NSNotificationCenter defaultCenter] addObserver: self
+                                              selector: @selector(pause)
+                                                  name: @"playerPauseNotification"
+                                                object: nil ];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( pause ) name:@"videoPauseNotification" object:nil];
-    
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchInOut:)];
+    // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
+    UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
     [self.view addGestureRecognizer:pinch];
     
-    NSLog( @"View Did Load Exit" );
+    [super viewDidLoad];
+    
+    NSLog(@"View Did Load Exit");
 }
 
--(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
-    NSLog( @"didPinchInOut Enter" );
-    
-    if (isFullScreen && recongizer.scale < 1) {
-        [self toggleFullscreen];
-    } else if (!isFullScreen && recongizer.scale > 1) {
-        [self toggleFullscreen];
-    }
-    
-    NSLog( @"didPinchInOut Exit" );
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    NSLog( @"viewWillAppear Enter" );
+-(void)viewWillAppear:(BOOL)animated {
+    NSLog(@"viewWillAppear Enter");
     
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
-        self.webView = [[PlayerControlsWebView alloc] initWithFrame: playerViewFrame];
+        self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
         [self.webView setPlayerControlsWebViewDelegate: self];
         
-        player = [[MPMoviePlayerController alloc] init];
-        player.view.frame = playerViewFrame;
+        self.player = [ [MPMoviePlayerController alloc] init ];
+        self.player.view.frame = playerViewFrame;
         
         // WebView initialize for supporting NativeComponent(html5 player view)
-        [[self.webView scrollView] setScrollEnabled: NO];
-        [[self.webView scrollView] setBounces: NO];
-        [[self.webView scrollView] setBouncesZoom: NO];
+        [ [self.webView scrollView] setScrollEnabled: NO ];
+        [ [self.webView scrollView] setBounces: NO ];
+        [ [self.webView scrollView] setBouncesZoom: NO ];
         self.webView.opaque = NO;
         self.webView.backgroundColor = [UIColor clearColor];
         
-        // Add NativeComponent(html5 player view) webView to player view
-        [player.view addSubview: self.webView];
+        // Add NativeComponent (html5 player view) webView to player view
+        [self.player.view addSubview: self.webView];
         [self.view addSubview: player.view];
         
-        player.controlStyle = MPMovieControlStyleNone;
+        self.player.controlStyle = MPMovieControlStyleNone;
     }
     
     [super viewWillAppear:NO];
@@ -95,69 +82,118 @@ static NSArray *sBitRates;
     NSLog( @"viewWillAppear Exit" );
 }
 
-- (void)viewDidDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog( @"viewDidDisappear Enter" );
+    
     isResumePlayer = YES;
     [super viewDidDisappear:animated];
+    
+    NSLog( @"viewDidDisappear Exit" );
 }
 
-- (void)setWebViewURL: (NSString *)iframeUrl{
+#pragma mark - WebView Methods
+
+- (void)setWebViewURL: (NSString *)iframeUrl {
     NSLog( @"setWebViewURL Enter" );
     
-    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self.webView loadRequest:[ NSURLRequest requestWithURL: [NSURL URLWithString:iframeUrl]]];
+    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    [ self.webView loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
 }
 
-- (void)play{
+#pragma mark - Player Methods
+
+-(void)initPlayerParams {
+    NSLog(@"initPlayerParams Enter");
+    
+    isFullScreen = NO;
+    isPlaying = NO;
+    isResumePlayer = NO;
+    
+    NSLog(@"initPlayerParams Exit");
+}
+
+- (void)play {
     NSLog( @"Play Player Enter" );
     
-    isDoPlay = YES;
+    isFirstPlay = YES;
     
     if ( isWideVine  && !isWideVineReady ) {
         return;
     }
     
-    if( !( player.playbackState == MPMoviePlaybackStatePlaying ) ) {
-        [player prepareToPlay];
-        [player play];
+    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
+        [self.player prepareToPlay];
+        [self.player play];
     }
     
     NSLog( @"Play Player Exit" );
 }
 
-- (void)UpdatePlayerLayout{
-    NSLog( @"UpdatePlayerLayout Enter" );
+- (void)pause {
+    NSLog(@"Pause Player Enter");
     
-    //TO:DO - find a better way to update player layout
-    [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById( this.id ).doUpdateLayout();"];
+    isFirstPlay = NO;
     
-    NSDictionary *dataDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:isFullScreen]
-                                                         forKey:@"isFullScreen"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"toggleFullscreenNotification" object:self userInfo:dataDict];
+    [self.player pause];
     
-    NSLog( @"UpdatePlayerLayout Exit" );
+    NSLog(@"Pause Player Exit");
+}
+
+- (void)stop {
+    NSLog(@"Stop Player Enter");
+    
+    isFirstPlay = NO;
+    
+    [self.player stop];
+    
+    NSLog(@"Stop Player Exit");
+}
+
+#pragma mark - Player Layout & Fullscreen Treatment
+
+- (void)updatePlayerLayout {
+    NSLog( @"updatePlayerLayout Enter" );
+    
+    //Update player layout
+    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
+    [self writeJavascript: updateLayoutJS];
+    
+    // FullScreen Treatment
+    NSDictionary *fullScreenDataDict = [ NSDictionary dictionaryWithObject: [NSNumber numberWithBool: isFullScreen]
+                                                                    forKey: @"isFullScreen" ];
+    [ [NSNotificationCenter defaultCenter] postNotificationName: @"toggleFullscreenNotification"
+                                                         object:self
+                                                       userInfo: fullScreenDataDict ];
+    
+    NSLog( @"updatePlayerLayout Exit" );
 }
 
 - (void)setOrientationTransform: (CGFloat) angle{
     NSLog( @"setOrientationTransform Enter" );
     
     if ( isFullScreen ) {
+        // Init Transform for Fullscreen
         fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
         fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
+        
         self.view.center = [[UIApplication sharedApplication] delegate].window.center;
         [self.view setTransform: fullScreenPlayerTransform];
+        
+        // Add Mask Support to WebView & Player
         self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
         self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
     }else{
         [self.view setTransform: CGAffineTransformIdentity];
     }
     
-    
     NSLog( @"setOrientationTransform Exit" );
 }
 
 - (void)checkDeviceStatus{
+    NSLog( @"checkDeviceStatus Enter" );
+    
     deviceOrientation = [[UIDevice currentDevice] orientation];
     
     if ([self isIpad]) {
@@ -197,6 +233,8 @@ static NSArray *sBitRates;
             }
         }
     }
+    
+    NSLog( @"checkDeviceStatus Exit" );
 }
 
 - (void)checkOrientationStatus{
@@ -236,7 +274,6 @@ static NSArray *sBitRates;
 - (void)openFullScreen{
     NSLog( @"openFullScreen Enter" );
     
-    //    if ( !isFullScreen ) {
     isFullScreen = YES;
    
     CGRect mainFrame;
@@ -265,14 +302,11 @@ static NSArray *sBitRates;
         [UIApplication sharedApplication].statusBarHidden = YES;
     }
     
-    [player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.webView setFrame: player.view.frame];
+    [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.webView setFrame: self.player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
-    [self triggerEventsJavaScript:@"enterfullscreen" WithValue:nil];
-    
-    //    }
-    
-    [self UpdatePlayerLayout];
+    [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
+    [self updatePlayerLayout];
     
     NSLog( @"openFullScreen Exit" );
 }
@@ -294,29 +328,9 @@ static NSArray *sBitRates;
     
     [self triggerEventsJavaScript:@"exitfullscreen" WithValue:nil];
     
-    [self UpdatePlayerLayout];
+    [self updatePlayerLayout];
     
     NSLog( @"closeFullScreen Exit" );
-}
-
-- (void)pause{
-    NSLog(@"Pause Player Enter");
-    
-    isDoPlay = NO;
-    
-    [player pause];
-    
-    NSLog(@"Pause Player Exit");
-}
-
-- (void)stop{
-    NSLog(@"Stop Player Enter");
-    
-    isDoPlay = NO;
-    
-    [player stop];
-    
-    NSLog(@"Stop Player Exit");
 }
 
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
@@ -471,7 +485,7 @@ static NSArray *sBitRates;
     NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
     NSLog(@"%@", jsStringLog);
     NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName,eventValue];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    [self writeJavascript: jsString];
     NSLog(@"triggerEventsJavaScript Exit");
 }
 
@@ -510,10 +524,6 @@ static NSArray *sBitRates;
     }
     
     NSLog(@"setAttribute Exit");
-}
-
-- (void)setWideVine:(NSString *)src andKey:(NSString*)key{
-    [self initializeWVDictionary:src andKey: key];
 }
 
 - (void)setPlayerSource: (NSURL *)src{
@@ -610,10 +620,23 @@ static NSArray *sBitRates;
     return YES;
 }
 
-#pragma widevine support methods
+#pragma mark - WideVine Methods
 
-- (void)donePlayingMovieWithWV
-{
+-(void)initWideVineParams {
+    NSLog(@"initWideVineParams Enter");
+    
+    isWideVine = NO;
+    isWideVineReady = NO;
+    isFirstPlay = NO;
+    
+    NSLog(@"initWideVineParams Exit");
+}
+
+- (void)setWideVine:(NSString *)src andKey:(NSString*)key {
+    [self initializeWVDictionary:src andKey: key];
+}
+
+- (void)donePlayingMovieWithWV {
     [self stop];
     WViOsApiStatus* wvStopStatus = WV_Stop();
     
@@ -622,7 +645,7 @@ static NSArray *sBitRates;
     }
 }
 
-- (void)playMovieFromUrl: (NSString *)videoUrlString{
+- (void)playMovieFromUrl: (NSString *)videoUrlString {
     NSLog(@"playMovieFromUrl Enter");
 
     float wait = 0.1;
@@ -637,7 +660,7 @@ static NSArray *sBitRates;
     NSLog(@"playMovieFromUrl Exit");
 }
 
-- (void)playMovieFromUrlLater{
+- (void)playMovieFromUrlLater {
     NSLog(@"playMovieFromUrlLater Enter");
     
     NSMutableString *responseUrl = [NSMutableString string];
@@ -657,7 +680,7 @@ static NSArray *sBitRates;
     [ self setPlayerSource: [NSURL URLWithString: responseUrl] ];
     isWideVineReady = YES;
     
-    if ( isDoPlay ) {
+    if ( isFirstPlay ) {
         [self play];
     }
     
@@ -683,7 +706,7 @@ static NSArray *sBitRates;
     }
 }
 
-WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ){
+WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
     NSLog( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
     
     switch ( event ) {
@@ -706,9 +729,27 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ){
     return WViOsApiStatus_OK;
 }
 
+-(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
+    NSLog( @"didPinchInOut Enter" );
+    
+    if (isFullScreen && recongizer.scale < 1) {
+        [self toggleFullscreen];
+    } else if (!isFullScreen && recongizer.scale > 1) {
+        [self toggleFullscreen];
+    }
+    
+    NSLog( @"didPinchInOut Exit" );
+}
+
+- (NSString*)writeJavascript:(NSString*)javascript
+{
+    return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
+}
+
 @end
 
 @implementation NSString (EnumParser)
+
 - (Attribute)attributeNameEnumFromString{
     NSLog(@"attributeNameEnumFromString Enter");
     
@@ -721,4 +762,5 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ){
     NSLog(@"attributeNameEnumFromString Exit");
     return (Attribute)[[Attributes objectForKey:self] intValue];
 }
+
 @end

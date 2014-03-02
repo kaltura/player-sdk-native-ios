@@ -26,6 +26,7 @@ typedef enum{
 } Attribute;
 
 @class NativeComponentPlugin;
+
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
@@ -35,7 +36,6 @@ typedef enum{
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, retain) NativeComponentPlugin *delegate;
-@property (nonatomic) BOOL *isWideVine;
 
 - (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
@@ -45,5 +45,7 @@ typedef enum{
 @end
 
 @interface NSString (EnumParser)
+
 - (Attribute)attributeNameEnumFromString;
+
 @end
