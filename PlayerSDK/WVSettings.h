@@ -13,5 +13,6 @@
 
 -(WViOsApiStatus*)initializeWD: (NSString*) key;
 - (void) stopWV;
+- (void)playMovieFromUrl: (NSString *)videoUrlString;
 
 @end

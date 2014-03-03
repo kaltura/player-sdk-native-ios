@@ -103,6 +103,12 @@
     NSLog(@"setWebViewURLExit");
 }
 
+- (NSString*)writeJavascript:(NSString*)javascript {
+    NSLog(@"writeJavascript: %@", javascript);
+    
+    return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
+}
+
 #pragma mark - Player Methods
 
 -(void)initPlayerParams {
@@ -528,6 +534,10 @@
         case wvServerKey:
             wvSettings = [[WVSettings alloc] init];
             isWideVine = YES;
+            [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                      selector: @selector(playWV:)
+                                                          name: @"wvResponseUrlNotification"
+                                                        object: nil ];
             attributeVal = [args objectAtIndex:1];
             [self initWV: playerSource andKey: attributeVal];
             break;
@@ -646,55 +656,30 @@
 }
 
 - (void) initWV: (NSString *)src andKey: (NSString *)key {
+    NSLog(@"initWV Enter");
+    
     WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
     
     if (wvInitStatus == WViOsApiStatus_OK) {
         NSLog(@"widevine was inited");
     }
     
-    [self playMovieFromUrl: src];
+    [wvSettings playMovieFromUrl: src];
+    
+    NSLog(@"initWV Exit");
 }
 
-- (void)playMovieFromUrl: (NSString *)videoUrlString {
-    NSLog(@"playMovieFromUrl Enter");
+-(void)playWV: (NSNotification *)responseUrlNotification  {
+    NSLog(@"playWV Exit");
     
-    float wait = 0.1;
-    
-    [[NSRunLoop mainRunLoop] addTimer:[NSTimer timerWithTimeInterval: wait
-                                                              target: self
-                                                            selector: @selector(playMovieFromUrlLater)
-                                                            userInfo: nil
-                                                             repeats: NO]
-                              forMode:NSDefaultRunLoopMode];
-    
-    NSLog(@"playMovieFromUrl Exit");
-}
-
-- (void)playMovieFromUrlLater {
-    NSLog(@"playMovieFromUrlLater Enter");
-    
-    NSMutableString *responseUrl = [NSMutableString string];
-    
-    NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
-    playerSource = [arr objectAtIndex: 0];
-    
-    WViOsApiStatus status = WV_Play(playerSource, responseUrl, 0);
-    NSLog(@"widevine response url: %@", responseUrl);
-    
-    if ( status != WViOsApiStatus_OK ) {
-        NSLog(@"ERROR: %u",status);
-        
-        return;
-    }
-    
-    [ self setPlayerSource: [NSURL URLWithString: responseUrl] ];
+    [ self setPlayerSource: [ NSURL URLWithString: [ [responseUrlNotification userInfo] valueForKey: @"response_url"] ] ];
     isWideVineReady = YES;
     
     if ( isPlayCalled ) {
         [self play];
     }
     
-    NSLog(@"playMovieFromUrlLater Exit");
+    NSLog(@"playWV Exit");
 }
 
 #pragma mark -
@@ -709,11 +694,6 @@
     }
     
     NSLog( @"didPinchInOut Exit" );
-}
-
-- (NSString*)writeJavascript:(NSString*)javascript
-{
-    return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
 }
 
 @end
