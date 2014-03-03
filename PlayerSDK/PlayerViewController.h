@@ -16,12 +16,14 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "PlayerSDK/PlayerControlsWebView.h"
 
-@class WVSettings;
-
 typedef enum{
+    // Player Content Source Url
     src = 0,
+    // Player Current time (Progress Bar)
     currentTime,
+    // Player Visibility
     visible,
+    // DRM WideVine Key
     wvServerKey,
 } Attribute;
 
@@ -30,7 +32,6 @@ typedef enum{
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
-    WVSettings* wvSettings;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;

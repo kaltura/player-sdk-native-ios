@@ -7,20 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WViPhoneAPI.h"
 
-@interface WVSettings : NSObject {
-    
-    NSString* drmServer;
-	NSString* portalId;
-	
-	BOOL nativeAdapting;
-    BOOL initialized;
-}
+@interface WVSettings : NSObject
 
-@property (nonatomic, strong) NSString* drmServer;
-@property (nonatomic, strong) NSString* portalId;
-
-- (BOOL) isNativeAdapting;
--(NSDictionary*) initializeDictionary:(NSString *)src andKS: (NSString*) key;
+-(WViOsApiStatus*)initializeWD: (NSString*) key;
+- (void) stopWV;
 
 @end

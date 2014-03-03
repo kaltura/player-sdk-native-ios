@@ -20,14 +20,15 @@
     BOOL isFullScreen, isPlaying, isResumePlayer;
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
-    UIDeviceOrientation prevOrientation,deviceOrientation;
+    UIDeviceOrientation prevOrientation, deviceOrientation;
     NSString *playerSource;
     
     // WideVine Params
-    BOOL isWideVine, isWideVineReady, isFirstPlay;
+    BOOL isWideVine, isWideVineReady, isPlayCalled;
+    WVSettings* wvSettings;
 }
 
-@synthesize  webView, player;
+@synthesize webView, player;
 @synthesize delegate;
 
 - (void)viewDidLoad {
@@ -117,7 +118,7 @@
 - (void)play {
     NSLog( @"Play Player Enter" );
     
-    isFirstPlay = YES;
+    isPlayCalled = YES;
     
     if ( isWideVine  && !isWideVineReady ) {
         return;
@@ -134,7 +135,7 @@
 - (void)pause {
     NSLog(@"Pause Player Enter");
     
-    isFirstPlay = NO;
+    isPlayCalled = NO;
     
     [self.player pause];
     
@@ -144,9 +145,16 @@
 - (void)stop {
     NSLog(@"Stop Player Enter");
     
-    isFirstPlay = NO;
-    
     [self.player stop];
+    isPlaying = NO;
+    isPlayCalled = NO;
+    
+    // Stop WideVine
+    if ( isWideVine ) {
+        [wvSettings stopWV];
+        isWideVine = NO;
+        isWideVineReady = NO;
+    }
     
     NSLog(@"Stop Player Exit");
 }
@@ -352,11 +360,16 @@
     NSLog(@"Binding Events Enter");
     
     NSMutableDictionary *eventsDictionary = [[NSMutableDictionary alloc] init];
-    [eventsDictionary setObject:MPMoviePlayerLoadStateDidChangeNotification forKey:@"triggerLoadPlabackEvents:"];
-    [eventsDictionary setObject:MPMoviePlayerPlaybackDidFinishNotification forKey:@"triggerFinishPlabackEvents:"];
-    [eventsDictionary setObject:MPMoviePlayerPlaybackStateDidChangeNotification forKey:@"triggerMoviePlabackEvents:"];
-    [eventsDictionary setObject:MPMoviePlayerTimedMetadataUpdatedNotification forKey:@"metadataUpdate:"];
-    [eventsDictionary setObject:MPMovieDurationAvailableNotification forKey:@"onMovieDurationAvailable:"];
+    [eventsDictionary setObject: MPMoviePlayerLoadStateDidChangeNotification
+                         forKey: @"triggerLoadPlabackEvents:"];
+    [eventsDictionary setObject: MPMoviePlayerPlaybackDidFinishNotification
+                         forKey: @"triggerFinishPlabackEvents:"];
+    [eventsDictionary setObject: MPMoviePlayerPlaybackStateDidChangeNotification
+                         forKey: @"triggerMoviePlabackEvents:"];
+    [eventsDictionary setObject: MPMoviePlayerTimedMetadataUpdatedNotification
+                         forKey: @"metadataUpdate:"];
+    [eventsDictionary setObject: MPMovieDurationAvailableNotification
+                         forKey: @"onMovieDurationAvailable:"];
     
     for (id functionName in eventsDictionary){
         id event = [eventsDictionary objectForKey:functionName];
@@ -457,7 +470,7 @@
     NSString *finishPlayBackName = [[NSString alloc]init];
     NSNumber* reason = [[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
     
-    switch ([reason intValue]) {
+    switch ( [reason intValue] ) {
         case MPMovieFinishReasonPlaybackEnded:
             finishPlayBackName = @"ended";
             NSLog(@"playbackFinished. Reason: Playback Ended");
@@ -516,7 +529,7 @@
             wvSettings = [[WVSettings alloc] init];
             isWideVine = YES;
             attributeVal = [args objectAtIndex:1];
-            [self setWideVine: playerSource andKey: attributeVal];
+            [self initWV: playerSource andKey: attributeVal];
             break;
             
         default:
@@ -627,29 +640,26 @@
     
     isWideVine = NO;
     isWideVineReady = NO;
-    isFirstPlay = NO;
+    isPlayCalled = NO;
     
     NSLog(@"initWideVineParams Exit");
 }
 
-- (void)setWideVine:(NSString *)src andKey:(NSString*)key {
-    [self initializeWVDictionary:src andKey: key];
-}
-
-- (void)donePlayingMovieWithWV {
-    [self stop];
-    WViOsApiStatus* wvStopStatus = WV_Stop();
+- (void) initWV: (NSString *)src andKey: (NSString *)key {
+    WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
     
-    if (wvStopStatus == WViOsApiStatus_OK ) {
-        NSLog(@"widevine was stopped");
+    if (wvInitStatus == WViOsApiStatus_OK) {
+        NSLog(@"widevine was inited");
     }
+    
+    [self playMovieFromUrl: src];
 }
 
 - (void)playMovieFromUrl: (NSString *)videoUrlString {
     NSLog(@"playMovieFromUrl Enter");
-
+    
     float wait = 0.1;
-
+    
     [[NSRunLoop mainRunLoop] addTimer:[NSTimer timerWithTimeInterval: wait
                                                               target: self
                                                             selector: @selector(playMovieFromUrlLater)
@@ -664,7 +674,7 @@
     NSLog(@"playMovieFromUrlLater Enter");
     
     NSMutableString *responseUrl = [NSMutableString string];
-
+    
     NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
     playerSource = [arr objectAtIndex: 0];
     
@@ -680,54 +690,14 @@
     [ self setPlayerSource: [NSURL URLWithString: responseUrl] ];
     isWideVineReady = YES;
     
-    if ( isFirstPlay ) {
+    if ( isPlayCalled ) {
         [self play];
     }
     
     NSLog(@"playMovieFromUrlLater Exit");
 }
 
-- (void) initializeWVDictionary:(NSString *)src andKey:(NSString *)key {
-    [self terminateWV];
-    WViOsApiStatus *wvInitStatus = WV_Initialize( WVCallback, [wvSettings initializeDictionary: src andKS: key] );
-    
-    if (wvInitStatus == WViOsApiStatus_OK) {
-        NSLog(@"widevine was inited");
-    }
-    
-    [self playMovieFromUrl: src];
-}
-
-- (void) terminateWV {
-    WViOsApiStatus *wvTerminateStatus = WV_Terminate();
-    
-    if (wvTerminateStatus == WViOsApiStatus_OK) {
-        NSLog(@"widevine was terminated");
-    }
-}
-
-WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
-    NSLog( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
-    
-    switch ( event ) {
-        case WViOsApiEvent_Stopped:
-			break;
-		case WViOsApiEvent_StoppingOnError:
-
-			break;
-		case WViOsApiEvent_EMMFailed:
-			break;
-		case WViOsApiEvent_EMMReceived:
-			break;
-            
-        default:
-            break;
-    }
-    
-    NSLog(@"widvine callback");
-    
-    return WViOsApiStatus_OK;
-}
+#pragma mark -
 
 -(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
     NSLog( @"didPinchInOut Enter" );
