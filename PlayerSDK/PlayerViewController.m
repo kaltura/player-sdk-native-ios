@@ -11,21 +11,25 @@
 //
 
 #import "PlayerViewController.h"
-#import "WVSettings.h"
-#import "WViPhoneAPI.h"
+#ifndef widevine
+    #import "WVSettings.h"
+    #import "WViPhoneAPI.h"
+#endif
 
 @implementation PlayerViewController {
     // Player Params
     BOOL isSeeking;
-    BOOL isFullScreen, isPlaying, isResumePlayer;
+    BOOL isFullScreen, isPlaying, isResumePlayer, isPlayCalled;
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation, deviceOrientation;
     NSString *playerSource;
     
-    // WideVine Params
-    BOOL isWideVine, isWideVineReady, isPlayCalled;
-    WVSettings* wvSettings;
+    #ifndef widevine
+        // WideVine Params
+        BOOL isWideVine, isWideVineReady;
+        WVSettings* wvSettings;
+    #endif
 }
 
 @synthesize webView, player;
@@ -34,7 +38,9 @@
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
     
-    [self initWideVineParams];
+    #ifndef widevine
+        [self initWideVineParams];
+    #endif
     [self initPlayerParams];
     
     // Observer for pause player notifications
@@ -117,6 +123,7 @@
     isFullScreen = NO;
     isPlaying = NO;
     isResumePlayer = NO;
+    isPlayCalled = NO;
     
     NSLog(@"initPlayerParams Exit");
 }
@@ -126,9 +133,11 @@
     
     isPlayCalled = YES;
     
-    if ( isWideVine  && !isWideVineReady ) {
-        return;
-    }
+    #ifndef widevine
+        if ( isWideVine  && !isWideVineReady ) {
+            return;
+        }
+    #endif
     
     if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
         [self.player prepareToPlay];
@@ -155,12 +164,14 @@
     isPlaying = NO;
     isPlayCalled = NO;
     
-    // Stop WideVine
-    if ( isWideVine ) {
-        [wvSettings stopWV];
-        isWideVine = NO;
-        isWideVineReady = NO;
-    }
+    #ifndef widevine
+        // Stop WideVine
+        if ( isWideVine ) {
+            [wvSettings stopWV];
+            isWideVine = NO;
+            isWideVineReady = NO;
+        }
+    #endif
     
     NSLog(@"Stop Player Exit");
 }
@@ -531,6 +542,7 @@
             attributeVal = [args objectAtIndex:1];
             [self visible: attributeVal];
             break;
+        #ifndef widevine
         case wvServerKey:
             wvSettings = [[WVSettings alloc] init];
             isWideVine = YES;
@@ -541,7 +553,8 @@
             attributeVal = [args objectAtIndex:1];
             [self initWV: playerSource andKey: attributeVal];
             break;
-            
+        #endif
+          
         default:
             break;
     }
@@ -644,13 +657,13 @@
 }
 
 #pragma mark - WideVine Methods
+#ifndef widevine
 
 -(void)initWideVineParams {
     NSLog(@"initWideVineParams Enter");
     
     isWideVine = NO;
     isWideVineReady = NO;
-    isPlayCalled = NO;
     
     NSLog(@"initWideVineParams Exit");
 }
@@ -682,6 +695,8 @@
     NSLog(@"playWV Exit");
 }
 
+#endif
+
 #pragma mark -
 
 -(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
@@ -706,7 +721,9 @@
     NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithInteger:src], @"src",
                                 [NSNumber numberWithInteger:currentTime], @"currentTime",
-                                [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
+                                #ifndef widevine
+                                    [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
+                                #endif
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");

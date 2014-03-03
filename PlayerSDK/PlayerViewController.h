@@ -23,8 +23,10 @@ typedef enum{
     currentTime,
     // Player Visibility
     visible,
-    // DRM WideVine Key
-    wvServerKey,
+    #ifndef widevine
+        // DRM WideVine Key
+        wvServerKey,
+    #endif
 } Attribute;
 
 @class NativeComponentPlugin;
