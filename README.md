@@ -6,7 +6,7 @@ The Kaltura player-sdk-native component enables embedding the [kaltura player](h
 * Widevine DRM support
 * AutoPlay 
 * Volume Control
-* [player.kaltura.com](http://player.kaltura.com) feature set
+* Full [player.kaltura.com](http://player.kaltura.com) feature set for themes and plugins
 
 For a full list of native embed advantages see native controls table within the [player toolkit basic usage guide](http://knowledge.kaltura.com/kaltura-player-v2-toolkit-theme-skin-guide). 
 
