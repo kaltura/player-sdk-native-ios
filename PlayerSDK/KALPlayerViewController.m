@@ -10,13 +10,13 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
-#import "PlayerViewController.h"
+#import "KALPlayerViewController.h"
 #if !(TARGET_IPHONE_SIMULATOR)
     #import "WVSettings.h"
     #import "WViPhoneAPI.h"
 #endif
 
-@implementation PlayerViewController {
+@implementation KALPlayerViewController{
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer, isPlayCalled;
@@ -70,7 +70,7 @@
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
-        self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
+        self.webView = [[KALPlayerControlsWebView alloc] initWithFrame: playerViewFrame];
         [self.webView setPlayerControlsWebViewDelegate: self];
         
         self.player = [ [MPMoviePlayerController alloc] init ];

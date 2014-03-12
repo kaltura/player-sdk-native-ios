@@ -14,7 +14,7 @@
 //
 
 #import <MediaPlayer/MediaPlayer.h>
-#import "PlayerSDK/PlayerControlsWebView.h"
+#import "KALPlayerControlsWebView.h"
 
 typedef enum{
     // Player Content Source Url
@@ -30,13 +30,12 @@ typedef enum{
 } Attribute;
 
 @class NativeComponentPlugin;
-
-@interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
+@interface KALPlayerViewController : UIViewController <KALPlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
 }
 
-@property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
+@property (nonatomic, strong) IBOutlet KALPlayerControlsWebView* webView;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, retain) NativeComponentPlugin *delegate;
 

@@ -48,8 +48,8 @@
 		BFFFA740182F9E31005B3B24 /* libPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA727182F9E31005B3B24 /* libPlayerSDK.a */; };
 		BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFFFA744182F9E31005B3B24 /* InfoPlist.strings */; };
 		BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */; };
-		BFFFA754182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */; };
-		BFFFA755182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */; };
+		BFFFA754182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */; };
+		BFFFA755182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */; };
 		BFFFA766182F9EB7005B3B24 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA75B182F9EB6005B3B24 /* NSObject+SBJSON.m */; };
 		BFFFA767182F9EB7005B3B24 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA75B182F9EB6005B3B24 /* NSObject+SBJSON.m */; };
 		BFFFA768182F9EB7005B3B24 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA75D182F9EB7005B3B24 /* NSString+SBJSON.m */; };
@@ -63,10 +63,10 @@
 		BFFFA770182F9EB7005B3B24 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA765182F9EB7005B3B24 /* SBJsonWriter.m */; };
 		BFFFA771182F9EB7005B3B24 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA765182F9EB7005B3B24 /* SBJsonWriter.m */; };
 		BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA775182FA012005B3B24 /* UIKit.framework */; };
-		BFFFA872182FB834005B3B24 /* PlayerControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */; };
-		BFFFA875182FB8DD005B3B24 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		BFFFA876182FB8DD005B3B24 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */; };
-		BFFFA87A182FC166005B3B24 /* PlayerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */; };
+		BFFFA872182FB834005B3B24 /* KALPlayerControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* KALPlayerControlsWebView.h */; };
+		BFFFA875182FB8DD005B3B24 /* KALPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* KALPlayerViewController.m */; };
+		BFFFA876182FB8DD005B3B24 /* KALPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* KALPlayerViewController.m */; };
+		BFFFA87A182FC166005B3B24 /* KALPlayerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA873182FB8DD005B3B24 /* KALPlayerViewController.h */; };
 		BFFFA87F182FC44D005B3B24 /* SBJSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA75E182F9EB7005B3B24 /* SBJSON.h */; };
 		BFFFA880182FC46B005B3B24 /* JSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA759182F9EB6005B3B24 /* JSON.h */; };
 		BFFFA881182FC46B005B3B24 /* NSObject+SBJSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA75A182F9EB6005B3B24 /* NSObject+SBJSON.h */; };
@@ -121,8 +121,8 @@
 				BFFFA884182FC46B005B3B24 /* SBJsonParser.h in CopyFiles */,
 				BFFFA885182FC46B005B3B24 /* SBJsonWriter.h in CopyFiles */,
 				BFFFA87F182FC44D005B3B24 /* SBJSON.h in CopyFiles */,
-				BFFFA87A182FC166005B3B24 /* PlayerViewController.h in CopyFiles */,
-				BFFFA872182FB834005B3B24 /* PlayerControlsWebView.h in CopyFiles */,
+				BFFFA87A182FC166005B3B24 /* KALPlayerViewController.h in CopyFiles */,
+				BFFFA872182FB834005B3B24 /* KALPlayerControlsWebView.h in CopyFiles */,
 				BFFFA730182F9E31005B3B24 /* PlayerSDK.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -149,8 +149,8 @@
 		BFFFA745182F9E31005B3B24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSDKTests.h; sourceTree = "<group>"; };
 		BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSDKTests.m; sourceTree = "<group>"; };
-		BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerControlsWebView.h; sourceTree = "<group>"; };
-		BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerControlsWebView.m; sourceTree = "<group>"; };
+		BFFFA752182F9E66005B3B24 /* KALPlayerControlsWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KALPlayerControlsWebView.h; sourceTree = "<group>"; };
+		BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KALPlayerControlsWebView.m; sourceTree = "<group>"; };
 		BFFFA759182F9EB6005B3B24 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		BFFFA75A182F9EB6005B3B24 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		BFFFA75B182F9EB6005B3B24 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -165,8 +165,8 @@
 		BFFFA764182F9EB7005B3B24 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		BFFFA765182F9EB7005B3B24 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		BFFFA775182FA012005B3B24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
-		BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
+		BFFFA873182FB8DD005B3B24 /* KALPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KALPlayerViewController.h; sourceTree = "<group>"; };
+		BFFFA874182FB8DD005B3B24 /* KALPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KALPlayerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -316,8 +316,8 @@
 		BFFFA774182F9F10005B3B24 /* PlayerControlsWebView */ = {
 			isa = PBXGroup;
 			children = (
-				BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */,
-				BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */,
+				BFFFA752182F9E66005B3B24 /* KALPlayerControlsWebView.h */,
+				BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */,
 			);
 			name = PlayerControlsWebView;
 			sourceTree = "<group>";
@@ -325,8 +325,8 @@
 		BFFFA877182FB8E4005B3B24 /* PlayerViewController */ = {
 			isa = PBXGroup;
 			children = (
-				BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */,
-				BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */,
+				BFFFA873182FB8DD005B3B24 /* KALPlayerViewController.h */,
+				BFFFA874182FB8DD005B3B24 /* KALPlayerViewController.m */,
 			);
 			name = PlayerViewController;
 			path = ..;
@@ -476,14 +476,14 @@
 			files = (
 				BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */,
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
-				BFFFA754182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */,
+				BFFFA754182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */,
 				BFFFA766182F9EB7005B3B24 /* NSObject+SBJSON.m in Sources */,
 				BFFFA768182F9EB7005B3B24 /* NSString+SBJSON.m in Sources */,
 				BFFFA76A182F9EB7005B3B24 /* SBJSON.m in Sources */,
 				BFFFA76C182F9EB7005B3B24 /* SBJsonBase.m in Sources */,
 				BFFFA76E182F9EB7005B3B24 /* SBJsonParser.m in Sources */,
 				BFFFA770182F9EB7005B3B24 /* SBJsonWriter.m in Sources */,
-				BFFFA875182FB8DD005B3B24 /* PlayerViewController.m in Sources */,
+				BFFFA875182FB8DD005B3B24 /* KALPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -492,14 +492,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */,
-				BFFFA755182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */,
+				BFFFA755182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */,
 				BFFFA767182F9EB7005B3B24 /* NSObject+SBJSON.m in Sources */,
 				BFFFA769182F9EB7005B3B24 /* NSString+SBJSON.m in Sources */,
 				BFFFA76B182F9EB7005B3B24 /* SBJSON.m in Sources */,
 				BFFFA76D182F9EB7005B3B24 /* SBJsonBase.m in Sources */,
 				BFFFA76F182F9EB7005B3B24 /* SBJsonParser.m in Sources */,
 				BFFFA771182F9EB7005B3B24 /* SBJsonWriter.m in Sources */,
-				BFFFA876182FB8DD005B3B24 /* PlayerViewController.m in Sources */,
+				BFFFA876182FB8DD005B3B24 /* KALPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

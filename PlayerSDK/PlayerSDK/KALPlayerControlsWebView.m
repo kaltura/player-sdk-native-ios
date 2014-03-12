@@ -25,10 +25,10 @@
 //
 
 
-#import "PlayerControlsWebView.h"
+#import "KALPlayerControlsWebView.h"
 
 
-@implementation PlayerControlsWebView {
+@implementation KALPlayerControlsWebView {
     BOOL isAd;
 }
 @synthesize playerControlsWebViewDelegate;
