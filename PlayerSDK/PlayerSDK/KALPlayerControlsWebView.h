@@ -12,7 +12,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SBJSON.h"
 
 @protocol KALPlayerControlsWebViewDelegate <NSObject>
 @required
@@ -20,7 +19,6 @@
 @end
 
 @interface KALPlayerControlsWebView : UIWebView <UIWebViewDelegate> {
-  SBJSON *json;
   
   int alertCallbackId;
    __unsafe_unretained id <KALPlayerControlsWebViewDelegate> playerControlsWebViewDelegate;

@@ -10,5 +10,4 @@ Pod::Spec.new do |s|
   s.source_files  = 'PlayerSDK/PlayerSDK/KAL*.{h,m}'
   s.framework  = 'MediaPlayer'
   s.requires_arc = true
-  s.dependency 'SBJson', '~> 3.2.0'
 end
