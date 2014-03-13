@@ -1,3 +1,4 @@
+#if !(TARGET_IPHONE_SIMULATOR)
 #ifndef IPHONSESSION_H_
 #define IPHONSESSION_H_
 
@@ -146,4 +147,5 @@ NSString *NSStringFromWViOsApiEvent( WViOsApiEvent );
 };
 #endif
         
+#endif
 #endif

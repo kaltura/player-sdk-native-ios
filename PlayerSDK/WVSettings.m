@@ -5,7 +5,7 @@
 //  Created by Eliza Sapir on 6/3/13.
 //
 //
-
+#if !(TARGET_IPHONE_SIMULATOR)
 #import "WVSettings.h"
 
 @implementation WVSettings {
@@ -98,5 +98,9 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
     
     NSLog(@"playMovieFromUrlLater Exit");
 }
+ 
+ 
 
 @end
+
+#endif

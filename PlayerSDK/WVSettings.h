@@ -6,6 +6,8 @@
 //
 //
 
+#if !(TARGET_IPHONE_SIMULATOR)
+
 #import <Foundation/Foundation.h>
 #import "WViPhoneAPI.h"
 
@@ -16,3 +18,5 @@
 - (void)playMovieFromUrl: (NSString *)videoUrlString;
 
 @end
+
+#endif

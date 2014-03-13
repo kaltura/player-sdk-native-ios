@@ -23,7 +23,7 @@ typedef enum{
     currentTime,
     // Player Visibility
     visible,
-    #ifndef widevine
+  #if !(TARGET_IPHONE_SIMULATOR)
         // DRM WideVine Key
         wvServerKey,
     #endif
@@ -44,6 +44,7 @@ typedef enum{
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
+- (void)openFullScreen;
 
 @end
 

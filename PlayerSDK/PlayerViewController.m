@@ -11,7 +11,7 @@
 //
 
 #import "PlayerViewController.h"
-#ifndef widevine
+#if !(TARGET_IPHONE_SIMULATOR)
     #import "WVSettings.h"
     #import "WViPhoneAPI.h"
 #endif
@@ -24,8 +24,9 @@
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation, deviceOrientation;
     NSString *playerSource;
+    NSDictionary *appConfigDict;
     
-    #ifndef widevine
+  #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
         BOOL isWideVine, isWideVineReady;
         WVSettings* wvSettings;
@@ -38,10 +39,12 @@
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
     
-    #ifndef widevine
+  #if !(TARGET_IPHONE_SIMULATOR)
         [self initWideVineParams];
     #endif
     [self initPlayerParams];
+    
+    appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
     
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
@@ -133,7 +136,7 @@
     
     isPlayCalled = YES;
     
-    #ifndef widevine
+  #if !(TARGET_IPHONE_SIMULATOR)
         if ( isWideVine  && !isWideVineReady ) {
             return;
         }
@@ -164,7 +167,7 @@
     isPlaying = NO;
     isPlayCalled = NO;
     
-    #ifndef widevine
+  #if !(TARGET_IPHONE_SIMULATOR)
         // Stop WideVine
         if ( isWideVine ) {
             [wvSettings stopWV];
@@ -221,7 +224,7 @@
     
     deviceOrientation = [[UIDevice currentDevice] orientation];
     
-    if ([self isIpad]) {
+    if ( [self isIpad] || [ [appConfigDict objectForKey: @"isLoginScreenActive"] boolValue ] ) {
         if (deviceOrientation == UIDeviceOrientationUnknown) {
             if ( [UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
                 [self setOrientationTransform: 90];
@@ -303,7 +306,7 @@
    
     CGRect mainFrame;
     
-    if ([self isIpad]) {
+    if ( [self isIpad] || [ [appConfigDict objectForKey: @"isLoginScreenActive"] boolValue ] ) {
         if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationUnknown ) {
             if (UIDeviceOrientationPortrait == [UIApplication sharedApplication].statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == [UIApplication sharedApplication].statusBarOrientation) {
                 mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
@@ -542,7 +545,7 @@
             attributeVal = [args objectAtIndex:1];
             [self visible: attributeVal];
             break;
-        #ifndef widevine
+      #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
             wvSettings = [[WVSettings alloc] init];
             isWideVine = YES;
@@ -657,7 +660,7 @@
 }
 
 #pragma mark - WideVine Methods
-#ifndef widevine
+#if !(TARGET_IPHONE_SIMULATOR)
 
 -(void)initWideVineParams {
     NSLog(@"initWideVineParams Enter");
@@ -721,7 +724,7 @@
     NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithInteger:src], @"src",
                                 [NSNumber numberWithInteger:currentTime], @"currentTime",
-                                #ifndef widevine
+                              #if !(TARGET_IPHONE_SIMULATOR)
                                     [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
                                 #endif
                                 nil
