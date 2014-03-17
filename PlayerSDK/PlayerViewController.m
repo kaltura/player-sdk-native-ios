@@ -27,6 +27,7 @@
     NSMutableDictionary *appConfigDict;
     BOOL openFullScreen;
     UIButton *btn;
+    BOOL isCloseFullScreenByTap;
     
   #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
@@ -270,6 +271,8 @@
 - (void)checkOrientationStatus{
     NSLog( @"checkOrientationStatus Enter" );
     
+    isCloseFullScreenByTap = NO;
+    
     // Handle rotation issues when player is playing
     if ( isPlaying ) {
         [self closeFullScreen];
@@ -292,6 +295,8 @@
 
 - (void)toggleFullscreen{
     NSLog( @"toggleFullscreen Enter" );
+    
+    isCloseFullScreenByTap = YES;
     
     if ( !isFullScreen ) {
         [self openFullScreen: openFullScreen];
@@ -348,7 +353,7 @@
 - (void)closeFullScreen{
     NSLog( @"closeFullScreen Enter" );
     
-    if ( openFullScreen && !isPlaying ) {
+    if ( openFullScreen && isCloseFullScreenByTap ) {
         [self stop];
     }
     
@@ -658,6 +663,7 @@
 - (void)doneFSBtnPressed {
     NSLog(@"doneFSBtnPressed Enter");
     
+    isCloseFullScreenByTap = YES;
     [self closeFullScreen];
     
     NSLog(@"doneFSBtnPressed Exit");
