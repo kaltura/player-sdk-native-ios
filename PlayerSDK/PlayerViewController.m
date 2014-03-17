@@ -307,17 +307,6 @@
     NSLog( @"openFullScreen Enter" );
     
     isFullScreen = YES;
-    
-    if ( openFullscreen ) {
-        btn = [ [UIButton alloc] initWithFrame: CGRectMake(20, 20, 65, 20) ];
-        [btn setTitle:@"Done" forState:UIControlStateNormal];
-        [[btn layer] setBorderWidth:1.0f];
-        [[btn layer] setBorderColor:[UIColor whiteColor].CGColor];
-        [[btn layer] setCornerRadius:8.0f];
-        [btn addTarget:self action:@selector(doneBtnPressed) forControlEvents:UIControlEventTouchUpInside];
-        [self.view addSubview:btn];
-        [self.view bringSubviewToFront:btn];
-    }
    
     CGRect mainFrame;
     openFullScreen = openFullscreen;
@@ -349,19 +338,11 @@
     [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.webView setFrame: self.player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
+    
     [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
     [self updatePlayerLayout];
     
     NSLog( @"openFullScreen Exit" );
-}
-
-- (void)doneBtnPressed{
-    if (btn) {
-        [self stop];
-        [btn removeFromSuperview];
-    }
-    
-    [self closeFullScreen];
 }
 
 - (void)closeFullScreen{
@@ -672,6 +653,14 @@
     self.webView = nil;
     
     NSLog(@"stopAndRemovePlayer Exit");
+}
+
+- (void)doneFSBtnPressed {
+    NSLog(@"doneFSBtnPressed Enter");
+    
+    [self closeFullScreen];
+    
+    NSLog(@"doneFSBtnPressed Exit");
 }
 
 - (BOOL)isIpad{
