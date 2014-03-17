@@ -44,7 +44,9 @@ typedef enum{
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
-- (void)openFullScreen;
+- (void)openFullScreen: (BOOL)openFullScreen;
+- (void)checkDeviceStatus;
+- (void)doneBtnPressed;
 
 @end
 

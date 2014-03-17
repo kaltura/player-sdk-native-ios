@@ -24,7 +24,9 @@
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation, deviceOrientation;
     NSString *playerSource;
-    NSDictionary *appConfigDict;
+    NSMutableDictionary *appConfigDict;
+    BOOL openFullScreen;
+    UIButton *btn;
     
   #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
@@ -224,7 +226,7 @@
     
     deviceOrientation = [[UIDevice currentDevice] orientation];
     
-    if ( [self isIpad] || [ [appConfigDict objectForKey: @"isLoginScreenActive"] boolValue ] ) {
+    if ( [self isIpad] || openFullScreen ) {
         if (deviceOrientation == UIDeviceOrientationUnknown) {
             if ( [UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
                 [self setOrientationTransform: 90];
@@ -271,13 +273,15 @@
     // Handle rotation issues when player is playing
     if ( isPlaying ) {
         [self closeFullScreen];
-        [self openFullScreen];
+        [self openFullScreen: openFullScreen];
         if ( isFullScreen ) {
             [self checkDeviceStatus];
         }
         
-        if (![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
-            [self closeFullScreen];
+        if ( ![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
+            if ( !openFullScreen ) {
+                [self closeFullScreen];
+            }
         }
     }else {
         [self closeFullScreen];
@@ -290,7 +294,7 @@
     NSLog( @"toggleFullscreen Enter" );
     
     if ( !isFullScreen ) {
-        [self openFullScreen];
+        [self openFullScreen: openFullScreen];
         [self checkDeviceStatus];
     } else{
         [self closeFullScreen];
@@ -299,14 +303,26 @@
     NSLog( @"toggleFullscreen Exit" );
 }
 
-- (void)openFullScreen{
+- (void)openFullScreen: (BOOL)openFullscreen{
     NSLog( @"openFullScreen Enter" );
     
     isFullScreen = YES;
+    
+    if ( openFullscreen ) {
+        btn = [ [UIButton alloc] initWithFrame: CGRectMake(20, 20, 65, 20) ];
+        [btn setTitle:@"Done" forState:UIControlStateNormal];
+        [[btn layer] setBorderWidth:1.0f];
+        [[btn layer] setBorderColor:[UIColor whiteColor].CGColor];
+        [[btn layer] setCornerRadius:8.0f];
+        [btn addTarget:self action:@selector(doneBtnPressed) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:btn];
+        [self.view bringSubviewToFront:btn];
+    }
    
     CGRect mainFrame;
+    openFullScreen = openFullscreen;
     
-    if ( [self isIpad] || [ [appConfigDict objectForKey: @"isLoginScreenActive"] boolValue ] ) {
+    if ( [self isIpad] || openFullscreen ) {
         if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationUnknown ) {
             if (UIDeviceOrientationPortrait == [UIApplication sharedApplication].statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == [UIApplication sharedApplication].statusBarOrientation) {
                 mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
@@ -339,8 +355,21 @@
     NSLog( @"openFullScreen Exit" );
 }
 
+- (void)doneBtnPressed{
+    if (btn) {
+        [self stop];
+        [btn removeFromSuperview];
+    }
+    
+    [self closeFullScreen];
+}
+
 - (void)closeFullScreen{
     NSLog( @"closeFullScreen Enter" );
+    
+    if ( openFullScreen && !isPlaying ) {
+        [self stop];
+    }
     
     CGRect originalFrame = CGRectMake( 0, 0, originalViewControllerFrame.size.width, originalViewControllerFrame.size.height );
     isFullScreen = NO;
