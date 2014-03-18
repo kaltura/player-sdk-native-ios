@@ -88,6 +88,15 @@
         [self.view addSubview: player.view];
         
         self.player.controlStyle = MPMovieControlStyleNone;
+        
+        // Add airplay
+        self.view.backgroundColor = [UIColor clearColor];
+        MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(50, 50, 200, 100)];
+        [volumeView setShowsVolumeSlider:NO];
+
+        [self.view addSubview:volumeView];
+        [self.view bringSubviewToFront:volumeView];
+        
     }
     
     [super viewWillAppear:NO];
