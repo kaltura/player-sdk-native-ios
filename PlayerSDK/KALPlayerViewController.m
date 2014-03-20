@@ -63,12 +63,14 @@
     
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
-    if ( !isFullScreen && !isResumePlayer ) {
+    if ( !isFullScreen && !isResumePlayer && !self.webView ) {
         self.webView = [[KALPlayerControlsWebView alloc] initWithFrame: playerViewFrame];
         [self.webView setPlayerControlsWebViewDelegate: self];
+        self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         
         player = [[MPMoviePlayerController alloc] init];
         player.view.frame = playerViewFrame;
+        player.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         
         // WebView initialize for supporting NativeComponent(html5 player view)
         [[self.webView scrollView] setScrollEnabled: NO];
@@ -457,13 +459,13 @@
 }
 
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue{
-    NSLog(@"triggerEventsJavaScript Enter");
+    //NSLog(@"triggerEventsJavaScript Enter");
     
     NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
-    NSLog(@"%@", jsStringLog);
+    //NSLog(@"%@", jsStringLog);
     NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName,eventValue];
     [self.webView stringByEvaluatingJavaScriptFromString:jsString];
-    NSLog(@"triggerEventsJavaScript Exit");
+    //NSLog(@"triggerEventsJavaScript Exit");
 }
 
 - (void)setAttribute: (NSArray*)args{
