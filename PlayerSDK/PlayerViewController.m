@@ -12,8 +12,8 @@
 
 #import "PlayerViewController.h"
 #if !(TARGET_IPHONE_SIMULATOR)
-    #import "WVSettings.h"
-    #import "WViPhoneAPI.h"
+#import "WVSettings.h"
+#import "WViPhoneAPI.h"
 #endif
 
 @implementation PlayerViewController {
@@ -28,12 +28,15 @@
     BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
+    // AirPlay Params
+    MPVolumeView *volumeView;
+    NSArray *prevAirPlayBtnPositionArr;
     
-  #if !(TARGET_IPHONE_SIMULATOR)
-        // WideVine Params
-        BOOL isWideVine, isWideVineReady;
-        WVSettings* wvSettings;
-    #endif
+#if !(TARGET_IPHONE_SIMULATOR)
+    // WideVine Params
+    BOOL isWideVine, isWideVineReady;
+    WVSettings* wvSettings;
+#endif
 }
 
 @synthesize webView, player;
@@ -42,9 +45,9 @@
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
     
-  #if !(TARGET_IPHONE_SIMULATOR)
-        [self initWideVineParams];
-    #endif
+#if !(TARGET_IPHONE_SIMULATOR)
+    [self initWideVineParams];
+#endif
     [self initPlayerParams];
     
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
@@ -88,15 +91,6 @@
         [self.view addSubview: player.view];
         
         self.player.controlStyle = MPMovieControlStyleNone;
-        
-        // Add airplay
-        self.view.backgroundColor = [UIColor clearColor];
-        MPVolumeView *volumeView = [[MPVolumeView alloc] initWithFrame:CGRectMake(50, 50, 200, 100)];
-        [volumeView setShowsVolumeSlider:NO];
-
-        [self.view addSubview:volumeView];
-        [self.view bringSubviewToFront:volumeView];
-        
     }
     
     [super viewWillAppear:NO];
@@ -148,11 +142,11 @@
     
     isPlayCalled = YES;
     
-  #if !(TARGET_IPHONE_SIMULATOR)
-        if ( isWideVine  && !isWideVineReady ) {
-            return;
-        }
-    #endif
+#if !(TARGET_IPHONE_SIMULATOR)
+    if ( isWideVine  && !isWideVineReady ) {
+        return;
+    }
+#endif
     
     if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
         [self.player prepareToPlay];
@@ -179,14 +173,14 @@
     isPlaying = NO;
     isPlayCalled = NO;
     
-  #if !(TARGET_IPHONE_SIMULATOR)
-        // Stop WideVine
-        if ( isWideVine ) {
-            [wvSettings stopWV];
-            isWideVine = NO;
-            isWideVineReady = NO;
-        }
-    #endif
+#if !(TARGET_IPHONE_SIMULATOR)
+    // Stop WideVine
+    if ( isWideVine ) {
+        [wvSettings stopWV];
+        isWideVine = NO;
+        isWideVineReady = NO;
+    }
+#endif
     
     NSLog(@"Stop Player Exit");
 }
@@ -321,7 +315,7 @@
     NSLog( @"openFullScreen Enter" );
     
     isFullScreen = YES;
-   
+    
     CGRect mainFrame;
     openFullScreen = openFullscreen;
     
@@ -375,7 +369,7 @@
     self.webView.frame = self.player.view.frame;
     
     if ( ![self isIOS7] ) {
-       [UIApplication sharedApplication].statusBarHidden = NO;
+        [UIApplication sharedApplication].statusBarHidden = NO;
     }
     
     [self triggerEventsJavaScript:@"exitfullscreen" WithValue:nil];
@@ -569,7 +563,7 @@
             attributeVal = [args objectAtIndex:1];
             [self visible: attributeVal];
             break;
-      #if !(TARGET_IPHONE_SIMULATOR)
+#if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
             wvSettings = [[WVSettings alloc] init];
             isWideVine = YES;
@@ -580,8 +574,8 @@
             attributeVal = [args objectAtIndex:1];
             [self initWV: playerSource andKey: attributeVal];
             break;
-        #endif
-          
+#endif
+            
         default:
             break;
     }
@@ -666,7 +660,20 @@
     player = nil;
     self.webView = nil;
     
+    [self removeAirPlayIcon];
+    
     NSLog(@"stopAndRemovePlayer Exit");
+}
+
+- (void)removeAirPlayIcon {
+    NSLog(@"removeAirPlayIcon Enter");
+    
+    if ( volumeView ) {
+        [volumeView removeFromSuperview];
+        volumeView = nil;
+    }
+    
+    NSLog(@"removeAirPlayIcon Exit");
 }
 
 - (void)doneFSBtnPressed {
@@ -676,6 +683,56 @@
     [self closeFullScreen];
     
     NSLog(@"doneFSBtnPressed Exit");
+}
+
+#pragma mark - airplay plugin
+- (void)addNativeAirPlayButton {
+    NSLog(@"addNativeAirPlayButton Enter");
+    
+    // Add airplay
+    self.view.backgroundColor = [UIColor clearColor];
+    if ( !volumeView ) {
+        volumeView = [ [MPVolumeView alloc] init ];
+        [volumeView setShowsVolumeSlider: NO];
+    }
+    
+    NSLog(@"addNativeAirPlayButton Exit");
+}
+
+-(void)showNativeAirPlayButton: (NSArray*)airPlayBtnPositionArr {
+    NSLog(@"showNativeAirPlayButton Enter");
+    
+    if ( volumeView.hidden ) {
+        volumeView.hidden = NO;
+        
+        if ( prevAirPlayBtnPositionArr == nil || ![prevAirPlayBtnPositionArr isEqualToArray: airPlayBtnPositionArr] ) {
+            prevAirPlayBtnPositionArr = airPlayBtnPositionArr;
+        }else {
+            return;
+        }
+    }
+    
+    CGFloat x = [[airPlayBtnPositionArr objectAtIndex:0] floatValue];
+    CGFloat y = [[airPlayBtnPositionArr objectAtIndex:1] floatValue];
+    CGFloat w = [[airPlayBtnPositionArr objectAtIndex:2] floatValue];
+    CGFloat h = [[airPlayBtnPositionArr objectAtIndex:3] floatValue];
+    
+    volumeView.frame = CGRectMake( x, y, w, h );
+    
+    [self.view addSubview: volumeView];
+    [self.view bringSubviewToFront: volumeView];
+    
+    NSLog(@"showNativeAirPlayButton Exit");
+}
+
+-(void)hideNativeAirPlayButton {
+    NSLog(@"hideNativeAirPlayButton Enter");
+    
+    if ( !volumeView.hidden ) {
+        volumeView.hidden = YES;
+    }
+    
+    NSLog(@"hideNativeAirPlayButton Exit");
 }
 
 - (BOOL)isIpad{
@@ -757,9 +814,9 @@
     NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithInteger:src], @"src",
                                 [NSNumber numberWithInteger:currentTime], @"currentTime",
-                              #if !(TARGET_IPHONE_SIMULATOR)
-                                    [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
-                                #endif
+#if !(TARGET_IPHONE_SIMULATOR)
+                                [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
+#endif
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");
