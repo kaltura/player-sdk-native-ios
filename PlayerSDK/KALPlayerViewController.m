@@ -312,19 +312,39 @@
     NSLog(@"Stop Player Exit");
 }
 
-// "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args{
-    NSLog(@"handleHtml5LibCall Enter");
+    NSLog(@"handleHtml5LibCall Enter: %@", functionName);
     
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    if ( [args count] > 0 ) {
-        functionName = [NSString stringWithFormat:@"%@:", functionName];
+    if ([functionName isEqualToString:@"bindPlayerEvents"]) {
+        [self bindPlayerEvents];
+    } else if ([functionName isEqualToString:@"setAttribute"]) {
+        [self setAttribute:args];
+    } else if ([functionName isEqualToString:@"play"]) {
+        [self play];
+    } else if ([functionName isEqualToString:@"pause"]) {
+        [self pause];
+    } else if ([functionName isEqualToString:@"toggleFullscreen"]) {
+        [self toggleFullscreen];
+    } else if ([functionName isEqualToString:@"notifyJsReady"]) {
+        [self notifyJsReady];
+    } else if ([functionName isEqualToString:@"stop"]) {
+        [self stop];
+    } else {
+        NSLog(@"Unknown Html5LibCall: %@", functionName);
     }
-    [self performSelector:NSSelectorFromString(functionName) withObject:args];
-#pragma clang diagnostic pop
     
     NSLog(@"handleHtml5LibCall Exit");
+}
+
+- (void)notifyJsReady {
+    NSLog(@"notifyJsReady Enter");
+    
+    self.isJavascriptReady = YES;
+    if (self.shouldPlayWhenJavascriptReady) {
+        [self play];
+    }
+    
+     NSLog(@"notifyJsReady Exit");
 }
 
 - (void)bindPlayerEvents{
@@ -469,7 +489,7 @@
 }
 
 - (void)setAttribute: (NSArray*)args{
-    NSLog(@"setAttribute Enter");
+    NSLog(@"setAttribute Enter: %@", args[0]);
     
     NSString *attributeName = [args objectAtIndex:0];
     Attribute attributeValue = [attributeName attributeNameEnumFromString];

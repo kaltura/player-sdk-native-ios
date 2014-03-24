@@ -39,12 +39,18 @@ typedef enum{
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, retain) NativeComponentPlugin *delegate;
 
+@property (nonatomic, assign) BOOL shouldPlayWhenJavascriptReady;
+@property (nonatomic, assign) BOOL isJavascriptReady;
+
 - (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
 - (void)openFullScreen: (BOOL)openFullScreen;
 - (void)checkDeviceStatus;
+
+- (void)play;
+- (void)pause;
 
 @end
 
