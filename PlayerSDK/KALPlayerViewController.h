@@ -52,6 +52,9 @@ typedef enum{
 - (void)play;
 - (void)pause;
 
+- (void)play;
+- (void)pause;
+
 @end
 
 @interface NSString (EnumParser)
