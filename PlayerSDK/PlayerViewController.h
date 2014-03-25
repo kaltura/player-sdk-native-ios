@@ -17,12 +17,20 @@
 #import "PlayerSDK/PlayerControlsWebView.h"
 
 typedef enum{
+    // Player Content Source Url
     src = 0,
+    // Player Current time (Progress Bar)
     currentTime,
+    // Player Visibility
     visible,
+  #if !(TARGET_IPHONE_SIMULATOR)
+        // DRM WideVine Key
+        wvServerKey,
+    #endif
 } Attribute;
 
 @class NativeComponentPlugin;
+
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
@@ -36,9 +44,13 @@ typedef enum{
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
+- (void)openFullScreen: (BOOL)openFullScreen;
+- (void)checkDeviceStatus;
 
 @end
 
 @interface NSString (EnumParser)
+
 - (Attribute)attributeNameEnumFromString;
+
 @end
