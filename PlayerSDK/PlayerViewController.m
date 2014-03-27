@@ -29,6 +29,10 @@
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
     
+    // Chromecast
+    ChromecastDeviceController* chromecastDeviceController;
+    int _lastKnownPlaybackTime;
+    
   #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
         BOOL isWideVine, isWideVineReady;
@@ -42,12 +46,32 @@
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
     
+    if (self) {
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(deviceConnected:)
+         name:ChromcastDeviceControllerDeviceConnectedNotification
+         object:nil];
+    }
+    
+    // Chromecast
+    // Initialize the chromecast device controller.
+    chromecastDeviceController = [[ChromecastDeviceController alloc] init];
+    
+    // We scan for devices on the phone here.
+    UIButton *b = [[UIButton alloc] init];
+    b.frame = CGRectMake(20, 20, 200, 200);
+    b.backgroundColor = [UIColor yellowColor];
+    [self.view addSubview: b];
+    [self.view bringSubviewToFront: b];
+    
   #if !(TARGET_IPHONE_SIMULATOR)
         [self initWideVineParams];
     #endif
     [self initPlayerParams];
     
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
+    [chromecastDeviceController performScan: YES];
     
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
@@ -62,6 +86,22 @@
     [super viewDidLoad];
     
     NSLog(@"View Did Load Exit");
+}
+
+#pragma mark State management
+- (void)deviceConnected:(NSNotification*)notification {
+    if ([[notification name] isEqualToString:ChromcastDeviceControllerDeviceConnectedNotification]) {
+        NSLog(@"Device has been Connected!");
+        
+        //Push Chromecast Segue
+        if ( chromecastDeviceController.isConnected ) {
+            _lastKnownPlaybackTime = [self.player currentPlaybackTime];
+            [self.player stop];
+//            [self performSegueWithIdentifier:@"castMedia" sender:self];
+        }
+    }
+    
+    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -87,6 +127,10 @@
         [self.player.view addSubview: self.webView];
         [self.view addSubview: player.view];
         
+        // Chromecast
+        [self.view addSubview: chromecastDeviceController.chromecastButton];
+        [self.view bringSubviewToFront: chromecastDeviceController.chromecastButton];
+        
         self.player.controlStyle = MPMovieControlStyleNone;
     }
     
@@ -99,6 +143,11 @@
     NSLog( @"viewDidDisappear Enter" );
     
     isResumePlayer = YES;
+    
+    if ( [ [UIDevice currentDevice] userInterfaceIdiom ] == UIUserInterfaceIdiomPhone ) {
+        [chromecastDeviceController performScan: NO];
+    }
+    
     [super viewDidDisappear:animated];
     
     NSLog( @"viewDidDisappear Exit" );

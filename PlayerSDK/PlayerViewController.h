@@ -16,6 +16,9 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "PlayerSDK/PlayerControlsWebView.h"
 
+//Chromecast
+#import "/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/PlayerSDK/ChromecastDeviceController.h"
+
 typedef enum{
     // Player Content Source Url
     src = 0,
