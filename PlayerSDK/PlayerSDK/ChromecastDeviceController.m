@@ -22,7 +22,7 @@ NSString *const ChromcastDeviceControllerDeviceDisconnectedNotification =
 NSString *const ChromcastDeviceControllerMediaNowPlayingNotification =
     @"ChromcastDeviceControllerMediaNowPlayingNotification";
 NSString *const ChromcastDeviceControllerSessionJoinNotification =
-    @"ChromcastDeviceControllerSessionJoinNotification";
+    @"ChromcastDeviceControl lerSessionJoinNotification";
 NSString *const ChromcastDeviceControllerStatusChangedNotification =
     @"ChromcastDeviceControllerStatusChangedNotification";
 
@@ -140,10 +140,18 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
 
 - (void)updateButtonStates {
   if (self.deviceScanner.devices.count == 0) {
+      [ [NSNotificationCenter defaultCenter] postNotificationName: @"hideChromecastButtonNotification"
+                                                           object: self
+                                                         userInfo: nil ];
+      
     //Enable the button
     [_chromecastButton setImage:_btnImage forState:UIControlStateNormal];
     _chromecastButton.hidden = YES;
   } else {
+      [ [NSNotificationCenter defaultCenter] postNotificationName: @"showChromecastButtonNotification"
+                                                           object: self
+                                                         userInfo: nil ];
+      
     if (self.deviceManager && self.deviceManager.isConnected) {
       //Enable the button
       [_chromecastButton setImage:_btnImageSelected forState:UIControlStateNormal];
@@ -292,11 +300,18 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
 
 #pragma mark - GCKDeviceScannerListener
 - (void)deviceDidComeOnline:(GCKDevice *)device {
-  NSLog(@"device found!! %@", device.friendlyName);
-  [self updateButtonStates];
+    NSLog(@"device found -> %@", device.friendlyName);
+   
+    [self updateButtonStates];
 }
 
 - (void)deviceDidGoOffline:(GCKDevice *)device {
+    NSLog(@"device went offline -> %@", device.friendlyName);
+
+    [ [NSNotificationCenter defaultCenter] postNotificationName: @"chromecastDeviceDidGoOfflineNotification"
+                                                         object: self
+                                                       userInfo: nil ];
+    
     [self updateButtonStates];
 }
 
@@ -334,7 +349,7 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
       [self connectToDevice];
     }
   } else {
-    if (buttonIndex == 1) { //Disconnect button
+    if ( [[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"Disconnect"] ) { //Disconnect button
       NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
       // New way of doing things: We're not going to stop the applicaton. We're just going
       // to leave it.
@@ -346,7 +361,7 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
       // Hack I need to put in for now, because deviceDisconnected doesn't appear to be getting called
       [self deviceDisconnected];
       [self updateButtonStates];
-    } else if (buttonIndex == 0) { // Join the existing session.
+    } else if ( buttonIndex == [actionSheet cancelButtonIndex] ) { // Join the existing session.
       [[NSNotificationCenter defaultCenter]
        postNotificationName:ChromcastDeviceControllerSessionJoinNotification
        object:self];

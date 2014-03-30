@@ -11,6 +11,7 @@
 		BF46E12818E456000024815F /* icon-cast-connected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF46E12418E456000024815F /* icon-cast-connected@2x.png */; };
 		BF46E12918E456000024815F /* icon-cast-identified.png in Resources */ = {isa = PBXBuildFile; fileRef = BF46E12518E456000024815F /* icon-cast-identified.png */; };
 		BF46E12A18E456000024815F /* icon-cast-identified@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF46E12618E456000024815F /* icon-cast-identified@2x.png */; };
+		BF46E12F18E745CB0024815F /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF852D5118E44AB00010D2D5 /* ChromecastDeviceController.h */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF852D5318E44AB00010D2D5 /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF852D5218E44AB00010D2D5 /* ChromecastDeviceController.m */; };
 		BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
@@ -72,6 +73,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BF46E12F18E745CB0024815F /* ChromecastDeviceController.h in CopyFiles */,
 				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
 				BFFFA880182FC46B005B3B24 /* JSON.h in CopyFiles */,
 				BFFFA881182FC46B005B3B24 /* NSObject+SBJSON.h in CopyFiles */,

@@ -28,10 +28,12 @@
     BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
+    BOOL isJsCallbackReady;
     
     // Chromecast
     ChromecastDeviceController* chromecastDeviceController;
     int _lastKnownPlaybackTime;
+    NSString *showChromecastButton;
     
   #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
@@ -56,14 +58,9 @@
     
     // Chromecast
     // Initialize the chromecast device controller.
-    chromecastDeviceController = [[ChromecastDeviceController alloc] init];
-    
-    // We scan for devices on the phone here.
-    UIButton *b = [[UIButton alloc] init];
-    b.frame = CGRectMake(20, 20, 200, 200);
-    b.backgroundColor = [UIColor yellowColor];
-    [self.view addSubview: b];
-    [self.view bringSubviewToFront: b];
+    chromecastDeviceController = [ [ChromecastDeviceController alloc] init ];
+    [chromecastDeviceController performScan: YES];
+    showChromecastButton = @"false";
     
   #if !(TARGET_IPHONE_SIMULATOR)
         [self initWideVineParams];
@@ -71,7 +68,6 @@
     [self initPlayerParams];
     
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
-    [chromecastDeviceController performScan: YES];
     
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
@@ -79,6 +75,16 @@
                                                   name: @"playerPauseNotification"
                                                 object: nil ];
     
+    [ [NSNotificationCenter defaultCenter] addObserver: self
+                                              selector: @selector(showChromecastButton:)
+                                                  name: @"showChromecastButtonNotification"
+                                                object: nil ];
+    
+    [ [NSNotificationCenter defaultCenter] addObserver: self
+                                              selector: @selector(hideChromecastButton:)
+                                                  name: @"hideChromecastButtonNotification"
+                                                object: nil ];
+
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
     [self.view addGestureRecognizer:pinch];
@@ -97,11 +103,10 @@
         if ( chromecastDeviceController.isConnected ) {
             _lastKnownPlaybackTime = [self.player currentPlaybackTime];
             [self.player stop];
-//            [self performSegueWithIdentifier:@"castMedia" sender:self];
         }
     }
     
-    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay:YES];
+    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"video/mp4" startTime: player.currentPlaybackTime autoPlay:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -170,6 +175,48 @@
     return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
 }
 
+#pragma mark - Chromecast Methods
+
+-(void)playChromecast {
+    NSLog(@"playChromecast Enter");
+    
+    [chromecastDeviceController pauseCastMedia: NO];
+    
+    NSLog(@"playChromecast Exit");
+}
+
+-(void)pauseChromecast {
+    NSLog(@"pauseChromecast Enter");
+    
+    [chromecastDeviceController pauseCastMedia: YES];
+    
+    NSLog(@"pauseChromecast Exit");
+}
+
+-(void)stopChromecast {
+    NSLog(@"stopChromecast Enter");
+    
+    [chromecastDeviceController stopCastMedia];
+    
+    NSLog(@"stopChromecast Exit");
+}
+
+-(void)volumeUpChromecast {
+    NSLog(@"volumeUpChromecast Enter");
+    
+    [chromecastDeviceController changeVolumeIncrease: YES];
+    
+    NSLog(@"volumeUpChromecast Exit");
+}
+
+-(void)volumeDownChromecast {
+    NSLog(@"volumeUpChromecast Enter");
+    
+    [chromecastDeviceController changeVolumeIncrease: NO];
+    
+    NSLog(@"volumeUpChromecast Exit");
+}
+
 #pragma mark - Player Methods
 
 -(void)initPlayerParams {
@@ -179,8 +226,23 @@
     isPlaying = NO;
     isResumePlayer = NO;
     isPlayCalled = NO;
+    isJsCallbackReady = NO;
     
     NSLog(@"initPlayerParams Exit");
+}
+
+- (void)notifyJsReady {
+    NSLog(@"notifyJsReady Enter");
+    
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 2);
+    dispatch_after(delay, dispatch_get_main_queue(), ^(void){
+        // do work in the UI thread here
+           [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
+    });
+    
+    isJsCallbackReady = YES;
+    
+    NSLog(@"notifyJsReady Exit");
 }
 
 - (void)play {
@@ -454,10 +516,12 @@
                          forKey: @"metadataUpdate:"];
     [eventsDictionary setObject: MPMovieDurationAvailableNotification
                          forKey: @"onMovieDurationAvailable:"];
-    
     for (id functionName in eventsDictionary){
         id event = [eventsDictionary objectForKey:functionName];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:NSSelectorFromString(functionName) name:event object:player];
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: NSSelectorFromString( functionName )
+                                                     name: event
+                                                   object: player ];
     }
     
     //  200 milliseconds is .2 seconds
@@ -468,7 +532,23 @@
     NSLog(@"Binding Events Exit");
 }
 
-- (void)triggerLoadPlabackEvents: (NSNotification *)note{
+- (void)showChromecastButton: (NSNotification *)note {
+    showChromecastButton = @"true";
+    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
+}
+
+- (void)hideChromecastButton: (NSNotification *)note {
+    showChromecastButton = @"false";
+    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
+}
+
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString *)propertyName value: (NSString*)value{
+    NSString *showChromecastBtnStr = [NSString stringWithFormat: @"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
+    NSLog( @"%@", showChromecastBtnStr );
+    [self.webView stringByEvaluatingJavaScriptFromString: showChromecastBtnStr];
+}
+
+- (void)triggerLoadPlabackEvents: (NSNotification *)note {
     NSLog(@"triggerLoadPlabackEvents Enter");
     
     NSString *loadStateName = [[NSString alloc]init];
@@ -499,7 +579,7 @@
     NSLog(@"triggerLoadPlabackEvents Exit");
 }
 
-- (void)triggerMoviePlabackEvents: (NSNotification *)note{
+- (void)triggerMoviePlabackEvents: (NSNotification *)note {
     NSLog(@"triggerMoviePlabackEvents Enter");
     
     NSString *playBackName = [[NSString alloc]init];
@@ -510,7 +590,7 @@
         playBackName = @"seeked";
         NSLog(@"MPMoviePlaybackStateStopSeeking");
         //called because there is another event that will be fired
-        [self triggerEventsJavaScript:playBackName WithValue:nil];
+        [self triggerEventsJavaScript:playBackName WithValue: nil];
     }
     
     switch ( player.playbackState ) {
@@ -581,7 +661,7 @@
     
     NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
     NSLog(@"%@", jsStringLog);
-    NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName,eventValue];
+    NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
     [self writeJavascript: jsString];
     NSLog(@"triggerEventsJavaScript Exit");
 }
