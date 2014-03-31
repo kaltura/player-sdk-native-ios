@@ -36,7 +36,7 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification;
                                                 GCKMediaControlChannelDelegate,
                                                 UIActionSheetDelegate>
 @property (nonatomic, strong) GCKDeviceScanner* deviceScanner;
-@property (nonatomic, strong) UIButton* chromecastButton;
+//@property (nonatomic, strong) UIButton* chromecastButton;
 @property (nonatomic, strong) GCKDeviceManager* deviceManager;
 @property (readonly, getter = getDeviceName) NSString* deviceName;
 @property (nonatomic, readonly) NSTimeInterval streamDuration;
@@ -60,6 +60,7 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification;
 - (void)setPlaybackPercent:(float)newPercent;
 - (void)stopCastMedia;
 - (void)changeVolumeIncrease:(BOOL)goingUp;
+- (void)chooseDevice:(id)sender;
 @end
 
 

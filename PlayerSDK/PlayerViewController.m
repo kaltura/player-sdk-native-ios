@@ -106,7 +106,8 @@
         }
     }
     
-    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"video/mp4" startTime: player.currentPlaybackTime autoPlay:YES];
+    // TODO: change to playerSource
+    [chromecastDeviceController loadMedia: [NSURL URLWithString: @"http://www.w3schools.com/html/mov_bbb.mp4"] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay:YES];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -131,11 +132,6 @@
         // Add NativeComponent (html5 player view) webView to player view
         [self.player.view addSubview: self.webView];
         [self.view addSubview: player.view];
-        
-        // Chromecast
-        [self.view addSubview: chromecastDeviceController.chromecastButton];
-        [self.view bringSubviewToFront: chromecastDeviceController.chromecastButton];
-        
         self.player.controlStyle = MPMovieControlStyleNone;
     }
     
@@ -787,6 +783,13 @@
     self.webView = nil;
     
     NSLog(@"stopAndRemovePlayer Exit");
+}
+
+-(void)showChromecastDeviceList{
+    NSLog(@"");
+    if ( chromecastDeviceController ) {
+        [chromecastDeviceController chooseDevice: self];
+    }
 }
 
 - (void)doneFSBtnPressed {

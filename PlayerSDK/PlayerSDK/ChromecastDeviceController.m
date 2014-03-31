@@ -52,14 +52,14 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
     _btnImage = [UIImage imageNamed:@"icon-cast-connected.png"];
     _btnImageSelected = [UIImage imageNamed:@"icon-cast-connected.png"];
 
-    _chromecastButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [_chromecastButton addTarget:self
-                          action:@selector(chooseDevice:)
-                forControlEvents:UIControlEventTouchDown];
-    _chromecastButton.frame = CGRectMake(0, 0, 40, 40);
-      _chromecastButton.backgroundColor = [UIColor redColor];
-    [_chromecastButton setImage:nil forState:UIControlStateNormal];
-    _chromecastButton.hidden = YES;
+//    _chromecastButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+//    [_chromecastButton addTarget:self
+//                          action:@selector(chooseDevice:)
+//                forControlEvents:UIControlEventTouchDown];
+//    _chromecastButton.frame = CGRectMake(0, 0, 40, 40);
+//      _chromecastButton.backgroundColor = [UIColor redColor];
+//    [_chromecastButton setImage:nil forState:UIControlStateNormal];
+//    _chromecastButton.hidden = YES;
 
     _queue = dispatch_queue_create("com.google.sample.Chromecast", NULL);
 
@@ -112,7 +112,7 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
     [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
     sheet.cancelButtonIndex = sheet.numberOfButtons - 1;
 
-    [sheet showInView:_chromecastButton];
+    [ sheet showInView: [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject] ];
   } else {
     // Gather stats from device.
     [self updateStatsFromDevice];
@@ -134,7 +134,7 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
     sheet.destructiveButtonIndex = (mediaTitle != nil ? 1 : 0);
     sheet.cancelButtonIndex = (mediaTitle != nil ? 2 : 1);
     
-    [sheet showInView:_chromecastButton];
+    [ sheet showInView: [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject] ];
   }
 }
 
@@ -145,8 +145,8 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
                                                          userInfo: nil ];
       
     //Enable the button
-    [_chromecastButton setImage:_btnImage forState:UIControlStateNormal];
-    _chromecastButton.hidden = YES;
+//    [_chromecastButton setImage:_btnImage forState:UIControlStateNormal];
+//    _chromecastButton.hidden = YES;
   } else {
       [ [NSNotificationCenter defaultCenter] postNotificationName: @"showChromecastButtonNotification"
                                                            object: self
@@ -154,15 +154,15 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
       
     if (self.deviceManager && self.deviceManager.isConnected) {
       //Enable the button
-      [_chromecastButton setImage:_btnImageSelected forState:UIControlStateNormal];
-      [_chromecastButton setTintColor:nil];
-      _chromecastButton.hidden = NO;
+//      [_chromecastButton setImage:_btnImageSelected forState:UIControlStateNormal];
+//      [_chromecastButton setTintColor:nil];
+//      _chromecastButton.hidden = NO;
 
     } else {
       //Enable the button
-      [_chromecastButton setImage:_btnImage forState:UIControlStateNormal];
-      [_chromecastButton setTintColor:[UIColor grayColor]];
-      _chromecastButton.hidden = NO;
+//      [_chromecastButton setImage:_btnImage forState:UIControlStateNormal];
+//      [_chromecastButton setTintColor:[UIColor grayColor]];
+//      _chromecastButton.hidden = NO;
     }
   }
 
