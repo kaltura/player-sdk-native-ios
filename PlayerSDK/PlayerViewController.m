@@ -29,6 +29,7 @@
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
     BOOL isJsCallbackReady;
+    float prevVolume;
     
     // Chromecast
     ChromecastDeviceController* chromecastDeviceController;
@@ -107,7 +108,7 @@
     }
     
     // TODO: change to playerSource
-    [chromecastDeviceController loadMedia: [NSURL URLWithString: @"http://www.w3schools.com/html/mov_bbb.mp4"] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay:YES];
+    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay: NO];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -133,6 +134,13 @@
         [self.player.view addSubview: self.webView];
         [self.view addSubview: player.view];
         self.player.controlStyle = MPMovieControlStyleNone;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(volumeChanged:)
+                                                     name:@"AVSystemController_SystemVolumeDidChangeNotification"
+                                                   object:nil];
+        prevVolume = 0;
+        
     }
     
     [super viewWillAppear:NO];
@@ -257,6 +265,10 @@
         [self.player play];
     }
     
+    if ( chromecastDeviceController ) {
+        [self playChromecast];
+    }
+    
     NSLog( @"Play Player Exit" );
 }
 
@@ -266,6 +278,10 @@
     isPlayCalled = NO;
     
     [self.player pause];
+    
+    if ( chromecastDeviceController ) {
+        [self pauseChromecast];
+    }
     
     NSLog(@"Pause Player Exit");
 }
@@ -285,6 +301,10 @@
             isWideVineReady = NO;
         }
     #endif
+    
+    if ( chromecastDeviceController ) {
+        [self stopChromecast];
+    }
     
     NSLog(@"Stop Player Exit");
 }
@@ -705,6 +725,10 @@
     NSLog(@"setAttribute Exit");
 }
 
+- (void) onMovieDurationAvailable:(NSNotification *)notification {
+    
+}
+
 - (void)setPlayerSource: (NSURL *)src{
     NSLog(@"setPlayerSource Enter");
     [player setContentURL:src];
@@ -734,11 +758,20 @@
     NSLog(@"visible Exit");
 }
 
-- (void) onMovieDurationAvailable:(NSNotification *)notification {
+- (void) volumeChanged:(NSNotification *)notification {
     NSLog(@"onMovieDurationAvailable Enter");
     
-    [self triggerEventsJavaScript:@"loadedmetadata" WithValue:[NSString stringWithFormat:@"%f",[player duration]]];
-    [[NSNotificationCenter defaultCenter] removeObserver:player];
+    float volume = [[[notification userInfo]
+                     objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"]
+                    floatValue];
+    
+    if ( volume > prevVolume) {
+        [self volumeUpChromecast];
+    } else if ( volume < prevVolume) {
+        [self volumeDownChromecast];
+    }
+    
+    prevVolume = volume;
     
     NSLog(@"onMovieDurationAvailable Exit");
 }
@@ -748,7 +781,13 @@
     
     if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) {
         CGFloat currentTime = player.currentPlaybackTime;
-        [self triggerEventsJavaScript:@"timeupdate" WithValue:[NSString stringWithFormat:@"%f", currentTime]];
+//        [self triggerEventsJavaScript:@"timeupdate" WithValue:[NSString stringWithFormat:@"%f", currentTime]];
+        
+        if (chromecastDeviceController) {
+            [chromecastDeviceController updateStatsFromDevice];
+            float currTime = (chromecastDeviceController.streamPosition / chromecastDeviceController.streamDuration) * 1000;
+            [ self triggerEventsJavaScript:@"timeupdate" WithValue: [NSString stringWithFormat:@"%f", currTime] ];
+        }
     }
     
     //    NSLog(@"sendCurrentTime Exit");
@@ -759,7 +798,7 @@
     
     if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) {
         CGFloat progress = player.playableDuration / player.duration;
-        [self triggerEventsJavaScript:@"progress" WithValue:[NSString stringWithFormat:@"%f", progress]];
+//        [self triggerEventsJavaScript:@"progress" WithValue:[NSString stringWithFormat:@"%f", progress]];
         //        NSLog(@"%@", [NSString stringWithFormat:@"progress:%f", progress]);
     }
     
