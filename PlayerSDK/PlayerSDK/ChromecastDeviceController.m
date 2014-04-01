@@ -189,11 +189,11 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
 }
 
 - (void)setPlaybackPercent:(float)newPercent {
-  newPercent = MAX(MIN(1.0, newPercent), 0.0);
+//  newPercent = MAX(MIN(1.0, newPercent), 0.0);
 
-  NSTimeInterval newTime = newPercent * _streamDuration;
+//  NSTimeInterval newTime = newPercent * _streamDuration;
   if (_streamDuration > 0 && self.isConnected) {
-    [self.mediaControlChannel seekToTimeInterval:newTime];
+    [self.mediaControlChannel seekToTimeInterval: newPercent];
   }
 }
 

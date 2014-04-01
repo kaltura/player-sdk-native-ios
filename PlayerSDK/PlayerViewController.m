@@ -698,7 +698,8 @@
         case currentTime:
             attributeVal = [args objectAtIndex:1];
             if( [player isPreparedToPlay] ){
-                [ player setCurrentPlaybackTime: [attributeVal doubleValue] ];
+                [ player setCurrentPlaybackTime: [attributeVal floatValue] ];
+                [ chromecastDeviceController setPlaybackPercent: [attributeVal floatValue] ];
             }
             break;
         case visible:
