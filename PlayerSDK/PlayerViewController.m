@@ -28,7 +28,6 @@
     BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
-    BOOL isJsCallbackReady;
     float prevVolume;
     
     // Chromecast
@@ -214,7 +213,6 @@
     isPlaying = NO;
     isResumePlayer = NO;
     isPlayCalled = NO;
-    isJsCallbackReady = NO;
     
     NSLog(@"initPlayerParams Exit");
 }
@@ -222,13 +220,7 @@
 - (void)notifyJsReady {
     NSLog(@"notifyJsReady Enter");
     
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, NSEC_PER_SEC * 2);
-    dispatch_after(delay, dispatch_get_main_queue(), ^(void){
-        // do work in the UI thread here
-           [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
-    });
-    
-    isJsCallbackReady = YES;
+    // TODO: When doing KDP Api we should call this method
     
     NSLog(@"notifyJsReady Exit");
 }
@@ -803,11 +795,25 @@
     NSLog(@"stopAndRemovePlayer Exit");
 }
 
--(void)showChromecastDeviceList{
-    NSLog(@"");
+-(void)showChromecastDeviceList {
+    NSLog(@"showChromecastDeviceList Enter");
+    
     if ( chromecastDeviceController ) {
         [chromecastDeviceController chooseDevice: self];
     }
+    
+    NSLog(@"showChromecastDeviceList Exit");
+}
+
+-(void)notifyLayoutReady {
+    NSLog(@"notifyLayoutReady Enter");
+    
+    if ( chromecastDeviceController ) {
+      [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
+    }
+    
+    NSLog(@"notifyLayoutReady Exit");
+    
 }
 
 - (void)doneFSBtnPressed {
