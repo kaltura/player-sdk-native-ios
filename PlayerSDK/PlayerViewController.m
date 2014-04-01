@@ -205,22 +205,6 @@
     NSLog(@"stopChromecast Exit");
 }
 
--(void)volumeUpChromecast {
-    NSLog(@"volumeUpChromecast Enter");
-    
-    [chromecastDeviceController changeVolumeIncrease: YES];
-    
-    NSLog(@"volumeUpChromecast Exit");
-}
-
--(void)volumeDownChromecast {
-    NSLog(@"volumeUpChromecast Enter");
-    
-    [chromecastDeviceController changeVolumeIncrease: NO];
-    
-    NSLog(@"volumeUpChromecast Exit");
-}
-
 #pragma mark - Player Methods
 
 -(void)initPlayerParams {
@@ -766,13 +750,7 @@
                      objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"]
                     floatValue];
     
-    if ( volume > prevVolume) {
-        [self volumeUpChromecast];
-    } else if ( volume < prevVolume) {
-        [self volumeDownChromecast];
-    }
-    
-    prevVolume = volume;
+    [chromecastDeviceController changeVolume: volume];
     
     NSLog(@"onMovieDurationAvailable Exit");
 }

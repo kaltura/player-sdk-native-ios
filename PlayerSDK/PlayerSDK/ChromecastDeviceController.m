@@ -163,18 +163,13 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
 
 }
 
-- (void)changeVolumeIncrease:(BOOL)goingUp {
-  float idealVolume = self.deviceVolume + (goingUp ? 0.1 : -0.1);
-  idealVolume = MIN(1.0, MAX(0.0, idealVolume));
-
-  [self.deviceManager setVolume:idealVolume];
+- (void)changeVolume: (float)idealVolume {
+    [self.deviceManager setVolume:idealVolume];
 }
 
 - (void)setPlaybackPercent:(float)newPercent {
-//  newPercent = MAX(MIN(1.0, newPercent), 0.0);
 
-//  NSTimeInterval newTime = newPercent * _streamDuration;
-  if (_streamDuration > 0 && self.isConnected) {
+    if (_streamDuration > 0 && self.isConnected) {
     [self.mediaControlChannel seekToTimeInterval: newPercent];
   }
 }

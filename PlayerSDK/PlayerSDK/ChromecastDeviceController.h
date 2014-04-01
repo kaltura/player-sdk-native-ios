@@ -59,8 +59,9 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification;
 - (void)updateStatsFromDevice;
 - (void)setPlaybackPercent:(float)newPercent;
 - (void)stopCastMedia;
-- (void)changeVolumeIncrease:(BOOL)goingUp;
+- (void)changeVolume: (float)idealVolume;
 - (void)chooseDevice:(id)sender;
+
 @end
 
 
