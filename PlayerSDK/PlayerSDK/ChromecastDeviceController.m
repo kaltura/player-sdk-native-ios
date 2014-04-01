@@ -47,20 +47,6 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
   if (self) {
     //Initialize device scanner
     self.deviceScanner = [[GCKDeviceScanner alloc] init];
-
-    //Create chromecast button
-    _btnImage = [UIImage imageNamed:@"icon-cast-connected.png"];
-    _btnImageSelected = [UIImage imageNamed:@"icon-cast-connected.png"];
-
-//    _chromecastButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-//    [_chromecastButton addTarget:self
-//                          action:@selector(chooseDevice:)
-//                forControlEvents:UIControlEventTouchDown];
-//    _chromecastButton.frame = CGRectMake(0, 0, 40, 40);
-//      _chromecastButton.backgroundColor = [UIColor redColor];
-//    [_chromecastButton setImage:nil forState:UIControlStateNormal];
-//    _chromecastButton.hidden = YES;
-
     _queue = dispatch_queue_create("com.google.sample.Chromecast", NULL);
 
   }
@@ -143,10 +129,6 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
       [ [NSNotificationCenter defaultCenter] postNotificationName: @"hideChromecastButtonNotification"
                                                            object: self
                                                          userInfo: nil ];
-      
-    //Enable the button
-//    [_chromecastButton setImage:_btnImage forState:UIControlStateNormal];
-//    _chromecastButton.hidden = YES;
   } else {
       [ [NSNotificationCenter defaultCenter] postNotificationName: @"showChromecastButtonNotification"
                                                            object: self
@@ -353,10 +335,11 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
       NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
       // New way of doing things: We're not going to stop the applicaton. We're just going
       // to leave it.
+      [self.deviceManager stopApplication];
       [self.deviceManager leaveApplication];
+      [self.deviceManager disconnect];
       // If you want to force application to stop, uncomment below
       //[self.deviceManager stopApplicationWithSessionID:self.applicationMetadata.sessionID];
-      [self.deviceManager disconnect];
 
       // Hack I need to put in for now, because deviceDisconnected doesn't appear to be getting called
       [self deviceDisconnected];
