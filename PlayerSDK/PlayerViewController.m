@@ -84,6 +84,10 @@
                                               selector: @selector(hideChromecastButton:)
                                                   name: @"hideChromecastButtonNotification"
                                                 object: nil ];
+    [ [NSNotificationCenter defaultCenter] addObserver: self
+                                              selector: @selector(chromecastDeviceDisConnected:)
+                                                  name: ChromcastDeviceControllerDeviceDisconnectedNotification
+                                                object: nil ];
 
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
@@ -107,7 +111,8 @@
     }
     
     // TODO: change to playerSource
-    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay: NO];
+    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay: YES];
+    [self triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -532,6 +537,10 @@
 - (void)hideChromecastButton: (NSNotification *)note {
     showChromecastButton = @"false";
     [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
+}
+
+- (void)chromecastDeviceDisConnected: (NSNotification *)note {
+    [self triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
 }
 
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString *)propertyName value: (NSString*)value{
