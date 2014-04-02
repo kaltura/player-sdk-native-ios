@@ -88,7 +88,12 @@
                                               selector: @selector(chromecastDeviceDisConnected:)
                                                   name: ChromcastDeviceControllerDeviceDisconnectedNotification
                                                 object: nil ];
-
+    
+    [ [NSNotificationCenter defaultCenter] addObserver: self
+                                              selector: @selector(chromecastDevicePlaying:)
+                                                  name: ChromcastDeviceControllerMediaNowPlayingNotification
+                                                object: nil ];
+    
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
     [self.view addGestureRecognizer:pinch];
@@ -111,7 +116,7 @@
     }
     
     // TODO: change to playerSource
-    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay: YES];
+    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: self.player.currentPlaybackTime autoPlay: YES];
     [self triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
 }
 
@@ -241,12 +246,12 @@
         }
     #endif
     
-    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
+    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) &&  !chromecastDeviceController.isConnected ) {
         [self.player prepareToPlay];
         [self.player play];
     }
     
-    if ( chromecastDeviceController ) {
+    if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
         [self playChromecast];
     }
     
@@ -258,10 +263,12 @@
     
     isPlayCalled = NO;
     
-    [self.player pause];
-    
-    if ( chromecastDeviceController ) {
+    if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
         [self pauseChromecast];
+    }
+    
+    if ( !chromecastDeviceController.isConnected ) {
+        [self.player pause];
     }
     
     NSLog(@"Pause Player Exit");
@@ -270,9 +277,12 @@
 - (void)stop {
     NSLog(@"Stop Player Enter");
     
-    [self.player stop];
     isPlaying = NO;
     isPlayCalled = NO;
+    
+    if ( !chromecastDeviceController.isConnected ) {
+        [self.player stop];
+    }
     
   #if !(TARGET_IPHONE_SIMULATOR)
         // Stop WideVine
@@ -283,7 +293,7 @@
         }
     #endif
     
-    if ( chromecastDeviceController ) {
+    if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
         [self stopChromecast];
     }
     
@@ -541,6 +551,11 @@
 
 - (void)chromecastDeviceDisConnected: (NSNotification *)note {
     [self triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
+    self.player.currentPlaybackTime = chromecastDeviceController.streamPosition;
+}
+
+- (void)chromecastDevicePlaying: (NSNotification *)note {
+    [self triggerEventsJavaScript:@"play" WithValue:nil];
 }
 
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString *)propertyName value: (NSString*)value{
@@ -684,6 +699,7 @@
             attributeVal = [args objectAtIndex:1];
             if( [player isPreparedToPlay] ){
                 [ player setCurrentPlaybackTime: [attributeVal floatValue] ];
+            } else if( chromecastDeviceController && chromecastDeviceController.isConnected ){
                 [ chromecastDeviceController setPlaybackPercent: [attributeVal floatValue] ];
             }
             break;
@@ -759,14 +775,16 @@
 - (void) sendCurrentTime:(NSTimer *)timer {
     //    NSLog(@"sendCurrentTime Enter");
     
-    if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) {
-        CGFloat currentTime = player.currentPlaybackTime;
-//        [self triggerEventsJavaScript:@"timeupdate" WithValue:[NSString stringWithFormat:@"%f", currentTime]];
-        
-        if (chromecastDeviceController) {
+    if ( (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) || (chromecastDeviceController && chromecastDeviceController.isConnected)) {
+        CGFloat currentTime;
+
+        if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
             [chromecastDeviceController updateStatsFromDevice];
-            float currTime = (chromecastDeviceController.streamPosition / chromecastDeviceController.streamDuration) * 1000;
-            [ self triggerEventsJavaScript:@"timeupdate" WithValue: [NSString stringWithFormat:@"%f", currTime] ];
+            currentTime = (chromecastDeviceController.streamPosition / chromecastDeviceController.streamDuration) * 1000;
+            [ self triggerEventsJavaScript:@"timeupdate" WithValue: [NSString stringWithFormat:@"%f", currentTime] ];
+        } else {
+            currentTime = player.currentPlaybackTime;
+            [self triggerEventsJavaScript:@"timeupdate" WithValue:[NSString stringWithFormat:@"%f", currentTime]];
         }
     }
     
