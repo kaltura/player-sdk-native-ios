@@ -126,4 +126,20 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     BOOL result = buttonIndex==1?YES:NO;
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];
 }
+
+-(void)webViewDidStartLoad:(UIWebView *)webView {
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = YES; // to stop it, set this to NO
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = NO; // to stop it, set this to NO
+}
+
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    UIApplication* app = [UIApplication sharedApplication];
+    app.networkActivityIndicatorVisible = NO; // to stop it, set this to NO
+}
+
 @end

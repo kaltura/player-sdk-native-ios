@@ -121,7 +121,7 @@
     }
     
     // TODO: change to playerSource
-    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: self.player.currentPlaybackTime autoPlay: YES];
+    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay: YES];
     [self triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
 }
 
@@ -397,7 +397,7 @@
     isCloseFullScreenByTap = NO;
     
     // Handle rotation issues when player is playing
-    if ( isPlaying ) {
+    if ( isPlaying || openFullScreen) {
         [self closeFullScreen];
         [self openFullScreen: openFullScreen];
         if ( isFullScreen ) {
@@ -680,8 +680,11 @@
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue{
     NSLog(@"triggerEventsJavaScript Enter");
     
-    NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
-    NSLog(@"%@", jsStringLog);
+    if ( [eventName  isEqual: @"timeupdate"] ) {
+        NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
+        NSLog(@"%@", jsStringLog);
+    }
+    
     NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
     [self writeJavascript: jsString];
     NSLog(@"triggerEventsJavaScript Exit");
@@ -785,7 +788,7 @@
 
         if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
             [chromecastDeviceController updateStatsFromDevice];
-            currentTime = (chromecastDeviceController.streamPosition / chromecastDeviceController.streamDuration) * 1000;
+            currentTime = chromecastDeviceController.streamPosition;
             [ self triggerEventsJavaScript:@"timeupdate" WithValue: [NSString stringWithFormat:@"%f", currentTime] ];
         } else {
             currentTime = player.currentPlaybackTime;
