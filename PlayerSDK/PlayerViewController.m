@@ -892,16 +892,20 @@
         if ( prevAirPlayBtnPositionArr == nil || ![prevAirPlayBtnPositionArr isEqualToArray: airPlayBtnPositionArr] ) {
             prevAirPlayBtnPositionArr = airPlayBtnPositionArr;
         }else {
+            volumeView.frame = CGRectMake( volumeView.frame.origin.x, volumeView.frame.origin.y + 1.5, volumeView.frame.size.width, volumeView.frame.size.height );
+            volumeView.transform = CGAffineTransformMakeScale(0.8, 0.8);
             return;
         }
     }
     
     CGFloat x = [[airPlayBtnPositionArr objectAtIndex:0] floatValue];
-    CGFloat y = [[airPlayBtnPositionArr objectAtIndex:1] floatValue];
+    // add 1.5 to make it look better
+    CGFloat y = [[airPlayBtnPositionArr objectAtIndex:1] floatValue] + 1.5;
     CGFloat w = [[airPlayBtnPositionArr objectAtIndex:2] floatValue];
     CGFloat h = [[airPlayBtnPositionArr objectAtIndex:3] floatValue];
     
     volumeView.frame = CGRectMake( x, y, w, h );
+    volumeView.transform = CGAffineTransformMakeScale(0.8, 0.8);
     
     [self.view addSubview: volumeView];
     [self.view bringSubviewToFront: volumeView];
