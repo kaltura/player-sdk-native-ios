@@ -28,7 +28,9 @@
 #import "PlayerControlsWebView.h"
 
 
-@implementation PlayerControlsWebView
+@implementation PlayerControlsWebView {
+    BOOL isAd;
+}
 @synthesize playerControlsWebViewDelegate;
 
 - (id)initWithFrame:(CGRect)frame
@@ -81,7 +83,11 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         NSArray *args = (NSArray*)[json objectWithString:argsAsString error:nil];
         
         [self handleCall:function callbackId:callbackId args:args];
+        isAd = YES;
         
+        return NO;
+    } else if( isAd ){
+        [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     }
     

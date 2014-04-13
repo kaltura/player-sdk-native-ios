@@ -134,6 +134,16 @@
     NSLog(@"initPlayerParams Exit");
 }
 
+- (void)notifyJsReady {
+    NSLog(@"notifyJsReady Enter");
+    
+//    // TODO: When doing KDP Api we should call this method
+    [self triggerEventsJavaScript: @"loadedmetadata" WithValue:  @""];
+    [ self triggerEventsJavaScript: @"durationchange" WithValue: [NSString stringWithFormat: @"%f", player.duration] ];
+    
+    NSLog(@"notifyJsReady Exit");
+}
+
 - (void)play {
     NSLog( @"Play Player Enter" );
     
@@ -158,7 +168,9 @@
     
     isPlayCalled = NO;
     
-    [self.player pause];
+    if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
+        [self.player pause];
+    }
     
     NSLog(@"Pause Player Exit");
 }
@@ -431,6 +443,8 @@
             break;
         case MPMovieLoadStatePlayable:
             loadStateName = @"canplay";
+            [ self triggerEventsJavaScript: @"durationchange" WithValue: [NSString stringWithFormat: @"%f", player.duration] ];
+            [self triggerEventsJavaScript: @"loadedmetadata" WithValue: @""];
             NSLog(@"MPMovieLoadStatePlayable");
             break;
         case MPMovieLoadStatePlaythroughOK:
@@ -472,12 +486,20 @@
             break;
         case MPMoviePlaybackStatePlaying:
             isPlaying = YES;
-            playBackName = @"play";
+            playBackName = @"";
+            if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
+                playBackName = @"play";
+            }
+            
             NSLog(@"MPMoviePlaybackStatePlaying");
             break;
         case MPMoviePlaybackStatePaused:
             isPlaying = NO;
-            playBackName = @"pause";
+            playBackName = @"";
+            if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
+                playBackName = @"pause";
+            }
+            
             NSLog(@"MPMoviePlaybackStatePaused");
             break;
         case MPMoviePlaybackStateInterrupted:
