@@ -68,9 +68,9 @@
         [self.webView setPlayerControlsWebViewDelegate: self];
         self.webView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         
-        player = [[MPMoviePlayerController alloc] init];
-        player.view.frame = playerViewFrame;
-        player.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+        self.player = [[MPMoviePlayerController alloc] init];
+        self.player.view.frame = playerViewFrame;
+        self.player.view.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
         
         // WebView initialize for supporting NativeComponent(html5 player view)
         [[self.webView scrollView] setScrollEnabled: NO];
@@ -80,7 +80,7 @@
         self.webView.backgroundColor = [UIColor clearColor];
         
         // Add NativeComponent(html5 player view) webView to player view
-        [player.view addSubview: self.webView];
+        [self.player.view addSubview: self.webView];
         [self.view addSubview: player.view];
         
         player.controlStyle = MPMovieControlStyleNone;
@@ -137,8 +137,8 @@
         fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
         self.view.center = [[UIApplication sharedApplication] delegate].window.center;
         [self.view setTransform: fullScreenPlayerTransform];
-        self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
-        self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
+        self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }else{
         [self.view setTransform: CGAffineTransformIdentity];
     }
@@ -147,65 +147,46 @@
     NSLog( @"setOrientationTransform Exit" );
 }
 
-- (void)checkDeviceStatus{
-    deviceOrientation = [[UIDevice currentDevice] orientation];
-    
-    if ([self isIpad]) {
-        if (deviceOrientation == UIDeviceOrientationUnknown) {
-            if ( [UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
-                [self setOrientationTransform: 90];
-            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight){
-                [self setOrientationTransform: -90];
-            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortrait){
-                [self setOrientationTransform: 180];
-                [self.view setTransform: CGAffineTransformIdentity];
-            }else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortraitUpsideDown){
-                [self setOrientationTransform: -180];
-            }
-        }else{
-            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
-                [self setOrientationTransform: 90];
-            }else if(deviceOrientation == UIDeviceOrientationLandscapeRight){
-                [self setOrientationTransform: -90];
-            }else if(deviceOrientation == UIDeviceOrientationPortrait){
-                [self setOrientationTransform: 180];
-                [self.view setTransform: CGAffineTransformIdentity];
-            }else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown){
-                [self setOrientationTransform: -180];
-            }
-        }
-    }else{
-        if (deviceOrientation == UIDeviceOrientationUnknown ||
-            deviceOrientation == UIDeviceOrientationPortrait ||
-            deviceOrientation == UIDeviceOrientationPortraitUpsideDown) {
-            [self setOrientationTransform: 90];
-        }else{
-            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
-                [self setOrientationTransform: 90];
-            }else if( deviceOrientation == UIDeviceOrientationLandscapeRight ){
-                [self setOrientationTransform: -90];
-            }
-        }
+- (void)checkDeviceStatus
+{
+    UIInterfaceOrientation orientation = self.interfaceOrientation;
+    if (orientation == UIInterfaceOrientationLandscapeLeft)
+    {
+        [self setOrientationTransform:-90];
+    }
+    else if (orientation == UIInterfaceOrientationLandscapeRight)
+    {
+        [self setOrientationTransform:90];
+    }
+    else if (orientation == UIInterfaceOrientationPortrait)
+    {
+        [self setOrientationTransform:180];
+        [self.view setTransform:CGAffineTransformIdentity];
+    }
+    else if (orientation == UIDeviceOrientationPortraitUpsideDown)
+    {
+        [self setOrientationTransform:-180];
     }
 }
 
-- (void)checkOrientationStatus{
+- (void)checkOrientationStatus
+{
     NSLog( @"checkOrientationStatus Enter" );
     
     // Handle rotation issues when player is playing
-    if ( isPlaying ) {
-        //        if ( !isFullScreen ) {
+    if ( isPlaying )
+    {
         [self closeFullScreen];
         [self openFullScreen];
-        //        }
-        //        TO:DO e.g: player.goFullScreen(landscapeLeft); and!! player.goFullScreen(portrait);
-        if ( isFullScreen ) {
+        
+        if ( isFullScreen )
+        {
             [self checkDeviceStatus];
         }
         
-        if (![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
-            [self closeFullScreen];
-        }
+//        if (![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
+//            [self closeFullScreen];
+//        }
     }else {
         [self closeFullScreen];
     }
@@ -229,32 +210,16 @@
 - (void)openFullScreen{
     NSLog( @"openFullScreen Enter" );
     
-    //    if ( !isFullScreen ) {
     isFullScreen = YES;
-    
-    //        if ( CGRectIsEmpty( originalViewControllerFrame ) ) {
-    //            originalViewControllerFrame = self.view.frame;
-    //        }
     
     CGRect mainFrame;
     
-    if ([self isIpad]) {
-        if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationUnknown ) {
-            if (UIDeviceOrientationPortrait == [UIApplication sharedApplication].statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == [UIApplication sharedApplication].statusBarOrientation) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-            }else if(UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)){
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-            }
-        }else{
-            if ( UIDeviceOrientationPortrait == [[UIDevice currentDevice] orientation] || UIDeviceOrientationPortraitUpsideDown == [[UIDevice currentDevice] orientation] ) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-            }else if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-            }
-        }
-    }else{
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-    }
+    UIInterfaceOrientation orientation = self.interfaceOrientation;
+
+    if (orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortraitUpsideDown)
+        mainFrame = CGRectMake([[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
+    else if (orientation == UIInterfaceOrientationLandscapeLeft || orientation == UIInterfaceOrientationLandscapeRight)
+        mainFrame = CGRectMake([[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width);
     
     [self.view setFrame: mainFrame];
     
@@ -262,12 +227,12 @@
         [UIApplication sharedApplication].statusBarHidden = YES;
     }
     
-    [player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.webView setFrame: player.view.frame];
-    [ self.view setTransform: fullScreenPlayerTransform ];
+    [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.webView setFrame: self.player.view.frame];
+//    [self.view setTransform: fullScreenPlayerTransform];
+    
     [self triggerEventsJavaScript:@"enterfullscreen" WithValue:nil];
     
-    //    }
     
     [self UpdatePlayerLayout];
     
@@ -299,7 +264,7 @@
 - (void)pause{
     NSLog(@"Pause Player Enter");
     
-    [player pause];
+    [self.player pause];
     
     NSLog(@"Pause Player Exit");
 }
@@ -307,7 +272,7 @@
 - (void)stop{
     NSLog(@"Stop Player Enter");
     
-    [player stop];
+    [self.player stop];
     
     NSLog(@"Stop Player Exit");
 }
@@ -359,7 +324,7 @@
     
     for (id functionName in eventsDictionary){
         id event = [eventsDictionary objectForKey:functionName];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:NSSelectorFromString(functionName) name:event object:player];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:NSSelectorFromString(functionName) name:event object:self.player];
     }
     
     //  200 milliseconds is .2 seconds
@@ -375,7 +340,7 @@
     
     NSString *loadStateName = [[NSString alloc]init];
     
-    switch ( player.loadState ) {
+    switch ( self.player.loadState ) {
         case MPMovieLoadStateUnknown:
             loadStateName = @"MPMovieLoadStateUnknown";
             NSLog(@"MPMovieLoadStateUnknown");
@@ -415,7 +380,7 @@
         [self triggerEventsJavaScript:playBackName WithValue:nil];
     }
     
-    switch ( player.playbackState ) {
+    switch ( self.player.playbackState ) {
         case MPMoviePlaybackStateStopped:
             isPlaying = NO;
             playBackName = @"stop";
@@ -502,8 +467,8 @@
             break;
         case currentTime:
             attributeVal = [args objectAtIndex:1];
-            if([player isPreparedToPlay]){
-                [player setCurrentPlaybackTime:[attributeVal doubleValue]];
+            if([self.player isPreparedToPlay]){
+                [self.player setCurrentPlaybackTime:[attributeVal doubleValue]];
             }
             break;
         case visible:
@@ -521,7 +486,7 @@
 - (void)setPlayerSource: (NSString *)src{
     NSLog(@"setPlayerSource Enter");
     
-    [player setContentURL:[NSURL URLWithString: src]];
+    [self.player setContentURL:[NSURL URLWithString: src]];
     
     NSLog(@"setPlayerSource Exit");
 }
@@ -531,7 +496,8 @@
     
     originalViewControllerFrame = CGRectMake( top, right, width, height );
     
-    if ( !isFullScreen ) {
+    if ( !isFullScreen )
+    {
         self.view.frame = originalViewControllerFrame;
         self.player.view.frame = CGRectMake( 0, 0, width, height );
         self.webView.frame = self.player.view.frame;
@@ -551,8 +517,8 @@
 - (void) onMovieDurationAvailable:(NSNotification *)notification {
     NSLog(@"onMovieDurationAvailable Enter");
     
-    [self triggerEventsJavaScript:@"loadedmetadata" WithValue:[NSString stringWithFormat:@"%f",[player duration]]];
-    [[NSNotificationCenter defaultCenter] removeObserver:player];
+    [self triggerEventsJavaScript:@"loadedmetadata" WithValue:[NSString stringWithFormat:@"%f",[self.player duration]]];
+    [[NSNotificationCenter defaultCenter] removeObserver:self.player];
     
     NSLog(@"onMovieDurationAvailable Exit");
 }
@@ -560,8 +526,8 @@
 - (void) sendCurrentTime:(NSTimer *)timer {
     //    NSLog(@"sendCurrentTime Enter");
     
-    if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) {
-        CGFloat currentTime = player.currentPlaybackTime;
+    if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (self.player.playbackState == MPMoviePlaybackStatePlaying)) {
+        CGFloat currentTime = self.player.currentPlaybackTime;
         [self triggerEventsJavaScript:@"timeupdate" WithValue:[NSString stringWithFormat:@"%f", currentTime]];
     }
     
@@ -571,8 +537,8 @@
 - (void) updatePlaybackProgressFromTimer:(NSTimer *)timer {
     //    NSLog(@"updatePlaybackProgressFromTimer Enter");
     
-    if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) {
-        CGFloat progress = player.playableDuration / player.duration;
+    if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (self.player.playbackState == MPMoviePlaybackStatePlaying)) {
+        CGFloat progress = self.player.playableDuration / self.player.duration;
         [self triggerEventsJavaScript:@"progress" WithValue:[NSString stringWithFormat:@"%f", progress]];
         //        NSLog(@"%@", [NSString stringWithFormat:@"progress:%f", progress]);
     }
@@ -584,16 +550,16 @@
     NSLog(@"stopAndRemovePlayer Enter");
     
     [self visible:@"false"];
-    [player stop];
-    [player setContentURL:nil];
-    [player.view removeFromSuperview];
+    [self.player stop];
+    [self.player setContentURL:nil];
+    [self.player.view removeFromSuperview];
     [self.webView removeFromSuperview];
     
     if(isFullScreen){
         isFullScreen = NO;
     }
     
-    player = nil;
+    self.player = nil;
     self.webView = nil;
     
     NSLog(@"stopAndRemovePlayer Exit");
