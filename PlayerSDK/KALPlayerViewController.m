@@ -21,7 +21,6 @@
     BOOL isFullScreen, isPlaying, isResumePlayer;
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
-    UIDeviceOrientation prevOrientation,deviceOrientation;
 }
 
 @synthesize  webView, player;
@@ -40,8 +39,6 @@
     
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchInOut:)];
     [self.view addGestureRecognizer:pinch];
-    
-    //    UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)
     
     NSLog( @"View Did Load Exit" );
 }
@@ -229,7 +226,7 @@
     
     [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.webView setFrame: self.player.view.frame];
-//    [self.view setTransform: fullScreenPlayerTransform];
+    [self.view setTransform: fullScreenPlayerTransform];
     
     [self triggerEventsJavaScript:@"enterfullscreen" WithValue:nil];
     
