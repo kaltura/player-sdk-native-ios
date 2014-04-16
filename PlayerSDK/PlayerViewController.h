@@ -32,15 +32,43 @@ typedef enum{
     #endif
 } Attribute;
 
-@class NativeComponentPlugin;
+@protocol KalturaPlayer <NSObject>
 
+@required
+
+@property double currentPlaybackTime;
+@property(readonly) UIView * view;
+@property int controlStyle;
+@property(readonly) int playbackState;
+@property(readonly) int loadState;
+@property(readonly) BOOL isPreparedToPlay;
+@property(copy) NSURL *contentURL;
+
+- (void)pause;
+- (void)play;
+- (void)stop;
+- (id)view;
+- (double)currentPlaybackTime;
+- (int)controlStyle;
+- (int)playbackState;
+- (int)loadState;
+- (void)prepareToPlay;
+- (BOOL)isPreparedToPlay;
+- (void)setContentURL:(NSURL *)arg1;
+- (double)playableDuration;
+- (double)duration;
+
+@end
+
+@class NativeComponentPlugin;
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
-    MPMoviePlayerController *player;
+    id<KalturaPlayer> player;
     NativeComponentPlugin *delegate;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
-@property (nonatomic, strong) MPMoviePlayerController *player;
+//@property (nonatomic, strong) MPMoviePlayerController *player;
+@property (nonatomic, strong) id<KalturaPlayer> player;
 @property (nonatomic, retain) NativeComponentPlugin *delegate;
 
 - (void)setWebViewURL: (NSString *)iframeUrl;

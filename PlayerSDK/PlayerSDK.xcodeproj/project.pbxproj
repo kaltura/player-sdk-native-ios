@@ -20,6 +20,9 @@
 		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
 		BF927ED018BD021A006667CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927ECF18BD021A006667CA /* libz.dylib */; };
 		BFAC0E6A18E329FA003EB1E0 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFAC0E6918E329F9003EB1E0 /* GoogleCast.framework */; };
+		BFF1DD3D18FF09E3005DF269 /* KalturaBasicPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF1DD3C18FF09E3005DF269 /* KalturaBasicPlayer.m */; };
+		BFF1DD3E18FF0BBD005DF269 /* KalturaBasicPlayer.h in Sources */ = {isa = PBXBuildFile; fileRef = BFF1DD3B18FF09E3005DF269 /* KalturaBasicPlayer.h */; };
+		BFF1DD3F18FF0BCB005DF269 /* KalturaBasicPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFF1DD3B18FF09E3005DF269 /* KalturaBasicPlayer.h */; };
 		BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
 		BFFFA730182F9E31005B3B24 /* PlayerSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA72F182F9E31005B3B24 /* PlayerSDK.h */; };
 		BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA731182F9E31005B3B24 /* PlayerSDK.m */; };
@@ -73,6 +76,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BFF1DD3F18FF0BCB005DF269 /* KalturaBasicPlayer.h in CopyFiles */,
 				BF46E12F18E745CB0024815F /* ChromecastDeviceController.h in CopyFiles */,
 				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
 				BFFFA880182FC46B005B3B24 /* JSON.h in CopyFiles */,
@@ -106,6 +110,8 @@
 		BF927ECD18BCEB62006667CA /* WVSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WVSettings.h; path = ../WVSettings.h; sourceTree = "<group>"; };
 		BF927ECF18BD021A006667CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BFAC0E6918E329F9003EB1E0 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
+		BFF1DD3B18FF09E3005DF269 /* KalturaBasicPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalturaBasicPlayer.h; sourceTree = "<group>"; };
+		BFF1DD3C18FF09E3005DF269 /* KalturaBasicPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalturaBasicPlayer.m; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -298,6 +304,8 @@
 			children = (
 				BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */,
 				BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */,
+				BFF1DD3B18FF09E3005DF269 /* KalturaBasicPlayer.h */,
+				BFF1DD3C18FF09E3005DF269 /* KalturaBasicPlayer.m */,
 			);
 			name = PlayerViewController;
 			path = ..;
@@ -414,8 +422,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFF1DD3E18FF0BBD005DF269 /* KalturaBasicPlayer.h in Sources */,
 				BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */,
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
+				BFF1DD3D18FF09E3005DF269 /* KalturaBasicPlayer.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */,
 				BFFFA766182F9EB7005B3B24 /* NSObject+SBJSON.m in Sources */,
 				BFFFA768182F9EB7005B3B24 /* NSString+SBJSON.m in Sources */,
