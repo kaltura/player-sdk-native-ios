@@ -58,7 +58,9 @@
 -(void)viewWillAppear:(BOOL)animated{
     NSLog( @"viewWillAppear Enter" );
     
-    CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
+    CGRect playerViewFrame = UIInterfaceOrientationIsPortrait(self.interfaceOrientation)
+        ? CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height )
+        : CGRectMake( 0, 0, self.view.frame.size.height, self.view.frame.size.width );
     
     if ( !isFullScreen && !isResumePlayer && !self.webView ) {
         self.webView = [[KALPlayerControlsWebView alloc] initWithFrame: playerViewFrame];
