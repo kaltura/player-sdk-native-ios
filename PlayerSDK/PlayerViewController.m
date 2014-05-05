@@ -138,8 +138,6 @@
     NSLog(@"notifyJsReady Enter");
     
 //    // TODO: When doing KDP Api we should call this method
-    [self triggerEventsJavaScript: @"loadedmetadata" WithValue:  @""];
-    [ self triggerEventsJavaScript: @"durationchange" WithValue: [NSString stringWithFormat: @"%f", player.duration] ];
     
     NSLog(@"notifyJsReady Exit");
 }
@@ -634,7 +632,6 @@
 - (void) onMovieDurationAvailable:(NSNotification *)notification {
     NSLog(@"onMovieDurationAvailable Enter");
     
-    [self triggerEventsJavaScript:@"loadedmetadata" WithValue:[NSString stringWithFormat:@"%f",[player duration]]];
     [[NSNotificationCenter defaultCenter] removeObserver:player];
     
     NSLog(@"onMovieDurationAvailable Exit");
