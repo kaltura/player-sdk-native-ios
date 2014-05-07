@@ -14,7 +14,7 @@
 //
 
 #import <MediaPlayer/MediaPlayer.h>
-#import "PlayerSDK/PlayerControlsWebView.h"
+#import "KALPlayerControlsWebView.h"
 
 typedef enum{
     // Player Content Source Url
@@ -30,15 +30,17 @@ typedef enum{
 } Attribute;
 
 @class NativeComponentPlugin;
-
-@interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
+@interface KALPlayerViewController : UIViewController <KALPlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
 }
 
-@property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
+@property (nonatomic, strong) IBOutlet KALPlayerControlsWebView* webView;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, retain) NativeComponentPlugin *delegate;
+
+@property (nonatomic, assign) BOOL shouldPlayWhenJavascriptReady;
+@property (nonatomic, assign) BOOL isJavascriptReady;
 
 - (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
@@ -46,6 +48,12 @@ typedef enum{
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
 - (void)openFullScreen: (BOOL)openFullScreen;
 - (void)checkDeviceStatus;
+
+- (void)play;
+- (void)pause;
+
+- (void)play;
+- (void)pause;
 
 @end
 
