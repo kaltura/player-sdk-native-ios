@@ -30,10 +30,9 @@
     BOOL isCloseFullScreenByTap;
     float prevVolume;
     
-    // Chromecast
-    ChromecastDeviceController* chromecastDeviceController;
+    
     int _lastKnownPlaybackTime;
-    NSString *showChromecastButton;
+    
 
     // AirPlay Params
     MPVolumeView *volumeView;
@@ -54,19 +53,7 @@
     
     NSLog(@"View Did Load Enter");
     
-    if (self) {
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(deviceConnected:)
-         name:ChromcastDeviceControllerDeviceConnectedNotification
-         object:nil];
-    }
     
-    // Chromecast
-    // Initialize the chromecast device controller.
-    chromecastDeviceController = [ [ChromecastDeviceController alloc] init ];
-    [chromecastDeviceController performScan: YES];
-    showChromecastButton = @"false";
     
   #if !(TARGET_IPHONE_SIMULATOR)
         [self initWideVineParams];
@@ -81,28 +68,17 @@
                                                   name: @"playerPauseNotification"
                                                 object: nil ];
     
-    [ [NSNotificationCenter defaultCenter] addObserver: self
-                                              selector: @selector(showChromecastButton:)
-                                                  name: @"showChromecastButtonNotification"
-                                                object: nil ];
     
-    [ [NSNotificationCenter defaultCenter] addObserver: self
-                                              selector: @selector(hideChromecastButton:)
-                                                  name: @"hideChromecastButtonNotification"
-                                                object: nil ];
-    [ [NSNotificationCenter defaultCenter] addObserver: self
-                                              selector: @selector(chromecastDeviceDisConnected:)
-                                                  name: ChromcastDeviceControllerDeviceDisconnectedNotification
-                                                object: nil ];
-    
-    [ [NSNotificationCenter defaultCenter] addObserver: self
-                                              selector: @selector(chromecastDevicePlaying:)
-                                                  name: ChromcastDeviceControllerMediaNowPlayingNotification
-                                                object: nil ];
     
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
     [self.view addGestureRecognizer:pinch];
+    
+    [player setDelegate:self];
+    
+    if (player && [player respondsToSelector:@selector(didLoad)]) {
+        [player didLoad];
+    }
     
     [super viewDidLoad];
     
@@ -110,21 +86,7 @@
 }
 
 #pragma mark State management
-- (void)deviceConnected:(NSNotification*)notification {
-    if ([[notification name] isEqualToString:ChromcastDeviceControllerDeviceConnectedNotification]) {
-        NSLog(@"Device has been Connected!");
-        
-        //Push Chromecast Segue
-        if ( chromecastDeviceController.isConnected ) {
-            _lastKnownPlaybackTime = [self.player currentPlaybackTime];
-            [self.player stop];
-        }
-    }
-    
-    // TODO: change to playerSource
-    [chromecastDeviceController loadMedia: [NSURL URLWithString: playerSource] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: player.currentPlaybackTime autoPlay: YES];
-    [self triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
-}
+
 
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
@@ -172,10 +134,10 @@
     NSLog( @"viewDidDisappear Enter" );
     
     isResumePlayer = YES;
-    
-    if ( [ [UIDevice currentDevice] userInterfaceIdiom ] == UIUserInterfaceIdiomPhone ) {
-        [chromecastDeviceController performScan: NO];
-    }
+//    
+//    if ( [ [UIDevice currentDevice] userInterfaceIdiom ] == UIUserInterfaceIdiomPhone ) {
+//        [chromecastDeviceController performScan: NO];
+//    }
     
     [super viewDidDisappear:animated];
     
@@ -197,32 +159,6 @@
     NSLog(@"writeJavascript: %@", javascript);
     
     return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
-}
-
-#pragma mark - Chromecast Methods
-
--(void)playChromecast {
-    NSLog(@"playChromecast Enter");
-    
-    [chromecastDeviceController pauseCastMedia: NO];
-    
-    NSLog(@"playChromecast Exit");
-}
-
--(void)pauseChromecast {
-    NSLog(@"pauseChromecast Enter");
-    
-    [chromecastDeviceController pauseCastMedia: YES];
-    
-    NSLog(@"pauseChromecast Exit");
-}
-
--(void)stopChromecast {
-    NSLog(@"stopChromecast Enter");
-    
-    [chromecastDeviceController stopCastMedia];
-    
-    NSLog(@"stopChromecast Exit");
 }
 
 #pragma mark - Player Methods
@@ -257,14 +193,11 @@
     }
 #endif
     
-    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) &&  !chromecastDeviceController.isConnected ) {
+    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
         [self.player prepareToPlay];
         [self.player play];
     }
-    
-    if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
-        [self playChromecast];
-    }
+
     
     NSLog( @"Play Player Exit" );
 }
@@ -273,14 +206,8 @@
     NSLog(@"Pause Player Enter");
     
     isPlayCalled = NO;
-    
-    if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
-        [self pauseChromecast];
-    }
-    
-    if ( !chromecastDeviceController.isConnected ) {
-        [self.player pause];
-    }
+
+    [self.player pause];
     
     NSLog(@"Pause Player Exit");
 }
@@ -290,10 +217,8 @@
     
     isPlaying = NO;
     isPlayCalled = NO;
-    
-    if ( !chromecastDeviceController.isConnected ) {
-        [self.player stop];
-    }
+
+    [self.player stop];
     
   #if !(TARGET_IPHONE_SIMULATOR)
         // Stop WideVine
@@ -303,10 +228,6 @@
             isWideVineReady = NO;
         }
     #endif
-    
-    if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
-        [self stopChromecast];
-    }
     
     NSLog(@"Stop Player Exit");
 }

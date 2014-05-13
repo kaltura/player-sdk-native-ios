@@ -9,6 +9,7 @@
 #import "KalturaBasicPlayer.h"
 
 @implementation KalturaBasicPlayer
+@synthesize delegate;
 
 - (void) play {
     NSLog(@"Now Playing...");

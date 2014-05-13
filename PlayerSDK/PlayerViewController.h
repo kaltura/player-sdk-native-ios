@@ -17,7 +17,7 @@
 #import "PlayerSDK/PlayerControlsWebView.h"
 
 //Chromecast
-#import "PlayerSDK/ChromecastDeviceController.h"
+//#import "PlayerSDK/ChromecastDeviceController.h"
 
 typedef enum{
     // Player Content Source Url
@@ -32,10 +32,11 @@ typedef enum{
     #endif
 } Attribute;
 
+@class PlayerViewController;
 @protocol KalturaPlayer <NSObject>
 
 @required
-
+@property (nonatomic) PlayerViewController *delegate;
 @property double currentPlaybackTime;
 @property(readonly) UIView * view;
 @property int controlStyle;
@@ -44,6 +45,7 @@ typedef enum{
 @property(readonly) BOOL isPreparedToPlay;
 @property(copy) NSURL *contentURL;
 
+- (void)setDelegate:(PlayerViewController *)delegate;
 - (void)pause;
 - (void)play;
 - (void)stop;
@@ -57,6 +59,11 @@ typedef enum{
 - (void)setContentURL:(NSURL *)arg1;
 - (double)playableDuration;
 - (double)duration;
+
+@optional
+
+-(void)didLoad;
+
 
 @end
 
@@ -77,6 +84,7 @@ typedef enum{
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
 - (void)openFullScreen: (BOOL)openFullScreen;
 - (void)checkDeviceStatus;
+- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
 
 @end
 

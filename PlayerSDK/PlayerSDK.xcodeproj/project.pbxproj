@@ -13,6 +13,8 @@
 		BF46E12A18E456000024815F /* icon-cast-identified@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF46E12618E456000024815F /* icon-cast-identified@2x.png */; };
 		BF46E12F18E745CB0024815F /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF852D5118E44AB00010D2D5 /* ChromecastDeviceController.h */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
+		BF6AEF0419214C6C0065469D /* KALChromecastPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6AEF0319214C6C0065469D /* KALChromecastPlayer.m */; };
+		BF6AEF0519214CEC0065469D /* KALChromecastPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF6AEF0219214C6C0065469D /* KALChromecastPlayer.h */; };
 		BF852D5318E44AB00010D2D5 /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF852D5218E44AB00010D2D5 /* ChromecastDeviceController.m */; };
 		BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
 		BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
@@ -76,6 +78,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BF6AEF0519214CEC0065469D /* KALChromecastPlayer.h in CopyFiles */,
 				BFF1DD3F18FF0BCB005DF269 /* KalturaBasicPlayer.h in CopyFiles */,
 				BF46E12F18E745CB0024815F /* ChromecastDeviceController.h in CopyFiles */,
 				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
@@ -100,6 +103,8 @@
 		BF46E12518E456000024815F /* icon-cast-identified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified.png"; sourceTree = "<group>"; };
 		BF46E12618E456000024815F /* icon-cast-identified@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified@2x.png"; sourceTree = "<group>"; };
 		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
+		BF6AEF0219214C6C0065469D /* KALChromecastPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KALChromecastPlayer.h; sourceTree = "<group>"; };
+		BF6AEF0319214C6C0065469D /* KALChromecastPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KALChromecastPlayer.m; sourceTree = "<group>"; };
 		BF852D5118E44AB00010D2D5 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromecastDeviceController.h; sourceTree = "<group>"; };
 		BF852D5218E44AB00010D2D5 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = "<group>"; };
 		BF852D5518E44CB30010D2D5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -306,6 +311,8 @@
 				BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */,
 				BFF1DD3B18FF09E3005DF269 /* KalturaBasicPlayer.h */,
 				BFF1DD3C18FF09E3005DF269 /* KalturaBasicPlayer.m */,
+				BF6AEF0219214C6C0065469D /* KALChromecastPlayer.h */,
+				BF6AEF0319214C6C0065469D /* KALChromecastPlayer.m */,
 			);
 			name = PlayerViewController;
 			path = ..;
@@ -422,6 +429,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF6AEF0419214C6C0065469D /* KALChromecastPlayer.m in Sources */,
 				BFF1DD3E18FF0BBD005DF269 /* KalturaBasicPlayer.h in Sources */,
 				BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */,
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
