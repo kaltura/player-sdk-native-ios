@@ -134,14 +134,6 @@
     NSLog(@"initPlayerParams Exit");
 }
 
-- (void)notifyJsReady {
-    NSLog(@"notifyJsReady Enter");
-    
-//    // TODO: When doing KDP Api we should call this method
-    
-    NSLog(@"notifyJsReady Exit");
-}
-
 - (void)play {
     NSLog( @"Play Player Enter" );
     
@@ -190,6 +182,25 @@
     #endif
     
     NSLog(@"Stop Player Exit");
+}
+
+#pragma KDP API
+
+- (void)notifyJsReady {
+    NSLog(@"notifyJsReady Enter");
+    
+    //    // TODO: When doing KDP Api we should call this method
+    
+    NSLog(@"notifyJsReady Exit");
+}
+
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value {
+    NSLog(@"setKDPAttribute Enter");
+    
+    NSString *kdpAttributeStr = [NSString stringWithFormat: @"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
+    [self writeJavascript: kdpAttributeStr];
+ 
+    NSLog(@"setKDPAttribute Exit");
 }
 
 #pragma mark - Player Layout & Fullscreen Treatment
