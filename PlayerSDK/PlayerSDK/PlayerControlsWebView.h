@@ -12,16 +12,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SBJSON.h"
 
 @protocol PlayerControlsWebViewDelegate <NSObject>
 @required
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 @end
 
-@interface PlayerControlsWebView : UIWebView <UIWebViewDelegate> {
-  SBJSON *json;
-  
+@interface PlayerControlsWebView : UIWebView <UIWebViewDelegate> {  
   int alertCallbackId;
    __unsafe_unretained id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 }
