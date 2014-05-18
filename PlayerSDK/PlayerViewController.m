@@ -29,6 +29,8 @@
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
     
+    BOOL isJsCallbackReady;
+    
   #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
         BOOL isWideVine, isWideVineReady;
@@ -38,6 +40,7 @@
 
 @synthesize webView, player;
 @synthesize delegate;
+@synthesize jsCallbackReadyHandler;
 
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
@@ -184,12 +187,28 @@
     NSLog(@"Stop Player Exit");
 }
 
-#pragma KDP API
+#pragma Kaltura Player External API
+
+- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler {
+    NSLog(@"registerJSCallbackReady Enter");
+
+    if ( isJsCallbackReady ) {
+        handler();
+    } else {
+        jsCallbackReadyHandler = handler;
+    }
+    
+    NSLog(@"registerJSCallbackReady Exit");
+}
 
 - (void)notifyJsReady {
     NSLog(@"notifyJsReady Enter");
     
-    //    // TODO: When doing KDP Api we should call this method
+    isJsCallbackReady = YES;
+    
+    if ( jsCallbackReadyHandler ) {
+        jsCallbackReadyHandler();
+    }
     
     NSLog(@"notifyJsReady Exit");
 }

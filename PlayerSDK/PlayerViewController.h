@@ -29,6 +29,9 @@ typedef enum{
     #endif
 } Attribute;
 
+// JSCallbackReady Handler Block
+typedef void (^JSCallbackReadyHandler)();
+
 @class NativeComponentPlugin;
 
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
@@ -40,12 +43,17 @@ typedef enum{
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, retain) NativeComponentPlugin *delegate;
 
+@property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
+
 - (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
 - (void)openFullScreen: (BOOL)openFullScreen;
 - (void)checkDeviceStatus;
+
+// Kaltura Player External API
+- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
 
 @end
 
