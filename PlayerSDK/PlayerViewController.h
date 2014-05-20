@@ -31,12 +31,15 @@ typedef enum{
 
 // JSCallbackReady Handler Block
 typedef void (^JSCallbackReadyHandler)();
+typedef void (^KPEventListener)();
 
 @class NativeComponentPlugin;
 
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
+    
+    NSMutableDictionary *listenersDict;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
@@ -54,6 +57,7 @@ typedef void (^JSCallbackReadyHandler)();
 
 // Kaltura Player External API
 - (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
+- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
 
 @end
 

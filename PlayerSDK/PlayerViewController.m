@@ -52,6 +52,9 @@
     
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
     
+    // Kaltura KDP API Listeners Dictionary
+    listenersDict = [NSMutableDictionary new];
+    
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
                                               selector: @selector(pause)
@@ -118,7 +121,7 @@
     NSLog(@"setWebViewURLExit");
 }
 
-- (NSString*)writeJavascript:(NSString*)javascript {
+- (NSString*)writeJavascript: (NSString*)javascript {
     NSLog(@"writeJavascript: %@", javascript);
     
     return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
@@ -208,9 +211,68 @@
     
     if ( jsCallbackReadyHandler ) {
         jsCallbackReadyHandler();
+        jsCallbackReadyHandler = nil;
     }
     
     NSLog(@"notifyJsReady Exit");
+}
+
+- (void) addKPlayerEventListener: (NSString *)name Listener: (KPEventListener)listener ListenerName: (NSString*) listenerCallbackName {
+    NSLog(@"addKPlayerEventListener Enter");
+    
+    NSMutableArray *listenersArr = [listenersDict objectForKey: name];
+    
+    BOOL isNewEvent = NO;
+    
+    if ( listenersArr == nil ) {
+        listenersArr = [NSMutableArray new];
+    }
+    
+    if ( [listenersArr count] == 0 ) {
+        isNewEvent = YES;
+    }
+    
+    [listenersArr addObject: listener];
+    [listenersDict setObject: listenersArr forKey: name];
+    
+    if ( isNewEvent) {
+        [ self writeJavascript: [NSString stringWithFormat: @"addJsListener(\"%@\");", name] ];
+    }
+    
+    NSLog(@"addKPlayerEventListener Exit");
+}
+
+- (void) notifyKPlayerEvent:(NSString *)name {
+    NSArray *listenersArr = [listenersDict objectForKey: name];
+    
+    if ( listenersArr != nil ) {
+        for (KPEventListener e in listenersArr) {
+            e();
+        }
+    }
+}
+
+- (void)removeKPlayerEventListener: (NSString *)name Listener: (KPEventListener)listener {
+    NSMutableArray *listenersArr = [listenersDict objectForKey:name];
+    
+    if (listenersArr == nil) {
+        listenersArr = [NSMutableArray new];
+    }
+    
+    [listenersArr addObject:listener];
+    [listenersDict setObject:listenersArr forKey:name];
+    
+    if ( [listenersArr count] == 0 ) {
+        [ self writeJavascript: [NSString stringWithFormat: @"addJsListener(\"%@\");", name] ];
+    }
+}
+
+- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody {
+    NSLog(@"sendNotification Enter");
+    
+    [self writeJavascript: [NSString stringWithFormat:@"sendNotification([\"%@\" ,%@]);", notificationName, notificationBody]];
+    
+    NSLog(@"sendNotification Exit");
 }
 
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value {
