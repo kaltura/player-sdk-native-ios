@@ -32,6 +32,8 @@
     BOOL isCloseFullScreenByTap;
     
     BOOL isJsCallbackReady;
+    NSMutableDictionary *kPlayerEventsDict;
+    NSMutableDictionary *kPlayerEvaluatedDict;
     
   #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
@@ -55,7 +57,7 @@
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
     
     // Kaltura KDP API Listeners Dictionary
-    listenersDict = [NSMutableDictionary new];
+    kPlayerEventsDict = [NSMutableDictionary new];
     
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
@@ -219,17 +221,17 @@
     NSLog(@"notifyJsReady Exit");
 }
 
-- (void) addKPlayerEventListener: (NSString *)name Listener: (KPEventListener *)listener {
+- (void) addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener {
     NSLog(@"addKPlayerEventListener Enter");
     
-    NSMutableArray *listenersArr = [listenersDict objectForKey: name];
+    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: name];
     
     if ( listenersArr == nil ) {
         listenersArr = [NSMutableArray new];
     }
     
     [listenersArr addObject: listener];
-    [listenersDict setObject: listenersArr forKey: name];
+    [kPlayerEventsDict setObject: listenersArr forKey: name];
     
     if ( [listenersArr count] == 1 ) {
         [ self writeJavascript: [NSString stringWithFormat: @"addJsListener(\"%@\");", name] ];
@@ -238,39 +240,70 @@
     NSLog(@"addKPlayerEventListener Exit");
 }
 
-- (void) notifyKPlayerEvent:(NSString *)name {
-    NSArray *listenersArr = [listenersDict objectForKey: name];
+- (void) notifyKPlayerEvent: (NSString *)name {
+    NSLog(@"notifyKPlayerEvent Enter");
+    
+    NSArray *listenersArr = [kPlayerEventsDict objectForKey: name];
     
     if ( listenersArr != nil ) {
         for (KPEventListener *e in listenersArr) {
             e.eventListener();
         }
     }
+    
+    NSLog(@"notifyKPlayerEvent Exit");
 }
 
-- (void)removeKPlayerEventListenerWithName: (NSString *)name forListenerName: (NSString *)listenerName  {
-    NSMutableArray *listenersArr = [listenersDict objectForKey:name];
+- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener {
+    NSLog(@"asyncEvaluate Enter");
+    
+    [kPlayerEvaluatedDict setObject: listener forKey: listener.name];
+    [ self writeJavascript: [NSString stringWithFormat: @"asyncEvaluate(\"%@\", \"%@\");", expression, listener.name] ];
+    
+    NSLog(@"asyncEvaluate Exit");
+}
+
+- (void) notifyKPlayerEvaluated: (NSString *)name {
+    NSLog(@"notifyKPlayerEvaluated Enter");
+    
+    NSArray *listenersArr = [kPlayerEvaluatedDict objectForKey: name];
+    
+    if ( listenersArr != nil ) {
+        for (KPEventListener *e in listenersArr) {
+            e.eventListener();
+        }
+    }
+    
+    NSLog(@"notifyKPlayerEvaluated Exit");
+}
+
+- (void)removeKPlayerEventListenerWithName: (NSString *)name forListenerName: (NSString *)listenerName {
+    NSLog(@"removeKPlayerEventListenerWithName Enter");
+    
+    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: name];
     
     if ( listenersArr == nil || [listenersArr count] == 0 ) {
         return;
     }
 
     for (KPEventListener *e in listenersArr) {
-        if ( [e.name isEqualToString:listenerName] ) {
-            [listenersArr removeObject:e];
+        if ( [e.name isEqualToString: listenerName] ) {
+            [listenersArr removeObject: e];
             break;
         }
     }
     
-    if ([listenersArr count] == 0) {
+    if ( [listenersArr count] == 0 ) {
         listenersArr = nil;
     }
     
-    [listenersDict setObject:listenersArr forKey:name];
+    [kPlayerEventsDict setObject: listenersArr forKey: name];
     
     if ( listenersArr == nil ) {
         [ self writeJavascript: [NSString stringWithFormat: @"removeJsListener(\"%@\");", name] ];
     }
+    
+    NSLog(@"removeKPlayerEventListenerWithName Exit");
 }
 
 - (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody {

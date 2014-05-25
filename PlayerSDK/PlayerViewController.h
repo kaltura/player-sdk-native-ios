@@ -37,8 +37,6 @@ typedef void (^JSCallbackReadyHandler)();
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
-    
-    NSMutableDictionary *listenersDict;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
