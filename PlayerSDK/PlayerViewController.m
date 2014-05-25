@@ -11,6 +11,8 @@
 //
 
 #import "PlayerViewController.h"
+
+#import "KPEventListener.h"
 #if !(TARGET_IPHONE_SIMULATOR)
     #import "WVSettings.h"
     #import "WViPhoneAPI.h"
@@ -217,25 +219,19 @@
     NSLog(@"notifyJsReady Exit");
 }
 
-- (void) addKPlayerEventListener: (NSString *)name Listener: (KPEventListener)listener ListenerName: (NSString*) listenerCallbackName {
+- (void) addKPlayerEventListener: (NSString *)name Listener: (KPEventListener *)listener {
     NSLog(@"addKPlayerEventListener Enter");
     
     NSMutableArray *listenersArr = [listenersDict objectForKey: name];
-    
-    BOOL isNewEvent = NO;
     
     if ( listenersArr == nil ) {
         listenersArr = [NSMutableArray new];
     }
     
-    if ( [listenersArr count] == 0 ) {
-        isNewEvent = YES;
-    }
-    
     [listenersArr addObject: listener];
     [listenersDict setObject: listenersArr forKey: name];
     
-    if ( isNewEvent) {
+    if ( [listenersArr count] == 1 ) {
         [ self writeJavascript: [NSString stringWithFormat: @"addJsListener(\"%@\");", name] ];
     }
     
@@ -246,24 +242,34 @@
     NSArray *listenersArr = [listenersDict objectForKey: name];
     
     if ( listenersArr != nil ) {
-        for (KPEventListener e in listenersArr) {
-            e();
+        for (KPEventListener *e in listenersArr) {
+            e.eventListener();
         }
     }
 }
 
-- (void)removeKPlayerEventListener: (NSString *)name Listener: (KPEventListener)listener {
+- (void)removeKPlayerEventListenerWithName: (NSString *)name forListenerName: (NSString *)listenerName  {
     NSMutableArray *listenersArr = [listenersDict objectForKey:name];
     
-    if (listenersArr == nil) {
-        listenersArr = [NSMutableArray new];
+    if ( listenersArr == nil || [listenersArr count] == 0 ) {
+        return;
+    }
+
+    for (KPEventListener *e in listenersArr) {
+        if ( [e.name isEqualToString:listenerName] ) {
+            [listenersArr removeObject:e];
+            break;
+        }
     }
     
-    [listenersArr addObject:listener];
+    if ([listenersArr count] == 0) {
+        listenersArr = nil;
+    }
+    
     [listenersDict setObject:listenersArr forKey:name];
     
-    if ( [listenersArr count] == 0 ) {
-        [ self writeJavascript: [NSString stringWithFormat: @"addJsListener(\"%@\");", name] ];
+    if ( listenersArr == nil ) {
+        [ self writeJavascript: [NSString stringWithFormat: @"removeJsListener(\"%@\");", name] ];
     }
 }
 

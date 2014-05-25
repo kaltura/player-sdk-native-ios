@@ -31,10 +31,9 @@ typedef enum{
 
 // JSCallbackReady Handler Block
 typedef void (^JSCallbackReadyHandler)();
-typedef void (^KPEventListener)();
 
 @class NativeComponentPlugin;
-
+@class KPEventListener;
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *delegate;
