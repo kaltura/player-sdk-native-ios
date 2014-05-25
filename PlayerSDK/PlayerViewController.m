@@ -194,7 +194,7 @@
     NSLog(@"Stop Player Exit");
 }
 
-#pragma Kaltura Player External API
+#pragma Kaltura Player External API - KDP API
 
 - (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler {
     NSLog(@"registerJSCallbackReady Enter");
@@ -221,7 +221,7 @@
     NSLog(@"notifyJsReady Exit");
 }
 
-- (void) addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener {
+- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener {
     NSLog(@"addKPlayerEventListener Enter");
     
     NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: name];
@@ -234,13 +234,14 @@
     [kPlayerEventsDict setObject: listenersArr forKey: name];
     
     if ( [listenersArr count] == 1 ) {
-        [ self writeJavascript: [NSString stringWithFormat: @"addJsListener(\"%@\");", name] ];
+        NSString *x = [NSString stringWithFormat: @"addJsListener(\"%@\");", name];
+        [ self writeJavascript: x ];
     }
     
     NSLog(@"addKPlayerEventListener Exit");
 }
 
-- (void) notifyKPlayerEvent: (NSString *)name {
+- (void)notifyKPlayerEvent: (NSString *)name {
     NSLog(@"notifyKPlayerEvent Enter");
     
     NSArray *listenersArr = [kPlayerEventsDict objectForKey: name];
@@ -253,30 +254,6 @@
     
     NSLog(@"notifyKPlayerEvent Exit");
 }
-
-- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener {
-    NSLog(@"asyncEvaluate Enter");
-    
-    [kPlayerEvaluatedDict setObject: listener forKey: listener.name];
-    [ self writeJavascript: [NSString stringWithFormat: @"asyncEvaluate(\"%@\", \"%@\");", expression, listener.name] ];
-    
-    NSLog(@"asyncEvaluate Exit");
-}
-
-- (void) notifyKPlayerEvaluated: (NSString *)name {
-    NSLog(@"notifyKPlayerEvaluated Enter");
-    
-    NSArray *listenersArr = [kPlayerEvaluatedDict objectForKey: name];
-    
-    if ( listenersArr != nil ) {
-        for (KPEventListener *e in listenersArr) {
-            e.eventListener();
-        }
-    }
-    
-    NSLog(@"notifyKPlayerEvaluated Exit");
-}
-
 - (void)removeKPlayerEventListenerWithName: (NSString *)name forListenerName: (NSString *)listenerName {
     NSLog(@"removeKPlayerEventListenerWithName Enter");
     
@@ -304,6 +281,29 @@
     }
     
     NSLog(@"removeKPlayerEventListenerWithName Exit");
+}
+
+- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener {
+    NSLog(@"asyncEvaluate Enter");
+    
+    [kPlayerEvaluatedDict setObject: listener forKey: listener.name];
+    [ self writeJavascript: [NSString stringWithFormat: @"asyncEvaluate(\"%@\", \"%@\");", expression, listener.name] ];
+    
+    NSLog(@"asyncEvaluate Exit");
+}
+
+- (void) notifyKPlayerEvaluated: (NSString *)name {
+    NSLog(@"notifyKPlayerEvaluated Enter");
+    
+    NSArray *listenersArr = [kPlayerEvaluatedDict objectForKey: name];
+    
+    if ( listenersArr != nil ) {
+        for (KPEventListener *e in listenersArr) {
+            e.eventListener();
+        }
+    }
+    
+    NSLog(@"notifyKPlayerEvaluated Exit");
 }
 
 - (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody {

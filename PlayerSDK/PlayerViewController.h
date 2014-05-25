@@ -45,6 +45,9 @@ typedef void (^JSCallbackReadyHandler)();
 
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 
+- (void)play;
+- (void)pause;
+- (void)stop;
 - (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
@@ -54,7 +57,11 @@ typedef void (^JSCallbackReadyHandler)();
 
 // Kaltura Player External API
 - (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
+- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
+- (void)removeKPlayerEventListenerWithName: (NSString *)name forListenerName: (NSString *)listenerName;
+- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
 - (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
 
 @end
 
