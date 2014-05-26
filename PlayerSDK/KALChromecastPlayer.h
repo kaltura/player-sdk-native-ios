@@ -14,4 +14,6 @@
     BOOL showChromecastButton;
 }
 
+@property (nonatomic) ChromecastDeviceController *chromecastDeviceController;
+
 @end

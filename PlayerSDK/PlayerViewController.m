@@ -11,6 +11,7 @@
 //
 
 #import "PlayerViewController.h"
+#import "KALChromecastPlayer.h"
 #if !(TARGET_IPHONE_SIMULATOR)
 #import "WVSettings.h"
 #import "WViPhoneAPI.h"
@@ -117,10 +118,7 @@
         [self.view addSubview: player.view];
         self.player.controlStyle = MPMovieControlStyleNone;
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(volumeChanged:)
-                                                     name:@"AVSystemController_SystemVolumeDidChangeNotification"
-                                                   object:nil];
+        
         prevVolume = 0;
         
     }
@@ -471,25 +469,6 @@
     NSLog(@"Binding Events Exit");
 }
 
-- (void)showChromecastButton: (NSNotification *)note {
-    showChromecastButton = @"true";
-    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
-}
-
-- (void)hideChromecastButton: (NSNotification *)note {
-    showChromecastButton = @"false";
-    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
-}
-
-- (void)chromecastDeviceDisConnected: (NSNotification *)note {
-    [self triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
-    self.player.currentPlaybackTime = chromecastDeviceController.streamPosition;
-}
-
-- (void)chromecastDevicePlaying: (NSNotification *)note {
-    [self triggerEventsJavaScript:@"play" WithValue:nil];
-}
-
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString *)propertyName value: (NSString*)value{
     NSString *showChromecastBtnStr = [NSString stringWithFormat: @"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
     NSLog( @"%@", showChromecastBtnStr );
@@ -634,8 +613,6 @@
             attributeVal = [args objectAtIndex:1];
             if( [player isPreparedToPlay] ){
                 [ player setCurrentPlaybackTime: [attributeVal floatValue] ];
-            } else if( chromecastDeviceController && chromecastDeviceController.isConnected ){
-                [ chromecastDeviceController setPlaybackPercent: [attributeVal floatValue] ];
             }
             break;
         case visible:
@@ -695,32 +672,20 @@
     NSLog(@"visible Exit");
 }
 
-- (void) volumeChanged:(NSNotification *)notification {
-    NSLog(@"onMovieDurationAvailable Enter");
-    
-    float volume = [[[notification userInfo]
-                     objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"]
-                    floatValue];
-    
-    [chromecastDeviceController changeVolume: volume];
-    
-    NSLog(@"onMovieDurationAvailable Exit");
-}
-
 - (void) sendCurrentTime:(NSTimer *)timer {
     //    NSLog(@"sendCurrentTime Enter");
     
-    if ( (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) || (chromecastDeviceController && chromecastDeviceController.isConnected)) {
-        CGFloat currentTime;
-
-        if ( chromecastDeviceController && chromecastDeviceController.isConnected ) {
-            [chromecastDeviceController updateStatsFromDevice];
-            currentTime = chromecastDeviceController.streamPosition;
-            [ self triggerEventsJavaScript:@"timeupdate" WithValue: [NSString stringWithFormat:@"%f", currentTime] ];
-        } else {
-            currentTime = player.currentPlaybackTime;
-            [self triggerEventsJavaScript:@"timeupdate" WithValue:[NSString stringWithFormat:@"%f", currentTime]];
+    if ( (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying))) {
+        CGFloat currentTime = -1;
+        if ([self.player respondsToSelector:@selector(sendCurrentTime)]) {
+            currentTime = [self.player getCurrentTime];
         }
+        
+        if(currentTime == -1) {
+            currentTime = player.currentPlaybackTime;
+        }
+        
+        [ self triggerEventsJavaScript:@"timeupdate" WithValue: [NSString stringWithFormat:@"%f", currentTime] ];
     }
     
     //    NSLog(@"sendCurrentTime Exit");
@@ -759,22 +724,15 @@
     NSLog(@"stopAndRemovePlayer Exit");
 }
 
--(void)showChromecastDeviceList {
-    NSLog(@"showChromecastDeviceList Enter");
-    
-    if ( chromecastDeviceController ) {
-        [chromecastDeviceController chooseDevice: self];
-    }
-    
-    NSLog(@"showChromecastDeviceList Exit");
-}
+
 
 -(void)notifyLayoutReady {
     NSLog(@"notifyLayoutReady Enter");
     
-    if ( chromecastDeviceController ) {
-      [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton];
+    if ([self.player respondsToSelector:@selector(notifyLayoutReady)]) {
+        [self.player notifyLayoutReady];
     }
+
     
     NSLog(@"notifyLayoutReady Exit");
 }

@@ -62,8 +62,9 @@ typedef enum{
 
 @optional
 
--(void)didLoad;
-
+- (void)didLoad;
+- (CGFloat) getCurrentTime;
+-(void)notifyLayoutReady;
 
 @end
 
@@ -85,6 +86,7 @@ typedef enum{
 - (void)openFullScreen: (BOOL)openFullScreen;
 - (void)checkDeviceStatus;
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString *)propertyName value: (NSString*)value;
 
 @end
 

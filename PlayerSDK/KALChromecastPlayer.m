@@ -9,6 +9,25 @@
 #import "KALChromecastPlayer.h"
 
 @implementation KALChromecastPlayer
+@synthesize chromecastDeviceController;
+
+- (CGFloat) getCurrentTime {
+    if ( self.isPreparedToPlay ) {
+        [chromecastDeviceController updateStatsFromDevice];
+        return chromecastDeviceController.streamPosition;
+    }
+    return -1;
+}
+
+-(void)showChromecastDeviceList {
+    NSLog(@"showChromecastDeviceList Enter");
+    
+    if ( chromecastDeviceController ) {
+        [chromecastDeviceController chooseDevice: self];
+    }
+    
+    NSLog(@"showChromecastDeviceList Exit");
+}
 
 - (void) didLoad {
     
@@ -18,6 +37,11 @@
          selector:@selector(deviceConnected:)
          name:ChromcastDeviceControllerDeviceConnectedNotification
          object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(volumeChanged:)
+                                                     name:@"AVSystemController_SystemVolumeDidChangeNotification"
+                                                   object:nil];
         
         [ [NSNotificationCenter defaultCenter] addObserver: self
                                                   selector: @selector(showChromecastButton:)
@@ -46,12 +70,42 @@
     showChromecastButton = NO;
 }
 
+- (void) volumeChanged:(NSNotification *)notification {
+    NSLog(@"onMovieDurationAvailable Enter");
+    
+    float volume = [[[notification userInfo]
+                     objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"]
+                    floatValue];
+    
+    [chromecastDeviceController changeVolume: volume];
+    
+    NSLog(@"onMovieDurationAvailable Exit");
+}
+
+- (BOOL) isPreparedToPlay {
+    return chromecastDeviceController && chromecastDeviceController.isConnected;
+}
+
+-(void)notifyLayoutReady {
+
+    if ( chromecastDeviceController ) {
+        [self.delegate setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+    }
+    
+}
+
+-(void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
+    if ([self isPreparedToPlay]) {
+        [ chromecastDeviceController setPlaybackPercent:  currentTime];
+    }
+}
+
 - (void)deviceConnected:(NSNotification*)notification {
     if ([[notification name] isEqualToString:ChromcastDeviceControllerDeviceConnectedNotification]) {
         NSLog(@"Device has been Connected!");
         
         //Push Chromecast Segue
-        if ( chromecastDeviceController.isConnected ) {
+        if ( [self isPreparedToPlay] ) {
             //_lastKnownPlaybackTime = [self currentPlaybackTime];
             [self stop];
         }
@@ -64,7 +118,7 @@
 
 #pragma mark - Chromecast Methods
 
--(void)playChromecast {
+-(void)play {
     NSLog(@"playChromecast Enter");
     
     [chromecastDeviceController pauseCastMedia: NO];
@@ -72,7 +126,7 @@
     NSLog(@"playChromecast Exit");
 }
 
--(void)pauseChromecast {
+-(void)pause {
     NSLog(@"pauseChromecast Enter");
     
     [chromecastDeviceController pauseCastMedia: YES];
@@ -80,12 +134,31 @@
     NSLog(@"pauseChromecast Exit");
 }
 
--(void)stopChromecast {
+-(void)stop {
     NSLog(@"stopChromecast Enter");
     
     [chromecastDeviceController stopCastMedia];
     
     NSLog(@"stopChromecast Exit");
+}
+
+- (void)showChromecastButton: (NSNotification *)note {
+    showChromecastButton = @"true";
+    [self.delegate setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+}
+
+- (void)hideChromecastButton: (NSNotification *)note {
+    showChromecastButton = @"false";
+    [self.delegate setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+}
+
+- (void)chromecastDeviceDisConnected: (NSNotification *)note {
+    [self.delegate triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
+    self.delegate.player.currentPlaybackTime = chromecastDeviceController.streamPosition;
+}
+
+- (void)chromecastDevicePlaying: (NSNotification *)note {
+    [self.delegate triggerEventsJavaScript:@"play" WithValue:nil];
 }
 
 @end
