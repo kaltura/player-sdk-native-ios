@@ -234,17 +234,17 @@
     [kPlayerEventsDict setObject: listenersArr forKey: name];
     
     if ( [listenersArr count] == 1 ) {
-        NSString *x = [NSString stringWithFormat: @"addJsListener(\"%@\");", name];
-        [ self writeJavascript: x ];
+         [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.addJsListener(\"%@\");", name] ];
     }
     
     NSLog(@"addKPlayerEventListener Exit");
 }
 
-- (void)notifyKPlayerEvent: (NSString *)name {
+- (void)notifyKPlayerEvent: (NSArray *)arr {
     NSLog(@"notifyKPlayerEvent Enter");
     
-    NSArray *listenersArr = [kPlayerEventsDict objectForKey: name];
+    NSString *eventName = [arr objectAtIndex: 0];
+    NSArray *listenersArr = [ kPlayerEventsDict objectForKey: eventName ];
     
     if ( listenersArr != nil ) {
         for (KPEventListener *e in listenersArr) {
@@ -277,7 +277,7 @@
     [kPlayerEventsDict setObject: listenersArr forKey: name];
     
     if ( listenersArr == nil ) {
-        [ self writeJavascript: [NSString stringWithFormat: @"removeJsListener(\"%@\");", name] ];
+        [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", name] ];
     }
     
     NSLog(@"removeKPlayerEventListenerWithName Exit");
@@ -287,7 +287,7 @@
     NSLog(@"asyncEvaluate Enter");
     
     [kPlayerEvaluatedDict setObject: listener forKey: listener.name];
-    [ self writeJavascript: [NSString stringWithFormat: @"asyncEvaluate(\"%@\", \"%@\");", expression, listener.name] ];
+    [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, listener.name] ];
     
     NSLog(@"asyncEvaluate Exit");
 }
@@ -309,7 +309,7 @@
 - (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody {
     NSLog(@"sendNotification Enter");
     
-    [self writeJavascript: [NSString stringWithFormat:@"sendNotification([\"%@\" ,%@]);", notificationName, notificationBody]];
+    [self writeJavascript: [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification([\"%@\" ,%@]);", notificationName, notificationBody]];
     
     NSLog(@"sendNotification Exit");
 }
