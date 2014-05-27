@@ -307,7 +307,11 @@
 - (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody {
     NSLog(@"sendNotification Enter");
     
-    [self writeJavascript: [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification([\"%@\" ,%@]);", notificationName, notificationBody]];
+    if ( notificationBody == nil || [ notificationBody isKindOfClass: [NSNull class] ] ) {
+        notificationBody = @"null";
+    }
+    
+    [self writeJavascript: [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notificationName, notificationBody]];
     
     NSLog(@"sendNotification Exit");
 }
