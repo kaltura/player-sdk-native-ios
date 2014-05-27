@@ -254,10 +254,10 @@
     
     NSLog(@"notifyKPlayerEvent Exit");
 }
-- (void)removeKPlayerEventListenerWithName: (NSString *)name forListenerName: (NSString *)listenerName {
+- (void)removeKPlayerEventListenerWithEventName: (NSString *)eventName forListenerName: (NSString *)listenerName {
     NSLog(@"removeKPlayerEventListenerWithName Enter");
     
-    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: name];
+    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: eventName];
     
     if ( listenersArr == nil || [listenersArr count] == 0 ) {
         return;
@@ -274,10 +274,8 @@
         listenersArr = nil;
     }
     
-    [kPlayerEventsDict setObject: listenersArr forKey: name];
-    
     if ( listenersArr == nil ) {
-        [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", name] ];
+        [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", eventName] ];
     }
     
     NSLog(@"removeKPlayerEventListenerWithName Exit");
