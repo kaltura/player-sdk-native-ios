@@ -35,6 +35,8 @@
 		BF65484118C4BD6500759F64 /* PlayerControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */; };
 		BF65484218C4BD6500759F64 /* PlayerSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA72F182F9E31005B3B24 /* PlayerSDK.h */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
+		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
+		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
 		BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
 		BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
 		BF927EC618BCDB07006667CA /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EC518BCDB07006667CA /* libWViPhoneAPI.a */; };
@@ -114,6 +116,8 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */,
+				BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */,
 				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
 				BFFFA880182FC46B005B3B24 /* JSON.h in CopyFiles */,
 				BFFFA881182FC46B005B3B24 /* NSObject+SBJSON.h in CopyFiles */,
@@ -212,6 +216,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BF9133CB19349AB700606682 /* KPEventListener */ = {
+			isa = PBXGroup;
+			children = (
+				BFA844751931160600F47E02 /* KPEventListener.h */,
+				BFA844761931160600F47E02 /* KPEventListener.m */,
+			);
+			name = KPEventListener;
+			sourceTree = "<group>";
+		};
 		BFA6F0D918BB796500F7C78F /* WideVine */ = {
 			isa = PBXGroup;
 			children = (
@@ -265,8 +278,7 @@
 				BFFFA774182F9F10005B3B24 /* PlayerControlsWebView */,
 				BFFFA88C182FCE1B005B3B24 /* PlayerSDK */,
 				BFFFA72D182F9E31005B3B24 /* Supporting Files */,
-				BFA844751931160600F47E02 /* KPEventListener.h */,
-				BFA844761931160600F47E02 /* KPEventListener.m */,
+				BF9133CB19349AB700606682 /* KPEventListener */,
 			);
 			path = PlayerSDK;
 			sourceTree = "<group>";
