@@ -4,14 +4,24 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>PlayerSDK.xcscheme</key>
+		<key>PlayerSDK widevine.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>6</integer>
+		</dict>
+		<key>PlayerSDK.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>BF65482418C4BD6500759F64</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>BFFFA726182F9E31005B3B24</key>
 		<dict>
 			<key>primary</key>

@@ -12,72 +12,92 @@
 
 #import "PlayerViewController.h"
 
-@implementation PlayerViewController{
+#import "KPEventListener.h"
+#if !(TARGET_IPHONE_SIMULATOR)
+    #import "WVSettings.h"
+    #import "WViPhoneAPI.h"
+#endif
+
+@implementation PlayerViewController {
+    // Player Params
     BOOL isSeeking;
-    BOOL isFullScreen, isPlaying, isResumePlayer;
+    BOOL isFullScreen, isPlaying, isResumePlayer, isPlayCalled;
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
-    UIDeviceOrientation prevOrientation,deviceOrientation;
+    UIDeviceOrientation prevOrientation, deviceOrientation;
+    NSString *playerSource;
+    NSMutableDictionary *appConfigDict;
+    BOOL openFullScreen;
+    UIButton *btn;
+    BOOL isCloseFullScreenByTap;
+    
+    BOOL isJsCallbackReady;
+    NSMutableDictionary *kPlayerEventsDict;
+    NSMutableDictionary *kPlayerEvaluatedDict;
+    
+  #if !(TARGET_IPHONE_SIMULATOR)
+        // WideVine Params
+        BOOL isWideVine, isWideVineReady;
+        WVSettings* wvSettings;
+    #endif
 }
 
-@synthesize  webView, player;
+@synthesize webView, player;
 @synthesize delegate;
+@synthesize jsCallbackReadyHandler;
 
-- (void)viewDidLoad
-{
-    NSLog( @"View Did Load Enter" );
+- (void)viewDidLoad {
+    NSLog(@"View Did Load Enter");
     
-    isFullScreen = NO;
-    isPlaying = NO;
-    isResumePlayer = NO;
-    [super viewDidLoad];
+  #if !(TARGET_IPHONE_SIMULATOR)
+        [self initWideVineParams];
+    #endif
+    [self initPlayerParams];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector( pause ) name:@"videoPauseNotification" object:nil];
+    appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
     
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(didPinchInOut:)];
+    // Kaltura KDP API Listeners Dictionary
+    kPlayerEventsDict = [NSMutableDictionary new];
+    
+    // Observer for pause player notifications
+    [ [NSNotificationCenter defaultCenter] addObserver: self
+                                              selector: @selector(pause)
+                                                  name: @"playerPauseNotification"
+                                                object: nil ];
+    
+    // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
+    UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
     [self.view addGestureRecognizer:pinch];
     
-    //    UIDeviceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)
+    [super viewDidLoad];
     
-    NSLog( @"View Did Load Exit" );
+    NSLog(@"View Did Load Exit");
 }
 
--(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
-    NSLog( @"didPinchInOut Enter" );
-    
-    if (isFullScreen && recongizer.scale < 1) {
-        [self toggleFullscreen];
-    } else if (!isFullScreen && recongizer.scale > 1) {
-        [self toggleFullscreen];
-    }
-    
-    NSLog( @"didPinchInOut Exit" );
-}
-
--(void)viewWillAppear:(BOOL)animated{
-    NSLog( @"viewWillAppear Enter" );
+-(void)viewWillAppear:(BOOL)animated {
+    NSLog(@"viewWillAppear Enter");
     
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
-        self.webView = [[PlayerControlsWebView alloc] initWithFrame: playerViewFrame];
+        self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
         [self.webView setPlayerControlsWebViewDelegate: self];
         
-        player = [[MPMoviePlayerController alloc] init];
-        player.view.frame = playerViewFrame;
+        self.player = [ [MPMoviePlayerController alloc] init ];
+        self.player.view.frame = playerViewFrame;
         
         // WebView initialize for supporting NativeComponent(html5 player view)
-        [[self.webView scrollView] setScrollEnabled: NO];
-        [[self.webView scrollView] setBounces: NO];
-        [[self.webView scrollView] setBouncesZoom: NO];
+        [ [self.webView scrollView] setScrollEnabled: NO ];
+        [ [self.webView scrollView] setBounces: NO ];
+        [ [self.webView scrollView] setBouncesZoom: NO ];
         self.webView.opaque = NO;
         self.webView.backgroundColor = [UIColor clearColor];
         
-        // Add NativeComponent(html5 player view) webView to player view
-        [player.view addSubview: self.webView];
+        // Add NativeComponent (html5 player view) webView to player view
+        [self.player.view addSubview: self.webView];
         [self.view addSubview: player.view];
         
-        player.controlStyle = MPMovieControlStyleNone;
+        self.player.controlStyle = MPMovieControlStyleNone;
     }
     
     [super viewWillAppear:NO];
@@ -85,62 +105,257 @@
     NSLog( @"viewWillAppear Exit" );
 }
 
-- (void)viewDidDisappear:(BOOL)animated{
+- (void)viewDidDisappear:(BOOL)animated {
+    NSLog( @"viewDidDisappear Enter" );
+    
     isResumePlayer = YES;
     [super viewDidDisappear:animated];
+    
+    NSLog( @"viewDidDisappear Exit" );
 }
 
-- (void)setWebViewURL: (NSString *)iframeUrl{
+#pragma mark - WebView Methods
+
+- (void)setWebViewURL: (NSString *)iframeUrl {
     NSLog( @"setWebViewURL Enter" );
     
-    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    [self.webView loadRequest:[ NSURLRequest requestWithURL: [NSURL URLWithString:iframeUrl]]];
+    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    [ self.webView loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
 }
 
-- (void)play{
+- (NSString*)writeJavascript: (NSString*)javascript {
+    NSLog(@"writeJavascript: %@", javascript);
+    
+    return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
+}
+
+#pragma mark - Player Methods
+
+-(void)initPlayerParams {
+    NSLog(@"initPlayerParams Enter");
+    
+    isFullScreen = NO;
+    isPlaying = NO;
+    isResumePlayer = NO;
+    isPlayCalled = NO;
+    
+    NSLog(@"initPlayerParams Exit");
+}
+
+- (void)play {
     NSLog( @"Play Player Enter" );
     
-    if( !( player.playbackState == MPMoviePlaybackStatePlaying ) ) {
-        [player prepareToPlay];
-        [player play];
+    isPlayCalled = YES;
+    
+  #if !(TARGET_IPHONE_SIMULATOR)
+        if ( isWideVine  && !isWideVineReady ) {
+            return;
+        }
+    #endif
+    
+    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
+        [self.player prepareToPlay];
+        [self.player play];
     }
     
     NSLog( @"Play Player Exit" );
 }
 
-- (void)UpdatePlayerLayout{
-    NSLog( @"UpdatePlayerLayout Enter" );
+- (void)pause {
+    NSLog(@"Pause Player Enter");
     
-    //TO:DO - find a better way to update player layout
-    [self.webView stringByEvaluatingJavaScriptFromString:@"document.getElementById( this.id ).doUpdateLayout();"];
+    isPlayCalled = NO;
     
-    NSDictionary *dataDict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:isFullScreen]
-                                                         forKey:@"isFullScreen"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"toggleFullscreenNotification" object:self userInfo:dataDict];
+    if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
+        [self.player pause];
+    }
     
-    NSLog( @"UpdatePlayerLayout Exit" );
+    NSLog(@"Pause Player Exit");
+}
+
+- (void)stop {
+    NSLog(@"Stop Player Enter");
+    
+    [self.player stop];
+    isPlaying = NO;
+    isPlayCalled = NO;
+    
+  #if !(TARGET_IPHONE_SIMULATOR)
+        // Stop WideVine
+        if ( isWideVine ) {
+            [wvSettings stopWV];
+            isWideVine = NO;
+            isWideVineReady = NO;
+        }
+    #endif
+    
+    NSLog(@"Stop Player Exit");
+}
+
+#pragma Kaltura Player External API - KDP API
+
+- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler {
+    NSLog(@"registerJSCallbackReady Enter");
+
+    if ( isJsCallbackReady ) {
+        handler();
+    } else {
+        jsCallbackReadyHandler = handler;
+    }
+    
+    NSLog(@"registerJSCallbackReady Exit");
+}
+
+- (void)notifyJsReady {
+    NSLog(@"notifyJsReady Enter");
+    
+    isJsCallbackReady = YES;
+    
+    if ( jsCallbackReadyHandler ) {
+        jsCallbackReadyHandler();
+        jsCallbackReadyHandler = nil;
+    }
+    
+    NSLog(@"notifyJsReady Exit");
+}
+
+- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener {
+    NSLog(@"addKPlayerEventListener Enter");
+    
+    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: name];
+    
+    if ( listenersArr == nil ) {
+        listenersArr = [NSMutableArray new];
+    }
+    
+    [listenersArr addObject: listener];
+    [kPlayerEventsDict setObject: listenersArr forKey: name];
+    
+    if ( [listenersArr count] == 1 ) {
+         [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.addJsListener(\"%@\");", name] ];
+    }
+    
+    NSLog(@"addKPlayerEventListener Exit");
+}
+
+- (void)notifyKPlayerEvent: (NSArray *)arr {
+    NSLog(@"notifyKPlayerEvent Enter");
+    
+    NSString *eventName = [arr objectAtIndex: 0];
+    NSArray *listenersArr = [ kPlayerEventsDict objectForKey: eventName ];
+    
+    if ( listenersArr != nil ) {
+        for (KPEventListener *e in listenersArr) {
+            e.eventListener();
+        }
+    }
+    
+    NSLog(@"notifyKPlayerEvent Exit");
+}
+- (void)removeKPlayerEventListenerWithEventName: (NSString *)eventName forListenerName: (NSString *)listenerName {
+    NSLog(@"removeKPlayerEventListenerWithName Enter");
+    
+    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: eventName];
+    
+    if ( listenersArr == nil || [listenersArr count] == 0 ) {
+        return;
+    }
+
+    for (KPEventListener *e in listenersArr) {
+        if ( [e.name isEqualToString: listenerName] ) {
+            [listenersArr removeObject: e];
+            break;
+        }
+    }
+    
+    if ( [listenersArr count] == 0 ) {
+        listenersArr = nil;
+    }
+    
+    if ( listenersArr == nil ) {
+        [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", eventName] ];
+    }
+    
+    NSLog(@"removeKPlayerEventListenerWithName Exit");
+}
+
+- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener {
+    NSLog(@"asyncEvaluate Enter");
+    
+    [kPlayerEvaluatedDict setObject: listener forKey: listener.name];
+    [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, listener.name] ];
+    
+    NSLog(@"asyncEvaluate Exit");
+}
+
+- (void) notifyKPlayerEvaluated: (NSString *)name {
+    NSLog(@"notifyKPlayerEvaluated Enter");
+    
+    NSArray *listenersArr = [kPlayerEvaluatedDict objectForKey: name];
+    
+    if ( listenersArr != nil ) {
+        for (KPEventListener *e in listenersArr) {
+            e.eventListener();
+        }
+    }
+    
+    NSLog(@"notifyKPlayerEvaluated Exit");
+}
+
+- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody {
+    NSLog(@"sendNotification Enter");
+    
+    if ( notificationBody == nil || [ notificationBody isKindOfClass: [NSNull class] ] ) {
+        notificationBody = @"null";
+    }
+    
+    [self writeJavascript: [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notificationName, notificationBody]];
+    
+    NSLog(@"sendNotification Exit");
+}
+
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value {
+    NSLog(@"setKDPAttribute Enter");
+    
+    NSString *kdpAttributeStr = [NSString stringWithFormat: @"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
+    [self writeJavascript: kdpAttributeStr];
+ 
+    NSLog(@"setKDPAttribute Exit");
+}
+
+#pragma mark - Player Layout & Fullscreen Treatment
+
+- (void)updatePlayerLayout {
+    NSLog( @"updatePlayerLayout Enter" );
+    
+    //Update player layout
+    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
+    [self writeJavascript: updateLayoutJS];
+    
+    // FullScreen Treatment
+    NSDictionary *fullScreenDataDict = [ NSDictionary dictionaryWithObject: [NSNumber numberWithBool: isFullScreen]
+                                                                    forKey: @"isFullScreen" ];
+    [ [NSNotificationCenter defaultCenter] postNotificationName: @"toggleFullscreenNotification"
+                                                         object:self
+                                                       userInfo: fullScreenDataDict ];
+    
+    NSLog( @"updatePlayerLayout Exit" );
 }
 
 - (void)setOrientationTransform: (CGFloat) angle{
     NSLog( @"setOrientationTransform Enter" );
     
     if ( isFullScreen ) {
+        // Init Transform for Fullscreen
         fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
+        fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
         
-        if ([self isIpad]) {
-            fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
-            self.view.center  = CGPointMake (384.0, 512.0);
-        }else{
-            if (angle == 90) {
-                fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 80, 80);
-            }else{
-                fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, -80, -80);
-            }
-        }
-        
+        self.view.center = [[UIApplication sharedApplication] delegate].window.center;
         [self.view setTransform: fullScreenPlayerTransform];
+        
+        // Add Mask Support to WebView & Player
         self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
         self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
     }else{
@@ -151,9 +366,11 @@
 }
 
 - (void)checkDeviceStatus{
+    NSLog( @"checkDeviceStatus Enter" );
+    
     deviceOrientation = [[UIDevice currentDevice] orientation];
     
-    if ([self isIpad]) {
+    if ( [self isIpad] || openFullScreen ) {
         if (deviceOrientation == UIDeviceOrientationUnknown) {
             if ( [UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
                 [self setOrientationTransform: 90];
@@ -178,7 +395,9 @@
             }
         }
     }else{
-        if (deviceOrientation == UIDeviceOrientationUnknown) {
+        if (deviceOrientation == UIDeviceOrientationUnknown ||
+            deviceOrientation == UIDeviceOrientationPortrait ||
+            deviceOrientation == UIDeviceOrientationPortraitUpsideDown) {
             [self setOrientationTransform: 90];
         }else{
             if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
@@ -188,24 +407,27 @@
             }
         }
     }
+    
+    NSLog( @"checkDeviceStatus Exit" );
 }
 
 - (void)checkOrientationStatus{
     NSLog( @"checkOrientationStatus Enter" );
     
+    isCloseFullScreenByTap = NO;
+    
     // Handle rotation issues when player is playing
     if ( isPlaying ) {
-        //        if ( !isFullScreen ) {
         [self closeFullScreen];
-        [self openFullScreen];
-        //        }
-        //        TO:DO e.g: player.goFullScreen(landscapeLeft); and!! player.goFullScreen(portrait);
+        [self openFullScreen: openFullScreen];
         if ( isFullScreen ) {
             [self checkDeviceStatus];
         }
         
-        if (![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
-            [self closeFullScreen];
+        if ( ![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
+            if ( !openFullScreen ) {
+                [self closeFullScreen];
+            }
         }
     }else {
         [self closeFullScreen];
@@ -217,8 +439,10 @@
 - (void)toggleFullscreen{
     NSLog( @"toggleFullscreen Enter" );
     
+    isCloseFullScreenByTap = YES;
+    
     if ( !isFullScreen ) {
-        [self openFullScreen];
+        [self openFullScreen: openFullScreen];
         [self checkDeviceStatus];
     } else{
         [self closeFullScreen];
@@ -227,19 +451,15 @@
     NSLog( @"toggleFullscreen Exit" );
 }
 
-- (void)openFullScreen{
+- (void)openFullScreen: (BOOL)openFullscreen{
     NSLog( @"openFullScreen Enter" );
     
-    //    if ( !isFullScreen ) {
     isFullScreen = YES;
-    
-    //        if ( CGRectIsEmpty( originalViewControllerFrame ) ) {
-    //            originalViewControllerFrame = self.view.frame;
-    //        }
-    
+   
     CGRect mainFrame;
+    openFullScreen = openFullscreen;
     
-    if ([self isIpad]) {
+    if ( [self isIpad] || openFullscreen ) {
         if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationUnknown ) {
             if (UIDeviceOrientationPortrait == [UIApplication sharedApplication].statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == [UIApplication sharedApplication].statusBarOrientation) {
                 mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
@@ -258,21 +478,27 @@
     }
     
     [self.view setFrame: mainFrame];
-    [UIApplication sharedApplication].statusBarHidden = YES;
-    [player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.webView setFrame: player.view.frame];
+    
+    if ( ![self isIOS7] ) {
+        [UIApplication sharedApplication].statusBarHidden = YES;
+    }
+    
+    [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.webView setFrame: self.player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
-    [self triggerEventsJavaScript:@"enterfullscreen" WithValue:nil];
     
-    //    }
-    
-    [self UpdatePlayerLayout];
+    [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
+    [self updatePlayerLayout];
     
     NSLog( @"openFullScreen Exit" );
 }
 
 - (void)closeFullScreen{
     NSLog( @"closeFullScreen Enter" );
+    
+    if ( openFullScreen && isCloseFullScreenByTap ) {
+        [self stop];
+    }
     
     CGRect originalFrame = CGRectMake( 0, 0, originalViewControllerFrame.size.width, originalViewControllerFrame.size.height );
     isFullScreen = NO;
@@ -282,28 +508,15 @@
     self.player.view.frame = originalFrame;
     self.webView.frame = self.player.view.frame;
     
-    [UIApplication sharedApplication].statusBarHidden = NO;
+    if ( ![self isIOS7] ) {
+       [UIApplication sharedApplication].statusBarHidden = NO;
+    }
+    
     [self triggerEventsJavaScript:@"exitfullscreen" WithValue:nil];
     
-    [self UpdatePlayerLayout];
+    [self updatePlayerLayout];
     
     NSLog( @"closeFullScreen Exit" );
-}
-
-- (void)pause{
-    NSLog(@"Pause Player Enter");
-    
-    [player pause];
-    
-    NSLog(@"Pause Player Exit");
-}
-
-- (void)stop{
-    NSLog(@"Stop Player Enter");
-    
-    [player stop];
-    
-    NSLog(@"Stop Player Exit");
 }
 
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
@@ -325,11 +538,16 @@
     NSLog(@"Binding Events Enter");
     
     NSMutableDictionary *eventsDictionary = [[NSMutableDictionary alloc] init];
-    [eventsDictionary setObject:MPMoviePlayerLoadStateDidChangeNotification forKey:@"triggerLoadPlabackEvents:"];
-    [eventsDictionary setObject:MPMoviePlayerPlaybackDidFinishNotification forKey:@"triggerFinishPlabackEvents:"];
-    [eventsDictionary setObject:MPMoviePlayerPlaybackStateDidChangeNotification forKey:@"triggerMoviePlabackEvents:"];
-    [eventsDictionary setObject:MPMoviePlayerTimedMetadataUpdatedNotification forKey:@"metadataUpdate:"];
-    [eventsDictionary setObject:MPMovieDurationAvailableNotification forKey:@"onMovieDurationAvailable:"];
+    [eventsDictionary setObject: MPMoviePlayerLoadStateDidChangeNotification
+                         forKey: @"triggerLoadPlabackEvents:"];
+    [eventsDictionary setObject: MPMoviePlayerPlaybackDidFinishNotification
+                         forKey: @"triggerFinishPlabackEvents:"];
+    [eventsDictionary setObject: MPMoviePlayerPlaybackStateDidChangeNotification
+                         forKey: @"triggerMoviePlabackEvents:"];
+    [eventsDictionary setObject: MPMoviePlayerTimedMetadataUpdatedNotification
+                         forKey: @"metadataUpdate:"];
+    [eventsDictionary setObject: MPMovieDurationAvailableNotification
+                         forKey: @"onMovieDurationAvailable:"];
     
     for (id functionName in eventsDictionary){
         id event = [eventsDictionary objectForKey:functionName];
@@ -356,6 +574,8 @@
             break;
         case MPMovieLoadStatePlayable:
             loadStateName = @"canplay";
+            [ self triggerEventsJavaScript: @"durationchange" WithValue: [NSString stringWithFormat: @"%f", player.duration] ];
+            [self triggerEventsJavaScript: @"loadedmetadata" WithValue: @""];
             NSLog(@"MPMovieLoadStatePlayable");
             break;
         case MPMovieLoadStatePlaythroughOK:
@@ -397,12 +617,20 @@
             break;
         case MPMoviePlaybackStatePlaying:
             isPlaying = YES;
-            playBackName = @"play";
+            playBackName = @"";
+            if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
+                playBackName = @"play";
+            }
+            
             NSLog(@"MPMoviePlaybackStatePlaying");
             break;
         case MPMoviePlaybackStatePaused:
             isPlaying = NO;
-            playBackName = @"pause";
+            playBackName = @"";
+            if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
+                playBackName = @"pause";
+            }
+            
             NSLog(@"MPMoviePlaybackStatePaused");
             break;
         case MPMoviePlaybackStateInterrupted:
@@ -430,7 +658,7 @@
     NSString *finishPlayBackName = [[NSString alloc]init];
     NSNumber* reason = [[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
     
-    switch ([reason intValue]) {
+    switch ( [reason intValue] ) {
         case MPMovieFinishReasonPlaybackEnded:
             finishPlayBackName = @"ended";
             NSLog(@"playbackFinished. Reason: Playback Ended");
@@ -458,7 +686,7 @@
     NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
     NSLog(@"%@", jsStringLog);
     NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName,eventValue];
-    [self.webView stringByEvaluatingJavaScriptFromString:jsString];
+    [self writeJavascript: jsString];
     NSLog(@"triggerEventsJavaScript Exit");
 }
 
@@ -469,22 +697,35 @@
     Attribute attributeValue = [attributeName attributeNameEnumFromString];
     NSString *attributeVal;
     
-    switch (attributeValue) {
+    switch ( attributeValue ) {
         case src:
             attributeVal = [args objectAtIndex:1];
-            [self setPlayerSource:attributeVal];
+            playerSource = attributeVal;
+            [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
             break;
         case currentTime:
             attributeVal = [args objectAtIndex:1];
-            if([player isPreparedToPlay]){
-                [player setCurrentPlaybackTime:[attributeVal doubleValue]];
+            if( [player isPreparedToPlay] ){
+                [ player setCurrentPlaybackTime: [attributeVal doubleValue] ];
             }
             break;
         case visible:
             attributeVal = [args objectAtIndex:1];
-            [self visible:attributeVal];
+            [self visible: attributeVal];
             break;
-            
+      #if !(TARGET_IPHONE_SIMULATOR)
+        case wvServerKey:
+            wvSettings = [[WVSettings alloc] init];
+            isWideVine = YES;
+            [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                      selector: @selector(playWV:)
+                                                          name: @"wvResponseUrlNotification"
+                                                        object: nil ];
+            attributeVal = [args objectAtIndex:1];
+            [self initWV: playerSource andKey: attributeVal];
+            break;
+        #endif
+          
         default:
             break;
     }
@@ -492,10 +733,9 @@
     NSLog(@"setAttribute Exit");
 }
 
-- (void)setPlayerSource: (NSString *)src{
+- (void)setPlayerSource: (NSURL *)src{
     NSLog(@"setPlayerSource Enter");
-    
-    [player setContentURL:[NSURL URLWithString: src]];
+    [player setContentURL:src];
     
     NSLog(@"setPlayerSource Exit");
 }
@@ -525,7 +765,6 @@
 - (void) onMovieDurationAvailable:(NSNotification *)notification {
     NSLog(@"onMovieDurationAvailable Enter");
     
-    [self triggerEventsJavaScript:@"loadedmetadata" WithValue:[NSString stringWithFormat:@"%f",[player duration]]];
     [[NSNotificationCenter defaultCenter] removeObserver:player];
     
     NSLog(@"onMovieDurationAvailable Exit");
@@ -573,22 +812,101 @@
     NSLog(@"stopAndRemovePlayer Exit");
 }
 
--(BOOL)isIpad{
+- (void)doneFSBtnPressed {
+    NSLog(@"doneFSBtnPressed Enter");
+    
+    isCloseFullScreenByTap = YES;
+    [self closeFullScreen];
+    
+    NSLog(@"doneFSBtnPressed Exit");
+}
+
+- (BOOL)isIpad{
+    
     return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
+}
+
+- (BOOL)isIOS7{
+    
+    if ( floor( NSFoundationVersionNumber ) <= NSFoundationVersionNumber_iOS_6_1 ) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - WideVine Methods
+#if !(TARGET_IPHONE_SIMULATOR)
+
+-(void)initWideVineParams {
+    NSLog(@"initWideVineParams Enter");
+    
+    isWideVine = NO;
+    isWideVineReady = NO;
+    
+    NSLog(@"initWideVineParams Exit");
+}
+
+- (void) initWV: (NSString *)src andKey: (NSString *)key {
+    NSLog(@"initWV Enter");
+    
+    WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
+    
+    if (wvInitStatus == WViOsApiStatus_OK) {
+        NSLog(@"widevine was inited");
+    }
+    
+    [wvSettings playMovieFromUrl: src];
+    
+    NSLog(@"initWV Exit");
+}
+
+-(void)playWV: (NSNotification *)responseUrlNotification  {
+    NSLog(@"playWV Exit");
+    
+    [ self setPlayerSource: [ NSURL URLWithString: [ [responseUrlNotification userInfo] valueForKey: @"response_url"] ] ];
+    isWideVineReady = YES;
+    
+    if ( isPlayCalled ) {
+        [self play];
+    }
+    
+    NSLog(@"playWV Exit");
+}
+
+#endif
+
+#pragma mark -
+
+-(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
+    NSLog( @"didPinchInOut Enter" );
+    
+    if (isFullScreen && recongizer.scale < 1) {
+        [self toggleFullscreen];
+    } else if (!isFullScreen && recongizer.scale > 1) {
+        [self toggleFullscreen];
+    }
+    
+    NSLog( @"didPinchInOut Exit" );
 }
 
 @end
 
 @implementation NSString (EnumParser)
+
 - (Attribute)attributeNameEnumFromString{
     NSLog(@"attributeNameEnumFromString Enter");
     
     NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [NSNumber numberWithInteger:src], @"src",
                                 [NSNumber numberWithInteger:currentTime], @"currentTime",
+                              #if !(TARGET_IPHONE_SIMULATOR)
+                                    [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
+                                #endif
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");
     return (Attribute)[[Attributes objectForKey:self] intValue];
 }
+
 @end
