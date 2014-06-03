@@ -49,6 +49,29 @@
 @synthesize delegate;
 @synthesize jsCallbackReadyHandler;
 
+
+- (instancetype) __unavailable init {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"-init is not a valid initializer for PlayViewController" userInfo:nil];
+    return nil;
+}
+
+- (instancetype) __unavailable initWithCoder:(NSCoder *)aDecoder {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"-initWithCoder is not a valid initializer for PlayViewController" userInfo:nil];
+    return nil;
+}
+
+- (instancetype) __unavailable initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"-initWithNibName is not a valid initializer for PlayViewController" userInfo:nil];
+    return nil;
+}
+
+- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView {
+    self = [super init];
+    [self.view setFrame:frame];
+    [parentView addSubview:self.view];
+    return self;
+}
+
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
     

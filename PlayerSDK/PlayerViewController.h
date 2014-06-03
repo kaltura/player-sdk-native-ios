@@ -45,6 +45,7 @@ typedef void (^JSCallbackReadyHandler)();
 
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 
+- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)play;
 - (void)pause;
 - (void)stop;
