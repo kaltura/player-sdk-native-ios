@@ -32,16 +32,25 @@ typedef enum{
 // JSCallbackReady Handler Block
 typedef void (^JSCallbackReadyHandler)();
 
+@protocol PlayerViewControllerDelegate <NSObject>
+
+@required
+-(NSURL *)getInitialKIframeUrl;
+
+@end
+
 @class NativeComponentPlugin;
 @class KPEventListener;
 @interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
-    NativeComponentPlugin *delegate;
+    NativeComponentPlugin *nativComponentDelegate;
+    id<PlayerViewControllerDelegate> delegate;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
 @property (nonatomic, strong) MPMoviePlayerController *player;
-@property (nonatomic, retain) NativeComponentPlugin *delegate;
+@property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
+@property (nonatomic, retain) id<PlayerViewControllerDelegate> delegate;
 
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 

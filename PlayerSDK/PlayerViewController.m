@@ -46,24 +46,9 @@
 }
 
 @synthesize webView, player;
-@synthesize delegate;
+@synthesize nativComponentDelegate;
 @synthesize jsCallbackReadyHandler;
-
-
-- (instancetype) __unavailable init {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"-init is not a valid initializer for PlayViewController" userInfo:nil];
-    return nil;
-}
-
-- (instancetype) __unavailable initWithCoder:(NSCoder *)aDecoder {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"-initWithCoder is not a valid initializer for PlayViewController" userInfo:nil];
-    return nil;
-}
-
-- (instancetype) __unavailable initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"-initWithNibName is not a valid initializer for PlayViewController" userInfo:nil];
-    return nil;
-}
+@synthesize delegate;
 
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView {
     self = [super init];
@@ -102,6 +87,14 @@
 
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
+    
+    // Before player appears the user must set the kaltura iframe url
+    if (delegate && [delegate respondsToSelector:@selector(getInitialKIframeUrl)]) {
+        [ self.webView loadRequest: [ NSURLRequest requestWithURL: [delegate getInitialKIframeUrl] ] ];
+    } else {
+        @throw [NSException exceptionWithName:NSGenericException reason:@"Delegate MUST be set and respond to selector -getInitialKIframeUrl !" userInfo:nil];
+        return;
+    }
     
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
