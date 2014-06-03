@@ -60,6 +60,14 @@
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
     
+    // Adding a suffix to user agent in order to identify native media space application
+    NSString* suffixUA = @"kalturaNativeCordovaPlayer";
+    UIWebView* wv = [[UIWebView alloc] initWithFrame:CGRectZero];
+    NSString* defaultUA = [wv stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSString* finalUA = [defaultUA stringByAppendingString:suffixUA];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:finalUA, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+    
 #if !(TARGET_IPHONE_SIMULATOR)
     [self initWideVineParams];
 #endif
@@ -85,17 +93,26 @@
     NSLog(@"View Did Load Exit");
 }
 
--(void)viewWillAppear:(BOOL)animated {
-    NSLog(@"viewWillAppear Enter");
+- (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"viewDidAppear Enter");
+    
+    [super viewDidAppear:animated];
     
     // Before player appears the user must set the kaltura iframe url
     if (delegate && [delegate respondsToSelector:@selector(getInitialKIframeUrl)]) {
-        [ self.webView loadRequest: [ NSURLRequest requestWithURL: [delegate getInitialKIframeUrl] ] ];
+        NSURL *url = [delegate getInitialKIframeUrl];
+        [ self.webView loadRequest: [ NSURLRequest requestWithURL:  url] ];
     } else {
         @throw [NSException exceptionWithName:NSGenericException reason:@"Delegate MUST be set and respond to selector -getInitialKIframeUrl !" userInfo:nil];
         return;
     }
     
+    NSLog(@"viewDidAppear Exit");
+}
+
+-(void)viewWillAppear:(BOOL)animated {
+    NSLog(@"viewWillAppear Enter");
+
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
