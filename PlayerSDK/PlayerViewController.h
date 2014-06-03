@@ -32,10 +32,14 @@ typedef enum{
 // JSCallbackReady Handler Block
 typedef void (^JSCallbackReadyHandler)();
 
+@class PlayerViewController;
 @protocol PlayerViewControllerDelegate <NSObject>
 
 @required
 -(NSURL *)getInitialKIframeUrl;
+
+@optional
+- (void) didPlay;
 
 @end
 

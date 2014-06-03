@@ -110,6 +110,12 @@
     NSLog(@"viewDidAppear Exit");
 }
 
+- (void) callSelectorOnDelegate:(SEL) selector {
+    if (delegate && [delegate respondsToSelector:selector]) {
+        [delegate performSelector:selector];
+    }
+}
+
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
 
@@ -195,6 +201,8 @@
         [self.player prepareToPlay];
         [self.player play];
     }
+    
+    [self callSelectorOnDelegate:@selector(didPlay)];
     
     NSLog( @"Play Player Exit" );
 }
