@@ -39,7 +39,9 @@ typedef void (^JSCallbackReadyHandler)();
 -(NSURL *)getInitialKIframeUrl;
 
 @optional
-- (void) didPlay;
+- (void) kPlayerDidPlay;
+- (void) kPlayerDidPause;
+- (void) kPlayerDidStop;
 
 @end
 

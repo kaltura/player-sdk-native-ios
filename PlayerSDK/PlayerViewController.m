@@ -113,7 +113,10 @@
 
 - (void) callSelectorOnDelegate:(SEL) selector {
     if (delegate && [delegate respondsToSelector:selector]) {
-        [delegate performSelector:selector];
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [delegate performSelector:selector];
+        #pragma clang diagnostic pop
     }
 }
 
@@ -203,7 +206,7 @@
         [self.player play];
     }
     
-    [self callSelectorOnDelegate:@selector(didPlay)];
+    [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
     
     NSLog( @"Play Player Exit" );
 }
@@ -216,6 +219,8 @@
     if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
         [self.player pause];
     }
+    
+    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
     
     NSLog(@"Pause Player Exit");
 }
@@ -235,6 +240,8 @@
         isWideVineReady = NO;
     }
 #endif
+    
+    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
     
     NSLog(@"Stop Player Exit");
 }
