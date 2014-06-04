@@ -67,6 +67,8 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
 - (void)openFullScreen: (BOOL)openFullScreen;
+- (void)closeFullScreen;
+- (void)toggleFullscreen;
 - (void)checkDeviceStatus;
 
 // Kaltura Player External API

@@ -53,6 +53,7 @@
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView {
     self = [super init];
     [self.view setFrame:frame];
+    originalViewControllerFrame = frame;
     [parentView addSubview:self.view];
     return self;
 }
