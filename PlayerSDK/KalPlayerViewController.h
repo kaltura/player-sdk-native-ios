@@ -1,5 +1,5 @@
 //
-//  PlayerViewController.h
+//  KalPlayerViewController.h
 //  HelloWorld
 //
 //  Created by Eliza Sapir on 9/11/13.
@@ -32,8 +32,8 @@ typedef enum{
 // JSCallbackReady Handler Block
 typedef void (^JSCallbackReadyHandler)();
 
-@class PlayerViewController;
-@protocol PlayerViewControllerDelegate <NSObject>
+@class KalPlayerViewController;
+@protocol KalPlayerViewControllerDelegate <NSObject>
 
 @required
 -(NSURL *)getInitialKIframeUrl;
@@ -47,16 +47,16 @@ typedef void (^JSCallbackReadyHandler)();
 
 @class NativeComponentPlugin;
 @class KPEventListener;
-@interface PlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
+@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     MPMoviePlayerController *player;
     NativeComponentPlugin *nativComponentDelegate;
-    id<PlayerViewControllerDelegate> delegate;
+    id<KalPlayerViewControllerDelegate> delegate;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
 @property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
-@property (nonatomic, retain) id<PlayerViewControllerDelegate> delegate;
+@property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
 
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 
@@ -68,9 +68,8 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
-- (void)openFullScreen: (BOOL)openFullScreen;
-- (void)closeFullScreen;
-- (void)toggleFullscreen;
+- (void)openFullscreen;
+- (void)closeFullscreen;
 - (void)checkDeviceStatus;
 
 // Kaltura Player External API

@@ -7,33 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF65482618C4BD6500759F64 /* PlayerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA731182F9E31005B3B24 /* PlayerSDK.m */; };
-		BF65482718C4BD6500759F64 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
-		BF65482818C4BD6500759F64 /* PlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */; };
-		BF65482918C4BD6500759F64 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA75B182F9EB6005B3B24 /* NSObject+SBJSON.m */; };
-		BF65482A18C4BD6500759F64 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA75D182F9EB7005B3B24 /* NSString+SBJSON.m */; };
-		BF65482B18C4BD6500759F64 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA75F182F9EB7005B3B24 /* SBJSON.m */; };
-		BF65482C18C4BD6500759F64 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA761182F9EB7005B3B24 /* SBJsonBase.m */; };
-		BF65482D18C4BD6500759F64 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA763182F9EB7005B3B24 /* SBJsonParser.m */; };
-		BF65482E18C4BD6500759F64 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA765182F9EB7005B3B24 /* SBJsonWriter.m */; };
-		BF65482F18C4BD6500759F64 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		BF65483118C4BD6500759F64 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927ECF18BD021A006667CA /* libz.dylib */; };
-		BF65483218C4BD6500759F64 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
-		BF65483318C4BD6500759F64 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
-		BF65483418C4BD6500759F64 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA775182FA012005B3B24 /* UIKit.framework */; };
-		BF65483518C4BD6500759F64 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
-		BF65483618C4BD6500759F64 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EC518BCDB07006667CA /* libWViPhoneAPI.a */; };
-		BF65483818C4BD6500759F64 /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
-		BF65483918C4BD6500759F64 /* JSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA759182F9EB6005B3B24 /* JSON.h */; };
-		BF65483A18C4BD6500759F64 /* NSObject+SBJSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA75A182F9EB6005B3B24 /* NSObject+SBJSON.h */; };
-		BF65483B18C4BD6500759F64 /* NSString+SBJSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA75C182F9EB7005B3B24 /* NSString+SBJSON.h */; };
-		BF65483C18C4BD6500759F64 /* SBJsonBase.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA760182F9EB7005B3B24 /* SBJsonBase.h */; };
-		BF65483D18C4BD6500759F64 /* SBJsonParser.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA762182F9EB7005B3B24 /* SBJsonParser.h */; };
-		BF65483E18C4BD6500759F64 /* SBJsonWriter.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA764182F9EB7005B3B24 /* SBJsonWriter.h */; };
-		BF65483F18C4BD6500759F64 /* SBJSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA75E182F9EB7005B3B24 /* SBJSON.h */; };
-		BF65484018C4BD6500759F64 /* PlayerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */; };
-		BF65484118C4BD6500759F64 /* PlayerControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */; };
-		BF65484218C4BD6500759F64 /* PlayerSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA72F182F9E31005B3B24 /* PlayerSDK.h */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
 		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
@@ -67,9 +40,9 @@
 		BFFFA771182F9EB7005B3B24 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA765182F9EB7005B3B24 /* SBJsonWriter.m */; };
 		BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA775182FA012005B3B24 /* UIKit.framework */; };
 		BFFFA872182FB834005B3B24 /* PlayerControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */; };
-		BFFFA875182FB8DD005B3B24 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
-		BFFFA876182FB8DD005B3B24 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */; };
-		BFFFA87A182FC166005B3B24 /* PlayerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */; };
+		BFFFA875182FB8DD005B3B24 /* KalPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* KalPlayerViewController.m */; settings = {COMPILER_FLAGS = "-fobjc-arc"; }; };
+		BFFFA876182FB8DD005B3B24 /* KalPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA874182FB8DD005B3B24 /* KalPlayerViewController.m */; };
+		BFFFA87A182FC166005B3B24 /* KalPlayerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA873182FB8DD005B3B24 /* KalPlayerViewController.h */; };
 		BFFFA87F182FC44D005B3B24 /* SBJSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA75E182F9EB7005B3B24 /* SBJSON.h */; };
 		BFFFA880182FC46B005B3B24 /* JSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA759182F9EB6005B3B24 /* JSON.h */; };
 		BFFFA881182FC46B005B3B24 /* NSObject+SBJSON.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA75A182F9EB6005B3B24 /* NSObject+SBJSON.h */; };
@@ -90,26 +63,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		BF65483718C4BD6500759F64 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-				BF65483818C4BD6500759F64 /* WVSettings.h in CopyFiles */,
-				BF65483918C4BD6500759F64 /* JSON.h in CopyFiles */,
-				BF65483A18C4BD6500759F64 /* NSObject+SBJSON.h in CopyFiles */,
-				BF65483B18C4BD6500759F64 /* NSString+SBJSON.h in CopyFiles */,
-				BF65483C18C4BD6500759F64 /* SBJsonBase.h in CopyFiles */,
-				BF65483D18C4BD6500759F64 /* SBJsonParser.h in CopyFiles */,
-				BF65483E18C4BD6500759F64 /* SBJsonWriter.h in CopyFiles */,
-				BF65483F18C4BD6500759F64 /* SBJSON.h in CopyFiles */,
-				BF65484018C4BD6500759F64 /* PlayerViewController.h in CopyFiles */,
-				BF65484118C4BD6500759F64 /* PlayerControlsWebView.h in CopyFiles */,
-				BF65484218C4BD6500759F64 /* PlayerSDK.h in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BFFFA725182F9E31005B3B24 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 12;
@@ -126,7 +79,7 @@
 				BFFFA884182FC46B005B3B24 /* SBJsonParser.h in CopyFiles */,
 				BFFFA885182FC46B005B3B24 /* SBJsonWriter.h in CopyFiles */,
 				BFFFA87F182FC44D005B3B24 /* SBJSON.h in CopyFiles */,
-				BFFFA87A182FC166005B3B24 /* PlayerViewController.h in CopyFiles */,
+				BFFFA87A182FC166005B3B24 /* KalPlayerViewController.h in CopyFiles */,
 				BFFFA872182FB834005B3B24 /* PlayerControlsWebView.h in CopyFiles */,
 				BFFFA730182F9E31005B3B24 /* PlayerSDK.h in CopyFiles */,
 			);
@@ -135,7 +88,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BF65484618C4BD6500759F64 /* libPlayerSDK widevine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPlayerSDK widevine.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
 		BF927EBA18BCD719006667CA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		BF927EBC18BCD722006667CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -172,24 +124,11 @@
 		BFFFA764182F9EB7005B3B24 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		BFFFA765182F9EB7005B3B24 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		BFFFA775182FA012005B3B24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
-		BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
+		BFFFA873182FB8DD005B3B24 /* KalPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalPlayerViewController.h; sourceTree = "<group>"; };
+		BFFFA874182FB8DD005B3B24 /* KalPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalPlayerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		BF65483018C4BD6500759F64 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BF65483118C4BD6500759F64 /* libz.dylib in Frameworks */,
-				BF65483218C4BD6500759F64 /* SystemConfiguration.framework in Frameworks */,
-				BF65483318C4BD6500759F64 /* libstdc++.dylib in Frameworks */,
-				BF65483418C4BD6500759F64 /* UIKit.framework in Frameworks */,
-				BF65483518C4BD6500759F64 /* Foundation.framework in Frameworks */,
-				BF65483618C4BD6500759F64 /* libWViPhoneAPI.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BFFFA724182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -252,7 +191,6 @@
 			children = (
 				BFFFA727182F9E31005B3B24 /* libPlayerSDK.a */,
 				BFFFA738182F9E31005B3B24 /* PlayerSDKTests.octest */,
-				BF65484618C4BD6500759F64 /* libPlayerSDK widevine.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -273,7 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				BFA6F0D918BB796500F7C78F /* WideVine */,
-				BFFFA877182FB8E4005B3B24 /* PlayerViewController */,
+				BFFFA877182FB8E4005B3B24 /* KalPlayerViewController */,
 				BFFFA773182F9ECF005B3B24 /* JSON */,
 				BFFFA774182F9F10005B3B24 /* PlayerControlsWebView */,
 				BFFFA88C182FCE1B005B3B24 /* PlayerSDK */,
@@ -339,13 +277,13 @@
 			name = PlayerControlsWebView;
 			sourceTree = "<group>";
 		};
-		BFFFA877182FB8E4005B3B24 /* PlayerViewController */ = {
+		BFFFA877182FB8E4005B3B24 /* KalPlayerViewController */ = {
 			isa = PBXGroup;
 			children = (
-				BFFFA873182FB8DD005B3B24 /* PlayerViewController.h */,
-				BFFFA874182FB8DD005B3B24 /* PlayerViewController.m */,
+				BFFFA873182FB8DD005B3B24 /* KalPlayerViewController.h */,
+				BFFFA874182FB8DD005B3B24 /* KalPlayerViewController.m */,
 			);
-			name = PlayerViewController;
+			name = KalPlayerViewController;
 			path = ..;
 			sourceTree = "<group>";
 		};
@@ -361,23 +299,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BF65482418C4BD6500759F64 /* PlayerSDK widevine */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BF65484318C4BD6500759F64 /* Build configuration list for PBXNativeTarget "PlayerSDK widevine" */;
-			buildPhases = (
-				BF65482518C4BD6500759F64 /* Sources */,
-				BF65483018C4BD6500759F64 /* Frameworks */,
-				BF65483718C4BD6500759F64 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "PlayerSDK widevine";
-			productName = PlayerSDK;
-			productReference = BF65484618C4BD6500759F64 /* libPlayerSDK widevine.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		BFFFA726182F9E31005B3B24 /* PlayerSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "PlayerSDK" */;
@@ -437,7 +358,6 @@
 			targets = (
 				BFFFA726182F9E31005B3B24 /* PlayerSDK */,
 				BFFFA737182F9E31005B3B24 /* PlayerSDKTests */,
-				BF65482418C4BD6500759F64 /* PlayerSDK widevine */,
 			);
 		};
 /* End PBXProject section */
@@ -470,23 +390,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		BF65482518C4BD6500759F64 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BF65482618C4BD6500759F64 /* PlayerSDK.m in Sources */,
-				BF65482718C4BD6500759F64 /* WVSettings.m in Sources */,
-				BF65482818C4BD6500759F64 /* PlayerControlsWebView.m in Sources */,
-				BF65482918C4BD6500759F64 /* NSObject+SBJSON.m in Sources */,
-				BF65482A18C4BD6500759F64 /* NSString+SBJSON.m in Sources */,
-				BF65482B18C4BD6500759F64 /* SBJSON.m in Sources */,
-				BF65482C18C4BD6500759F64 /* SBJsonBase.m in Sources */,
-				BF65482D18C4BD6500759F64 /* SBJsonParser.m in Sources */,
-				BF65482E18C4BD6500759F64 /* SBJsonWriter.m in Sources */,
-				BF65482F18C4BD6500759F64 /* PlayerViewController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		BFFFA723182F9E31005B3B24 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -501,7 +404,7 @@
 				BFFFA76C182F9EB7005B3B24 /* SBJsonBase.m in Sources */,
 				BFFFA76E182F9EB7005B3B24 /* SBJsonParser.m in Sources */,
 				BFFFA770182F9EB7005B3B24 /* SBJsonWriter.m in Sources */,
-				BFFFA875182FB8DD005B3B24 /* PlayerViewController.m in Sources */,
+				BFFFA875182FB8DD005B3B24 /* KalPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,7 +420,7 @@
 				BFFFA76D182F9EB7005B3B24 /* SBJsonBase.m in Sources */,
 				BFFFA76F182F9EB7005B3B24 /* SBJsonParser.m in Sources */,
 				BFFFA771182F9EB7005B3B24 /* SBJsonWriter.m in Sources */,
-				BFFFA876182FB8DD005B3B24 /* PlayerViewController.m in Sources */,
+				BFFFA876182FB8DD005B3B24 /* KalPlayerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,78 +446,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		BF65484418C4BD6500759F64 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = (
-					"$(ARCHS_STANDARD_32_BIT)",
-					armv7,
-				);
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
-				DSTROOT = /tmp/PlayerSDK.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-				);
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					widevine,
-				);
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
-					"DEBUG=1",
-					widevine,
-				);
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/PlayerSDK",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "PlayerSDK widevine";
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
-			};
-			name = Debug;
-		};
-		BF65484518C4BD6500759F64 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
-				DSTROOT = /tmp/PlayerSDK.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-				);
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = widevine;
-				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = widevine;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/PlayerSDK",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "PlayerSDK widevine";
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
-			};
-			name = Release;
-		};
 		BFFFA74A182F9E31005B3B24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -789,15 +620,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BF65484318C4BD6500759F64 /* Build configuration list for PBXNativeTarget "PlayerSDK widevine" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BF65484418C4BD6500759F64 /* Debug */,
-				BF65484518C4BD6500759F64 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "PlayerSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

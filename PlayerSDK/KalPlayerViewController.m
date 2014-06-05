@@ -1,5 +1,5 @@
 //
-//  PlayerViewController.m
+//  KalPlayerViewController.m
 //  HelloWorld
 //
 //  Created by Eliza Sapir on 9/11/13.
@@ -10,7 +10,7 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
-#import "PlayerViewController.h"
+#import "KalPlayerViewController.h"
 
 #import "KPEventListener.h"
 #if !(TARGET_IPHONE_SIMULATOR)
@@ -18,7 +18,7 @@
 #import "WViPhoneAPI.h"
 #endif
 
-@implementation PlayerViewController {
+@implementation KalPlayerViewController {
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer, isPlayCalled;
@@ -488,7 +488,19 @@
     NSLog( @"checkOrientationStatus Exit" );
 }
 
-- (void)toggleFullscreen{
+- (void)openFullscreen {
+    if ( !isFullScreen ) {
+        [self toggleFullscreen];
+    }
+}
+
+- (void)closeFullscreen {
+    if ( isFullScreen ) {
+        [self toggleFullscreen];
+    }
+}
+
+- (void)toggleFullscreen {
     NSLog( @"toggleFullscreen Enter" );
     
     isCloseFullScreenByTap = YES;
