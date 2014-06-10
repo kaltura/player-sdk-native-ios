@@ -61,6 +61,7 @@
     
     // Kaltura KDP API Listeners Dictionary
     kPlayerEventsDict = [NSMutableDictionary new];
+    kPlayerEvaluatedDict = [NSMutableDictionary new];
     
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
@@ -251,7 +252,7 @@
     
     if ( listenersArr != nil ) {
         for (KPEventListener *e in listenersArr) {
-            e.eventListener();
+            e.eventListener(nil);
         }
     }
     
@@ -293,16 +294,11 @@
     NSLog(@"asyncEvaluate Exit");
 }
 
-- (void) notifyKPlayerEvaluated: (NSString *)name {
+- (void) notifyKPlayerEvaluated: (NSArray *)arr {
     NSLog(@"notifyKPlayerEvaluated Enter");
     
-    NSArray *listenersArr = [kPlayerEvaluatedDict objectForKey: name];
-    
-    if ( listenersArr != nil ) {
-        for (KPEventListener *e in listenersArr) {
-            e.eventListener();
-        }
-    }
+    KPEventListener *listener = [kPlayerEvaluatedDict objectForKey: [arr objectAtIndex: 0] ];
+    listener.eventListener( [arr objectAtIndex: 1] );
     
     NSLog(@"notifyKPlayerEvaluated Exit");
 }

@@ -12,15 +12,15 @@
 @synthesize eventListener = _eventListener;
 @synthesize name = _name;
 
--(id) initWithBlock:(KPEventListenerBlock)eventListener andName:(NSString *)name {
+- (id)initWithBlock: (KPEventListenerBlock)eventListener andName: (NSString *)name {
     self = [super init];
     _eventListener = eventListener;
     _name = name;
     return self;
 }
 
-+(KPEventListener *) eventListener:(KPEventListenerBlock)block withName:(NSString *)name {
-    return [[KPEventListener alloc] initWithBlock:block andName:name];
++ (KPEventListener *)eventListener: (KPEventListenerBlock)block withName: (NSString *)name {
+    return [ [KPEventListener alloc] initWithBlock: block andName: name ];
 }
 
 @end

@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-typedef void (^KPEventListenerBlock)();
+typedef void (^KPEventListenerBlock)(NSString *value);
 @interface KPEventListener : NSObject
 
 @property (nonatomic, readonly) KPEventListenerBlock eventListener;
 @property (nonatomic, readonly) NSString *name;
 
--(id) initWithBlock:(KPEventListenerBlock)eventListener andName:(NSString *)name;
-+(KPEventListener *) eventListener:(KPEventListenerBlock)block withName:(NSString *)name;
+- (id) initWithBlock: (KPEventListenerBlock)eventListener andName: (NSString *)name;
++ (KPEventListener *) eventListener: (KPEventListenerBlock)block withName: (NSString *)name;
 
 @end
