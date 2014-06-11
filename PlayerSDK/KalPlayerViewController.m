@@ -102,6 +102,8 @@
     // Before player appears the user must set the kaltura iframe url
     if (delegate && [delegate respondsToSelector:@selector(getInitialKIframeUrl)]) {
         NSURL *url = [delegate getInitialKIframeUrl];
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject: [url absoluteString] forKey:@"iframe_url"];
         [ self.webView loadRequest: [ NSURLRequest requestWithURL:  url] ];
     } else {
         @throw [NSException exceptionWithName:NSGenericException reason:@"Delegate MUST be set and respond to selector -getInitialKIframeUrl !" userInfo:nil];
