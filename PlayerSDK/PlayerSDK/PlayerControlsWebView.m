@@ -86,7 +86,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         isAd = YES;
         
         return NO;
-    } else if( isAd ){
+    } else if( isAd &&
+              !( [ requestString isEqualToString: [ [NSUserDefaults standardUserDefaults] objectForKey: @"iframe_url" ] ] ) ){
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     }

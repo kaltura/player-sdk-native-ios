@@ -1,5 +1,5 @@
 //
-//  PlayerViewController.m
+//  KalPlayerViewController.m
 //  HelloWorld
 //
 //  Created by Eliza Sapir on 9/11/13.
@@ -10,7 +10,7 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
-#import "PlayerViewController.h"
+#import "KalPlayerViewController.h"
 
 #import "KPEventListener.h"
 #if !(TARGET_IPHONE_SIMULATOR)
@@ -18,7 +18,7 @@
 #import "WViPhoneAPI.h"
 #endif
 
-@implementation PlayerViewController {
+@implementation KalPlayerViewController {
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer, isPlayCalled;
@@ -46,11 +46,28 @@
 }
 
 @synthesize webView, player;
-@synthesize delegate;
+@synthesize nativComponentDelegate;
 @synthesize jsCallbackReadyHandler;
+@synthesize delegate;
+
+- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView {
+    self = [super init];
+    [self.view setFrame:frame];
+    originalViewControllerFrame = frame;
+    [parentView addSubview:self.view];
+    return self;
+}
 
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
+    
+    // Adding a suffix to user agent in order to identify native media space application
+    NSString* suffixUA = @"kalturaNativeCordovaPlayer";
+    UIWebView* wv = [[UIWebView alloc] initWithFrame:CGRectZero];
+    NSString* defaultUA = [wv stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
+    NSString* finalUA = [defaultUA stringByAppendingString:suffixUA];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:finalUA, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
     
 #if !(TARGET_IPHONE_SIMULATOR)
     [self initWideVineParams];
@@ -78,9 +95,39 @@
     NSLog(@"View Did Load Exit");
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    NSLog(@"viewDidAppear Enter");
+    
+    [super viewDidAppear:animated];
+    
+    if( [[NSUserDefaults standardUserDefaults] objectForKey: @"iframe_url"] != nil ) {
+        return;
+    }
+    
+    // Before player appears the user must set the kaltura iframe url
+    if ( delegate && [delegate respondsToSelector: @selector(getInitialKIframeUrl)] ) {
+        NSURL *url = [delegate getInitialKIframeUrl];
+        [self setWebViewURL: [NSString stringWithFormat: @"%@", url]];
+    } else {
+        @throw [NSException exceptionWithName:NSGenericException reason:@"Delegate MUST be set and respond to selector -getInitialKIframeUrl !" userInfo:nil];
+        return;
+    }
+    
+    NSLog(@"viewDidAppear Exit");
+}
+
+- (void) callSelectorOnDelegate:(SEL) selector {
+    if (delegate && [delegate respondsToSelector:selector]) {
+        #pragma clang diagnostic push
+        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            [delegate performSelector:selector];
+        #pragma clang diagnostic pop
+    }
+}
+
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
-    
+
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
@@ -123,6 +170,8 @@
 - (void)setWebViewURL: (NSString *)iframeUrl {
     NSLog( @"setWebViewURL Enter" );
     
+    [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
+    
     iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     [ self.webView loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
@@ -164,6 +213,8 @@
         [self.player play];
     }
     
+    [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
+    
     NSLog( @"Play Player Exit" );
 }
 
@@ -175,6 +226,8 @@
     if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
         [self.player pause];
     }
+    
+    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
     
     NSLog(@"Pause Player Exit");
 }
@@ -194,6 +247,8 @@
         isWideVineReady = NO;
     }
 #endif
+    
+    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
     
     NSLog(@"Stop Player Exit");
 }
@@ -435,7 +490,19 @@
     NSLog( @"checkOrientationStatus Exit" );
 }
 
-- (void)toggleFullscreen{
+- (void)openFullscreen {
+    if ( !isFullScreen ) {
+        [self toggleFullscreen];
+    }
+}
+
+- (void)closeFullscreen {
+    if ( isFullScreen ) {
+        [self toggleFullscreen];
+    }
+}
+
+- (void)toggleFullscreen {
     NSLog( @"toggleFullscreen Enter" );
     
     isCloseFullScreenByTap = YES;
