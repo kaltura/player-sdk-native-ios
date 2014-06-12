@@ -705,8 +705,7 @@
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/PlayerSDK",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK",
+					.,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -735,8 +734,7 @@
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/PlayerSDK",
-					"/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK",
+					.,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
