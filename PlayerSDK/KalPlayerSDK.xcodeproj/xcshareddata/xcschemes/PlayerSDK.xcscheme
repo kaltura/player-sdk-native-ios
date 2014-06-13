@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0500"
+   LastUpgradeVersion = "0510"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BF65482418C4BD6500759F64"
-               BuildableName = "libPlayerSDK widevine.a"
-               BlueprintName = "PlayerSDK widevine"
+               BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
+               BuildableName = "libPlayerSDK.a"
+               BlueprintName = "PlayerSDK"
                ReferencedContainer = "container:PlayerSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BFFFA737182F9E31005B3B24"
+               BuildableName = "PlayerSDKTests.octest"
+               BlueprintName = "PlayerSDKTests"
+               ReferencedContainer = "container:PlayerSDK.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
