@@ -90,6 +90,11 @@
     UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
     [self.view addGestureRecognizer:pinch];
     
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleEnteredBackground:)
+                                                 name: UIApplicationDidEnterBackgroundNotification
+                                               object: nil];
+    
     [super viewDidLoad];
     
     NSLog(@"View Did Load Exit");
@@ -116,7 +121,15 @@
     NSLog(@"viewDidAppear Exit");
 }
 
-- (void) callSelectorOnDelegate:(SEL) selector {
+- (void)handleEnteredBackground: (NSNotification *)not {
+    NSLog(@"handleEnteredBackground Enter");
+    
+    [self sendNotification: @"doPause" andNotificationBody: nil];
+    
+    NSLog(@"handleEnteredBackground Exit");
+}
+
+- (void)callSelectorOnDelegate:(SEL) selector {
     if (delegate && [delegate respondsToSelector:selector]) {
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
