@@ -14,7 +14,7 @@
 //
 
 #import <MediaPlayer/MediaPlayer.h>
-#import "PlayerSDK/PlayerControlsWebView.h"
+#import "PlayerControlsWebView.h"
 
 typedef enum{
     // Player Content Source Url
