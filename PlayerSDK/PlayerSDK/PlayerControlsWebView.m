@@ -28,9 +28,8 @@
 #import "PlayerControlsWebView.h"
 
 
-@implementation PlayerControlsWebView {
-    BOOL isAd;
-}
+@implementation PlayerControlsWebView
+
 @synthesize playerControlsWebViewDelegate;
 
 - (id)initWithFrame:(CGRect)frame
@@ -70,8 +69,6 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
 	NSString *requestString = [[request URL] absoluteString];
     
-    //NSLog(@"request : %@",requestString);
-    
     if ([requestString hasPrefix:@"js-frame:"]) {
         
         NSArray *components = [requestString componentsSeparatedByString:@":"];
@@ -83,14 +80,25 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         NSArray *args = (NSArray*)[json objectWithString:argsAsString error:nil];
         
         [self handleCall:function callbackId:callbackId args:args];
-        isAd = YES;
         
         return NO;
-    } else if( isAd &&
-              !( [ requestString isEqualToString: [ [NSUserDefaults standardUserDefaults] objectForKey: @"iframe_url" ] ] ) ){
+    } else if( ![self checkIsIframeUrl: requestString] ){
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     }
+    
+    return YES;
+}
+
+- (BOOL)checkIsIframeUrl: (NSString *)requestString {
+    
+    NSLog(@"checkIsIframeUrl Enter");
+    
+    if ( [requestString rangeOfString: @"mwEmbedFrame"].location == NSNotFound ) {
+        return NO;
+    }
+
+    NSLog(@"checkIsIframeUrl Enter");
     
     return YES;
 }
@@ -113,7 +121,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     NSString *resultArrayString = [json stringWithObject:resultArray allowScalar:YES error:nil];
     
-    [self stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NativeBridge.resultForCallback(%d,%@);",callbackId,resultArrayString]];
+    [self stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"NativeBridge.resultForCallback(%d,%@);", callbackId, resultArrayString]];
 }
 
 // Implements all you native function in this one, by matching 'functionName' and parsing 'args'
@@ -128,7 +136,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     if (!alertCallbackId) return;
     
-    NSLog(@"prompt result : %d",buttonIndex);
+    NSLog(@"prompt result : %d", buttonIndex);
     
     BOOL result = buttonIndex==1?YES:NO;
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];
