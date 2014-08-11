@@ -71,6 +71,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)openFullscreen;
 - (void)closeFullscreen;
 - (void)checkDeviceStatus;
+- (void)setNativeFullscreen;
 
 // Kaltura Player External API
 - (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;

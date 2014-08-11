@@ -503,6 +503,34 @@
     NSLog( @"checkOrientationStatus Exit" );
 }
 
+- (void)setNativeFullscreen {
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+}
+
+- (void)deviceOrientationDidChange {
+    CGRect mainFrame;
+    
+     if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
+        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
+    } else {
+        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
+    }
+    
+    [self.view setFrame: mainFrame];
+    
+    [UIApplication sharedApplication].statusBarHidden = YES;
+    
+    [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.webView setFrame: self.player.view.frame];
+    [ self.view setTransform: fullScreenPlayerTransform ];
+    
+    [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
+    [self updatePlayerLayout];
+    [self checkDeviceStatus];
+}
+
 - (void)openFullscreen {
     if ( !isFullScreen ) {
         [self toggleFullscreen];
