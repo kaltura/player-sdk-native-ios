@@ -464,7 +464,9 @@
     }else{
         if (deviceOrientation == UIDeviceOrientationUnknown ||
             deviceOrientation == UIDeviceOrientationPortrait ||
-            deviceOrientation == UIDeviceOrientationPortraitUpsideDown) {
+            deviceOrientation == UIDeviceOrientationPortraitUpsideDown ||
+            deviceOrientation == UIDeviceOrientationFaceDown ||
+            deviceOrientation == UIDeviceOrientationFaceUp) {
             [self setOrientationTransform: 90];
         }else{
             if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
