@@ -21,9 +21,10 @@
 		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BFE34299199BE70600C63F74 /* KALChromecastPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KALChromecastPlayer.m */; };
 		BFE342A0199BE78900C63F74 /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
-		BFE3E2EF199CAA9E00666F32 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE3E2EE199CAA9E00666F32 /* GoogleCast.framework */; };
 		BFE3E2F0199CAB1200666F32 /* KALChromecastPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KALChromecastPlayer.h */; };
 		BFE3E2F1199CAB2C00666F32 /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
+		BFE3E2F5199CB40400666F32 /* KALPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB741D6199BA3CD001E9DDD /* KALPlayer.h */; };
+		BFE3E2FC199CC9AB00666F32 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */; };
 		BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
 		BFFFA730182F9E31005B3B24 /* PlayerSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA72F182F9E31005B3B24 /* PlayerSDK.h */; };
 		BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA731182F9E31005B3B24 /* PlayerSDK.m */; };
@@ -74,6 +75,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BFE3E2F5199CB40400666F32 /* KALPlayer.h in CopyFiles */,
 				BFE3E2F1199CAB2C00666F32 /* ChromecastDeviceController.h in CopyFiles */,
 				BFE3E2F0199CAB1200666F32 /* KALChromecastPlayer.h in CopyFiles */,
 				BFA2DC12194B349F00831A71 /* KalPlayerViewController.h in CopyFiles */,
@@ -116,7 +118,7 @@
 		BFE3429D199BE78900C63F74 /* icon-cast-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-connected@2x.png"; sourceTree = SOURCE_ROOT; };
 		BFE3429E199BE78900C63F74 /* icon-cast-identified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified.png"; sourceTree = SOURCE_ROOT; };
 		BFE3429F199BE78900C63F74 /* icon-cast-identified@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified@2x.png"; sourceTree = SOURCE_ROOT; };
-		BFE3E2EE199CAA9E00666F32 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
+		BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libKalPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKalPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* KalPlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KalPlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -151,7 +153,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFE3E2EF199CAA9E00666F32 /* GoogleCast.framework in Frameworks */,
+				BFE3E2FC199CC9AB00666F32 /* GoogleCast.framework in Frameworks */,
 				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
 				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
 				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
@@ -250,7 +252,7 @@
 		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BFE3E2EE199CAA9E00666F32 /* GoogleCast.framework */,
+				BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */,
 				BF927ECF18BD021A006667CA /* libz.dylib */,
 				BF927EBC18BCD722006667CA /* SystemConfiguration.framework */,
 				BF927EBA18BCD719006667CA /* libstdc++.dylib */,

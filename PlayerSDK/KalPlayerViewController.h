@@ -65,7 +65,8 @@ typedef void (^JSCallbackReadyHandler)();
 
 - (void)didLoad;
 - (CGFloat) getCurrentTime;
--(void)notifyLayoutReady;
+- (void)notifyLayoutReady;
+- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 
 @end
 
