@@ -17,7 +17,13 @@
 		BFA2DBF81949F29B00831A71 /* KalPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KalPlayerViewController.m */; };
 		BFA2DC12194B349F00831A71 /* KalPlayerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KalPlayerViewController.h */; };
 		BFA844771931160600F47E02 /* KPEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA844761931160600F47E02 /* KPEventListener.m */; };
+		BFB741D8199BA3CD001E9DDD /* KALPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KALPlayer.m */; };
 		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
+		BFE34299199BE70600C63F74 /* KALChromecastPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KALChromecastPlayer.m */; };
+		BFE342A0199BE78900C63F74 /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
+		BFE3E2EF199CAA9E00666F32 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE3E2EE199CAA9E00666F32 /* GoogleCast.framework */; };
+		BFE3E2F0199CAB1200666F32 /* KALChromecastPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KALChromecastPlayer.h */; };
+		BFE3E2F1199CAB2C00666F32 /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 		BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
 		BFFFA730182F9E31005B3B24 /* PlayerSDK.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA72F182F9E31005B3B24 /* PlayerSDK.h */; };
 		BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA731182F9E31005B3B24 /* PlayerSDK.m */; };
@@ -68,6 +74,8 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BFE3E2F1199CAB2C00666F32 /* ChromecastDeviceController.h in CopyFiles */,
+				BFE3E2F0199CAB1200666F32 /* KALChromecastPlayer.h in CopyFiles */,
 				BFA2DC12194B349F00831A71 /* KalPlayerViewController.h in CopyFiles */,
 				BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */,
 				BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */,
@@ -97,7 +105,18 @@
 		BFA2DBF71949F29B00831A71 /* KalPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalPlayerViewController.m; sourceTree = "<group>"; };
 		BFA844751931160600F47E02 /* KPEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPEventListener.h; sourceTree = "<group>"; };
 		BFA844761931160600F47E02 /* KPEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPEventListener.m; sourceTree = "<group>"; };
+		BFB741D6199BA3CD001E9DDD /* KALPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KALPlayer.h; sourceTree = "<group>"; };
+		BFB741D7199BA3CD001E9DDD /* KALPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KALPlayer.m; sourceTree = "<group>"; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
+		BFE34297199BE70600C63F74 /* KALChromecastPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KALChromecastPlayer.h; sourceTree = "<group>"; };
+		BFE34298199BE70600C63F74 /* KALChromecastPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KALChromecastPlayer.m; sourceTree = "<group>"; };
+		BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromecastDeviceController.h; sourceTree = SOURCE_ROOT; };
+		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
+		BFE3429C199BE78900C63F74 /* icon-cast-connected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-connected.png"; sourceTree = SOURCE_ROOT; };
+		BFE3429D199BE78900C63F74 /* icon-cast-connected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-connected@2x.png"; sourceTree = SOURCE_ROOT; };
+		BFE3429E199BE78900C63F74 /* icon-cast-identified.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified.png"; sourceTree = SOURCE_ROOT; };
+		BFE3429F199BE78900C63F74 /* icon-cast-identified@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-cast-identified@2x.png"; sourceTree = SOURCE_ROOT; };
+		BFE3E2EE199CAA9E00666F32 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libKalPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKalPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* KalPlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KalPlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -132,6 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFE3E2EF199CAA9E00666F32 /* GoogleCast.framework in Frameworks */,
 				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
 				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
 				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
@@ -174,6 +194,39 @@
 			name = WideVine;
 			sourceTree = "<group>";
 		};
+		BFE342A1199BE79000C63F74 /* ChromecastDeviceController */ = {
+			isa = PBXGroup;
+			children = (
+				BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */,
+				BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */,
+				BFE3429C199BE78900C63F74 /* icon-cast-connected.png */,
+				BFE3429D199BE78900C63F74 /* icon-cast-connected@2x.png */,
+				BFE3429E199BE78900C63F74 /* icon-cast-identified.png */,
+				BFE3429F199BE78900C63F74 /* icon-cast-identified@2x.png */,
+			);
+			name = ChromecastDeviceController;
+			sourceTree = "<group>";
+		};
+		BFE3E2F2199CAF6200666F32 /* KALChromecastPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				BFE34297199BE70600C63F74 /* KALChromecastPlayer.h */,
+				BFE34298199BE70600C63F74 /* KALChromecastPlayer.m */,
+			);
+			name = KALChromecastPlayer;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		BFE3E2F3199CAFCF00666F32 /* KALPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				BFB741D6199BA3CD001E9DDD /* KALPlayer.h */,
+				BFB741D7199BA3CD001E9DDD /* KALPlayer.m */,
+			);
+			name = KALPlayer;
+			path = ..;
+			sourceTree = "<group>";
+		};
 		BFFFA71E182F9E31005B3B24 = {
 			isa = PBXGroup;
 			children = (
@@ -197,6 +250,7 @@
 		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BFE3E2EE199CAA9E00666F32 /* GoogleCast.framework */,
 				BF927ECF18BD021A006667CA /* libz.dylib */,
 				BF927EBC18BCD722006667CA /* SystemConfiguration.framework */,
 				BF927EBA18BCD719006667CA /* libstdc++.dylib */,
@@ -209,6 +263,9 @@
 		BFFFA72C182F9E31005B3B24 /* PlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				BFE3E2F3199CAFCF00666F32 /* KALPlayer */,
+				BFE3E2F2199CAF6200666F32 /* KALChromecastPlayer */,
+				BFE342A1199BE79000C63F74 /* ChromecastDeviceController */,
 				BFA6F0D918BB796500F7C78F /* WideVine */,
 				BFFFA877182FB8E4005B3B24 /* KalPlayerViewController */,
 				BFFFA773182F9ECF005B3B24 /* JSON */,
@@ -396,12 +453,15 @@
 				BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */,
 				BFA2DBF81949F29B00831A71 /* KalPlayerViewController.m in Sources */,
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
+				BFB741D8199BA3CD001E9DDD /* KALPlayer.m in Sources */,
+				BFE342A0199BE78900C63F74 /* ChromecastDeviceController.m in Sources */,
 				BFA844771931160600F47E02 /* KPEventListener.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */,
 				BFFFA766182F9EB7005B3B24 /* NSObject+SBJSON.m in Sources */,
 				BFFFA768182F9EB7005B3B24 /* NSString+SBJSON.m in Sources */,
 				BFFFA76A182F9EB7005B3B24 /* SBJSON.m in Sources */,
 				BFFFA76C182F9EB7005B3B24 /* SBJsonBase.m in Sources */,
+				BFE34299199BE70600C63F74 /* KALChromecastPlayer.m in Sources */,
 				BFFFA76E182F9EB7005B3B24 /* SBJsonParser.m in Sources */,
 				BFFFA770182F9EB7005B3B24 /* SBJsonWriter.m in Sources */,
 			);
@@ -532,6 +592,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -561,6 +622,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

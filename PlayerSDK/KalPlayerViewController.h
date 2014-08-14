@@ -33,6 +33,42 @@ typedef enum{
 typedef void (^JSCallbackReadyHandler)();
 
 @class KalPlayerViewController;
+
+@protocol KalturaPlayer <NSObject>
+
+@required
+@property (nonatomic) KalPlayerViewController *delegate;
+@property double currentPlaybackTime;
+@property(readonly) UIView * view;
+@property int controlStyle;
+@property(readonly) int playbackState;
+@property(readonly) int loadState;
+@property(readonly) BOOL isPreparedToPlay;
+@property(copy) NSURL *contentURL;
+
+- (void)setDelegate:(KalPlayerViewController *)delegate;
+- (void)pause;
+- (void)play;
+- (void)stop;
+- (id)view;
+- (double)currentPlaybackTime;
+- (int)controlStyle;
+- (int)playbackState;
+- (int)loadState;
+- (void)prepareToPlay;
+- (BOOL)isPreparedToPlay;
+- (void)setContentURL:(NSURL *)arg1;
+- (double)playableDuration;
+- (double)duration;
+
+@optional
+
+- (void)didLoad;
+- (CGFloat) getCurrentTime;
+-(void)notifyLayoutReady;
+
+@end
+
 @protocol KalPlayerViewControllerDelegate <NSObject>
 
 @required
@@ -47,15 +83,16 @@ typedef void (^JSCallbackReadyHandler)();
 
 @class NativeComponentPlugin;
 @class KPEventListener;
+
 @interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
-    MPMoviePlayerController *player;
+    id<KalturaPlayer> player;
     NativeComponentPlugin *nativComponentDelegate;
     id<KalPlayerViewControllerDelegate> delegate;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
-@property (nonatomic, strong) MPMoviePlayerController *player;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
+@property (nonatomic, strong) id<KalturaPlayer> player;
 @property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
 
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
@@ -72,6 +109,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)closeFullscreen;
 - (void)checkDeviceStatus;
 - (void)setNativeFullscreen;
+- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
 
 // Kaltura Player External API
 - (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;

@@ -147,7 +147,12 @@
         self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
         [self.webView setPlayerControlsWebViewDelegate: self];
         
-        self.player = [ [MPMoviePlayerController alloc] init ];
+//        self.player = [ [MPMoviePlayerController alloc] init ];
+        NSAssert(self.player, @"You MUST initilize and set player in order to make the view work!");
+// TODO: if there is no player add basice player
+//        if (!self.player) {
+//            self.player = [[basicPlayer alloc] init];
+//        }
         self.player.view.frame = playerViewFrame;
         
         // WebView initialize for supporting NativeComponent(html5 player view)
