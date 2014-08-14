@@ -48,7 +48,6 @@
 @synthesize webView, player;
 @synthesize nativComponentDelegate;
 @synthesize jsCallbackReadyHandler;
-@synthesize delegate;
 
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView {
     self = [super init];
@@ -110,8 +109,8 @@
     }
     
     // Before player appears the user must set the kaltura iframe url
-    if ( delegate && [delegate respondsToSelector: @selector(getInitialKIframeUrl)] ) {
-        NSURL *url = [delegate getInitialKIframeUrl];
+    if ( kalPlayerViewControllerDelegate && [kalPlayerViewControllerDelegate respondsToSelector: @selector(getInitialKIframeUrl)] ) {
+        NSURL *url = [kalPlayerViewControllerDelegate getInitialKIframeUrl];
         [self setWebViewURL: [NSString stringWithFormat: @"%@", url]];
     } else {
         @throw [NSException exceptionWithName:NSGenericException reason:@"Delegate MUST be set and respond to selector -getInitialKIframeUrl !" userInfo:nil];
@@ -130,10 +129,10 @@
 }
 
 - (void)callSelectorOnDelegate:(SEL) selector {
-    if (delegate && [delegate respondsToSelector:selector]) {
+    if (kalPlayerViewControllerDelegate && [kalPlayerViewControllerDelegate respondsToSelector:selector]) {
         #pragma clang diagnostic push
         #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [delegate performSelector:selector];
+            [kalPlayerViewControllerDelegate performSelector:selector];
         #pragma clang diagnostic pop
     }
 }

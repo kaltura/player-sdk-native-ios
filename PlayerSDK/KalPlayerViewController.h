@@ -37,7 +37,7 @@ typedef void (^JSCallbackReadyHandler)();
 @protocol KalturaPlayer <NSObject>
 
 @required
-@property (nonatomic) KalPlayerViewController *delegate;
+@property (nonatomic) id<KalturaPlayer> delegate;
 @property double currentPlaybackTime;
 @property(readonly) UIView * view;
 @property int controlStyle;
@@ -46,7 +46,7 @@ typedef void (^JSCallbackReadyHandler)();
 @property(readonly) BOOL isPreparedToPlay;
 @property(copy) NSURL *contentURL;
 
-- (void)setDelegate:(KalPlayerViewController *)delegate;
+
 - (void)pause;
 - (void)play;
 - (void)stop;
@@ -67,12 +67,15 @@ typedef void (^JSCallbackReadyHandler)();
 - (CGFloat) getCurrentTime;
 - (void)notifyLayoutReady;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
+- (void)setWebViewURL: (NSString *)iframeUrl;
+- (void)setNativeFullscreen;
 
 @end
 
 @protocol KalPlayerViewControllerDelegate <NSObject>
 
 @required
+@property (nonatomic, retain) id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;
 -(NSURL *)getInitialKIframeUrl;
 
 @optional
@@ -88,13 +91,12 @@ typedef void (^JSCallbackReadyHandler)();
 @interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     id<KalturaPlayer> player;
     NativeComponentPlugin *nativComponentDelegate;
-    id<KalPlayerViewControllerDelegate> delegate;
+    id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;
 }
 
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
 @property (nonatomic, strong) id<KalturaPlayer> player;
-@property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
 
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 
