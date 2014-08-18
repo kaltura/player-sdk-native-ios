@@ -40,6 +40,7 @@ typedef void (^JSCallbackReadyHandler)();
 @protocol KalturaPlayer <NSObject>
 
 @required
+
 @property double currentPlaybackTime;
 @property(readonly) UIView * view;
 @property int controlStyle;
@@ -49,7 +50,6 @@ typedef void (^JSCallbackReadyHandler)();
 @property(copy) NSURL *contentURL;
 
 @property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
-
 
 - (void)pause;
 - (void)play;
@@ -71,23 +71,15 @@ typedef void (^JSCallbackReadyHandler)();
 - (CGFloat) getCurrentTime;
 - (void)notifyLayoutReady;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-- (void)setWebViewURL: (NSString *)iframeUrl;
-
-// Kaltura Player External API
-- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
-- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
-- (void)removeKPlayerEventListenerWithEventName: (NSString *)name forListenerName: (NSString *)listenerName;
-- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
-- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
-- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
-- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
-
+//- (void)setWebViewURL: (NSString *)iframeUrl;
 
 @end
+
 
 @protocol KalPlayerViewControllerDelegate <NSObject>
 
 @required
+
 @property (nonatomic, retain) id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;
 -(NSURL *)getInitialKIframeUrl;
 
@@ -98,7 +90,21 @@ typedef void (^JSCallbackReadyHandler)();
 
 @end
 
-@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
+@protocol KDPApi <NSObject>
+
+@optional
+// Kaltura Player External API
+- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
+- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
+- (void)removeKPlayerEventListenerWithEventName: (NSString *)name forListenerName: (NSString *)listenerName;
+- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
+- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
+- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
+
+@end
+
+@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate, KDPApi> {
     id<KalturaPlayer> player;
     NativeComponentPlugin *nativComponentDelegate;
     id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;
@@ -107,13 +113,9 @@ typedef void (^JSCallbackReadyHandler)();
 @property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
 @property (nonatomic, strong) id<KalturaPlayer> player;
-
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-- (void)play;
-- (void)pause;
-- (void)stop;
 //- (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
@@ -122,7 +124,16 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)closeFullscreen;
 - (void)checkDeviceStatus;
 - (void)setNativeFullscreen;
+- (void)setWebViewURL: (NSString *)iframeUrl;
 
+// Kaltura Player External API
+- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
+- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
+- (void)removeKPlayerEventListenerWithEventName: (NSString *)name forListenerName: (NSString *)listenerName;
+- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
+- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
+- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
 
 @end
 

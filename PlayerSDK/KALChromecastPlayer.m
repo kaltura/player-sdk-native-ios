@@ -91,7 +91,7 @@
 
     if ( chromecastDeviceController ) {
         if ([self respondsToSelector:@selector(setKDPAttribute:propertyName:value:)]) {
-            [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+            [self.kDPApi setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
         }
     }
     
@@ -116,7 +116,7 @@
     
     // TODO: change to playerSource
     [chromecastDeviceController loadMedia: self.contentURL thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: self.currentPlaybackTime autoPlay: YES];
-    [self.delegate triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
+    [self.kDPApi triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
 }
 
 #pragma mark - Chromecast Methods
@@ -147,21 +147,21 @@
 
 - (void)showChromecastButton: (NSNotification *)note {
     showChromecastButton = @"true";
-    [self.delegate setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+    [self.kDPApi setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
 }
 
 - (void)hideChromecastButton: (NSNotification *)note {
     showChromecastButton = @"false";
-    [self.delegate setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+    [self.kDPApi setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
 }
 
 - (void)chromecastDeviceDisConnected: (NSNotification *)note {
-    [self.delegate triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
-    self.delegate.currentPlaybackTime = chromecastDeviceController.streamPosition;
+    [self.kDPApi triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
+    self.currentPlaybackTime = chromecastDeviceController.streamPosition;
 }
 
 - (void)chromecastDevicePlaying: (NSNotification *)note {
-    [self.delegate triggerEventsJavaScript:@"play" WithValue:nil];
+    [self.kDPApi triggerEventsJavaScript:@"play" WithValue:nil];
 }
 
 @end

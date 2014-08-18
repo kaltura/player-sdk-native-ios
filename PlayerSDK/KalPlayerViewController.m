@@ -18,6 +18,10 @@
 #import "WViPhoneAPI.h"
 #endif
 
+#import "KALPlayer.h"
+#import "KALChromecastPlayer.h"
+
+
 @implementation KalPlayerViewController {
     // Player Params
     BOOL isSeeking;
@@ -128,14 +132,14 @@
     NSLog(@"handleEnteredBackground Exit");
 }
 
-- (void)callSelectorOnDelegate:(SEL) selector {
-    if (kalPlayerViewControllerDelegate && [kalPlayerViewControllerDelegate respondsToSelector:selector]) {
-        #pragma clang diagnostic push
-        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            [kalPlayerViewControllerDelegate performSelector:selector];
-        #pragma clang diagnostic pop
-    }
-}
+//- (void)callSelectorOnDelegate:(SEL) selector {
+//    if (kalPlayerViewControllerDelegate && [kalPlayerViewControllerDelegate respondsToSelector:selector]) {
+//        #pragma clang diagnostic push
+//        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+//            [kalPlayerViewControllerDelegate performSelector:selector];
+//        #pragma clang diagnostic pop
+//    }
+//}
 
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
@@ -146,7 +150,7 @@
         self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
         [self.webView setPlayerControlsWebViewDelegate: self];
         
-//        self.player = [ [MPMoviePlayerController alloc] init ];
+        self.player = [[KALPlayer alloc] init];
         NSAssert(self.player, @"You MUST initilize and set player in order to make the view work!");
 // TODO: if there is no player add basice player
 //        if (!self.player) {
@@ -214,61 +218,61 @@
     NSLog(@"initPlayerParams Exit");
 }
 
-- (void)play {
-    NSLog( @"Play Player Enter" );
-    
-    isPlayCalled = YES;
-    
-#if !(TARGET_IPHONE_SIMULATOR)
-    if ( isWideVine  && !isWideVineReady ) {
-        return;
-    }
-#endif
-    
-    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
-        [self.player prepareToPlay];
-        [self.player play];
-    }
-    
-    [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
-    
-    NSLog( @"Play Player Exit" );
-}
+//- (void)play {
+//    NSLog( @"Play Player Enter" );
+//    
+//    isPlayCalled = YES;
+//    
+//#if !(TARGET_IPHONE_SIMULATOR)
+//    if ( isWideVine  && !isWideVineReady ) {
+//        return;
+//    }
+//#endif
+//    
+//    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
+//        [self.player prepareToPlay];
+//        [self.player play];
+//    }
+//    
+//    [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
+//    
+//    NSLog( @"Play Player Exit" );
+//}
 
-- (void)pause {
-    NSLog(@"Pause Player Enter");
-    
-    isPlayCalled = NO;
-    
-    if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
-        [self.player pause];
-    }
-    
-    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
-    
-    NSLog(@"Pause Player Exit");
-}
+//- (void)pause {
+//    NSLog(@"Pause Player Enter");
+//    
+//    isPlayCalled = NO;
+//    
+//    if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
+//        [self.player pause];
+//    }
+//    
+//    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
+//    
+//    NSLog(@"Pause Player Exit");
+//}
 
-- (void)stop {
-    NSLog(@"Stop Player Enter");
-    
-    [self.player stop];
-    isPlaying = NO;
-    isPlayCalled = NO;
-    
-#if !(TARGET_IPHONE_SIMULATOR)
-    // Stop WideVine
-    if ( isWideVine ) {
-        [wvSettings stopWV];
-        isWideVine = NO;
-        isWideVineReady = NO;
-    }
-#endif
-    
-    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
-    
-    NSLog(@"Stop Player Exit");
-}
+//- (void)stop {
+//    NSLog(@"Stop Player Enter");
+//    
+//    [self.player stop];
+//    isPlaying = NO;
+//    isPlayCalled = NO;
+//    
+//#if !(TARGET_IPHONE_SIMULATOR)
+//    // Stop WideVine
+//    if ( isWideVine ) {
+//        [wvSettings stopWV];
+//        isWideVine = NO;
+//        isWideVineReady = NO;
+//    }
+//#endif
+//    
+//    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
+//    
+//    NSLog(@"Stop Player Exit");
+//}
 
 #pragma Kaltura Player External API - KDP API
 
@@ -608,7 +612,7 @@
     NSLog( @"closeFullScreen Enter" );
     
     if ( openFullScreen && isCloseFullScreenByTap ) {
-        [self stop];
+//        [self stop];
     }
     
     CGRect originalFrame = CGRectMake( 0, 0, originalViewControllerFrame.size.width, originalViewControllerFrame.size.height );
