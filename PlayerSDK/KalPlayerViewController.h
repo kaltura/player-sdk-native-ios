@@ -33,11 +33,13 @@ typedef enum{
 typedef void (^JSCallbackReadyHandler)();
 
 @class KalPlayerViewController;
+@class NativeComponentPlugin;
+@class KPEventListener;
 
+@protocol KalPlayerViewControllerDelegate;
 @protocol KalturaPlayer <NSObject>
 
 @required
-@property (nonatomic) id<KalturaPlayer> delegate;
 @property double currentPlaybackTime;
 @property(readonly) UIView * view;
 @property int controlStyle;
@@ -45,6 +47,8 @@ typedef void (^JSCallbackReadyHandler)();
 @property(readonly) int loadState;
 @property(readonly) BOOL isPreparedToPlay;
 @property(copy) NSURL *contentURL;
+
+@property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
 
 
 - (void)pause;
@@ -68,7 +72,16 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)notifyLayoutReady;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)setWebViewURL: (NSString *)iframeUrl;
-- (void)setNativeFullscreen;
+
+// Kaltura Player External API
+- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
+- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
+- (void)removeKPlayerEventListenerWithEventName: (NSString *)name forListenerName: (NSString *)listenerName;
+- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
+- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
+- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
+- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
+
 
 @end
 
@@ -84,9 +97,6 @@ typedef void (^JSCallbackReadyHandler)();
 - (void) kPlayerDidStop;
 
 @end
-
-@class NativeComponentPlugin;
-@class KPEventListener;
 
 @interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     id<KalturaPlayer> player;
@@ -104,7 +114,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)play;
 - (void)pause;
 - (void)stop;
-- (void)setWebViewURL: (NSString *)iframeUrl;
+//- (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
@@ -112,15 +122,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)closeFullscreen;
 - (void)checkDeviceStatus;
 - (void)setNativeFullscreen;
-- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
 
-// Kaltura Player External API
-- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
-- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
-- (void)removeKPlayerEventListenerWithEventName: (NSString *)name forListenerName: (NSString *)listenerName;
-- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
-- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
-- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
 
 @end
 

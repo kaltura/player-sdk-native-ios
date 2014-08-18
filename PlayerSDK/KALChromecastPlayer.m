@@ -16,6 +16,7 @@
         [chromecastDeviceController updateStatsFromDevice];
         return chromecastDeviceController.streamPosition;
     }
+    
     return -1;
 }
 
@@ -89,7 +90,9 @@
 -(void)notifyLayoutReady {
 
     if ( chromecastDeviceController ) {
-        [self.delegate setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+        if ([self respondsToSelector:@selector(setKDPAttribute:propertyName:value:)]) {
+            [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
+        }
     }
     
 }
@@ -154,7 +157,7 @@
 
 - (void)chromecastDeviceDisConnected: (NSNotification *)note {
     [self.delegate triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
-    self.delegate.player.currentPlaybackTime = chromecastDeviceController.streamPosition;
+    self.delegate.currentPlaybackTime = chromecastDeviceController.streamPosition;
 }
 
 - (void)chromecastDevicePlaying: (NSNotification *)note {

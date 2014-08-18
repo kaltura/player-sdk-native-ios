@@ -265,11 +265,11 @@
 		BFFFA72C182F9E31005B3B24 /* PlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				BFFFA877182FB8E4005B3B24 /* KalPlayerViewController */,
 				BFE3E2F3199CAFCF00666F32 /* KALPlayer */,
 				BFE3E2F2199CAF6200666F32 /* KALChromecastPlayer */,
 				BFE342A1199BE79000C63F74 /* ChromecastDeviceController */,
 				BFA6F0D918BB796500F7C78F /* WideVine */,
-				BFFFA877182FB8E4005B3B24 /* KalPlayerViewController */,
 				BFFFA773182F9ECF005B3B24 /* JSON */,
 				BFFFA774182F9F10005B3B24 /* PlayerControlsWebView */,
 				BFFFA88C182FCE1B005B3B24 /* PlayerSDK */,

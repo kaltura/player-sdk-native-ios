@@ -19,9 +19,16 @@
 @synthesize contentURL;
 
 - (void)play {
-    NSLog(@"Now Playing...");
+    if (delegate && [delegate respondsToSelector:@selector(kPlayerDidPlay)]) {
+        [delegate kPlayerDidPlay];
+    }
+    
     [super play];
 }
+
+//KALPlayer *kp = [KALPlayer new];
+//[kp setDelegate: self];
+
 
 
 @end
