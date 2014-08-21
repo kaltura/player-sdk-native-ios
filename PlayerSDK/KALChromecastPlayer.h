@@ -11,8 +11,6 @@
 
 @interface KALChromecastPlayer : NSObject  <KalturaPlayer>
 
-@property (nonatomic, assign) id<KDPApi> kDPApi;
-
 - (void)pause;
 - (void)play;
 - (void)stop;

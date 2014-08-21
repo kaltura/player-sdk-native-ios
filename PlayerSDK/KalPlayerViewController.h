@@ -98,21 +98,7 @@ typedef void (^JSCallbackReadyHandler)();
 
 @end
 
-@protocol KDPApi <NSObject>
-
-@optional
-// Kaltura Player External API
-- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
-- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
-- (void)removeKPlayerEventListenerWithEventName: (NSString *)name forListenerName: (NSString *)listenerName;
-- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
-- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
-- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
-- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
-
-@end
-
-@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate, KDPApi> {
+@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
     id<KalturaPlayer> player;
     NativeComponentPlugin *nativComponentDelegate;
     id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;

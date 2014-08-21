@@ -1065,7 +1065,7 @@
 }
 
 - (void)deviceConnected:(NSNotification*)notification {
-    [self switchPlayer:[KALChromecastPlayer class]];
+    [self switchPlayer: [KALChromecastPlayer class]];
     [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
 }
 

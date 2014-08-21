@@ -20,25 +20,6 @@
 @synthesize loadState;
 @synthesize isPreparedToPlay;
 
-//- (instancetype) initWithPreviousPlayer:(id<KalturaPlayer>) prevPlayer {
-//    self = [super init];
-//    
-//    if (self) {
-//        if ( [self isPreparedToPlay] ) {
-//            self.currentPlaybackTime = prevPlayer.currentPlaybackTime;
-//            [prevPlayer stop];
-//        }
-//        
-//        chromecastDeviceController = (ChromecastDeviceController *)[KalPlayerViewController sharedChromecastDeviceController];
-//        
-//        [chromecastDeviceController loadMedia: [prevPlayer contentURL] thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: self.currentPlaybackTime autoPlay: YES];
-////        [self triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
-////        [[prevPlayer view] removeFromSuperview];
-//    }
-//
-//    return self;
-//}
-
 - (void) copyParamsFromPlayer:(id<KalturaPlayer>) player {
     if (self) {
         if ( [self isPreparedToPlay] ) {
