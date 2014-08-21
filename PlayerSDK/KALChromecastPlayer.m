@@ -111,16 +111,6 @@
     return chromecastDeviceController && chromecastDeviceController.isConnected;
 }
 
--(void)notifyLayoutReady {
-
-    if ( chromecastDeviceController ) {
-        if ([self respondsToSelector:@selector(setKDPAttribute:propertyName:value:)]) {
-            [self.kDPApi setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastButton ? @"true" : @"false"];
-        }
-    }
-    
-}
-
 -(void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     if ([self isPreparedToPlay]) {
         [ chromecastDeviceController setPlaybackPercent:  currentTime];

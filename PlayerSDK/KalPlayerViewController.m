@@ -42,6 +42,8 @@
     NSMutableDictionary *kPlayerEventsDict;
     NSMutableDictionary *kPlayerEvaluatedDict;
     
+    BOOL *showChromecastBtn;
+    
   #if !(TARGET_IPHONE_SIMULATOR)
         // WideVine Params
         BOOL isWideVine, isWideVineReady;
@@ -1083,14 +1085,10 @@
                                                    object: nil];
         
         [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(showChromecastButton:)
-                                                      name: @"showChromecastButtonNotification"
+                                                  selector: @selector(chromecastVisiblity:)
+                                                      name: @"chromecastVisiblityNotification"
                                                     object: nil ];
         
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(hideChromecastButton:)
-                                                      name: @"hideChromecastButtonNotification"
-                                                    object: nil ];
         [ [NSNotificationCenter defaultCenter] addObserver: self
                                                   selector: @selector(chromecastDeviceDisConnected:)
                                                       name: ChromcastDeviceControllerDeviceDisconnectedNotification
@@ -1104,6 +1102,7 @@
     
     // Chromecast
     // Initialize the chromecast device controller.
+    showChromecastBtn = NO;
     [[KalPlayerViewController sharedChromecastDeviceController] performScan: YES];
 }
 
@@ -1118,14 +1117,20 @@
     return chromecastDeviceController;
 }
 
-- (void)showChromecastButton: (NSNotification *)note {
-//    showChromecastButton = @"true";
-    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: @"true"];
+- (void)chromecastVisiblity: (NSNotification *)note {
+    if ( [[[KalPlayerViewController sharedChromecastDeviceController] deviceScanner] devices] ) {
+        showChromecastBtn = YES;
+    }
 }
 
-- (void)hideChromecastButton: (NSNotification *)note {
-//    showChromecastButton = @"false";
-    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: @"false"];
+-(void)notifyLayoutReady {
+    [self setChromecastVisiblity];
+}
+
+- (void)setChromecastVisiblity {
+    if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
+        [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastBtn ? @"true": @"false"];
+    }
 }
 
 - (void)chromecastDeviceDisConnected: (NSNotification *)note {

@@ -125,29 +125,9 @@ NSString *const ChromcastDeviceControllerStatusChangedNotification =
 }
 
 - (void)updateButtonStates {
-  if (self.deviceScanner.devices.count == 0) {
-      [ [NSNotificationCenter defaultCenter] postNotificationName: @"hideChromecastButtonNotification"
-                                                           object: self
-                                                         userInfo: nil ];
-  } else {
-      [ [NSNotificationCenter defaultCenter] postNotificationName: @"showChromecastButtonNotification"
-                                                           object: self
-                                                         userInfo: nil ];
-      
-    if (self.deviceManager && self.deviceManager.isConnected) {
-      //Enable the button
-//      [_chromecastButton setImage:_btnImageSelected forState:UIControlStateNormal];
-//      [_chromecastButton setTintColor:nil];
-//      _chromecastButton.hidden = NO;
-
-    } else {
-      //Enable the button
-//      [_chromecastButton setImage:_btnImage forState:UIControlStateNormal];
-//      [_chromecastButton setTintColor:[UIColor grayColor]];
-//      _chromecastButton.hidden = NO;
-    }
-  }
-
+    [ [NSNotificationCenter defaultCenter] postNotificationName: @"chromecastVisiblityNotification"
+                                                         object: self
+                                                       userInfo: nil ];
 }
 
 - (void)updateStatsFromDevice {

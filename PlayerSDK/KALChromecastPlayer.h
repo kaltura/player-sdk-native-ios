@@ -8,11 +8,8 @@
 
 #import "KALPlayer.h"
 #import "ChromecastDeviceController.h"
-//#import "KALChromecastPlayer.h"
 
-@interface KALChromecastPlayer : NSObject  <KalturaPlayer> {
-    BOOL showChromecastButton;
-}
+@interface KALChromecastPlayer : NSObject  <KalturaPlayer>
 
 @property (nonatomic, assign) id<KDPApi> kDPApi;
 

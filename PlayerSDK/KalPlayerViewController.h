@@ -77,7 +77,6 @@ typedef void (^JSCallbackReadyHandler)();
 
 - (void)didLoad;
 - (CGFloat) getCurrentTime;
-- (void)notifyLayoutReady;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void) copyParamsFromPlayer:(id<KalturaPlayer>) player;
 //- (void)setWebViewURL: (NSString *)iframeUrl;
