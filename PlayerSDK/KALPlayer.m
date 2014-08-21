@@ -44,6 +44,31 @@
 @synthesize isPreparedToPlay;
 @synthesize contentURL;
 
+- (void) copyParamsFromPlayer:(id<KalturaPlayer>) player {
+    if (self) {
+        if ( [self isPreparedToPlay] ) {
+            self.currentPlaybackTime = player.currentPlaybackTime;
+        }
+        
+        [self setContentURL: [player contentURL]];
+    }
+}
+
+-(NSURL *)contentURL {
+    return super.contentURL;
+}
+-(void)setContentURL:(NSURL *)cs {
+    super.contentURL = [cs copy];
+}
+
+-(int)controlStyle {
+    return [super controlStyle];
+}
+
+-(void)setControlStyle:(int)cs {
+    [super setControlStyle:cs];
+}
+
 - (void)play {
     NSLog( @"Play Player Enter" );
     
@@ -117,9 +142,6 @@
     return [super currentPlaybackTime];
 }
 
-- (int)controlStyle {
-    return [super controlStyle];
-}
 
 - (int)playbackState {
     return [super playbackState];
@@ -137,9 +159,6 @@
     return [super isPreparedToPlay];
 }
 
-- (void)setContentURL:(NSURL *)arg1 {
-    [super setContentURL: arg1];
-}
 
 - (double)playableDuration {
     return [super playableDuration];

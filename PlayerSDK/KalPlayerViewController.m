@@ -20,7 +20,7 @@
 
 #import "KALPlayer.h"
 #import "KALChromecastPlayer.h"
-
+#import "ChromecastDeviceController.h"
 
 @implementation KalPlayerViewController {
     // Player Params
@@ -64,6 +64,8 @@
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
     
+    self.players = [NSMutableDictionary new];
+    
     // Adding a suffix to user agent in order to identify native media space application
     NSString* suffixUA = @"kalturaNativeCordovaPlayer";
     UIWebView* wv = [[UIWebView alloc] initWithFrame:CGRectZero];
@@ -97,6 +99,7 @@
                                              selector: @selector(handleEnteredBackground:)
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
+    [self didLoad];
     
     [super viewDidLoad];
     
@@ -132,25 +135,32 @@
     NSLog(@"handleEnteredBackground Exit");
 }
 
-//- (void)callSelectorOnDelegate:(SEL) selector {
-//    if (kalPlayerViewControllerDelegate && [kalPlayerViewControllerDelegate respondsToSelector:selector]) {
-//        #pragma clang diagnostic push
-//        #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-//            [kalPlayerViewControllerDelegate performSelector:selector];
-//        #pragma clang diagnostic pop
-//    }
-//}
+-(id<KalturaPlayer>)getPlayerByClass:(Class<KalturaPlayer>)c {
+    NSString *playerName = NSStringFromClass(c);
+    id<KalturaPlayer> p = [self.players objectForKey:playerName];
+    
+    if (p == nil) {
+        p = [[c alloc] init];
+        [self.players setObject:p forKey:playerName];
+    }
+    
+    if (self.player) {
+        [p copyParamsFromPlayer:self.player];
+    }
+    
+    return p;
+}
 
 -(void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
-
+    
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
         self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
         [self.webView setPlayerControlsWebViewDelegate: self];
         
-        self.player = [[KALPlayer alloc] init];
+        self.player = [self getPlayerByClass:[KALPlayer class]];
         NSAssert(self.player, @"You MUST initilize and set player in order to make the view work!");
 // TODO: if there is no player add basice player
 //        if (!self.player) {
@@ -193,7 +203,7 @@
     
     [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
     
-    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+//    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     [ self.webView loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
@@ -218,61 +228,30 @@
     NSLog(@"initPlayerParams Exit");
 }
 
-//- (void)play {
-//    NSLog( @"Play Player Enter" );
-//    
-//    isPlayCalled = YES;
-//    
-//#if !(TARGET_IPHONE_SIMULATOR)
-//    if ( isWideVine  && !isWideVineReady ) {
-//        return;
-//    }
-//#endif
-//    
-//    if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
-//        [self.player prepareToPlay];
-//        [self.player play];
-//    }
-//    
-//    [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
-//    
-//    NSLog( @"Play Player Exit" );
-//}
+- (void)play {
+    NSLog( @"Play Player Enter" );
+    
+    [self.player play];
+    [self showChromecastDeviceList];
+    
+    NSLog( @"Play Player Exit" );
+}
 
-//- (void)pause {
-//    NSLog(@"Pause Player Enter");
-//    
-//    isPlayCalled = NO;
-//    
-//    if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
-//        [self.player pause];
-//    }
-//    
-//    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
-//    
-//    NSLog(@"Pause Player Exit");
-//}
+- (void)pause {
+    NSLog(@"Pause Player Enter");
+    
+    [self.player pause];
+    
+    NSLog(@"Pause Player Exit");
+}
 
-//- (void)stop {
-//    NSLog(@"Stop Player Enter");
-//    
-//    [self.player stop];
-//    isPlaying = NO;
-//    isPlayCalled = NO;
-//    
-//#if !(TARGET_IPHONE_SIMULATOR)
-//    // Stop WideVine
-//    if ( isWideVine ) {
-//        [wvSettings stopWV];
-//        isWideVine = NO;
-//        isWideVineReady = NO;
-//    }
-//#endif
-//    
-//    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
-//    
-//    NSLog(@"Stop Player Exit");
-//}
+- (void)stop {
+    NSLog(@"Stop Player Enter");
+    
+    [self.player stop];
+    
+    NSLog(@"Stop Player Exit");
+}
 
 #pragma Kaltura Player External API - KDP API
 
@@ -664,7 +643,7 @@
     
     for (id functionName in eventsDictionary){
         id event = [eventsDictionary objectForKey:functionName];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:NSSelectorFromString(functionName) name:event object:player];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:NSSelectorFromString(functionName) name:event object:self.player];
     }
     
     //  200 milliseconds is .2 seconds
@@ -987,6 +966,23 @@
     NSLog(@"showNativeAirPlayButton Exit");
 }
 
+- (void)switchPlayer:(Class)p {
+    [self.player stop];
+    self.player = [self getPlayerByClass:p];
+    
+//    if ( [self.player isPreparedToPlay] ) {
+//        [self.player play];
+//    }
+}
+
+-(void)showChromecastDeviceList {
+    NSLog(@"showChromecastDeviceList Enter");
+    
+    [ [KalPlayerViewController sharedChromecastDeviceController] chooseDevice: self];
+    
+    NSLog(@"showChromecastDeviceList Exit");
+}
+
 -(void)hideNativeAirPlayButton {
     NSLog(@"hideNativeAirPlayButton Enter");
     
@@ -1064,6 +1060,81 @@
     }
     
     NSLog( @"didPinchInOut Exit" );
+}
+
+- (void)deviceConnected:(NSNotification*)notification {
+    [self switchPlayer:[KALChromecastPlayer class]];
+    [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
+}
+
+// Chromecast
+- (void) didLoad {
+    
+    if (self) {
+        [[NSNotificationCenter defaultCenter]
+         addObserver:self
+         selector:@selector(deviceConnected:)
+         name:ChromcastDeviceControllerDeviceConnectedNotification
+         object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(volumeChanged:)
+                                                     name: @"AVSystemController_SystemVolumeDidChangeNotification"
+                                                   object: nil];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(showChromecastButton:)
+                                                      name: @"showChromecastButtonNotification"
+                                                    object: nil ];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(hideChromecastButton:)
+                                                      name: @"hideChromecastButtonNotification"
+                                                    object: nil ];
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(chromecastDeviceDisConnected:)
+                                                      name: ChromcastDeviceControllerDeviceDisconnectedNotification
+                                                    object: nil ];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(chromecastDevicePlaying:)
+                                                      name: ChromcastDeviceControllerMediaNowPlayingNotification
+                                                    object: nil ];
+    }
+    
+    // Chromecast
+    // Initialize the chromecast device controller.
+    [[KalPlayerViewController sharedChromecastDeviceController] performScan: YES];
+}
+
++ (id)sharedChromecastDeviceController {
+    static ChromecastDeviceController *chromecastDeviceController = nil;
+    static dispatch_once_t onceToken;
+
+    dispatch_once( &onceToken, ^{
+       chromecastDeviceController = [[ChromecastDeviceController alloc] init];
+    });
+    
+    return chromecastDeviceController;
+}
+
+- (void)showChromecastButton: (NSNotification *)note {
+//    showChromecastButton = @"true";
+    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: @"true"];
+}
+
+- (void)hideChromecastButton: (NSNotification *)note {
+//    showChromecastButton = @"false";
+    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: @"false"];
+}
+
+- (void)chromecastDeviceDisConnected: (NSNotification *)note {
+    [self switchPlayer:[KALPlayer class]];
+    [self triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
+}
+
+- (void)chromecastDevicePlaying: (NSNotification *)note {
+    [self triggerEventsJavaScript:@"play" WithValue:nil];
 }
 
 @end

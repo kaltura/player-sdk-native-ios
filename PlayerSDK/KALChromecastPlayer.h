@@ -11,11 +11,19 @@
 //#import "KALChromecastPlayer.h"
 
 @interface KALChromecastPlayer : NSObject  <KalturaPlayer> {
-    ChromecastDeviceController *chromecastDeviceController;
     BOOL showChromecastButton;
 }
 
-@property (nonatomic) ChromecastDeviceController *chromecastDeviceController;
 @property (nonatomic, assign) id<KDPApi> kDPApi;
+
+- (void)pause;
+- (void)play;
+- (void)stop;
+- (double)currentPlaybackTime;
+- (int)playbackState;
+- (BOOL)isPreparedToPlay;
+- (void)setContentURL:(NSURL *)url;
+- (double)playableDuration;
+- (double)duration;
 
 @end

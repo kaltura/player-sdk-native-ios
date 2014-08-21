@@ -43,34 +43,43 @@ typedef void (^JSCallbackReadyHandler)();
 
 @property double currentPlaybackTime;
 @property(readonly) UIView * view;
-@property int controlStyle;
 @property(readonly) int playbackState;
 @property(readonly) int loadState;
 @property(readonly) BOOL isPreparedToPlay;
-@property(copy) NSURL *contentURL;
 
 @property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
++ (id)alloc;
+
+-(int)getControlStyle;
+-(void)setControlStyle:(int)cs;
+
+-(NSURL *)contentURL;
+-(void)setContentURL:(NSURL *)cs;
 
 - (void)pause;
 - (void)play;
 - (void)stop;
-- (id)view;
+//- (id)view;
 - (double)currentPlaybackTime;
-- (int)controlStyle;
+//- (int)controlStyle;
 - (int)playbackState;
-- (int)loadState;
-- (void)prepareToPlay;
+//- (int)loadState;
+//- (void)prepareToPlay;
 - (BOOL)isPreparedToPlay;
-- (void)setContentURL:(NSURL *)arg1;
 - (double)playableDuration;
 - (double)duration;
 
 @optional
+- (id)view;
+- (int)controlStyle;
+- (void)prepareToPlay;
+- (int)loadState;
 
 - (void)didLoad;
 - (CGFloat) getCurrentTime;
 - (void)notifyLayoutReady;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
+- (void) copyParamsFromPlayer:(id<KalturaPlayer>) player;
 //- (void)setWebViewURL: (NSString *)iframeUrl;
 
 @end
@@ -125,6 +134,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)checkDeviceStatus;
 - (void)setNativeFullscreen;
 - (void)setWebViewURL: (NSString *)iframeUrl;
++ (id)sharedChromecastDeviceController;
 
 // Kaltura Player External API
 - (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
@@ -134,6 +144,8 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
+
+@property (nonatomic, retain) NSMutableDictionary *players;
 
 @end
 

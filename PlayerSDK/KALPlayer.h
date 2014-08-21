@@ -21,7 +21,7 @@
 - (int)loadState;
 - (void)prepareToPlay;
 - (BOOL)isPreparedToPlay;
-- (void)setContentURL:(NSURL *)arg1;
+- (void)setContentURL:(NSURL *)url;
 - (double)playableDuration;
 - (double)duration;
 
