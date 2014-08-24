@@ -22,11 +22,11 @@
 
 - (void) copyParamsFromPlayer:(id<KalturaPlayer>) player {
     if (self) {
+        chromecastDeviceController = (ChromecastDeviceController *)[KalPlayerViewController sharedChromecastDeviceController];
+        
         if ( [self isPreparedToPlay] ) {
             self.currentPlaybackTime = player.currentPlaybackTime;
         }
-        
-        chromecastDeviceController = (ChromecastDeviceController *)[KalPlayerViewController sharedChromecastDeviceController];
         
         [self setContentURL: [player contentURL]];
     }
@@ -92,7 +92,7 @@
     return chromecastDeviceController && chromecastDeviceController.isConnected;
 }
 
--(void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
+- (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     if ([self isPreparedToPlay]) {
         [ chromecastDeviceController setPlaybackPercent:  currentTime];
     }

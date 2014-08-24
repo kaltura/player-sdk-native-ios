@@ -55,7 +55,7 @@
 @synthesize nativComponentDelegate;
 @synthesize jsCallbackReadyHandler;
 
-- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView {
+- (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
     self = [super init];
     [self.view setFrame:frame];
     originalViewControllerFrame = frame;
@@ -137,7 +137,7 @@
     NSLog(@"handleEnteredBackground Exit");
 }
 
--(id<KalturaPlayer>)getPlayerByClass:(Class<KalturaPlayer>)c {
+- (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)c {
     NSString *playerName = NSStringFromClass(c);
     id<KalturaPlayer> p = [self.players objectForKey:playerName];
     
@@ -146,14 +146,14 @@
         [self.players setObject:p forKey:playerName];
     }
     
-    if (self.player) {
-        [p copyParamsFromPlayer:self.player];
+    if ( [self player] ) {
+        [p copyParamsFromPlayer: [self player]];
     }
     
     return p;
 }
 
--(void)viewWillAppear:(BOOL)animated {
+- (void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
     
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
@@ -163,7 +163,7 @@
         [self.webView setPlayerControlsWebViewDelegate: self];
         
         self.player = [self getPlayerByClass:[KALPlayer class]];
-        NSAssert(self.player, @"You MUST initilize and set player in order to make the view work!");
+        NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
 // TODO: if there is no player add basice player
 //        if (!self.player) {
 //            self.player = [[basicPlayer alloc] init];
@@ -171,15 +171,15 @@
         self.player.view.frame = playerViewFrame;
         
         // WebView initialize for supporting NativeComponent(html5 player view)
-        [ [self.webView scrollView] setScrollEnabled: NO ];
-        [ [self.webView scrollView] setBounces: NO ];
-        [ [self.webView scrollView] setBouncesZoom: NO ];
+        [ [[self webView] scrollView] setScrollEnabled: NO ];
+        [ [[self webView] scrollView] setBounces: NO ];
+        [ [[self webView] scrollView] setBouncesZoom: NO ];
         self.webView.opaque = NO;
         self.webView.backgroundColor = [UIColor clearColor];
         
         // Add NativeComponent (html5 player view) webView to player view
-        [self.player.view addSubview: self.webView];
-        [self.view addSubview: player.view];
+        [[[self player] view] addSubview: [self webView]];
+        [self.view addSubview: [[self player] view]];
         
         self.player.controlStyle = MPMovieControlStyleNone;
     }
@@ -206,7 +206,7 @@
     [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
     
 //    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    [ self.webView loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
+    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
 }
@@ -233,8 +233,7 @@
 - (void)play {
     NSLog( @"Play Player Enter" );
     
-    [self.player play];
-    [self showChromecastDeviceList];
+    [[self player] play];
     
     NSLog( @"Play Player Exit" );
 }
@@ -242,7 +241,7 @@
 - (void)pause {
     NSLog(@"Pause Player Enter");
     
-    [self.player pause];
+    [[self player] pause];
     
     NSLog(@"Pause Player Exit");
 }
@@ -250,7 +249,7 @@
 - (void)stop {
     NSLog(@"Stop Player Enter");
     
-    [self.player stop];
+    [[self player] stop];
     
     NSLog(@"Stop Player Exit");
 }
@@ -345,8 +344,8 @@
 - (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener {
     NSLog(@"asyncEvaluate Enter");
     
-    [kPlayerEvaluatedDict setObject: listener forKey: listener.name];
-    [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, listener.name] ];
+    [kPlayerEvaluatedDict setObject: listener forKey: [listener name]];
+    [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, [listener name]] ];
     
     NSLog(@"asyncEvaluate Exit");
 }
@@ -602,7 +601,7 @@
     [self.view setTransform: CGAffineTransformIdentity];
     self.view.frame = originalViewControllerFrame;
     self.player.view.frame = originalFrame;
-    self.webView.frame = self.player.view.frame;
+    self.webView.frame = [[[self player] view] frame];
     
     [UIApplication sharedApplication].statusBarHidden = NO;
     
@@ -631,147 +630,59 @@
 - (void)bindPlayerEvents{
     NSLog(@"Binding Events Enter");
     
-    NSMutableDictionary *eventsDictionary = [[NSMutableDictionary alloc] init];
-    [eventsDictionary setObject: MPMoviePlayerLoadStateDidChangeNotification
-                         forKey: @"triggerLoadPlabackEvents:"];
-    [eventsDictionary setObject: MPMoviePlayerPlaybackDidFinishNotification
-                         forKey: @"triggerFinishPlabackEvents:"];
-    [eventsDictionary setObject: MPMoviePlayerPlaybackStateDidChangeNotification
-                         forKey: @"triggerMoviePlabackEvents:"];
-    [eventsDictionary setObject: MPMoviePlayerTimedMetadataUpdatedNotification
-                         forKey: @"metadataUpdate:"];
-    [eventsDictionary setObject: MPMovieDurationAvailableNotification
-                         forKey: @"onMovieDurationAvailable:"];
-    
-    for (id functionName in eventsDictionary){
-        id event = [eventsDictionary objectForKey:functionName];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:NSSelectorFromString(functionName) name:event object:self.player];
+    if ( self ) {
+        [[self player] bindPlayerEvents];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(x:)
+                                                      name: @"canplay"
+                                                    object: nil ];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(x:)
+                                                      name: @"play"
+                                                    object: nil ];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(x:)
+                                                      name: @"pause"
+                                                    object: nil ];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(x:)
+                                                      name: @"ended"
+                                                    object: nil ];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(x:)
+                                                      name: @"seeking"
+                                                    object: nil ];
+        
+        [ [NSNotificationCenter defaultCenter] addObserver: self
+                                                  selector: @selector(x:)
+                                                      name: @"seeked"
+                                                    object: nil ];
     }
     
-    //  200 milliseconds is .2 seconds
-    [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector: @selector( sendCurrentTime: ) userInfo:nil repeats:YES];
-    //  every second
-    [NSTimer scheduledTimerWithTimeInterval:1 target:self selector: @selector( updatePlaybackProgressFromTimer: ) userInfo:nil repeats:YES];
+
+    
+//    if ( [self.player playbackState] == MPMoviePlaybackStatePlaying) {
+        //  200 milliseconds is .2 seconds
+        [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector: @selector( sendCurrentTime:) userInfo:nil repeats:YES];
+        //  every second
+        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector: @selector( updatePlaybackProgressFromTimer: ) userInfo:nil repeats:YES];
+//    }
+    
     
     NSLog(@"Binding Events Exit");
 }
 
-- (void)triggerLoadPlabackEvents: (NSNotification *)note{
+- (void)x: (NSNotification *)note{
     NSLog(@"triggerLoadPlabackEvents Enter");
     
-    NSString *loadStateName = [[NSString alloc]init];
-    
-    switch ( player.loadState ) {
-        case MPMovieLoadStateUnknown:
-            loadStateName = @"MPMovieLoadStateUnknown";
-            NSLog(@"MPMovieLoadStateUnknown");
-            break;
-        case MPMovieLoadStatePlayable:
-            loadStateName = @"canplay";
-            [ self triggerEventsJavaScript: @"durationchange" WithValue: [NSString stringWithFormat: @"%f", player.duration] ];
-            [self triggerEventsJavaScript: @"loadedmetadata" WithValue: @""];
-            NSLog(@"MPMovieLoadStatePlayable");
-            break;
-        case MPMovieLoadStatePlaythroughOK:
-            loadStateName = @"MPMovieLoadStatePlaythroughOK";
-            NSLog(@"MPMovieLoadStatePlaythroughOK");
-            break;
-        case MPMovieLoadStateStalled:
-            loadStateName = @"stalled";
-            NSLog(@"MPMovieLoadStateStalled");
-            break;
-        default:
-            break;
-    }
-    
-    [self triggerEventsJavaScript:loadStateName WithValue:nil];
+    [self triggerEventsJavaScript: [note name] WithValue: [[note userInfo] valueForKey: [note name]]];
     
     NSLog(@"triggerLoadPlabackEvents Exit");
-}
-
-- (void)triggerMoviePlabackEvents: (NSNotification *)note{
-    NSLog(@"triggerMoviePlabackEvents Enter");
-    
-    NSString *playBackName = [[NSString alloc]init];
-    
-    
-    if (isSeeking) {
-        isSeeking = NO;
-        playBackName = @"seeked";
-        NSLog(@"MPMoviePlaybackStateStopSeeking");
-        //called because there is another event that will be fired
-        [self triggerEventsJavaScript:playBackName WithValue:nil];
-    }
-    
-    switch ( player.playbackState ) {
-        case MPMoviePlaybackStateStopped:
-            isPlaying = NO;
-            playBackName = @"stop";
-            NSLog(@"MPMoviePlaybackStateStopped");
-            break;
-        case MPMoviePlaybackStatePlaying:
-            isPlaying = YES;
-            playBackName = @"";
-            if( !( self.player.playbackState == MPMoviePlaybackStatePlaying ) ) {
-                playBackName = @"play";
-            }
-            
-            NSLog(@"MPMoviePlaybackStatePlaying");
-            break;
-        case MPMoviePlaybackStatePaused:
-            isPlaying = NO;
-            playBackName = @"";
-            if ( !( self.player.playbackState == MPMoviePlaybackStatePaused ) ) {
-                playBackName = @"pause";
-            }
-            
-            NSLog(@"MPMoviePlaybackStatePaused");
-            break;
-        case MPMoviePlaybackStateInterrupted:
-            playBackName = @"MPMoviePlaybackStateInterrupted";
-            NSLog(@"MPMoviePlaybackStateInterrupted");
-            break;
-        case MPMoviePlaybackStateSeekingForward:
-        case MPMoviePlaybackStateSeekingBackward:
-            isSeeking = YES;
-            playBackName = @"seeking";
-            NSLog(@"MPMoviePlaybackStateSeeking");
-            break;
-        default:
-            break;
-    }
-    
-    [self triggerEventsJavaScript:playBackName WithValue:nil];
-    
-    NSLog(@"triggerMoviePlabackEvents Exit");
-}
-
-- (void)triggerFinishPlabackEvents:(NSNotification*)notification {
-    NSLog(@"triggerFinishPlabackEvents Enter");
-    
-    NSString *finishPlayBackName = [[NSString alloc]init];
-    NSNumber* reason = [[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
-    
-    switch ( [reason intValue] ) {
-        case MPMovieFinishReasonPlaybackEnded:
-            finishPlayBackName = @"ended";
-            NSLog(@"playbackFinished. Reason: Playback Ended");
-            break;
-        case MPMovieFinishReasonPlaybackError:
-            finishPlayBackName = @"error";
-            NSLog(@"playbackFinished. Reason: Playback Error");
-            break;
-        case MPMovieFinishReasonUserExited:
-            finishPlayBackName = @"MPMovieFinishReasonUserExited";
-            NSLog(@"playbackFinished. Reason: User Exited");
-            break;
-        default:
-            break;
-    }
-    
-    [self triggerEventsJavaScript:finishPlayBackName WithValue:nil];
-    
-    NSLog(@"triggerFinishPlabackEvents Exit");
 }
 
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue{
@@ -799,8 +710,8 @@
             break;
         case currentTime:
             attributeVal = [args objectAtIndex:1];
-            if( [player isPreparedToPlay] ){
-                [ player setCurrentPlaybackTime: [attributeVal doubleValue] ];
+            if( [[self player] isPreparedToPlay] ){
+                [ [self player] setCurrentPlaybackTime: [attributeVal doubleValue] ];
             }
             break;
         case visible:
@@ -856,14 +767,6 @@
     NSLog(@"visible Exit");
 }
 
-- (void) onMovieDurationAvailable:(NSNotification *)notification {
-    NSLog(@"onMovieDurationAvailable Enter");
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:player];
-    
-    NSLog(@"onMovieDurationAvailable Exit");
-}
-
 - (void) sendCurrentTime:(NSTimer *)timer {
     //    NSLog(@"sendCurrentTime Enter");
     
@@ -891,16 +794,16 @@
     NSLog(@"stopAndRemovePlayer Enter");
     
     [self visible:@"false"];
-    [player stop];
-    [player setContentURL:nil];
-    [player.view removeFromSuperview];
-    [self.webView removeFromSuperview];
+    [[self player] stop];
+    [[self player] setContentURL:nil];
+    [[[self player] view] removeFromSuperview];
+    [[self webView] removeFromSuperview];
     
-    if(isFullScreen){
+    if( isFullScreen ){
         isFullScreen = NO;
     }
     
-    player = nil;
+    self.player = nil;
     self.webView = nil;
     
     [self removeAirPlayIcon];
@@ -1134,12 +1037,12 @@
 }
 
 - (void)chromecastDeviceDisConnected: (NSNotification *)note {
-    [self switchPlayer:[KALPlayer class]];
-    [self triggerEventsJavaScript:@"chromecastDeviceDisConnected" WithValue:nil];
+    [self switchPlayer: [KALPlayer class]];
+    [self triggerEventsJavaScript: @"chromecastDeviceDisConnected" WithValue: nil];
 }
 
 - (void)chromecastDevicePlaying: (NSNotification *)note {
-    [self triggerEventsJavaScript:@"play" WithValue:nil];
+    [self triggerEventsJavaScript: @"play" WithValue: nil];
 }
 
 @end

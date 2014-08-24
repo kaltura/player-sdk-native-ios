@@ -68,6 +68,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (BOOL)isPreparedToPlay;
 - (double)playableDuration;
 - (double)duration;
+- (void)bindPlayerEvents;
 
 @optional
 - (id)view;

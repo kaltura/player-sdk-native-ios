@@ -24,5 +24,6 @@
 - (void)setContentURL:(NSURL *)url;
 - (double)playableDuration;
 - (double)duration;
+- (void)bindPlayerEvents;
 
 @end
