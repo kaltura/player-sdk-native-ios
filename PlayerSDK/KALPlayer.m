@@ -36,7 +36,6 @@
 }
 
 @synthesize delegate;
-@synthesize currentPlaybackTime;
 @synthesize view;
 @synthesize controlStyle;
 @synthesize playbackState;
@@ -48,10 +47,7 @@
     NSLog(@"copyParamsFromPlayer Enter");
     
     if (self) {
-        if ( [self isPreparedToPlay] ) {
-            self.currentPlaybackTime = player.currentPlaybackTime;
-        }
-        
+        [self setCurrentPlaybackTime: [player getCurrentPlaybackTime]];
         [self setContentURL: [player contentURL]];
     }
     
@@ -147,8 +143,12 @@
     return [super view];
 }
 
-- (double)currentPlaybackTime {
+- (double)getCurrentPlaybackTime {
     return [super currentPlaybackTime];
+}
+
+- (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
+    [super setCurrentPlaybackTime: currPlaybackTime];
 }
 
 - (int)loadState {
@@ -170,12 +170,6 @@
 
 - (double)duration {
     return [super duration];
-}
-
-- (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
-    if ( [self isPreparedToPlay] ) {
-        [super setCurrentPlaybackTime: currPlaybackTime];
-    }
 }
 
 - (void)bindPlayerEvents {

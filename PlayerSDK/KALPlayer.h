@@ -27,5 +27,7 @@
 - (void)bindPlayerEvents;
 - (void)sendCurrentTime:(NSTimer *)timer;
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
+-(double)getCurrentPlaybackTime;
+-(void)setCurrentPlaybackTime:(double)cs;
 
 @end

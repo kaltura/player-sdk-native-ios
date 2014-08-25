@@ -14,7 +14,6 @@
 - (void)pause;
 - (void)play;
 - (void)stop;
-- (double)currentPlaybackTime;
 - (int)playbackState;
 - (BOOL)isPreparedToPlay;
 - (void)setContentURL:(NSURL *)url;
@@ -23,5 +22,7 @@
 - (void)bindPlayerEvents;
 - (void)sendCurrentTime:(NSTimer *)timer;
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
+-(double)getCurrentPlaybackTime;
+-(void)setCurrentPlaybackTime:(double)cs;
 
 @end

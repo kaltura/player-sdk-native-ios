@@ -41,7 +41,6 @@ typedef void (^JSCallbackReadyHandler)();
 
 @required
 
-@property double currentPlaybackTime;
 @property(readonly) UIView * view;
 @property(readonly) int playbackState;
 @property(readonly) int loadState;
@@ -54,11 +53,13 @@ typedef void (^JSCallbackReadyHandler)();
 -(NSURL *)contentURL;
 -(void)setContentURL:(NSURL *)cs;
 
+-(double)getCurrentPlaybackTime;
+-(void)setCurrentPlaybackTime:(double)cs;
+
 - (void)pause;
 - (void)play;
 - (void)stop;
 //- (id)view;
-- (double)currentPlaybackTime;
 //- (int)controlStyle;
 - (int)playbackState;
 //- (int)loadState;

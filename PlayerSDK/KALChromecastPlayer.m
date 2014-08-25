@@ -14,7 +14,6 @@
 }
 
 @synthesize delegate;
-@synthesize currentPlaybackTime;
 @synthesize view;
 @synthesize playbackState;
 @synthesize loadState;
@@ -26,9 +25,10 @@
     if (self) {
         chromecastDeviceController = (ChromecastDeviceController *)[KalPlayerViewController sharedChromecastDeviceController];
         
-        if ( [self isPreparedToPlay] ) {
-            self.currentPlaybackTime = player.currentPlaybackTime;
-        }
+//        if ( [self isPreparedToPlay] ) {
+        [self setCurrentPlaybackTime: [player getCurrentPlaybackTime]];
+//            self.currentPlaybackTime = [player currentPlaybackTime];
+//        }
         
         [self setContentURL: [player contentURL]];
     }
@@ -51,7 +51,7 @@
                                     title: @""
                                  subtitle: @""
                                  mimeType: @""
-                                startTime: [self currentPlaybackTime]
+                                startTime: [self getCurrentPlaybackTime]
                                  autoPlay: YES];
 }
 
@@ -87,28 +87,29 @@
     return [chromecastDeviceController streamPosition];
 }
 
-- (double)currentPlaybackTime {
+- (double)getCurrentPlaybackTime {
     return [self getCurrentTime];
 }
 
 - (CGFloat)getCurrentTime {
-    if ( [self isPreparedToPlay] ) {
+//    if ( [self isPreparedToPlay] ) {
         [chromecastDeviceController updateStatsFromDevice];
         
         return [chromecastDeviceController streamPosition];
-    }
+//    }
     
-    return -1;
-}
-
-- (BOOL)isPreparedToPlay {
-    return chromecastDeviceController && chromecastDeviceController.isConnected;
+//    return -1;
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
-    if ( [self isPreparedToPlay] ) {
+//    if ( [self isPreparedToPlay] ) {
         [chromecastDeviceController setPlaybackPercent: currPlaybackTime];
-    }
+    
+//    }
+}
+
+- (BOOL)isPreparedToPlay {
+    return chromecastDeviceController && [chromecastDeviceController isConnected];
 }
 
 - (void)bindPlayerEvents {
@@ -153,7 +154,7 @@
     if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
         && ( [self playbackState] == GCKMediaPlayerStatePlaying ) ) {
         [self triggerKPlayerEvents: @"timeupdate"
-                         withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self currentPlaybackTime]]}];
+                         withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self getCurrentPlaybackTime]]}];
     }
 }
 

@@ -137,22 +137,24 @@
     NSLog(@"handleEnteredBackground Exit");
 }
 
-- (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)c {
-    NSString *playerName = NSStringFromClass(c);
-    id<KalturaPlayer> p = [self.players objectForKey:playerName];
+- (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)class {
+    NSString *playerName = NSStringFromClass(class);
+    id<KalturaPlayer> newKPlayer = [[self players] objectForKey:playerName];
     
-    if (p == nil) {
-        p = [[c alloc] init];
-        [self.players setObject:p forKey:playerName];
-        // if player is created for the first time add observer to all relevant notifications 
-        [[self player] bindPlayerEvents];
+    if ( newKPlayer == nil ) {
+        newKPlayer = [[class alloc] init];
+        [[self players] setObject: newKPlayer forKey: playerName];
+        // if player is created for the first time add observer to all relevant notifications
+        [newKPlayer bindPlayerEvents];
     }
     
     if ( [self player] ) {
-        [p copyParamsFromPlayer: [self player]];
+        
+        NSLog(@"%f", [[self player] getCurrentPlaybackTime]);
+        [newKPlayer copyParamsFromPlayer: [self player]];
     }
     
-    return p;
+    return newKPlayer;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -630,7 +632,7 @@
     NSLog(@"Binding Events Enter");
     
     if ( self ) {
-        [[self player] bindPlayerEvents];
+//        [[self player] bindPlayerEvents];
         
        NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", nil];
         
@@ -917,6 +919,10 @@
     [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
 }
 
+//-(void)chromecastDevicePlaying: (NSNotification *)note {
+//    [self triggerEventsJavaScript: @"play" WithValue: nil];
+//}
+
 // Chromecast
 - (void) didLoad {
     
@@ -936,6 +942,11 @@
                                                   selector: @selector(chromecastDeviceDisConnected:)
                                                       name: ChromcastDeviceControllerDeviceDisconnectedNotification
                                                     object: nil ];
+        
+//                [ [NSNotificationCenter defaultCenter] addObserver: self
+//                                                                    selector: @selector(chromecastDevicePlaying:)
+//                                                                        name: ChromcastDeviceControllerMediaNowPlayingNotification
+//                                                                      object: nil ];
     }
     
     // Chromecast
