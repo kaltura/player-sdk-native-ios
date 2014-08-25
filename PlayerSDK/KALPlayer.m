@@ -45,6 +45,8 @@
 @synthesize contentURL;
 
 - (void) copyParamsFromPlayer:(id<KalturaPlayer>) player {
+    NSLog(@"copyParamsFromPlayer Enter");
+    
     if (self) {
         if ( [self isPreparedToPlay] ) {
             self.currentPlaybackTime = player.currentPlaybackTime;
@@ -52,13 +54,20 @@
         
         [self setContentURL: [player contentURL]];
     }
+    
+    NSLog(@"copyParamsFromPlayer Exit");
+}
+
+- (int)playbackState {
+    return [super playbackState];
 }
 
 -(NSURL *)contentURL {
-    return super.contentURL;
+    return [super contentURL];
 }
--(void)setContentURL:(NSURL *)cs {
-    super.contentURL = [cs copy];
+
+-(void)setContentURL: (NSURL *)url {
+    super.contentURL = [url copy];
 }
 
 -(int)controlStyle {
@@ -66,11 +75,11 @@
 }
 
 -(void)setControlStyle:(int)cs {
-    [super setControlStyle:cs];
+    [super setControlStyle: cs];
 }
 
 - (void)play {
-    NSLog( @"Play Player Enter" );
+    NSLog(@"play Enter");
     
     isPlayCalled = YES;
     
@@ -87,11 +96,11 @@
     
     [self callSelectorOnDelegate: @selector(kPlayerDidPlay)];
     
-    NSLog( @"Play Player Exit" );
+    NSLog(@"play Exit");
 }
 
 - (void)pause {
-    NSLog(@"Pause Player Enter");
+    NSLog(@"pause Enter");
     
     isPlayCalled = NO;
     
@@ -101,11 +110,11 @@
     
     [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
     
-    NSLog(@"Pause Player Exit");
+    NSLog(@"pause Exit");
 }
 
 - (void)stop {
-    NSLog(@"Stop Player Enter");
+    NSLog(@"stop Enter");
     
     [super stop];
     isPlaying = NO;
@@ -122,7 +131,7 @@
     
     [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
     
-    NSLog(@"Stop Player Exit");
+    NSLog(@"stop Exit");
 }
 
 - (void)callSelectorOnDelegate:(SEL) selector {
@@ -140,11 +149,6 @@
 
 - (double)currentPlaybackTime {
     return [super currentPlaybackTime];
-}
-
-
-- (int)playbackState {
-    return [super playbackState];
 }
 
 - (int)loadState {
@@ -169,7 +173,7 @@
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
-    if ([self isPreparedToPlay]) {
+    if ( [self isPreparedToPlay] ) {
         [super setCurrentPlaybackTime: currPlaybackTime];
     }
 }
@@ -189,8 +193,11 @@
                          forKey: @"onMovieDurationAvailable:"];
     
     for (id functionName in eventsDictionary){
-        id event = [eventsDictionary objectForKey:functionName];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:NSSelectorFromString(functionName) name:event object:self];
+        id event = [eventsDictionary objectForKey: functionName];
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: NSSelectorFromString(functionName)
+                                                     name: event
+                                                   object: self];
     }
 }
 

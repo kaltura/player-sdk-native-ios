@@ -10,7 +10,7 @@
 
 @implementation KALChromecastPlayer {
     ChromecastDeviceController *chromecastDeviceController;
-    NSURL *contentURL;
+    NSURL *ccContentURL;
 }
 
 @synthesize delegate;
@@ -20,7 +20,9 @@
 @synthesize loadState;
 @synthesize isPreparedToPlay;
 
-- (void) copyParamsFromPlayer:(id<KalturaPlayer>) player {
+- (void)copyParamsFromPlayer:(id<KalturaPlayer>) player {
+    NSLog(@"copyParamsFromPlayer Enter");
+    
     if (self) {
         chromecastDeviceController = (ChromecastDeviceController *)[KalPlayerViewController sharedChromecastDeviceController];
         
@@ -30,51 +32,139 @@
         
         [self setContentURL: [player contentURL]];
     }
+    
+    NSLog(@"copyParamsFromPlayer Exit");
 }
 
 - (int)playbackState {
-    return chromecastDeviceController.playerState;
+    return [chromecastDeviceController playerState];
 }
 
 - (NSURL *)contentURL {
-    return contentURL;
+    return ccContentURL;
 }
 
 - (void)setContentURL:(NSURL *)url {
-    contentURL = url;
-    [chromecastDeviceController loadMedia: url thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: self.currentPlaybackTime autoPlay: YES];
+    ccContentURL = url;
+    [chromecastDeviceController loadMedia: url
+                             thumbnailURL: nil
+                                    title: @""
+                                 subtitle: @""
+                                 mimeType: @""
+                                startTime: [self currentPlaybackTime]
+                                 autoPlay: YES];
+}
+
+-(void)play {
+    NSLog(@"play Enter");
+    
+    [chromecastDeviceController pauseCastMedia: NO];
+    
+    NSLog(@"play Exit");
+}
+
+-(void)pause {
+    NSLog(@"pause Enter");
+    
+    [chromecastDeviceController pauseCastMedia: YES];
+    
+    NSLog(@"pause Exit");
+}
+
+-(void)stop {
+    NSLog(@"stop Enter");
+    
+    [chromecastDeviceController stopCastMedia];
+    
+    NSLog(@"stop Exit");
 }
 
 - (double)playableDuration {
-    return chromecastDeviceController.streamDuration;
+    return [chromecastDeviceController streamDuration];
 }
 
 - (double)duration {
-    return chromecastDeviceController.streamDuration;
+    return [chromecastDeviceController streamPosition];
 }
 
 - (double)currentPlaybackTime {
     return [self getCurrentTime];
 }
 
-- (CGFloat) getCurrentTime {
-    if ( self.isPreparedToPlay ) {
+- (CGFloat)getCurrentTime {
+    if ( [self isPreparedToPlay] ) {
         [chromecastDeviceController updateStatsFromDevice];
-        return chromecastDeviceController.streamPosition;
+        
+        return [chromecastDeviceController streamPosition];
     }
     
     return -1;
 }
 
-//-(void)showChromecastDeviceList {
-//    NSLog(@"showChromecastDeviceList Enter");
-//    
-//    if ( chromecastDeviceController ) {
-//        [chromecastDeviceController chooseDevice: self];
-//    }
-//    
-//    NSLog(@"showChromecastDeviceList Exit");
-//}
+- (BOOL)isPreparedToPlay {
+    return chromecastDeviceController && chromecastDeviceController.isConnected;
+}
+
+- (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
+    if ( [self isPreparedToPlay] ) {
+        [chromecastDeviceController setPlaybackPercent: currPlaybackTime];
+    }
+}
+
+- (void)bindPlayerEvents {
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(triggerMediaNowPlaying:)
+                                                 name: ChromcastDeviceControllerMediaNowPlayingNotification
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(volumeChanged:)
+                                                 name: @"AVSystemController_SystemVolumeDidChangeNotification"
+                                               object: nil];
+}
+
+- (void)triggerMediaNowPlaying:(NSNotification*)notification {
+    NSLog(@"triggerMediaNowPlaying Enter");
+    
+    [self triggerKPlayerEvents: @"play" withValue: nil];
+    [NSTimer scheduledTimerWithTimeInterval: .2
+                                     target: self
+                                   selector: @selector(sendCurrentTime:)
+                                   userInfo: nil
+                                    repeats: YES];
+    [NSTimer scheduledTimerWithTimeInterval: 1
+                                     target: self
+                                   selector: @selector(updatePlaybackProgressFromTimer:)
+                                   userInfo: nil
+                                    repeats: YES];
+    
+    NSLog(@"triggerMediaNowPlaying Exit");
+}
+
+- (void)triggerKPlayerEvents: (NSString *)notName withValue: (NSDictionary *)notValueDict {
+    NSLog(@"triggerKPlayerEvents Enter");
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName: notName object: nil userInfo: notValueDict];
+    
+    NSLog(@"triggerKPlayerEvents Exit");
+}
+
+- (void)sendCurrentTime:(NSTimer *)timer {
+    if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
+        && ( [self playbackState] == GCKMediaPlayerStatePlaying ) ) {
+        [self triggerKPlayerEvents: @"timeupdate"
+                         withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self currentPlaybackTime]]}];
+    }
+}
+
+- (void)updatePlaybackProgressFromTimer:(NSTimer *)timer {
+    if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
+        && ( [self playbackState] == GCKMediaPlayerStatePlaying ) ) {
+        CGFloat progress = [self playableDuration] / [self duration];
+        [self triggerKPlayerEvents: @"progress"
+                         withValue: @{@"progress": [NSString stringWithFormat:@"%f", progress]}];
+    }
+}
 
 - (void) volumeChanged:(NSNotification *)notification {
     NSLog(@"onMovieDurationAvailable Enter");
@@ -86,58 +176,6 @@
     [chromecastDeviceController changeVolume: volume];
     
     NSLog(@"onMovieDurationAvailable Exit");
-}
-
-- (BOOL) isPreparedToPlay {
-    return chromecastDeviceController && chromecastDeviceController.isConnected;
-}
-
-- (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if ([self isPreparedToPlay]) {
-        [ chromecastDeviceController setPlaybackPercent:  currentTime];
-    }
-}
-
-//- (void)deviceConnected:(NSNotification*)notification {
-//    if ([[notification name] isEqualToString:ChromcastDeviceControllerDeviceConnectedNotification]) {
-//        NSLog(@"Device has been Connected!");
-//        
-//        //Push Chromecast Segue
-//        if ( [self isPreparedToPlay] ) {
-//            //_lastKnownPlaybackTime = [self currentPlaybackTime];
-//            [self stop];
-//        }
-//    }
-//    
-//    // TODO: change to playerSource
-//    [chromecastDeviceController loadMedia: self.contentURL thumbnailURL: nil title:@"" subtitle:@"" mimeType:@"" startTime: self.currentPlaybackTime autoPlay: YES];
-//    [self.kDPApi triggerEventsJavaScript:@"chromecastDeviceConnected" WithValue:nil];
-//}
-
-#pragma mark - Chromecast Methods
-
--(void)play {
-    NSLog(@"playChromecast Enter");
-    
-    [chromecastDeviceController pauseCastMedia: NO];
-    
-    NSLog(@"playChromecast Exit");
-}
-
--(void)pause {
-    NSLog(@"pauseChromecast Enter");
-    
-    [chromecastDeviceController pauseCastMedia: YES];
-    
-    NSLog(@"pauseChromecast Exit");
-}
-
--(void)stop {
-    NSLog(@"stopChromecast Enter");
-    
-    [chromecastDeviceController stopCastMedia];
-    
-    NSLog(@"stopChromecast Exit");
 }
 
 @end

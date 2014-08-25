@@ -144,6 +144,8 @@
     if (p == nil) {
         p = [[c alloc] init];
         [self.players setObject:p forKey:playerName];
+        // if player is created for the first time add observer to all relevant notifications 
+        [[self player] bindPlayerEvents];
     }
     
     if ( [self player] ) {
@@ -815,8 +817,8 @@
 }
 
 - (void)switchPlayer:(Class)p {
-    [self.player stop];
-    self.player = [self getPlayerByClass:p];
+    [[self player] stop];
+    self.player = [self getPlayerByClass: p];
     
 //    if ( [self.player isPreparedToPlay] ) {
 //        [self.player play];
@@ -925,11 +927,6 @@
          name:ChromcastDeviceControllerDeviceConnectedNotification
          object:nil];
         
-        [[NSNotificationCenter defaultCenter] addObserver: self
-                                                 selector: @selector(volumeChanged:)
-                                                     name: @"AVSystemController_SystemVolumeDidChangeNotification"
-                                                   object: nil];
-        
         [ [NSNotificationCenter defaultCenter] addObserver: self
                                                   selector: @selector(chromecastVisiblity:)
                                                       name: @"chromecastVisiblityNotification"
@@ -938,11 +935,6 @@
         [ [NSNotificationCenter defaultCenter] addObserver: self
                                                   selector: @selector(chromecastDeviceDisConnected:)
                                                       name: ChromcastDeviceControllerDeviceDisconnectedNotification
-                                                    object: nil ];
-        
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(chromecastDevicePlaying:)
-                                                      name: ChromcastDeviceControllerMediaNowPlayingNotification
                                                     object: nil ];
     }
     
@@ -982,10 +974,6 @@
 - (void)chromecastDeviceDisConnected: (NSNotification *)note {
     [self switchPlayer: [KALPlayer class]];
     [self triggerEventsJavaScript: @"chromecastDeviceDisConnected" WithValue: nil];
-}
-
-- (void)chromecastDevicePlaying: (NSNotification *)note {
-    [self triggerEventsJavaScript: @"play" WithValue: nil];
 }
 
 @end

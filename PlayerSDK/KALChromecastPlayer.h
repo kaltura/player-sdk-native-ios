@@ -21,5 +21,7 @@
 - (double)playableDuration;
 - (double)duration;
 - (void)bindPlayerEvents;
+- (void)sendCurrentTime:(NSTimer *)timer;
+- (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
 
 @end
