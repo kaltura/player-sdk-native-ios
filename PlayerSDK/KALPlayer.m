@@ -252,6 +252,16 @@
             playBackName = @"";
             if( ( [self playbackState] == MPMoviePlaybackStatePlaying ) ) {
                 playBackName = @"play";
+                [NSTimer scheduledTimerWithTimeInterval: .2
+                                                 target: self
+                                               selector: @selector(sendCurrentTime:)
+                                               userInfo: nil
+                                                repeats: YES];
+                [NSTimer scheduledTimerWithTimeInterval: 1
+                                                 target: self
+                                               selector: @selector(updatePlaybackProgressFromTimer:)
+                                               userInfo: nil
+                                                repeats: YES];
             }
             
             NSLog(@"MPMoviePlaybackStatePlaying");
@@ -320,12 +330,29 @@
     NSLog(@"triggerKPlayerEvents Exit");
 }
 
-- (void) onMovieDurationAvailable:(NSNotification *)notification {
+- (void)onMovieDurationAvailable:(NSNotification *)notification {
     NSLog(@"onMovieDurationAvailable Enter");
     
 //    [[NSNotificationCenter defaultCenter] removeObserver: self];
     
     NSLog(@"onMovieDurationAvailable Exit");
+}
+
+- (void)sendCurrentTime:(NSTimer *)timer {
+    if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
+        && ( [self playbackState] == MPMoviePlaybackStatePlaying ) ) {
+        [self triggerKPlayerEvents: @"timeupdate"
+                         withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self currentPlaybackTime]]}];
+    }
+}
+
+- (void)updatePlaybackProgressFromTimer:(NSTimer *)timer {
+    if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
+        && ( [self playbackState] == MPMoviePlaybackStatePlaying ) ) {
+        CGFloat progress = [self playableDuration] / [self duration];
+        [self triggerKPlayerEvents: @"progress"
+                         withValue: @{@"progress": [NSString stringWithFormat:@"%f", progress]}];
+    }
 }
 
 //KALPlayer *kp = [KALPlayer new];

@@ -630,7 +630,7 @@
     if ( self ) {
         [[self player] bindPlayerEvents];
         
-       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"play", @"pause", @"ended", @"seeking", @"seeked", nil];
+       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", nil];
         
         for (id kPlayerEvent in kPlayerEvents) {
             [[NSNotificationCenter defaultCenter] addObserver: self
@@ -639,14 +639,6 @@
                                                         object: nil];
         }
     }
-    
-//    if ( [self.player playbackState] == MPMoviePlaybackStatePlaying) {
-        //  200 milliseconds is .2 seconds
-        [NSTimer scheduledTimerWithTimeInterval:.2 target:self selector: @selector( sendCurrentTime:) userInfo:nil repeats:YES];
-        //  every second
-        [NSTimer scheduledTimerWithTimeInterval:1 target:self selector: @selector( updatePlaybackProgressFromTimer: ) userInfo:nil repeats:YES];
-//    }
-    
     
     NSLog(@"Binding Events Exit");
 }
@@ -739,29 +731,6 @@
     [self triggerEventsJavaScript:@"visible" WithValue:[NSString stringWithFormat:@"%@", boolVal]];
     
     NSLog(@"visible Exit");
-}
-
-- (void) sendCurrentTime:(NSTimer *)timer {
-    //    NSLog(@"sendCurrentTime Enter");
-    
-    if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) {
-        CGFloat currentTime = player.currentPlaybackTime;
-        [self triggerEventsJavaScript:@"timeupdate" WithValue:[NSString stringWithFormat:@"%f", currentTime]];
-    }
-    
-    //    NSLog(@"sendCurrentTime Exit");
-}
-
-- (void) updatePlaybackProgressFromTimer:(NSTimer *)timer {
-    //    NSLog(@"updatePlaybackProgressFromTimer Enter");
-    
-    if (([UIApplication sharedApplication].applicationState == UIApplicationStateActive) && (player.playbackState == MPMoviePlaybackStatePlaying)) {
-        CGFloat progress = player.playableDuration / player.duration;
-        [self triggerEventsJavaScript:@"progress" WithValue:[NSString stringWithFormat:@"%f", progress]];
-        //        NSLog(@"%@", [NSString stringWithFormat:@"progress:%f", progress]);
-    }
-    
-    //    NSLog(@"updatePlaybackProgressFromTimer Exit");
 }
 
 - (void)stopAndRemovePlayer{
