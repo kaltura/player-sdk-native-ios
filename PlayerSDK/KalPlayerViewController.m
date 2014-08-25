@@ -160,14 +160,11 @@
     
     if ( !isFullScreen && !isResumePlayer ) {
         self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
-        [self.webView setPlayerControlsWebViewDelegate: self];
+        [[self webView] setPlayerControlsWebViewDelegate: self];
         
         self.player = [self getPlayerByClass:[KALPlayer class]];
         NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
-// TODO: if there is no player add basice player
-//        if (!self.player) {
-//            self.player = [[basicPlayer alloc] init];
-//        }
+
         self.player.view.frame = playerViewFrame;
         
         // WebView initialize for supporting NativeComponent(html5 player view)
@@ -179,7 +176,7 @@
         
         // Add NativeComponent (html5 player view) webView to player view
         [[[self player] view] addSubview: [self webView]];
-        [self.view addSubview: [[self player] view]];
+        [[self view] addSubview: [[self player] view]];
         
         self.player.controlStyle = MPMovieControlStyleNone;
     }
@@ -214,7 +211,7 @@
 - (NSString*)writeJavascript: (NSString*)javascript {
     NSLog(@"writeJavascript: %@", javascript);
     
-    return [self.webView stringByEvaluatingJavaScriptFromString: javascript];
+    return [[self webView] stringByEvaluatingJavaScriptFromString: javascript];
 }
 
 #pragma mark - Player Methods
@@ -323,7 +320,7 @@
         return;
     }
 
-    for (KPEventListener *e in listenersArr) {
+    for ( KPEventListener *e in listenersArr ) {
         if ( [e.name isEqualToString: listenerName] ) {
             [listenersArr removeObject: e];
             break;
@@ -335,7 +332,7 @@
     }
     
     if ( listenersArr == nil ) {
-        [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", eventName] ];
+        [self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", eventName]];
     }
     
     NSLog(@"removeKPlayerEventListenerWithName Exit");
@@ -345,7 +342,7 @@
     NSLog(@"asyncEvaluate Enter");
     
     [kPlayerEvaluatedDict setObject: listener forKey: [listener name]];
-    [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, [listener name]] ];
+    [self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, [listener name]]];
     
     NSLog(@"asyncEvaluate Exit");
 }
@@ -633,38 +630,15 @@
     if ( self ) {
         [[self player] bindPlayerEvents];
         
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(x:)
-                                                      name: @"canplay"
-                                                    object: nil ];
+       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"play", @"pause", @"ended", @"seeking", @"seeked", nil];
         
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(x:)
-                                                      name: @"play"
-                                                    object: nil ];
-        
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(x:)
-                                                      name: @"pause"
-                                                    object: nil ];
-        
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(x:)
-                                                      name: @"ended"
-                                                    object: nil ];
-        
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(x:)
-                                                      name: @"seeking"
-                                                    object: nil ];
-        
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(x:)
-                                                      name: @"seeked"
-                                                    object: nil ];
+        for (id kPlayerEvent in kPlayerEvents) {
+            [[NSNotificationCenter defaultCenter] addObserver: self
+                                                      selector: @selector(triggerKPlayerNotification:)
+                                                          name: kPlayerEvent
+                                                        object: nil];
+        }
     }
-    
-
     
 //    if ( [self.player playbackState] == MPMoviePlaybackStatePlaying) {
         //  200 milliseconds is .2 seconds
@@ -677,7 +651,7 @@
     NSLog(@"Binding Events Exit");
 }
 
-- (void)x: (NSNotification *)note{
+- (void)triggerKPlayerNotification: (NSNotification *)note{
     NSLog(@"triggerLoadPlabackEvents Enter");
     
     [self triggerEventsJavaScript: [note name] WithValue: [[note userInfo] valueForKey: [note name]]];

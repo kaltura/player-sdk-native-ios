@@ -50,9 +50,7 @@ typedef void (^JSCallbackReadyHandler)();
 @property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
 + (id)alloc;
 
--(int)getControlStyle;
 -(void)setControlStyle:(int)cs;
-
 -(NSURL *)contentURL;
 -(void)setContentURL:(NSURL *)cs;
 
