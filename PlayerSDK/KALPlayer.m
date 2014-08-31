@@ -7,6 +7,10 @@
 //
 
 #import "KALPlayer.h"
+#if !(TARGET_IPHONE_SIMULATOR)
+#import "WVSettings.h"
+#import "WViPhoneAPI.h"
+#endif
 
 @implementation KALPlayer {
     // Player Params
@@ -193,6 +197,10 @@
                                                      name: event
                                                    object: self];
     }
+    
+#if !(TARGET_IPHONE_SIMULATOR)
+    [self initWideVineParams];
+#endif
 }
 
 - (void)triggerLoadPlabackEvents: (NSNotification *)note{
@@ -355,6 +363,56 @@
                          withValue: @{@"progress": [NSString stringWithFormat:@"%f", progress]}];
     }
 }
+
+#pragma mark - WideVine Methods
+#if !(TARGET_IPHONE_SIMULATOR)
+
+- (void)initWideVineParams {
+    NSLog(@"initWideVineParams Enter");
+    
+    isWideVine = NO;
+    isWideVineReady = NO;
+    
+    NSLog(@"initWideVineParams Exit");
+}
+
+- (void)setWideVideConfigurations {
+    wvSettings = [[WVSettings alloc] init];
+    isWideVine = YES;
+    [ [NSNotificationCenter defaultCenter] addObserver: self
+                                              selector: @selector(playWV:)
+                                                  name: @"wvResponseUrlNotification"
+                                                object: nil ];
+}
+
+- (void) initWV: (NSString *)src andKey: (NSString *)key {
+    NSLog(@"initWV Enter");
+
+    WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
+
+    if (wvInitStatus == WViOsApiStatus_OK) {
+        NSLog(@"widevine was inited");
+    }
+
+    [wvSettings playMovieFromUrl: src];
+
+    NSLog(@"initWV Exit");
+}
+
+-(void)playWV: (NSNotification *)responseUrlNotification  {
+    NSLog(@"playWV Exit");
+    
+    [ self setContentURL: [ NSURL URLWithString: [ [responseUrlNotification userInfo] valueForKey: @"response_url"] ] ];
+    isWideVineReady = YES;
+    
+    if ( isPlayCalled ) {
+        [self play];
+    }
+    
+    NSLog(@"playWV Exit");
+}
+
+#endif
 
 //KALPlayer *kp = [KALPlayer new];
 //[kp setDelegate: self];

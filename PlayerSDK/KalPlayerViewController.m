@@ -13,14 +13,10 @@
 #import "KalPlayerViewController.h"
 
 #import "KPEventListener.h"
-#if !(TARGET_IPHONE_SIMULATOR)
-#import "WVSettings.h"
-#import "WViPhoneAPI.h"
-#endif
-
-#import "KALPlayer.h"
-#import "KALChromecastPlayer.h"
-#import "ChromecastDeviceController.h"
+//#if !(TARGET_IPHONE_SIMULATOR)
+//#import "WVSettings.h"
+//#import "WViPhoneAPI.h"
+//#endif
 
 @implementation KalPlayerViewController {
     // Player Params
@@ -44,11 +40,11 @@
     
     BOOL *showChromecastBtn;
     
-  #if !(TARGET_IPHONE_SIMULATOR)
-        // WideVine Params
-        BOOL isWideVine, isWideVineReady;
-        WVSettings* wvSettings;
-    #endif
+//  #if !(TARGET_IPHONE_SIMULATOR)
+//        // WideVine Params
+//        BOOL isWideVine, isWideVineReady;
+//        WVSettings* wvSettings;
+//    #endif
 }
 
 @synthesize webView, player;
@@ -76,9 +72,9 @@
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:finalUA, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
     
-#if !(TARGET_IPHONE_SIMULATOR)
-    [self initWideVineParams];
-#endif
+//#if !(TARGET_IPHONE_SIMULATOR)
+//    [self initWideVineParams];
+//#endif
     [self initPlayerParams];
     
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
@@ -102,6 +98,7 @@
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
     [self didLoad];
+    [[KalPlayerViewController sharedChromecastDeviceController] setDelegate: self];
     
     [super viewDidLoad];
     
@@ -690,14 +687,20 @@
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
-            wvSettings = [[WVSettings alloc] init];
-            isWideVine = YES;
-            [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                      selector: @selector(playWV:)
-                                                          name: @"wvResponseUrlNotification"
-                                                        object: nil ];
+//            wvSettings = [[WVSettings alloc] init];
+//            isWideVine = YES;
+//            [ [NSNotificationCenter defaultCenter] addObserver: self
+//                                                      selector: @selector(playWV:)
+//                                                          name: @"wvResponseUrlNotification"
+//                                                        object: nil ];
+            if ( [[self player] respondsToSelector:@selector(setWideVideConfigurations)] ) {
+                [[self player] setWideVideConfigurations];
+            }
             attributeVal = [args objectAtIndex:1];
-            [self initWV: playerSource andKey: attributeVal];
+            if ( [[self player] respondsToSelector:@selector(initWV:andKey:)]) {
+                [[self player] initWV: playerSource andKey: attributeVal];
+            }
+
             break;
 #endif
             
@@ -710,7 +713,7 @@
 
 - (void)setPlayerSource: (NSURL *)src{
     NSLog(@"setPlayerSource Enter");
-    [player setContentURL:src];
+    [[self player] setContentURL:src];
     
     NSLog(@"setPlayerSource Exit");
 }
@@ -862,41 +865,41 @@
 #pragma mark - WideVine Methods
 #if !(TARGET_IPHONE_SIMULATOR)
 
--(void)initWideVineParams {
-    NSLog(@"initWideVineParams Enter");
-    
-    isWideVine = NO;
-    isWideVineReady = NO;
-    
-    NSLog(@"initWideVineParams Exit");
-}
+//-(void)initWideVineParams {
+//    NSLog(@"initWideVineParams Enter");
+//    
+//    isWideVine = NO;
+//    isWideVineReady = NO;
+//    
+//    NSLog(@"initWideVineParams Exit");
+//}
 
-- (void) initWV: (NSString *)src andKey: (NSString *)key {
-    NSLog(@"initWV Enter");
-    
-    WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
-    
-    if (wvInitStatus == WViOsApiStatus_OK) {
-        NSLog(@"widevine was inited");
-    }
-    
-    [wvSettings playMovieFromUrl: src];
-    
-    NSLog(@"initWV Exit");
-}
+//- (void) initWV: (NSString *)src andKey: (NSString *)key {
+//    NSLog(@"initWV Enter");
+//    
+//    WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
+//    
+//    if (wvInitStatus == WViOsApiStatus_OK) {
+//        NSLog(@"widevine was inited");
+//    }
+//    
+//    [wvSettings playMovieFromUrl: src];
+//    
+//    NSLog(@"initWV Exit");
+//}
 
--(void)playWV: (NSNotification *)responseUrlNotification  {
-    NSLog(@"playWV Exit");
-    
-    [ self setPlayerSource: [ NSURL URLWithString: [ [responseUrlNotification userInfo] valueForKey: @"response_url"] ] ];
-    isWideVineReady = YES;
-    
-    if ( isPlayCalled ) {
-        [self play];
-    }
-    
-    NSLog(@"playWV Exit");
-}
+//-(void)playWV: (NSNotification *)responseUrlNotification  {
+//    NSLog(@"playWV Exit");
+//    
+//    [ self setPlayerSource: [ NSURL URLWithString: [ [responseUrlNotification userInfo] valueForKey: @"response_url"] ] ];
+//    isWideVineReady = YES;
+//    
+//    if ( isPlayCalled ) {
+//        [self play];
+//    }
+//    
+//    NSLog(@"playWV Exit");
+//}
 
 #endif
 
@@ -914,9 +917,18 @@
     NSLog( @"didPinchInOut Exit" );
 }
 
-- (void)deviceConnected:(NSNotification*)notification {
+- (void)didConnectToDevice:(GCKDevice*)device {
     [self switchPlayer: [KALChromecastPlayer class]];
     [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
+}
+
+- (void)didReceiveMediaStateChange {
+    if ( [[KalPlayerViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePlaying ) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"ChromcastDeviceControllerMediaNowPlayingNotification" object: nil];
+//        [self triggerEventsJavaScript: @"play" WithValue: nil];
+    } else if ( [[KalPlayerViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePaused ) {
+        [[NSNotificationCenter defaultCenter] postNotificationName: @"ChromcastDeviceControllerMediaNowPauseNotification" object: nil];
+    }
 }
 
 //-(void)chromecastDevicePlaying: (NSNotification *)note {
@@ -924,33 +936,7 @@
 //}
 
 // Chromecast
-- (void) didLoad {
-    
-    if (self) {
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self
-         selector:@selector(deviceConnected:)
-         name:ChromcastDeviceControllerDeviceConnectedNotification
-         object:nil];
-        
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(chromecastVisiblity:)
-                                                      name: @"chromecastVisiblityNotification"
-                                                    object: nil ];
-        
-        [ [NSNotificationCenter defaultCenter] addObserver: self
-                                                  selector: @selector(chromecastDeviceDisConnected:)
-                                                      name: ChromcastDeviceControllerDeviceDisconnectedNotification
-                                                    object: nil ];
-        
-//                [ [NSNotificationCenter defaultCenter] addObserver: self
-//                                                                    selector: @selector(chromecastDevicePlaying:)
-//                                                                        name: ChromcastDeviceControllerMediaNowPlayingNotification
-//                                                                      object: nil ];
-    }
-    
-    // Chromecast
-    // Initialize the chromecast device controller.
+- (void)didLoad {
     showChromecastBtn = NO;
     [[KalPlayerViewController sharedChromecastDeviceController] performScan: YES];
 }
@@ -966,7 +952,7 @@
     return chromecastDeviceController;
 }
 
-- (void)chromecastVisiblity: (NSNotification *)note {
+- (void)didDiscoverDeviceOnNetwork {
     if ( [[[KalPlayerViewController sharedChromecastDeviceController] deviceScanner] devices] ) {
         showChromecastBtn = YES;
     }
@@ -982,7 +968,7 @@
     }
 }
 
-- (void)chromecastDeviceDisConnected: (NSNotification *)note {
+- (void)didDisconnect {
     [self switchPlayer: [KALPlayer class]];
     [self triggerEventsJavaScript: @"chromecastDeviceDisConnected" WithValue: nil];
 }

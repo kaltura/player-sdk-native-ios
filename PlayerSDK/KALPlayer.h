@@ -27,7 +27,9 @@
 - (void)bindPlayerEvents;
 - (void)sendCurrentTime:(NSTimer *)timer;
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
--(double)getCurrentPlaybackTime;
--(void)setCurrentPlaybackTime:(double)cs;
+- (double)getCurrentPlaybackTime;
+- (void)setCurrentPlaybackTime:(double)cs;
+- (void)initWV: (NSString *)src andKey: (NSString *)key;
+- (void)setWideVideConfigurations;
 
 @end

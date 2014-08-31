@@ -2,6 +2,14 @@
 
 #import <Foundation/Foundation.h>
 
+/** @file GCKError.h
+ *  @brief Error codes
+ */
+
+/**
+ * @enum GCKErrorCode
+ * @brief Description of error codes
+ */
 typedef NS_ENUM(NSInteger, GCKErrorCode) {
 
   /**
@@ -72,10 +80,20 @@ typedef NS_ENUM(NSInteger, GCKErrorCode) {
   GCKErrorCodeInvalidMediaPlayerState = 95,
 
   /**
+   * Error code indicating that the application session ID was not valid.
+   */
+  GCKErrorCodeInvalidApplicationSessionID = 96,
+
+  /**
    * Error code indicating that an unknown, unexpected error has occurred.
    */
   GCKErrorCodeUnknown = 99,
 };
+
+/**
+ * The key for the customData JSON object associated with the error in the userInfo dictionary.
+ */
+extern NSString *const kGCKErrorCustomDataKey;
 
 /**
  * The class for all GCK framework errors.

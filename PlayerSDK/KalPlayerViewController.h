@@ -13,8 +13,14 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+@protocol KalturaPlayer;
+
 #import <MediaPlayer/MediaPlayer.h>
 #import "PlayerControlsWebView.h"
+
+#import "KALPlayer.h"
+#import "KALChromecastPlayer.h"
+#import "ChromecastDeviceController.h"
 
 typedef enum{
     // Player Content Source Url
@@ -82,6 +88,8 @@ typedef void (^JSCallbackReadyHandler)();
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void) copyParamsFromPlayer:(id<KalturaPlayer>) player;
 //- (void)setWebViewURL: (NSString *)iframeUrl;
+- (void)initWV: (NSString *)src andKey: (NSString *)key;
+- (void)setWideVideConfigurations;
 
 @end
 
@@ -100,7 +108,7 @@ typedef void (^JSCallbackReadyHandler)();
 
 @end
 
-@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate> {
+@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate, ChromecastControllerDelegate> {
     id<KalturaPlayer> player;
     NativeComponentPlugin *nativComponentDelegate;
     id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;

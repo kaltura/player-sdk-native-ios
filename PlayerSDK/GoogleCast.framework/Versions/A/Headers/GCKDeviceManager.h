@@ -10,6 +10,24 @@
 @protocol GCKDeviceManagerDelegate;
 
 /**
+ * An enum describing the active input status states.
+ */
+typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
+  /**
+   * The active input status is unknown.
+   */
+  GCKActiveInputStatusUnknown = -1,
+  /**
+   * The input is active.
+   */
+  GCKActiveInputStatusInactive = 0,
+  /**
+   * The input is inactive.
+   */
+  GCKActiveInputStatusActive = 1,
+};
+
+/**
  * Controls a Cast device. This class can send messages to, receive messages from, launch, and
  * close applications running on a Cast device.
  *
@@ -64,18 +82,6 @@
 - (void)connect;
 
 /**
- * Connects to the device overriding the default inactivity timeout interval. This timer is reset
- * whenever there is any incoming activity from the receciver.
- * The SDK will send a heartbeat PING before this timeout to actively test the connection, if no
- * PONG (or other message) is received before this timeout then we close the connection. When this
- * happens didDisconnectWithError is fired with GCKErrorCodeTimeout as the error code.
- *
- * @param inactivityTimeout Timeout for inactivity from the receiver. Should be positive and
- * greater than 5 seconds.
- */
-- (void)connectWithInactivityTimeout:(NSTimeInterval)inactivityTimeout;
-
-/**
  * Disconnects from the device.
  */
 - (void)disconnect;
@@ -116,7 +122,7 @@
  *
  * @param applicationID The application ID.
  * @param relaunchIfRunning If YES, relaunches the application if it is already running instead of
- * joining the running applicaiton.
+ * joining the running application.
  * @return NO if the message could not be sent.
  */
 - (BOOL)launchApplication:(NSString *)applicationID
@@ -288,5 +294,13 @@
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
     volumeDidChangeToLevel:(float)volumeLevel
               isMuted:(BOOL)isMuted;
+
+/**
+ * Called whenever the active input status changes.
+ *
+ * @param activeInputStatus The active input status.
+ */
+- (void)deviceManager:(GCKDeviceManager *)deviceManager
+    didReceiveActiveInputStatus:(GCKActiveInputStatus)activeInputStatus;
 
 @end

@@ -115,9 +115,13 @@
 - (void)bindPlayerEvents {
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(triggerMediaNowPlaying:)
-                                                 name: ChromcastDeviceControllerMediaNowPlayingNotification
+                                                 name: @"ChromcastDeviceControllerMediaNowPlayingNotification"
                                                object: nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(triggerMediaNowPaused:)
+                                                 name: @"ChromcastDeviceControllerMediaNowPauseNotification"
+                                               object: nil];
+
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(volumeChanged:)
                                                  name: @"AVSystemController_SystemVolumeDidChangeNotification"
@@ -127,19 +131,31 @@
 - (void)triggerMediaNowPlaying:(NSNotification*)notification {
     NSLog(@"triggerMediaNowPlaying Enter");
     
-    [self triggerKPlayerEvents: @"play" withValue: nil];
-    [NSTimer scheduledTimerWithTimeInterval: .2
-                                     target: self
-                                   selector: @selector(sendCurrentTime:)
-                                   userInfo: nil
-                                    repeats: YES];
-    [NSTimer scheduledTimerWithTimeInterval: 1
-                                     target: self
-                                   selector: @selector(updatePlaybackProgressFromTimer:)
-                                   userInfo: nil
-                                    repeats: YES];
+    if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying ) {
+        [self triggerKPlayerEvents: @"play" withValue: nil];
+        [NSTimer scheduledTimerWithTimeInterval: .2
+                                         target: self
+                                       selector: @selector(sendCurrentTime:)
+                                       userInfo: nil
+                                        repeats: YES];
+        [NSTimer scheduledTimerWithTimeInterval: 1
+                                         target: self
+                                       selector: @selector(updatePlaybackProgressFromTimer:)
+                                       userInfo: nil
+                                        repeats: YES];
+    }
     
     NSLog(@"triggerMediaNowPlaying Exit");
+}
+
+- (void)triggerMediaNowPaused:(NSNotification*)notification {
+    NSLog(@"triggerMediaNowPaused Enter");
+    
+    if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePaused ) {
+        [self triggerKPlayerEvents: @"pause" withValue: nil];
+    }
+    
+    NSLog(@"triggerMediaNowPaused Exit");
 }
 
 - (void)triggerKPlayerEvents: (NSString *)notName withValue: (NSDictionary *)notValueDict {
