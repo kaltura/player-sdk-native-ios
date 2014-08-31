@@ -58,7 +58,9 @@
 -(void)play {
     NSLog(@"play Enter");
     
-    [chromecastDeviceController pauseCastMedia: NO];
+    if ( chromecastDeviceController.playerState !=  GCKMediaPlayerStatePlaying ) {
+        [chromecastDeviceController pauseCastMedia: NO];
+    }
     
     NSLog(@"play Exit");
 }
@@ -66,7 +68,9 @@
 -(void)pause {
     NSLog(@"pause Enter");
     
-    [chromecastDeviceController pauseCastMedia: YES];
+    if ( chromecastDeviceController.playerState != GCKMediaPlayerStatePaused ) {
+         [chromecastDeviceController pauseCastMedia: YES];
+    }
     
     NSLog(@"pause Exit");
 }
