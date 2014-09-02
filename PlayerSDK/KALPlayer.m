@@ -147,7 +147,7 @@
     return [super view];
 }
 
-- (double)getCurrentPlaybackTime {
+- (NSTimeInterval)getCurrentPlaybackTime {
     return [super currentPlaybackTime];
 }
 

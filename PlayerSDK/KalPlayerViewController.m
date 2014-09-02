@@ -923,11 +923,17 @@
 }
 
 - (void)didReceiveMediaStateChange {
+    if (![self.player isKindOfClass:[KALChromecastPlayer class]]) {
+        return;
+    }
+    
+    KALChromecastPlayer *chromecastPlayer = (KALChromecastPlayer *) self.player;
+    
     if ( [[KalPlayerViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePlaying ) {
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"ChromcastDeviceControllerMediaNowPlayingNotification" object: nil];
+        [chromecastPlayer triggerMediaNowPlaying];
 //        [self triggerEventsJavaScript: @"play" WithValue: nil];
     } else if ( [[KalPlayerViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePaused ) {
-        [[NSNotificationCenter defaultCenter] postNotificationName: @"ChromcastDeviceControllerMediaNowPauseNotification" object: nil];
+        [chromecastPlayer triggerMediaNowPaused];
     }
 }
 

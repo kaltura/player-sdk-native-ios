@@ -91,7 +91,7 @@
     return [chromecastDeviceController streamPosition];
 }
 
-- (double)getCurrentPlaybackTime {
+- (NSTimeInterval)getCurrentPlaybackTime {
     return [self getCurrentTime];
 }
 
@@ -117,14 +117,6 @@
 }
 
 - (void)bindPlayerEvents {
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(triggerMediaNowPlaying:)
-                                                 name: @"ChromcastDeviceControllerMediaNowPlayingNotification"
-                                               object: nil];
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(triggerMediaNowPaused:)
-                                                 name: @"ChromcastDeviceControllerMediaNowPauseNotification"
-                                               object: nil];
 
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(volumeChanged:)
@@ -132,7 +124,8 @@
                                                object: nil];
 }
 
-- (void)triggerMediaNowPlaying:(NSNotification*)notification {
+// TODO: triggerMediaNowPlaying call it directly with no events
+- (void)triggerMediaNowPlaying {
     NSLog(@"triggerMediaNowPlaying Enter");
     
     if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying ) {
@@ -152,7 +145,7 @@
     NSLog(@"triggerMediaNowPlaying Exit");
 }
 
-- (void)triggerMediaNowPaused:(NSNotification*)notification {
+- (void)triggerMediaNowPaused {
     NSLog(@"triggerMediaNowPaused Enter");
     
     if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePaused ) {
