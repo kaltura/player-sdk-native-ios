@@ -13,10 +13,6 @@
 #import "KalPlayerViewController.h"
 
 #import "KPEventListener.h"
-//#if !(TARGET_IPHONE_SIMULATOR)
-//#import "WVSettings.h"
-//#import "WViPhoneAPI.h"
-//#endif
 
 @implementation KalPlayerViewController {
     // Player Params
@@ -39,12 +35,6 @@
     NSMutableDictionary *kPlayerEvaluatedDict;
     
     BOOL *showChromecastBtn;
-    
-//  #if !(TARGET_IPHONE_SIMULATOR)
-//        // WideVine Params
-//        BOOL isWideVine, isWideVineReady;
-//        WVSettings* wvSettings;
-//    #endif
 }
 
 @synthesize webView, player;
@@ -71,10 +61,7 @@
     NSString* finalUA = [defaultUA stringByAppendingString:suffixUA];
     NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:finalUA, @"UserAgent", nil];
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
-    
-//#if !(TARGET_IPHONE_SIMULATOR)
-//    [self initWideVineParams];
-//#endif
+
     [self initPlayerParams];
     
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
@@ -687,12 +674,6 @@
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
-//            wvSettings = [[WVSettings alloc] init];
-//            isWideVine = YES;
-//            [ [NSNotificationCenter defaultCenter] addObserver: self
-//                                                      selector: @selector(playWV:)
-//                                                          name: @"wvResponseUrlNotification"
-//                                                        object: nil ];
             if ( [[self player] respondsToSelector:@selector(setWideVideConfigurations)] ) {
                 [[self player] setWideVideConfigurations];
             }
@@ -703,7 +684,6 @@
 
             break;
 #endif
-            
         default:
             break;
     }
@@ -862,47 +842,6 @@
     return YES;
 }
 
-#pragma mark - WideVine Methods
-#if !(TARGET_IPHONE_SIMULATOR)
-
-//-(void)initWideVineParams {
-//    NSLog(@"initWideVineParams Enter");
-//    
-//    isWideVine = NO;
-//    isWideVineReady = NO;
-//    
-//    NSLog(@"initWideVineParams Exit");
-//}
-
-//- (void) initWV: (NSString *)src andKey: (NSString *)key {
-//    NSLog(@"initWV Enter");
-//    
-//    WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
-//    
-//    if (wvInitStatus == WViOsApiStatus_OK) {
-//        NSLog(@"widevine was inited");
-//    }
-//    
-//    [wvSettings playMovieFromUrl: src];
-//    
-//    NSLog(@"initWV Exit");
-//}
-
-//-(void)playWV: (NSNotification *)responseUrlNotification  {
-//    NSLog(@"playWV Exit");
-//    
-//    [ self setPlayerSource: [ NSURL URLWithString: [ [responseUrlNotification userInfo] valueForKey: @"response_url"] ] ];
-//    isWideVineReady = YES;
-//    
-//    if ( isPlayCalled ) {
-//        [self play];
-//    }
-//    
-//    NSLog(@"playWV Exit");
-//}
-
-#endif
-
 #pragma mark -
 
 -(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
@@ -936,10 +875,6 @@
         [chromecastPlayer triggerMediaNowPaused];
     }
 }
-
-//-(void)chromecastDevicePlaying: (NSNotification *)note {
-//    [self triggerEventsJavaScript: @"play" WithValue: nil];
-//}
 
 // Chromecast
 - (void)didLoad {
