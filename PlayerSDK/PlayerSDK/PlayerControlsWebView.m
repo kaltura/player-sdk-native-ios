@@ -41,10 +41,6 @@
         
         // Set non-opaque in order to make "body{background-color:transparent}" working!
         self.opaque = NO;
-        
-        // Instanciate JSON parser library
-        json = [ SBJSON new ];
-        
     
 //        NSURL *url = [[NSBundle mainBundle] URLForResource:@"www/webview-document" withExtension:@"html"];
 //        [self loadRequest:[NSURLRequest requestWithURL:url]];
@@ -77,9 +73,15 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 		int callbackId = [((NSString*)[components objectAtIndex:2]) intValue];
         NSString *argsAsString = [(NSString*)[components objectAtIndex:3]
                                   stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSArray *args = (NSArray*)[json objectWithString:argsAsString error:nil];
+        NSError* error = nil;
+        NSData* data = [argsAsString dataUsingEncoding:NSUTF8StringEncoding];
+        NSArray* args = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
         
-        [self handleCall:function callbackId:callbackId args:args];
+        if (error) {
+            NSLog(@"JSON parsing error: %@", error);
+        } else {
+            [self handleCall:function callbackId:callbackId args:args];
+        }
         
         return NO;
     } else if( ![self checkIsIframeUrl: requestString] ){
@@ -119,9 +121,14 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         va_end(argsList);
     }
     
-    NSString *resultArrayString = [json stringWithObject:resultArray allowScalar:YES error:nil];
-    
-    [self stringByEvaluatingJavaScriptFromString: [NSString stringWithFormat: @"NativeBridge.resultForCallback(%d,%@);", callbackId, resultArrayString]];
+    NSError* error = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:resultArray options:kNilOptions error:&error];
+    if (error) {
+        NSLog(@"JSON writing error: %@", error);
+    } else {
+        NSString *resultArrayString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        [self stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NativeBridge.resultForCallback(%d,%@);",callbackId,resultArrayString]];
+    }
 }
 
 // Implements all you native function in this one, by matching 'functionName' and parsing 'args'
