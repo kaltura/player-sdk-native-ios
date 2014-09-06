@@ -16,7 +16,7 @@
 @protocol KalturaPlayer;
 
 #import <MediaPlayer/MediaPlayer.h>
-#import "PlayerControlsWebView.h"
+#import "KALPlayerControlsWebView.h"
 
 #import "KALPlayer.h"
 #import "KALChromecastPlayer.h"

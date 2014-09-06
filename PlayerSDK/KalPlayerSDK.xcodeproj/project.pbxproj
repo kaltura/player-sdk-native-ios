@@ -33,10 +33,10 @@
 		BFFFA740182F9E31005B3B24 /* libKalPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA727182F9E31005B3B24 /* libKalPlayerSDK.a */; };
 		BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFFFA744182F9E31005B3B24 /* InfoPlist.strings */; };
 		BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */; };
-		BFFFA754182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */; };
-		BFFFA755182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */; };
+		BFFFA754182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */; };
+		BFFFA755182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */; };
 		BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA775182FA012005B3B24 /* UIKit.framework */; };
-		BFFFA872182FB834005B3B24 /* PlayerControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */; };
+		BFFFA872182FB834005B3B24 /* KALPlayerControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* KALPlayerControlsWebView.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,7 +63,7 @@
 				BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */,
 				BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */,
 				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
-				BFFFA872182FB834005B3B24 /* PlayerControlsWebView.h in CopyFiles */,
+				BFFFA872182FB834005B3B24 /* KALPlayerControlsWebView.h in CopyFiles */,
 				BFFFA730182F9E31005B3B24 /* PlayerSDK.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,8 +100,8 @@
 		BFFFA745182F9E31005B3B24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSDKTests.h; sourceTree = "<group>"; };
 		BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSDKTests.m; sourceTree = "<group>"; };
-		BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerControlsWebView.h; sourceTree = "<group>"; };
-		BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerControlsWebView.m; sourceTree = "<group>"; };
+		BFFFA752182F9E66005B3B24 /* KALPlayerControlsWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KALPlayerControlsWebView.h; sourceTree = "<group>"; };
+		BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KALPlayerControlsWebView.m; sourceTree = "<group>"; };
 		BFFFA775182FA012005B3B24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -261,8 +261,8 @@
 		BFFFA774182F9F10005B3B24 /* PlayerControlsWebView */ = {
 			isa = PBXGroup;
 			children = (
-				BFFFA752182F9E66005B3B24 /* PlayerControlsWebView.h */,
-				BFFFA753182F9E66005B3B24 /* PlayerControlsWebView.m */,
+				BFFFA752182F9E66005B3B24 /* KALPlayerControlsWebView.h */,
+				BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */,
 			);
 			name = PlayerControlsWebView;
 			sourceTree = "<group>";
@@ -391,7 +391,7 @@
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
 				BFB741D8199BA3CD001E9DDD /* KALPlayer.m in Sources */,
 				BFA844771931160600F47E02 /* KPEventListener.m in Sources */,
-				BFFFA754182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */,
+				BFFFA754182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,7 +400,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */,
-				BFFFA755182F9E66005B3B24 /* PlayerControlsWebView.m in Sources */,
+				BFFFA755182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

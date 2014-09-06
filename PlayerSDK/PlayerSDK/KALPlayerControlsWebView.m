@@ -25,7 +25,7 @@
 //
 
 
-#import "PlayerControlsWebView.h"
+#import "KALPlayerControlsWebView.h"
 
 
 @implementation PlayerControlsWebView
