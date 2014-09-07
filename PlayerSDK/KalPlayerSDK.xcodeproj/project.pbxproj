@@ -30,7 +30,7 @@
 		BFFFA732182F9E31005B3B24 /* PlayerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA731182F9E31005B3B24 /* PlayerSDK.m */; };
 		BFFFA73A182F9E31005B3B24 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */; };
 		BFFFA73D182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
-		BFFFA740182F9E31005B3B24 /* libKalPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA727182F9E31005B3B24 /* libKalPlayerSDK.a */; };
+		BFFFA740182F9E31005B3B24 /* libKALPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA727182F9E31005B3B24 /* libKALPlayerSDK.a */; };
 		BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFFFA744182F9E31005B3B24 /* InfoPlist.strings */; };
 		BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */; };
 		BFFFA754182F9E66005B3B24 /* KALPlayerControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KALPlayerControlsWebView.m */; };
@@ -89,12 +89,12 @@
 		BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromecastDeviceController.h; sourceTree = SOURCE_ROOT; };
 		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
 		BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
-		BFFFA727182F9E31005B3B24 /* libKalPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKalPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFFA727182F9E31005B3B24 /* libKALPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		BFFFA72E182F9E31005B3B24 /* KalPlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "KalPlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
+		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
 		BFFFA72F182F9E31005B3B24 /* PlayerSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSDK.h; sourceTree = "<group>"; };
 		BFFFA731182F9E31005B3B24 /* PlayerSDK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSDK.m; sourceTree = "<group>"; };
-		BFFFA738182F9E31005B3B24 /* KalPlayerSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KalPlayerSDKTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFFA738182F9E31005B3B24 /* KalKALPlayerSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KalKALPlayerSDKTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BFFFA743182F9E31005B3B24 /* KalPlayerSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "KalPlayerSDKTests-Info.plist"; sourceTree = "<group>"; };
 		BFFFA745182F9E31005B3B24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 			files = (
 				BFFFA73A182F9E31005B3B24 /* SenTestingKit.framework in Frameworks */,
 				BFFFA73D182F9E31005B3B24 /* Foundation.framework in Frameworks */,
-				BFFFA740182F9E31005B3B24 /* libKalPlayerSDK.a in Frameworks */,
+				BFFFA740182F9E31005B3B24 /* libKALPlayerSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,8 +196,8 @@
 		BFFFA728182F9E31005B3B24 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BFFFA727182F9E31005B3B24 /* libKalPlayerSDK.a */,
-				BFFFA738182F9E31005B3B24 /* KalPlayerSDKTests.octest */,
+				BFFFA727182F9E31005B3B24 /* libKALPlayerSDK.a */,
+				BFFFA738182F9E31005B3B24 /* KalKALPlayerSDKTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -234,7 +234,7 @@
 		BFFFA72D182F9E31005B3B24 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				BFFFA72E182F9E31005B3B24 /* KalPlayerSDK-Prefix.pch */,
+				BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -289,9 +289,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		BFFFA726182F9E31005B3B24 /* KalPlayerSDK */ = {
+		BFFFA726182F9E31005B3B24 /* KALPlayerSDK */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KalPlayerSDK" */;
+			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALPlayerSDK" */;
 			buildPhases = (
 				BFFFA723182F9E31005B3B24 /* Sources */,
 				BFFFA724182F9E31005B3B24 /* Frameworks */,
@@ -301,14 +301,14 @@
 			);
 			dependencies = (
 			);
-			name = KalPlayerSDK;
+			name = KALPlayerSDK;
 			productName = PlayerSDK;
-			productReference = BFFFA727182F9E31005B3B24 /* libKalPlayerSDK.a */;
+			productReference = BFFFA727182F9E31005B3B24 /* libKALPlayerSDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		BFFFA737182F9E31005B3B24 /* KalPlayerSDKTests */ = {
+		BFFFA737182F9E31005B3B24 /* KALPlayerSDKTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KalPlayerSDKTests" */;
+			buildConfigurationList = BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALPlayerSDKTests" */;
 			buildPhases = (
 				BFFFA733182F9E31005B3B24 /* Sources */,
 				BFFFA734182F9E31005B3B24 /* Frameworks */,
@@ -320,9 +320,9 @@
 			dependencies = (
 				BFFFA73F182F9E31005B3B24 /* PBXTargetDependency */,
 			);
-			name = KalPlayerSDKTests;
+			name = KALPlayerSDKTests;
 			productName = PlayerSDKTests;
-			productReference = BFFFA738182F9E31005B3B24 /* KalPlayerSDKTests.octest */;
+			productReference = BFFFA738182F9E31005B3B24 /* KalKALPlayerSDKTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -334,7 +334,7 @@
 				LastUpgradeCheck = 0510;
 				ORGANIZATIONNAME = Kaltura;
 			};
-			buildConfigurationList = BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KalPlayerSDK" */;
+			buildConfigurationList = BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KALPlayerSDK" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -346,8 +346,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				BFFFA726182F9E31005B3B24 /* KalPlayerSDK */,
-				BFFFA737182F9E31005B3B24 /* KalPlayerSDKTests */,
+				BFFFA726182F9E31005B3B24 /* KALPlayerSDK */,
+				BFFFA737182F9E31005B3B24 /* KALPlayerSDKTests */,
 			);
 		};
 /* End PBXProject section */
@@ -409,7 +409,7 @@
 /* Begin PBXTargetDependency section */
 		BFFFA73F182F9E31005B3B24 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = BFFFA726182F9E31005B3B24 /* KalPlayerSDK */;
+			target = BFFFA726182F9E31005B3B24 /* KALPlayerSDK */;
 			targetProxy = BFFFA73E182F9E31005B3B24 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -518,7 +518,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/KalPlayerSDK-Prefix.pch";
+				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					.,
@@ -527,7 +527,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = KalPlayerSDK;
+				PRODUCT_NAME = KALPlayerSDK;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = armv7;
 			};
@@ -548,7 +548,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/KalPlayerSDK-Prefix.pch";
+				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -557,7 +557,7 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = KalPlayerSDK;
+				PRODUCT_NAME = KALPlayerSDK;
 				SKIP_INSTALL = YES;
 				VALID_ARCHS = armv7;
 			};
@@ -573,7 +573,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				INFOPLIST_FILE = "PlayerSDKTests/KalPlayerSDKTests-Info.plist";
-				PRODUCT_NAME = KalPlayerSDKTests;
+				PRODUCT_NAME = KalKALPlayerSDKTests;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -589,7 +589,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				INFOPLIST_FILE = "PlayerSDKTests/KalPlayerSDKTests-Info.plist";
-				PRODUCT_NAME = KalPlayerSDKTests;
+				PRODUCT_NAME = KalKALPlayerSDKTests;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -598,7 +598,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KalPlayerSDK" */ = {
+		BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KALPlayerSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BFFFA74A182F9E31005B3B24 /* Debug */,
@@ -607,7 +607,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KalPlayerSDK" */ = {
+		BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALPlayerSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BFFFA74D182F9E31005B3B24 /* Debug */,
@@ -616,7 +616,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KalPlayerSDKTests" */ = {
+		BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALPlayerSDKTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				BFFFA750182F9E31005B3B24 /* Debug */,

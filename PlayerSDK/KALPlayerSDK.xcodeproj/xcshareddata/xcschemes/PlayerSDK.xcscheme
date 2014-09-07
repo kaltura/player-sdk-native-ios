@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
-               BuildableName = "libKalPlayerSDK.a"
-               BlueprintName = "KalPlayerSDK"
-               ReferencedContainer = "container:KalPlayerSDK.xcodeproj">
+               BuildableName = "libKALPlayerSDK.a"
+               BlueprintName = "KALPlayerSDK"
+               ReferencedContainer = "container:KALPlayerSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
