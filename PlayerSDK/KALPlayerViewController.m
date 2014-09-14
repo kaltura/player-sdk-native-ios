@@ -487,6 +487,10 @@
 - (void)deviceOrientationDidChange {
     CGRect mainFrame;
     
+    if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceDown || [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceUp ) {
+        return;
+    }
+    
      if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
         mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
     } else {
