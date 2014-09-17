@@ -622,7 +622,7 @@
     if ( self ) {
 //        [[self player] bindPlayerEvents];
         
-       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", nil];
+       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"durationchange", @"loadedmetadata", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", nil];
         
         for (id kPlayerEvent in kPlayerEvents) {
             [[NSNotificationCenter defaultCenter] addObserver: self
