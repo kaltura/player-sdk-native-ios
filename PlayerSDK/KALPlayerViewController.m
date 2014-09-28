@@ -10,19 +10,19 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
-#import "KalPlayerViewController.h"
+#import "KALPlayerViewController.h"
 
 #import "KPEventListener.h"
 
 @implementation KalPlayerViewController {
     // Player Params
     BOOL isSeeking;
-    BOOL isFullScreen, isPlaying, isResumePlayer, isPlayCalled;
+    BOOL isFullScreen, isPlaying, isResumePlayer;
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation, deviceOrientation;
     NSString *playerSource;
-    NSMutableDictionary *appConfigDict;
+    NSDictionary *appConfigDict;
     BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
@@ -210,7 +210,6 @@
     isFullScreen = NO;
     isPlaying = NO;
     isResumePlayer = NO;
-    isPlayCalled = NO;
     
     NSLog(@"initPlayerParams Exit");
 }
@@ -637,6 +636,14 @@
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     NSLog(@"triggerLoadPlabackEvents Enter");
+    
+    if( [[note name]  isEqual: @"play"] ) {
+        isPlaying = YES;
+    }
+    
+    if ([[note name]  isEqual: @"pause"] || [[note name]  isEqual: @"stop"] ) {
+        isPlaying = NO;
+    }
     
     [self triggerEventsJavaScript: [note name] WithValue: [[note userInfo] valueForKey: [note name]]];
     

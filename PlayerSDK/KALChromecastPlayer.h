@@ -8,7 +8,7 @@
 
 #import "KALPlayer.h"
 #import "ChromecastDeviceController.h"
-#import "KalPlayerViewController.h"
+#import "KALPlayerViewController.h"
 
 @interface KALChromecastPlayer : NSObject <KalturaPlayer>
 

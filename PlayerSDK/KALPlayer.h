@@ -7,7 +7,7 @@
 //
 
 #import <MediaPlayer/MediaPlayer.h>
-#import "KalPlayerViewController.h"
+#import "KALPlayerViewController.h"
 
 @interface KALPlayer : MPMoviePlayerController <KalturaPlayer>
 

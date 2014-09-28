@@ -15,7 +15,6 @@
 @implementation KALPlayer {
     // Player Params
     BOOL isSeeking;
-    BOOL isFullScreen, isPlaying, isResumePlayer, isPlayCalled;
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation, deviceOrientation;
@@ -81,8 +80,6 @@
 - (void)play {
     NSLog(@"play Enter");
     
-    isPlayCalled = YES;
-    
 #if !(TARGET_IPHONE_SIMULATOR)
     if ( isWideVine  && !isWideVineReady ) {
         return;
@@ -102,8 +99,6 @@
 - (void)pause {
     NSLog(@"pause Enter");
     
-    isPlayCalled = NO;
-    
     if ( !( self.playbackState == MPMoviePlaybackStatePaused ) ) {
         [super pause];
     }
@@ -117,8 +112,6 @@
     NSLog(@"stop Enter");
     
     [super stop];
-    isPlaying = NO;
-    isPlayCalled = NO;
     
 #if !(TARGET_IPHONE_SIMULATOR)
     // Stop WideVine
@@ -252,12 +245,10 @@
     
     switch ( [self playbackState] ) {
         case MPMoviePlaybackStateStopped:
-            isPlaying = NO;
             playBackName = @"stop";
             NSLog(@"MPMoviePlaybackStateStopped");
             break;
         case MPMoviePlaybackStatePlaying:
-            isPlaying = YES;
             playBackName = @"";
             if( ( [self playbackState] == MPMoviePlaybackStatePlaying ) ) {
                 playBackName = @"play";
@@ -276,7 +267,6 @@
             NSLog(@"MPMoviePlaybackStatePlaying");
             break;
         case MPMoviePlaybackStatePaused:
-            isPlaying = NO;
             playBackName = @"";
             if ( ( [self playbackState] == MPMoviePlaybackStatePaused ) ) {
                 playBackName = @"pause";

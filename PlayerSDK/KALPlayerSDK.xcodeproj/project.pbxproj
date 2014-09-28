@@ -323,7 +323,7 @@
 			name = KALPlayerSDKTests;
 			productName = PlayerSDKTests;
 			productReference = BFFFA738182F9E31005B3B24 /* KalKALPlayerSDKTests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -331,7 +331,8 @@
 		BFFFA71F182F9E31005B3B24 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastTestingUpgradeCheck = 0600;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Kaltura;
 			};
 			buildConfigurationList = BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KALPlayerSDK" */;
@@ -459,7 +460,7 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/libWViPhoneAPI.a\"";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
