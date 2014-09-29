@@ -8,9 +8,14 @@ Pod::Spec.new do |s|
 	s.author             = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
 	s.platform     = :ios, '6.0'
 	s.source       = { :git => "https://github.com/kaltura/player-sdk-native-ios.git", :tag => "v0.8" }
-	s.source_files  = 'PlayerSDK/PlayerSDK/KAL*.{h,m}', 'PlayerSDK/KAL*.{h,m}', 'PlayerSDK/*WV*.{h,m}', 'PlayerSDK/ChromecastDeviceController.{h,m}', 'PlayerSDK/GoogleCast/GoogleCast.h', 'PlayerSDK/GoogleCast.framework/Headers/GoogleCast.h'
+	s.source_files  = 'PlayerSDK/PlayerSDK/KAL*.{h,m}', 'PlayerSDK/KAL*.{h,m}', 'PlayerSDK/*WV*.{h,m}', 'PlayerSDK/*Chromecast*.{h,m}'
 	s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
-	s.library      = 'stdc++'
+	s.library      = 'stdc++', 'z'
 	s.framework    = 'MediaPlayer', 'GoogleCast'
+	s.xcconfig = {
+      "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release",
+      "OTHER_LDFLAGS" => "$(inherited) -ObjC"
+  	}
+	s.dependency "google-cast-sdk", "2.3.0.1"
 	s.requires_arc = true
 end
