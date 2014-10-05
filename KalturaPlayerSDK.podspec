@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
 	s.author             = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
 	s.platform     = :ios, '6.0'
 	s.source       = { :git => "https://github.com/kaltura/player-sdk-native-ios.git", :tag => "v0.8" }
-	s.source_files  = 'PlayerSDK/PlayerSDK/KAL*.{h,m}', 'PlayerSDK/KAL*.{h,m}', 'PlayerSDK/*WV*.{h,m}', 'PlayerSDK/*Chromecast*.{h,m}'
+	s.source_files  = 'PlayerSDK/PlayerSDK/*.{h,m}', 'PlayerSDK/*.{h,m}'
 	s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
 	s.library      = 'stdc++', 'z'
 	s.framework    = 'MediaPlayer', 'GoogleCast'
