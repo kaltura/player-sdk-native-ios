@@ -386,6 +386,12 @@
 - (void)setOrientationTransform: (CGFloat) angle{
     NSLog( @"setOrientationTransform Enter" );
     
+    // UIWindow frame in ios 8 different for Landscape mode
+    if( [self isIOS8] ) {
+        [self.view setTransform: CGAffineTransformIdentity];
+        return;
+    }
+    
     if ( isFullScreen ) {
         // Init Transform for Fullscreen
         fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
@@ -846,11 +852,24 @@
 
 - (BOOL)isIOS7{
     
-    if ( floor( NSFoundationVersionNumber ) <= NSFoundationVersionNumber_iOS_6_1 ) {
-        return NO;
+    NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    
+    if ([[vComp objectAtIndex:0] intValue] == 7) {
+        return YES;
     }
     
-    return YES;
+    return NO;
+}
+
+- (BOOL)isIOS8{
+    
+    NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    
+    if ([[vComp objectAtIndex:0] intValue] == 8) {
+        return YES;
+    }
+    
+    return NO;
 }
 
 #pragma mark -
