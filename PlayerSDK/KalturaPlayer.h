@@ -15,7 +15,6 @@
 - (void)play;
 - (void)stop;
 - (id)view;
-- (double)currentPlaybackTime;
 - (int)controlStyle;
 - (int)playbackState;
 - (int)loadState;
