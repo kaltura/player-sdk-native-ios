@@ -26,7 +26,7 @@
         chromecastDeviceController = (ChromecastDeviceController *)[KalPlayerViewController sharedChromecastDeviceController];
         
 //        if ( [self isPreparedToPlay] ) {
-        [self setCurrentPlaybackTime: [player getCurrentPlaybackTime]];
+        [self setCurrentPlaybackTime: [player currentPlaybackTime]];
 //            self.currentPlaybackTime = [player currentPlaybackTime];
 //        }
         
@@ -51,7 +51,7 @@
                                     title: @""
                                  subtitle: @""
                                  mimeType: @""
-                                startTime: [self getCurrentPlaybackTime]
+                                startTime: [self currentPlaybackTime]
                                  autoPlay: YES];
 }
 
@@ -91,7 +91,7 @@
     return [chromecastDeviceController streamPosition];
 }
 
-- (NSTimeInterval)getCurrentPlaybackTime {
+- (NSTimeInterval)currentPlaybackTime {
     return [self getCurrentTime];
 }
 
@@ -167,7 +167,7 @@
     if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
         && ( [self playbackState] == GCKMediaPlayerStatePlaying ) ) {
         [self triggerKPlayerEvents: @"timeupdate"
-                         withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self getCurrentPlaybackTime]]}];
+                         withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self currentPlaybackTime]]}];
     }
 }
 

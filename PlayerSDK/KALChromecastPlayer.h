@@ -23,8 +23,8 @@
 - (void)bindPlayerEvents;
 - (void)sendCurrentTime:(NSTimer *)timer;
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
--(NSTimeInterval)getCurrentPlaybackTime;
--(void)setCurrentPlaybackTime:(double)cs;
+- (NSTimeInterval)currentPlaybackTime;
+- (void)setCurrentPlaybackTime:(double)cs;
 - (void)triggerMediaNowPlaying;
 - (void)triggerMediaNowPaused;
 

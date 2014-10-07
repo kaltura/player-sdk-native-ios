@@ -55,21 +55,16 @@ typedef void (^JSCallbackReadyHandler)();
 @property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
 + (id)alloc;
 
--(void)setControlStyle:(int)cs;
--(NSURL *)contentURL;
--(void)setContentURL:(NSURL *)cs;
+- (NSURL *)contentURL;
+- (void)setContentURL:(NSURL *)cs;
 
--(double)getCurrentPlaybackTime;
--(void)setCurrentPlaybackTime:(double)cs;
+- (double)currentPlaybackTime;
+- (void)setCurrentPlaybackTime:(double)cs;
 
 - (void)pause;
 - (void)play;
 - (void)stop;
-//- (id)view;
-//- (int)controlStyle;
 - (int)playbackState;
-//- (int)loadState;
-//- (void)prepareToPlay;
 - (BOOL)isPreparedToPlay;
 - (double)playableDuration;
 - (double)duration;
@@ -87,9 +82,9 @@ typedef void (^JSCallbackReadyHandler)();
 - (CGFloat) getCurrentTime;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void) copyParamsFromPlayer:(id<KalturaPlayer>) player;
-//- (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)initWV: (NSString *)src andKey: (NSString *)key;
 - (void)setWideVideConfigurations;
+- (void)setControlStyle:(int)cs;
 
 @end
 
@@ -120,7 +115,6 @@ typedef void (^JSCallbackReadyHandler)();
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-//- (void)setWebViewURL: (NSString *)iframeUrl;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;

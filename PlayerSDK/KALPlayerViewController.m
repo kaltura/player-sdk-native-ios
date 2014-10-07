@@ -134,7 +134,7 @@
     
     if ( [self player] ) {
         
-        NSLog(@"%f", [[self player] getCurrentPlaybackTime]);
+        NSLog(@"%f", [[self player] currentPlaybackTime]);
         [newKPlayer copyParamsFromPlayer: [self player]];
     }
     

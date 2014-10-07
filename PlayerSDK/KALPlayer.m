@@ -51,7 +51,7 @@
     NSLog(@"copyParamsFromPlayer Enter");
     
     if (self) {
-        [self setCurrentPlaybackTime: [player getCurrentPlaybackTime]];
+        [self setCurrentPlaybackTime: [player currentPlaybackTime]];
         [self setContentURL: [player contentURL]];
     }
     
@@ -147,7 +147,7 @@
     return [super view];
 }
 
-- (NSTimeInterval)getCurrentPlaybackTime {
+- (NSTimeInterval)currentPlaybackTime {
     return [super currentPlaybackTime];
 }
 
