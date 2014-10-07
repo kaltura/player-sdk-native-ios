@@ -16,10 +16,10 @@
 @protocol KalturaPlayer;
 
 #import <MediaPlayer/MediaPlayer.h>
-#import "KALPlayerControlsWebView.h"
+#import "KPControlsWebView.h"
 
-#import "KALPlayer.h"
-#import "KALChromecastPlayer.h"
+#import "KalturaPlayer.h"
+#import "KPChromecast.h"
 #import "ChromecastDeviceController.h"
 
 typedef enum{
@@ -38,7 +38,7 @@ typedef enum{
 // JSCallbackReady Handler Block
 typedef void (^JSCallbackReadyHandler)();
 
-@class KalPlayerViewController;
+@class KPViewController;
 @class NativeComponentPlugin;
 @class KPEventListener;
 
@@ -103,13 +103,13 @@ typedef void (^JSCallbackReadyHandler)();
 
 @end
 
-@interface KalPlayerViewController : UIViewController <PlayerControlsWebViewDelegate, ChromecastControllerDelegate> {
+@interface KPViewController : UIViewController <PlayerControlsWebViewDelegate, ChromecastControllerDelegate> {
     id<KalturaPlayer> player;
     NativeComponentPlugin *nativComponentDelegate;
     id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;
 }
 
-@property (nonatomic, strong) IBOutlet PlayerControlsWebView* webView;
+@property (nonatomic, strong) IBOutlet KPControlsWebView* webView;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
 @property (nonatomic, strong) id<KalturaPlayer> player;
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;

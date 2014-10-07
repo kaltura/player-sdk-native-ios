@@ -10,11 +10,10 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
-#import "KALPlayerViewController.h"
-
+#import "KPViewController.h"
 #import "KPEventListener.h"
 
-@implementation KalPlayerViewController {
+@implementation KPViewController {
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
@@ -85,7 +84,7 @@
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
     [self didLoad];
-    [[KalPlayerViewController sharedChromecastDeviceController] setDelegate: self];
+    [[KPViewController sharedChromecastDeviceController] setDelegate: self];
     
     [super viewDidLoad];
     
@@ -147,10 +146,10 @@
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
-        self.webView = [ [PlayerControlsWebView alloc] initWithFrame: playerViewFrame ];
+        self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
         [[self webView] setPlayerControlsWebViewDelegate: self];
         
-        self.player = [self getPlayerByClass:[KALPlayer class]];
+        self.player = [self getPlayerByClass:[KalturaPlayer class]];
         NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
 
         self.player.view.frame = playerViewFrame;
@@ -830,7 +829,7 @@
 -(void)showChromecastDeviceList {
     NSLog(@"showChromecastDeviceList Enter");
     
-    [ [KalPlayerViewController sharedChromecastDeviceController] chooseDevice: self];
+    [ [KPViewController sharedChromecastDeviceController] chooseDevice: self];
     
     NSLog(@"showChromecastDeviceList Exit");
 }
@@ -887,21 +886,21 @@
 }
 
 - (void)didConnectToDevice:(GCKDevice*)device {
-    [self switchPlayer: [KALChromecastPlayer class]];
+    [self switchPlayer: [KPChromecast class]];
     [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
 }
 
 - (void)didReceiveMediaStateChange {
-    if (![self.player isKindOfClass:[KALChromecastPlayer class]]) {
+    if (![self.player isKindOfClass:[KPChromecast class]]) {
         return;
     }
     
-    KALChromecastPlayer *chromecastPlayer = (KALChromecastPlayer *) self.player;
+    KPChromecast *chromecastPlayer = (KPChromecast *) self.player;
     
-    if ( [[KalPlayerViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePlaying ) {
+    if ( [[KPViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePlaying ) {
         [chromecastPlayer triggerMediaNowPlaying];
 //        [self triggerEventsJavaScript: @"play" WithValue: nil];
-    } else if ( [[KalPlayerViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePaused ) {
+    } else if ( [[KPViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePaused ) {
         [chromecastPlayer triggerMediaNowPaused];
     }
 }
@@ -909,7 +908,7 @@
 // Chromecast
 - (void)didLoad {
     showChromecastBtn = NO;
-    [[KalPlayerViewController sharedChromecastDeviceController] performScan: YES];
+    [[KPViewController sharedChromecastDeviceController] performScan: YES];
 }
 
 + (id)sharedChromecastDeviceController {
@@ -924,7 +923,7 @@
 }
 
 - (void)didDiscoverDeviceOnNetwork {
-    if ( [[[KalPlayerViewController sharedChromecastDeviceController] deviceScanner] devices] ) {
+    if ( [[[KPViewController sharedChromecastDeviceController] deviceScanner] devices] ) {
         showChromecastBtn = YES;
     }
 }
@@ -940,7 +939,7 @@
 }
 
 - (void)didDisconnect {
-    [self switchPlayer: [KALPlayer class]];
+    [self switchPlayer: [KalturaPlayer class]];
     [self triggerEventsJavaScript: @"chromecastDeviceDisConnected" WithValue: nil];
 }
 

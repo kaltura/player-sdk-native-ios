@@ -25,10 +25,10 @@
 //
 
 
-#import "KALPlayerControlsWebView.h"
+#import "KPControlsWebView.h"
 
 
-@implementation PlayerControlsWebView
+@implementation KPControlsWebView
 
 @synthesize playerControlsWebViewDelegate;
 

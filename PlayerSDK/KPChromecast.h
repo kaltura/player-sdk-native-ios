@@ -1,25 +1,21 @@
 //
-//  KALPlayer.h
-//  KalPlayerSDK
+//  KALChromecastPlayer.h
+//  PlayerSDK
 //
-//  Created by Eliza Sapir on 8/13/14.
+//  Created by Eliza Sapir on 5/12/14.
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import <MediaPlayer/MediaPlayer.h>
-#import "KALPlayerViewController.h"
+#import "KalturaPlayer.h"
+#import "ChromecastDeviceController.h"
+#import "KPViewController.h"
 
-@interface KALPlayer : MPMoviePlayerController <KalturaPlayer>
+@interface KPChromecast : NSObject <KalturaPlayer>
 
 - (void)pause;
 - (void)play;
 - (void)stop;
-- (id)view;
-- (double)currentPlaybackTime;
-- (int)controlStyle;
 - (int)playbackState;
-- (int)loadState;
-- (void)prepareToPlay;
 - (BOOL)isPreparedToPlay;
 - (void)setContentURL:(NSURL *)url;
 - (double)playableDuration;
@@ -29,7 +25,7 @@
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
 - (NSTimeInterval)currentPlaybackTime;
 - (void)setCurrentPlaybackTime:(double)cs;
-- (void)initWV: (NSString *)src andKey: (NSString *)key;
-- (void)setWideVideConfigurations;
+- (void)triggerMediaNowPlaying;
+- (void)triggerMediaNowPaused;
 
 @end

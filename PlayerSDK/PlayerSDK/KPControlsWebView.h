@@ -18,7 +18,7 @@
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 @end
 
-@interface PlayerControlsWebView : UIWebView <UIWebViewDelegate> {
+@interface KPControlsWebView : UIWebView <UIWebViewDelegate> {
   
   int alertCallbackId;
    __unsafe_unretained id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;

@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "KALChromecastPlayer.h"
+#import "KPChromecast.h"
 
-@implementation KALChromecastPlayer {
+@implementation KPChromecast {
     ChromecastDeviceController *chromecastDeviceController;
     NSURL *ccContentURL;
 }
@@ -23,7 +23,7 @@
     NSLog(@"copyParamsFromPlayer Enter");
     
     if (self) {
-        chromecastDeviceController = (ChromecastDeviceController *)[KalPlayerViewController sharedChromecastDeviceController];
+        chromecastDeviceController = (ChromecastDeviceController *)[KPViewController sharedChromecastDeviceController];
         
 //        if ( [self isPreparedToPlay] ) {
         [self setCurrentPlaybackTime: [player currentPlaybackTime]];

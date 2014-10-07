@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "KALPlayer.h"
+#import "KalturaPlayer.h"
 #if !(TARGET_IPHONE_SIMULATOR)
 #import "WVSettings.h"
 #import "WViPhoneAPI.h"
 #endif
 
-@implementation KALPlayer {
+@implementation KalturaPlayer {
     // Player Params
     BOOL isSeeking;
     BOOL isPlayCalled;
