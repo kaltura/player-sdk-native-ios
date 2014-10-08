@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>15203FA3-C0D8-4154-B857-8AA5F5F244EC</string>
+	<key>IDESourceControlProjectName</key>
+	<string>KALTURAPlayerSDK</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C8599C6442C2751A61AE351C616FCB28200CC541</key>
+		<string>https://github.com/kaltura/player-sdk-native-ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PlayerSDK/KALTURAPlayerSDK.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C8599C6442C2751A61AE351C616FCB28200CC541</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/kaltura/player-sdk-native-ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C8599C6442C2751A61AE351C616FCB28200CC541</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C8599C6442C2751A61AE351C616FCB28200CC541</string>
+			<key>IDESourceControlWCCName</key>
+			<string>player-sdk-native-ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>

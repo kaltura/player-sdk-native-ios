@@ -1,0 +1,19 @@
+1. Cd Dir
+2. nano Podfile
+
+
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.0'
+
+pod 'NAME', 'VERSION' (~> 2.0)
+
+ctrl + x
+y
+enter
+
+3. pod install
+
+4. work via workspace
+
+// create podspec
+http://guides.cocoapods.org/making/getting-setup-with-trunk.html

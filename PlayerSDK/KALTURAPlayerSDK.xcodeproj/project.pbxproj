@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		81F20979ABEDF94C95602890 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D155C46D6F63C9425F6DE80 /* libPods.a */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
 		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
@@ -21,13 +22,9 @@
 		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
 		BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
 		BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
-		BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */; };
 		BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
 		BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */; };
-		BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
-		BFFFA73A182F9E31005B3B24 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */; };
-		BFFFA73D182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
 		BFFFA740182F9E31005B3B24 /* libKALTURAPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */; };
 		BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFFFA744182F9E31005B3B24 /* InfoPlist.strings */; };
 		BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */; };
@@ -68,6 +65,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6D155C46D6F63C9425F6DE80 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		79838A89EEFD71C70971FA54 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
 		BF927EBA18BCD719006667CA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		BF927EBC18BCD722006667CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -85,12 +84,9 @@
 		BFE34298199BE70600C63F74 /* KPChromecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPChromecast.m; sourceTree = "<group>"; };
 		BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromecastDeviceController.h; sourceTree = SOURCE_ROOT; };
 		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
-		BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
 		BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KalKALTURAPlayerSDKTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BFFFA743182F9E31005B3B24 /* PlayerSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerSDKTests-Info.plist"; sourceTree = "<group>"; };
 		BFFFA745182F9E31005B3B24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSDKTests.h; sourceTree = "<group>"; };
@@ -98,6 +94,7 @@
 		BFFFA752182F9E66005B3B24 /* KPControlsWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPControlsWebView.h; sourceTree = "<group>"; };
 		BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPControlsWebView.m; sourceTree = "<group>"; };
 		BFFFA775182FA012005B3B24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F8FD89F3E1D0CC97D4A30393 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,13 +102,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */,
 				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
 				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
 				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
 				BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */,
 				BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */,
-				BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */,
+				81F20979ABEDF94C95602890 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,8 +115,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFFFA73A182F9E31005B3B24 /* SenTestingKit.framework in Frameworks */,
-				BFFFA73D182F9E31005B3B24 /* Foundation.framework in Frameworks */,
 				BFFFA740182F9E31005B3B24 /* libKALTURAPlayerSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,6 +122,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D5524D9333B901C717D5254 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F8FD89F3E1D0CC97D4A30393 /* Pods.debug.xcconfig */,
+				79838A89EEFD71C70971FA54 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BF9133CB19349AB700606682 /* KPEventListener */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +188,7 @@
 				BFFFA741182F9E31005B3B24 /* PlayerSDKTests */,
 				BFFFA729182F9E31005B3B24 /* Frameworks */,
 				BFFFA728182F9E31005B3B24 /* Products */,
+				0D5524D9333B901C717D5254 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -200,12 +204,10 @@
 		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */,
 				BF927ECF18BD021A006667CA /* libz.dylib */,
 				BF927EBC18BCD722006667CA /* SystemConfiguration.framework */,
 				BF927EBA18BCD719006667CA /* libstdc++.dylib */,
-				BFFFA72A182F9E31005B3B24 /* Foundation.framework */,
-				BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */,
+				6D155C46D6F63C9425F6DE80 /* libPods.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -279,9 +281,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDK" */;
 			buildPhases = (
+				A53A932566A5DD1B129B9296 /* Check Pods Manifest.lock */,
 				BFFFA723182F9E31005B3B24 /* Sources */,
 				BFFFA724182F9E31005B3B24 /* Frameworks */,
 				BFFFA725182F9E31005B3B24 /* CopyFiles */,
+				B4778A1A18BB017B8BF74C45 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -351,6 +355,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		A53A932566A5DD1B129B9296 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B4778A1A18BB017B8BF74C45 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		BFFFA736182F9E31005B3B24 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -491,6 +525,7 @@
 		};
 		BFFFA74D182F9E31005B3B24 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8FD89F3E1D0CC97D4A30393 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
@@ -521,6 +556,7 @@
 		};
 		BFFFA74E182F9E31005B3B24 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 79838A89EEFD71C70971FA54 /* Pods.release.xcconfig */;
 			buildSettings = {
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
 				"ARCHS[sdk=iphonesimulator*]" = i386;
