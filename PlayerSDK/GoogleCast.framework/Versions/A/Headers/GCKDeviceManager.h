@@ -2,30 +2,35 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKCommon.h"
+
 @class GCKApplicationMetadata;
 @class GCKDevice;
 @class GCKCastChannel;
+@class GCKLaunchOptions;
 @class GCKReceiverControlChannel;
 
-@protocol GCKDeviceManagerDelegate;
-
-/**
- * An enum describing the active input status states.
- */
-typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
-  /**
-   * The active input status is unknown.
-   */
-  GCKActiveInputStatusUnknown = -1,
-  /**
-   * The input is active.
-   */
-  GCKActiveInputStatusInactive = 0,
-  /**
-   * The input is inactive.
-   */
-  GCKActiveInputStatusActive = 1,
+/** Enum defining GCKDeviceManager connection states. */
+typedef NS_ENUM(NSInteger, GCKConnectionState) {
+  /** Disconnected from the device. */
+  GCKConnectionStateDisconnected = 0,
+  /** Connecting to the device. */
+  GCKConnectionStateConnecting = 1,
+  /** Connected to the device. */
+  GCKConnectionStateConnected = 2,
+  /** Disconnecting from the device. */
+  GCKConnectionStateDisconnecting = 3
 };
+
+/** Enum defining the reasons for a connection becoming suspended. */
+typedef NS_ENUM(NSInteger, GCKConnectionSuspendReason) {
+  /** The connection was suspended because the application is going into the background. */
+  GCKConnectionSuspendReasonAppBackgrounded = 1,
+  /** The connection was suspended because of a network or protocol error. */
+  GCKConnectionSuspendReasonNetworkError = 2
+};
+
+@protocol GCKDeviceManagerDelegate;
 
 /**
  * Controls a Cast device. This class can send messages to, receive messages from, launch, and
@@ -33,7 +38,13 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  *
  * @ingroup DeviceControl
  */
+GCK_EXPORT
 @interface GCKDeviceManager : NSObject
+
+/**
+ * The device manager's current connection state.
+ */
+@property(nonatomic, readonly) GCKConnectionState connectionState;
 
 /**
  * True if the device manager has established a connection to the device.
@@ -62,17 +73,73 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  */
 @property(nonatomic) NSTimeInterval reconnectTimeout;
 
+/**
+ * The device that is being controlled by this GCKDeviceManager.
+ */
 @property(nonatomic, readonly) GCKDevice *device;
 
+/**
+ * The delegate for receiving notifications from the GCKDeviceManager.
+ */
 @property(nonatomic, weak) id<GCKDeviceManagerDelegate> delegate;
 
 /**
- * Designated initializer. Constructs a new GCKDeviceManager with the given device.
+ * The current volume of the device, if known; otherwise <code>0</code>.
+ */
+@property(nonatomic, assign, readonly) float deviceVolume;
+
+/**
+ * The current mute state of the device, if known; otherwise <code>NO</code>.
+ */
+@property(nonatomic, assign, readonly) BOOL deviceMuted;
+
+/**
+ * The application session ID for the currently connected receiver application, if any;
+ * otherwise <code>nil</code>.
+ */
+@property(nonatomic, copy, readonly) NSString *applicationSessionID;
+
+/**
+ * The metadata for the receiver application that is currently running on the receiver, if any;
+ * otherwise <code>nil</code>.
+ */
+@property(nonatomic, copy, readonly) GCKApplicationMetadata *applicationMetadata;
+
+/**
+ * The most recently reported status text from the currently running receiver application, if any;
+ * otherwise <code>nil</code>.
+ */
+@property(nonatomic, copy, readonly) NSString *applicationStatusText;
+
+/**
+ * Constructs a new GCKDeviceManager with the given device. The object will listen for app state
+ * notifications, and will automatically disconnect from the device when the app goes into the
+ * background and attempt to reconnect to the device when the app returns to the foreground.
  *
  * @param device The device to control.
  * @param clientPackageName The client package name.
  */
 - (id)initWithDevice:(GCKDevice *)device clientPackageName:(NSString *)clientPackageName;
+
+/**
+ * Designated initializer. Constructs a new GCKDeviceManager for controlling the given device.
+ * <p>
+ * If <code>ignoreAppStateNotifications</code> is <code>NO</code>, the object will listen for
+ * changes to the app state and will automatically disconnect from the device when the app goes into
+ * the background and attempt to reconnect to the device when the app returns to the foreground.
+ * <p>
+ * If <code>ignoreAppStateNotifications</code> is <code>YES</code>, the object will not listen for
+ * these notifications, and it will be the app's responsibility to manage the connection lifecycle.
+ * Note that in general, a backgrounded iOS app cannot continue running indefinitely, and its
+ * active network connections will eventually be closed by the operating system.
+ *
+ * @param device The device to control.
+ * @param clientPackageName The client package name.
+ * @param ignoreAppStateNotifications Whether this object will ignore app state notifications.
+ */
+- (id)initWithDevice:(GCKDevice *)device
+              clientPackageName:(NSString *)clientPackageName
+    ignoreAppStateNotifications:(BOOL)ignoreAppStateNotifications;
 
 #pragma mark Device connection
 
@@ -82,7 +149,8 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
 - (void)connect;
 
 /**
- * Disconnects from the device.
+ * Disconnects from the device. This method <b>must</b> be called at some point after
+ * @link #connect @endlink was called and before this object is released by its owner.
  */
 - (void)disconnect;
 
@@ -93,8 +161,8 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  * namespace.
  *
  * @param channel The channel.
- * @return YES if the channel was added, NO if it was not added because there was already
- * a channel attached for that namespace.
+ * @return <code>YES</code> if the channel was added, <code>NO</code> if it was not added because
+ * there was already a channel attached for that namespace.
  */
 - (BOOL)addChannel:(GCKCastChannel *)channel;
 
@@ -102,8 +170,8 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  * Removes a previously added channel.
  *
  * @param channel The channel.
- * @return YES if the channel was removed, NO if it was not removed because the given
- * channel was not previously attached.
+ * @return <code>YES</code> if the channel was removed, <code>NO</code> if it was not removed
+ * because the given channel was not previously attached.
  */
 - (BOOL)removeChannel:(GCKCastChannel *)channel;
 
@@ -113,59 +181,73 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  * Launches an application.
  *
  * @param applicationID The application ID.
- * @return NO if the message could not be sent.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)launchApplication:(NSString *)applicationID;
+- (NSInteger)launchApplication:(NSString *)applicationID;
 
 /**
  * Launches an application, optionally relaunching it if it is already running.
  *
  * @param applicationID The application ID.
- * @param relaunchIfRunning If YES, relaunches the application if it is already running instead of
- * joining the running application.
- * @return NO if the message could not be sent.
+ * @param launchOptions The launch options for this request. If <code>nil</code>, defaults will be
+ * used.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)launchApplication:(NSString *)applicationID
-        relaunchIfRunning:(BOOL)relaunchIfRunning;
+- (NSInteger)launchApplication:(NSString *)applicationID
+             withLaunchOptions:(GCKLaunchOptions *)launchOptions;
+
+/**
+ * Launches an application, optionally relaunching it if it is already running.
+ * <p>
+ * @deprecated Use -[launchApplication:withLaunchOptions:] instead.
+ *
+ * @param applicationID The application ID.
+ * @param relaunchIfRunning If <code>YES</code., relaunches the application if it is already
+ * running instead of joining the running application.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
+ */
+- (NSInteger)launchApplication:(NSString *)applicationID
+             relaunchIfRunning:(BOOL)relaunchIfRunning;
 
 /**
  * Joins an application.
  *
- * @param applicationID The application ID.
- * @return NO if the message could not be sent.
+ * @param applicationID The application ID. If <code>nil</code>, attempts to join whichever
+ * application is currently running; otherwise, attempts to join the specified application.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)joinApplication:(NSString *)applicationID;
+- (NSInteger)joinApplication:(NSString *)applicationID;
 
 /**
  * Joins an application with a particular session ID.
  *
  * @param applicationID The application ID.
  * @param sessionID The session ID.
- * @return NO if the message could not be sent.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)joinApplication:(NSString *)applicationID sessionID:(NSString *)sessionID;
+- (NSInteger)joinApplication:(NSString *)applicationID sessionID:(NSString *)sessionID;
 
 /**
  * Leaves the current application.
  *
- * @return NO if the message could not be sent.
+ * @return <code>NO</code> if the message could not be sent.
  */
 - (BOOL)leaveApplication;
 
 /**
  * Stops any running application(s).
  *
- * @return NO if the message could not be sent.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)stopApplication;
+- (NSInteger)stopApplication;
 
 /**
  * Stops the application with the given session ID. Session ID must be non-negative.
  *
  * @param sessionID The session ID.
- * @return NO if the message could not be sent.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)stopApplicationWithSessionID:(NSString *)sessionID;
+- (NSInteger)stopApplicationWithSessionID:(NSString *)sessionID;
 
 #pragma mark Device status
 
@@ -174,26 +256,26 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  *
  * @param volume The new volume, in the range [0.0, 1.0]. Out of range values will be silently
  * clipped.
- * @return NO if the message could not be sent.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)setVolume:(float)volume;
+- (NSInteger)setVolume:(float)volume;
 
 /**
  * Turns muting on or off.
  *
  * @param muted Whether audio should be muted or unmuted.
- * @return NO if the message could not be sent.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)setMuted:(BOOL)muted;
+- (NSInteger)setMuted:(BOOL)muted;
 
 /**
  * Requests the device's current status. This may cause an application status callback, if
  * currently connected to an application, and may cause a device volume callback, if the
  * device volume has changed.
  *
- * @return NO if the message could not be sent.
+ * @return The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.
  */
-- (BOOL)requestDeviceStatus;
+- (NSInteger)requestDeviceStatus;
 
 @end
 
@@ -204,6 +286,7 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  *
  * @ingroup DeviceControl
  */
+GCK_EXPORT
 @protocol GCKDeviceManagerDelegate <NSObject>
 
 @optional
@@ -236,6 +319,31 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
     didDisconnectWithError:(NSError *)error;
 
+/**
+ * Called when the connection to the device has been suspended, possibly temporarily. When a
+ * connection is suspended, the device manager will automatically attempt to re-establish the
+ * connection at the appropriate time. The calling application should not attempt to force a
+ * reconnect itself.
+ *
+ * @param deviceManager The device manager.
+ * @param reason The reason for the suspension.
+ */
+- (void)deviceManager:(GCKDeviceManager *)deviceManager
+    didSuspendConnectionWithReason:(GCKConnectionSuspendReason)reason;
+
+/**
+ * Called when a previously suspended device connection has been re-established.
+ *
+ * @param deviceManager The device manager.
+ * @param rejoinedApplication If a connection had been established to a receiver application at the
+ * time of the suspension, this flag indicates whether that application has been successfully
+ * re-joined. This value would be <code>NO</code> if, for example, the application was terminated
+ * during the time that the device manager was attempting to re-establish its connection to the
+ * device.
+ */
+- (void)deviceManagerDidResumeConnection:(GCKDeviceManager *)deviceManager
+                     rejoinedApplication:(BOOL)rejoinedApplication;
+
 #pragma mark Application connection callbacks
 
 /**
@@ -243,13 +351,13 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  *
  * @param applicationMetadata Metadata about the application.
  * @param sessionID The session ID.
- * @param launchedApplication YES if the application was launched as part of the connection, or NO
- * if the application was already running and was joined.
+ * @param launchedApplication <code>YES</code> if the application was launched as part of the
+ * connection, or <code>NO</code> if the application was already running and was joined.
  */
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
     didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
-            sessionID:(NSString *)sessionID
-    launchedApplication:(BOOL)launchedApplication;
+                      sessionID:(NSString *)sessionID
+            launchedApplication:(BOOL)launchedApplication;
 
 /**
  * Called when connecting to an application fails.
@@ -278,12 +386,22 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
 #pragma mark Device status callbacks
 
 /**
- * Called whenever updated status information is received.
+ * Called whenever the application metadata for the currently running application has changed.
  *
- * @param applicationMetadata The application metadata.
+ * @param applicationMetadata The application metadata. May be nil if no application is currently
+ * running.
  */
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
-    didReceiveStatusForApplication:(GCKApplicationMetadata *)applicationMetadata;
+    didReceiveApplicationMetadata:(GCKApplicationMetadata *)metadata;
+
+/**
+ * Called whenever the currently running application status text has changed.
+ *
+ * @param applicationStatusText The application status text. May be nil if no application is
+ * currently running or if the application did not report any status text.
+ */
+- (void)deviceManager:(GCKDeviceManager *)deviceManager
+    didReceiveApplicationStatusText:(NSString *)applicationStatusText;
 
 /**
  * Called whenever the volume changes.
@@ -302,5 +420,25 @@ typedef NS_ENUM(NSInteger, GCKActiveInputStatus) {
  */
 - (void)deviceManager:(GCKDeviceManager *)deviceManager
     didReceiveActiveInputStatus:(GCKActiveInputStatus)activeInputStatus;
+
+/**
+ * Called whenever the standby status changes.
+ *
+ * @param standbyStatus The standby status.
+ */
+- (void)deviceManager:(GCKDeviceManager *)deviceManager
+    didReceiveStandbyStatus:(GCKStandbyStatus)standbyStatus;
+
+#pragma mark Request status callbacks
+
+/**
+ * Called when an asynchronous operation has failed.
+ *
+ * @param requestID The ID of the request that failed.
+ * @param error The error.
+ */
+- (void)deviceManager:(GCKDeviceManager *)deviceManager
+              request:(NSInteger)requestID
+     didFailWithError:(NSError *)error;
 
 @end

@@ -2,13 +2,9 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol GCKCastChannelHandler;
+#import "GCKDefines.h"
 
-/**
- * An invalid request ID; if a method returns this request ID, it means that the request could
- * not be made.
- */
-extern const NSInteger kGCKInvalidRequestID;
+@protocol GCKCastChannelHandler;
 
 /**
  * A GCKCastChannel is used to send and receive messages that are tagged with a specific
@@ -22,6 +18,7 @@ extern const NSInteger kGCKInvalidRequestID;
  *
  * @ingroup Messages
  */
+GCK_EXPORT
 @interface GCKCastChannel : NSObject
 
 /** The channel's namespace. */
@@ -66,18 +63,12 @@ extern const NSInteger kGCKInvalidRequestID;
 /**
  * Called when this channel is added to a connected handler, or when then disconnected
  * handler to which this channel has been added becomes connected.
- *
- * This implementation updates isConnected, so if subclasses override this method they should
- * call through to the super implementation.
  */
 - (void)didConnect;
 
 /**
  * Called when this channel is removed from a connected handler, or when then connected
  * handler to which this channel has been added becomes disconnected.
- *
- * This implementation updates isConnected, so if subclasses override this method they should
- * call through to the super implementation.
  */
 - (void)didDisconnect;
 

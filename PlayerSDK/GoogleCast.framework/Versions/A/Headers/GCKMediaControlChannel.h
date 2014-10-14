@@ -22,7 +22,7 @@
  * |mediaControlChannelDidUpdateStatus:|, and methods which act on streams should be called only
  * while the media status is non-nil.
  */
-extern NSString *const kGCKMediaDefaultReceiverApplicationID;
+GCK_EXTERN NSString *const kGCKMediaDefaultReceiverApplicationID;
 
 typedef NS_ENUM(NSInteger, GCKMediaControlChannelResumeState) {
   /** A resume state indicating that the player state should be left unchanged. */
@@ -46,10 +46,11 @@ typedef NS_ENUM(NSInteger, GCKMediaControlChannelResumeState) {
  *
  * @ingroup MediaControl
  */
+GCK_EXPORT
 @interface GCKMediaControlChannel : GCKCastChannel
 
 /**
- * The current media status, if any.
+ * The media status for the currently loaded media, if any; otherwise <code>nil</code>.
  */
 @property(nonatomic, strong, readonly) GCKMediaStatus *mediaStatus;
 
@@ -285,7 +286,8 @@ typedef NS_ENUM(NSInteger, GCKMediaControlChannelResumeState) {
 
 /**
  * Returns the approximate stream position as calculated from the last received stream
- * information and the elapsed wall-time since that update.
+ * information and the elapsed wall-time since that update. If the channel is not connected, or if
+ * no media is currently loaded, 0 is returned.
  */
 - (NSTimeInterval)approximateStreamPosition;
 
@@ -294,6 +296,7 @@ typedef NS_ENUM(NSInteger, GCKMediaControlChannelResumeState) {
 /**
  * The delegate for GCKMediaControlChannel notifications.
  */
+GCK_EXPORT
 @protocol GCKMediaControlChannelDelegate <NSObject>
 
 @optional
@@ -329,6 +332,16 @@ typedef NS_ENUM(NSInteger, GCKMediaControlChannelResumeState) {
  */
 - (void)mediaControlChannel:(GCKMediaControlChannel *)mediaControlChannel
     requestDidCompleteWithID:(NSInteger)requestID;
+
+/**
+ * Called when a request is no longer being tracked because another request of the same type has
+ * been issued by the application.
+ *
+ * @param requestID The request ID that has been replaced. This is the ID returned when the request
+ * was made.
+ */
+- (void)mediaControlChannel:(GCKMediaControlChannel *)mediaControlChannel
+    didReplaceRequestWithID:(NSInteger)requestID;
 
 /**
  * Called when a request fails.

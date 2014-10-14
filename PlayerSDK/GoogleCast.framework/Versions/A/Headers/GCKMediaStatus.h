@@ -1,25 +1,28 @@
 // Copyright 2013 Google Inc.
+
 #import <Foundation/Foundation.h>
+
+#import "GCKDefines.h"
 
 @class GCKMediaInformation;
 
 /** A flag (bitmask) indicating that a media item can be paused. */
-extern const NSInteger kGCKMediaCommandPause;
+GCK_EXTERN const NSInteger kGCKMediaCommandPause;
 
 /** A flag (bitmask) indicating that a media item supports seeking. */
-extern const NSInteger kGCKMediaCommandSeek;
+GCK_EXTERN const NSInteger kGCKMediaCommandSeek;
 
 /** A flag (bitmask) indicating that a media item's audio volume can be changed. */
-extern const NSInteger kGCKMediaCommandSetVolume;
+GCK_EXTERN const NSInteger kGCKMediaCommandSetVolume;
 
 /** A flag (bitmask) indicating that a media item's audio can be muted. */
-extern const NSInteger kGCKMediaCommandToggleMute;
+GCK_EXTERN const NSInteger kGCKMediaCommandToggleMute;
 
 /** A flag (bitmask) indicating that a media item supports skipping forward. */
-extern const NSInteger kGCKMediaCommandSkipForward;
+GCK_EXTERN const NSInteger kGCKMediaCommandSkipForward;
 
 /** A flag (bitmask) indicating that a media item supports skipping backward. */
-extern const NSInteger kGCKMediaCommandSkipBackward;
+GCK_EXTERN const NSInteger kGCKMediaCommandSkipBackward;
 
 typedef NS_ENUM(NSInteger, GCKMediaPlayerState) {
   /** Constant indicating unknown player state. */
@@ -59,7 +62,10 @@ typedef NS_ENUM(NSInteger, GCKMediaPlayerIdleReason) {
 
 /**
  * A class that holds status information about some media.
+ *
+ * @ingroup MediaControl
  */
+GCK_EXPORT
 @interface GCKMediaStatus : NSObject
 
 /**

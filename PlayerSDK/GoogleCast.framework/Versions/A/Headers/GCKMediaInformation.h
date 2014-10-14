@@ -1,5 +1,7 @@
 // Copyright 2013 Google Inc.
 
+#import "GCKDefines.h"
+
 @class GCKMediaMetadata;
 @class GCKMediaTextTrackStyle;
 
@@ -16,7 +18,10 @@ typedef NS_ENUM(NSInteger, GCKMediaStreamType) {
 
 /**
  * A class that aggregates information about a media item.
+ *
+ * @ingroup MediaControl
  */
+GCK_EXPORT
 @interface GCKMediaInformation : NSObject
 
 /**

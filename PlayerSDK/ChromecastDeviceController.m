@@ -64,18 +64,13 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
      
     // Create filter criteria to only show devices that can run your app
     GCKFilterCriteria *filterCriteria = [[GCKFilterCriteria alloc] init];
-    filterCriteria = [GCKFilterCriteria criteriaForAvailableApplicationWithID:kReceiverAppID];
-      
-      
     // Create Device filter that only shows devices that can run your app.
     // This allows you to publish your app to the Apple App store before before publishing in Cast console.
     // Once the app is published in Cast console the cast icon will begin showing up on ios devices.
     // If an app is not published in the Cast console the cast icon will only appear for whitelisted dongles
-    self.deviceFilter = [[GCKDeviceFilter alloc] initWithDeviceScanner:self.deviceScanner criteria:filterCriteria];
 
-    // Initialize UI controls for navigation bar and tool bar.
-//    [self initControls];
-
+    self.deviceScanner.filterCriteria = [GCKFilterCriteria criteriaForAvailableApplicationWithID:kReceiverAppID];
+    
     _queue = dispatch_queue_create("com.google.sample.Chromecast", NULL);
 
   }
@@ -98,13 +93,11 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
   if (start) {
     NSLog(@"Start Scan");
     [self.deviceScanner addListener:self];
-    [self.deviceFilter addDeviceFilterListener:self];
     [self.deviceScanner startScan];
   } else {
     NSLog(@"Stop Scan");
     [self.deviceScanner stopScan];
     [self.deviceScanner removeListener:self];
-    [self.deviceFilter removeDeviceFilterListener:self];
   }
 }
 
@@ -322,21 +315,6 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 
 - (void)deviceDidGoOffline:(GCKDevice *)device {
 
-}
-
-
-
-#pragma mark - GCKDeviceFilterListener
-- (void)deviceDidComeOnline:(GCKDevice *)device forDeviceFilter:(GCKDeviceFilter *)deviceFilter {
-  NSLog(@"filtered device found!! %@", device.friendlyName);
-//  [self updateCastIconButtonStates];
-  if ([self.delegate respondsToSelector:@selector(didDiscoverDeviceOnNetwork)]) {
-    [self.delegate didDiscoverDeviceOnNetwork];
-  }
-}
-
-- (void)deviceDidGoOffline:(GCKDevice *)device forDeviceFilter:(GCKDeviceFilter *)deviceFilter {
-//    [self updateCastIconButtonStates];
 }
 
 #pragma - GCKMediaControlChannelDelegate methods

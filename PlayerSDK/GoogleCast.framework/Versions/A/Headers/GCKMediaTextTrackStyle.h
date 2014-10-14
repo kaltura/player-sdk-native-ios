@@ -1,5 +1,7 @@
 // Copyright 2014 Google Inc.
 
+#import "GCKDefines.h"
+
 @class GCKColor;
 
 /**
@@ -83,10 +85,11 @@ typedef NS_ENUM(NSInteger, GCKMediaTextTrackStyleFontStyle) {
 };
 
 /**
- * A class representing a media track. Instances of this object are immutable.
+ * A class representing a style for a text media track.
  *
  * @ingroup MediaControl
  */
+GCK_EXPORT
 @interface GCKMediaTextTrackStyle : NSObject<NSCopying>
 
 /**
@@ -99,17 +102,6 @@ typedef NS_ENUM(NSInteger, GCKMediaTextTrackStyleFontStyle) {
  * method will return nil on systems older than iOS 7.
  */
 + (GCKMediaTextTrackStyle *)createDefault;
-
-/** @cond INTERNAL */
-
-- (id)initWithJSONObject:(id)JSONObject;
-
-/**
- * Create a JSON object which can serialized with NSJSONSerialization to pass to the receiver.
- */
-- (id)JSONObject;
-
-/** @endcond */
 
 /** The font scaling factor for the text. */
 @property(nonatomic) CGFloat fontScale;
@@ -132,7 +124,7 @@ typedef NS_ENUM(NSInteger, GCKMediaTextTrackStyleFontStyle) {
 /** The window color. */
 @property(nonatomic, copy) GCKColor *windowColor;
 
-/** Rounded corner radius absolute value in pixels. **/
+/** Rounded corner radius absolute value in pixels. */
 @property(nonatomic) CGFloat windowRoundedCornerRadius;
 
 /** The font family; if the font is not available, the generic font family will be used. **/

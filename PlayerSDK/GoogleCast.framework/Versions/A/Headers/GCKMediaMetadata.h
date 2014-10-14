@@ -1,9 +1,10 @@
 // Copyright 2013 Google Inc.
 
+#import "GCKDefines.h"
+
 @class GCKImage;
 
-/** @cond INTERNAL */
-
+/** Media metadata types. */
 typedef NS_ENUM(NSInteger, GCKMediaMetadataType) {
   /** A media type representing generic media content. */
   GCKMediaMetadataTypeGeneric = 0,
@@ -19,9 +20,6 @@ typedef NS_ENUM(NSInteger, GCKMediaMetadataType) {
   GCKMediaMetadataTypeUser = 100,
 };
 
-/** @endcond */
-
-
 /**
  * String key: Creation date.
  * <p>
@@ -29,7 +27,7 @@ typedef NS_ENUM(NSInteger, GCKMediaMetadataType) {
  * For example, this could be the date and time at which a photograph was taken or a piece of
  * music was recorded.
  */
-extern NSString *const kGCKMetadataKeyCreationDate;
+GCK_EXTERN NSString *const kGCKMetadataKeyCreationDate;
 
 /**
  * String key: Release date.
@@ -37,7 +35,7 @@ extern NSString *const kGCKMetadataKeyCreationDate;
  * The value is the date and/or time at which the media was released, in ISO-8601 format.
  * For example, this could be the date that a movie or music album was released.
  */
-extern NSString *const kGCKMetadataKeyReleaseDate;
+GCK_EXTERN NSString *const kGCKMetadataKeyReleaseDate;
 
 /**
  * String key: Broadcast date.
@@ -45,7 +43,7 @@ extern NSString *const kGCKMetadataKeyReleaseDate;
  * The value is the date and/or time at which the media was first broadcast, in ISO-8601 format.
  * For example, this could be the date that a TV show episode was first aired.
  */
-extern NSString *const kGCKMetadataKeyBroadcastDate;
+GCK_EXTERN NSString *const kGCKMetadataKeyBroadcastDate;
 
 /**
  * String key: Title.
@@ -53,14 +51,14 @@ extern NSString *const kGCKMetadataKeyBroadcastDate;
  * The title of the media. For example, this could be the title of a song, movie, or TV show
  * episode. This value is suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeyTitle;
+GCK_EXTERN NSString *const kGCKMetadataKeyTitle;
 
 /**
  * String key: Subtitle.
  * <p>
  * The subtitle of the media. This value is suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeySubtitle;
+GCK_EXTERN NSString *const kGCKMetadataKeySubtitle;
 
 /**
  * String key: Artist.
@@ -68,7 +66,7 @@ extern NSString *const kGCKMetadataKeySubtitle;
  * The name of the artist who created the media. For example, this could be the name of a
  * musician, performer, or photographer. This value is suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeyArtist;
+GCK_EXTERN NSString *const kGCKMetadataKeyArtist;
 
 /**
  * String key: Album artist.
@@ -77,7 +75,7 @@ extern NSString *const kGCKMetadataKeyArtist;
  * mixes, the album artist is not necessarily the same as the artist(s) of the individual songs
  * on the album. This value is suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeyAlbumArtist;
+GCK_EXTERN NSString *const kGCKMetadataKeyAlbumArtist;
 
 /**
  * String key: Album title.
@@ -85,21 +83,21 @@ extern NSString *const kGCKMetadataKeyAlbumArtist;
  * The title of the album that a music track belongs to. This value is suitable for display
  * purposes.
  */
-extern NSString *const kGCKMetadataKeyAlbumTitle;
+GCK_EXTERN NSString *const kGCKMetadataKeyAlbumTitle;
 
 /**
  * String key: Composer.
  * <p>
  * The name of the composer of a music track. This value is suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeyComposer;
+GCK_EXTERN NSString *const kGCKMetadataKeyComposer;
 
 /**
  * Integer key: Disc number.
  * <p>
  * The disc number (counting from 1) that a music track belongs to in a multi-disc album.
  */
-extern NSString *const kGCKMetadataKeyDiscNumber;
+GCK_EXTERN NSString *const kGCKMetadataKeyDiscNumber;
 
 /**
  * Integer key: Track number.
@@ -108,7 +106,7 @@ extern NSString *const kGCKMetadataKeyDiscNumber;
  * starting from 1, however this value may be 0 if it is a "hidden track" at the beginning of
  * an album.
  */
-extern NSString *const kGCKMetadataKeyTrackNumber;
+GCK_EXTERN NSString *const kGCKMetadataKeyTrackNumber;
 
 /**
  * Integer key: Season number.
@@ -117,7 +115,7 @@ extern NSString *const kGCKMetadataKeyTrackNumber;
  * starting from 1, however this value may be 0 if it is a "pilot" episode that predates the
  * official start of a TV series.
  */
-extern NSString *const kGCKMetadataKeySeasonNumber;
+GCK_EXTERN NSString *const kGCKMetadataKeySeasonNumber;
 
 /**
  * Integer key: Episode number.
@@ -126,7 +124,7 @@ extern NSString *const kGCKMetadataKeySeasonNumber;
  * counted starting from 1, however this value may be 0 if it is a "pilot" episode that is not
  * considered to be an official episode of the first season.
  */
-extern NSString *const kGCKMetadataKeyEpisodeNumber;
+GCK_EXTERN NSString *const kGCKMetadataKeyEpisodeNumber;
 
 /**
  * String key: Series title.
@@ -134,7 +132,7 @@ extern NSString *const kGCKMetadataKeyEpisodeNumber;
  * The name of a series. For example, this could be the name of a TV show or series of related
  * music albums. This value is suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeySeriesTitle;
+GCK_EXTERN NSString *const kGCKMetadataKeySeriesTitle;
 
 /**
  * String key: Studio.
@@ -142,7 +140,7 @@ extern NSString *const kGCKMetadataKeySeriesTitle;
  * The name of a recording studio that produced a piece of media. For example, this could be
  * the name of a movie studio or music label. This value is suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeyStudio;
+GCK_EXTERN NSString *const kGCKMetadataKeyStudio;
 
 /**
  * Integer key: Width.
@@ -150,7 +148,7 @@ extern NSString *const kGCKMetadataKeyStudio;
  * The width of a piece of media, in pixels. This would typically be used for providing the
  * dimensions of a photograph.
  */
-extern NSString *const kGCKMetadataKeyWidth;
+GCK_EXTERN NSString *const kGCKMetadataKeyWidth;
 
 /**
  * Integer key: Height.
@@ -158,7 +156,7 @@ extern NSString *const kGCKMetadataKeyWidth;
  * The height of a piece of media, in pixels. This would typically be used for providing the
  * dimensions of a photograph.
  */
-extern NSString *const kGCKMetadataKeyHeight;
+GCK_EXTERN NSString *const kGCKMetadataKeyHeight;
 
 /**
  * String key: Location name.
@@ -167,7 +165,7 @@ extern NSString *const kGCKMetadataKeyHeight;
  * location of a photograph or the principal filming location of a movie. This value is
  * suitable for display purposes.
  */
-extern NSString *const kGCKMetadataKeyLocationName;
+GCK_EXTERN NSString *const kGCKMetadataKeyLocationName;
 
 /**
  * Double key: Location latitude.
@@ -176,7 +174,7 @@ extern NSString *const kGCKMetadataKeyLocationName;
  * For example, this could be the location of a photograph or the principal filming location of
  * a movie.
  */
-extern NSString *const kGCKMetadataKeyLocationLatitude;
+GCK_EXTERN NSString *const kGCKMetadataKeyLocationLatitude;
 
 /**
  * Double key: Location longitude.
@@ -185,7 +183,7 @@ extern NSString *const kGCKMetadataKeyLocationLatitude;
  * For example, this could be the location of a photograph or the principal filming location of
  * a movie.
  */
-extern NSString *const kGCKMetadataKeyLocationLongitude;
+GCK_EXTERN NSString *const kGCKMetadataKeyLocationLongitude;
 
 
 /**
@@ -203,7 +201,10 @@ extern NSString *const kGCKMetadataKeyLocationLongitude;
  * When a MediaMetadata object is serialized to JSON for delivery to a Cast receiver, any
  * predefined fields which are not supported for a given media type will not be included in the
  * serialized form, but any application-defined fields will always be included.
+ *
+ * @ingroup MediaControl
  */
+GCK_EXPORT
 @interface GCKMediaMetadata : NSObject
 
 @property(nonatomic, readonly) GCKMediaMetadataType metadataType;
@@ -356,21 +357,5 @@ extern NSString *const kGCKMetadataKeyLocationLongitude;
  * @throw IllegalArgumentException If the specified field's predefined type is not a date.
  */
 - (NSString *)dateAsStringForKey:(NSString *)key;
-
-/** @cond INTERNAL */
-
-/**
- * Initialize this object with its JSON representation.
- */
-- (id)initWithJSONObject:(id)JSONObject;
-
-+ (instancetype)metadataWithJSONObject:(id)JSONObject;
-
-/**
- * Create a JSON object which can serialized with NSJSONSerialization to pass to the receiver.
- */
-- (id)JSONObject;
-
-/** @endcond */
 
 @end
