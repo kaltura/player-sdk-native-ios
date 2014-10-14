@@ -1,0 +1,1 @@
+../../../GoogleAds-IMA-iOS-SDK/IMACompanionAdSlot.h

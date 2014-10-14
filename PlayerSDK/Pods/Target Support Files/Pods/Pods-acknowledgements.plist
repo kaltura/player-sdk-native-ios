@@ -14,6 +14,15 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>Copyright 2014 Google, Inc. All rights reserved.
+</string>
+			<key>Title</key>
+			<string>GoogleAds-IMA-iOS-SDK</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>https://developers.google.com/terms/</string>
 			<key>Title</key>
 			<string>google-cast-sdk</string>

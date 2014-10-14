@@ -77,6 +77,7 @@ Pod::Spec.new do |s|
   s.library      = 'stdc++', 'z'
   s.framework    = 'MediaPlayer', 'GoogleCast', 'SenTestingKit'
   s.dependency "google-cast-sdk", "2.3.0.1" 
+  s.dependency "GoogleAds-IMA-iOS-SDK", "3.0.beta.4"
   s.xcconfig = {
       "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release",
       "OTHER_LDFLAGS" => "$(inherited) -ObjC"

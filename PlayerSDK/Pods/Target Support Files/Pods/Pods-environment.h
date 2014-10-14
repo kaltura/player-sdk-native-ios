@@ -6,6 +6,13 @@
 // project.
 
 
+// GoogleAds-IMA-iOS-SDK
+#define COCOAPODS_POD_AVAILABLE_GoogleAds_IMA_iOS_SDK
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 3.0.beta.7.
+
 // google-cast-sdk
 #define COCOAPODS_POD_AVAILABLE_google_cast_sdk
 // This library does not follow semantic-versioning,

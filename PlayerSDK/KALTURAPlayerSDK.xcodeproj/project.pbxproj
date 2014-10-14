@@ -1,653 +1,1454 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		81F20979ABEDF94C95602890 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D155C46D6F63C9425F6DE80 /* libPods.a */; };
-		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
-		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
-		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
-		BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
-		BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
-		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
-		BF927ED018BD021A006667CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927ECF18BD021A006667CA /* libz.dylib */; };
-		BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KPViewController.h */; };
-		BFA844771931160600F47E02 /* KPEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA844761931160600F47E02 /* KPEventListener.m */; };
-		BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */; };
-		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
-		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
-		BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
-		BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
-		BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
-		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
-		BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */; };
-		BFFFA740182F9E31005B3B24 /* libKALTURAPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */; };
-		BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFFFA744182F9E31005B3B24 /* InfoPlist.strings */; };
-		BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */; };
-		BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */; };
-		BFFFA755182F9E66005B3B24 /* KPControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */; };
-		BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA775182FA012005B3B24 /* UIKit.framework */; };
-		BFFFA872182FB834005B3B24 /* KPControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* KPControlsWebView.h */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		BFFFA73E182F9E31005B3B24 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFFFA71F182F9E31005B3B24 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BFFFA726182F9E31005B3B24;
-			remoteInfo = PlayerSDK;
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		BFFFA725182F9E31005B3B24 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 12;
-			dstPath = "include/${PRODUCT_NAME}";
-			dstSubfolderSpec = 16;
-			files = (
-				BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */,
-				BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */,
-				BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */,
-				BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */,
-				BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */,
-				BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */,
-				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
-				BFFFA872182FB834005B3B24 /* KPControlsWebView.h in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
-
-/* Begin PBXFileReference section */
-		6D155C46D6F63C9425F6DE80 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		79838A89EEFD71C70971FA54 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
-		BF927EBA18BCD719006667CA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
-		BF927EBC18BCD722006667CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WViPhoneAPI.h; path = ../WViPhoneAPI.h; sourceTree = "<group>"; };
-		BF927ECD18BCEB62006667CA /* WVSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WVSettings.h; path = ../WVSettings.h; sourceTree = "<group>"; };
-		BF927ECF18BD021A006667CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		BFA2DBF61949F29B00831A71 /* KPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewController.h; sourceTree = "<group>"; };
-		BFA2DBF71949F29B00831A71 /* KPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPViewController.m; sourceTree = "<group>"; };
-		BFA844751931160600F47E02 /* KPEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPEventListener.h; sourceTree = "<group>"; };
-		BFA844761931160600F47E02 /* KPEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPEventListener.m; sourceTree = "<group>"; };
-		BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalturaPlayer.h; sourceTree = "<group>"; };
-		BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalturaPlayer.m; sourceTree = "<group>"; };
-		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
-		BFE34297199BE70600C63F74 /* KPChromecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPChromecast.h; sourceTree = "<group>"; };
-		BFE34298199BE70600C63F74 /* KPChromecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPChromecast.m; sourceTree = "<group>"; };
-		BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromecastDeviceController.h; sourceTree = SOURCE_ROOT; };
-		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
-		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
-		BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KalKALTURAPlayerSDKTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		BFFFA743182F9E31005B3B24 /* PlayerSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerSDKTests-Info.plist"; sourceTree = "<group>"; };
-		BFFFA745182F9E31005B3B24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSDKTests.h; sourceTree = "<group>"; };
-		BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSDKTests.m; sourceTree = "<group>"; };
-		BFFFA752182F9E66005B3B24 /* KPControlsWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPControlsWebView.h; sourceTree = "<group>"; };
-		BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPControlsWebView.m; sourceTree = "<group>"; };
-		BFFFA775182FA012005B3B24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		F8FD89F3E1D0CC97D4A30393 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		BFFFA724182F9E31005B3B24 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
-				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
-				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
-				BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */,
-				BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */,
-				81F20979ABEDF94C95602890 /* libPods.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFFA734182F9E31005B3B24 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFFFA740182F9E31005B3B24 /* libKALTURAPlayerSDK.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		0D5524D9333B901C717D5254 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F8FD89F3E1D0CC97D4A30393 /* Pods.debug.xcconfig */,
-				79838A89EEFD71C70971FA54 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		BF9133CB19349AB700606682 /* KPEventListener */ = {
-			isa = PBXGroup;
-			children = (
-				BFA844751931160600F47E02 /* KPEventListener.h */,
-				BFA844761931160600F47E02 /* KPEventListener.m */,
-			);
-			name = KPEventListener;
-			sourceTree = "<group>";
-		};
-		BFA6F0D918BB796500F7C78F /* WideVine */ = {
-			isa = PBXGroup;
-			children = (
-				BFC574A41997C296000511B8 /* libWViPhoneAPI.a */,
-				BF66631E18C48C7E001F5E51 /* WVSettings.m */,
-				BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */,
-				BF927ECD18BCEB62006667CA /* WVSettings.h */,
-			);
-			name = WideVine;
-			sourceTree = "<group>";
-		};
-		BFE342A1199BE79000C63F74 /* ChromecastDeviceController */ = {
-			isa = PBXGroup;
-			children = (
-				BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */,
-				BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */,
-			);
-			name = ChromecastDeviceController;
-			sourceTree = "<group>";
-		};
-		BFE3E2F2199CAF6200666F32 /* KPChromecast */ = {
-			isa = PBXGroup;
-			children = (
-				BFE34297199BE70600C63F74 /* KPChromecast.h */,
-				BFE34298199BE70600C63F74 /* KPChromecast.m */,
-			);
-			name = KPChromecast;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		BFE3E2F3199CAFCF00666F32 /* KalturaPlayer */ = {
-			isa = PBXGroup;
-			children = (
-				BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */,
-				BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */,
-			);
-			name = KalturaPlayer;
-			path = ..;
-			sourceTree = "<group>";
-		};
-		BFFFA71E182F9E31005B3B24 = {
-			isa = PBXGroup;
-			children = (
-				BFFFA775182FA012005B3B24 /* UIKit.framework */,
-				BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */,
-				BFFFA741182F9E31005B3B24 /* PlayerSDKTests */,
-				BFFFA729182F9E31005B3B24 /* Frameworks */,
-				BFFFA728182F9E31005B3B24 /* Products */,
-				0D5524D9333B901C717D5254 /* Pods */,
-			);
-			sourceTree = "<group>";
-		};
-		BFFFA728182F9E31005B3B24 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */,
-				BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				BF927ECF18BD021A006667CA /* libz.dylib */,
-				BF927EBC18BCD722006667CA /* SystemConfiguration.framework */,
-				BF927EBA18BCD719006667CA /* libstdc++.dylib */,
-				6D155C46D6F63C9425F6DE80 /* libPods.a */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA877182FB8E4005B3B24 /* KPViewController */,
-				BFE3E2F3199CAFCF00666F32 /* KalturaPlayer */,
-				BFE3E2F2199CAF6200666F32 /* KPChromecast */,
-				BFE342A1199BE79000C63F74 /* ChromecastDeviceController */,
-				BFA6F0D918BB796500F7C78F /* WideVine */,
-				BFFFA774182F9F10005B3B24 /* KPControlsWebView */,
-				BFFFA72D182F9E31005B3B24 /* Supporting Files */,
-				BF9133CB19349AB700606682 /* KPEventListener */,
-			);
-			name = KALTURAPlayerSDK;
-			path = PlayerSDK;
-			sourceTree = "<group>";
-		};
-		BFFFA72D182F9E31005B3B24 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		BFFFA741182F9E31005B3B24 /* PlayerSDKTests */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */,
-				BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */,
-				BFFFA742182F9E31005B3B24 /* Supporting Files */,
-			);
-			path = PlayerSDKTests;
-			sourceTree = "<group>";
-		};
-		BFFFA742182F9E31005B3B24 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA743182F9E31005B3B24 /* PlayerSDKTests-Info.plist */,
-				BFFFA744182F9E31005B3B24 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		BFFFA774182F9F10005B3B24 /* KPControlsWebView */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA752182F9E66005B3B24 /* KPControlsWebView.h */,
-				BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */,
-			);
-			name = KPControlsWebView;
-			sourceTree = "<group>";
-		};
-		BFFFA877182FB8E4005B3B24 /* KPViewController */ = {
-			isa = PBXGroup;
-			children = (
-				BFA2DBF61949F29B00831A71 /* KPViewController.h */,
-				BFA2DBF71949F29B00831A71 /* KPViewController.m */,
-			);
-			name = KPViewController;
-			path = ..;
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDK" */;
-			buildPhases = (
-				A53A932566A5DD1B129B9296 /* Check Pods Manifest.lock */,
-				BFFFA723182F9E31005B3B24 /* Sources */,
-				BFFFA724182F9E31005B3B24 /* Frameworks */,
-				BFFFA725182F9E31005B3B24 /* CopyFiles */,
-				B4778A1A18BB017B8BF74C45 /* Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = KALTURAPlayerSDK;
-			productName = PlayerSDK;
-			productReference = BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		BFFFA737182F9E31005B3B24 /* KALTURAPlayerSDKTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDKTests" */;
-			buildPhases = (
-				BFFFA733182F9E31005B3B24 /* Sources */,
-				BFFFA734182F9E31005B3B24 /* Frameworks */,
-				BFFFA735182F9E31005B3B24 /* Resources */,
-				BFFFA736182F9E31005B3B24 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BFFFA73F182F9E31005B3B24 /* PBXTargetDependency */,
-			);
-			name = KALTURAPlayerSDKTests;
-			productName = PlayerSDKTests;
-			productReference = BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		BFFFA71F182F9E31005B3B24 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastTestingUpgradeCheck = 0600;
-				LastUpgradeCheck = 0600;
-				ORGANIZATIONNAME = Kaltura;
-			};
-			buildConfigurationList = BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KALTURAPlayerSDK" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-			);
-			mainGroup = BFFFA71E182F9E31005B3B24;
-			productRefGroup = BFFFA728182F9E31005B3B24 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */,
-				BFFFA737182F9E31005B3B24 /* KALTURAPlayerSDKTests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		BFFFA735182F9E31005B3B24 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		A53A932566A5DD1B129B9296 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B4778A1A18BB017B8BF74C45 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BFFFA736182F9E31005B3B24 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		BFFFA723182F9E31005B3B24 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
-				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
-				BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */,
-				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
-				BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */,
-				BFA844771931160600F47E02 /* KPEventListener.m in Sources */,
-				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFFA733182F9E31005B3B24 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */,
-				BFFFA755182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		BFFFA73F182F9E31005B3B24 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */;
-			targetProxy = BFFFA73E182F9E31005B3B24 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		BFFFA744182F9E31005B3B24 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BFFFA745182F9E31005B3B24 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		BFFFA74A182F9E31005B3B24 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = NO;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = NO;
-				CLANG_WARN_INT_CONVERSION = NO;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"\"$(SRCROOT)/WViPhoneAPI.h\"",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/libWViPhoneAPI.a\"";
-				ONLY_ACTIVE_ARCH = NO;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
-			};
-			name = Debug;
-		};
-		BFFFA74B182F9E31005B3B24 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = NO;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = NO;
-				CLANG_WARN_INT_CONVERSION = NO;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
-				COPY_PHASE_STRIP = YES;
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = (
-					"$(inherited)",
-					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
-					"\"$(SRCROOT)/WViPhoneAPI.h\"",
-				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/libWViPhoneAPI.a\"";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
-			};
-			name = Release;
-		};
-		BFFFA74D182F9E31005B3B24 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F8FD89F3E1D0CC97D4A30393 /* Pods.debug.xcconfig */;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
-				DSTROOT = /tmp/PlayerSDK.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"$(PROJECT_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					.,
-					"$(PROJECT_DIR)",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = KALTURAPlayerSDK;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
-			};
-			name = Debug;
-		};
-		BFFFA74E182F9E31005B3B24 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 79838A89EEFD71C70971FA54 /* Pods.release.xcconfig */;
-			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
-				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
-				CLANG_CXX_LIBRARY = "compiler-default";
-				DSTROOT = /tmp/PlayerSDK.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"$(PROJECT_DIR)",
-				);
-				GCC_C_LANGUAGE_STANDARD = c99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					.,
-					"$(PROJECT_DIR)",
-				);
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = KALTURAPlayerSDK;
-				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
-			};
-			name = Release;
-		};
-		BFFFA750182F9E31005B3B24 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				INFOPLIST_FILE = "PlayerSDKTests/PlayerSDKTests-Info.plist";
-				PRODUCT_NAME = KalKALTURAPlayerSDKTests;
-				VALID_ARCHS = armv7;
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		BFFFA751182F9E31005B3B24 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				INFOPLIST_FILE = "PlayerSDKTests/PlayerSDKTests-Info.plist";
-				PRODUCT_NAME = KalKALTURAPlayerSDKTests;
-				VALID_ARCHS = armv7;
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KALTURAPlayerSDK" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BFFFA74A182F9E31005B3B24 /* Debug */,
-				BFFFA74B182F9E31005B3B24 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDK" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BFFFA74D182F9E31005B3B24 /* Debug */,
-				BFFFA74E182F9E31005B3B24 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDKTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BFFFA750182F9E31005B3B24 /* Debug */,
-				BFFFA751182F9E31005B3B24 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-/* End XCConfigurationList section */
-	};
-	rootObject = BFFFA71F182F9E31005B3B24 /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>0D5524D9333B901C717D5254</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>F8FD89F3E1D0CC97D4A30393</string>
+				<string>79838A89EEFD71C70971FA54</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>6D155C46D6F63C9425F6DE80</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>79838A89EEFD71C70971FA54</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>81F20979ABEDF94C95602890</key>
+		<dict>
+			<key>fileRef</key>
+			<string>6D155C46D6F63C9425F6DE80</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>A53A932566A5DD1B129B9296</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>B4778A1A18BB017B8BF74C45</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>BF66631E18C48C7E001F5E51</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>WVSettings.m</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+		</dict>
+		<key>BF66631F18C48C7E001F5E51</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BF66631E18C48C7E001F5E51</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BF9133C919349A4400606682</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA747182F9E31005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BF9133CA19349A8200606682</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFA844751931160600F47E02</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BF9133CB19349AB700606682</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFA844751931160600F47E02</string>
+				<string>BFA844761931160600F47E02</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>KPEventListener</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BF927EBA18BCD719006667CA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>compiled.mach-o.dylib</string>
+			<key>name</key>
+			<string>libstdc++.dylib</string>
+			<key>path</key>
+			<string>usr/lib/libstdc++.dylib</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BF927EBB18BCD719006667CA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BF927EBA18BCD719006667CA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BF927EBC18BCD722006667CA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>SystemConfiguration.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/SystemConfiguration.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BF927EBD18BCD722006667CA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BF927EBC18BCD722006667CA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BF927EBF18BCD75A006667CA</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>WViPhoneAPI.h</string>
+			<key>path</key>
+			<string>../WViPhoneAPI.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BF927ECD18BCEB62006667CA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>name</key>
+			<string>WVSettings.h</string>
+			<key>path</key>
+			<string>../WVSettings.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BF927ECE18BCEB62006667CA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BF927ECD18BCEB62006667CA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BF927ECF18BD021A006667CA</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>compiled.mach-o.dylib</string>
+			<key>name</key>
+			<string>libz.dylib</string>
+			<key>path</key>
+			<string>usr/lib/libz.dylib</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BF927ED018BD021A006667CA</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BF927ECF18BD021A006667CA</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFA2DBF61949F29B00831A71</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>KPViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFA2DBF71949F29B00831A71</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>KPViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFA2DC12194B349F00831A71</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFA2DBF61949F29B00831A71</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFA6F0D918BB796500F7C78F</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFC574A41997C296000511B8</string>
+				<string>BF66631E18C48C7E001F5E51</string>
+				<string>BF927EBF18BCD75A006667CA</string>
+				<string>BF927ECD18BCEB62006667CA</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>WideVine</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFA844751931160600F47E02</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>KPEventListener.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFA844761931160600F47E02</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>KPEventListener.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFA844771931160600F47E02</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFA844761931160600F47E02</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFB741D6199BA3CD001E9DDD</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>KalturaPlayer.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFB741D7199BA3CD001E9DDD</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>KalturaPlayer.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFB741D8199BA3CD001E9DDD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFB741D7199BA3CD001E9DDD</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFC574A41997C296000511B8</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>archive.ar</string>
+			<key>path</key>
+			<string>libWViPhoneAPI.a</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+		</dict>
+		<key>BFC574A51997C296000511B8</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFC574A41997C296000511B8</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFDF5FCE19B3240A00C9F9AC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFE34297199BE70600C63F74</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFDF5FCF19B3241D00C9F9AC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFA2DBF71949F29B00831A71</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFDF5FD019B3243600C9F9AC</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFE34298199BE70600C63F74</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFE34297199BE70600C63F74</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>KPChromecast.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFE34298199BE70600C63F74</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>KPChromecast.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFE3429A199BE78900C63F74</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>ChromecastDeviceController.h</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+		</dict>
+		<key>BFE3429B199BE78900C63F74</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>ChromecastDeviceController.m</string>
+			<key>sourceTree</key>
+			<string>SOURCE_ROOT</string>
+		</dict>
+		<key>BFE342A1199BE79000C63F74</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFE3429A199BE78900C63F74</string>
+				<string>BFE3429B199BE78900C63F74</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>ChromecastDeviceController</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFE3437B19A4A97800BBD1FD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFE3429A199BE78900C63F74</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFE3437C19A4A98200BBD1FD</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFE3429B199BE78900C63F74</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFE3E2F2199CAF6200666F32</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFE34297199BE70600C63F74</string>
+				<string>BFE34298199BE70600C63F74</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>KPChromecast</string>
+			<key>path</key>
+			<string>..</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFE3E2F3199CAFCF00666F32</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFB741D6199BA3CD001E9DDD</string>
+				<string>BFB741D7199BA3CD001E9DDD</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>KalturaPlayer</string>
+			<key>path</key>
+			<string>..</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFE3E2F5199CB40400666F32</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFB741D6199BA3CD001E9DDD</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA71E182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA775182FA012005B3B24</string>
+				<string>BFFFA72C182F9E31005B3B24</string>
+				<string>BFFFA741182F9E31005B3B24</string>
+				<string>BFFFA729182F9E31005B3B24</string>
+				<string>BFFFA728182F9E31005B3B24</string>
+				<string>0D5524D9333B901C717D5254</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA71F182F9E31005B3B24</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastTestingUpgradeCheck</key>
+				<string>0600</string>
+				<key>LastUpgradeCheck</key>
+				<string>0600</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>Kaltura</string>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>BFFFA722182F9E31005B3B24</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+			</array>
+			<key>mainGroup</key>
+			<string>BFFFA71E182F9E31005B3B24</string>
+			<key>productRefGroup</key>
+			<string>BFFFA728182F9E31005B3B24</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>BFFFA726182F9E31005B3B24</string>
+				<string>BFFFA737182F9E31005B3B24</string>
+			</array>
+		</dict>
+		<key>BFFFA722182F9E31005B3B24</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>BFFFA74A182F9E31005B3B24</string>
+				<string>BFFFA74B182F9E31005B3B24</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>BFFFA723182F9E31005B3B24</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>BFDF5FD019B3243600C9F9AC</string>
+				<string>BFDF5FCF19B3241D00C9F9AC</string>
+				<string>BFE3437C19A4A98200BBD1FD</string>
+				<string>BF66631F18C48C7E001F5E51</string>
+				<string>BFB741D8199BA3CD001E9DDD</string>
+				<string>BFA844771931160600F47E02</string>
+				<string>BFFFA754182F9E66005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BFFFA724182F9E31005B3B24</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>BF927ED018BD021A006667CA</string>
+				<string>BF927EBD18BCD722006667CA</string>
+				<string>BFC574A51997C296000511B8</string>
+				<string>BF927EBB18BCD719006667CA</string>
+				<string>BFFFA776182FA012005B3B24</string>
+				<string>81F20979ABEDF94C95602890</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BFFFA725182F9E31005B3B24</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>12</string>
+			<key>dstPath</key>
+			<string>include/${PRODUCT_NAME}</string>
+			<key>dstSubfolderSpec</key>
+			<string>16</string>
+			<key>files</key>
+			<array>
+				<string>BFDF5FCE19B3240A00C9F9AC</string>
+				<string>BFE3437B19A4A97800BBD1FD</string>
+				<string>BFE3E2F5199CB40400666F32</string>
+				<string>BFA2DC12194B349F00831A71</string>
+				<string>BF9133CA19349A8200606682</string>
+				<string>BF9133C919349A4400606682</string>
+				<string>BF927ECE18BCEB62006667CA</string>
+				<string>BFFFA872182FB834005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXCopyFilesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BFFFA726182F9E31005B3B24</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>BFFFA74C182F9E31005B3B24</string>
+			<key>buildPhases</key>
+			<array>
+				<string>A53A932566A5DD1B129B9296</string>
+				<string>BFFFA723182F9E31005B3B24</string>
+				<string>BFFFA724182F9E31005B3B24</string>
+				<string>BFFFA725182F9E31005B3B24</string>
+				<string>B4778A1A18BB017B8BF74C45</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>KALTURAPlayerSDK</string>
+			<key>productName</key>
+			<string>PlayerSDK</string>
+			<key>productReference</key>
+			<string>BFFFA727182F9E31005B3B24</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
+		<key>BFFFA727182F9E31005B3B24</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libKALTURAPlayerSDK.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>BFFFA728182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA727182F9E31005B3B24</string>
+				<string>BFFFA738182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA729182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BF927ECF18BD021A006667CA</string>
+				<string>BF927EBC18BCD722006667CA</string>
+				<string>BF927EBA18BCD719006667CA</string>
+				<string>6D155C46D6F63C9425F6DE80</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA72C182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA877182FB8E4005B3B24</string>
+				<string>BFE3E2F3199CAFCF00666F32</string>
+				<string>BFE3E2F2199CAF6200666F32</string>
+				<string>BFE342A1199BE79000C63F74</string>
+				<string>BFA6F0D918BB796500F7C78F</string>
+				<string>BFFFA774182F9F10005B3B24</string>
+				<string>BFFFA72D182F9E31005B3B24</string>
+				<string>BF9133CB19349AB700606682</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>KALTURAPlayerSDK</string>
+			<key>path</key>
+			<string>PlayerSDK</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA72D182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA72E182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA72E182F9E31005B3B24</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>PlayerSDK-Prefix.pch</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA733182F9E31005B3B24</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>BFFFA749182F9E31005B3B24</string>
+				<string>BFFFA755182F9E66005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BFFFA734182F9E31005B3B24</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>BFFFA740182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BFFFA735182F9E31005B3B24</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>BFFFA746182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>BFFFA736182F9E31005B3B24</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string># Run the unit tests in this test bundle.
+"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests"
+</string>
+		</dict>
+		<key>BFFFA737182F9E31005B3B24</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>BFFFA74F182F9E31005B3B24</string>
+			<key>buildPhases</key>
+			<array>
+				<string>BFFFA733182F9E31005B3B24</string>
+				<string>BFFFA734182F9E31005B3B24</string>
+				<string>BFFFA735182F9E31005B3B24</string>
+				<string>BFFFA736182F9E31005B3B24</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>BFFFA73F182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>KALTURAPlayerSDKTests</string>
+			<key>productName</key>
+			<string>PlayerSDKTests</string>
+			<key>productReference</key>
+			<string>BFFFA738182F9E31005B3B24</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.ocunit-test</string>
+		</dict>
+		<key>BFFFA738182F9E31005B3B24</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>KalKALTURAPlayerSDKTests.octest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>BFFFA73E182F9E31005B3B24</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>BFFFA71F182F9E31005B3B24</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>BFFFA726182F9E31005B3B24</string>
+			<key>remoteInfo</key>
+			<string>PlayerSDK</string>
+		</dict>
+		<key>BFFFA73F182F9E31005B3B24</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>BFFFA726182F9E31005B3B24</string>
+			<key>targetProxy</key>
+			<string>BFFFA73E182F9E31005B3B24</string>
+		</dict>
+		<key>BFFFA740182F9E31005B3B24</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA727182F9E31005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA741182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA747182F9E31005B3B24</string>
+				<string>BFFFA748182F9E31005B3B24</string>
+				<string>BFFFA742182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>PlayerSDKTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA742182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA743182F9E31005B3B24</string>
+				<string>BFFFA744182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA743182F9E31005B3B24</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>PlayerSDKTests-Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA744182F9E31005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA745182F9E31005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA745182F9E31005B3B24</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.strings</string>
+			<key>name</key>
+			<string>en</string>
+			<key>path</key>
+			<string>en.lproj/InfoPlist.strings</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA746182F9E31005B3B24</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA744182F9E31005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA747182F9E31005B3B24</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>PlayerSDKTests.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA748182F9E31005B3B24</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>PlayerSDKTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA749182F9E31005B3B24</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA748182F9E31005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA74A182F9E31005B3B24</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
+				<key>ARCHS[sdk=iphoneos*]</key>
+				<string>$(ARCHS_STANDARD_32_BIT)</string>
+				<key>ARCHS[sdk=iphonesimulator*]</key>
+				<string>$(ARCHS_STANDARD)</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>compiler-default</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>compiler-default</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>NO</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>NO</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>NO</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>c99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_SYMBOLS_PRIVATE_EXTERN</key>
+				<string>NO</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>"$(SRCROOT)/WViPhoneAPI.h"</string>
+				</array>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>4.3</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<string>"$(SRCROOT)/libWViPhoneAPI.a"</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>NO</string>
+				<key>VALID_ARCHS</key>
+				<string>armv7</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>BFFFA74B182F9E31005B3B24</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>YES</string>
+				<key>ARCHS[sdk=iphoneos*]</key>
+				<string>$(ARCHS_STANDARD_32_BIT)</string>
+				<key>ARCHS[sdk=iphonesimulator*]</key>
+				<string>i386</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>compiler-default</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>compiler-default</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>NO</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>NO</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>NO</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>NO</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>c99</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>HEADER_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include</string>
+					<string>"$(SRCROOT)/WViPhoneAPI.h"</string>
+				</array>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>4.3</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]</key>
+				<string>5.1.1</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<string>"$(SRCROOT)/libWViPhoneAPI.a"</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>NO</string>
+				<key>OTHER_CFLAGS</key>
+				<string>-DNS_BLOCK_ASSERTIONS=1</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>NO</string>
+				<key>VALID_ARCHS</key>
+				<string>armv7</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>BFFFA74C182F9E31005B3B24</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>BFFFA74D182F9E31005B3B24</string>
+				<string>BFFFA74E182F9E31005B3B24</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>BFFFA74D182F9E31005B3B24</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>F8FD89F3E1D0CC97D4A30393</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ARCHS[sdk=iphoneos*]</key>
+				<string>$(ARCHS_STANDARD_32_BIT)</string>
+				<key>ARCHS[sdk=iphonesimulator*]</key>
+				<string>$(ARCHS_STANDARD)</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>compiler-default</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>compiler-default</string>
+				<key>DSTROOT</key>
+				<string>/tmp/PlayerSDK.dst</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks"</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>c99</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>PlayerSDK/PlayerSDK-Prefix.pch</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>.</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>NO</string>
+				<key>OTHER_CPLUSPLUSFLAGS</key>
+				<string>$(OTHER_CFLAGS)</string>
+				<key>OTHER_LDFLAGS</key>
+				<string>-ObjC</string>
+				<key>PRODUCT_NAME</key>
+				<string>KALTURAPlayerSDK</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VALID_ARCHS</key>
+				<string>armv7</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>BFFFA74E182F9E31005B3B24</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>79838A89EEFD71C70971FA54</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ARCHS[sdk=iphoneos*]</key>
+				<string>$(ARCHS_STANDARD_32_BIT)</string>
+				<key>ARCHS[sdk=iphonesimulator*]</key>
+				<string>i386</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>compiler-default</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>compiler-default</string>
+				<key>DSTROOT</key>
+				<string>/tmp/PlayerSDK.dst</string>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks"</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>c99</string>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>PlayerSDK/PlayerSDK-Prefix.pch</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]</key>
+				<string>5.1.1</string>
+				<key>LIBRARY_SEARCH_PATHS</key>
+				<array>
+					<string>$(inherited)</string>
+					<string>.</string>
+					<string>$(PROJECT_DIR)</string>
+				</array>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string>-ObjC</string>
+				<key>PRODUCT_NAME</key>
+				<string>KALTURAPlayerSDK</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+				<key>VALID_ARCHS</key>
+				<string>armv7</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>BFFFA74F182F9E31005B3B24</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>BFFFA750182F9E31005B3B24</string>
+				<string>BFFFA751182F9E31005B3B24</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>BFFFA750182F9E31005B3B24</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>"$(SDKROOT)/Developer/Library/Frameworks"</string>
+					<string>"$(DEVELOPER_LIBRARY_DIR)/Frameworks"</string>
+				</array>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>PlayerSDK/PlayerSDK-Prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>PlayerSDKTests/PlayerSDKTests-Info.plist</string>
+				<key>PRODUCT_NAME</key>
+				<string>KalKALTURAPlayerSDKTests</string>
+				<key>VALID_ARCHS</key>
+				<string>armv7</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>octest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>BFFFA751182F9E31005B3B24</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>FRAMEWORK_SEARCH_PATHS</key>
+				<array>
+					<string>"$(SDKROOT)/Developer/Library/Frameworks"</string>
+					<string>"$(DEVELOPER_LIBRARY_DIR)/Frameworks"</string>
+				</array>
+				<key>GCC_PRECOMPILE_PREFIX_HEADER</key>
+				<string>YES</string>
+				<key>GCC_PREFIX_HEADER</key>
+				<string>PlayerSDK/PlayerSDK-Prefix.pch</string>
+				<key>INFOPLIST_FILE</key>
+				<string>PlayerSDKTests/PlayerSDKTests-Info.plist</string>
+				<key>PRODUCT_NAME</key>
+				<string>KalKALTURAPlayerSDKTests</string>
+				<key>VALID_ARCHS</key>
+				<string>armv7</string>
+				<key>WRAPPER_EXTENSION</key>
+				<string>octest</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>BFFFA752182F9E66005B3B24</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>KPControlsWebView.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA753182F9E66005B3B24</key>
+		<dict>
+			<key>fileEncoding</key>
+			<string>4</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>KPControlsWebView.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA754182F9E66005B3B24</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA753182F9E66005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA755182F9E66005B3B24</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA753182F9E66005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA774182F9F10005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFFFA752182F9E66005B3B24</string>
+				<string>BFFFA753182F9E66005B3B24</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>KPControlsWebView</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>BFFFA775182FA012005B3B24</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.framework</string>
+			<key>name</key>
+			<string>UIKit.framework</string>
+			<key>path</key>
+			<string>System/Library/Frameworks/UIKit.framework</string>
+			<key>sourceTree</key>
+			<string>SDKROOT</string>
+		</dict>
+		<key>BFFFA776182FA012005B3B24</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA775182FA012005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA872182FB834005B3B24</key>
+		<dict>
+			<key>fileRef</key>
+			<string>BFFFA752182F9E66005B3B24</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>BFFFA877182FB8E4005B3B24</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>BFA2DBF61949F29B00831A71</string>
+				<string>BFA2DBF71949F29B00831A71</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>KPViewController</string>
+			<key>path</key>
+			<string>..</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>F8FD89F3E1D0CC97D4A30393</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods/Pods.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>BFFFA71F182F9E31005B3B24</string>
+</dict>
+</plist>

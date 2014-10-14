@@ -1,0 +1,2 @@
+PODS_GOOGLEADS_IMA_IOS_SDK_LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/GoogleAds-IMA-iOS-SDK/"
+PODS_GOOGLEADS_IMA_IOS_SDK_OTHER_LDFLAGS = -l"GoogleIMA3" -framework "AVFoundation" -framework "AdSupport" -framework "AudioToolbox" -framework "CoreFoundation" -framework "CoreGraphics" -framework "CoreMedia" -framework "MessageUI" -framework "QuartzCore" -framework "SystemConfiguration" -framework "UIKit"
