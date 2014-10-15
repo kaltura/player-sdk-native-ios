@@ -7,8 +7,6 @@
 //
 
 #import "KalturaPlayer.h"
-#if !(TARGET_IPHONE_SIMULATOR)
-#endif
 
 @implementation KalturaPlayer {
     // Player Params

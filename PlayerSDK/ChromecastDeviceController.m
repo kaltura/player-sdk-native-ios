@@ -62,8 +62,6 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
     // Initialize device scanner
     self.deviceScanner = [[GCKDeviceScanner alloc] init];
      
-    // Create filter criteria to only show devices that can run your app
-    GCKFilterCriteria *filterCriteria = [[GCKFilterCriteria alloc] init];
     // Create Device filter that only shows devices that can run your app.
     // This allows you to publish your app to the Apple App store before before publishing in Cast console.
     // Once the app is published in Cast console the cast icon will begin showing up on ios devices.
