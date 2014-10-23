@@ -2,11 +2,14 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
+
 /**
  * Utility methods for working with JSON data.
  *
  * @ingroup Utilities
  */
+GCK_EXPORT
 @interface GCKJSONUtils : NSObject
 
 /**
@@ -17,6 +20,17 @@
  * an NSDictionary), or <code>nil</code> if the parsing failed.
  */
 + (id)parseJSON:(NSString *)json;
+
+/**
+ * Parses a JSON string into an object.
+ *
+ * @param json The JSON string to parse.
+ * @param error If not nil, the location at which to store a pointer to an NSError if the parsing
+ * fails.
+ * @return The root object of the object hierarchy that represents the data (either an NSArray or
+ * an NSDictionary), or <code>nil</code> if the parsing failed.
+ */
++ (id)parseJSON:(NSString *)json error:(NSError **)error;
 
 /**
  * Writes an object hierarchy of data to a JSON string.

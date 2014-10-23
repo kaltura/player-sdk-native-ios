@@ -2,6 +2,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
+
 @class GCKSenderApplicationInfo;
 
 /**
@@ -9,7 +11,8 @@
  *
  * @ingroup Applications
  */
-@interface GCKApplicationMetadata : NSObject
+GCK_EXPORT
+@interface GCKApplicationMetadata : NSObject<NSCopying>
 
 /** The application's ID. */
 @property(nonatomic, copy, readonly) NSString *applicationID;
@@ -26,6 +29,12 @@
 @property(nonatomic, copy, readonly) NSArray *namespaces;
 
 /**
+ * Information about the sender application that is the counterpart to the receiver application,
+ * if any.
+ */
+@property(nonatomic, copy, readonly) GCKSenderApplicationInfo *senderApplicationInfo;
+
+/**
  * The identifier of the sender application that is the counterpart to the receiver
  * application, if any.
  */
@@ -36,10 +45,5 @@
  * application, if any.
  */
 - (NSURL *)senderAppLaunchURL;
-
-/**
- * Returns the sender application info for this platform, or nil if there isn't one.
- */
-- (GCKSenderApplicationInfo *)senderApplicationInfo;
 
 @end

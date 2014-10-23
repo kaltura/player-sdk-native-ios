@@ -2,6 +2,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
+
 /** Enum defining the device status at the time the device was scanned. */
 typedef NS_ENUM(NSInteger, GCKDeviceStatus) {
   /** Unknown status. */
@@ -17,6 +19,7 @@ typedef NS_ENUM(NSInteger, GCKDeviceStatus) {
  *
  * @ingroup Discovery
  */
+GCK_EXPORT
 @interface GCKDevice : NSObject <NSCopying, NSCoding>
 
 /** The device's IPv4 address, in dot-notation. Used when making network requests. */
@@ -45,11 +48,20 @@ typedef NS_ENUM(NSInteger, GCKDeviceStatus) {
 /** The device's status at the time that it was most recently scanned. */
 @property(nonatomic, readonly) GCKDeviceStatus status;
 
+/** The status text reported by the currently running receiver application, if any. */
+@property(nonatomic, copy) NSString *statusText;
+
 /** Designated initializer. Constructs a new GCKDevice with the given IP address.
  *
  * @param ipAddress The device's IPv4 address, in dot-notation.
  * @param servicePort The device's service port.
  */
 - (id)initWithIPAddress:(NSString *)ipAddress servicePort:(UInt32)servicePort;
+
+/**
+ * Tests if this device refers to the same physical device as another. Returns YES if both
+ * GCKDevice objects have the same IP address, service port, and device ID.
+ */
+- (BOOL)isSameDeviceAs:(const GCKDevice *)other;
 
 @end

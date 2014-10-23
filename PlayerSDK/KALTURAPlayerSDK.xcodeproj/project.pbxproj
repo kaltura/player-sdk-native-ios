@@ -7,21 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
+		794D3F3A19ED6AB6009957E5 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794D3F3919ED6AB6009957E5 /* GoogleCast.framework */; };
+		794D3F3B19ED6AB6009957E5 /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 794D3F3919ED6AB6009957E5 /* GoogleCast.framework */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
 		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
-		BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
 		BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
-		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
-		BF927ED018BD021A006667CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927ECF18BD021A006667CA /* libz.dylib */; };
 		BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KPViewController.h */; };
 		BFA844771931160600F47E02 /* KPEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA844761931160600F47E02 /* KPEventListener.m */; };
 		BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */; };
-		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
 		BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
 		BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
-		BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */; };
 		BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
 		BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */; };
@@ -60,7 +56,6 @@
 				BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */,
 				BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */,
 				BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */,
-				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
 				BFFFA872182FB834005B3B24 /* KPControlsWebView.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,11 +63,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
+		794D3F3919ED6AB6009957E5 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		BF927EBA18BCD719006667CA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		BF927EBC18BCD722006667CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WViPhoneAPI.h; path = ../WViPhoneAPI.h; sourceTree = "<group>"; };
-		BF927ECD18BCEB62006667CA /* WVSettings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WVSettings.h; path = ../WVSettings.h; sourceTree = "<group>"; };
 		BF927ECF18BD021A006667CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BFA2DBF61949F29B00831A71 /* KPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewController.h; sourceTree = "<group>"; };
 		BFA2DBF71949F29B00831A71 /* KPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPViewController.m; sourceTree = "<group>"; };
@@ -80,12 +73,10 @@
 		BFA844761931160600F47E02 /* KPEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPEventListener.m; sourceTree = "<group>"; };
 		BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalturaPlayer.h; sourceTree = "<group>"; };
 		BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalturaPlayer.m; sourceTree = "<group>"; };
-		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
 		BFE34297199BE70600C63F74 /* KPChromecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPChromecast.h; sourceTree = "<group>"; };
 		BFE34298199BE70600C63F74 /* KPChromecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPChromecast.m; sourceTree = "<group>"; };
 		BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromecastDeviceController.h; sourceTree = SOURCE_ROOT; };
 		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
-		BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleCast.framework; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -105,11 +96,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */,
-				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
+				794D3F3A19ED6AB6009957E5 /* GoogleCast.framework in Frameworks */,
 				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
-				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
-				BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */,
 				BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */,
 				BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */,
 			);
@@ -119,6 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				794D3F3B19ED6AB6009957E5 /* GoogleCast.framework in Frameworks */,
 				BFFFA73A182F9E31005B3B24 /* SenTestingKit.framework in Frameworks */,
 				BFFFA73D182F9E31005B3B24 /* Foundation.framework in Frameworks */,
 				BFFFA740182F9E31005B3B24 /* libKALTURAPlayerSDK.a in Frameworks */,
@@ -135,17 +124,6 @@
 				BFA844761931160600F47E02 /* KPEventListener.m */,
 			);
 			name = KPEventListener;
-			sourceTree = "<group>";
-		};
-		BFA6F0D918BB796500F7C78F /* WideVine */ = {
-			isa = PBXGroup;
-			children = (
-				BFC574A41997C296000511B8 /* libWViPhoneAPI.a */,
-				BF66631E18C48C7E001F5E51 /* WVSettings.m */,
-				BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */,
-				BF927ECD18BCEB62006667CA /* WVSettings.h */,
-			);
-			name = WideVine;
 			sourceTree = "<group>";
 		};
 		BFE342A1199BE79000C63F74 /* ChromecastDeviceController */ = {
@@ -200,7 +178,7 @@
 		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */,
+				794D3F3919ED6AB6009957E5 /* GoogleCast.framework */,
 				BF927ECF18BD021A006667CA /* libz.dylib */,
 				BF927EBC18BCD722006667CA /* SystemConfiguration.framework */,
 				BF927EBA18BCD719006667CA /* libstdc++.dylib */,
@@ -217,7 +195,6 @@
 				BFE3E2F3199CAFCF00666F32 /* KalturaPlayer */,
 				BFE3E2F2199CAF6200666F32 /* KPChromecast */,
 				BFE342A1199BE79000C63F74 /* ChromecastDeviceController */,
-				BFA6F0D918BB796500F7C78F /* WideVine */,
 				BFFFA774182F9F10005B3B24 /* KPControlsWebView */,
 				BFFFA72D182F9E31005B3B24 /* Supporting Files */,
 				BF9133CB19349AB700606682 /* KPEventListener */,
@@ -282,6 +259,7 @@
 				BFFFA723182F9E31005B3B24 /* Sources */,
 				BFFFA724182F9E31005B3B24 /* Frameworks */,
 				BFFFA725182F9E31005B3B24 /* CopyFiles */,
+				79B89CD719EDFEB800D31C73 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -351,6 +329,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		79B89CD719EDFEB800D31C73 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "##########################################\n#\n# c.f. http://stackoverflow.com/questions/3520977/build-fat-static-library-device-simulator-using-xcode-and-sdk-4\n#\n# Version 2.7\n#\n# Latest Change:\n# - Supports iPhone 5 / iPod Touch 5 (uses Apple's workaround to lipo bug)\n#\n# Purpose:\n#   Automatically create a Universal static library for iPhone + iPad + iPhone Simulator from within XCode\n#\n# Author: Adam Martin - http://twitter.com/t_machine_org\n# Based on: original script from Eonil (main changes: Eonil's script WILL NOT WORK in Xcode GUI - it WILL CRASH YOUR COMPUTER)\n#\n\nset -e\nset -o pipefail\n\n#################[ Tests: helps workaround any future bugs in Xcode ]########\n#\nDEBUG_THIS_SCRIPT=\"false\"\n\nif [ $DEBUG_THIS_SCRIPT = \"true\" ]\nthen\necho \"########### TESTS #############\"\necho \"Use the following variables when debugging this script; note that they may change on recursions\"\necho \"BUILD_DIR = $BUILD_DIR\"\necho \"BUILD_ROOT = $BUILD_ROOT\"\necho \"CONFIGURATION_BUILD_DIR = $CONFIGURATION_BUILD_DIR\"\necho \"BUILT_PRODUCTS_DIR = $BUILT_PRODUCTS_DIR\"\necho \"CONFIGURATION_TEMP_DIR = $CONFIGURATION_TEMP_DIR\"\necho \"TARGET_BUILD_DIR = $TARGET_BUILD_DIR\"\nfi\n\n#####################[ part 1 ]##################\n# First, work out the BASESDK version number (NB: Apple ought to report this, but they hide it)\n#    (incidental: searching for substrings in sh is a nightmare! Sob)\n\nSDK_VERSION=$(echo ${SDK_NAME} | grep -o '.\\{3\\}$')\n\n# Next, work out if we're in SIM or DEVICE\n\nif [ ${PLATFORM_NAME} = \"iphonesimulator\" ]\nthen\nOTHER_SDK_TO_BUILD=iphoneos${SDK_VERSION}\nelse\nOTHER_SDK_TO_BUILD=iphonesimulator${SDK_VERSION}\nfi\n\necho \"XCode has selected SDK: ${PLATFORM_NAME} with version: ${SDK_VERSION} (although back-targetting: ${IPHONEOS_DEPLOYMENT_TARGET})\"\necho \"...therefore, OTHER_SDK_TO_BUILD = ${OTHER_SDK_TO_BUILD}\"\n#\n#####################[ end of part 1 ]##################\n\n#####################[ part 2 ]##################\n#\n# IF this is the original invocation, invoke WHATEVER other builds are required\n#\n# Xcode is already building ONE target...\n#\n# ...but this is a LIBRARY, so Apple is wrong to set it to build just one.\n# ...we need to build ALL targets\n# ...we MUST NOT re-build the target that is ALREADY being built: Xcode WILL CRASH YOUR COMPUTER if you try this (infinite recursion!)\n#\n#\n# So: build ONLY the missing platforms/configurations.\n\nif [ \"true\" == ${ALREADYINVOKED:-false} ]\nthen\necho \"RECURSION: I am NOT the root invocation, so I'm NOT going to recurse\"\nelse\n# CRITICAL:\n# Prevent infinite recursion (Xcode sucks)\nexport ALREADYINVOKED=\"true\"\n\necho \"RECURSION: I am the root ... recursing all missing build targets NOW...\"\necho \"RECURSION: ...about to invoke: xcodebuild -configuration \\\"${CONFIGURATION}\\\" -project \\\"${PROJECT_NAME}.xcodeproj\\\" -target \\\"${TARGET_NAME}\\\" -sdk \\\"${OTHER_SDK_TO_BUILD}\\\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO\" BUILD_DIR=\\\"${BUILD_DIR}\\\" BUILD_ROOT=\\\"${BUILD_ROOT}\\\" SYMROOT=\\\"${SYMROOT}\\\"\n\nxcodebuild -configuration \"${CONFIGURATION}\" -project \"${PROJECT_NAME}.xcodeproj\" -target \"${TARGET_NAME}\" -sdk \"${OTHER_SDK_TO_BUILD}\" ${ACTION} RUN_CLANG_STATIC_ANALYZER=NO BUILD_DIR=\"${BUILD_DIR}\" BUILD_ROOT=\"${BUILD_ROOT}\" SYMROOT=\"${SYMROOT}\"\n\nACTION=\"build\"\n\n#Merge all platform binaries as a fat binary for each configurations.\n\n# Calculate where the (multiple) built files are coming from:\nCURRENTCONFIG_DEVICE_DIR=${SYMROOT}/${CONFIGURATION}-iphoneos\nCURRENTCONFIG_SIMULATOR_DIR=${SYMROOT}/${CONFIGURATION}-iphonesimulator\n\necho \"Taking device build from: ${CURRENTCONFIG_DEVICE_DIR}\"\necho \"Taking simulator build from: ${CURRENTCONFIG_SIMULATOR_DIR}\"\n\nCREATING_UNIVERSAL_DIR=${SYMROOT}/${CONFIGURATION}-universal\necho \"...I will output a universal build to: ${CREATING_UNIVERSAL_DIR}\"\n\n# ... remove the products of previous runs of this script\n#      NB: this directory is ONLY created by this script - it should be safe to delete!\n\nrm -rf \"${CREATING_UNIVERSAL_DIR}\"\nmkdir \"${CREATING_UNIVERSAL_DIR}\"\n\n#\necho \"lipo: for current configuration (${CONFIGURATION}) creating output file: ${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\"\nxcrun -sdk iphoneos lipo -create -output \"${CREATING_UNIVERSAL_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_DEVICE_DIR}/${EXECUTABLE_NAME}\" \"${CURRENTCONFIG_SIMULATOR_DIR}/${EXECUTABLE_NAME}\"\n\n#########\n#\n# Added: StackOverflow suggestion to also copy \"include\" files\n#    (untested, but should work OK)\n#\necho \"Fetching headers from ${PUBLIC_HEADERS_FOLDER_PATH}\"\necho \"  (if you embed your library project in another project, you will need to add\"\necho \"   a \"User Search Headers\" build setting of: (NB INCLUDE THE DOUBLE QUOTES BELOW!)\"\necho '        \"$(TARGET_BUILD_DIR)/usr/local/include/\"'\nif [ -d \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\" ]\nthen\nmkdir -p \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\n# * needs to be outside the double quotes?\ncp -r \"${CURRENTCONFIG_DEVICE_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"* \"${CREATING_UNIVERSAL_DIR}${PUBLIC_HEADERS_FOLDER_PATH}\"\nfi\nfi";
+		};
 		BFFFA736182F9E31005B3B24 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -374,7 +365,6 @@
 				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
 				BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */,
-				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
 				BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */,
 				BFA844771931160600F47E02 /* KPEventListener.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
@@ -492,19 +482,21 @@
 		BFFFA74D182F9E31005B3B24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
+				ARCHS = "$(ARCHS_STANDARD)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DSTROOT = /tmp/PlayerSDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
 					"$(PROJECT_DIR)",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					.,
@@ -515,27 +507,29 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Debug;
 		};
 		BFFFA74E182F9E31005B3B24 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
+				ARCHS = "$(ARCHS_STANDARD)";
+				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
+				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				DSTROOT = /tmp/PlayerSDK.dst;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
 					"$(PROJECT_DIR)",
 				);
-				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					.,
@@ -545,7 +539,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
+				VALID_ARCHS = "$(ARCHS_STANDARD)";
 			};
 			name = Release;
 		};
@@ -555,6 +549,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
@@ -571,6 +566,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";

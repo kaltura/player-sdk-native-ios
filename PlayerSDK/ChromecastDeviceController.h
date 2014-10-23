@@ -74,16 +74,12 @@ typedef NS_ENUM(NSInteger, ChromecastControllerFeatures) {
  * the device, launch an application, load media and control its playback.
  */
 @interface ChromecastDeviceController : NSObject<GCKDeviceScannerListener,
-                                                 GCKDeviceFilterListener,
                                                  GCKDeviceManagerDelegate,
                                                  GCKMediaControlChannelDelegate,
                                                  UIActionSheetDelegate>
 
 /** The device scanner used to detect devices on the network. */
 @property(nonatomic, strong) GCKDeviceScanner* deviceScanner;
-
-/** The device scanner used to detect devices on the network. */
-@property(nonatomic, strong) GCKDeviceFilter* deviceFilter;
 
 /** The device manager used to manage conencted chromecast device. */
 @property(nonatomic, strong) GCKDeviceManager* deviceManager;

@@ -2,6 +2,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
+
 /**
  * A category that adds some convenience methods to NSDictionary for setting and safely looking up
  * values of various types. These methods are particularly useful for getting and setting fields of

@@ -85,6 +85,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         
         return NO;
     } else if( ![self checkIsIframeUrl: requestString] ){
+        NSLog(@"checkIsIframe is NO, opening URL in browser: %@", request.URL);
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     }
@@ -96,12 +97,14 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     NSLog(@"checkIsIframeUrl Enter");
     
-    if ( [requestString rangeOfString: @"mwEmbedFrame"].location == NSNotFound ) {
+    if ( [requestString rangeOfString: @"mwEmbedFrame"].location == NSNotFound &&
+        [requestString rangeOfString: @"embedIframeJs"].location == NSNotFound) {
+
+        NSLog(@"checkIsIframeUrl returning NO");
+        
         return NO;
     }
 
-    NSLog(@"checkIsIframeUrl Enter");
-    
     return YES;
 }
 
@@ -143,7 +146,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     if (!alertCallbackId) return;
     
-    NSLog(@"prompt result : %d", buttonIndex);
+    NSLog(@"prompt result : %ld", (long)buttonIndex);
     
     BOOL result = buttonIndex==1?YES:NO;
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];

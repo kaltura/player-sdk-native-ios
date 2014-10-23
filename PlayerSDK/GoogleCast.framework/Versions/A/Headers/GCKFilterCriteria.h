@@ -1,10 +1,14 @@
 // Copyright 2013 Google Inc.
 
+#import "GCKDefines.h"
 
 /**
  * Filter criteria for applications.
+ *
+ * @ingroup Discovery
  */
-@interface GCKFilterCriteria : NSObject
+GCK_EXPORT
+@interface GCKFilterCriteria : NSObject <NSCopying, NSCoding>
 
 /**
  * Criteria for an application which is available to be launched on a device. The application does

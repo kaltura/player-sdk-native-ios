@@ -1,8 +1,13 @@
 // Copyright 2013 Google Inc.
 
+#import "GCKDefines.h"
+
 /**
  * A class that represents an image that is located on a web server.
+ *
+ * @ingroup MediaControl
  */
+GCK_EXPORT
 @interface GCKImage : NSObject <NSCopying, NSCoding>
 
 /**
@@ -29,19 +34,5 @@
  * @param height The height of the image, in pixels.
  */
 - (id)initWithURL:(NSURL *)URL width:(NSInteger)width height:(NSInteger)height;
-
-/** @cond INTERNAL */
-
-/**
- * Initalizes this GCKImage from its JSON representation.
- */
-- (id)initWithJSONObject:(id)JSONObject;
-
-/**
- * Create a JSON object which can serialized with NSJSONSerialization to pass to the receiver.
- */
-- (id)JSONObject;
-
-/** @endcond */
 
 @end

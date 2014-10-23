@@ -2,7 +2,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
+
 @class GCKDevice;
+@class GCKFilterCriteria;
 @protocol GCKDeviceScannerListener;
 
 /**
@@ -12,6 +15,7 @@
  *
  * @ingroup Discovery
  */
+GCK_EXPORT
 @interface GCKDeviceScanner : NSObject
 
 /** The array of discovered devices. */
@@ -23,6 +27,9 @@
 /** Whether a scan is currently in progress. */
 @property(nonatomic, readonly) BOOL scanning;
 
+/** The current filtering criteria. */
+@property(nonatomic, copy) GCKFilterCriteria *filterCriteria;
+
 /**
  * Designated initializer. Constructs a new GCKDeviceScanner.
  */
@@ -30,13 +37,14 @@
 
 /**
  * Starts a new device scan. The scan must eventually be stopped by calling
- * @link #stopScan @endlink.
+ * @link #stopScan @endlink. Must only be called from the main thread.
  */
 - (void)startScan;
 
 /**
  * Stops any in-progress device scan. This method <b>must</b> be called at some point after
- * @link #startScan @endlink was called and before this object is released by its owner.
+ * @link #startScan @endlink was called and before this object is released by its owner. Must only
+ * be called from the main thread.
  */
 - (void)stopScan;
 
@@ -61,6 +69,7 @@
  *
  * @ingroup Discovery
  */
+GCK_EXPORT
 @protocol GCKDeviceScannerListener <NSObject>
 
 @optional
@@ -78,5 +87,15 @@
  * @param device The device.
  */
 - (void)deviceDidGoOffline:(GCKDevice *)device;
+
+/**
+ * Called when there is a change to one or more properties of the device that do not affect
+ * connectivity to the device. This includes all properties except the device ID, IP address,
+ * and service port; if any of these properties changes, the device will be reported as "offline"
+ * and a new device with the updated properties will be reported as "online".
+ *
+ * @param device The device.
+ */
+- (void)deviceDidChange:(GCKDevice *)device;
 
 @end

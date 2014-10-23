@@ -6,17 +6,20 @@
 #include <AppKit/NSColor.h>
 #endif
 
+#import "GCKDefines.h"
+
 /**
  * A class that represents an RGBA color.
  *
  * @ingroup MediaControl
  */
+GCK_EXPORT
 @interface GCKColor : NSObject <NSCopying, NSCoding>
 
-@property(atomic, readonly) CGFloat red;
-@property(atomic, readonly) CGFloat green;
-@property(atomic, readonly) CGFloat blue;
-@property(atomic, readonly) CGFloat alpha;
+@property(nonatomic, readonly) CGFloat red;
+@property(nonatomic, readonly) CGFloat green;
+@property(nonatomic, readonly) CGFloat blue;
+@property(nonatomic, readonly) CGFloat alpha;
 
 /**
  * Designated initializer. Constructs a GCKColor object with the given red, green, blue, and alpha
@@ -63,7 +66,7 @@
 - (id)initWithCSSString:(NSString *)CSSString;
 
 /**
- * Returns a a CSS string representation of the color, in the form "#RRGGBBAA".
+ * Returns a CSS string representation of the color, in the form "#RRGGBBAA".
  */
 - (NSString *)CSSString;
 
