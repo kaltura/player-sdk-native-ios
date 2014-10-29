@@ -1,7 +1,0 @@
-FRAMEWORK_SEARCH_PATHS = $(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release
-GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/GoogleAds-IMA-iOS-SDK" "${PODS_ROOT}/Headers/Public/google-cast-sdk"
-LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/GoogleAds-IMA-iOS-SDK/"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/GoogleAds-IMA-iOS-SDK" -isystem "${PODS_ROOT}/Headers/Public/google-cast-sdk"
-OTHER_LDFLAGS = -ObjC -l"GoogleIMA3" -l"Pods-GoogleAds-IMA-iOS-SDK" -l"Pods-google-cast-sdk" -framework "AVFoundation" -framework "AdSupport" -framework "AudioToolbox" -framework "CoreFoundation" -framework "CoreGraphics" -framework "CoreMedia" -framework "GoogleCast" -framework "MediaAccessibility" -framework "MessageUI" -framework "QuartzCore" -framework "SystemConfiguration" -framework "UIKit"
-PODS_ROOT = ${SRCROOT}/Pods
