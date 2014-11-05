@@ -10,6 +10,12 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
 #import "KALPlayerViewController.h"
 #if !(TARGET_IPHONE_SIMULATOR)
     #import "WVSettings.h"
@@ -29,6 +35,7 @@
 - (void)viewDidLoad
 {
     NSLog( @"View Did Load Enter" );
+    self.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
     isFullScreen = NO;
     isPlaying = NO;
@@ -132,10 +139,17 @@
     NSLog( @"setOrientationTransform Enter" );
     
     if ( isFullScreen ) {
-        fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
-        fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
-        self.view.center = [[UIApplication sharedApplication] delegate].window.center;
+        if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
+            fullScreenPlayerTransform = CGAffineTransformIdentity;
+            CGRect bounds = self.view.bounds;
+            bounds.size = [[UIApplication sharedApplication] delegate].window.bounds.size;
+            self.view.bounds = bounds;
+        } else {
+            fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
+            fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
+        }
         [self.view setTransform: fullScreenPlayerTransform];
+        self.view.center = [[UIApplication sharedApplication] delegate].window.center;
         self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     }else{
