@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "KalturaPlayerSDK@MindSea"
-  s.version      = "1.0-ms-2"
+  s.version      = "1.0-ms-3"
   s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
   s.homepage     = "https://github.com/MindSea/kaltura-player-sdk-native-ios"
   s.license      = { :type => 'COMMERCIAL', :text => 'COMMERCIAL' }
