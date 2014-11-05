@@ -96,8 +96,9 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     NSLog(@"checkIsIframeUrl Enter");
     
-    if ( [requestString rangeOfString: @"mwEmbedFrame"].location == NSNotFound ) {
-        return NO;
+    if ( [requestString rangeOfString: @"mwEmbedFrame"].location != NSNotFound
+        || ![requestString rangeOfString: @"embedIframeJs"].location != NSNotFound ) {
+        return YES;
     }
 
     NSLog(@"checkIsIframeUrl Enter");
