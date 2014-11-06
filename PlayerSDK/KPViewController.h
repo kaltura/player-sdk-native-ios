@@ -42,7 +42,7 @@ typedef void (^JSCallbackReadyHandler)();
 @class NativeComponentPlugin;
 @class KPEventListener;
 
-@protocol KalPlayerViewControllerDelegate;
+@protocol KPViewControllerDelegate;
 @protocol KalturaPlayer <NSObject>
 
 @required
@@ -52,7 +52,7 @@ typedef void (^JSCallbackReadyHandler)();
 @property(readonly) int loadState;
 @property(readonly) BOOL isPreparedToPlay;
 
-@property (nonatomic, retain) id<KalPlayerViewControllerDelegate> delegate;
+@property (nonatomic, retain) id<KPViewControllerDelegate> delegate;
 + (id)alloc;
 
 - (NSURL *)contentURL;
@@ -89,11 +89,11 @@ typedef void (^JSCallbackReadyHandler)();
 @end
 
 
-@protocol KalPlayerViewControllerDelegate <NSObject>
+@protocol KPViewControllerDelegate <NSObject>
 
 @required
 
-@property (nonatomic, retain) id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;
+@property (nonatomic, retain) id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
 -(NSURL *)getInitialKIframeUrl;
 
 @optional
@@ -106,7 +106,7 @@ typedef void (^JSCallbackReadyHandler)();
 @interface KPViewController : UIViewController <PlayerControlsWebViewDelegate, ChromecastControllerDelegate> {
     id<KalturaPlayer> player;
     NativeComponentPlugin *nativComponentDelegate;
-    id<KalPlayerViewControllerDelegate> kalPlayerViewControllerDelegate;
+    id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
 }
 
 @property (nonatomic, strong) IBOutlet KPControlsWebView* webView;

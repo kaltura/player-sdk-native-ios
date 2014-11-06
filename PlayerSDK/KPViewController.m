@@ -25,6 +25,7 @@
     BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
+    BOOL isFullScreenToggled;
     // AirPlay Params
     MPVolumeView *volumeView;
     NSArray *prevAirPlayBtnPositionArr;
@@ -209,13 +210,14 @@
     isFullScreen = NO;
     isPlaying = NO;
     isResumePlayer = NO;
+    isFullScreenToggled = NO;
     
     NSLog(@"initPlayerParams Exit");
 }
 
 - (void)play {
     NSLog( @"Play Player Enter" );
-    
+       
     [[self player] play];
     
     NSLog( @"Play Player Exit" );
@@ -386,11 +388,12 @@
     NSLog( @"setOrientationTransform Enter" );
     
     // UIWindow frame in ios 8 different for Landscape mode
-    if( [self isIOS8] ) {
+    if( [self isIOS8] && !isFullScreenToggled ) {
         [self.view setTransform: CGAffineTransformIdentity];
         return;
     }
     
+    isFullScreenToggled = NO;
     if ( isFullScreen ) {
         // Init Transform for Fullscreen
         fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
@@ -532,6 +535,7 @@
     NSLog( @"toggleFullscreen Enter" );
     
     isCloseFullScreenByTap = YES;
+    isFullScreenToggled = YES;
     
     if ( !isFullScreen ) {
         [self openFullScreen: openFullScreen];
