@@ -106,7 +106,7 @@
         NSURL *url = [kalPlayerViewControllerDelegate getInitialKIframeUrl];
         [self setWebViewURL: [NSString stringWithFormat: @"%@", url]];
     } else {
-        @throw [NSException exceptionWithName:NSGenericException reason:@"Delegate MUST be set and respond to selector -getInitialKIframeUrl !" userInfo:nil];
+        NSLog( @"Error:: Delegate MUST be set and respond to selector -getInitialKIframeUrl");
         return;
     }
     
