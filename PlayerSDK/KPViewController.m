@@ -489,6 +489,14 @@
     [UIApplication sharedApplication].statusBarHidden = YES;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    // Disable fullscreen button if the player is set to fullscreen by default
+    [self registerJSCallbackReady: ^() {
+        NSLog(@"jsCallbackReady");
+        if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
+            [self setKDPAttribute: @"fullScreenBtn" propertyName: @"visible" value: @"false"];
+        }
+    }];
 }
 
 - (void)deviceOrientationDidChange {
