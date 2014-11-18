@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B3932ACC1A092F7400AC0442 /* KPShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932ACA1A092F7400AC0442 /* KPShareViewController.m */; };
+		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
+		B3932AD31A0A274B00AC0442 /* KPShareViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3932AC91A092F7400AC0442 /* KPShareViewController.h */; };
+		B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */; };
+		B39BEC7D1A0A7F740085BA26 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B39BEC7C1A0A7F740085BA26 /* Social.framework */; };
+		B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */; };
+		B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */; };
+		B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */; };
+		B39BEC951A0BA8C40085BA26 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B39BEC941A0BA8C40085BA26 /* MessageUI.framework */; };
+		B39BEC971A0BC75E0085BA26 /* ShareImages.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B39BEC861A0B6C3D0085BA26 /* ShareImages.bundle */; };
+		B39BEC9A1A0BCB280085BA26 /* KPShareBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
 		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
@@ -54,6 +65,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				B3932AD31A0A274B00AC0442 /* KPShareViewController.h in CopyFiles */,
 				BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */,
 				BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */,
 				BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */,
@@ -68,6 +80,23 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B3932AC91A092F7400AC0442 /* KPShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareViewController.h; sourceTree = "<group>"; };
+		B3932ACA1A092F7400AC0442 /* KPShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPShareViewController.m; sourceTree = "<group>"; };
+		B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareManager.h; sourceTree = "<group>"; };
+		B3932AD01A0A0DA000AC0442 /* KPShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPShareManager.m; sourceTree = "<group>"; };
+		B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookStrategy.h; sourceTree = "<group>"; };
+		B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookStrategy.m; sourceTree = "<group>"; };
+		B39BEC7C1A0A7F740085BA26 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
+		B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterStrategy.h; sourceTree = "<group>"; };
+		B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterStrategy.m; sourceTree = "<group>"; };
+		B39BEC861A0B6C3D0085BA26 /* ShareImages.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareImages.bundle; sourceTree = "<group>"; };
+		B39BEC8A1A0B6EC40085BA26 /* MailStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailStrategy.h; sourceTree = "<group>"; };
+		B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailStrategy.m; sourceTree = "<group>"; };
+		B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageStrategy.h; sourceTree = "<group>"; };
+		B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageStrategy.m; sourceTree = "<group>"; };
+		B39BEC941A0BA8C40085BA26 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		B39BEC981A0BCB280085BA26 /* KPShareBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareBrowserViewController.h; sourceTree = "<group>"; };
+		B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPShareBrowserViewController.m; sourceTree = "<group>"; };
 		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
 		BF927EBA18BCD719006667CA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		BF927EBC18BCD722006667CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -105,6 +134,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B39BEC951A0BA8C40085BA26 /* MessageUI.framework in Frameworks */,
+				B39BEC7D1A0A7F740085BA26 /* Social.framework in Frameworks */,
 				BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */,
 				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
 				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
@@ -128,6 +159,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B3932AC81A092C4900AC0442 /* ShareViewContrller */ = {
+			isa = PBXGroup;
+			children = (
+				B3932AC91A092F7400AC0442 /* KPShareViewController.h */,
+				B3932ACA1A092F7400AC0442 /* KPShareViewController.m */,
+				B39BEC981A0BCB280085BA26 /* KPShareBrowserViewController.h */,
+				B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */,
+			);
+			name = ShareViewContrller;
+			sourceTree = "<group>";
+		};
+		B3932ACE1A0A0D7A00AC0442 /* ShareManager */ = {
+			isa = PBXGroup;
+			children = (
+				B39BEC861A0B6C3D0085BA26 /* ShareImages.bundle */,
+				B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */,
+				B3932AD01A0A0DA000AC0442 /* KPShareManager.m */,
+				B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */,
+				B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */,
+				B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */,
+				B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */,
+				B39BEC8A1A0B6EC40085BA26 /* MailStrategy.h */,
+				B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */,
+				B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */,
+				B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */,
+			);
+			name = ShareManager;
+			sourceTree = "<group>";
+		};
 		BF9133CB19349AB700606682 /* KPEventListener */ = {
 			isa = PBXGroup;
 			children = (
@@ -200,6 +260,8 @@
 		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B39BEC941A0BA8C40085BA26 /* MessageUI.framework */,
+				B39BEC7C1A0A7F740085BA26 /* Social.framework */,
 				BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */,
 				BF927ECF18BD021A006667CA /* libz.dylib */,
 				BF927EBC18BCD722006667CA /* SystemConfiguration.framework */,
@@ -213,6 +275,8 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B3932ACE1A0A0D7A00AC0442 /* ShareManager */,
+				B3932AC81A092C4900AC0442 /* ShareViewContrller */,
 				BFFFA877182FB8E4005B3B24 /* KPViewController */,
 				BFE3E2F3199CAFCF00666F32 /* KalturaPlayer */,
 				BFE3E2F2199CAF6200666F32 /* KPChromecast */,
@@ -282,6 +346,7 @@
 				BFFFA723182F9E31005B3B24 /* Sources */,
 				BFFFA724182F9E31005B3B24 /* Frameworks */,
 				BFFFA725182F9E31005B3B24 /* CopyFiles */,
+				B39BEC961A0BC7510085BA26 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -340,6 +405,14 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B39BEC961A0BC7510085BA26 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B39BEC971A0BC75E0085BA26 /* ShareImages.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BFFFA735182F9E31005B3B24 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,11 +446,18 @@
 			files = (
 				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
+				B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */,
+				B39BEC9A1A0BCB280085BA26 /* KPShareBrowserViewController.m in Sources */,
 				BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */,
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
 				BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */,
+				B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */,
+				B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */,
 				BFA844771931160600F47E02 /* KPEventListener.m in Sources */,
+				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
+				B3932ACC1A092F7400AC0442 /* KPShareViewController.m in Sources */,
+				B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

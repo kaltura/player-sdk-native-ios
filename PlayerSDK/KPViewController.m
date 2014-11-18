@@ -12,6 +12,7 @@
 
 #import "KPViewController.h"
 #import "KPEventListener.h"
+#import "KPShareViewController.h"
 
 @implementation KPViewController {
     // Player Params
@@ -34,6 +35,8 @@
     NSMutableDictionary *kPlayerEvaluatedDict;
     
     BOOL *showChromecastBtn;
+    
+    NSDictionary *shareParamsDict;
 }
 
 @synthesize webView, player;
@@ -235,6 +238,32 @@
     [[self player] stop];
     
     NSLog(@"Stop Player Exit");
+}
+
+- (void)share {
+    NSLog(@"%@", shareParamsDict);
+
+    
+//    NSBundle *sdkBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
+//                                                   URLForResource:@"libKALTURAPlayerSDK"
+//                                                   withExtension:nil]];
+//    NSString *path = [[NSBundle mainBundle] resourcePath];
+//    NSFileManager *fm = [NSFileManager defaultManager];
+//    
+//    NSError *error = nil;
+//    
+//    NSArray *directoryAndFileNames = [fm contentsOfDirectoryAtPath:path error:&error];
+    NSLog(@"%@", [NSBundle allBundles]);
+    NSArray *defaultShareArr = @[@{@"name": @"Mail"},
+                                 @{@"name": @"Message"}];
+    NSArray *shareParamsArr = [shareParamsDict[@"shareProviders"] arrayByAddingObjectsFromArray:defaultShareArr];
+    KPShareViewController *shareViewController = [KPShareViewController new];
+    shareViewController.shareProvidersArr = shareParamsArr.copy;
+    shareViewController.sharedURL = shareParamsDict[@"sharedLink"];
+    [self presentViewController:shareViewController
+                       animated:YES
+                     completion:nil];
+    
 }
 
 #pragma Kaltura Player External API - KDP API
@@ -672,22 +701,19 @@
     
     NSString *attributeName = [args objectAtIndex:0];
     Attribute attributeValue = [attributeName attributeNameEnumFromString];
-    NSString *attributeVal;
+    NSString *attributeVal = args[1];
     
     switch ( attributeValue ) {
         case src:
-            attributeVal = [args objectAtIndex:1];
             playerSource = attributeVal;
             [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
             break;
         case currentTime:
-            attributeVal = [args objectAtIndex:1];
             if( [[self player] isPreparedToPlay] ){
                 [ [self player] setCurrentPlaybackTime: [attributeVal doubleValue] ];
             }
             break;
         case visible:
-            attributeVal = [args objectAtIndex:1];
             [self visible: attributeVal];
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
@@ -695,13 +721,15 @@
             if ( [[self player] respondsToSelector:@selector(setWideVideConfigurations)] ) {
                 [[self player] setWideVideConfigurations];
             }
-            attributeVal = [args objectAtIndex:1];
             if ( [[self player] respondsToSelector:@selector(initWV:andKey:)]) {
                 [[self player] initWV: playerSource andKey: attributeVal];
             }
 
             break;
 #endif
+        case shareParams:
+            shareParamsDict = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+            break;
         default:
             break;
     }
@@ -958,6 +986,7 @@
 #if !(TARGET_IPHONE_SIMULATOR)
                                 [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
 #endif
+                                [NSNumber numberWithInteger:shareParams], @"shareParams",
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");

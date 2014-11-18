@@ -33,6 +33,7 @@ typedef enum{
         // DRM WideVine Key
         wvServerKey,
     #endif
+    shareParams
 } Attribute;
 
 // JSCallbackReady Handler Block
