@@ -10,8 +10,8 @@
 #import <UIKit/UIKit.h>
 
 static NSString *NameKey = @"name";
-static NSString *AppURLKey = @"appUrl";
-static NSString *RedirectURL = @"redirectUrl";
+static NSString *RootURLKey = @"url";
+static NSString *RedirectURLKey = @"redirectUrl";
 
 /** Deals with any kind of share failure
  */
@@ -40,6 +40,7 @@ typedef void (^KPShareCompletionBlock)(KPShareResults result, KPShareError *shar
 @property (nonatomic, copy, readonly) NSString *shareLink;
 @property (nonatomic, copy, readonly) NSString *shareIconName;
 @property (nonatomic, copy, readonly) NSString *shareIconLink;
+@property (nonatomic, copy, readonly) NSString *rootURL;
 @property (nonatomic, copy, readonly) NSString *redirectURL;
 @property (nonatomic, copy) NSString *facebookAppID;
 

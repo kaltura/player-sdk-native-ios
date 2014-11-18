@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
 		B3932ACC1A092F7400AC0442 /* KPShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932ACA1A092F7400AC0442 /* KPShareViewController.m */; };
 		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
 		B3932AD31A0A274B00AC0442 /* KPShareViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3932AC91A092F7400AC0442 /* KPShareViewController.h */; };
@@ -80,6 +81,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusStrategy.h; sourceTree = "<group>"; };
+		B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusStrategy.m; sourceTree = "<group>"; };
 		B3932AC91A092F7400AC0442 /* KPShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareViewController.h; sourceTree = "<group>"; };
 		B3932ACA1A092F7400AC0442 /* KPShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPShareViewController.m; sourceTree = "<group>"; };
 		B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareManager.h; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 				B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */,
 				B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */,
 				B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */,
+				B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */,
+				B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */,
 				B39BEC8A1A0B6EC40085BA26 /* MailStrategy.h */,
 				B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */,
 				B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */,
@@ -457,6 +462,7 @@
 				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
 				B3932ACC1A092F7400AC0442 /* KPShareViewController.m in Sources */,
+				B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */,
 				B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

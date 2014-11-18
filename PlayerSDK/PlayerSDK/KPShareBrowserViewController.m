@@ -21,7 +21,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    _redirectURI = @"https://developers.facebook.com/tools";
+    //_redirectURI = @"https://developers.facebook.com/tools";
+    [self initializeToolBar];
     [self initializeWebView];
 }
 
@@ -32,7 +33,7 @@
 
 
 - (void)initializeWebView {
-    webview = [[UIWebView alloc] initWithFrame:self.view.bounds];
+    webview = [[UIWebView alloc] initWithFrame:(CGRect){0, 0, self.view.frame.size.width, self.view.frame.size.height - 44}];
     webview.delegate = self;
     webview.backgroundColor = [UIColor grayColor];
     [webview loadRequest:[NSURLRequest requestWithURL:_shareURL]];
@@ -42,6 +43,16 @@
     [self.view addSubview:spinner];
 }
 
+- (void)initializeToolBar {
+    UIToolbar* toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44);
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
+                                                                                 target:self
+                                                                                 action:@selector(cancelPressed:)];
+    [toolbar setItems:@[shareButton]];
+    [self.view addSubview:toolbar];
+}
+
 - (void)cancelPressed:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -49,8 +60,11 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSString *currentRequest = request.URL.absoluteString;
     NSLog(@"Current Request : %@", currentRequest);
-    if ([currentRequest hasPrefix:_redirectURI]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+    for (NSString *redirectUrl in _redirectURI) {
+        if ([currentRequest hasPrefix:redirectUrl]) {
+            [self dismissViewControllerAnimated:YES completion:nil];
+            break;
+        }
     }
     return YES;
 }

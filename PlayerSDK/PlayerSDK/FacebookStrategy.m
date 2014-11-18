@@ -7,7 +7,7 @@
 //
 
 #import "FacebookStrategy.h"
-#import "KPShareBrowserViewController.h"
+
 
 @implementation FacebookStrategy
 
@@ -47,26 +47,17 @@
     }
     KPShareBrowserViewController *browser = [KPShareBrowserViewController new];
     browser.shareURL = [self shareURL:shareParams];
+    NSArray *redirectURIs = [[shareParams redirectURL] componentsSeparatedByString:@","];
+    browser.redirectURI = redirectURIs.count ? redirectURIs : @[[shareParams redirectURL]];
     return browser;
 }
 
 - (NSURL *)shareURL:(id<KPShareParams>)params {
-    NSString *appID = @"145634995501895";
-    if ([params facebookAppID]) {
-        appID = [params facebookAppID];
-    }
-    
-    NSString *caption = @"some text";
-    if ([params shareDescription]) {
-        caption = [params shareDescription];
-    }
-    
     NSString *sharedLink = @"";
     if ([params shareLink]) {
         sharedLink = [params shareLink];
     }
-    
-    NSString *requestString = [NSString stringWithFormat:@"https://www.facebook.com/dialog/share?app_id=%@&display=popup&caption=%@&redirect_uri=https://developers.facebook.com/tools/explorer&href=%@", appID, caption, sharedLink];
+    NSString *requestString = [[params rootURL] stringByAppendingString:sharedLink];
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [NSURL URLWithString:requestString];
 }

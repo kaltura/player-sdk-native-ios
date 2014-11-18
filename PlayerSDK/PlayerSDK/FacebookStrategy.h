@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KPShareManager.h"
+#import "KPShareBrowserViewController.h"
 #import <Social/Social.h>
 
 @interface FacebookStrategy : NSObject <KPShareStratrgy>

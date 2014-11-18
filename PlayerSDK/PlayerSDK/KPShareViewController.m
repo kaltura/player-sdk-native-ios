@@ -135,7 +135,9 @@ static const NSString *ShareNameKey = @"name";
     }];
     
     if (shareController) {
-        [self presentViewController:shareController animated:YES completion:nil];
+        [self presentViewController:shareController
+                           animated:YES
+                         completion:nil];
     }
 }
 
@@ -157,6 +159,14 @@ static const NSString *ShareNameKey = @"name";
 
 - (NSString *)shareIconLink {
     return @"";
+}
+
+- (NSString *)rootURL {
+    return _shareProvidersArr[shareIndex][RootURLKey];
+}
+
+- (NSString *)redirectURL {
+    return _shareProvidersArr[shareIndex][RedirectURLKey];
 }
 
 - (NSString *)facebookAppID {
