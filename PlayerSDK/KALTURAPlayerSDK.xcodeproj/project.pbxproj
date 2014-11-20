@@ -10,6 +10,7 @@
 		B33E5DAA1A1CE27A00A14A1B /* ShareIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */; };
 		B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
 		B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
+		B33E5DE41A1DF1CE00A14A1B /* KPShareViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DE31A1DF1CE00A14A1B /* KPShareViewController.xib */; };
 		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
 		B3932ACC1A092F7400AC0442 /* KPShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932ACA1A092F7400AC0442 /* KPShareViewController.m */; };
 		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
@@ -93,6 +94,7 @@
 /* Begin PBXFileReference section */
 		B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ShareIcons.xcassets; sourceTree = "<group>"; };
 		B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPShareBrowserViewController.xib; sourceTree = "<group>"; };
+		B33E5DE31A1DF1CE00A14A1B /* KPShareViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPShareViewController.xib; sourceTree = "<group>"; };
 		B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusStrategy.h; sourceTree = "<group>"; };
 		B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusStrategy.m; sourceTree = "<group>"; };
 		B3932AC91A092F7400AC0442 /* KPShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareViewController.h; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				B3932AC91A092F7400AC0442 /* KPShareViewController.h */,
 				B3932ACA1A092F7400AC0442 /* KPShareViewController.m */,
+				B33E5DE31A1DF1CE00A14A1B /* KPShareViewController.xib */,
 				B39BEC981A0BCB280085BA26 /* KPShareBrowserViewController.h */,
 				B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */,
 				B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */,
@@ -489,6 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */,
+				B33E5DE41A1DF1CE00A14A1B /* KPShareViewController.xib in Resources */,
 				B33E5DAA1A1CE27A00A14A1B /* ShareIcons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

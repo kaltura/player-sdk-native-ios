@@ -7,8 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KPShareManager.h"
+
+@class KPShareBrowserViewController;
+@protocol KPShareBrowserViewControllerDelegate <NSObject>
+
+- (void)shareBrowser:(KPShareBrowserViewController *)shareBrowser result:(KPShareResults)result;
+
+@end
 
 @interface KPShareBrowserViewController : UIViewController
 @property (nonatomic, strong) NSURL *shareURL;
 @property (nonatomic, copy) NSArray *redirectURI;
+@property (nonatomic, weak) id<KPShareBrowserViewControllerDelegate> delegate;
 @end

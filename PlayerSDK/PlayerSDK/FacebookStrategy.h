@@ -11,7 +11,9 @@
 #import "KPShareBrowserViewController.h"
 #import <Social/Social.h>
 
-@interface FacebookStrategy : NSObject <KPShareStratrgy>
+@interface FacebookStrategy : NSObject <KPShareStratrgy, KPShareBrowserViewControllerDelegate> {
+    KPShareCompletionBlock _completion;
+}
 @property (nonatomic, copy, readonly) NSString *composeType;
 
 - (NSURL *)shareURL:(id<KPShareParams>)params;

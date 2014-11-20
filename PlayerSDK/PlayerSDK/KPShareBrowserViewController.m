@@ -41,6 +41,7 @@
 
 
 - (IBAction)cancelPressed:(UIBarButtonItem *)sender {
+    [_delegate shareBrowser:self result:KPShareResultsCancel];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -49,7 +50,7 @@
     NSLog(@"Current Request : %@", currentRequest);
     for (NSString *redirectUrl in _redirectURI) {
         if ([currentRequest hasPrefix:redirectUrl]) {
-            [self dismissViewControllerAnimated:YES completion:nil];
+            [_delegate shareBrowser:self result:KPShareResultsSuccess];
             break;
         }
     }
@@ -63,6 +64,6 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    
+    [_delegate shareBrowser:self result:KPShareResultsFailed];
 }
 @end

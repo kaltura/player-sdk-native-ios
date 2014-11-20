@@ -46,7 +46,9 @@
         
         return controller;
     }
+    _completion = [completion copy];
     KPShareBrowserViewController *browser = [KPShareBrowserViewController new];
+    browser.delegate = self;
     browser.shareURL = [self shareURL:shareParams];
     NSArray *redirectURIs = [[shareParams redirectURL] componentsSeparatedByString:@","];
     browser.redirectURI = redirectURIs.count ? redirectURIs : @[[shareParams redirectURL]];
@@ -61,5 +63,11 @@
     NSString *requestString = [[params rootURL] stringByAppendingString:sharedLink];
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [NSURL URLWithString:requestString];
+}
+
+#pragma mark KPShareBrowserViewControllerDelegate
+- (void)shareBrowser:(KPShareBrowserViewController *)shareBrowser result:(KPShareResults)result {
+    [shareBrowser dismissViewControllerAnimated:YES completion:nil];
+    _completion(result, nil);
 }
 @end

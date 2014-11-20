@@ -39,8 +39,7 @@
 
 @interface KPShareViewController () <UICollectionViewDataSource, UICollectionViewDelegate, KPShareParams>{
     
-    UICollectionView *shareCollectionView;
-    UINavigationBar *navBar;
+    __weak IBOutlet UICollectionView *shareCollectionView;
     NSInteger shareIndex;
 }
 
@@ -50,54 +49,31 @@ static const NSString *ShareNameKey = @"name";
 
 @implementation KPShareViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:@"KPShareViewController" bundle:shareBundle()];
+    if (self) {
+        return self;
+    }
+    return nil;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.view.backgroundColor = [UIColor whiteColor];
-    [self initializeNavigationBar];
-    [self initializeCollectionView];
-}
-
-- (void)initializeNavigationBar {
-    navBar = [[UINavigationBar alloc] initWithFrame:(CGRect){0, 20, self.view.frame.size.width, 44.0}];
-    UINavigationItem *titleItem = [UINavigationItem new];
-    titleItem.title = @"Share";
-    UIBarButtonItem *dismissButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
-                                                                                   target:self
-                                                                                   action:@selector(cancelPressed:)];
-    titleItem.leftBarButtonItem = dismissButton;
-    [navBar pushNavigationItem:titleItem animated:YES];
-    [self.view addSubview:navBar];
-}
-
-- (void)initializeCollectionView {
-    UICollectionViewFlowLayout *layout=[[UICollectionViewFlowLayout alloc] init];
-    layout.sectionInset = (UIEdgeInsets){20, 20, 20, 20};
-    layout.itemSize = (CGSize){59, 59};
-    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-    CGFloat collectionViewY = navBar.frame.origin.y + navBar.frame.size.height;
-    CGRect collectionViewFrame = (CGRect){0, collectionViewY, self.view.frame.size.width, self.view.frame.size.height - collectionViewY};
-    shareCollectionView=[[UICollectionView alloc] initWithFrame:collectionViewFrame
-                                           collectionViewLayout:layout];
-    shareCollectionView.alwaysBounceVertical = YES;
-    [shareCollectionView setDataSource:self];
-    [shareCollectionView setDelegate:self];
-    
     [shareCollectionView registerClass:[KPSharCell class] forCellWithReuseIdentifier:@"cellIdentifier"];
-    [shareCollectionView setBackgroundColor:[UIColor lightGrayColor]];
-    
-    [self.view addSubview:shareCollectionView];
+}
+
+
+- (IBAction)cancelButtonPressed:(UIButton *)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)cancelPressed:(UIBarButtonItem *)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
+#pragma mark UICollectionViewDatasource
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
     return _shareProvidersArr.count;
@@ -109,14 +85,6 @@ static const NSString *ShareNameKey = @"name";
     KPSharCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier"
                                                                          forIndexPath:indexPath];
     
-//    [KPShareManager fetchShareIcon:_shareProvidersArr[indexPath.row][ShareNameKey]
-//                        completion:^(UIImage *icon, NSError *error) {
-//                            if (icon) {
-//                                dispatch_async(dispatch_get_main_queue(), ^{
-//                                    cell.shareIcon = icon;
-//                                });
-//                            }
-//                        }];
     cell.shareIcon = shareIcon(_shareProvidersArr[indexPath.row][ShareNameKey]);
     return cell;
 }
@@ -125,6 +93,8 @@ static const NSString *ShareNameKey = @"name";
     return CGSizeMake(59, 59);
 }
 
+
+#pragma mark UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     shareIndex = indexPath.row;
     NSString *strategyName = [_shareProvidersArr[indexPath.row][ShareNameKey] stringByAppendingString:@"Strategy"];
@@ -132,7 +102,7 @@ static const NSString *ShareNameKey = @"name";
     [KPShareManager shared].datasource = self;
     [KPShareManager shared].shareStrategyObject = [[startegyClass alloc] init];
     UIViewController *shareController = [[KPShareManager shared] shareWithCompletion:^(KPShareResults result, KPShareError *shareError) {
-        
+        [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
     if (shareController) {
@@ -142,6 +112,8 @@ static const NSString *ShareNameKey = @"name";
     }
 }
 
+
+#pragma mark KPShareParams
 - (NSString *)shareLink {
     return _sharedURL;
 }
