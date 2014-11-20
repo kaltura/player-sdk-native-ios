@@ -106,17 +106,18 @@ static const NSString *ShareNameKey = @"name";
 // The cell that is returned must be retrieved from a call to -dequeueReusableCellWithReuseIdentifier:forIndexPath:
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    __block KPSharCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier"
+    KPSharCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellIdentifier"
                                                                          forIndexPath:indexPath];
     
-    [KPShareManager fetchShareIcon:_shareProvidersArr[indexPath.row][ShareNameKey]
-                        completion:^(UIImage *icon, NSError *error) {
-                            if (icon) {
-                                dispatch_async(dispatch_get_main_queue(), ^{
-                                    cell.shareIcon = icon;
-                                });
-                            }
-                        }];
+//    [KPShareManager fetchShareIcon:_shareProvidersArr[indexPath.row][ShareNameKey]
+//                        completion:^(UIImage *icon, NSError *error) {
+//                            if (icon) {
+//                                dispatch_async(dispatch_get_main_queue(), ^{
+//                                    cell.shareIcon = icon;
+//                                });
+//                            }
+//                        }];
+    cell.shareIcon = shareIcon(_shareProvidersArr[indexPath.row][ShareNameKey]);
     return cell;
 }
 
@@ -158,7 +159,7 @@ static const NSString *ShareNameKey = @"name";
 }
 
 - (NSString *)shareIconLink {
-    return @"";
+    return _shareIconLink;
 }
 
 - (NSString *)rootURL {
@@ -169,7 +170,4 @@ static const NSString *ShareNameKey = @"name";
     return _shareProvidersArr[shareIndex][RedirectURLKey];
 }
 
-- (NSString *)facebookAppID {
-    return nil;
-}
 @end

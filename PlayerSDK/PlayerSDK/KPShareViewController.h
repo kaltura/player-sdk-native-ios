@@ -11,4 +11,5 @@
 @interface KPShareViewController : UIViewController
 @property (nonatomic, copy) NSArray *shareProvidersArr;
 @property (nonatomic, copy) NSString *sharedURL;
+@property (nonatomic, copy) NSString *shareIconLink;
 @end

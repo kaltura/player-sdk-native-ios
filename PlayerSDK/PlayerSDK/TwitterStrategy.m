@@ -13,12 +13,4 @@
     return SLServiceTypeTwitter;
 }
 
-//- (NSURL *)shareURL:(id<KPShareParams>)params {
-//    if ([params shareLink] && [params shareLink].length > 10) {
-//        NSString *requestString = [NSString stringWithFormat:@"https://twitter.com/share?url=%@", [params shareLink]];
-//        requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//        return [NSURL URLWithString:requestString];
-//    }
-//    return nil;
-//}
 @end

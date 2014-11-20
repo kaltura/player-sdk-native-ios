@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B33E5DAA1A1CE27A00A14A1B /* ShareIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */; };
+		B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
+		B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
 		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
 		B3932ACC1A092F7400AC0442 /* KPShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932ACA1A092F7400AC0442 /* KPShareViewController.m */; };
 		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
@@ -50,6 +53,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		B3D758921A1CBEFF00CA5A96 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFFFA71F182F9E31005B3B24 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B3D7588A1A1CBEDF00CA5A96;
+			remoteInfo = Test;
+		};
 		BFFFA73E182F9E31005B3B24 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFFFA71F182F9E31005B3B24 /* Project object */;
@@ -81,6 +91,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ShareIcons.xcassets; sourceTree = "<group>"; };
+		B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPShareBrowserViewController.xib; sourceTree = "<group>"; };
 		B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusStrategy.h; sourceTree = "<group>"; };
 		B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusStrategy.m; sourceTree = "<group>"; };
 		B3932AC91A092F7400AC0442 /* KPShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareViewController.h; sourceTree = "<group>"; };
@@ -100,6 +112,8 @@
 		B39BEC941A0BA8C40085BA26 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		B39BEC981A0BCB280085BA26 /* KPShareBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareBrowserViewController.h; sourceTree = "<group>"; };
 		B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPShareBrowserViewController.m; sourceTree = "<group>"; };
+		B3D7588B1A1CBEDF00CA5A96 /* Test.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3D7588E1A1CBEDF00CA5A96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
 		BF927EBA18BCD719006667CA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		BF927EBC18BCD722006667CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -133,6 +147,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B3D758881A1CBEDF00CA5A96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BFFFA724182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -169,6 +190,7 @@
 				B3932ACA1A092F7400AC0442 /* KPShareViewController.m */,
 				B39BEC981A0BCB280085BA26 /* KPShareBrowserViewController.h */,
 				B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */,
+				B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */,
 			);
 			name = ShareViewContrller;
 			sourceTree = "<group>";
@@ -191,6 +213,22 @@
 				B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */,
 			);
 			name = ShareManager;
+			sourceTree = "<group>";
+		};
+		B3D7588C1A1CBEDF00CA5A96 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				B3D7588D1A1CBEDF00CA5A96 /* Supporting Files */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		B3D7588D1A1CBEDF00CA5A96 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B3D7588E1A1CBEDF00CA5A96 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		BF9133CB19349AB700606682 /* KPEventListener */ = {
@@ -248,6 +286,7 @@
 				BFFFA775182FA012005B3B24 /* UIKit.framework */,
 				BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */,
 				BFFFA741182F9E31005B3B24 /* PlayerSDKTests */,
+				B3D7588C1A1CBEDF00CA5A96 /* Test */,
 				BFFFA729182F9E31005B3B24 /* Frameworks */,
 				BFFFA728182F9E31005B3B24 /* Products */,
 			);
@@ -258,6 +297,7 @@
 			children = (
 				BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */,
 				BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */,
+				B3D7588B1A1CBEDF00CA5A96 /* Test.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,6 +320,7 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */,
 				B3932ACE1A0A0D7A00AC0442 /* ShareManager */,
 				B3932AC81A092C4900AC0442 /* ShareViewContrller */,
 				BFFFA877182FB8E4005B3B24 /* KPViewController */,
@@ -344,6 +385,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		B3D7588A1A1CBEDF00CA5A96 /* Test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B3D758911A1CBEDF00CA5A96 /* Build configuration list for PBXNativeTarget "Test" */;
+			buildPhases = (
+				B3D758871A1CBEDF00CA5A96 /* Sources */,
+				B3D758881A1CBEDF00CA5A96 /* Frameworks */,
+				B3D758891A1CBEDF00CA5A96 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Test;
+			productName = Test;
+			productReference = B3D7588B1A1CBEDF00CA5A96 /* Test.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 		BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDK" */;
@@ -356,6 +414,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B3D758931A1CBEFF00CA5A96 /* PBXTargetDependency */,
 			);
 			name = KALTURAPlayerSDK;
 			productName = PlayerSDK;
@@ -387,9 +446,14 @@
 		BFFFA71F182F9E31005B3B24 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastTestingUpgradeCheck = 0600;
+				LastTestingUpgradeCheck = 0610;
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = Kaltura;
+				TargetAttributes = {
+					B3D7588A1A1CBEDF00CA5A96 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
 			};
 			buildConfigurationList = BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KALTURAPlayerSDK" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -405,6 +469,7 @@
 			targets = (
 				BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */,
 				BFFFA737182F9E31005B3B24 /* KALTURAPlayerSDKTests */,
+				B3D7588A1A1CBEDF00CA5A96 /* Test */,
 			);
 		};
 /* End PBXProject section */
@@ -414,7 +479,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */,
 				B39BEC971A0BC75E0085BA26 /* ShareImages.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3D758891A1CBEDF00CA5A96 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */,
+				B33E5DAA1A1CE27A00A14A1B /* ShareIcons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +520,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B3D758871A1CBEDF00CA5A96 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BFFFA723182F9E31005B3B24 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -479,6 +561,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		B3D758931A1CBEFF00CA5A96 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B3D7588A1A1CBEDF00CA5A96 /* Test */;
+			targetProxy = B3D758921A1CBEFF00CA5A96 /* PBXContainerItemProxy */;
+		};
 		BFFFA73F182F9E31005B3B24 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */;
@@ -498,6 +585,80 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		B3D7588F1A1CBEDF00CA5A96 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = NO;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = Test/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		B3D758901A1CBEDF00CA5A96 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = Test/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 		BFFFA74A182F9E31005B3B24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -529,7 +690,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/libWViPhoneAPI.a\"";
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -563,7 +724,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/libWViPhoneAPI.a\"";
 				ONLY_ACTIVE_ARCH = NO;
@@ -670,6 +831,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B3D758911A1CBEDF00CA5A96 /* Build configuration list for PBXNativeTarget "Test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B3D7588F1A1CBEDF00CA5A96 /* Debug */,
+				B3D758901A1CBEDF00CA5A96 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BFFFA722182F9E31005B3B24 /* Build configuration list for PBXProject "KALTURAPlayerSDK" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

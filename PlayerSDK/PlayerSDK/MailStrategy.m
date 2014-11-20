@@ -10,6 +10,7 @@
 
 
 @implementation MailStrategy
+
 - (UIViewController *)share:(id<KPShareParams>)shareParams
                  completion:(KPShareCompletionBlock)completion {
     _completion = [completion copy];
@@ -18,12 +19,14 @@
     [mailController setSubject:[shareParams shareTitle]];
     NSString *mailBody = [[shareParams shareDescription] stringByAppendingString:[shareParams shareLink]];
     [mailController setMessageBody:mailBody isHTML:NO];
-    if ([shareParams shareIconName] && [UIImage imageNamed:[shareParams shareIconName]]) {
-        NSData *imgData = UIImageJPEGRepresentation([UIImage imageNamed:[shareParams shareIconName]], 1);
-        [mailController addAttachmentData:imgData
-                                 mimeType:@"image/jpeg"
-                                 fileName:@"publicity.png"];
-    }
+//    if ([shareParams shareIconName] && [UIImage imageNamed:[shareParams shareIconName]]) {
+//        NSData *imgData = UIImageJPEGRepresentation([UIImage imageNamed:[shareParams shareIconName]], 1);
+//        [mailController addAttachmentData:imgData
+//                                 mimeType:@"image/jpeg"
+//                                 fileName:@"publicity.png"];
+//    }
+    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams shareLink]]];
+    [mailController addAttachmentData:data mimeType:@"video/m4v" fileName:@"PlayVideo"];
     return mailController;
 }
 

@@ -7,23 +7,31 @@
 //
 
 #import "KPShareBrowserViewController.h"
+#import "KPShareManager.h"
 
 @interface KPShareBrowserViewController () <UIWebViewDelegate>{
-    UIWebView *webview;
-    UINavigationBar *navBar;
-    UIActivityIndicatorView *spinner;
+    
+    __weak IBOutlet UIWebView *webview;
+    __weak IBOutlet UIView *loadingView;
 }
 
 @end
 
 @implementation KPShareBrowserViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:@"KPShareBrowserViewController" bundle:shareBundle()];
+    if (self) {
+        return self;
+    }
+    return nil;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //_redirectURI = @"https://developers.facebook.com/tools";
-    [self initializeToolBar];
-    [self initializeWebView];
+    [webview loadRequest:[NSURLRequest requestWithURL:_shareURL]];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -32,28 +40,7 @@
 }
 
 
-- (void)initializeWebView {
-    webview = [[UIWebView alloc] initWithFrame:(CGRect){0, 0, self.view.frame.size.width, self.view.frame.size.height - 44}];
-    webview.delegate = self;
-    webview.backgroundColor = [UIColor grayColor];
-    [webview loadRequest:[NSURLRequest requestWithURL:_shareURL]];
-    [self.view addSubview:webview];
-    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    //spinner.center = webview.center;
-    [self.view addSubview:spinner];
-}
-
-- (void)initializeToolBar {
-    UIToolbar* toolbar = [[UIToolbar alloc] init];
-    toolbar.frame = CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44);
-    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop
-                                                                                 target:self
-                                                                                 action:@selector(cancelPressed:)];
-    [toolbar setItems:@[shareButton]];
-    [self.view addSubview:toolbar];
-}
-
-- (void)cancelPressed:(UIBarButtonItem *)sender {
+- (IBAction)cancelPressed:(UIBarButtonItem *)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -69,14 +56,11 @@
     return YES;
 }
 
-//- (void)webViewDidFinishLoad:(UIWebView *)webView {
-//    if ([webview.request.URL.absoluteString hasPrefix:@"https://www.facebook.com/dialog/feed"]) {
-//        [UIView animateWithDuration:0.35
-//                         animations:^{
-//                             spinner.alpha = 0;
-//                         }];
-//    }
-//}
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+    [UIView animateWithDuration:0.35 animations:^{
+        loadingView.alpha = 0;
+    }];
+}
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     

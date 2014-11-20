@@ -28,25 +28,15 @@
     return nil;
 }
 
-+ (void)fetchShareIcon:(NSString *)shareComposer completion:(void (^)(UIImage *, NSError *))completion {
-    NSString *rootURL = @"https://sites.google.com/site/kalturaimages/shareicons/";
-    rootURL = [rootURL stringByAppendingFormat:@"%@.png", shareComposer];
-    NSURL *url = [NSURL URLWithString:rootURL];
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:url]
-                                       queue:[NSOperationQueue new]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               if (connectionError) {
-                                   completion(nil, connectionError);
-                               } else if (data) {
-                                   UIImage *img = [UIImage imageWithData:data];
-                                   if ([img isKindOfClass:[UIImage class]]) {
-                                       completion(img, nil);
-                                   } else {
-                                       completion(nil, [NSError errorWithDomain:@"Image not valid"
-                                                                           code:10000
-                                                                       userInfo:nil]);
-                                   }
-                               }
-                           }];
+
+NSBundle *shareBundle() {
+    return [NSBundle bundleWithURL:[[NSBundle mainBundle]
+                                    URLForResource:@"Test"
+                                    withExtension:@"bundle"]];
+}
+
+UIImage *shareIcon(NSString *iconName) {
+    NSString *imagePath = [NSString stringWithFormat:@"Test.bundle/%@", iconName];
+    return [UIImage imageNamed:imagePath];
 }
 @end

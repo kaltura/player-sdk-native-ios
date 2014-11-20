@@ -35,8 +35,9 @@
             [controller setInitialText:shareParams.shareTitle];
         }
         
-        if ([shareParams respondsToSelector:@selector(shareIconName)]) {
-            [controller addImage:[UIImage imageNamed:[shareParams shareIconName]]];
+        if ([shareParams respondsToSelector:@selector(shareIconLink)]) {
+            NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams shareIconLink]]];
+            [controller addImage:[UIImage imageWithData:imgData]];
         }
         
         if ([shareParams respondsToSelector:@selector(shareLink)]) {

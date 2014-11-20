@@ -244,22 +244,18 @@
     NSLog(@"%@", shareParamsDict);
 
     
-//    NSBundle *sdkBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
-//                                                   URLForResource:@"libKALTURAPlayerSDK"
-//                                                   withExtension:nil]];
-//    NSString *path = [[NSBundle mainBundle] resourcePath];
-//    NSFileManager *fm = [NSFileManager defaultManager];
-//    
-//    NSError *error = nil;
-//    
-//    NSArray *directoryAndFileNames = [fm contentsOfDirectoryAtPath:path error:&error];
-    NSLog(@"%@", [NSBundle allBundles]);
-    NSArray *defaultShareArr = @[@{@"name": @"Mail"},
-                                 @{@"name": @"Message"}];
-    NSArray *shareParamsArr = [shareParamsDict[@"shareProviders"] arrayByAddingObjectsFromArray:defaultShareArr];
+    NSString *path = [[NSBundle mainBundle] resourcePath];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    NSError *error = nil;
+    
+    NSArray *directoryAndFileNames = [fm contentsOfDirectoryAtPath:path error:&error];
+    
+    NSArray *shareParamsArr = shareParamsDict[@"shareProviders"];
     KPShareViewController *shareViewController = [KPShareViewController new];
     shareViewController.shareProvidersArr = shareParamsArr.copy;
     shareViewController.sharedURL = shareParamsDict[@"sharedLink"];
+    shareViewController.shareIconLink = shareParamsDict[@"thumbnail"];
     [self presentViewController:shareViewController
                        animated:YES
                      completion:nil];
