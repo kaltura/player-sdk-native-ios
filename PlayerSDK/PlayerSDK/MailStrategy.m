@@ -17,7 +17,7 @@
     MFMailComposeViewController *mailController = [[MFMailComposeViewController alloc] init];
     mailController.mailComposeDelegate = self;
     [mailController setSubject:[shareParams shareTitle]];
-    NSString *mailBody = [[shareParams shareDescription] stringByAppendingString:[shareParams shareLink]];
+    NSString *mailBody = [shareParams shareLink];
     [mailController setMessageBody:mailBody isHTML:NO];
 //    if ([shareParams shareIconName] && [UIImage imageNamed:[shareParams shareIconName]]) {
 //        NSData *imgData = UIImageJPEGRepresentation([UIImage imageNamed:[shareParams shareIconName]], 1);
@@ -25,14 +25,15 @@
 //                                 mimeType:@"image/jpeg"
 //                                 fileName:@"publicity.png"];
 //    }
-    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams shareLink]]];
-    [mailController addAttachmentData:data mimeType:@"video/m4v" fileName:@"PlayVideo"];
+//    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams shareLink]]];
+//    [mailController addAttachmentData:data mimeType:@"video/m4v" fileName:@"PlayVideo"];
     return mailController;
 }
 
 - (void)mailComposeController:(MFMailComposeViewController *)controller
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError *)error {
+    [controller dismissViewControllerAnimated:YES completion:nil];
     if (error) {
         KPShareError *err = [KPShareError new];
         err.error = error;
@@ -42,7 +43,6 @@
     } else if (result == MFMailComposeResultCancelled) {
         _completion(KPShareResultsCancel, nil);
     }
-    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

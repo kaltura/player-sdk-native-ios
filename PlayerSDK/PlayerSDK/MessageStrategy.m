@@ -21,14 +21,14 @@
     MFMessageComposeViewController *messageController = [MFMessageComposeViewController new];
     messageController.messageComposeDelegate = self;
     [messageController setSubject:[shareParams shareTitle]];
-    NSString *messageBody = [[shareParams shareDescription] stringByAppendingString:[shareParams shareLink]];
+    NSString *messageBody = [shareParams shareLink];
     [messageController setBody:messageBody];
-    if ([shareParams shareIconName] && [UIImage imageNamed:[shareParams shareIconName]]) {
-        NSData *imgData = UIImageJPEGRepresentation([UIImage imageNamed:[shareParams shareIconName]], 1);
-        [messageController addAttachmentData:imgData
-                              typeIdentifier:@"public.data"
-                                    filename:@"publicity_image.png"];
-    }
+//    if ([shareParams shareIconName] && [UIImage imageNamed:[shareParams shareIconName]]) {
+//        NSData *imgData = UIImageJPEGRepresentation([UIImage imageNamed:[shareParams shareIconName]], 1);
+//        [messageController addAttachmentData:imgData
+//                              typeIdentifier:@"public.data"
+//                                    filename:@"publicity_image.png"];
+//    }
     return messageController;
 }
 

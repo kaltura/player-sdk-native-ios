@@ -102,6 +102,7 @@ static const NSString *ShareNameKey = @"name";
     [KPShareManager shared].datasource = self;
     [KPShareManager shared].shareStrategyObject = [[startegyClass alloc] init];
     UIViewController *shareController = [[KPShareManager shared] shareWithCompletion:^(KPShareResults result, KPShareError *shareError) {
+        self.view.backgroundColor = [UIColor clearColor];
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
@@ -119,7 +120,7 @@ static const NSString *ShareNameKey = @"name";
 }
 
 - (NSString *)shareTitle {
-    return @"Check out my video";
+    return _videoName;
 }
 
 - (NSString *)shareIconName {

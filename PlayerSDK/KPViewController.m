@@ -256,6 +256,7 @@
     shareViewController.shareProvidersArr = shareParamsArr.copy;
     shareViewController.sharedURL = shareParamsDict[@"sharedLink"];
     shareViewController.shareIconLink = shareParamsDict[@"thumbnail"];
+    shareViewController.videoName = shareParamsDict[@"videoName"];
     shareViewController.modalPresentationStyle = UIModalPresentationCustom;
     [self presentViewController:shareViewController
                        animated:YES

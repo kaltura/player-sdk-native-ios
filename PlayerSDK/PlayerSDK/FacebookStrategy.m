@@ -18,7 +18,9 @@
 - (UIViewController *)share:(id<KPShareParams>)shareParams completion:(KPShareCompletionBlock)completion {
     if ([SLComposeViewController isAvailableForServiceType:self.composeType]) {
         SLComposeViewController *controller = [SLComposeViewController composeViewControllerForServiceType:self.composeType];
+        __weak UIViewController *weakController = controller;
         [controller setCompletionHandler:^(SLComposeViewControllerResult result){
+            [weakController dismissViewControllerAnimated:YES completion:nil];
             switch (result) {
                 case SLComposeViewControllerResultCancelled:
                     completion(KPShareResultsCancel, nil);
@@ -31,9 +33,6 @@
                     break;
             }
         }];
-        if ([shareParams respondsToSelector:@selector(shareTitle)]) {
-            [controller setInitialText:shareParams.shareTitle];
-        }
         
         if ([shareParams respondsToSelector:@selector(shareIconLink)]) {
             NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams shareIconLink]]];
@@ -42,6 +41,10 @@
         
         if ([shareParams respondsToSelector:@selector(shareLink)]) {
             [controller addURL:[NSURL URLWithString:[shareParams shareLink]]];
+        }
+        
+        if ([shareParams respondsToSelector:@selector(shareTitle)]) {
+            [controller setInitialText:[shareParams shareTitle]];
         }
         
         return controller;
@@ -68,6 +71,8 @@
 #pragma mark KPShareBrowserViewControllerDelegate
 - (void)shareBrowser:(KPShareBrowserViewController *)shareBrowser result:(KPShareResults)result {
     [shareBrowser dismissViewControllerAnimated:YES completion:nil];
-    _completion(result, nil);
+    if (_completion) {
+        _completion(result, nil);
+    }
 }
 @end

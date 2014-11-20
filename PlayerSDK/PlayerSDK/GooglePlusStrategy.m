@@ -10,8 +10,10 @@
 
 @implementation GooglePlusStrategy
 - (UIViewController *)share:(id<KPShareParams>)shareParams completion:(KPShareCompletionBlock)completion {
+    _completion = [completion copy];
     KPShareBrowserViewController *browser = [KPShareBrowserViewController new];
     browser.shareURL = [self shareURL:shareParams];
+    browser.delegate = self;
     NSArray *redirectURIs = [[shareParams redirectURL] componentsSeparatedByString:@","];
     browser.redirectURI = redirectURIs.count ? redirectURIs : @[[shareParams redirectURL]];
     return browser;
