@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B30BADE91A21ED06008E5E67 /* NSDictionary+Strategy.m */; };
-		B33E5DAA1A1CE27A00A14A1B /* ShareIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */; };
 		B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
 		B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
 		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
@@ -19,7 +18,6 @@
 		B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */; };
 		B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */; };
 		B39BEC951A0BA8C40085BA26 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B39BEC941A0BA8C40085BA26 /* MessageUI.framework */; };
-		B39BEC971A0BC75E0085BA26 /* ShareImages.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B39BEC861A0B6C3D0085BA26 /* ShareImages.bundle */; };
 		B39BEC9A1A0BCB280085BA26 /* KPShareBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
@@ -91,7 +89,6 @@
 /* Begin PBXFileReference section */
 		B30BADE81A21ED06008E5E67 /* NSDictionary+Strategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Strategy.h"; sourceTree = "<group>"; };
 		B30BADE91A21ED06008E5E67 /* NSDictionary+Strategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Strategy.m"; sourceTree = "<group>"; };
-		B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ShareIcons.xcassets; sourceTree = "<group>"; };
 		B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPShareBrowserViewController.xib; sourceTree = "<group>"; };
 		B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusStrategy.h; sourceTree = "<group>"; };
 		B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusStrategy.m; sourceTree = "<group>"; };
@@ -102,7 +99,6 @@
 		B39BEC7C1A0A7F740085BA26 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterStrategy.h; sourceTree = "<group>"; };
 		B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterStrategy.m; sourceTree = "<group>"; };
-		B39BEC861A0B6C3D0085BA26 /* ShareImages.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareImages.bundle; sourceTree = "<group>"; };
 		B39BEC8A1A0B6EC40085BA26 /* MailStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MailStrategy.h; sourceTree = "<group>"; };
 		B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MailStrategy.m; sourceTree = "<group>"; };
 		B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageStrategy.h; sourceTree = "<group>"; };
@@ -194,7 +190,6 @@
 		B3932ACE1A0A0D7A00AC0442 /* ShareManager */ = {
 			isa = PBXGroup;
 			children = (
-				B39BEC861A0B6C3D0085BA26 /* ShareImages.bundle */,
 				B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */,
 				B3932AD01A0A0DA000AC0442 /* KPShareManager.m */,
 				B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */,
@@ -318,7 +313,6 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
-				B33E5DA91A1CE27A00A14A1B /* ShareIcons.xcassets */,
 				B3932ACE1A0A0D7A00AC0442 /* ShareManager */,
 				B3932AC81A092C4900AC0442 /* ShareViewContrller */,
 				BFFFA877182FB8E4005B3B24 /* KPViewController */,
@@ -478,7 +472,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */,
-				B39BEC971A0BC75E0085BA26 /* ShareImages.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,7 +480,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */,
-				B33E5DAA1A1CE27A00A14A1B /* ShareIcons.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
