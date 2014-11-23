@@ -11,6 +11,11 @@
 @implementation KPShareError
 @end
 
+@interface KPShareManager()
+
+@property (nonatomic, strong) id<KPShareStratrgy> strategy;
+@end
+
 @implementation KPShareManager
 + (KPShareManager *)shared {
     static KPShareManager *shared = nil;
@@ -22,8 +27,9 @@
 }
 
 - (UIViewController *)shareWithCompletion:(KPShareCompletionBlock)completion {
-    if (_shareStrategyObject && [_shareStrategyObject respondsToSelector:@selector(share:completion:)]) {
-        return [_shareStrategyObject share:_datasource completion:completion];
+    if (_datasource && [_datasource respondsToSelector:@selector(networkStrategyClass)]) {
+        self.strategy = [[_datasource networkStrategyClass] new];
+        return [self.strategy share:_datasource completion:completion];
     }
     return nil;
 }

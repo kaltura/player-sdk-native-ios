@@ -40,14 +40,12 @@ typedef void (^KPShareCompletionBlock)(KPShareResults result, KPShareError *shar
 @protocol KPShareParams <NSObject>
 
 @optional
-@property (nonatomic, copy, readonly) NSString *shareTitle;
-@property (nonatomic, copy, readonly) NSString *shareDescription;
+@property (nonatomic, copy, readonly) NSString *videoName;
 @property (nonatomic, copy, readonly) NSString *shareLink;
-@property (nonatomic, copy, readonly) NSString *shareIconName;
-@property (nonatomic, copy, readonly) NSString *shareIconLink;
-@property (nonatomic, copy, readonly) NSString *rootURL;
-@property (nonatomic, copy, readonly) NSString *redirectURL;
-
+@property (nonatomic, copy, readonly) NSString *thumbnailLink;
+@property (nonatomic, copy, readonly) NSString *networkURL;
+@property (nonatomic, copy, readonly) NSArray *redirectURLs;
+@property (nonatomic, assign, readonly) Class networkStrategyClass;
 @end
 
 @protocol KPShareStratrgy <NSObject>
@@ -64,10 +62,10 @@ typedef void (^KPShareCompletionBlock)(KPShareResults result, KPShareError *shar
 @interface KPShareManager : NSObject
 
 /// An object which contains all the parameters for creating a post
-@property (nonatomic, unsafe_unretained) id<KPShareParams> datasource;
+@property (nonatomic, strong) id<KPShareParams> datasource;
 
-/// An object which conforms to the share strategy, represnts a share provider
-@property (nonatomic, strong) id<KPShareStratrgy> shareStrategyObject;
+///// An object which conforms to the share strategy, represnts a share provider
+//@property (nonatomic, strong) id<KPShareStratrgy> shareStrategyObject;
 
 
 /** Singleton instance
@@ -85,7 +83,4 @@ typedef void (^KPShareCompletionBlock)(KPShareResults result, KPShareError *shar
  */
 - (UIViewController *)shareWithCompletion:(KPShareCompletionBlock)completion;
 
-
-NSBundle *shareBundle();
-UIImage *shareIcon(NSString *iconName);
 @end

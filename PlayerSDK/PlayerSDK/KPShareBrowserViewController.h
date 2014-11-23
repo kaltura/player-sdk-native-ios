@@ -17,7 +17,7 @@
 @end
 
 @interface KPShareBrowserViewController : UIViewController
-@property (nonatomic, strong) NSURL *shareURL;
-@property (nonatomic, copy) NSArray *redirectURI;
+@property (nonatomic, strong) NSURL *url;
+@property (nonatomic, copy) NSArray *redirectURIs;
 @property (nonatomic, weak) id<KPShareBrowserViewControllerDelegate> delegate;
 @end

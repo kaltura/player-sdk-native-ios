@@ -20,15 +20,9 @@
     _completion = [completion copy];
     MFMessageComposeViewController *messageController = [MFMessageComposeViewController new];
     messageController.messageComposeDelegate = self;
-    [messageController setSubject:[shareParams shareTitle]];
-    NSString *messageBody = [shareParams shareLink];
+    [messageController setSubject:[shareParams videoName]];
+    NSString *messageBody = [[shareParams videoName] stringByAppendingFormat:@"\n\n%@", [shareParams shareLink]];
     [messageController setBody:messageBody];
-//    if ([shareParams shareIconName] && [UIImage imageNamed:[shareParams shareIconName]]) {
-//        NSData *imgData = UIImageJPEGRepresentation([UIImage imageNamed:[shareParams shareIconName]], 1);
-//        [messageController addAttachmentData:imgData
-//                              typeIdentifier:@"public.data"
-//                                    filename:@"publicity_image.png"];
-//    }
     return messageController;
 }
 
@@ -41,6 +35,5 @@
     } else {
         _completion(KPShareResultsFailed, nil);
     }
-    [controller dismissViewControllerAnimated:YES completion:nil];
 }
 @end

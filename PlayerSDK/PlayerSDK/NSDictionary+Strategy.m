@@ -1,0 +1,48 @@
+//
+//  NSDictionary+Strategy.m
+//  KALTURAPlayerSDK
+//
+//  Created by Nissim Pardo on 11/23/14.
+//  Copyright (c) 2014 Kaltura. All rights reserved.
+//
+
+#import "NSDictionary+Strategy.h"
+
+static NSString *NetworkKeyPath = @"shareNetwork.name";
+static NSString *NetworkURLKeyPath = @"shareNetwork.url";
+static NSString *NetworkRedirectURLKeyPath = @"shareNetwork.redirectUrl";
+static NSString *SharedLinkKey = @"sharedLink";
+static NSString *VideoNameKey = @"videoName";
+static NSString *ThumbnailKey = @"thumbnail";
+
+@implementation NSDictionary (Strategy)
+- (NSString *)videoName {
+    return self[VideoNameKey];
+}
+
+- (NSString *)shareLink {
+    return self[SharedLinkKey];
+}
+
+- (NSString *)thumbnailLink {
+    return self[ThumbnailKey];
+}
+
+- (NSString *)networkURL {
+    return [self valueForKeyPath:NetworkURLKeyPath];
+}
+
+- (NSArray *)redirectURLs {
+    NSString *urlsString = [self valueForKeyPath:NetworkRedirectURLKeyPath];
+    NSArray *urls = [urlsString componentsSeparatedByString:@","];
+    if (urlsString.length && !urls.count) {
+        return @[urlsString];
+    }
+    return urls;
+}
+
+- (Class)networkStrategyClass {
+    NSString *strategyName = [[self valueForKeyPath:NetworkKeyPath] stringByAppendingString:@"Strategy"];
+    return NSClassFromString(strategyName);
+}
+@end

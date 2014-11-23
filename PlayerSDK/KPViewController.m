@@ -12,7 +12,8 @@
 
 #import "KPViewController.h"
 #import "KPEventListener.h"
-#import "KPShareViewController.h"
+#import "KPShareManager.h"
+#import "NSDictionary+Strategy.h"
 
 @implementation KPViewController {
     // Player Params
@@ -241,27 +242,33 @@
 }
 
 - (void)share {
-    NSLog(@"%@", shareParamsDict);
-
-    
-    NSString *path = [[NSBundle mainBundle] resourcePath];
-    NSFileManager *fm = [NSFileManager defaultManager];
-    
-    NSError *error = nil;
-    
-    NSArray *directoryAndFileNames = [fm contentsOfDirectoryAtPath:path error:&error];
-    
-    NSArray *shareParamsArr = shareParamsDict[@"shareProviders"];
-    KPShareViewController *shareViewController = [KPShareViewController new];
-    shareViewController.shareProvidersArr = shareParamsArr.copy;
-    shareViewController.sharedURL = shareParamsDict[@"sharedLink"];
-    shareViewController.shareIconLink = shareParamsDict[@"thumbnail"];
-    shareViewController.videoName = shareParamsDict[@"videoName"];
-    shareViewController.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:shareViewController
-                       animated:YES
-                     completion:nil];
-    
+//    NSLog(@"%@", shareParamsDict);
+//
+//    
+//    NSString *path = [[NSBundle mainBundle] resourcePath];
+//    NSFileManager *fm = [NSFileManager defaultManager];
+//    
+//    NSError *error = nil;
+//    
+//    NSArray *directoryAndFileNames = [fm contentsOfDirectoryAtPath:path error:&error];
+//    
+//    NSArray *shareParamsArr = shareParamsDict[@"shareProviders"];
+//    KPShareViewController *shareViewController = [KPShareViewController new];
+//    shareViewController.shareProvidersArr = shareParamsArr.copy;
+//    shareViewController.sharedURL = shareParamsDict[@"sharedLink"];
+//    shareViewController.shareIconLink = shareParamsDict[@"thumbnail"];
+//    shareViewController.videoName = shareParamsDict[@"videoName"];
+//    shareViewController.modalPresentationStyle = UIModalPresentationCustom;
+    [KPShareManager shared].datasource = shareParamsDict;
+    __block UIViewController *shareViewController = [[KPShareManager shared] shareWithCompletion:^(KPShareResults result,
+                                                                                                   KPShareError *shareError) {
+        [shareViewController dismissViewControllerAnimated:YES completion:nil];
+    }];
+    if (shareViewController) {
+        [self presentViewController:shareViewController
+                           animated:YES
+                         completion:nil];
+    }
 }
 
 #pragma Kaltura Player External API - KDP API

@@ -12,10 +12,9 @@
 - (UIViewController *)share:(id<KPShareParams>)shareParams completion:(KPShareCompletionBlock)completion {
     _completion = [completion copy];
     KPShareBrowserViewController *browser = [KPShareBrowserViewController new];
-    browser.shareURL = [self shareURL:shareParams];
+    browser.url = [self shareURL:shareParams];
     browser.delegate = self;
-    NSArray *redirectURIs = [[shareParams redirectURL] componentsSeparatedByString:@","];
-    browser.redirectURI = redirectURIs.count ? redirectURIs : @[[shareParams redirectURL]];
+    browser.redirectURIs = [shareParams redirectURLs];
     return browser;
 }
 @end

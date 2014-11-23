@@ -35,7 +35,7 @@
         }];
         
         if ([shareParams respondsToSelector:@selector(shareIconLink)]) {
-            NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams shareIconLink]]];
+            NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams thumbnailLink]]];
             [controller addImage:[UIImage imageWithData:imgData]];
         }
         
@@ -44,7 +44,7 @@
         }
         
         if ([shareParams respondsToSelector:@selector(shareTitle)]) {
-            [controller setInitialText:[shareParams shareTitle]];
+            [controller setInitialText:[shareParams videoName]];
         }
         
         return controller;
@@ -52,9 +52,8 @@
     _completion = [completion copy];
     KPShareBrowserViewController *browser = [KPShareBrowserViewController new];
     browser.delegate = self;
-    browser.shareURL = [self shareURL:shareParams];
-    NSArray *redirectURIs = [[shareParams redirectURL] componentsSeparatedByString:@","];
-    browser.redirectURI = redirectURIs.count ? redirectURIs : @[[shareParams redirectURL]];
+    browser.url = [self shareURL:shareParams];
+    browser.redirectURIs = [shareParams redirectURLs];
     return browser;
 }
 
@@ -63,7 +62,7 @@
     if ([params shareLink]) {
         sharedLink = [params shareLink];
     }
-    NSString *requestString = [[params rootURL] stringByAppendingString:sharedLink];
+    NSString *requestString = [[params networkURL] stringByAppendingString:sharedLink];
     requestString = [requestString stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     return [NSURL URLWithString:requestString];
 }

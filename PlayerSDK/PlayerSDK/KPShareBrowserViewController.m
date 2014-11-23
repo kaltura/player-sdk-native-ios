@@ -7,7 +7,6 @@
 //
 
 #import "KPShareBrowserViewController.h"
-#import "KPShareManager.h"
 
 @interface KPShareBrowserViewController () <UIWebViewDelegate>{
     
@@ -20,7 +19,10 @@
 @implementation KPShareBrowserViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:@"KPShareBrowserViewController" bundle:shareBundle()];
+    NSBundle *playerBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
+                                                      URLForResource:@"Test"
+                                                      withExtension:@"bundle"]];
+    self = [super initWithNibName:@"KPShareBrowserViewController" bundle:playerBundle];
     if (self) {
         return self;
     }
@@ -30,8 +32,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //_redirectURI = @"https://developers.facebook.com/tools";
-    [webview loadRequest:[NSURLRequest requestWithURL:_shareURL]];
+    [webview loadRequest:[NSURLRequest requestWithURL:_url]];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,10 +47,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+#pragma mark
+#pragma mark UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSString *currentRequest = request.URL.absoluteString;
-    NSLog(@"Current Request : %@", currentRequest);
-    for (NSString *redirectUrl in _redirectURI) {
+    for (NSString *redirectUrl in _redirectURIs) {
         if ([currentRequest hasPrefix:redirectUrl]) {
             [_delegate shareBrowser:self result:KPShareResultsSuccess];
             break;
@@ -66,4 +70,5 @@
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     [_delegate shareBrowser:self result:KPShareResultsFailed];
 }
+
 @end
