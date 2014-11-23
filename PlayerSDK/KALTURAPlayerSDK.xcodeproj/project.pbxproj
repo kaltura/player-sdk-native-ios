@@ -17,9 +17,10 @@
 		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
 		BF927ED018BD021A006667CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927ECF18BD021A006667CA /* libz.dylib */; };
 		BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KPViewController.h */; };
+		BFA664921A2209960016B728 /* WViPhoneAPI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */; };
+		BFA664931A220D3B0016B728 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BFA844771931160600F47E02 /* KPEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA844761931160600F47E02 /* KPEventListener.m */; };
 		BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */; };
-		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
 		BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
 		BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
@@ -52,6 +53,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BFA664921A2209960016B728 /* WViPhoneAPI.h in CopyFiles */,
 				BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */,
 				BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */,
 				BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */,
@@ -103,10 +105,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFA664931A220D3B0016B728 /* libWViPhoneAPI.a in Frameworks */,
 				BF66DFA01A0BA49000FDB53A /* GoogleCast.framework in Frameworks */,
 				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
 				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
-				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
 				BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */,
 				BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */,
 			);
@@ -420,8 +422,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -453,7 +453,6 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -461,8 +460,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -489,15 +486,12 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
 		BFFFA74D182F9E31005B3B24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				DSTROOT = /tmp/PlayerSDK.dst;
@@ -519,15 +513,12 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
 		BFFFA74E182F9E31005B3B24 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				DSTROOT = /tmp/PlayerSDK.dst;
@@ -549,7 +540,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
