@@ -18,6 +18,8 @@ static NSString *RootURLKey = @"url";
 /// Key for redirect URL value (use for determine that the share request has finished)
 static NSString *RedirectURLKey = @"redirectUrl";
 
+
+
 /** Deals with any kind of share failure
  */
 @interface KPShareError : NSObject
@@ -35,16 +37,32 @@ typedef NS_ENUM(NSInteger, KPShareResults) {
     KPShareResultsCancel
 };
 
+
+/// Share action call back
 typedef void (^KPShareCompletionBlock)(KPShareResults result, KPShareError *shareError);
 
+
+/// All the parameters for submitting share action
 @protocol KPShareParams <NSObject>
 
 @optional
+
+/// Contains the video name according to the meta data of the page
 @property (nonatomic, copy, readonly) NSString *videoName;
+
+/// The link to the video, played by Kaltura player
 @property (nonatomic, copy, readonly) NSString *shareLink;
+
+/// The link for the first frame of the video
 @property (nonatomic, copy, readonly) NSString *thumbnailLink;
+
+/// Share API of the selected network
 @property (nonatomic, copy, readonly) NSString *networkURL;
+
+/// Redirect URIs: cancel, finished, fail
 @property (nonatomic, copy, readonly) NSArray *redirectURLs;
+
+/// Generates the strategy class by the network name
 @property (nonatomic, assign, readonly) Class networkStrategyClass;
 @end
 
@@ -64,8 +82,6 @@ typedef void (^KPShareCompletionBlock)(KPShareResults result, KPShareError *shar
 /// An object which contains all the parameters for creating a post
 @property (nonatomic, strong) id<KPShareParams> datasource;
 
-///// An object which conforms to the share strategy, represnts a share provider
-//@property (nonatomic, strong) id<KPShareStratrgy> shareStrategyObject;
 
 
 /** Singleton instance

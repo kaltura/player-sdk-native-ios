@@ -13,6 +13,7 @@
 
 @interface KPShareManager()
 
+/// An object which conforms to the share strategy, represnts a share provider
 @property (nonatomic, strong) id<KPShareStratrgy> strategy;
 @end
 
@@ -27,22 +28,16 @@
 }
 
 - (UIViewController *)shareWithCompletion:(KPShareCompletionBlock)completion {
+    // Check if _datasource initialized
     if (_datasource && [_datasource respondsToSelector:@selector(networkStrategyClass)]) {
+        
+        // Creating a strategy object according to the user selection
         self.strategy = [[_datasource networkStrategyClass] new];
+        
+        // Creating the share viewController
         return [self.strategy share:_datasource completion:completion];
     }
     return nil;
 }
 
-
-NSBundle *shareBundle() {
-    return [NSBundle bundleWithURL:[[NSBundle mainBundle]
-                                    URLForResource:@"Test"
-                                    withExtension:@"bundle"]];
-}
-
-UIImage *shareIcon(NSString *iconName) {
-    NSString *imagePath = [NSString stringWithFormat:@"Test.bundle/%@", iconName];
-    return [UIImage imageNamed:imagePath];
-}
 @end
