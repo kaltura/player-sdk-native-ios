@@ -177,6 +177,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B30BADEE1A223142008E5E67 /* ShareStrategies */ = {
+			isa = PBXGroup;
+			children = (
+				B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */,
+				B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */,
+				B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */,
+				B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */,
+				B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */,
+				B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */,
+				B39BEC8A1A0B6EC40085BA26 /* MailStrategy.h */,
+				B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */,
+				B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */,
+				B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */,
+			);
+			name = ShareStrategies;
+			sourceTree = "<group>";
+		};
 		B3932AC81A092C4900AC0442 /* ShareViewContrller */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,18 +207,10 @@
 		B3932ACE1A0A0D7A00AC0442 /* ShareManager */ = {
 			isa = PBXGroup;
 			children = (
+				B3932AC81A092C4900AC0442 /* ShareViewContrller */,
+				B30BADEE1A223142008E5E67 /* ShareStrategies */,
 				B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */,
 				B3932AD01A0A0DA000AC0442 /* KPShareManager.m */,
-				B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */,
-				B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */,
-				B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */,
-				B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */,
-				B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */,
-				B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */,
-				B39BEC8A1A0B6EC40085BA26 /* MailStrategy.h */,
-				B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */,
-				B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */,
-				B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */,
 				B30BADE81A21ED06008E5E67 /* NSDictionary+Strategy.h */,
 				B30BADE91A21ED06008E5E67 /* NSDictionary+Strategy.m */,
 			);
@@ -314,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				B3932ACE1A0A0D7A00AC0442 /* ShareManager */,
-				B3932AC81A092C4900AC0442 /* ShareViewContrller */,
 				BFFFA877182FB8E4005B3B24 /* KPViewController */,
 				BFE3E2F3199CAFCF00666F32 /* KalturaPlayer */,
 				BFE3E2F2199CAF6200666F32 /* KPChromecast */,

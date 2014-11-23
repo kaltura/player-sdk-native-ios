@@ -34,7 +34,7 @@
             }
         }];
         
-        if ([shareParams respondsToSelector:@selector(shareIconLink)]) {
+        if ([shareParams respondsToSelector:@selector(thumbnailLink)]) {
             NSData *imgData = [NSData dataWithContentsOfURL:[NSURL URLWithString:[shareParams thumbnailLink]]];
             [controller addImage:[UIImage imageWithData:imgData]];
         }
