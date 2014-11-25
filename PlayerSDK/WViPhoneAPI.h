@@ -1,14 +1,13 @@
-#if !(TARGET_IPHONE_SIMULATOR)
 #ifndef IPHONSESSION_H_
 #define IPHONSESSION_H_
 
 
 #ifdef __cplusplus
 extern "C" {
-#endif
+#endif  // _cplusplus
 #import <Foundation/NSString.h>
 #import <Foundation/NSDictionary.h>
-    
+
     typedef enum WViOsApiStatus {
 	WViOsApiStatus_OK = 0,
 	WViOsApiStatus_NotInitialized,
@@ -56,7 +55,9 @@ extern "C" {
         WViOsApiEvent_ChapterSetup,
         WViOsApiEvent_StoppingOnError,
         WViOsApiEvent_VideoParams,
-        WViOsApiEvent_AudioParams
+        WViOsApiEvent_AudioParams,
+        WViOsApiEvent_Subtitles,
+        WViOsApiEvent_AudioOnlyTracks,
     } WViOsApiEvent;
 
     enum {
@@ -99,13 +100,17 @@ extern "C" {
 #define WVAudioType @"WVAudioType"
 #define WVNumChannels @"WVNumChannels"
 #define WVSampleFrequency @"WVSampleFrequency"
-#define WVBitrate @"WVBitrate"    
+#define WVBitrate @"WVBitrate"
 #define WVCopyControlInformation_EMIKey @"WVCopyControlInformation_EMIKey"
 #define WVCopyControlInformation_APSKey @"WVCopyControlInformation_APSKey"
 #define WVCopyControlInformation_CITKey @"WVCopyControlInformation_CITKey"
 #define WVCopyControlInformation_HDCPKey @"WVCopyControlInformation_HDCPKey"
+#define WVSubtitlesFormatKey @"WVSubtitlesFormatKey"
+#define WVSubtitlesIdKey @"WVSubtitlesIdKey"
+#define WVMediaSourceKey @"WVMediaSourceKey"
+#define WVTrackIdKey @"WVTrackIdKey"
+#define WVAudioIdKey @"WVAudioIdKey"
 
-   
 //Setup values
 #define WVDRMServerKey @"WVDRMServerKey"
 #define WVDRMAckUrlKey @"WVDRMAckUrlKey"
@@ -123,6 +128,9 @@ extern "C" {
 #define WVClientIdKey @"WVClientIDKey"
 #define WVPortalKey @"WVPortalKey"
 #define WVStorefrontKey @"WVStorefrontKey"
+#define WVUseJSONKey @"WVUseJSON"
+#define WVUseEncryptedLoopback @"WVUseEncryptedLoopback"
+#define WVMinimumAdaptionInterval @"WVMinimumAdaptionInterval"
 
 typedef WViOsApiStatus (*WViOsApiStatusCallback)( WViOsApiEvent event, NSDictionary *attributes );
 
@@ -135,17 +143,18 @@ WViOsApiStatus WV_UnregisterAsset (NSString *asset);
 WViOsApiStatus WV_QueryAssetsStatus ();
 WViOsApiStatus WV_QueryAssetStatus (NSString *asset );
 WViOsApiStatus WV_NowOnline ();
+WViOsApiStatus WV_RenewAsset (NSString *asset);
 WViOsApiStatus WV_Play (NSString *asset, NSMutableString *url, NSData *authentication );
 WViOsApiStatus WV_Stop ();
 WViOsApiStatus WV_SelectBitrateTrack( int trackNumber );
+WViOsApiStatus WV_SelectAudioTrack(int trackNumber);
 NSString *WV_GetDeviceId();
-    
+
 NSString *NSStringFromWViOsApiEvent( WViOsApiEvent );
 
 
 #ifdef __cplusplus
 };
-#endif
-        
-#endif
+#endif  // _cplusplus
+
 #endif
