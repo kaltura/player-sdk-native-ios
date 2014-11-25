@@ -12,6 +12,7 @@
     
     __weak IBOutlet UIWebView *webview;
     __weak IBOutlet UIView *loadingView;
+    KPBrowserCompletionHandler _completionHandler;
 }
 
 @end
@@ -29,11 +30,23 @@
     return nil;
 }
 
+- (void)setCompletionHandler:(KPBrowserCompletionHandler)completionHandler {
+    _completionHandler = completionHandler;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [webview loadRequest:[NSURLRequest requestWithURL:_url]];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [webview loadHTMLString:@"" baseURL:nil];
+    [webview stopLoading];
+    webview.delegate = nil;
+    [webview removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -43,8 +56,9 @@
 
 
 - (IBAction)cancelPressed:(UIBarButtonItem *)sender {
-    [_delegate shareBrowser:self result:KPShareResultsCancel];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    if (_completionHandler) {
+        _completionHandler(KPBrowserResultCancel, nil);
+    }
 }
 
 
@@ -53,8 +67,8 @@
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSString *currentRequest = request.URL.absoluteString;
     for (NSString *redirectUrl in _redirectURIs) {
-        if ([currentRequest hasPrefix:redirectUrl]) {
-            [_delegate shareBrowser:self result:KPShareResultsSuccess];
+        if ([currentRequest hasPrefix:redirectUrl] && _completionHandler) {
+            _completionHandler(KPBrowserResultSuccess, nil);
             break;
         }
     }
@@ -68,7 +82,12 @@
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    [_delegate shareBrowser:self result:KPShareResultsFailed];
+    if (_completionHandler) {
+        _completionHandler(KPBrowserResultFailed, error);
+    }
 }
 
+- (void)dealloc {
+    _completionHandler = nil;
+}
 @end

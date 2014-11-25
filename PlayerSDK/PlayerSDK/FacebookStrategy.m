@@ -43,17 +43,30 @@
             [controller addURL:[NSURL URLWithString:[shareParams shareLink]]];
         }
         
-        if ([shareParams respondsToSelector:@selector(shareTitle)]) {
+        if ([shareParams respondsToSelector:@selector(videoName)]) {
             [controller setInitialText:[shareParams videoName]];
         }
         
         return controller;
     }
-    _completion = [completion copy];
+    return [self shareWithBrowser:shareParams completion:completion];
+}
+
+- (KPShareBrowserViewController *)shareWithBrowser:(id<KPShareParams>)params
+                                        completion:(KPShareCompletionBlock)completion {
     KPShareBrowserViewController *browser = [KPShareBrowserViewController new];
-    browser.delegate = self;
-    browser.url = [self shareURL:shareParams];
-    browser.redirectURIs = [shareParams redirectURLs];
+    browser.url = [self shareURL:params];
+    browser.redirectURIs = [params redirectURLs];
+    __weak UIViewController *weakBrowser = browser;
+    [browser setCompletionHandler: ^(KPBrowserResult result, NSError *error) {
+        [weakBrowser dismissViewControllerAnimated:YES completion:nil];
+        KPShareError *shareError = nil;
+        if (error) {
+            shareError = [KPShareError new];
+            shareError.error = error;
+        }
+        completion((KPShareResults)result, shareError);
+    }];
     return browser;
 }
 
@@ -67,11 +80,4 @@
     return [NSURL URLWithString:requestString];
 }
 
-#pragma mark KPShareBrowserViewControllerDelegate
-- (void)shareBrowser:(KPShareBrowserViewController *)shareBrowser result:(KPShareResults)result {
-    [shareBrowser dismissViewControllerAnimated:YES completion:nil];
-    if (_completion) {
-        _completion(result, nil);
-    }
-}
 @end

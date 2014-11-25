@@ -242,16 +242,13 @@
 }
 
 - (void)share {
-    [KPShareManager shared].datasource = shareParamsDict;
-    __block UIViewController *shareViewController = [[KPShareManager shared] shareWithCompletion:^(KPShareResults result,
-                                                                                                   KPShareError *shareError) {
-        [shareViewController dismissViewControllerAnimated:YES completion:nil];
+    KPShareManager *shareManager = [KPShareManager new];
+    shareManager.datasource = shareParamsDict;
+    UIViewController *shareController = [shareManager shareWithCompletion:^(KPShareResults result,
+                                                                            KPShareError *shareError) {
+        
     }];
-    if (shareViewController) {
-        [self presentViewController:shareViewController
-                           animated:YES
-                         completion:nil];
-    }
+    [self presentViewController:shareController animated:YES completion:nil];
 }
 
 #pragma Kaltura Player External API - KDP API

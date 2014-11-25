@@ -11,9 +11,7 @@
 #import "KPShareBrowserViewController.h"
 #import <Social/Social.h>
 
-@interface FacebookStrategy : NSObject <KPShareStratrgy, KPShareBrowserViewControllerDelegate> {
-    KPShareCompletionBlock _completion;
-}
+@interface FacebookStrategy : NSObject <KPShareStratrgy>
 
 /// SLServiceType for the Twitter and the Facebook networks
 @property (nonatomic, copy, readonly) NSString *composeType;
@@ -26,4 +24,7 @@
  *  @return NSURL The API request which has been generated.
  */
 - (NSURL *)shareURL:(id<KPShareParams>)params;
+
+- (KPShareBrowserViewController *)shareWithBrowser:(id<KPShareParams>)params
+                                        completion:(KPShareCompletionBlock)completion;
 @end

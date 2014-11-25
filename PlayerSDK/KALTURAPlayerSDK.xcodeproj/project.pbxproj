@@ -8,6 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B30BADE91A21ED06008E5E67 /* NSDictionary+Strategy.m */; };
+		B32A5CDC1A2492C10051DC7F /* FacebookStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */; };
+		B32A5CDD1A2492C10051DC7F /* TwitterStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */; };
+		B32A5CDE1A2492C10051DC7F /* GooglePlusStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */; };
+		B32A5CDF1A2492C10051DC7F /* MailStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8A1A0B6EC40085BA26 /* MailStrategy.h */; };
+		B32A5CE01A2492C10051DC7F /* MessageStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */; };
+		B32A5CE11A2492C10051DC7F /* KPShareManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */; };
+		B32A5CE21A2492C10051DC7F /* NSDictionary+Strategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B30BADE81A21ED06008E5E67 /* NSDictionary+Strategy.h */; };
 		B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
 		B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
 		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
@@ -73,6 +80,13 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				B32A5CDC1A2492C10051DC7F /* FacebookStrategy.h in CopyFiles */,
+				B32A5CDD1A2492C10051DC7F /* TwitterStrategy.h in CopyFiles */,
+				B32A5CDE1A2492C10051DC7F /* GooglePlusStrategy.h in CopyFiles */,
+				B32A5CDF1A2492C10051DC7F /* MailStrategy.h in CopyFiles */,
+				B32A5CE01A2492C10051DC7F /* MessageStrategy.h in CopyFiles */,
+				B32A5CE11A2492C10051DC7F /* KPShareManager.h in CopyFiles */,
+				B32A5CE21A2492C10051DC7F /* NSDictionary+Strategy.h in CopyFiles */,
 				BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */,
 				BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */,
 				BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */,
