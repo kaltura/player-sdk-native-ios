@@ -9,16 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-/// Key for share provider value
-static NSString *NameKey = @"name";
-
-/// Key for share api Domain value
-static NSString *RootURLKey = @"url";
-
-/// Key for redirect URL value (use for determine that the share request has finished)
-static NSString *RedirectURLKey = @"redirectUrl";
-
-
 
 /** Deals with any kind of share failure
  */
@@ -82,13 +72,6 @@ typedef void (^KPShareCompletionBlock)(KPShareResults result, KPShareError *shar
 /// An object which contains all the parameters for creating a post
 @property (nonatomic, strong) id<KPShareParams> datasource;
 
-
-
-/** Singleton instance
- *
- * @return KPShareManager instance
- */
-+ (KPShareManager *)shared;
 
 
 /** Perform post action by strategy pattern
