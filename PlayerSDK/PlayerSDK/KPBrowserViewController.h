@@ -16,7 +16,7 @@ typedef NS_ENUM(NSInteger, KPBrowserResult){
 
 typedef void (^KPBrowserCompletionHandler)(KPBrowserResult result, NSError *error);
 
-@interface KPShareBrowserViewController : UIViewController
+@interface KPBrowserViewController : UIViewController
 
 /// The share url for the current network
 @property (nonatomic, copy) NSURL *url;

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KPShareManager.h"
-#import "KPShareBrowserViewController.h"
+#import "KPBrowserViewController.h"
 #import <Social/Social.h>
 
 @interface FacebookStrategy : NSObject <KPShareStratrgy>
@@ -25,6 +25,6 @@
  */
 - (NSURL *)shareURL:(id<KPShareParams>)params;
 
-- (KPShareBrowserViewController *)shareWithBrowser:(id<KPShareParams>)params
-                                        completion:(KPShareCompletionBlock)completion;
+- (KPBrowserViewController *)shareWithBrowser:(id<KPShareParams>)params
+                                   completion:(KPShareCompletionBlock)completion;
 @end

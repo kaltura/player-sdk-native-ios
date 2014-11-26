@@ -15,8 +15,9 @@
 		B32A5CE01A2492C10051DC7F /* MessageStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */; };
 		B32A5CE11A2492C10051DC7F /* KPShareManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */; };
 		B32A5CE21A2492C10051DC7F /* NSDictionary+Strategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B30BADE81A21ED06008E5E67 /* NSDictionary+Strategy.h */; };
-		B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
-		B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */; };
+		B32A5CE71A25D4C00051DC7F /* KPBrowserViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC981A0BCB280085BA26 /* KPBrowserViewController.h */; };
+		B33E5DAC1A1CEA2000A14A1B /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */; };
+		B33E5DAD1A1CEF4400A14A1B /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */; };
 		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
 		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
 		B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */; };
@@ -25,7 +26,7 @@
 		B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */; };
 		B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */; };
 		B39BEC951A0BA8C40085BA26 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B39BEC941A0BA8C40085BA26 /* MessageUI.framework */; };
-		B39BEC9A1A0BCB280085BA26 /* KPShareBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */; };
+		B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
 		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
@@ -80,6 +81,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				B32A5CE71A25D4C00051DC7F /* KPBrowserViewController.h in CopyFiles */,
 				B32A5CDC1A2492C10051DC7F /* FacebookStrategy.h in CopyFiles */,
 				B32A5CDD1A2492C10051DC7F /* TwitterStrategy.h in CopyFiles */,
 				B32A5CDE1A2492C10051DC7F /* GooglePlusStrategy.h in CopyFiles */,
@@ -103,7 +105,7 @@
 /* Begin PBXFileReference section */
 		B30BADE81A21ED06008E5E67 /* NSDictionary+Strategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Strategy.h"; sourceTree = "<group>"; };
 		B30BADE91A21ED06008E5E67 /* NSDictionary+Strategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Strategy.m"; sourceTree = "<group>"; };
-		B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPShareBrowserViewController.xib; sourceTree = "<group>"; };
+		B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPBrowserViewController.xib; sourceTree = "<group>"; };
 		B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusStrategy.h; sourceTree = "<group>"; };
 		B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusStrategy.m; sourceTree = "<group>"; };
 		B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareManager.h; sourceTree = "<group>"; };
@@ -118,8 +120,8 @@
 		B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageStrategy.h; sourceTree = "<group>"; };
 		B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageStrategy.m; sourceTree = "<group>"; };
 		B39BEC941A0BA8C40085BA26 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		B39BEC981A0BCB280085BA26 /* KPShareBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareBrowserViewController.h; sourceTree = "<group>"; };
-		B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPShareBrowserViewController.m; sourceTree = "<group>"; };
+		B39BEC981A0BCB280085BA26 /* KPBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPBrowserViewController.h; sourceTree = "<group>"; };
+		B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPBrowserViewController.m; sourceTree = "<group>"; };
 		B3D7588B1A1CBEDF00CA5A96 /* Test.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3D7588E1A1CBEDF00CA5A96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
@@ -211,9 +213,9 @@
 		B3932AC81A092C4900AC0442 /* ShareViewContrller */ = {
 			isa = PBXGroup;
 			children = (
-				B39BEC981A0BCB280085BA26 /* KPShareBrowserViewController.h */,
-				B39BEC991A0BCB280085BA26 /* KPShareBrowserViewController.m */,
-				B33E5DAB1A1CEA2000A14A1B /* KPShareBrowserViewController.xib */,
+				B39BEC981A0BCB280085BA26 /* KPBrowserViewController.h */,
+				B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */,
+				B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */,
 			);
 			name = ShareViewContrller;
 			sourceTree = "<group>";
@@ -493,7 +495,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B33E5DAD1A1CEF4400A14A1B /* KPShareBrowserViewController.xib in Resources */,
+				B33E5DAD1A1CEF4400A14A1B /* KPBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -501,7 +503,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B33E5DAC1A1CEA2000A14A1B /* KPShareBrowserViewController.xib in Resources */,
+				B33E5DAC1A1CEA2000A14A1B /* KPBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +548,7 @@
 				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
 				B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */,
-				B39BEC9A1A0BCB280085BA26 /* KPShareBrowserViewController.m in Sources */,
+				B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */,
 				BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */,
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
 				BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */,

@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KPShareBrowserViewController">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="KPBrowserViewController">
             <connections>
                 <outlet property="loadingView" destination="rSd-ou-uYM" id="Pp0-3p-Pdh"/>
                 <outlet property="view" destination="iN0-l3-epB" id="9jo-yA-SeX"/>

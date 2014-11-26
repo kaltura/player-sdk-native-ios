@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "KPShareBrowserViewController.h"
+#import "KPBrowserViewController.h"
 
-@interface KPShareBrowserViewController () <UIWebViewDelegate>{
+@interface KPBrowserViewController () <UIWebViewDelegate>{
     
     __weak IBOutlet UIWebView *webview;
     __weak IBOutlet UIView *loadingView;
@@ -17,13 +17,13 @@
 
 @end
 
-@implementation KPShareBrowserViewController
+@implementation KPBrowserViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     NSBundle *playerBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
                                                       URLForResource:@"Test"
                                                       withExtension:@"bundle"]];
-    self = [super initWithNibName:@"KPShareBrowserViewController" bundle:playerBundle];
+    self = [super initWithNibName:@"KPBrowserViewController" bundle:playerBundle];
     if (self) {
         return self;
     }
