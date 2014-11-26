@@ -10,5 +10,5 @@
 #import "KPShareManager.h"
 
 @interface NSDictionary (Strategy) <KPShareParams>
-
+@property (nonatomic, assign, readonly) NSInteger actionType;
 @end

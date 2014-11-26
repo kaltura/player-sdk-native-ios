@@ -15,6 +15,10 @@
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
 
+typedef NS_ENUM(NSInteger, KPActionType) {
+    KPActionTypeShare
+};
+
 @implementation KPViewController {
     // Player Params
     BOOL isSeeking;
@@ -37,7 +41,7 @@
     
     BOOL *showChromecastBtn;
     
-    NSDictionary *shareParamsDict;
+    NSDictionary *nativeActionParams;
 }
 
 @synthesize webView, player;
@@ -241,9 +245,20 @@
     NSLog(@"Stop Player Exit");
 }
 
+- (void)doNativeAction {
+    switch (nativeActionParams.actionType) {
+        case KPActionTypeShare:
+            [self share];
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (void)share {
     KPShareManager *shareManager = [KPShareManager new];
-    shareManager.datasource = shareParamsDict;
+    shareManager.datasource = nativeActionParams;
     UIViewController *shareController = [shareManager shareWithCompletion:^(KPShareResults result,
                                                                             KPShareError *shareError) {
         
@@ -712,8 +727,8 @@
 
             break;
 #endif
-        case shareParams:
-            shareParamsDict = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+        case nativeAction:
+            nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
             break;
         default:
             break;
@@ -971,7 +986,7 @@
 #if !(TARGET_IPHONE_SIMULATOR)
                                 [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
 #endif
-                                [NSNumber numberWithInteger:shareParams], @"shareParams",
+                                [NSNumber numberWithInteger:nativeAction], @"nativeAction",
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");

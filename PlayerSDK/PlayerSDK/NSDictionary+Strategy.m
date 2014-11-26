@@ -8,6 +8,8 @@
 
 #import "NSDictionary+Strategy.h"
 
+static NSString *ActionTypeKey = @"actionType";
+
 static NSString *NetworkKeyPath = @"shareNetwork.name";
 static NSString *NetworkURLKeyPath = @"shareNetwork.url";
 static NSString *NetworkRedirectURLKeyPath = @"shareNetwork.redirectUrl";
@@ -44,5 +46,9 @@ static NSString *ThumbnailKey = @"thumbnail";
 - (Class)networkStrategyClass {
     NSString *strategyName = [[self valueForKeyPath:NetworkKeyPath] stringByAppendingString:@"Strategy"];
     return NSClassFromString(strategyName);
+}
+
+- (NSInteger)actionType {
+    return [self[ActionTypeKey] integerValue];
 }
 @end
