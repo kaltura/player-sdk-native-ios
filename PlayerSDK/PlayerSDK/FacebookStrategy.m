@@ -54,7 +54,8 @@
 
 - (KPBrowserViewController *)shareWithBrowser:(id<KPShareParams>)params
                                         completion:(KPShareCompletionBlock)completion {
-    KPBrowserViewController *browser = [KPBrowserViewController new];
+    
+    KPBrowserViewController *browser = [KPBrowserViewController currentBrowser];
     browser.url = [self shareURL:params];
     browser.redirectURIs = [params redirectURLs];
     __weak UIViewController *weakBrowser = browser;
@@ -67,6 +68,8 @@
         }
         completion((KPShareResults)result, shareError);
     }];
+//    KPWebKitBrowserViewController *browser = [KPWebKitBrowserViewController new];
+//    browser.url = [self shareURL:params];
     return browser;
 }
 

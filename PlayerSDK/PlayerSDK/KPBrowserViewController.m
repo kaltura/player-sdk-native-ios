@@ -7,23 +7,28 @@
 //
 
 #import "KPBrowserViewController.h"
+#import "Utilities.h"
 
 @interface KPBrowserViewController () <UIWebViewDelegate>{
     
     __weak IBOutlet UIWebView *webview;
     __weak IBOutlet UIView *loadingView;
-    KPBrowserCompletionHandler _completionHandler;
 }
 
 @end
 
 @implementation KPBrowserViewController
 
++ (id)currentBrowser {
+    NSString *nibName = isIOS8() ? @"KPWebKitBrowserViewController" : @"KPBrowserViewController";
+    return [[NSClassFromString(nibName) alloc] initWithNibName:nibName bundle:nil];
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     NSBundle *playerBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
                                                       URLForResource:@"Test"
                                                       withExtension:@"bundle"]];
-    self = [super initWithNibName:@"KPBrowserViewController" bundle:playerBundle];
+    self = [super initWithNibName:nibNameOrNil bundle:playerBundle];
     if (self) {
         return self;
     }

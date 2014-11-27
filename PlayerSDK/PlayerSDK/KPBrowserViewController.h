@@ -16,7 +16,15 @@ typedef NS_ENUM(NSInteger, KPBrowserResult){
 
 typedef void (^KPBrowserCompletionHandler)(KPBrowserResult result, NSError *error);
 
-@interface KPBrowserViewController : UIViewController
+@interface KPBrowserViewController : UIViewController {
+    KPBrowserCompletionHandler _completionHandler;
+}
+
+/** Creates a browser according to the operating system
+ *
+ *  @return instancetype UIWebView browser for iOS7 and WKWebView for iOS8+
+ */
++ (instancetype)currentBrowser;
 
 /// The share url for the current network
 @property (nonatomic, copy) NSURL *url;
@@ -25,4 +33,5 @@ typedef void (^KPBrowserCompletionHandler)(KPBrowserResult result, NSError *erro
 @property (nonatomic, copy) NSArray *redirectURIs;
 
 - (void)setCompletionHandler:(KPBrowserCompletionHandler)completionHandler;
+
 @end
