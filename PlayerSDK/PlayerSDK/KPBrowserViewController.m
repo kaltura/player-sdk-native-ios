@@ -62,7 +62,9 @@
 
 - (IBAction)cancelPressed:(UIBarButtonItem *)sender {
     if (_completionHandler) {
-        _completionHandler(KPBrowserResultCancel, nil);
+        _completionHandler(KPBrowserResultSuccess, nil);
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 

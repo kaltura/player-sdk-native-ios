@@ -21,19 +21,20 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="522"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="522" id="LuX-El-mhm"/>
+                        <constraint firstAttribute="width" constant="320" id="JHv-xB-kkj"/>
+                        <constraint firstAttribute="height" constant="522" id="OZq-j2-5gN"/>
                     </constraints>
                 </view>
                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WTH-uU-8Tr">
                     <rect key="frame" x="0.0" y="522" width="320" height="2"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="2" id="zrS-Qr-Qtv"/>
+                        <constraint firstAttribute="height" constant="2" id="QYJ-c8-YtK"/>
                     </constraints>
                 </progressView>
                 <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wzz-RV-pbp">
                     <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="44" id="fGx-hh-Cto"/>
+                        <constraint firstAttribute="height" constant="44" id="GWT-Cn-pzA"/>
                     </constraints>
                     <items>
                         <barButtonItem systemItem="stop" id="hdD-eE-ljq">
@@ -46,16 +47,17 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="WTH-uU-8Tr" secondAttribute="trailing" id="JVw-h2-BcP"/>
-                <constraint firstAttribute="trailing" secondItem="Ter-s0-14g" secondAttribute="trailing" id="KMx-q7-j8i"/>
-                <constraint firstItem="Ter-s0-14g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="QxS-QV-Vto"/>
-                <constraint firstItem="wzz-RV-pbp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Rkh-Kt-HGx"/>
-                <constraint firstItem="WTH-uU-8Tr" firstAttribute="top" secondItem="Ter-s0-14g" secondAttribute="bottom" id="enf-Mt-4EF"/>
-                <constraint firstItem="wzz-RV-pbp" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="524" id="jI0-gD-N2D"/>
-                <constraint firstItem="WTH-uU-8Tr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="kO0-cc-wFD"/>
-                <constraint firstItem="wzz-RV-pbp" firstAttribute="top" secondItem="WTH-uU-8Tr" secondAttribute="bottom" id="lUk-VA-PRe"/>
-                <constraint firstItem="Ter-s0-14g" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vwX-vj-MEc"/>
-                <constraint firstAttribute="trailing" secondItem="wzz-RV-pbp" secondAttribute="trailing" id="vyv-Iq-Yz9"/>
+                <constraint firstItem="WTH-uU-8Tr" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="6Gy-8m-hOr"/>
+                <constraint firstAttribute="trailing" secondItem="WTH-uU-8Tr" secondAttribute="trailing" id="9NJ-QV-Ncb"/>
+                <constraint firstAttribute="bottom" secondItem="wzz-RV-pbp" secondAttribute="bottom" id="9gM-SJ-GsQ"/>
+                <constraint firstItem="wzz-RV-pbp" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="KgB-zM-kmO"/>
+                <constraint firstAttribute="bottom" secondItem="Ter-s0-14g" secondAttribute="bottom" constant="46" id="XO9-UO-ua4"/>
+                <constraint firstItem="WTH-uU-8Tr" firstAttribute="top" secondItem="Ter-s0-14g" secondAttribute="bottom" id="Y1E-Rf-07i"/>
+                <constraint firstItem="Ter-s0-14g" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="bXM-8O-g59"/>
+                <constraint firstItem="Ter-s0-14g" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ez1-MU-laJ"/>
+                <constraint firstItem="wzz-RV-pbp" firstAttribute="top" secondItem="WTH-uU-8Tr" secondAttribute="bottom" id="nfg-Oy-3GS"/>
+                <constraint firstAttribute="trailing" secondItem="wzz-RV-pbp" secondAttribute="trailing" id="o3d-PN-tTu"/>
+                <constraint firstAttribute="trailing" secondItem="Ter-s0-14g" secondAttribute="trailing" id="y2V-WQ-6ka"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
             <point key="canvasLocation" x="420" y="375"/>

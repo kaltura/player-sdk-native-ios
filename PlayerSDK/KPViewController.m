@@ -14,9 +14,11 @@
 #import "KPEventListener.h"
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
+#import "KPBrowserViewController.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
-    KPActionTypeShare
+    KPActionTypeShare,
+    KPActionTypeOpenHomePage
 };
 
 @implementation KPViewController {
@@ -250,7 +252,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         case KPActionTypeShare:
             [self share];
             break;
-            
+        case KPActionTypeOpenHomePage:
+            [self openURL];
+            break;
         default:
             break;
     }
@@ -264,6 +268,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         
     }];
     [self presentViewController:shareController animated:YES completion:nil];
+}
+
+- (void)openURL {
+    KPBrowserViewController *browser = [KPBrowserViewController currentBrowser];
+    browser.url = nativeActionParams.openURL;
+    [self presentViewController:browser animated:YES completion:nil];
 }
 
 #pragma Kaltura Player External API - KDP API
@@ -657,7 +667,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ( self ) {
 //        [[self player] bindPlayerEvents];
         
-       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"durationchange", @"loadedmetadata", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", nil];
+       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"durationchange", @"loadedmetadata", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", @"fetchNativeAdID", nil];
         
         for (id kPlayerEvent in kPlayerEvents) {
             [[NSNotificationCenter defaultCenter] addObserver: self
@@ -728,7 +738,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
 #endif
         case nativeAction:
-            nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+            nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding]
+                                                                 options:0
+                                                                   error:nil];
+            break;
+        case JSReady:
+            [self triggerEventsJavaScript:@"fetchNativeAdID" WithValue:@"Yeahh"];
             break;
         default:
             break;
@@ -987,6 +1002,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                 [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
 #endif
                                 [NSNumber numberWithInteger:nativeAction], @"nativeAction",
+                                [NSNumber numberWithInteger:JSReady], @"JSReady",
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");

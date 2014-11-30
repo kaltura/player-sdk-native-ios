@@ -25,7 +25,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    //WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc] init];
+    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(orientationChanged)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
     webview = [[WKWebView alloc] initWithFrame:webviewHolder.bounds];
     webview.navigationDelegate = self;
     [webviewHolder addSubview:webview];
@@ -38,7 +42,11 @@
 }
 
 - (IBAction)dismissPressed:(UIBarButtonItem *)sender {
-    _completionHandler(KPBrowserResultSuccess, nil);
+    if (_completionHandler) {
+        _completionHandler(KPBrowserResultSuccess, nil);
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)restetProgressBar {
@@ -65,6 +73,13 @@
 
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    _completionHandler(KPBrowserResultFailed, error);
+    if (_completionHandler) {
+        _completionHandler(KPBrowserResultFailed, error);
+    }
+}
+
+
+- (void)orientationChanged {
+    webview.frame = webviewHolder.bounds;
 }
 @end

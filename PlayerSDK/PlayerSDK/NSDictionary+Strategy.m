@@ -10,12 +10,15 @@
 
 static NSString *ActionTypeKey = @"actionType";
 
+static NSString *OpenURL = @"url";
+
 static NSString *NetworkKeyPath = @"shareNetwork.name";
 static NSString *NetworkURLKeyPath = @"shareNetwork.url";
 static NSString *NetworkRedirectURLKeyPath = @"shareNetwork.redirectUrl";
 static NSString *SharedLinkKey = @"sharedLink";
 static NSString *VideoNameKey = @"videoName";
 static NSString *ThumbnailKey = @"thumbnail";
+
 
 @implementation NSDictionary (Strategy)
 - (NSString *)videoName {
@@ -50,5 +53,9 @@ static NSString *ThumbnailKey = @"thumbnail";
 
 - (NSInteger)actionType {
     return [self[ActionTypeKey] integerValue];
+}
+
+- (NSURL *)openURL {
+    return [NSURL URLWithString:self[OpenURL]];
 }
 @end
