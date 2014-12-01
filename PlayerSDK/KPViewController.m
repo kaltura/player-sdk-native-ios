@@ -12,6 +12,15 @@
 
 #import "KPViewController.h"
 #import "KPEventListener.h"
+#import "KPShareManager.h"
+#import "NSDictionary+Strategy.h"
+#import "KPBrowserViewController.h"
+#import "Utilities.h"
+
+typedef NS_ENUM(NSInteger, KPActionType) {
+    KPActionTypeShare,
+    KPActionTypeOpenHomePage
+};
 
 @implementation KPViewController {
     // Player Params
@@ -35,6 +44,8 @@
     NSMutableDictionary *kPlayerEvaluatedDict;
     
     BOOL *showChromecastBtn;
+    
+    NSDictionary *nativeActionParams;
 }
 
 @synthesize webView, player;
@@ -191,6 +202,9 @@
     [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
     
 //    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    
+    /// Add the idfa to the iframeURL
+    iframeUrl = [iframeUrl stringByAppendingFormat:@"&flashvars[nativeAdId]=%@", idfa()];
     [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
@@ -237,6 +251,35 @@
     [[self player] stop];
     
     NSLog(@"Stop Player Exit");
+}
+
+- (void)doNativeAction {
+    switch (nativeActionParams.actionType) {
+        case KPActionTypeShare:
+            [self share];
+            break;
+        case KPActionTypeOpenHomePage:
+            [self openURL];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)share {
+    KPShareManager *shareManager = [KPShareManager new];
+    shareManager.datasource = nativeActionParams;
+    UIViewController *shareController = [shareManager shareWithCompletion:^(KPShareResults result,
+                                                                            KPShareError *shareError) {
+        
+    }];
+    [self presentViewController:shareController animated:YES completion:nil];
+}
+
+- (void)openURL {
+    KPBrowserViewController *browser = [KPBrowserViewController currentBrowser];
+    browser.url = nativeActionParams.openURL;
+    [self presentViewController:browser animated:YES completion:nil];
 }
 
 #pragma Kaltura Player External API - KDP API
@@ -628,7 +671,10 @@
     if ( [args count] > 0 ) {
         functionName = [NSString stringWithFormat:@"%@:", functionName];
     }
-    [self performSelector:NSSelectorFromString(functionName) withObject:args];
+    if ([self respondsToSelector:NSSelectorFromString(functionName)]) {
+        [self performSelector:NSSelectorFromString(functionName) withObject:args];
+    }
+    
 #pragma clang diagnostic pop
     
     NSLog(@"handleHtml5LibCall Exit");
@@ -640,7 +686,7 @@
     if ( self ) {
 //        [[self player] bindPlayerEvents];
         
-       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"durationchange", @"loadedmetadata", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", nil];
+       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"durationchange", @"loadedmetadata", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", @"fetchNativeAdID", nil];
         
         for (id kPlayerEvent in kPlayerEvents) {
             [[NSNotificationCenter defaultCenter] addObserver: self
@@ -684,22 +730,19 @@
     
     NSString *attributeName = [args objectAtIndex:0];
     Attribute attributeValue = [attributeName attributeNameEnumFromString];
-    NSString *attributeVal;
+    NSString *attributeVal = args[1];
     
     switch ( attributeValue ) {
         case src:
-            attributeVal = [args objectAtIndex:1];
             playerSource = attributeVal;
             [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
             break;
         case currentTime:
-            attributeVal = [args objectAtIndex:1];
             if( [[self player] isPreparedToPlay] ){
                 [ [self player] setCurrentPlaybackTime: [attributeVal doubleValue] ];
             }
             break;
         case visible:
-            attributeVal = [args objectAtIndex:1];
             [self visible: attributeVal];
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
@@ -707,17 +750,20 @@
             if ( [[self player] respondsToSelector:@selector(setWideVideConfigurations)] ) {
                 [[self player] setWideVideConfigurations];
             }
-            attributeVal = [args objectAtIndex:1];
             if ( [[self player] respondsToSelector:@selector(initWV:andKey:)]) {
                 [[self player] initWV: playerSource andKey: attributeVal];
             }
 
             break;
 #endif
+        case nativeAction:
+            nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding]
+                                                                 options:0
+                                                                   error:nil];
+            break;
         default:
             break;
     }
-    
     NSLog(@"setAttribute Exit");
 }
 
@@ -970,6 +1016,7 @@
 #if !(TARGET_IPHONE_SIMULATOR)
                                 [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
 #endif
+                                [NSNumber numberWithInteger:nativeAction], @"nativeAction",
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");
