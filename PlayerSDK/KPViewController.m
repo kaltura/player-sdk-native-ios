@@ -15,6 +15,7 @@
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
+#import "Utilities.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
@@ -200,6 +201,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
     
 //    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    
+    /// Add the idfa to the iframeURL
+    iframeUrl = [iframeUrl stringByAppendingFormat:@"&flashvars[nativeAdId]=%@", idfa()];
     [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
@@ -425,7 +429,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog( @"setOrientationTransform Enter" );
     
     // UIWindow frame in ios 8 different for Landscape mode
-    if( [self isIOS8] ) {
+    if( isIOS8() ) {
         [self.view setTransform: CGAffineTransformIdentity];
         return;
     }
@@ -655,7 +659,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ( [args count] > 0 ) {
         functionName = [NSString stringWithFormat:@"%@:", functionName];
     }
-    [self performSelector:NSSelectorFromString(functionName) withObject:args];
+    if ([self respondsToSelector:NSSelectorFromString(functionName)]) {
+        [self performSelector:NSSelectorFromString(functionName) withObject:args];
+    }
+    
 #pragma clang diagnostic pop
     
     NSLog(@"handleHtml5LibCall Exit");
@@ -742,13 +749,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                  options:0
                                                                    error:nil];
             break;
-        case JSReady:
-            [self triggerEventsJavaScript:@"fetchNativeAdID" WithValue:@"Yeahh"];
-            break;
         default:
             break;
     }
-    
     NSLog(@"setAttribute Exit");
 }
 
@@ -1002,7 +1005,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                 [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
 #endif
                                 [NSNumber numberWithInteger:nativeAction], @"nativeAction",
-                                [NSNumber numberWithInteger:JSReady], @"JSReady",
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");

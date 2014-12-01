@@ -1,4 +1,5 @@
 #import <Foundation/Foundation.h>
+#import <AdSupport/AdSupport.h>
 
 CG_INLINE BOOL __isIOS8() {
     NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
@@ -10,6 +11,12 @@ CG_INLINE BOOL __isIOS8() {
     return NO;
 }
 
+CG_INLINE NSString *__idfa() {
+    return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+}
+
 CG_EXTERN BOOL isIOS8();
+CG_EXTERN NSString *idfa();
 
 #define isIOS8 __isIOS8
+#define idfa __idfa
