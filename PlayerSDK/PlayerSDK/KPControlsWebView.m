@@ -96,13 +96,14 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     NSLog(@"checkIsIframeUrl Enter");
     
-    if ( [requestString rangeOfString: @"mwEmbedFrame"].location == NSNotFound ) {
-        return NO;
+    if ( [requestString rangeOfString: @"mwEmbedFrame"].location != NSNotFound
+        || [requestString rangeOfString: @"embedIframeJs"].location != NSNotFound ) {
+        return YES;
     }
 
     NSLog(@"checkIsIframeUrl Enter");
     
-    return YES;
+    return NO;
 }
 
 // Call this function when you have results to send back to javascript callbacks

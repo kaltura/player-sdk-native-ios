@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
+    BOOL isFullScreenToggled;
     // AirPlay Params
     MPVolumeView *volumeView;
     NSArray *prevAirPlayBtnPositionArr;
@@ -116,7 +117,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         NSURL *url = [kalPlayerViewControllerDelegate getInitialKIframeUrl];
         [self setWebViewURL: [NSString stringWithFormat: @"%@", url]];
     } else {
-        @throw [NSException exceptionWithName:NSGenericException reason:@"Delegate MUST be set and respond to selector -getInitialKIframeUrl !" userInfo:nil];
+        NSLog( @"Error:: Delegate MUST be set and respond to selector -getInitialKIframeUrl");
         return;
     }
     
@@ -223,13 +224,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     isFullScreen = NO;
     isPlaying = NO;
     isResumePlayer = NO;
+    isFullScreenToggled = NO;
     
     NSLog(@"initPlayerParams Exit");
 }
 
 - (void)play {
     NSLog( @"Play Player Enter" );
-    
+       
     [[self player] play];
     
     NSLog( @"Play Player Exit" );
@@ -429,11 +431,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog( @"setOrientationTransform Enter" );
     
     // UIWindow frame in ios 8 different for Landscape mode
-    if( isIOS8() ) {
+    if( [self isIOS8] && !isFullScreenToggled ) {
         [self.view setTransform: CGAffineTransformIdentity];
         return;
     }
     
+    isFullScreenToggled = NO;
     if ( isFullScreen ) {
         // Init Transform for Fullscreen
         fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
@@ -529,6 +532,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [UIApplication sharedApplication].statusBarHidden = YES;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+    
+    // Disable fullscreen button if the player is set to fullscreen by default
+    [self registerJSCallbackReady: ^() {
+        NSLog(@"jsCallbackReady");
+        if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
+            [self setKDPAttribute: @"fullScreenBtn" propertyName: @"visible" value: @"false"];
+        }
+    }];
 }
 
 - (void)deviceOrientationDidChange {
@@ -575,6 +586,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog( @"toggleFullscreen Enter" );
     
     isCloseFullScreenByTap = YES;
+    isFullScreenToggled = YES;
     
     if ( !isFullScreen ) {
         [self openFullScreen: openFullScreen];
