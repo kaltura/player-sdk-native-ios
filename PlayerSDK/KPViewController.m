@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeOpenHomePage
 };
 
+static NSURL *urlScheme;
+
 @implementation KPViewController {
     // Player Params
     BOOL isSeeking;
@@ -58,6 +60,18 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     originalViewControllerFrame = frame;
     [parentView addSubview:self.view];
     return self;
+}
+
++ (void)setURLScheme:(NSURL *)url {
+    @synchronized(self) {
+        urlScheme = url;
+    }
+}
+
++ (NSURL *)URLScheme {
+    @synchronized(self) {
+        return urlScheme;
+    }
 }
 
 - (void)viewDidLoad {
@@ -126,10 +140,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)handleEnteredBackground: (NSNotification *)not {
     NSLog(@"handleEnteredBackground Enter");
-    
     [self sendNotification: @"doPause" andNotificationBody: nil];
     
     NSLog(@"handleEnteredBackground Exit");
+}
+
+- (void)didBecomeActive {
+    NSLog(@"%@", self.class.URLScheme);
 }
 
 - (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)class {
@@ -202,6 +219,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
     
 //    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    if (self.class.URLScheme) {
+        
+    }
     
     /// Add the idfa to the iframeURL
     iframeUrl = [iframeUrl stringByAppendingFormat:@"&flashvars[nativeAdId]=%@", idfa()];
