@@ -1,5 +1,22 @@
 #import <UIKit/UIKit.h>
 
+typedef enum{
+    // Player Content Source Url
+    src = 0,
+    // Player Current time (Progress Bar)
+    currentTime,
+    // Player Visibility
+    visible,
+#if !(TARGET_IPHONE_SIMULATOR)
+    // DRM WideVine Key
+    wvServerKey,
+#endif
+    nativeAction
+} Attribute;
+
+// JSCallbackReady Handler Block
+typedef void (^JSCallbackReadyHandler)();
+
 @protocol KPViewControllerDelegate <NSObject>
 
 @required

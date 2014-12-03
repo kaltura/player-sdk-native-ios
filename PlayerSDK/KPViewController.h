@@ -23,22 +23,7 @@
 #import "ChromecastDeviceController.h"
 #import "KPViewControllerProtocols.h"
 
-typedef enum{
-    // Player Content Source Url
-    src = 0,
-    // Player Current time (Progress Bar)
-    currentTime,
-    // Player Visibility
-    visible,
-  #if !(TARGET_IPHONE_SIMULATOR)
-        // DRM WideVine Key
-        wvServerKey,
-    #endif
-    nativeAction
-} Attribute;
 
-// JSCallbackReady Handler Block
-typedef void (^JSCallbackReadyHandler)();
 
 @class KPViewController;
 @class NativeComponentPlugin;
@@ -90,8 +75,3 @@ typedef void (^JSCallbackReadyHandler)();
 
 @end
 
-@interface NSString (EnumParser)
-
-- (Attribute)attributeNameEnumFromString;
-
-@end

@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KPViewControllerProtocols.h"
 
 @interface NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param;
-
+@property (nonatomic, assign, readonly) Attribute attributeEnumFromString;
 @end

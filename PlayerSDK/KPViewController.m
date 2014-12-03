@@ -16,6 +16,7 @@
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
 #import "KPPlayerDatasourceHandler.h"
+#import "NSString+Utilities.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
@@ -751,10 +752,9 @@ static NSURL *urlScheme;
     NSLog(@"setAttribute Enter");
     
     NSString *attributeName = [args objectAtIndex:0];
-    Attribute attributeValue = [attributeName attributeNameEnumFromString];
     NSString *attributeVal = args[1];
     
-    switch ( attributeValue ) {
+    switch ( attributeName.attributeEnumFromString ) {
         case src:
             playerSource = attributeVal;
             [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
@@ -1027,22 +1027,4 @@ static NSURL *urlScheme;
 
 @end
 
-@implementation NSString (EnumParser)
 
-- (Attribute)attributeNameEnumFromString{
-    NSLog(@"attributeNameEnumFromString Enter");
-    
-    NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithInteger:src], @"src",
-                                [NSNumber numberWithInteger:currentTime], @"currentTime",
-#if !(TARGET_IPHONE_SIMULATOR)
-                                [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
-#endif
-                                [NSNumber numberWithInteger:nativeAction], @"nativeAction",
-                                nil
-                                ];
-    NSLog(@"attributeNameEnumFromString Exit");
-    return (Attribute)[[Attributes objectForKey:self] intValue];
-}
-
-@end
