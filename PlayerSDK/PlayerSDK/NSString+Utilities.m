@@ -11,8 +11,9 @@
 @implementation NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param {
     if (param) {
-        return [self stringByAppendingFormat:@"&%@=%@", param.allKeys.lastObject, param.allValues.lastObject];
+        return [self stringByAppendingFormat:@"&%@=%@", param.allKeys[0], param.allValues[0]];
     }
     return nil;
 }
+
 @end

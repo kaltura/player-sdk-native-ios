@@ -15,7 +15,7 @@
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
-#import "Utilities.h"
+#import "KPPlayerDatasourceHandler.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
@@ -219,15 +219,17 @@ static NSURL *urlScheme;
     [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
     
 //    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    if (self.class.URLScheme) {
-        
-    }
+    
     
     /// Add the idfa to the iframeURL
-    iframeUrl = [iframeUrl stringByAppendingFormat:@"&flashvars[nativeAdId]=%@", idfa()];
     [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
+}
+
+
+- (void)load {
+    [self.webView loadRequest:[KPPlayerDatasourceHandler videoRequest:self.datasource]];
 }
 
 - (NSString*)writeJavascript: (NSString*)javascript {

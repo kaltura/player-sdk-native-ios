@@ -10,4 +10,5 @@
 
 @interface NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param;
+
 @end

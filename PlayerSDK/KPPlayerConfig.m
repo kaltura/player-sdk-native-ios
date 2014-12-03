@@ -7,6 +7,10 @@
 //
 
 #import "KPPlayerConfig.h"
+#import "Utilities.h"
+
+static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
+
 @interface KPPlayerConfig()
 
 @property (nonatomic, copy, readonly) NSMutableArray *mutableFlashvarsArray;
@@ -22,13 +26,19 @@
     return _mutableFlashvarsArray;
 }
 
-- (void)addFlashvar:(NSString *)key value:(NSString *)value {
+- (void)addConfigKey:(NSString *)key withValue:(NSString *)value; {
     if (key && value) {
-        [self.mutableFlashvarsArray addObject:@{key: [NSString stringWithFormat:@"flashvars[%@]", value]}];
+        [self.mutableFlashvarsArray addObject:@{[NSString stringWithFormat:@"flashvars[%@]", key]: value}];
     }
 }
 
 - (NSArray *)flashvarsArray {
+    [self addDefaultFlags];
     return self.mutableFlashvarsArray.copy;
 }
+
+- (void)addDefaultFlags {
+    [self addConfigKey:KPPlayerConfigNativeAdIdKey withValue:advertiserID];
+}
+
 @end

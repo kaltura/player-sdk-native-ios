@@ -85,6 +85,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
 
+- (void)load;
 @property (nonatomic, retain) NSMutableDictionary *players;
 
 @end

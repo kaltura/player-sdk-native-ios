@@ -12,7 +12,7 @@ static NSString *KPFlashvarNativeCallOutKey = @"nativeCallout";
 static NSString *KPFlashvarChromecastKey = @"chromecast.plugin";
 
 @interface KPPlayerConfig : NSObject
-- (void)addFlashvar:(NSString *)key value:(NSString *)value;
+- (void)addConfigKey:(NSString *)key withValue:(NSString *)value;;
 
 @property (nonatomic, copy, readonly) NSArray *flashvarsArray;
 @end
