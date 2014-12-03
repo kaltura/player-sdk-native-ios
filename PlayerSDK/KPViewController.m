@@ -761,6 +761,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                  options:0
                                                                    error:nil];
             break;
+        case doubleClickRequestAds:
+            NSLog(@"doubleClickRequestAds");
+            break;
         default:
             break;
     }
@@ -1017,6 +1020,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                 [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
 #endif
                                 [NSNumber numberWithInteger:nativeAction], @"nativeAction",
+                                [NSNumber numberWithInteger:doubleClickRequestAds], @"doubleClickRequestAds",
                                 nil
                                 ];
     NSLog(@"attributeNameEnumFromString Exit");
