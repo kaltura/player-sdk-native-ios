@@ -144,7 +144,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     if (!alertCallbackId) return;
     
-    NSLog(@"prompt result : %d", buttonIndex);
+    NSLog(@"prompt result : %ld", (long)buttonIndex);
     
     BOOL result = buttonIndex==1?YES:NO;
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];
