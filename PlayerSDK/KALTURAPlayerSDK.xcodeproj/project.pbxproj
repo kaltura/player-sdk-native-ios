@@ -693,8 +693,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -726,7 +724,6 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -734,8 +731,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -762,15 +757,12 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
-				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
 		BFFFA74D182F9E31005B3B24 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				DSTROOT = /tmp/PlayerSDK.dst;
@@ -792,15 +784,12 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
 		BFFFA74E182F9E31005B3B24 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD_32_BIT)";
-				"ARCHS[sdk=iphonesimulator*]" = i386;
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
 				DSTROOT = /tmp/PlayerSDK.dst;
@@ -822,7 +811,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
-				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
