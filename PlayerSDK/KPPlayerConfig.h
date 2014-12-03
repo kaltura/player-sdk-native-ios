@@ -8,11 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-static NSString *KPFlashvarNativeCallOutKey = @"nativeCallout";
-static NSString *KPFlashvarChromecastKey = @"chromecast.plugin";
+/// KPPlayerConfig keys
+static NSString *KPPlayerConfigNativeCallOutKey = @"nativeCallout";
+static NSString *KPPlayerConfigChromecastKey = @"chromecast.plugin";
 
 @interface KPPlayerConfig : NSObject
+
+/** Adds flags for the video request
+ *
+ *  @param NSString The name of the flag
+ *  @param NSString The value for the flag
+ */
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value;;
 
+/// Contains all the added flags
 @property (nonatomic, copy, readonly) NSArray *flashvarsArray;
 @end
