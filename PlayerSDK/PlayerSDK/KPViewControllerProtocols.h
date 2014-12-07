@@ -34,18 +34,21 @@ typedef void (^JSCallbackReadyHandler)();
 #import "KPPlayerConfig.h"
 @protocol KPViewControllerDatasource <NSObject>
 
-@property (nonatomic, copy, readonly) NSString *root;
+/// Address of the video server
+@property (nonatomic, copy, readonly) NSString *serverAddress;
+
 @property (nonatomic, copy, readonly) NSString *wid;
 @property (nonatomic, copy, readonly) NSString *uiConfId;
 @property (nonatomic, copy, readonly) NSString *cacheSt;
 @property (nonatomic, copy, readonly) NSString *entryId;
 @property (nonatomic, copy, readonly) KPPlayerConfig *configFlags;
 @property (nonatomic, copy, readonly) NSString *playerId;
-//@property (nonatomic, assign, readonly) BOOL debug;
-//@property (nonatomic, assign, readonly) BOOL forceMobileHTML5;
 @property (nonatomic, copy, readonly) NSString *urid;
 
 @end
+
+
+
 
 @protocol KalturaPlayer <NSObject>
 

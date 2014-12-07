@@ -33,7 +33,6 @@ static NSString *NativeActionKey = @"nativeAction";
                             @"nativeAction"];
     
     NSLog(@"attributeNameEnumFromString Exit");
-    NSLog(@"%u", (Attribute)[attributes indexOfObject:self]);
     return (Attribute)[attributes indexOfObject:self];
 }
 @end

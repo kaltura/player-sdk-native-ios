@@ -14,7 +14,7 @@
 @implementation KPPlayerDatasourceHandler
 
 + (NSURLRequest *)videoRequest:(id<KPViewControllerDatasource>)params {
-    NSString *link = params.root;
+    NSString *link = params.serverAddress;
     if (link && link.length) {
         link = [link stringByAppendingString:@"?"];
     } else {
@@ -39,8 +39,8 @@
         link = [link appendParam:@{KPPlayerDatasourceUridKey: params.urid}];
     }
     if ([params respondsToSelector:@selector(configFlags)] && params.configFlags) {
-        for (NSDictionary *flashVar in params.configFlags.flashvarsArray) {
-            link = [link appendParam:flashVar];
+        for (NSString *key in params.configFlags.flashvarsDict.allKeys) {
+            link = [link appendParam:@{key: params.configFlags.flashvarsDict[key]}];
         }
     }
     link = [link stringByReplacingOccurrencesOfString:@"?&" withString:@"?"];

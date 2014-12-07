@@ -11,6 +11,7 @@
 /// KPPlayerConfig keys
 static NSString *KPPlayerConfigNativeCallOutKey = @"nativeCallout";
 static NSString *KPPlayerConfigChromecastKey = @"chromecast.plugin";
+static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 
 @interface KPPlayerConfig : NSObject
 
@@ -22,5 +23,5 @@ static NSString *KPPlayerConfigChromecastKey = @"chromecast.plugin";
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value;;
 
 /// Contains all the added flags
-@property (nonatomic, copy, readonly) NSArray *flashvarsArray;
+@property (nonatomic, copy, readonly) NSDictionary *flashvarsDict;
 @end
