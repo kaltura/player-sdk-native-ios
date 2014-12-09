@@ -21,88 +21,19 @@
 #import "KalturaPlayer.h"
 #import "KPChromecast.h"
 #import "ChromecastDeviceController.h"
+#import "KPViewControllerProtocols.h"
 
-typedef enum{
-    // Player Content Source Url
-    src = 0,
-    // Player Current time (Progress Bar)
-    currentTime,
-    // Player Visibility
-    visible,
-  #if !(TARGET_IPHONE_SIMULATOR)
-        // DRM WideVine Key
-        wvServerKey,
-    #endif
-    nativeAction
-} Attribute;
 
-// JSCallbackReady Handler Block
-typedef void (^JSCallbackReadyHandler)();
 
 @class KPViewController;
 @class NativeComponentPlugin;
 @class KPEventListener;
 
 @protocol KPViewControllerDelegate;
-@protocol KalturaPlayer <NSObject>
-
-@required
-
-@property(readonly) UIView * view;
-@property(readonly) int playbackState;
-@property(readonly) int loadState;
-@property(readonly) BOOL isPreparedToPlay;
-
-@property (nonatomic, retain) id<KPViewControllerDelegate> delegate;
-+ (id)alloc;
-
-- (NSURL *)contentURL;
-- (void)setContentURL:(NSURL *)cs;
-
-- (double)currentPlaybackTime;
-- (void)setCurrentPlaybackTime:(double)cs;
-
-- (void)pause;
-- (void)play;
-- (void)stop;
-- (int)playbackState;
-- (BOOL)isPreparedToPlay;
-- (double)playableDuration;
-- (double)duration;
-- (void)bindPlayerEvents;
-- (void)sendCurrentTime:(NSTimer *)timer;
-- (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
-
-@optional
-- (id)view;
-- (int)controlStyle;
-- (void)prepareToPlay;
-- (int)loadState;
-
-- (void)didLoad;
-- (CGFloat) getCurrentTime;
-- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-- (void) copyParamsFromPlayer:(id<KalturaPlayer>) player;
-- (void)initWV: (NSString *)src andKey: (NSString *)key;
-- (void)setWideVideConfigurations;
-- (void)setControlStyle:(int)cs;
-
-@end
+@protocol KalturaPlayer;
+@protocol KPViewControllerDatasource;
 
 
-@protocol KPViewControllerDelegate <NSObject>
-
-@required
-
-@property (nonatomic, retain) id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
--(NSURL *)getInitialKIframeUrl;
-
-@optional
-- (void) kPlayerDidPlay;
-- (void) kPlayerDidPause;
-- (void) kPlayerDidStop;
-
-@end
 
 @interface KPViewController : UIViewController <PlayerControlsWebViewDelegate, ChromecastControllerDelegate> {
     id<KalturaPlayer> player;
@@ -110,10 +41,14 @@ typedef void (^JSCallbackReadyHandler)();
     id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
 }
 
++ (void)setURLScheme:(NSURL *)url;
++ (NSURL *)URLScheme;
+
 @property (nonatomic, strong) IBOutlet KPControlsWebView* webView;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
 @property (nonatomic, strong) id<KalturaPlayer> player;
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
+@property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
 
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)stopAndRemovePlayer;
@@ -135,12 +70,8 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
 
+- (void)load;
 @property (nonatomic, retain) NSMutableDictionary *players;
 
 @end
 
-@interface NSString (EnumParser)
-
-- (Attribute)attributeNameEnumFromString;
-
-@end

@@ -15,12 +15,15 @@
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
-#import "Utilities.h"
+#import "KPPlayerDatasourceHandler.h"
+#import "NSString+Utilities.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
     KPActionTypeOpenHomePage
 };
+
+static NSURL *urlScheme;
 
 @implementation KPViewController {
     // Player Params
@@ -58,6 +61,18 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     originalViewControllerFrame = frame;
     [parentView addSubview:self.view];
     return self;
+}
+
++ (void)setURLScheme:(NSURL *)url {
+    @synchronized(self) {
+        urlScheme = url;
+    }
+}
+
++ (NSURL *)URLScheme {
+    @synchronized(self) {
+        return urlScheme;
+    }
 }
 
 - (void)viewDidLoad {
@@ -126,10 +141,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)handleEnteredBackground: (NSNotification *)not {
     NSLog(@"handleEnteredBackground Enter");
-    
     [self sendNotification: @"doPause" andNotificationBody: nil];
     
     NSLog(@"handleEnteredBackground Exit");
+}
+
+- (void)didBecomeActive {
+    NSLog(@"%@", self.class.URLScheme);
 }
 
 - (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)class {
@@ -203,11 +221,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
 //    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     
+    
     /// Add the idfa to the iframeURL
-    iframeUrl = [iframeUrl stringByAppendingFormat:@"&flashvars[nativeAdId]=%@", idfa()];
     [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
     NSLog(@"setWebViewURLExit");
+}
+
+
+- (void)load {
+    [self.webView loadRequest:[KPPlayerDatasourceHandler videoRequest:self.datasource]];
 }
 
 - (NSString*)writeJavascript: (NSString*)javascript {
@@ -729,10 +752,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog(@"setAttribute Enter");
     
     NSString *attributeName = [args objectAtIndex:0];
-    Attribute attributeValue = [attributeName attributeNameEnumFromString];
     NSString *attributeVal = args[1];
     
-    switch ( attributeValue ) {
+    switch ( attributeName.attributeEnumFromString ) {
         case src:
             playerSource = attributeVal;
             [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
@@ -1005,22 +1027,4 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @end
 
-@implementation NSString (EnumParser)
 
-- (Attribute)attributeNameEnumFromString{
-    NSLog(@"attributeNameEnumFromString Enter");
-    
-    NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithInteger:src], @"src",
-                                [NSNumber numberWithInteger:currentTime], @"currentTime",
-#if !(TARGET_IPHONE_SIMULATOR)
-                                [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
-#endif
-                                [NSNumber numberWithInteger:nativeAction], @"nativeAction",
-                                nil
-                                ];
-    NSLog(@"attributeNameEnumFromString Exit");
-    return (Attribute)[[Attributes objectForKey:self] intValue];
-}
-
-@end
