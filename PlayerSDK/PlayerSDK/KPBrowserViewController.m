@@ -7,7 +7,7 @@
 //
 
 #import "KPBrowserViewController.h"
-#import "Utilities.h"
+#import "DeviceParamsHandler.h"
 
 @interface KPBrowserViewController () <UIWebViewDelegate>{
     

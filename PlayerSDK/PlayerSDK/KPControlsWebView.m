@@ -26,7 +26,9 @@
 
 
 #import "KPControlsWebView.h"
+#import "NSString+Utilities.h"
 
+static KPControlsWebView *currentWebview;
 
 @implementation KPControlsWebView
 
@@ -41,7 +43,7 @@
         
         // Set non-opaque in order to make "body{background-color:transparent}" working!
         self.opaque = NO;
-    
+        KPControlsWebView.currentWebview = self;
 //        NSURL *url = [[NSBundle mainBundle] URLForResource:@"www/webview-document" withExtension:@"html"];
 //        [self loadRequest:[NSURLRequest requestWithURL:url]];
         
@@ -51,6 +53,30 @@
         
     }
     return self;
+}
+
++ (void)setCurrentWebview:(KPControlsWebView *)wv {
+    @synchronized(self) {
+        currentWebview = wv;
+    }
+}
+
++ (KPControlsWebView *)currentWebview {
+    @synchronized(self) {
+        return currentWebview;
+    }
+}
+
+void removeJSListener(NSString *event) {
+    [[KPControlsWebView currentWebview] writeJavaScript:event];
+}
+
+void addJSListener(NSString *event) {
+    [[KPControlsWebView currentWebview] writeJavaScript:event.addJSListener];
+}
+
+void updateLayoutJS() {
+    [[KPControlsWebView currentWebview] writeJavaScript:@"document.getElementById( this.id ).doUpdateLayout();"];
 }
 
 // This selector is called when something is loaded in our webview
@@ -65,24 +91,15 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
 	NSString *requestString = [[request URL] absoluteString];
     
-    if ([requestString hasPrefix:@"js-frame:"]) {
-        
-        NSArray *components = [requestString componentsSeparatedByString:@":"];
-        
-        NSString *function = (NSString*)[components objectAtIndex:1];
-		int callbackId = [((NSString*)[components objectAtIndex:2]) intValue];
-        NSString *argsAsString = [(NSString*)[components objectAtIndex:3]
-                                  stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSError* error = nil;
-        NSData* data = [argsAsString dataUsingEncoding:NSUTF8StringEncoding];
-        NSArray* args = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        
-        if (error) {
-            NSLog(@"JSON parsing error: %@", error);
+    if (requestString.isJSFrame) {
+        FunctionComponents functionComponents = requestString.extractFunction;
+        if (functionComponents.error) {
+            NSLog(@"JSON parsing error: %@", functionComponents.error);
         } else {
-            [self handleCall:function callbackId:callbackId args:args];
+            [self handleCall:functionComponents.name
+                  callbackId:functionComponents.callBackID
+                        args:functionComponents.args];
         }
-        
         return NO;
     } else if( ![self checkIsIframeUrl: requestString] ){
         [[UIApplication sharedApplication] openURL: request.URL];
@@ -132,6 +149,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     }
 }
 
+- (NSString *)writeJavaScript:(NSString *)javaScript {
+    return [self stringByEvaluatingJavaScriptFromString:javaScript];
+}
+
 // Implements all you native function in this one, by matching 'functionName' and parsing 'args'
 // Use 'callbackId' with 'returnResult' selector when you get some results to send back to javascript
 - (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args
@@ -149,4 +170,5 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     BOOL result = buttonIndex==1?YES:NO;
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];
 }
+
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "KPPlayerConfig.h"
-#import "Utilities.h"
+#import "DeviceParamsHandler.h"
 
 
 
@@ -39,7 +39,7 @@
 }
 
 - (void)addDefaultFlags {
-    [self addConfigKey:KPPlayerConfigNativeAdIdKey withValue:advertiserID];
+    [self addConfigKey:KPPlayerConfigNativeAdIdKey withValue:advertiserID()];
 }
 
 @end

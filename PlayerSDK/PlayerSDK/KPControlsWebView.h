@@ -11,7 +11,12 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+void addJSListener(NSString *event);
+void removeJSListener(NSString *event);
+void updateLayoutJS();
+
 #import <UIKit/UIKit.h>
+
 
 @protocol PlayerControlsWebViewDelegate <NSObject>
 @required
@@ -24,10 +29,14 @@
    __unsafe_unretained id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 }
 
+
 @property (nonatomic, assign) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
+
 
 - (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 - (void)returnResult:(int)callbackId args:(id)firstObj, ...;
+
+- (NSString *)writeJavaScript:(NSString *)javaScript;
 
 @end
 

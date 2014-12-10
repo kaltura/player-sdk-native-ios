@@ -17,13 +17,13 @@
 #import "KPBrowserViewController.h"
 #import "KPPlayerDatasourceHandler.h"
 #import "NSString+Utilities.h"
+#import "DeviceParamsHandler.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
     KPActionTypeOpenHomePage
 };
 
-static NSURL *urlScheme;
 
 @implementation KPViewController {
     // Player Params
@@ -63,17 +63,6 @@ static NSURL *urlScheme;
     return self;
 }
 
-+ (void)setURLScheme:(NSURL *)url {
-    @synchronized(self) {
-        urlScheme = url;
-    }
-}
-
-+ (NSURL *)URLScheme {
-    @synchronized(self) {
-        return urlScheme;
-    }
-}
 
 - (void)viewDidLoad {
     NSLog(@"View Did Load Enter");
@@ -81,13 +70,7 @@ static NSURL *urlScheme;
     self.players = [NSMutableDictionary new];
     
     // Adding a suffix to user agent in order to identify native media space application
-    NSString* suffixUA = @"kalturaNativeCordovaPlayer";
-    UIWebView* wv = [[UIWebView alloc] initWithFrame:CGRectZero];
-    NSString* defaultUA = [wv stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSString* finalUA = [defaultUA stringByAppendingString:suffixUA];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:finalUA, @"UserAgent", nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
-
+    setUserAgent();
     [self initPlayerParams];
     
     appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
@@ -146,9 +129,6 @@ static NSURL *urlScheme;
     NSLog(@"handleEnteredBackground Exit");
 }
 
-- (void)didBecomeActive {
-    NSLog(@"%@", self.class.URLScheme);
-}
 
 - (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)class {
     NSString *playerName = NSStringFromClass(class);
@@ -233,11 +213,10 @@ static NSURL *urlScheme;
     [self.webView loadRequest:[KPPlayerDatasourceHandler videoRequest:self.datasource]];
 }
 
-- (NSString*)writeJavascript: (NSString*)javascript {
-    NSLog(@"writeJavascript: %@", javascript);
-    
-    return [[self webView] stringByEvaluatingJavaScriptFromString: javascript];
-}
+//- (NSString*)writeJavascript: (NSString*)javascript {
+//    NSLog(@"writeJavascript: %@", javascript);
+//    return [self.webView writeJavaScript: javascript];
+//}
 
 #pragma mark - Player Methods
 
@@ -345,7 +324,7 @@ static NSURL *urlScheme;
     [kPlayerEventsDict setObject: listenersArr forKey: name];
     
     if ( [listenersArr count] == 1 ) {
-         [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.addJsListener(\"%@\");", name] ];
+         [ self.webView writeJavaScript: name.addJSListener ];
     }
     
     NSLog(@"addKPlayerEventListener Exit");
@@ -386,7 +365,7 @@ static NSURL *urlScheme;
     }
     
     if ( listenersArr == nil ) {
-        [self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", eventName]];
+        [self.webView writeJavaScript: eventName.removeJSListener];
     }
     
     NSLog(@"removeKPlayerEventListenerWithName Exit");
@@ -396,7 +375,7 @@ static NSURL *urlScheme;
     NSLog(@"asyncEvaluate Enter");
     
     [kPlayerEvaluatedDict setObject: listener forKey: [listener name]];
-    [self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, [listener name]]];
+    [self.webView writeJavaScript: [expression asyncEvaluateWithListenerName:[listener name]]];
     
     NSLog(@"asyncEvaluate Exit");
 }
@@ -417,7 +396,7 @@ static NSURL *urlScheme;
         notificationBody = @"null";
     }
     
-    [self writeJavascript: [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notificationName, notificationBody]];
+    [self.webView writeJavaScript: [notificationName sendNotificationWithBody:notificationBody]];
     
     NSLog(@"sendNotification Exit");
 }
@@ -425,8 +404,8 @@ static NSURL *urlScheme;
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value {
     NSLog(@"setKDPAttribute Enter");
     
-    NSString *kdpAttributeStr = [NSString stringWithFormat: @"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
-    [self writeJavascript: kdpAttributeStr];
+    NSString *kdpAttributeStr = [pluginName setKDPAttribute:propertyName value:value];
+    [self.webView writeJavaScript: kdpAttributeStr];
  
     NSLog(@"setKDPAttribute Exit");
 }
@@ -438,7 +417,7 @@ static NSURL *urlScheme;
     
     //Update player layout
     NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
-    [self writeJavascript: updateLayoutJS];
+    [self.webView writeJavaScript: updateLayoutJS];
     
     // FullScreen Treatment
     NSDictionary *fullScreenDataDict = [ NSDictionary dictionaryWithObject: [NSNumber numberWithBool: isFullScreen]
@@ -724,15 +703,7 @@ static NSURL *urlScheme;
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     NSLog(@"triggerLoadPlabackEvents Enter");
-    
-    if( [[note name]  isEqual: @"play"] ) {
-        isPlaying = YES;
-    }
-    
-    if ([[note name]  isEqual: @"pause"] || [[note name]  isEqual: @"stop"] ) {
-        isPlaying = NO;
-    }
-    
+    isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
     [self triggerEventsJavaScript: [note name] WithValue: [[note userInfo] valueForKey: [note name]]];
     
     NSLog(@"triggerLoadPlabackEvents Exit");
@@ -740,11 +711,7 @@ static NSURL *urlScheme;
 
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue{
     NSLog(@"triggerEventsJavaScript Enter");
-    
-    NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
-    NSLog(@"%@", jsStringLog);
-    NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName,eventValue];
-    [self writeJavascript: jsString];
+    [self.webView writeJavaScript: [eventName triggerEvent:eventValue]];
     NSLog(@"triggerEventsJavaScript Exit");
 }
 
