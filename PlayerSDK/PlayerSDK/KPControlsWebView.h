@@ -11,9 +11,6 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
-void addJSListener(NSString *event);
-void removeJSListener(NSString *event);
-void updateLayoutJS();
 
 #import <UIKit/UIKit.h>
 
@@ -32,11 +29,17 @@ void updateLayoutJS();
 
 @property (nonatomic, assign) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 
-
 - (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 - (void)returnResult:(int)callbackId args:(id)firstObj, ...;
 
 - (NSString *)writeJavaScript:(NSString *)javaScript;
 
+- (void)eventListener:(NSString *)eventName action:(BOOL)addOrRemove;
+
+
+// Javascript calls
+@property (nonatomic, copy, readonly) void(^addJSListener)(NSString *event);
+@property (nonatomic, copy) void(^removeJSListener)(NSString *event);
+@property (nonatomic, copy, readonly) void(^JSasyncEvaluate)(NSString *expression, NSString *listener);
 @end
 

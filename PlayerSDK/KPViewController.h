@@ -50,6 +50,7 @@
 @property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 @property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
 
+
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
@@ -60,6 +61,7 @@
 - (void)setNativeFullscreen;
 - (void)setWebViewURL: (NSString *)iframeUrl;
 + (id)sharedChromecastDeviceController;
+- (void)load;
 
 // Kaltura Player External API
 - (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
@@ -70,8 +72,10 @@
 - (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
 - (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
 
-- (void)load;
+
 @property (nonatomic, retain) NSMutableDictionary *players;
+
+@property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event);
 
 @end
 

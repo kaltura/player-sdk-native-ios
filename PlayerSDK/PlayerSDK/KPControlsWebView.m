@@ -28,7 +28,6 @@
 #import "KPControlsWebView.h"
 #import "NSString+Utilities.h"
 
-static KPControlsWebView *currentWebview;
 
 @implementation KPControlsWebView
 
@@ -43,7 +42,6 @@ static KPControlsWebView *currentWebview;
         
         // Set non-opaque in order to make "body{background-color:transparent}" working!
         self.opaque = NO;
-        KPControlsWebView.currentWebview = self;
 //        NSURL *url = [[NSBundle mainBundle] URLForResource:@"www/webview-document" withExtension:@"html"];
 //        [self loadRequest:[NSURLRequest requestWithURL:url]];
         
@@ -55,29 +53,7 @@ static KPControlsWebView *currentWebview;
     return self;
 }
 
-+ (void)setCurrentWebview:(KPControlsWebView *)wv {
-    @synchronized(self) {
-        currentWebview = wv;
-    }
-}
 
-+ (KPControlsWebView *)currentWebview {
-    @synchronized(self) {
-        return currentWebview;
-    }
-}
-
-void removeJSListener(NSString *event) {
-    [[KPControlsWebView currentWebview] writeJavaScript:event];
-}
-
-void addJSListener(NSString *event) {
-    [[KPControlsWebView currentWebview] writeJavaScript:event.addJSListener];
-}
-
-void updateLayoutJS() {
-    [[KPControlsWebView currentWebview] writeJavaScript:@"document.getElementById( this.id ).doUpdateLayout();"];
-}
 
 // This selector is called when something is loaded in our webview
 // By something I don't mean anything but just "some" :
@@ -89,19 +65,19 @@ void updateLayoutJS() {
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     
-	NSString *requestString = [[request URL] absoluteString];
+	NSString *requestString = request.URL.absoluteString;
     
     if (requestString.isJSFrame) {
         FunctionComponents functionComponents = requestString.extractFunction;
         if (functionComponents.error) {
             NSLog(@"JSON parsing error: %@", functionComponents.error);
         } else {
-            [self handleCall:functionComponents.name
-                  callbackId:functionComponents.callBackID
-                        args:functionComponents.args];
+            [playerControlsWebViewDelegate handleHtml5LibCall:functionComponents.name
+                                                   callbackId:functionComponents.callBackID
+                                                         args:functionComponents.args];
         }
         return NO;
-    } else if( ![self checkIsIframeUrl: requestString] ){
+    } else if( !requestString.isFrameURL ){
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     }
@@ -109,19 +85,6 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     return YES;
 }
 
-- (BOOL)checkIsIframeUrl: (NSString *)requestString {
-    
-    NSLog(@"checkIsIframeUrl Enter");
-    
-    if ( [requestString rangeOfString: @"mwEmbedFrame"].location != NSNotFound
-        || [requestString rangeOfString: @"embedIframeJs"].location != NSNotFound ) {
-        return YES;
-    }
-
-    NSLog(@"checkIsIframeUrl Enter");
-    
-    return NO;
-}
 
 // Call this function when you have results to send back to javascript callbacks
 // callbackId : int comes from handleCall function
@@ -149,16 +112,34 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     }
 }
 
+- (void(^)(NSString *))addJSListener {
+    return ^(NSString *name) {
+        [self writeJavaScript:name.addJSListener];
+    };
+}
+
+- (void(^)(NSString *))removeJSListener {
+    return ^(NSString *name) {
+        [self writeJavaScript:name.removeJSListener];
+    };
+}
+
+- (void(^)(NSString *, NSString *))JSasyncEvaluate {
+    return ^(NSString *expression, NSString *listener) {
+        [self writeJavaScript:[expression asyncEvaluateWithListenerName:listener]];
+    };
+}
+
 - (NSString *)writeJavaScript:(NSString *)javaScript {
     return [self stringByEvaluatingJavaScriptFromString:javaScript];
 }
 
-// Implements all you native function in this one, by matching 'functionName' and parsing 'args'
-// Use 'callbackId' with 'returnResult' selector when you get some results to send back to javascript
-- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args
-{
-    [playerControlsWebViewDelegate handleHtml5LibCall:functionName callbackId:callbackId args:args];
-}
+//// Implements all you native function in this one, by matching 'functionName' and parsing 'args'
+//// Use 'callbackId' with 'returnResult' selector when you get some results to send back to javascript
+//- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args
+//{
+//    [playerControlsWebViewDelegate handleHtml5LibCall:functionName callbackId:callbackId args:args];
+//}
 
 // Just one example with AlertView that show how to return asynchronous results
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

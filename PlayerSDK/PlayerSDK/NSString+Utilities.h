@@ -21,6 +21,7 @@ typedef struct FunctionComponents {
 
 @property (nonatomic, assign, readonly) Attribute attributeEnumFromString;
 @property (nonatomic, assign, readonly) BOOL isJSFrame;
+@property (nonatomic, assign, readonly) BOOL isFrameURL;
 @property (nonatomic, assign, readonly) FunctionComponents extractFunction;
 
 @property (nonatomic, assign, readonly) BOOL isPlay;

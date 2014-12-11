@@ -40,6 +40,11 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self hasPrefix:@"js-frame:"];
 }
 
+- (BOOL)isFrameURL {
+    return [self rangeOfString: @"mwEmbedFrame"].location != NSNotFound
+    || [self rangeOfString: @"embedIframeJs"].location != NSNotFound;
+}
+
 - (BOOL)isPlay {
     return [self isEqualToString:@"play"];
 }

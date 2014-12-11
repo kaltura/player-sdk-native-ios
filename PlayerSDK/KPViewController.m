@@ -105,7 +105,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog(@"viewDidAppear Enter");
     
     [super viewDidAppear:animated];
-    
     if( [[NSUserDefaults standardUserDefaults] objectForKey: @"iframe_url"] != nil ) {
         return;
     }
@@ -118,7 +117,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         NSLog( @"Error:: Delegate MUST be set and respond to selector -getInitialKIframeUrl");
         return;
     }
-    
     NSLog(@"viewDidAppear Exit");
 }
 
@@ -375,7 +373,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog(@"asyncEvaluate Enter");
     
     [kPlayerEvaluatedDict setObject: listener forKey: [listener name]];
-    [self.webView writeJavaScript: [expression asyncEvaluateWithListenerName:[listener name]]];
+    self.webView.JSasyncEvaluate(expression, listener.name);
     
     NSLog(@"asyncEvaluate Exit");
 }
