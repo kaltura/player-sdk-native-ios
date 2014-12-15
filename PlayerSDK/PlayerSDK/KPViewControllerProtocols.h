@@ -1,5 +1,13 @@
 #import <UIKit/UIKit.h>
 
+/// Key names of the video request
+static NSString *KPPlayerDatasourceWidKey = @"wid";
+static NSString *KPPlayerDatasourceUiConfIdKey = @"uiconf_id";
+static NSString *KPPlayerDatasourceCacheStKey = @"cache_st";
+static NSString *KPPlayerDatasourceEntryId = @"entry_id";
+static NSString *KPPlayerDatasourcePlayerIdKey = @"playerId";
+static NSString *KPPlayerDatasourceUridKey = @"urid";
+
 typedef enum{
     // Player Content Source Url
     src = 0,

@@ -66,12 +66,27 @@
 // Kaltura Player External API
 
 - (void)registerReadyEvent:(void(^)())handler;
-- (void)addEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)())handler;
-- (void)removeEventListener:(NSString *)event eventID:(NSString *)eventID;
-- (void)asyncEvaluate:(NSString *)expression expressionID:(NSString *)expressionID handler:(void(^)(NSString *value))handler;
-- (void)sendNotification:(NSString *)notification forName:(NSString *)notificationName;
-- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value;
-- (void)triggerEvent:(NSString *)event withValue:(NSString *)value;
+
+- (void)addEventListener:(NSString *)event
+                 eventID:(NSString *)eventID
+                 handler:(void(^)())handler;
+
+- (void)removeEventListener:(NSString *)event
+                    eventID:(NSString *)eventID;
+
+- (void)asyncEvaluate:(NSString *)expression
+         expressionID:(NSString *)expressionID
+              handler:(void(^)(NSString *value))handler;
+
+- (void)sendNotification:(NSString *)notification
+                 forName:(NSString *)notificationName;
+
+- (void)setKDPAttribute:(NSString *)pluginName
+           propertyName:(NSString *)propertyName
+                  value:(NSString *)value;
+
+- (void)triggerEvent:(NSString *)event
+           withValue:(NSString *)value;
 
 
 @property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());

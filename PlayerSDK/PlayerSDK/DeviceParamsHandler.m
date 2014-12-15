@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+
 #import <AdSupport/AdSupport.h>
 #import "DeviceParamsHandler.h"
 
@@ -24,6 +24,28 @@ NSString *advertiserID() {
     return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
 }
 
-@implementation DeviceParamsHandler
+BOOL isDeviceOrientation(UIDeviceOrientation orientation) {
+    return _deviceOrientation == orientation;
+}
 
+BOOL isStatusBarOrientation(UIInterfaceOrientation orientation) {
+    return _statusBarOrientation == orientation;
+}
+
+
+
+@implementation DeviceParamsHandler
++ (BOOL)compareOrientation:(UIDeviceOrientation)compareTo listOfOrientations:(UIDeviceOrientation)list, ... {
+    if (compareTo == list) {
+        return YES;
+    }
+    BOOL isOneOf = NO;
+    va_list ap;
+    int i;
+    va_start(ap, list);
+    for (i = 0; i < list; i++) {
+        isOneOf |= va_arg(ap, UIDeviceOrientation) == compareTo;
+    }
+    return isOneOf;
+}
 @end
