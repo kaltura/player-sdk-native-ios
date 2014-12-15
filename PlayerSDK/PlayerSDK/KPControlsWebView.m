@@ -112,34 +112,35 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     }
 }
 
-- (void(^)(NSString *))addJSListener {
-    return ^(NSString *name) {
-        [self writeJavaScript:name.addJSListener];
-    };
+
+- (void)addEventListener:(NSString *)event {
+    [self stringByEvaluatingJavaScriptFromString:event.addJSListener];
 }
 
-- (void(^)(NSString *))removeJSListener {
-    return ^(NSString *name) {
-        [self writeJavaScript:name.removeJSListener];
-    };
+- (void)removeEventListener:(NSString *)event {
+    [self stringByEvaluatingJavaScriptFromString:event.removeJSListener];
 }
 
-- (void(^)(NSString *, NSString *))JSasyncEvaluate {
-    return ^(NSString *expression, NSString *listener) {
-        [self writeJavaScript:[expression asyncEvaluateWithListenerName:listener]];
-    };
+- (void)evaluate:(NSString *)expression evaluateID:(NSString *)evaluateID {
+    [self stringByEvaluatingJavaScriptFromString:[expression evaluateWithID:evaluateID]];
 }
 
-- (NSString *)writeJavaScript:(NSString *)javaScript {
-    return [self stringByEvaluatingJavaScriptFromString:javaScript];
+- (void)sendNotification:(NSString *)notification withName:(NSString *)notificationName {
+    [self stringByEvaluatingJavaScriptFromString:[notificationName sendNotificationWithBody:notification]];
 }
 
-//// Implements all you native function in this one, by matching 'functionName' and parsing 'args'
-//// Use 'callbackId' with 'returnResult' selector when you get some results to send back to javascript
-//- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args
-//{
-//    [playerControlsWebViewDelegate handleHtml5LibCall:functionName callbackId:callbackId args:args];
-//}
+- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value {
+    [self stringByEvaluatingJavaScriptFromString:[pluginName setKDPAttribute:propertyName value:value]];
+}
+
+- (void)triggerEvent:(NSString *)event withValue:(NSString *)value {
+    [self stringByEvaluatingJavaScriptFromString:[event triggerEvent:value]];
+}
+
+- (void)updateLayout {
+    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
+    [self stringByEvaluatingJavaScriptFromString:updateLayoutJS];
+}
 
 // Just one example with AlertView that show how to return asynchronous results
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

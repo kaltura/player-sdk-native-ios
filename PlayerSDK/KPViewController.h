@@ -13,6 +13,7 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+
 @protocol KalturaPlayer;
 
 #import <MediaPlayer/MediaPlayer.h>
@@ -41,15 +42,14 @@
     id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
 }
 
-+ (void)setURLScheme:(NSURL *)url;
-+ (NSURL *)URLScheme;
 
 @property (nonatomic, strong) IBOutlet KPControlsWebView* webView;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
 @property (nonatomic, strong) id<KalturaPlayer> player;
-@property (readwrite, nonatomic, copy) JSCallbackReadyHandler jsCallbackReadyHandler;
 @property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
+@property (nonatomic, retain) NSMutableDictionary *players;
 
+@property (nonatomic, assign) CGRect playerFrame;
 
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)stopAndRemovePlayer;
@@ -64,18 +64,24 @@
 - (void)load;
 
 // Kaltura Player External API
-- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler;
-- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener;
-- (void)removeKPlayerEventListenerWithEventName: (NSString *)name forListenerName: (NSString *)listenerName;
-- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener;
-- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody;
-- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value;
-- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue;
+
+- (void)registerReadyEvent:(void(^)())handler;
+- (void)addEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)())handler;
+- (void)removeEventListener:(NSString *)event eventID:(NSString *)eventID;
+- (void)asyncEvaluate:(NSString *)expression expressionID:(NSString *)expressionID handler:(void(^)(NSString *value))handler;
+- (void)sendNotification:(NSString *)notification forName:(NSString *)notificationName;
+- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value;
+- (void)triggerEvent:(NSString *)event withValue:(NSString *)value;
 
 
-@property (nonatomic, retain) NSMutableDictionary *players;
+@property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());
+@property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event, NSString *eventID, void(^)());
+@property (nonatomic, copy, readonly) void (^removeEventListener)(NSString *event, NSString *eventID);
+@property (nonatomic, copy, readonly) void (^asyncEvaluate)(NSString *expression, NSString *expressionID, void(^)(NSString *value));
+@property (nonatomic, copy, readonly) void (^sendNotification)(NSString *notification, NSString *notificationName);
+@property (nonatomic, copy, readonly) void (^setKDPAttribute)(NSString *pluginName, NSString *propertyName, NSString *value);
+@property (nonatomic, copy, readonly) void (^triggerEvent)(NSString *event, NSString *value);
 
-@property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event);
 
 @end
 

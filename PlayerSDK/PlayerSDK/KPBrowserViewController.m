@@ -20,7 +20,7 @@
 @implementation KPBrowserViewController
 
 + (id)currentBrowser {
-    NSString *nibName = isIOS8() ? @"KPWebKitBrowserViewController" : @"KPBrowserViewController";
+    NSString *nibName = isIOS(8) ? @"KPWebKitBrowserViewController" : @"KPBrowserViewController";
     return [[NSClassFromString(nibName) alloc] initWithNibName:nibName bundle:nil];
 }
 

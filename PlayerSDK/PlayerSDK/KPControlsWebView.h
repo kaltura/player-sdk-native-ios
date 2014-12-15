@@ -23,23 +23,21 @@
 @interface KPControlsWebView : UIWebView <UIWebViewDelegate> {
   
   int alertCallbackId;
-   __unsafe_unretained id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 }
 
 
-@property (nonatomic, assign) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
+@property (nonatomic, weak) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 
-- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
+//- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 - (void)returnResult:(int)callbackId args:(id)firstObj, ...;
 
-- (NSString *)writeJavaScript:(NSString *)javaScript;
 
-- (void)eventListener:(NSString *)eventName action:(BOOL)addOrRemove;
-
-
-// Javascript calls
-@property (nonatomic, copy, readonly) void(^addJSListener)(NSString *event);
-@property (nonatomic, copy) void(^removeJSListener)(NSString *event);
-@property (nonatomic, copy, readonly) void(^JSasyncEvaluate)(NSString *expression, NSString *listener);
+- (void)addEventListener:(NSString *)event;
+- (void)removeEventListener:(NSString *)event;
+- (void)evaluate:(NSString *)expression evaluateID:(NSString *)evaluateID;
+- (void)sendNotification:(NSString *)notification withName:(NSString *)notificationName;
+- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value;
+- (void)triggerEvent:(NSString *)event withValue:(NSString *)value;
+- (void)updateLayout;
 @end
 

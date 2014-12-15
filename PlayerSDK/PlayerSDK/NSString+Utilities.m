@@ -84,8 +84,8 @@ static NSString *NativeActionKey = @"nativeAction";
     return [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", self];
 }
 
-- (NSString *)asyncEvaluateWithListenerName:(NSString *)name {
-    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", self, name];
+- (NSString *)evaluateWithID:(NSString *)ID {
+    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", self, ID];
 }
 
 - (NSString *)sendNotificationWithBody:(NSString *)body {

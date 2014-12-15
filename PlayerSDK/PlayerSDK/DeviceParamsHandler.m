@@ -19,13 +19,6 @@ void setUserAgent() {
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
 }
 
-BOOL isIOS8() {
-    NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    if ([[vComp objectAtIndex:0] intValue] == 8) {
-        return YES;
-    }
-    return NO;
-}
 
 NSString *advertiserID() {
     return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];

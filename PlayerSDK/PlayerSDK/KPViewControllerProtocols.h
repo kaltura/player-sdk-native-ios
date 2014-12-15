@@ -14,8 +14,6 @@ typedef enum{
     nativeAction
 } Attribute;
 
-// JSCallbackReady Handler Block
-typedef void (^JSCallbackReadyHandler)();
 
 @protocol KPViewControllerDelegate <NSObject>
 
@@ -33,7 +31,7 @@ typedef void (^JSCallbackReadyHandler)();
 
 #import "KPPlayerConfig.h"
 @protocol KPViewControllerDatasource <NSObject>
-
+@optional
 /// Address of the video server
 @property (nonatomic, copy, readonly) NSString *serverAddress;
 

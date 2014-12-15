@@ -8,7 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-BOOL isIOS8();
+#define isIOS(version) [[[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."][0] intValue] == (version)
+#define isIpad [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad
+
 void setUserAgent();
 NSString *advertiserID();
 
