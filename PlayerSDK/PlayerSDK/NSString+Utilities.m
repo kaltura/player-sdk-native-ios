@@ -97,7 +97,7 @@ static NSString *NativeActionKey = @"nativeAction";
 }
 
 - (NSString *)triggerEvent:(NSString *)event {
-    NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", self, event];
+    NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger(\"%@\", '%@')", self, event];
     NSLog(@"%@", jsStringLog);
     return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", self, event];
 }

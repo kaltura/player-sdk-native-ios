@@ -33,11 +33,22 @@
 
 
 - (void)addEventListener:(NSString *)event;
+
 - (void)removeEventListener:(NSString *)event;
-- (void)evaluate:(NSString *)expression evaluateID:(NSString *)evaluateID;
-- (void)sendNotification:(NSString *)notification withName:(NSString *)notificationName;
-- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value;
-- (void)triggerEvent:(NSString *)event withValue:(NSString *)value;
+
+- (void)evaluate:(NSString *)expression
+      evaluateID:(NSString *)evaluateID;
+
+- (void)sendNotification:(NSString *)notification
+                withName:(NSString *)notificationName;
+
+- (void)setKDPAttribute:(NSString *)pluginName
+           propertyName:(NSString *)propertyName
+                  value:(NSString *)value;
+
+- (void)triggerEvent:(NSString *)event
+           withValue:(NSString *)value;
+
 - (void)updateLayout;
 @end
 

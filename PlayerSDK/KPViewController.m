@@ -499,7 +499,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)setOrientationTransform: (CGFloat) angle{
     NSLog( @"setOrientationTransform Enter" );
-    
     // UIWindow frame in ios 8 different for Landscape mode
     if( isIOS(8) && !isFullScreenToggled ) {
         [self.view setTransform: CGAffineTransformIdentity];
@@ -644,7 +643,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     // Disable fullscreen button if the player is set to fullscreen by default
     self.registerReadyEvent(^{
         if ([self respondsToSelector:@selector(setKDPAttribute:propertyName:value:)]) {
-            self.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
+            //self.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         }
     });
 }
@@ -790,8 +789,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     if ( self ) {
 //        [[self player] bindPlayerEvents];
-        
-       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"durationchange", @"loadedmetadata", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", @"fetchNativeAdID", nil];
+        NSArray *kPlayerEvents = @[@"canplay",
+                                   @"durationchange",
+                                   @"loadedmetadata",
+                                   @"play", @"pause",
+                                   @"ended",
+                                   @"seeking",
+                                   @"seeked",
+                                   @"timeupdate",
+                                   @"progress",
+                                   @"fetchNativeAdID"];
         
         for (id kPlayerEvent in kPlayerEvents) {
             [[NSNotificationCenter defaultCenter] addObserver: self
@@ -862,7 +869,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 
 
-- (void)resizePlayerView: (CGFloat)top right:(CGFloat)right width:(CGFloat)width height:(CGFloat)height{
+- (void)resizePlayerView: (CGFloat)top
+                   right:(CGFloat)right
+                   width:(CGFloat)width
+                  height:(CGFloat)height {
     NSLog(@"resizePlayerView Enter");
     
     originalViewControllerFrame = CGRectMake( top, right, width, height );
