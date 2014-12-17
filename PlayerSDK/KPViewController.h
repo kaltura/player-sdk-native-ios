@@ -13,6 +13,18 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+static NSString *KPlayerEventCanplay = @"canplay";
+static NSString *KPlayerEventDurationChange = @"durationchange";
+static NSString *KPlayerEventLoadedMetadata = @"loadedmetadata";
+static NSString *KPlayerEventPlay = @"play";
+static NSString *KPlayerEventPause = @"pause";
+static NSString *KPlayerEventEnded = @"ended";
+static NSString *KPlayerEventSeeking = @"seeking";
+static NSString *KPlayerEventSeeked = @"seeked";
+static NSString *KPlayerEventTimeupdate = @"timeupdate";
+static NSString *KPlayerEventProgress = @"progress";
+static NSString *KPlayerEventToggleFullScreen = @"toggleFullscreen";
+
 
 @protocol KalturaPlayer;
 
@@ -54,7 +66,7 @@
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
-- (void)resizePlayerView: (CGFloat )top right: (CGFloat )right width: (CGFloat )width height: (CGFloat )height;
+- (void)resizePlayerView:(CGRect)newFrame;
 - (void)openFullscreen;
 - (void)closeFullscreen;
 - (void)checkDeviceStatus;
@@ -89,12 +101,20 @@
            withValue:(NSString *)value;
 
 
+
+
 @property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());
+
 @property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event, NSString *eventID, void(^)());
+
 @property (nonatomic, copy, readonly) void (^removeEventListener)(NSString *event, NSString *eventID);
+
 @property (nonatomic, copy, readonly) void (^asyncEvaluate)(NSString *expression, NSString *expressionID, void(^)(NSString *value));
+
 @property (nonatomic, copy, readonly) void (^sendNotification)(NSString *notification, NSString *notificationName);
+
 @property (nonatomic, copy, readonly) void (^setKDPAttribute)(NSString *pluginName, NSString *propertyName, NSString *value);
+
 @property (nonatomic, copy, readonly) void (^triggerEvent)(NSString *event, NSString *value);
 
 

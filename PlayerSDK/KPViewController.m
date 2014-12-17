@@ -316,7 +316,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         if (!callBackReadyRegistrations) {
             callBackReadyRegistrations = [NSMutableArray new];
         }
-        [callBackReadyRegistrations addObject:handler];
+        if (handler) {
+            [callBackReadyRegistrations addObject:handler];
+        }
     }
 }
 
@@ -351,7 +353,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         }
         [listenerArr addObject:@{eventID: handler}];
         self.kPlayerEventsDict[event] = listenerArr;
-        if (listenerArr.count == 1) {
+        if (listenerArr.count == 1 && ![event isEqualToString:KPlayerEventToggleFullScreen]) {
             [weakSelf.webView addEventListener:event];
         }
     }];
@@ -394,7 +396,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     if ( !listenersArr.count ) {
         listenersArr = nil;
-        [self.webView removeEventListener:event];
+        if (![event isEqualToString:KPlayerEventToggleFullScreen]) {
+            [self.webView removeEventListener:event];
+        }
     }
 }
 
@@ -487,8 +491,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog( @"updatePlayerLayout Enter" );
     
     //Update player layout
-    [self.webView updateLayout];
-    
+    //[self.webView updateLayout];
+    self.triggerEvent(@"updateLayout", nil);
     // FullScreen Treatment
     [ [NSNotificationCenter defaultCenter] postNotificationName: @"toggleFullscreenNotification"
                                                          object:self
@@ -526,83 +530,83 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)checkDeviceStatus{
     NSLog( @"checkDeviceStatus Enter" );
-    deviceOrientation = isDeviceOrientation(UIDeviceOrientationUnknown) ? _statusBarOrientation : _deviceOrientation;
-    if (isIpad || openFullScreen) {
-        switch (deviceOrientation) {
-            case UIDeviceOrientationLandscapeLeft:
-                [self setOrientationTransform: 90];
-                break;
-            case UIDeviceOrientationLandscapeRight:
-                [self setOrientationTransform: -90];
-                break;
-            case UIDeviceOrientationPortrait:
-                [self setOrientationTransform: 180];
-                [self.view setTransform: CGAffineTransformIdentity];
-                break;
-            case UIDeviceOrientationPortraitUpsideDown:
-                [self setOrientationTransform: -180];
-                break;
-            default:
-                break;
-        }
-    } else {
-        BOOL isOneOfOrientations = [DeviceParamsHandler compareOrientation:deviceOrientation
-                                            listOfOrientations:UIDeviceOrientationUnknown,
-                        UIDeviceOrientationPortrait,
-                        UIDeviceOrientationPortraitUpsideDown,
-                        UIDeviceOrientationFaceDown,
-                        UIDeviceOrientationFaceUp];
-        if (isOneOfOrientations) {
-            [self setOrientationTransform: 90];
-        } else {
-            if (isDeviceOrientation(UIDeviceOrientationLandscapeLeft)) {
-                [self setOrientationTransform: 90];
-            } else if (isDeviceOrientation(UIDeviceOrientationLandscapeRight)){
-                [self setOrientationTransform: -90];
-            }
-        }
-    }
-    
-//    deviceOrientation = [[UIDevice currentDevice] orientation];
-//    if ( isIpad || openFullScreen ) {
-//        if (deviceOrientation == UIDeviceOrientationUnknown) {
-//            if ( [UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
+//    deviceOrientation = isDeviceOrientation(UIDeviceOrientationUnknown) ? _statusBarOrientation : _deviceOrientation;
+//    if (isIpad || openFullScreen) {
+//        switch (deviceOrientation) {
+//            case UIDeviceOrientationLandscapeLeft:
 //                [self setOrientationTransform: 90];
-//            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight){
+//                break;
+//            case UIDeviceOrientationLandscapeRight:
 //                [self setOrientationTransform: -90];
-//            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortrait){
+//                break;
+//            case UIDeviceOrientationPortrait:
 //                [self setOrientationTransform: 180];
 //                [self.view setTransform: CGAffineTransformIdentity];
-//            }else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortraitUpsideDown){
+//                break;
+//            case UIDeviceOrientationPortraitUpsideDown:
 //                [self setOrientationTransform: -180];
-//            }
-//        }else{
-//            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
-//                [self setOrientationTransform: 90];
-//            }else if(deviceOrientation == UIDeviceOrientationLandscapeRight){
-//                [self setOrientationTransform: -90];
-//            }else if(deviceOrientation == UIDeviceOrientationPortrait){
-//                [self setOrientationTransform: 180];
-//                [self.view setTransform: CGAffineTransformIdentity];
-//            }else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown){
-//                [self setOrientationTransform: -180];
-//            }
+//                break;
+//            default:
+//                break;
 //        }
-//    }else{
-//        if (deviceOrientation == UIDeviceOrientationUnknown ||
-//            deviceOrientation == UIDeviceOrientationPortrait ||
-//            deviceOrientation == UIDeviceOrientationPortraitUpsideDown ||
-//            deviceOrientation == UIDeviceOrientationFaceDown ||
-//            deviceOrientation == UIDeviceOrientationFaceUp) {
+//    } else {
+//        BOOL isOneOfOrientations = [DeviceParamsHandler compareOrientation:deviceOrientation
+//                                            listOfOrientations:UIDeviceOrientationUnknown,
+//                        UIDeviceOrientationPortrait,
+//                        UIDeviceOrientationPortraitUpsideDown,
+//                        UIDeviceOrientationFaceDown,
+//                        UIDeviceOrientationFaceUp];
+//        if (isOneOfOrientations) {
 //            [self setOrientationTransform: 90];
-//        }else{
-//            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
+//        } else {
+//            if (isDeviceOrientation(UIDeviceOrientationLandscapeLeft)) {
 //                [self setOrientationTransform: 90];
-//            }else if( deviceOrientation == UIDeviceOrientationLandscapeRight ){
+//            } else if (isDeviceOrientation(UIDeviceOrientationLandscapeRight)){
 //                [self setOrientationTransform: -90];
 //            }
 //        }
 //    }
+    
+    deviceOrientation = [[UIDevice currentDevice] orientation];
+    if ( isIpad || openFullScreen ) {
+        if (deviceOrientation == UIDeviceOrientationUnknown) {
+            if ( _statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
+                [self setOrientationTransform: 90];
+            }else if(_statusBarOrientation == UIDeviceOrientationLandscapeRight){
+                [self setOrientationTransform: -90];
+            }else if(_statusBarOrientation == UIDeviceOrientationPortrait){
+                [self setOrientationTransform: 180];
+                [self.view setTransform: CGAffineTransformIdentity];
+            }else if (_statusBarOrientation == UIDeviceOrientationPortraitUpsideDown){
+                [self setOrientationTransform: -180];
+            }
+        }else{
+            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
+                [self setOrientationTransform: 90];
+            }else if(deviceOrientation == UIDeviceOrientationLandscapeRight){
+                [self setOrientationTransform: -90];
+            }else if(deviceOrientation == UIDeviceOrientationPortrait){
+                [self setOrientationTransform: 180];
+                [self.view setTransform: CGAffineTransformIdentity];
+            }else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown){
+                [self setOrientationTransform: -180];
+            }
+        }
+    }else{
+        if (deviceOrientation == UIDeviceOrientationUnknown ||
+            deviceOrientation == UIDeviceOrientationPortrait ||
+            deviceOrientation == UIDeviceOrientationPortraitUpsideDown ||
+            deviceOrientation == UIDeviceOrientationFaceDown ||
+            deviceOrientation == UIDeviceOrientationFaceUp) {
+            [self setOrientationTransform: 90];
+        }else{
+            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
+                [self setOrientationTransform: 90];
+            }else if( deviceOrientation == UIDeviceOrientationLandscapeRight ){
+                [self setOrientationTransform: -90];
+            }
+        }
+    }
     
     NSLog( @"checkDeviceStatus Exit" );
 }
@@ -651,7 +655,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)deviceOrientationDidChange {
     CGRect mainFrame;
     
-    if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceDown || [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceUp ) {
+    if ( _deviceOrientation == UIDeviceOrientationFaceDown || _deviceOrientation == UIDeviceOrientationFaceUp ) {
         return;
     }
     
@@ -671,7 +675,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self.webView setFrame: self.player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
     self.triggerEvent(@"enterfullscreen", nil);
-    [self updatePlayerLayout];
+    self.triggerEvent(@"updateLayout", nil);
     [self checkDeviceStatus];
 }
 
@@ -688,19 +692,30 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)toggleFullscreen {
-    NSLog( @"toggleFullscreen Enter" );
-    
-    isCloseFullScreenByTap = YES;
-    isFullScreenToggled = YES;
-    
-    if ( !isFullScreen ) {
-        [self openFullScreen: openFullScreen];
-        [self checkDeviceStatus];
-    } else{
-        [self closeFullScreen];
+    if (self.kPlayerEventsDict[KPlayerEventToggleFullScreen]) {
+        NSArray *listenersArr = self.kPlayerEventsDict[ KPlayerEventToggleFullScreen ];
+        
+        if ( listenersArr != nil ) {
+            for (NSDictionary *eDict in listenersArr) {
+                ((void(^)())eDict.allValues.lastObject)();
+            }
+        }
+    } else {
+        [self updatePlayerLayout];
+        NSLog( @"toggleFullscreen Enter" );
+        
+        isCloseFullScreenByTap = YES;
+        isFullScreenToggled = YES;
+        
+        if ( !isFullScreen ) {
+            [self openFullScreen: openFullScreen];
+            [self checkDeviceStatus];
+        } else{
+            [self closeFullScreen];
+        }
+        
+        NSLog( @"toggleFullscreen Exit" );
     }
-    
-    NSLog( @"toggleFullscreen Exit" );
 }
 
 - (void)openFullScreen: (BOOL)openFullscreen{
@@ -734,12 +749,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [UIApplication sharedApplication].statusBarHidden = YES;
 
     [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.webView setFrame: self.player.view.frame];
+    [self.webView setFrame: self.player.view.bounds];
     [ self.view setTransform: fullScreenPlayerTransform ];
     
     self.triggerEvent(@"enterfullscreen", nil);
     [self updatePlayerLayout];
-    
     NSLog( @"openFullScreen Exit" );
 }
 
@@ -792,7 +806,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         NSArray *kPlayerEvents = @[@"canplay",
                                    @"durationchange",
                                    @"loadedmetadata",
-                                   @"play", @"pause",
+                                   @"play",
+                                   @"pause",
                                    @"ended",
                                    @"seeking",
                                    @"seeked",
@@ -814,7 +829,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     NSLog(@"triggerLoadPlabackEvents Enter");
     isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
-    self.triggerEvent(note.name, note.userInfo[note.name]);
+    if (![note.name isEqualToString:KPlayerEventToggleFullScreen]) {
+        self.triggerEvent(note.name, note.userInfo[note.name]);
+    }
+    
     
     NSLog(@"triggerLoadPlabackEvents Exit");
 }
@@ -867,23 +885,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog(@"setPlayerSource Exit");
 }
 
-
-
-- (void)resizePlayerView: (CGFloat)top
-                   right:(CGFloat)right
-                   width:(CGFloat)width
-                  height:(CGFloat)height {
-    NSLog(@"resizePlayerView Enter");
-    
-    originalViewControllerFrame = CGRectMake( top, right, width, height );
-    
+- (void)resizePlayerView:(CGRect)newFrame {
+    originalViewControllerFrame = newFrame;
     if ( !isFullScreen ) {
         self.view.frame = originalViewControllerFrame;
-        self.player.view.frame = CGRectMake( 0, 0, width, height );
+        self.player.view.frame = newFrame;
         self.webView.frame = self.player.view.frame;
     }
-    
-    NSLog(@"resizePlayerView Exit");
 }
 
 - (void)setPlayerFrame:(CGRect)playerFrame {
