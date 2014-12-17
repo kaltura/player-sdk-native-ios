@@ -1,5 +1,18 @@
 #import <UIKit/UIKit.h>
 
+/// Player events constants
+static NSString *KPlayerEventCanplay = @"canplay";
+static NSString *KPlayerEventDurationChange = @"durationchange";
+static NSString *KPlayerEventLoadedMetadata = @"loadedmetadata";
+static NSString *KPlayerEventPlay = @"play";
+static NSString *KPlayerEventPause = @"pause";
+static NSString *KPlayerEventEnded = @"ended";
+static NSString *KPlayerEventSeeking = @"seeking";
+static NSString *KPlayerEventSeeked = @"seeked";
+static NSString *KPlayerEventTimeupdate = @"timeupdate";
+static NSString *KPlayerEventProgress = @"progress";
+static NSString *KPlayerEventToggleFullScreen = @"toggleFullscreen";
+
 /// Key names of the video request
 static NSString *KPPlayerDatasourceWidKey = @"wid";
 static NSString *KPPlayerDatasourceUiConfIdKey = @"uiconf_id";

@@ -18,7 +18,6 @@ static NSString *ToggleFullscreenNotification = @"toggleFullscreenNotification";
 static NSString *IsFullScreenKey = @"isFullScreen";
 
 #import "KPViewController.h"
-#import "KPEventListener.h"
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
@@ -353,7 +352,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         }
         [listenerArr addObject:@{eventID: handler}];
         self.kPlayerEventsDict[event] = listenerArr;
-        if (listenerArr.count == 1 && ![event isEqualToString:KPlayerEventToggleFullScreen]) {
+        if (listenerArr.count == 1 && !event.isToggleFullScreen) {
             [weakSelf.webView addEventListener:event];
         }
     }];
@@ -396,7 +395,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     if ( !listenersArr.count ) {
         listenersArr = nil;
-        if (![event isEqualToString:KPlayerEventToggleFullScreen]) {
+        if (!event.isToggleFullScreen) {
             [self.webView removeEventListener:event];
         }
     }
@@ -467,23 +466,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     };
 }
 
-//- (void) notifyKPlayerEvaluated: (NSArray *)arr {
-//    NSLog(@"notifyKPlayerEvaluated Enter");
-//    
-//    KPEventListener *listener = [kPlayerEvaluatedDict objectForKey: [arr objectAtIndex: 0] ];
-//    listener.eventListener( [arr objectAtIndex: 1] );
-//    
-//    NSLog(@"notifyKPlayerEvaluated Exit");
-//}
-
-//- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener {
-//    NSLog(@"asyncEvaluate Enter");
-//    
-//    [kPlayerEvaluatedDict setObject: listener forKey: [listener name]];
-//    self.webView.JSasyncEvaluate(expression, listener.name);
-//    
-//    NSLog(@"asyncEvaluate Exit");
-//}
 
 #pragma mark - Player Layout & Fullscreen Treatment
 
@@ -613,7 +595,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)checkOrientationStatus{
     NSLog( @"checkOrientationStatus Enter" );
-    
     isCloseFullScreenByTap = NO;
     
     // Handle rotation issues when player is playing
@@ -828,12 +809,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     NSLog(@"triggerLoadPlabackEvents Enter");
+    
     isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
-    if (![note.name isEqualToString:KPlayerEventToggleFullScreen]) {
-        self.triggerEvent(note.name, note.userInfo[note.name]);
-    }
-    
-    
+
     NSLog(@"triggerLoadPlabackEvents Exit");
 }
 

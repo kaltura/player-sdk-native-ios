@@ -31,6 +31,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, assign, readonly) BOOL isPlay;
 @property (nonatomic, assign, readonly) BOOL isPause;
 @property (nonatomic, assign, readonly) BOOL isStop;
+@property (nonatomic, assign, readonly) BOOL isToggleFullScreen;
 
 
 #pragma mark

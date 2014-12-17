@@ -57,6 +57,10 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self isEqualToString:@"stop"];
 }
 
+- (BOOL)isToggleFullScreen {
+    return [self isEqualToString:KPlayerEventToggleFullScreen];
+}
+
 - (FunctionComponents)extractFunction {
     struct FunctionComponents function;
     function.name = nil;
