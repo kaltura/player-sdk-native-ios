@@ -19,9 +19,9 @@
 		B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B32A5CED1A2723730051DC7F /* KPWebKitBrowserViewController.m */; };
 		B32A5CF01A27308C0051DC7F /* KPWebKitBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B32A5CEF1A27308C0051DC7F /* KPWebKitBrowserViewController.xib */; };
 		B32A5CF11A27308C0051DC7F /* KPWebKitBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B32A5CEF1A27308C0051DC7F /* KPWebKitBrowserViewController.xib */; };
-		B32A5CF31A274B4D0051DC7F /* Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B32A5CF21A2749E70051DC7F /* Utilities.h */; };
 		B33E5DAC1A1CEA2000A14A1B /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */; };
 		B33E5DAD1A1CEF4400A14A1B /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */; };
+		B37FAA781A405AE0003FBA78 /* DeviceParamsHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */; };
 		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
 		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
 		B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */; };
@@ -38,15 +38,14 @@
 		B3C27BF61A2DF03E003108CB /* KPPlayerDatasourceHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF01A2DEDCB003108CB /* KPPlayerDatasourceHandler.h */; };
 		B3C27BF91A2DFE12003108CB /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */; };
 		B3C27BFD1A2F2936003108CB /* NSString+Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */; };
+		B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
-		BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA844751931160600F47E02 /* KPEventListener.h */; };
 		BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
 		BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
 		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
 		BF927ED018BD021A006667CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927ECF18BD021A006667CA /* libz.dylib */; };
 		BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KPViewController.h */; };
-		BFA844771931160600F47E02 /* KPEventListener.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA844761931160600F47E02 /* KPEventListener.m */; };
 		BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */; };
 		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
@@ -92,11 +91,11 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				B37FAA781A405AE0003FBA78 /* DeviceParamsHandler.h in CopyFiles */,
 				B3C27BFD1A2F2936003108CB /* NSString+Utilities.h in CopyFiles */,
 				B3C27BF51A2DF03E003108CB /* KPPlayerConfig.h in CopyFiles */,
 				B3C27BF61A2DF03E003108CB /* KPPlayerDatasourceHandler.h in CopyFiles */,
 				B3C27BF41A2DF024003108CB /* KPViewControllerProtocols.h in CopyFiles */,
-				B32A5CF31A274B4D0051DC7F /* Utilities.h in CopyFiles */,
 				B32A5CE71A25D4C00051DC7F /* KPBrowserViewController.h in CopyFiles */,
 				B32A5CDC1A2492C10051DC7F /* FacebookStrategy.h in CopyFiles */,
 				B32A5CDD1A2492C10051DC7F /* TwitterStrategy.h in CopyFiles */,
@@ -109,7 +108,6 @@
 				BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */,
 				BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */,
 				BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */,
-				BF9133CA19349A8200606682 /* KPEventListener.h in CopyFiles */,
 				BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */,
 				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
 				BFFFA872182FB834005B3B24 /* KPControlsWebView.h in CopyFiles */,
@@ -124,7 +122,6 @@
 		B32A5CEC1A2723730051DC7F /* KPWebKitBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPWebKitBrowserViewController.h; sourceTree = "<group>"; };
 		B32A5CED1A2723730051DC7F /* KPWebKitBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPWebKitBrowserViewController.m; sourceTree = "<group>"; };
 		B32A5CEF1A27308C0051DC7F /* KPWebKitBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPWebKitBrowserViewController.xib; sourceTree = "<group>"; };
-		B32A5CF21A2749E70051DC7F /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utilities.h; sourceTree = "<group>"; };
 		B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPBrowserViewController.xib; sourceTree = "<group>"; };
 		B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusStrategy.h; sourceTree = "<group>"; };
 		B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GooglePlusStrategy.m; sourceTree = "<group>"; };
@@ -151,6 +148,8 @@
 		B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
 		B3D7588B1A1CBEDF00CA5A96 /* Test.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Test.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3D7588E1A1CBEDF00CA5A96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceParamsHandler.h; sourceTree = "<group>"; };
+		B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceParamsHandler.m; sourceTree = "<group>"; };
 		BF66631E18C48C7E001F5E51 /* WVSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WVSettings.m; sourceTree = SOURCE_ROOT; };
 		BF927EBA18BCD719006667CA /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		BF927EBC18BCD722006667CA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -159,8 +158,6 @@
 		BF927ECF18BD021A006667CA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		BFA2DBF61949F29B00831A71 /* KPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewController.h; sourceTree = "<group>"; };
 		BFA2DBF71949F29B00831A71 /* KPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPViewController.m; sourceTree = "<group>"; };
-		BFA844751931160600F47E02 /* KPEventListener.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPEventListener.h; sourceTree = "<group>"; };
-		BFA844761931160600F47E02 /* KPEventListener.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPEventListener.m; sourceTree = "<group>"; };
 		BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KalturaPlayer.h; sourceTree = "<group>"; };
 		BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KalturaPlayer.m; sourceTree = "<group>"; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
@@ -279,15 +276,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BF9133CB19349AB700606682 /* KPEventListener */ = {
-			isa = PBXGroup;
-			children = (
-				BFA844751931160600F47E02 /* KPEventListener.h */,
-				BFA844761931160600F47E02 /* KPEventListener.m */,
-			);
-			name = KPEventListener;
-			sourceTree = "<group>";
-		};
 		BFA6F0D918BB796500F7C78F /* WideVine */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,7 +357,8 @@
 			isa = PBXGroup;
 			children = (
 				B3C27BF31A2DEDFF003108CB /* KPViewControllerProtocols.h */,
-				B32A5CF21A2749E70051DC7F /* Utilities.h */,
+				B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */,
+				B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */,
 				B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */,
 				B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */,
 				B3932ACE1A0A0D7A00AC0442 /* ShareManager */,
@@ -380,7 +369,6 @@
 				BFA6F0D918BB796500F7C78F /* WideVine */,
 				BFFFA774182F9F10005B3B24 /* KPControlsWebView */,
 				BFFFA72D182F9E31005B3B24 /* Supporting Files */,
-				BF9133CB19349AB700606682 /* KPEventListener */,
 			);
 			name = KALTURAPlayerSDK;
 			path = PlayerSDK;
@@ -587,6 +575,7 @@
 			files = (
 				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
+				B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */,
 				B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */,
 				B3C27BF91A2DFE12003108CB /* NSString+Utilities.m in Sources */,
 				B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */,
@@ -596,7 +585,6 @@
 				B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */,
 				B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */,
 				B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */,
-				BFA844771931160600F47E02 /* KPEventListener.m in Sources */,
 				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
 				B3C27BF21A2DEDCB003108CB /* KPPlayerDatasourceHandler.m in Sources */,
 				B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */,

@@ -9,13 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "KPViewControllerProtocols.h"
 
-/// Key names of the video request
-static NSString *KPPlayerDatasourceWidKey = @"wid";
-static NSString *KPPlayerDatasourceUiConfIdKey = @"uiconf_id";
-static NSString *KPPlayerDatasourceCacheStKey = @"cache_st";
-static NSString *KPPlayerDatasourceEntryId = @"entry_id";
-static NSString *KPPlayerDatasourcePlayerIdKey = @"playerId";
-static NSString *KPPlayerDatasourceUridKey = @"urid";
 
 @interface KPPlayerDatasourceHandler : NSObject
 

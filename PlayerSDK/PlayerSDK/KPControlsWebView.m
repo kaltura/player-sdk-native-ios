@@ -26,6 +26,7 @@
 
 
 #import "KPControlsWebView.h"
+#import "NSString+Utilities.h"
 
 
 @implementation KPControlsWebView
@@ -41,7 +42,6 @@
         
         // Set non-opaque in order to make "body{background-color:transparent}" working!
         self.opaque = NO;
-    
 //        NSURL *url = [[NSBundle mainBundle] URLForResource:@"www/webview-document" withExtension:@"html"];
 //        [self loadRequest:[NSURLRequest requestWithURL:url]];
         
@@ -53,6 +53,8 @@
     return self;
 }
 
+
+
 // This selector is called when something is loaded in our webview
 // By something I don't mean anything but just "some" :
 //  - main html document
@@ -63,28 +65,19 @@
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     
-	NSString *requestString = [[request URL] absoluteString];
+	NSString *requestString = request.URL.absoluteString;
     
-    if ([requestString hasPrefix:@"js-frame:"]) {
-        
-        NSArray *components = [requestString componentsSeparatedByString:@":"];
-        
-        NSString *function = (NSString*)[components objectAtIndex:1];
-		int callbackId = [((NSString*)[components objectAtIndex:2]) intValue];
-        NSString *argsAsString = [(NSString*)[components objectAtIndex:3]
-                                  stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-        NSError* error = nil;
-        NSData* data = [argsAsString dataUsingEncoding:NSUTF8StringEncoding];
-        NSArray* args = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-        
-        if (error) {
-            NSLog(@"JSON parsing error: %@", error);
+    if (requestString.isJSFrame) {
+        FunctionComponents functionComponents = requestString.extractFunction;
+        if (functionComponents.error) {
+            NSLog(@"JSON parsing error: %@", functionComponents.error);
         } else {
-            [self handleCall:function callbackId:callbackId args:args];
+            [playerControlsWebViewDelegate handleHtml5LibCall:functionComponents.name
+                                                   callbackId:functionComponents.callBackID
+                                                         args:functionComponents.args];
         }
-        
         return NO;
-    } else if( ![self checkIsIframeUrl: requestString] ){
+    } else if( !requestString.isFrameURL ){
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     }
@@ -92,19 +85,6 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     return YES;
 }
 
-- (BOOL)checkIsIframeUrl: (NSString *)requestString {
-    
-    NSLog(@"checkIsIframeUrl Enter");
-    
-    if ( [requestString rangeOfString: @"mwEmbedFrame"].location != NSNotFound
-        || [requestString rangeOfString: @"embedIframeJs"].location != NSNotFound ) {
-        return YES;
-    }
-
-    NSLog(@"checkIsIframeUrl Enter");
-    
-    return NO;
-}
 
 // Call this function when you have results to send back to javascript callbacks
 // callbackId : int comes from handleCall function
@@ -132,11 +112,34 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     }
 }
 
-// Implements all you native function in this one, by matching 'functionName' and parsing 'args'
-// Use 'callbackId' with 'returnResult' selector when you get some results to send back to javascript
-- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args
-{
-    [playerControlsWebViewDelegate handleHtml5LibCall:functionName callbackId:callbackId args:args];
+
+- (void)addEventListener:(NSString *)event {
+    [self stringByEvaluatingJavaScriptFromString:event.addJSListener];
+}
+
+- (void)removeEventListener:(NSString *)event {
+    [self stringByEvaluatingJavaScriptFromString:event.removeJSListener];
+}
+
+- (void)evaluate:(NSString *)expression evaluateID:(NSString *)evaluateID {
+    [self stringByEvaluatingJavaScriptFromString:[expression evaluateWithID:evaluateID]];
+}
+
+- (void)sendNotification:(NSString *)notification withName:(NSString *)notificationName {
+    [self stringByEvaluatingJavaScriptFromString:[notificationName sendNotificationWithBody:notification]];
+}
+
+- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value {
+    [self stringByEvaluatingJavaScriptFromString:[pluginName setKDPAttribute:propertyName value:value]];
+}
+
+- (void)triggerEvent:(NSString *)event withValue:(NSString *)value {
+    [self stringByEvaluatingJavaScriptFromString:[event triggerEvent:value]];
+}
+
+- (void)updateLayout {
+    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
+    [self stringByEvaluatingJavaScriptFromString:updateLayoutJS];
 }
 
 // Just one example with AlertView that show how to return asynchronous results
@@ -149,4 +152,5 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     BOOL result = buttonIndex==1?YES:NO;
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];
 }
+
 @end
