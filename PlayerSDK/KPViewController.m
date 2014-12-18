@@ -811,7 +811,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSLog(@"triggerLoadPlabackEvents Enter");
     
     isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
-
+    [self.webView triggerEvent:note.name withValue:note.userInfo[note.name]];
     NSLog(@"triggerLoadPlabackEvents Exit");
 }
 
