@@ -12,6 +12,7 @@ static NSString *WVServerKey = @"wvServerKey";
 static NSString *NativeActionKey = @"nativeAction";
 
 #import "NSString+Utilities.h"
+#import "KPLog.h"
 
 @implementation NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param {
@@ -23,7 +24,7 @@ static NSString *NativeActionKey = @"nativeAction";
 
 
 - (Attribute)attributeEnumFromString {
-    NSLog(@"attributeNameEnumFromString Enter");
+    KPLogTrace(@"Enter");
     NSArray *attributes = @[@"src",
                             @"currentTime",
                             @"visible",
@@ -31,8 +32,7 @@ static NSString *NativeActionKey = @"nativeAction";
                             @"wvServerKey",
 #endif
                             @"nativeAction"];
-    
-    NSLog(@"attributeNameEnumFromString Exit");
+    KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }
 
@@ -102,7 +102,7 @@ static NSString *NativeActionKey = @"nativeAction";
 
 - (NSString *)triggerEvent:(NSString *)event {
     NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger(\"%@\", '%@')", self, event];
-    NSLog(@"%@", jsStringLog);
+    KPLogInfo(@"%@", jsStringLog);
     return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", self, event];
 }
 @end

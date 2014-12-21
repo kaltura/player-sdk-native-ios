@@ -20,8 +20,7 @@
 @synthesize isPreparedToPlay;
 
 - (void)copyParamsFromPlayer:(id<KalturaPlayer>) player {
-    NSLog(@"copyParamsFromPlayer Enter");
-    
+    KPLogTrace(@"Enter");
     if (self) {
         chromecastDeviceController = (ChromecastDeviceController *)[KPViewController sharedChromecastDeviceController];
         
@@ -32,8 +31,7 @@
         
         [self setContentURL: [player contentURL]];
     }
-    
-    NSLog(@"copyParamsFromPlayer Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (int)playbackState {
@@ -56,31 +54,25 @@
 }
 
 -(void)play {
-    NSLog(@"play Enter");
-    
+    KPLogTrace(@"Enter");
     if ( chromecastDeviceController.playerState !=  GCKMediaPlayerStatePlaying ) {
         [chromecastDeviceController pauseCastMedia: NO];
     }
-    
-    NSLog(@"play Exit");
+    KPLogTrace(@"Exit");
 }
 
 -(void)pause {
-    NSLog(@"pause Enter");
-    
+    KPLogTrace(@"Enter");
     if ( chromecastDeviceController.playerState != GCKMediaPlayerStatePaused ) {
          [chromecastDeviceController pauseCastMedia: YES];
     }
-    
-    NSLog(@"pause Exit");
+    KPLogTrace(@"Exit");
 }
 
 -(void)stop {
-    NSLog(@"stop Enter");
-    
+    KPLogTrace(@"Enter");
     [chromecastDeviceController stopCastMedia];
-    
-    NSLog(@"stop Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (double)playableDuration {
@@ -126,8 +118,7 @@
 
 // TODO: triggerMediaNowPlaying call it directly with no events
 - (void)triggerMediaNowPlaying {
-    NSLog(@"triggerMediaNowPlaying Enter");
-    
+    KPLogTrace(@"Enter");
     if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying ) {
         [self triggerKPlayerEvents: @"play" withValue: nil];
         [NSTimer scheduledTimerWithTimeInterval: .2
@@ -141,26 +132,21 @@
                                        userInfo: nil
                                         repeats: YES];
     }
-    
-    NSLog(@"triggerMediaNowPlaying Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)triggerMediaNowPaused {
-    NSLog(@"triggerMediaNowPaused Enter");
-    
+    KPLogTrace(@"Enter");
     if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePaused ) {
         [self triggerKPlayerEvents: @"pause" withValue: nil];
     }
-    
-    NSLog(@"triggerMediaNowPaused Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)triggerKPlayerEvents: (NSString *)notName withValue: (NSDictionary *)notValueDict {
-    NSLog(@"triggerKPlayerEvents Enter");
-    
+    KPLogTrace(@"Enter");
     [[NSNotificationCenter defaultCenter] postNotificationName: notName object: nil userInfo: notValueDict];
-    
-    NSLog(@"triggerKPlayerEvents Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)sendCurrentTime:(NSTimer *)timer {
@@ -181,15 +167,13 @@
 }
 
 - (void) volumeChanged:(NSNotification *)notification {
-    NSLog(@"onMovieDurationAvailable Enter");
-    
+    KPLogTrace(@"Enter");
     float volume = [[[notification userInfo]
                      objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"]
                     floatValue];
     
     [chromecastDeviceController changeVolume: volume];
     
-    NSLog(@"onMovieDurationAvailable Exit");
 }
 
 @end
