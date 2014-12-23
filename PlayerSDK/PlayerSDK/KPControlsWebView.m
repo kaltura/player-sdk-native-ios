@@ -27,6 +27,7 @@
 
 #import "KPControlsWebView.h"
 #import "NSString+Utilities.h"
+#import "KPLog.h"
 
 
 @implementation KPControlsWebView
@@ -70,7 +71,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     if (requestString.isJSFrame) {
         FunctionComponents functionComponents = requestString.extractFunction;
         if (functionComponents.error) {
-            NSLog(@"JSON parsing error: %@", functionComponents.error);
+            KPLogError(@"JSON parsing error: %@", functionComponents.error);
         } else {
             [playerControlsWebViewDelegate handleHtml5LibCall:functionComponents.name
                                                    callbackId:functionComponents.callBackID
@@ -105,7 +106,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     NSError* error = nil;
     NSData *data = [NSJSONSerialization dataWithJSONObject:resultArray options:kNilOptions error:&error];
     if (error) {
-        NSLog(@"JSON writing error: %@", error);
+        KPLogError(@"JSON writing error: %@", error);
     } else {
         NSString *resultArrayString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         [self stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"NativeBridge.resultForCallback(%d,%@);",callbackId,resultArrayString]];
@@ -147,7 +148,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 {
     if (!alertCallbackId) return;
     
-    NSLog(@"prompt result : %ld", (long)buttonIndex);
+    KPLogInfo(@"prompt result : %ld", (long)buttonIndex);
     
     BOOL result = buttonIndex==1?YES:NO;
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];

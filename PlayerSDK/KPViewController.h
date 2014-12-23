@@ -18,11 +18,12 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 #import "KPControlsWebView.h"
-
+#import "KPLog.h"
 #import "KalturaPlayer.h"
 #import "KPChromecast.h"
 #import "ChromecastDeviceController.h"
 #import "KPViewControllerProtocols.h"
+
 
 
 
@@ -42,15 +43,14 @@
     id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
 }
 
-
 @property (nonatomic, strong) IBOutlet KPControlsWebView* webView;
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
 @property (nonatomic, strong) id<KalturaPlayer> player;
 @property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
 @property (nonatomic, retain) NSMutableDictionary *players;
-
 @property (nonatomic, assign) CGRect playerFrame;
 
++ (void)setLogLevel:(KPLogLevel)logLevel;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
