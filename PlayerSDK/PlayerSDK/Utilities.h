@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <AdSupport/AdSupport.h>
+#import <UIKit/UIKit.h>
 
 CG_INLINE BOOL __isIOS8() {
     NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];

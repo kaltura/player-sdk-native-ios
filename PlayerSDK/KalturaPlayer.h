@@ -9,6 +9,11 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "KPViewController.h"
 
+//#import <Pods/GoogleAds-IMA-iOS-SDK/GoogleIMASDK3/IMAAdsLoader.h>
+
+//#import <IMAAdsLoader.h>
+//#import <IMAAdsManager.h>
+
 @interface KalturaPlayer : MPMoviePlayerController <KalturaPlayer>
 
 - (void)pause;

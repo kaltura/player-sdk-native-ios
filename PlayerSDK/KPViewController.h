@@ -88,6 +88,8 @@ typedef void (^JSCallbackReadyHandler)();
 - (void)setWideVideConfigurations;
 - (void)setControlStyle:(int)cs;
 
+- (void)showAdAtURL:(NSString *)adTagUrl;
+
 @end
 
 

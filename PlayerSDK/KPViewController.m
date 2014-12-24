@@ -16,6 +16,7 @@
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
 #import "Utilities.h"
+#import "KPKalturaPlayWithAdsSupport.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
@@ -161,7 +162,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
         [[self webView] setPlayerControlsWebViewDelegate: self];
         
-        self.player = [self getPlayerByClass:[KalturaPlayer class]];
+        self.player = [self getPlayerByClass:[KPKalturaPlayWithAdsSupport class]];
         NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
 
         self.player.view.frame = playerViewFrame;
@@ -537,7 +538,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self registerJSCallbackReady: ^() {
         NSLog(@"jsCallbackReady");
         if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
-            [self setKDPAttribute: @"fullScreenBtn" propertyName: @"visible" value: @"false"];
+//            [self setKDPAttribute: @"fullScreenBtn" propertyName: @"visible" value: @"false"];
         }
     }];
 }
@@ -763,6 +764,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
         case doubleClickRequestAds:
             NSLog(@"doubleClickRequestAds");
+            [[self player] showAdAtURL:attributeVal];
             break;
         default:
             break;
