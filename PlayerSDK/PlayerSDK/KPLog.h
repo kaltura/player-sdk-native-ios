@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <Availability.h>
 #import "KPLogManager.h"
 
 

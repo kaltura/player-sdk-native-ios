@@ -19,7 +19,7 @@
 @implementation KPPlayerConfig
 @synthesize mutableFlashvarsDict = _mutableFlashvarsDict;
 
-- (NSMutableDictionary *)mutableFlashvarsArray {
+- (NSMutableDictionary *)mutableFlashvarsDict {
     if (!_mutableFlashvarsDict) {
         _mutableFlashvarsDict = [NSMutableDictionary new];
     }
@@ -35,7 +35,7 @@
 
 - (NSDictionary *)flashvarsDict {
     [self addDefaultFlags];
-    return self.mutableFlashvarsArray.copy;
+    return self.mutableFlashvarsDict.copy;
 }
 
 - (void)addDefaultFlags {
