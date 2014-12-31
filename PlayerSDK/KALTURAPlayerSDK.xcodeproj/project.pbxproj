@@ -46,10 +46,8 @@
 		B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
-		BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBA18BCD719006667CA /* libstdc++.dylib */; };
 		BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
 		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
-		BF927ED018BD021A006667CA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927ECF18BD021A006667CA /* libz.dylib */; };
 		BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KPViewController.h */; };
 		BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */; };
 		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
@@ -207,10 +205,8 @@
 				B39BEC951A0BA8C40085BA26 /* MessageUI.framework in Frameworks */,
 				B39BEC7D1A0A7F740085BA26 /* Social.framework in Frameworks */,
 				BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */,
-				BF927ED018BD021A006667CA /* libz.dylib in Frameworks */,
 				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
 				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
-				BF927EBB18BCD719006667CA /* libstdc++.dylib in Frameworks */,
 				BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */,
 				BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */,
 			);
