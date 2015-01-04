@@ -38,6 +38,12 @@
     if ([params respondsToSelector:@selector(urid)] && params.urid) {
         link = [link appendParam:@{KPPlayerDatasourceUridKey: params.urid}];
     }
+    if ([params respondsToSelector:@selector(debug)] && params.debug) {
+        link = [link appendParam:@{KPPlayerDatasourceDebugKey: params.debug}];
+    }
+    if ([params respondsToSelector:@selector(forceMobileHTML5)] && params.forceMobileHTML5) {
+        link = [link appendParam:@{KPPlayerDatasourceForceHtml5Key: params.forceMobileHTML5}];
+    }
     if ([params respondsToSelector:@selector(configFlags)] && params.configFlags) {
         for (NSString *key in params.configFlags.flashvarsDict.allKeys) {
             link = [link appendParam:@{key: params.configFlags.flashvarsDict[key]}];

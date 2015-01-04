@@ -20,6 +20,8 @@ static NSString *KPPlayerDatasourceCacheStKey = @"cache_st";
 static NSString *KPPlayerDatasourceEntryId = @"entry_id";
 static NSString *KPPlayerDatasourcePlayerIdKey = @"playerId";
 static NSString *KPPlayerDatasourceUridKey = @"urid";
+static NSString *KPPlayerDatasourceDebugKey = @"debug";
+static NSString *KPPlayerDatasourceForceHtml5Key = @"forceMobileHTML5";
 
 typedef enum{
     // Player Content Source Url
@@ -63,6 +65,8 @@ typedef enum{
 @property (nonatomic, copy, readonly) KPPlayerConfig *configFlags;
 @property (nonatomic, copy, readonly) NSString *playerId;
 @property (nonatomic, copy, readonly) NSString *urid;
+@property (nonatomic, copy, readonly) NSString *debug;
+@property (nonatomic, copy, readonly) NSString *forceMobileHTML5;
 
 @end
 
