@@ -179,7 +179,7 @@
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
-		BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KalKALTURAPlayerSDKTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFFFA738182F9E31005B3B24 /* .octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = .octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		BFFFA743182F9E31005B3B24 /* PlayerSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerSDKTests-Info.plist"; sourceTree = "<group>"; };
 		BFFFA745182F9E31005B3B24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -340,7 +340,7 @@
 			isa = PBXGroup;
 			children = (
 				BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */,
-				BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */,
+				BFFFA738182F9E31005B3B24 /* .octest */,
 				B3D7588B1A1CBEDF00CA5A96 /* Test.bundle */,
 			);
 			name = Products;
@@ -491,7 +491,7 @@
 			);
 			name = KALTURAPlayerSDKTests;
 			productName = PlayerSDKTests;
-			productReference = BFFFA738182F9E31005B3B24 /* KalKALTURAPlayerSDKTests.octest */;
+			productReference = BFFFA738182F9E31005B3B24 /* .octest */;
 			productType = "com.apple.product-type.bundle.ocunit-test";
 		};
 /* End PBXNativeTarget section */
@@ -854,7 +854,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				INFOPLIST_FILE = "PlayerSDKTests/PlayerSDKTests-Info.plist";
-				PRODUCT_NAME = KalKALTURAPlayerSDKTests;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -870,7 +869,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
 				INFOPLIST_FILE = "PlayerSDKTests/PlayerSDKTests-Info.plist";
-				PRODUCT_NAME = KalKALTURAPlayerSDKTests;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = octest;
 			};
