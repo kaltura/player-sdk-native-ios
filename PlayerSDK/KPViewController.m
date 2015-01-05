@@ -109,7 +109,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)viewDidLoad {
     KPLogTrace(@"Enter");
     appConfigDict = extractDictionary(AppConfigurationFileName, @"plist");
-    setUserAgent();
+    //setUserAgent();
     [self initPlayerParams];
 
     // Observer for pause player notifications
@@ -182,7 +182,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)viewWillAppear:(BOOL)animated {
     KPLogTrace(@"Enter");
-    CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
+    CGRect playerViewFrame = (CGRect){ CGPointZero, self.view.frame.size };
     
     if ( !isFullScreen && !isResumePlayer ) {
         self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
@@ -644,9 +644,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     
     if ( isIOS(8) ) {
-        mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
+        mainFrame = (CGRect){ screenOrigin, screenSize } ;
     } else if(UIDeviceOrientationIsLandscape(_deviceOrientation)){
-        mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
+        mainFrame = (CGRect){ screenOrigin, screenSize.height, screenSize.width } ;
     } else {
         mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
     }
@@ -655,7 +655,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     [UIApplication sharedApplication].statusBarHidden = YES;
     
-    [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    [self.player.view setFrame: (CGRect){CGPointZero, self.view.frame.size}];
     [self.webView setFrame: self.player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
     self.triggerEvent(@"enterfullscreen", nil);
@@ -714,19 +714,19 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ( isIpad || openFullscreen ) {
         if ( isDeviceOrientation(UIDeviceOrientationUnknown) ) {
             if (UIDeviceOrientationPortrait == _statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == _statusBarOrientation) {
-                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
+                mainFrame = (CGRect){ screenOrigin, screenSize } ;
             }else if(UIDeviceOrientationIsLandscape(_statusBarOrientation)){
-                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
+                mainFrame = (CGRect){ screenOrigin, screenSize.height, screenSize.width };
             }
         }else{
             if ( UIDeviceOrientationPortrait == _deviceOrientation || UIDeviceOrientationPortraitUpsideDown == _deviceOrientation ) {
-                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
+                mainFrame = (CGRect){ screenOrigin, screenSize };
             }else if(UIDeviceOrientationIsLandscape(_deviceOrientation)){
-                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
+                mainFrame = (CGRect){ screenOrigin, screenSize.height, screenSize.width };
             }
         }
     }else{
-        mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
+        mainFrame = (CGRect){ screenOrigin, screenSize.height, screenSize.width };
     }
     
     [self.view setFrame: mainFrame];
