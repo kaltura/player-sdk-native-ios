@@ -775,6 +775,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         functionName = [NSString stringWithFormat:@"%@:", functionName];
     }
     if ([self respondsToSelector:NSSelectorFromString(functionName)]) {
+        KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:NSSelectorFromString(functionName) withObject:args];
     }
     

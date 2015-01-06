@@ -86,7 +86,7 @@
         return;
     }
 #endif
-    
+    KPLogDebug(@"playbackState - %ld", self.playbackState);
     if( !( self.playbackState == MPMoviePlaybackStatePlaying ) ) {
         [self prepareToPlay];
         [super play];

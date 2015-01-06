@@ -67,7 +67,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     
 	NSString *requestString = request.URL.absoluteString;
-    
+    KPLogDebug(@"requestString %@", requestString);
     if (requestString.isJSFrame) {
         FunctionComponents functionComponents = requestString.extractFunction;
         if (functionComponents.error) {
