@@ -30,6 +30,7 @@
     NSArray *prevAirPlayBtnPositionArr;
     
     BOOL isJsCallbackReady;
+    BOOL shouldNotifyPlayEnded;
     NSMutableDictionary *kPlayerEventsDict;
     NSMutableDictionary *kPlayerEvaluatedDict;
     
@@ -66,7 +67,14 @@
 }
 
 -(void)setContentURL: (NSURL *)url {
-    super.contentURL = [url copy];
+    if (self.playbackState == MPMoviePlaybackStatePlaying || self.playbackState == MPMoviePlaybackStatePaused) {
+        shouldNotifyPlayEnded = NO;
+        [super stop];
+        super.contentURL = [url copy];
+        [self play];
+    } else {
+        super.contentURL = [url copy];
+    }
 }
 
 -(int)controlStyle {
@@ -169,12 +177,11 @@
 }
 
 - (void)bindPlayerEvents {
+    shouldNotifyPlayEnded = YES;
     NSMutableDictionary *eventsDictionary = [[NSMutableDictionary alloc] init];
     
     [eventsDictionary setObject: MPMoviePlayerLoadStateDidChangeNotification
                          forKey: @"triggerLoadPlabackEvents:"];
-    [eventsDictionary setObject: MPMoviePlayerPlaybackDidFinishNotification
-                         forKey: @"triggerFinishPlabackEvents:"];
     [eventsDictionary setObject: MPMoviePlayerPlaybackStateDidChangeNotification
                          forKey: @"triggerMoviePlabackEvents:"];
     [eventsDictionary setObject: MPMoviePlayerTimedMetadataUpdatedNotification
@@ -197,6 +204,10 @@
 
 - (void)triggerLoadPlabackEvents: (NSNotification *)note{
     KPLogTrace(@"Enter");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(triggerFinishPlaybackEvents:)
+                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+                                               object:nil];
     NSString *loadStateName = [[NSString alloc]init];
     
     switch ( [self loadState] ) {
@@ -247,6 +258,7 @@
         case MPMoviePlaybackStatePlaying:
             playBackName = @"";
             if( ( [self playbackState] == MPMoviePlaybackStatePlaying ) ) {
+                shouldNotifyPlayEnded = YES;
                 playBackName = @"play";
                 [NSTimer scheduledTimerWithTimeInterval: .2
                                                  target: self
@@ -289,8 +301,11 @@
     KPLogTrace(@"Exit");
 }
 
-- (void)triggerFinishPlabackEvents:(NSNotification*)notification {
+- (void)triggerFinishPlaybackEvents:(NSNotification*)notification {
     KPLogTrace(@"Enter");
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:nil];
     NSString *finishPlayBackName = [[NSString alloc]init];
     NSNumber* reason = [[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
     
@@ -310,8 +325,9 @@
         default:
             break;
     }
-    
-    [self triggerKPlayerEvents: finishPlayBackName withValue: nil];
+    if (shouldNotifyPlayEnded) {
+        [self triggerKPlayerEvents: finishPlayBackName withValue: nil];
+    }
     KPLogTrace(@"Exit");
 }
 
@@ -390,7 +406,5 @@
 
 //KALPlayer *kp = [KALPlayer new];
 //[kp setDelegate: self];
-
-
 
 @end

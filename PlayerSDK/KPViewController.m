@@ -25,10 +25,14 @@ static NSString *IsFullScreenKey = @"isFullScreen";
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
 
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
-    KPActionTypeOpenHomePage
+    KPActionTypeOpenHomePage,
+    KPActionTypeSkip
 };
 
 @interface KPViewController() {
@@ -105,13 +109,21 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return _kPlayerEvaluatedDict;
 }
 
+- (NSString *) platform {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithUTF8String:machine];
+    free(machine);
+    return platform;
+}
 
 - (void)viewDidLoad {
     KPLogTrace(@"Enter");
     appConfigDict = extractDictionary(AppConfigurationFileName, @"plist");
     setUserAgent();
     [self initPlayerParams];
-
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
                                               selector: @selector(pause)
@@ -282,16 +294,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)doNativeAction {
     KPLogTrace(@"Enter");
-    switch (nativeActionParams.actionType) {
-        case KPActionTypeShare:
-            [self share];
-            break;
-        case KPActionTypeOpenHomePage:
-            [self openURL];
-            break;
-        default:
-            break;
-    }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    SEL nativeAction = NSSelectorFromString(nativeActionParams.actionType);
+    [self performSelector:nativeAction withObject:nil];
+#pragma clang diagnostic pop
     KPLogTrace(@"Exit");
 }
 

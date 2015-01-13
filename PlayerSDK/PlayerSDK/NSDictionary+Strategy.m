@@ -51,8 +51,8 @@ static NSString *ThumbnailKey = @"thumbnail";
     return NSClassFromString(strategyName);
 }
 
-- (NSInteger)actionType {
-    return [self[ActionTypeKey] integerValue];
+- (NSString *)actionType {
+    return self[ActionTypeKey];
 }
 
 - (NSURL *)openURL {
