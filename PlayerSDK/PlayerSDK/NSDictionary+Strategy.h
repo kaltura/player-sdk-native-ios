@@ -10,6 +10,6 @@
 #import "KPShareManager.h"
 
 @interface NSDictionary (Strategy) <KPShareParams>
-@property (nonatomic, assign, readonly) NSInteger actionType;
+@property (nonatomic, copy, readonly) NSString *actionType;
 @property (nonatomic, copy, readonly) NSURL *openURL;
 @end
