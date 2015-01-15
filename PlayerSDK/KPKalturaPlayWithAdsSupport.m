@@ -26,37 +26,69 @@
     return self;
 }
 
+
+// Create ads rendering settings to tell the SDK to use the in-app browser.
+- (IMAAdsRenderingSettings *)adsRenderingSettings {
+    if (!_adsRenderingSettings) {
+        _adsRenderingSettings = [IMAAdsRenderingSettings new];
+        _adsRenderingSettings.webOpenerPresentingController = self;
+    }
+    return _adsRenderingSettings;
+}
+
+- (IMAAVPlayerContentPlayhead *)contentPlayhead {
+    if (!_contentPlayhead) {
+        _contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
+    }
+    return _contentPlayhead;
+}
+
+// Create our AdDisplayContainer. Initialize it with our videoView as the container. This
+
+- (IMAAdDisplayContainer *)adDisplayContainer {
+    if (!_adDisplayContainer) {
+        _adDisplayContainer = [[IMAAdDisplayContainer alloc] initWithAdContainer:self.view.superview
+                                                                  companionSlots:nil];
+    }
+    return _adDisplayContainer;
+}
+
+- (IMAAdsLoader *)adsLoader {
+    if (!_adsLoader) {
+        _adsLoader = [[IMAAdsLoader alloc] initWithSettings:nil];
+        _adsLoader.delegate = self;
+    }
+    return _adsLoader;
+}
+
 - (void)showAdAtURL:(NSString *)adTagUrl {
-    [self setupAdsLoader];
-    [self setUpAdDisplayContainer];
-    IMAAdsRequest *request =
-    [[IMAAdsRequest alloc] initWithAdTagUrl:adTagUrl
-                         adDisplayContainer:self.adDisplayContainer
-                                userContext:nil];
+    IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:adTagUrl
+                                                  adDisplayContainer:self.adDisplayContainer
+                                                         userContext:nil];
     
     [self.adsLoader requestAdsWithRequest:request];
 }
 
-- (void)setupAdsLoader {
-    self.adsLoader = [[IMAAdsLoader alloc] initWithSettings:nil];
-    self.adsLoader.delegate = self;
-}
+//- (void)setupAdsLoader {
+//    self.adsLoader = [[IMAAdsLoader alloc] initWithSettings:nil];
+//    self.adsLoader.delegate = self;
+//}
 
-- (void)setUpAdDisplayContainer {
-    // Create our AdDisplayContainer. Initialize it with our videoView as the container. This
-    // will result in ads being displayed over our content video.
-    self.adDisplayContainer =
-    [[IMAAdDisplayContainer alloc] initWithAdContainer:self.view.superview companionSlots:nil];
-}
+//- (void)setUpAdDisplayContainer {
+//    // Create our AdDisplayContainer. Initialize it with our videoView as the container. This
+//    // will result in ads being displayed over our content video.
+//    self.adDisplayContainer =
+//    [[IMAAdDisplayContainer alloc] initWithAdContainer:self.view.superview companionSlots:nil];
+//}
 
-- (void)createAdsRenderingSettings {
-    self.adsRenderingSettings = [[IMAAdsRenderingSettings alloc] init];
-    self.adsRenderingSettings.webOpenerPresentingController = self;
-}
+//- (void)createAdsRenderingSettings {
+//    self.adsRenderingSettings = [[IMAAdsRenderingSettings alloc] init];
+//    self.adsRenderingSettings.webOpenerPresentingController = self;
+//}
 
-- (void)createContentPlayhead {
-    self.contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
-}
+//- (void)createContentPlayhead {
+//    self.contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
+//}
 
 #pragma mark AdsLoader Delegates
 
@@ -64,10 +96,10 @@
     // Grab the instance of the IMAAdsManager and set ourselves as the delegate.
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
-    // Create ads rendering settings to tell the SDK to use the in-app browser.
-    [self createAdsRenderingSettings];
+    
+    //[self createAdsRenderingSettings];
     // Create a content playhead so the SDK can track our content for VMAP and ad rules.
-    [self createContentPlayhead];
+    //[self createContentPlayhead];
     // Initialize the ads manager.
     [self.adsManager initializeWithContentPlayhead:self.contentPlayhead
                               adsRenderingSettings:self.adsRenderingSettings];
