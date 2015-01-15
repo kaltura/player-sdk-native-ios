@@ -30,11 +30,9 @@
 		B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GooglePlusStrategy.m */; };
 		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
 		B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */; };
-		B39BEC7D1A0A7F740085BA26 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B39BEC7C1A0A7F740085BA26 /* Social.framework */; };
 		B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */; };
 		B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */; };
 		B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */; };
-		B39BEC951A0BA8C40085BA26 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B39BEC941A0BA8C40085BA26 /* MessageUI.framework */; };
 		B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */; };
 		B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BEE1A2DE0BB003108CB /* KPPlayerConfig.m */; };
 		B3C27BF21A2DEDCB003108CB /* KPPlayerDatasourceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BF11A2DEDCB003108CB /* KPPlayerDatasourceHandler.m */; };
@@ -46,15 +44,12 @@
 		B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
 		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
-		BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF927EBC18BCD722006667CA /* SystemConfiguration.framework */; };
 		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
 		BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KPViewController.h */; };
 		BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */; };
-		BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
 		BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
 		BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
-		BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */; };
 		BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
 		BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */; };
@@ -66,7 +61,6 @@
 		BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */; };
 		BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */; };
 		BFFFA755182F9E66005B3B24 /* KPControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */; };
-		BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA775182FA012005B3B24 /* UIKit.framework */; };
 		BFFFA872182FB834005B3B24 /* KPControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* KPControlsWebView.h */; };
 /* End PBXBuildFile section */
 
@@ -202,12 +196,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B39BEC951A0BA8C40085BA26 /* MessageUI.framework in Frameworks */,
-				B39BEC7D1A0A7F740085BA26 /* Social.framework in Frameworks */,
-				BFDF5FD219B33D0400C9F9AC /* GoogleCast.framework in Frameworks */,
-				BF927EBD18BCD722006667CA /* SystemConfiguration.framework in Frameworks */,
-				BFC574A51997C296000511B8 /* libWViPhoneAPI.a in Frameworks */,
-				BFFFA776182FA012005B3B24 /* UIKit.framework in Frameworks */,
 				BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -811,7 +799,10 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
 			};
@@ -838,7 +829,10 @@
 					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				SKIP_INSTALL = YES;
 			};
