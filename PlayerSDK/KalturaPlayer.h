@@ -15,7 +15,6 @@
 - (void)pause;
 - (void)play;
 - (void)stop;
-- (void)skip;
 - (id)view;
 - (int)controlStyle;
 - (int)playbackState;
