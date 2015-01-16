@@ -36,6 +36,7 @@
     return _adsRenderingSettings;
 }
 
+// Create a content playhead so the SDK can track our content for VMAP and ad rules.
 - (IMAAVPlayerContentPlayhead *)contentPlayhead {
     if (!_contentPlayhead) {
         _contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
@@ -44,7 +45,6 @@
 }
 
 // Create our AdDisplayContainer. Initialize it with our videoView as the container. This
-
 - (IMAAdDisplayContainer *)adDisplayContainer {
     if (!_adDisplayContainer) {
         _adDisplayContainer = [[IMAAdDisplayContainer alloc] initWithAdContainer:self.view.superview
@@ -69,27 +69,6 @@
     [self.adsLoader requestAdsWithRequest:request];
 }
 
-//- (void)setupAdsLoader {
-//    self.adsLoader = [[IMAAdsLoader alloc] initWithSettings:nil];
-//    self.adsLoader.delegate = self;
-//}
-
-//- (void)setUpAdDisplayContainer {
-//    // Create our AdDisplayContainer. Initialize it with our videoView as the container. This
-//    // will result in ads being displayed over our content video.
-//    self.adDisplayContainer =
-//    [[IMAAdDisplayContainer alloc] initWithAdContainer:self.view.superview companionSlots:nil];
-//}
-
-//- (void)createAdsRenderingSettings {
-//    self.adsRenderingSettings = [[IMAAdsRenderingSettings alloc] init];
-//    self.adsRenderingSettings.webOpenerPresentingController = self;
-//}
-
-//- (void)createContentPlayhead {
-//    self.contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
-//}
-
 #pragma mark AdsLoader Delegates
 
 - (void)adsLoader:(IMAAdsLoader *)loader adsLoadedWithData:(IMAAdsLoadedData *)adsLoadedData {
@@ -97,9 +76,6 @@
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
     
-    //[self createAdsRenderingSettings];
-    // Create a content playhead so the SDK can track our content for VMAP and ad rules.
-    //[self createContentPlayhead];
     // Initialize the ads manager.
     [self.adsManager initializeWithContentPlayhead:self.contentPlayhead
                               adsRenderingSettings:self.adsRenderingSettings];
