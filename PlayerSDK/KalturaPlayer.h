@@ -8,11 +8,7 @@
 
 #import <MediaPlayer/MediaPlayer.h>
 #import "KPViewController.h"
-
-//#import <Pods/GoogleAds-IMA-iOS-SDK/GoogleIMASDK3/IMAAdsLoader.h>
-
-//#import <IMAAdsLoader.h>
-//#import <IMAAdsManager.h>
+#import "KPViewControllerProtocols.h"
 
 @interface KalturaPlayer : MPMoviePlayerController <KalturaPlayer>
 
@@ -33,7 +29,7 @@
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
 - (NSTimeInterval)currentPlaybackTime;
 - (void)setCurrentPlaybackTime:(double)cs;
-- (void)initWV: (NSString *)src andKey: (NSString *)key;
-- (void)setWideVideConfigurations;
+//- (void)initWV: (NSString *)src andKey: (NSString *)key;
+//- (void)setWideVideConfigurations;
 
 @end

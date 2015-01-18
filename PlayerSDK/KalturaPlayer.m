@@ -7,6 +7,7 @@
 //
 
 #import "KalturaPlayer.h"
+#import "KPLog.h"
 #if !(TARGET_IPHONE_SIMULATOR)
 #import "WVSettings.h"
 #import "WViPhoneAPI.h"
@@ -29,6 +30,7 @@
     NSArray *prevAirPlayBtnPositionArr;
     
     BOOL isJsCallbackReady;
+    BOOL shouldNotifyPlayEnded;
     NSMutableDictionary *kPlayerEventsDict;
     NSMutableDictionary *kPlayerEvaluatedDict;
     
@@ -48,14 +50,12 @@
 @synthesize contentURL;
 
 - (void) copyParamsFromPlayer:(id<KalturaPlayer>) player {
-    NSLog(@"copyParamsFromPlayer Enter");
-    
+    KPLogTrace(@"Enter");
     if (self) {
         [self setCurrentPlaybackTime: [player currentPlaybackTime]];
         [self setContentURL: [player contentURL]];
     }
-    
-    NSLog(@"copyParamsFromPlayer Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (int)playbackState {
@@ -67,7 +67,14 @@
 }
 
 -(void)setContentURL: (NSURL *)url {
-    super.contentURL = [url copy];
+    if (self.playbackState == MPMoviePlaybackStatePlaying || self.playbackState == MPMoviePlaybackStatePaused) {
+        shouldNotifyPlayEnded = NO;
+        [super stop];
+        super.contentURL = [url copy];
+        [self play];
+    } else {
+        super.contentURL = [url copy];
+    }
 }
 
 -(int)controlStyle {
@@ -79,8 +86,7 @@
 }
 
 - (void)play {
-    NSLog(@"play Enter");
-    
+    KPLogTrace(@"Enter");
     isPlayCalled = YES;
     
 #if !(TARGET_IPHONE_SIMULATOR)
@@ -88,20 +94,18 @@
         return;
     }
 #endif
-    
+    KPLogDebug(@"playbackState - %ld", self.playbackState);
     if( !( self.playbackState == MPMoviePlaybackStatePlaying ) ) {
         [self prepareToPlay];
         [super play];
     }
     
     [self callSelectorOnDelegate: @selector(kPlayerDidPlay)];
-    
-    NSLog(@"play Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)pause {
-    NSLog(@"pause Enter");
-    
+    KPLogTrace(@"Enter");
     isPlayCalled = NO;
     
     if ( !( self.playbackState == MPMoviePlaybackStatePaused ) ) {
@@ -109,13 +113,11 @@
     }
     
     [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
-    
-    NSLog(@"pause Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)stop {
-    NSLog(@"stop Enter");
-    
+    KPLogTrace(@"Enter");
     isPlayCalled = NO;
     
     [super stop];
@@ -130,8 +132,7 @@
 #endif
     
     [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
-    
-    NSLog(@"stop Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)callSelectorOnDelegate:(SEL) selector {
@@ -176,12 +177,11 @@
 }
 
 - (void)bindPlayerEvents {
+    shouldNotifyPlayEnded = YES;
     NSMutableDictionary *eventsDictionary = [[NSMutableDictionary alloc] init];
     
     [eventsDictionary setObject: MPMoviePlayerLoadStateDidChangeNotification
                          forKey: @"triggerLoadPlabackEvents:"];
-    [eventsDictionary setObject: MPMoviePlayerPlaybackDidFinishNotification
-                         forKey: @"triggerFinishPlabackEvents:"];
     [eventsDictionary setObject: MPMoviePlayerPlaybackStateDidChangeNotification
                          forKey: @"triggerMoviePlabackEvents:"];
     [eventsDictionary setObject: MPMoviePlayerTimedMetadataUpdatedNotification
@@ -203,48 +203,49 @@
 }
 
 - (void)triggerLoadPlabackEvents: (NSNotification *)note{
-    NSLog(@"triggerLoadPlabackEvents Enter");
-    
+    KPLogTrace(@"Enter");
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(triggerFinishPlaybackEvents:)
+                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+                                               object:nil];
     NSString *loadStateName = [[NSString alloc]init];
     
     switch ( [self loadState] ) {
         case MPMovieLoadStateUnknown:
             loadStateName = @"MPMovieLoadStateUnknown";
-            NSLog(@"MPMovieLoadStateUnknown");
+            KPLogDebug(@"MPMovieLoadStateUnknown");
             break;
         case MPMovieLoadStatePlayable:
             loadStateName = @"canplay";
             [self triggerKPlayerEvents: @"durationchange" withValue: @{@"durationchange": [NSString stringWithFormat: @"%f", [self duration]]}];
             [self triggerKPlayerEvents: @"loadedmetadata"  withValue: @{@"loadedmetadata": @""}];
-            NSLog(@"MPMovieLoadStatePlayable");
+            KPLogDebug(@"MPMovieLoadStatePlayable");
             break;
         case MPMovieLoadStatePlaythroughOK:
             loadStateName = @"MPMovieLoadStatePlaythroughOK";
-            NSLog(@"MPMovieLoadStatePlaythroughOK");
+            KPLogDebug(@"MPMovieLoadStatePlaythroughOK");
             break;
         case MPMovieLoadStateStalled:
             loadStateName = @"stalled";
-            NSLog(@"MPMovieLoadStateStalled");
+            KPLogDebug(@"MPMovieLoadStateStalled");
             break;
         default:
             break;
     }
     
     [self triggerKPlayerEvents: loadStateName withValue: nil];
-    
-    NSLog(@"triggerLoadPlabackEvents Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)triggerMoviePlabackEvents: (NSNotification *)note{
-    NSLog(@"triggerMoviePlabackEvents Enter");
-    
+    KPLogTrace(@"Enter");
     NSString *playBackName = [[NSString alloc] init];
     
     
     if (isSeeking) {
         isSeeking = NO;
         playBackName = @"seeked";
-        NSLog(@"MPMoviePlaybackStateStopSeeking");
+        KPLogDebug(@"MPMoviePlaybackStateStopSeeking");
         //called because there is another event that will be fired
         [self triggerKPlayerEvents: playBackName withValue: nil];
     }
@@ -252,11 +253,12 @@
     switch ( [self playbackState] ) {
         case MPMoviePlaybackStateStopped:
             playBackName = @"stop";
-            NSLog(@"MPMoviePlaybackStateStopped");
+            KPLogDebug(@"MPMoviePlaybackStateStopped");
             break;
         case MPMoviePlaybackStatePlaying:
             playBackName = @"";
             if( ( [self playbackState] == MPMoviePlaybackStatePlaying ) ) {
+                shouldNotifyPlayEnded = YES;
                 playBackName = @"play";
                 [NSTimer scheduledTimerWithTimeInterval: .2
                                                  target: self
@@ -270,7 +272,7 @@
                                                 repeats: YES];
             }
             
-            NSLog(@"MPMoviePlaybackStatePlaying");
+            KPLogDebug(@"MPMoviePlaybackStatePlaying");
             break;
         case MPMoviePlaybackStatePaused:
             playBackName = @"";
@@ -278,17 +280,17 @@
                 playBackName = @"pause";
             }
             
-            NSLog(@"MPMoviePlaybackStatePaused");
+            KPLogDebug(@"MPMoviePlaybackStatePaused");
             break;
         case MPMoviePlaybackStateInterrupted:
             playBackName = @"MPMoviePlaybackStateInterrupted";
-            NSLog(@"MPMoviePlaybackStateInterrupted");
+            KPLogDebug(@"MPMoviePlaybackStateInterrupted");
             break;
         case MPMoviePlaybackStateSeekingForward:
         case MPMoviePlaybackStateSeekingBackward:
             isSeeking = YES;
             playBackName = @"seeking";
-            NSLog(@"MPMoviePlaybackStateSeeking");
+            KPLogDebug(@"MPMoviePlaybackStateSeeking");
             break;
         default:
             break;
@@ -296,51 +298,49 @@
     
     [self triggerKPlayerEvents: playBackName withValue: nil];
     
-    NSLog(@"triggerMoviePlabackEvents Exit");
+    KPLogTrace(@"Exit");
 }
 
-- (void)triggerFinishPlabackEvents:(NSNotification*)notification {
-    NSLog(@"triggerFinishPlabackEvents Enter");
-    
+- (void)triggerFinishPlaybackEvents:(NSNotification*)notification {
+    KPLogTrace(@"Enter");
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:MPMoviePlayerPlaybackDidFinishNotification
+                                                  object:nil];
     NSString *finishPlayBackName = [[NSString alloc]init];
     NSNumber* reason = [[notification userInfo] objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
     
     switch ( [reason intValue] ) {
         case MPMovieFinishReasonPlaybackEnded:
             finishPlayBackName = @"ended";
-            NSLog(@"playbackFinished. Reason: Playback Ended");
+            KPLogDebug(@"playbackFinished. Reason: Playback Ended");
             break;
         case MPMovieFinishReasonPlaybackError:
             finishPlayBackName = @"error";
-            NSLog(@"playbackFinished. Reason: Playback Error");
+            KPLogDebug(@"playbackFinished. Reason: Playback Error");
             break;
         case MPMovieFinishReasonUserExited:
             finishPlayBackName = @"MPMovieFinishReasonUserExited";
-            NSLog(@"playbackFinished. Reason: User Exited");
+            KPLogDebug(@"playbackFinished. Reason: User Exited");
             break;
         default:
             break;
     }
-    
-    [self triggerKPlayerEvents: finishPlayBackName withValue: nil];
-    
-    NSLog(@"triggerFinishPlabackEvents Exit");
+    if (shouldNotifyPlayEnded) {
+        [self triggerKPlayerEvents: finishPlayBackName withValue: nil];
+    }
+    KPLogTrace(@"Exit");
 }
 
 - (void)triggerKPlayerEvents: (NSString *)notName withValue: (NSDictionary *)notValueDict {
-    NSLog(@"triggerKPlayerEvents Enter");
-    
+    KPLogTrace(@"Enter");
     [[NSNotificationCenter defaultCenter] postNotificationName: notName object: nil userInfo: notValueDict];
-    
-    NSLog(@"triggerKPlayerEvents Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)onMovieDurationAvailable:(NSNotification *)notification {
-    NSLog(@"onMovieDurationAvailable Enter");
-    
+    KPLogTrace(@"Enter");
 //    [[NSNotificationCenter defaultCenter] removeObserver: self];
-    
-    NSLog(@"onMovieDurationAvailable Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)sendCurrentTime:(NSTimer *)timer {
@@ -364,12 +364,10 @@
 #if !(TARGET_IPHONE_SIMULATOR)
 
 - (void)initWideVineParams {
-    NSLog(@"initWideVineParams Enter");
-    
+    KPLogTrace(@"Enter");
     isWideVine = NO;
     isWideVineReady = NO;
-    
-    NSLog(@"initWideVineParams Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)setWideVideConfigurations {
@@ -382,37 +380,31 @@
 }
 
 - (void) initWV: (NSString *)src andKey: (NSString *)key {
-    NSLog(@"initWV Enter");
-
+    KPLogTrace(@"Enter");
     WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
 
     if (wvInitStatus == WViOsApiStatus_OK) {
-        NSLog(@"widevine was inited");
+        KPLogDebug(@"widevine was inited");
     }
 
     [wvSettings playMovieFromUrl: src];
-
-    NSLog(@"initWV Exit");
+    KPLogTrace(@"Exit");
 }
 
 -(void)playWV: (NSNotification *)responseUrlNotification  {
-    NSLog(@"playWV Exit");
-    
+    KPLogTrace(@"Enter");
     [ self setContentURL: [ NSURL URLWithString: [ [responseUrlNotification userInfo] valueForKey: @"response_url"] ] ];
     isWideVineReady = YES;
     
     if ( isPlayCalled ) {
         [self play];
     }
-    
-    NSLog(@"playWV Exit");
+    KPLogTrace(@"Exit");
 }
 
 #endif
 
 //KALPlayer *kp = [KALPlayer new];
 //[kp setDelegate: self];
-
-
 
 @end

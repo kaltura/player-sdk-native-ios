@@ -10,20 +10,32 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+static NSString *AppConfigurationFileName = @"AppConfigurations";
+
+static NSString *PlayerPauseNotification = @"playerPauseNotification";
+static NSString *ToggleFullscreenNotification = @"toggleFullscreenNotification";
+
+static NSString *IsFullScreenKey = @"isFullScreen";
+
 #import "KPViewController.h"
-#import "KPEventListener.h"
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
-#import "Utilities.h"
-#import "KPKalturaPlayWithAdsSupport.h"
+#import "KPPlayerDatasourceHandler.h"
+#import "NSString+Utilities.h"
+#import "DeviceParamsHandler.h"
+
+#include <sys/types.h>
+#include <sys/sysctl.h>
+
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
-    KPActionTypeOpenHomePage
+    KPActionTypeOpenHomePage,
+    KPActionTypeSkip
 };
 
-@implementation KPViewController {
+@interface KPViewController() {
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
@@ -41,52 +53,85 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSArray *prevAirPlayBtnPositionArr;
     
     BOOL isJsCallbackReady;
-    NSMutableDictionary *kPlayerEventsDict;
-    NSMutableDictionary *kPlayerEvaluatedDict;
+    
+    
     
     BOOL *showChromecastBtn;
     
     NSDictionary *nativeActionParams;
+    
+    NSMutableArray *callBackReadyRegistrations;
 }
 
+@property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
+@property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
+@end
+
+@implementation KPViewController 
 @synthesize webView, player;
 @synthesize nativComponentDelegate;
-@synthesize jsCallbackReadyHandler;
+
++ (void)setLogLevel:(KPLogLevel)logLevel {
+    @synchronized(self) {
+        KPLogManager.KPLogLevel = logLevel;
+    }
+}
 
 - (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
     self = [super init];
-    [self.view setFrame:frame];
-    originalViewControllerFrame = frame;
-    [parentView addSubview:self.view];
+    if (self) {
+        [self.view setFrame:frame];
+        originalViewControllerFrame = frame;
+        [parentView addSubview:self.view];
+        return self;
+    }
     return self;
 }
 
-- (void)viewDidLoad {
-    NSLog(@"View Did Load Enter");
-    
-    self.players = [NSMutableDictionary new];
-    
-    // Adding a suffix to user agent in order to identify native media space application
-    NSString* suffixUA = @"kalturaNativeCordovaPlayer";
-    UIWebView* wv = [[UIWebView alloc] initWithFrame:CGRectZero];
-    NSString* defaultUA = [wv stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
-    NSString* finalUA = [defaultUA stringByAppendingString:suffixUA];
-    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:finalUA, @"UserAgent", nil];
-    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+- (NSMutableDictionary *)players {
+    if (!_players) {
+        _players = [NSMutableDictionary new];
+    }
+    return _players;
+}
 
+- (NSMutableDictionary *)kPlayerEventsDict {
+    if (!_kPlayerEventsDict) {
+        _kPlayerEventsDict = [NSMutableDictionary new];
+    }
+    return _kPlayerEventsDict;
+}
+
+- (NSMutableDictionary *)kPlayerEvaluatedDict {
+    if (!_kPlayerEvaluatedDict) {
+        _kPlayerEvaluatedDict = [NSMutableDictionary new];
+    }
+    return _kPlayerEvaluatedDict;
+}
+
+- (NSString *) platform {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithUTF8String:machine];
+    free(machine);
+    return platform;
+}
+
+- (void)viewDidLoad {
+    KPLogTrace(@"Enter");
+    appConfigDict = extractDictionary(AppConfigurationFileName, @"plist");
+    setUserAgent();
     [self initPlayerParams];
-    
-    appConfigDict = [NSDictionary dictionaryWithContentsOfFile: [ [NSBundle mainBundle] pathForResource: @"AppConfigurations" ofType: @"plist"]];
-    
-    // Kaltura KDP API Listeners Dictionary
-    kPlayerEventsDict = [NSMutableDictionary new];
-    kPlayerEvaluatedDict = [NSMutableDictionary new];
-    
     // Observer for pause player notifications
     [ [NSNotificationCenter defaultCenter] addObserver: self
                                               selector: @selector(pause)
-                                                  name: @"playerPauseNotification"
+                                                  name: PlayerPauseNotification
                                                 object: nil ];
+    
+    
+    
     
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
@@ -97,18 +142,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
     [self didLoad];
-    [[KPViewController sharedChromecastDeviceController] setDelegate: self];
-    
+    [KPViewController sharedChromecastDeviceController];
     [super viewDidLoad];
-    
-    NSLog(@"View Did Load Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    NSLog(@"viewDidAppear Enter");
-    
+    KPLogTrace(@"Enter");
     [super viewDidAppear:animated];
-    
     if( [[NSUserDefaults standardUserDefaults] objectForKey: @"iframe_url"] != nil ) {
         return;
     }
@@ -118,35 +159,33 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         NSURL *url = [kalPlayerViewControllerDelegate getInitialKIframeUrl];
         [self setWebViewURL: [NSString stringWithFormat: @"%@", url]];
     } else {
-        NSLog( @"Error:: Delegate MUST be set and respond to selector -getInitialKIframeUrl");
+        KPLogError(@"Delegate MUST be set and respond to selector -getInitialKIframeUrl");
         return;
     }
-    
-    NSLog(@"viewDidAppear Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)handleEnteredBackground: (NSNotification *)not {
-    NSLog(@"handleEnteredBackground Enter");
-    
-    [self sendNotification: @"doPause" andNotificationBody: nil];
-    
-    NSLog(@"handleEnteredBackground Exit");
+    KPLogTrace(@"Enter");
+    self.sendNotification(nil, @"doPause");
+    KPLogTrace(@"Exit");
 }
+
 
 - (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)class {
     NSString *playerName = NSStringFromClass(class);
-    id<KalturaPlayer> newKPlayer = [[self players] objectForKey:playerName];
+    id<KalturaPlayer> newKPlayer = self.players[playerName];
     
     if ( newKPlayer == nil ) {
         newKPlayer = [[class alloc] init];
-        [[self players] setObject: newKPlayer forKey: playerName];
+        self.players[playerName] = newKPlayer;
         // if player is created for the first time add observer to all relevant notifications
         [newKPlayer bindPlayerEvents];
     }
     
     if ( [self player] ) {
         
-        NSLog(@"%f", [[self player] currentPlaybackTime]);
+        KPLogInfo(@"%f", [[self player] currentPlaybackTime]);
         [newKPlayer copyParamsFromPlayer: [self player]];
     }
     
@@ -154,15 +193,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"viewWillAppear Enter");
-    
+    KPLogTrace(@"Enter");
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
     if ( !isFullScreen && !isResumePlayer ) {
         self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
         [[self webView] setPlayerControlsWebViewDelegate: self];
         
-        self.player = [self getPlayerByClass:[KPKalturaPlayWithAdsSupport class]];
+        self.player = [self getPlayerByClass:[KalturaPlayer class]];
         NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
 
         self.player.view.frame = playerViewFrame;
@@ -183,256 +221,322 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     [super viewWillAppear:NO];
     
-    NSLog( @"viewWillAppear Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
-    NSLog( @"viewDidDisappear Enter" );
+    KPLogTrace(@"Enter");
     
     isResumePlayer = YES;
     [super viewDidDisappear:animated];
     
-    NSLog( @"viewDidDisappear Exit" );
+    KPLogTrace(@"Exit");
 }
 
 #pragma mark - WebView Methods
 
 - (void)setWebViewURL: (NSString *)iframeUrl {
-    NSLog( @"setWebViewURL Enter" );
-    
+    KPLogTrace(@"Enter");
     [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
     
 //    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
     
+    
     /// Add the idfa to the iframeURL
-    iframeUrl = [iframeUrl stringByAppendingFormat:@"&flashvars[nativeAdId]=%@", idfa()];
+    
     [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     
-    NSLog(@"setWebViewURLExit");
+    
+    
+    KPLogTrace(@"Exit");
 }
 
-- (NSString*)writeJavascript: (NSString*)javascript {
-    NSLog(@"writeJavascript: %@", javascript);
-    
-    return [[self webView] stringByEvaluatingJavaScriptFromString: javascript];
+
+- (void)load {
+    [self.webView loadRequest:[KPPlayerDatasourceHandler videoRequest:self.datasource]];
 }
+
 
 #pragma mark - Player Methods
 
 -(void)initPlayerParams {
-    NSLog(@"initPlayerParams Enter");
-    
+    KPLogTrace(@"Enter");
     isFullScreen = NO;
     isPlaying = NO;
     isResumePlayer = NO;
     isFullScreenToggled = NO;
-    
-    NSLog(@"initPlayerParams Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)play {
-    NSLog( @"Play Player Enter" );
-       
+    KPLogTrace(@"Enter");
+    
     [[self player] play];
     
-    NSLog( @"Play Player Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)pause {
-    NSLog(@"Pause Player Enter");
     
+    KPLogTrace(@"Enter");
     [[self player] pause];
     
-    NSLog(@"Pause Player Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)stop {
-    NSLog(@"Stop Player Enter");
     
+    KPLogTrace(@"Enter");
     [[self player] stop];
     
-    NSLog(@"Stop Player Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)doNativeAction {
-    switch (nativeActionParams.actionType) {
-        case KPActionTypeShare:
-            [self share];
-            break;
-        case KPActionTypeOpenHomePage:
-            [self openURL];
-            break;
-        default:
-            break;
-    }
+    KPLogTrace(@"Enter");
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    SEL nativeAction = NSSelectorFromString(nativeActionParams.actionType);
+    [self performSelector:nativeAction withObject:nil];
+#pragma clang diagnostic pop
+    KPLogTrace(@"Exit");
 }
 
 - (void)share {
+    KPLogTrace(@"Enter");
     KPShareManager *shareManager = [KPShareManager new];
     shareManager.datasource = nativeActionParams;
     UIViewController *shareController = [shareManager shareWithCompletion:^(KPShareResults result,
                                                                             KPShareError *shareError) {
-        
+        if (shareError.error) {
+            KPLogError(@"%@", shareError.error.description);
+        }
     }];
     [self presentViewController:shareController animated:YES completion:nil];
+    KPLogTrace(@"Exit");
 }
 
 - (void)openURL {
+    KPLogTrace(@"Enter");
     KPBrowserViewController *browser = [KPBrowserViewController currentBrowser];
     browser.url = nativeActionParams.openURL;
     [self presentViewController:browser animated:YES completion:nil];
+    KPLogTrace(@"Exit");
 }
 
 #pragma Kaltura Player External API - KDP API
 
-- (void)registerJSCallbackReady: (JSCallbackReadyHandler)handler {
-    NSLog(@"registerJSCallbackReady Enter");
-
-    if ( isJsCallbackReady ) {
+- (void)registerReadyEvent:(void (^)())handler {
+    KPLogTrace(@"Enter");
+    if (isJsCallbackReady) {
         handler();
     } else {
-        jsCallbackReadyHandler = handler;
+        if (!callBackReadyRegistrations) {
+            callBackReadyRegistrations = [NSMutableArray new];
+        }
+        if (handler) {
+            [callBackReadyRegistrations addObject:handler];
+        }
     }
-    
-    NSLog(@"registerJSCallbackReady Exit");
+    KPLogTrace(@"Exit");
+}
+
+- (void(^)(void(^)()))registerReadyEvent {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    return ^(void(^readyCallback)()){
+        [weakSelf registerReadyEvent:readyCallback];
+        KPLogTrace(@"Exit");
+    };
 }
 
 - (void)notifyJsReady {
-    NSLog(@"notifyJsReady Enter");
     
+    KPLogTrace(@"Enter");
     isJsCallbackReady = YES;
-    
-    if ( jsCallbackReadyHandler ) {
-        jsCallbackReadyHandler();
-        jsCallbackReadyHandler = nil;
+    NSArray *registrations = callBackReadyRegistrations.copy;
+    for (void(^handler)() in registrations) {
+        handler();
+        [callBackReadyRegistrations removeObject:handler];
     }
-    
-    NSLog(@"notifyJsReady Exit");
+    callBackReadyRegistrations = nil;
+    KPLogTrace(@"Exit");
 }
 
-- (void)addKPlayerEventListener: (NSString *)name forListener: (KPEventListener *)listener {
-    NSLog(@"addKPlayerEventListener Enter");
-    
-    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: name];
-    
-    if ( listenersArr == nil ) {
-        listenersArr = [NSMutableArray new];
-    }
-    
-    [listenersArr addObject: listener];
-    [kPlayerEventsDict setObject: listenersArr forKey: name];
-    
-    if ( [listenersArr count] == 1 ) {
-         [ self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.addJsListener(\"%@\");", name] ];
-    }
-    
-    NSLog(@"addKPlayerEventListener Exit");
+- (void)addEventListener:(NSString *)event
+                 eventID:(NSString *)eventID
+                 handler:(void (^)())handler {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    [self registerReadyEvent:^{
+        NSMutableArray *listenerArr = self.kPlayerEventsDict[event];
+        if (!listenerArr) {
+            listenerArr = [NSMutableArray new];
+        }
+        [listenerArr addObject:@{eventID: handler}];
+        self.kPlayerEventsDict[event] = listenerArr;
+        if (listenerArr.count == 1 && !event.isToggleFullScreen) {
+            [weakSelf.webView addEventListener:event];
+        }
+        KPLogTrace(@"Exit");
+    }];
+}
+
+- (void(^)(NSString *, NSString *, void(^)()))addEventListener {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    return ^(NSString *event, NSString *eventID, void(^completion)()){
+        [weakSelf addEventListener:event eventID:eventID handler:completion];
+        KPLogTrace(@"Exit");
+    };
 }
 
 - (void)notifyKPlayerEvent: (NSArray *)arr {
-    NSLog(@"notifyKPlayerEvent Enter");
-    
-    NSString *eventName = [arr objectAtIndex: 0];
-    NSArray *listenersArr = [ kPlayerEventsDict objectForKey: eventName ];
+    KPLogTrace(@"Enter");
+    NSString *eventName = arr[0];
+    NSArray *listenersArr = self.kPlayerEventsDict[ eventName ];
     
     if ( listenersArr != nil ) {
-        for (KPEventListener *e in listenersArr) {
-            e.eventListener(nil);
+        for (NSDictionary *eDict in listenersArr) {
+            ((void(^)())eDict.allValues.lastObject)();
         }
     }
-    
-    NSLog(@"notifyKPlayerEvent Exit");
+    KPLogTrace(@"Exit");
 }
-- (void)removeKPlayerEventListenerWithEventName: (NSString *)eventName forListenerName: (NSString *)listenerName {
-    NSLog(@"removeKPlayerEventListenerWithName Enter");
-    
-    NSMutableArray *listenersArr = [kPlayerEventsDict objectForKey: eventName];
-    
+
+
+- (void)removeEventListener:(NSString *)event
+                    eventID:(NSString *)eventID {
+    KPLogTrace(@"Enter");
+    NSMutableArray *listenersArr = self.kPlayerEventsDict[event];
     if ( listenersArr == nil || [listenersArr count] == 0 ) {
+        KPLogInfo(@"No such event to remove");
         return;
     }
-
-    for ( KPEventListener *e in listenersArr ) {
-        if ( [e.name isEqualToString: listenerName] ) {
-            [listenersArr removeObject: e];
-            break;
+    NSArray *temp = listenersArr.copy;
+    for (NSDictionary *dict in temp) {
+        if ([dict.allKeys.lastObject isEqualToString:eventID]) {
+            [listenersArr removeObject:dict];
         }
     }
-    
-    if ( [listenersArr count] == 0 ) {
+    if ( !listenersArr.count ) {
         listenersArr = nil;
+        if (!event.isToggleFullScreen) {
+            [self.webView removeEventListener:event];
+        }
     }
-    
-    if ( listenersArr == nil ) {
-        [self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", eventName]];
+    KPLogTrace(@"Exit");
+}
+
+- (void(^)(NSString *, NSString *))removeEventListener {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    return ^(NSString *event, NSString *eventID) {
+        [weakSelf removeEventListener:event eventID:eventID];
+        KPLogTrace(@"Exit");
+    };
+}
+
+- (void)asyncEvaluate:(NSString *)expression
+         expressionID:(NSString *)expressionID
+              handler:(void(^)(NSString *))handler {
+    KPLogTrace(@"Enter");
+    self.kPlayerEvaluatedDict[expressionID] = handler;
+    [self.webView evaluate:expressionID evaluateID:expressionID];
+    KPLogTrace(@"Exit");
+}
+
+- (void(^)(NSString *, NSString *, void(^)(NSString *)))asyncEvaluate {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    return ^(NSString *expression, NSString *expressionID, void(^handler)(NSString *value)) {
+        [weakSelf asyncEvaluate:expression expressionID:expressionID handler:handler];
+        KPLogTrace(@"Exit");
+    };
+}
+
+- (void)notifyKPlayerEvaluated: (NSArray *)arr {
+    KPLogTrace(@"Enter");
+    if (arr.count == 2) {
+        ((void(^)(NSString *))self.kPlayerEvaluatedDict[arr[0]])(arr[1]);
+    } else if (arr.count < 2) {
+        KPLogDebug(@"Missing Evaluation Params");
     }
-    
-    NSLog(@"removeKPlayerEventListenerWithName Exit");
+    KPLogTrace(@"Exit");
 }
 
-- (void)asyncEvaluate: (NSString *)expression forListener: (KPEventListener *)listener {
-    NSLog(@"asyncEvaluate Enter");
-    
-    [kPlayerEvaluatedDict setObject: listener forKey: [listener name]];
-    [self writeJavascript: [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, [listener name]]];
-    
-    NSLog(@"asyncEvaluate Exit");
-}
-
-- (void) notifyKPlayerEvaluated: (NSArray *)arr {
-    NSLog(@"notifyKPlayerEvaluated Enter");
-    
-    KPEventListener *listener = [kPlayerEvaluatedDict objectForKey: [arr objectAtIndex: 0] ];
-    listener.eventListener( [arr objectAtIndex: 1] );
-    
-    NSLog(@"notifyKPlayerEvaluated Exit");
-}
-
-- (void)sendNotification: (NSString*)notificationName andNotificationBody: (NSString *)notificationBody {
-    NSLog(@"sendNotification Enter");
-    
-    if ( notificationBody == nil || [ notificationBody isKindOfClass: [NSNull class] ] ) {
-        notificationBody = @"null";
+- (void)sendNotification:(NSString *)notification forName:(NSString *)notificationName {
+    KPLogTrace(@"Enter");
+    if ( !notification || [ notification isKindOfClass: [NSNull class] ] ) {
+        notification = @"null";
     }
-    
-    [self writeJavascript: [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notificationName, notificationBody]];
-    
-    NSLog(@"sendNotification Exit");
+    [self.webView sendNotification:notification withName:notificationName];
+    KPLogTrace(@"Exit");
 }
 
-- (void)setKDPAttribute: (NSString*)pluginName propertyName: (NSString*)propertyName value: (NSString*)value {
-    NSLog(@"setKDPAttribute Enter");
-    
-    NSString *kdpAttributeStr = [NSString stringWithFormat: @"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
-    [self writeJavascript: kdpAttributeStr];
- 
-    NSLog(@"setKDPAttribute Exit");
+- (void(^)(NSString *, NSString *))sendNotification {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    return ^(NSString *notification, NSString *notificationName){
+        [weakSelf sendNotification:notification forName:notificationName];
+        KPLogTrace(@"Exit");
+    };
 }
+
+- (void)setKDPAttribute:(NSString *)pluginName
+           propertyName:(NSString *)propertyName
+                  value:(NSString *)value {
+    KPLogTrace(@"Enter");
+    [self.webView setKDPAttribute:pluginName propertyName:propertyName value:value];
+    KPLogTrace(@"Exit");
+}
+
+- (void(^)(NSString *, NSString *, NSString *))setKDPAttribute {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    return ^(NSString *pluginName, NSString *propertyName, NSString *value) {
+        [weakSelf setKDPAttribute:pluginName propertyName:propertyName value:value];
+        KPLogTrace(@"Exit");
+    };
+}
+
+- (void)triggerEvent:(NSString *)event withValue:(NSString *)value {
+    KPLogTrace(@"Enter");
+    [self.webView triggerEvent:event withValue:value];
+    KPLogTrace(@"Exit");
+}
+
+- (void(^)(NSString *, NSString *))triggerEvent {
+    KPLogTrace(@"Enter");
+    __weak KPViewController *weakSelf = self;
+    return ^(NSString *event, NSString *value){
+        [weakSelf triggerEvent:event withValue:value];
+        KPLogTrace(@"Exit");
+    };
+}
+
 
 #pragma mark - Player Layout & Fullscreen Treatment
 
 - (void)updatePlayerLayout {
-    NSLog( @"updatePlayerLayout Enter" );
     
+    KPLogTrace(@"Enter");
     //Update player layout
-    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
-    [self writeJavascript: updateLayoutJS];
-    
+    //[self.webView updateLayout];
+    self.triggerEvent(@"updateLayout", nil);
     // FullScreen Treatment
-    NSDictionary *fullScreenDataDict = [ NSDictionary dictionaryWithObject: [NSNumber numberWithBool: isFullScreen]
-                                                                    forKey: @"isFullScreen" ];
     [ [NSNotificationCenter defaultCenter] postNotificationName: @"toggleFullscreenNotification"
                                                          object:self
-                                                       userInfo: fullScreenDataDict ];
+                                                       userInfo: @{IsFullScreenKey: @(isFullScreen)} ];
     
-    NSLog( @"updatePlayerLayout Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)setOrientationTransform: (CGFloat) angle{
-    NSLog( @"setOrientationTransform Enter" );
-    
+    KPLogTrace(@"Enter");
     // UIWindow frame in ios 8 different for Landscape mode
-    if( [self isIOS8] && !isFullScreenToggled ) {
+    if( isIOS(8) && !isFullScreenToggled ) {
         [self.view setTransform: CGAffineTransformIdentity];
         return;
     }
@@ -453,24 +557,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [self.view setTransform: CGAffineTransformIdentity];
     }
     
-    NSLog( @"setOrientationTransform Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)checkDeviceStatus{
-    NSLog( @"checkDeviceStatus Enter" );
-    
+    KPLogTrace(@"Enter");
     deviceOrientation = [[UIDevice currentDevice] orientation];
-    
-    if ( [self isIpad] || openFullScreen ) {
+    if ( isIpad || openFullScreen ) {
         if (deviceOrientation == UIDeviceOrientationUnknown) {
-            if ( [UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
+            if ( _statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
                 [self setOrientationTransform: 90];
-            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight){
+            }else if(_statusBarOrientation == UIDeviceOrientationLandscapeRight){
                 [self setOrientationTransform: -90];
-            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortrait){
+            }else if(_statusBarOrientation == UIDeviceOrientationPortrait){
                 [self setOrientationTransform: 180];
                 [self.view setTransform: CGAffineTransformIdentity];
-            }else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortraitUpsideDown){
+            }else if (_statusBarOrientation == UIDeviceOrientationPortraitUpsideDown){
                 [self setOrientationTransform: -180];
             }
         }else{
@@ -500,13 +602,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             }
         }
     }
-    
-    NSLog( @"checkDeviceStatus Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)checkOrientationStatus{
-    NSLog( @"checkOrientationStatus Enter" );
-    
+    KPLogTrace(@"Enter");
     isCloseFullScreenByTap = NO;
     
     // Handle rotation issues when player is playing
@@ -517,7 +617,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             [self checkDeviceStatus];
         }
         
-        if ( ![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
+        if ( !isIpad && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
             if ( !openFullScreen ) {
                 [self closeFullScreen];
             }
@@ -525,37 +625,41 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }else {
         [self closeFullScreen];
     }
-    
-    NSLog( @"checkOrientationStatus Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)setNativeFullscreen {
+    KPLogTrace(@"Enter");
     [UIApplication sharedApplication].statusBarHidden = YES;
     [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(deviceOrientationDidChange)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
     
     // Disable fullscreen button if the player is set to fullscreen by default
-    [self registerJSCallbackReady: ^() {
-        NSLog(@"jsCallbackReady");
-        if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
-//            [self setKDPAttribute: @"fullScreenBtn" propertyName: @"visible" value: @"false"];
+    self.registerReadyEvent(^{
+        if ([self respondsToSelector:@selector(setKDPAttribute:propertyName:value:)]) {
+            self.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         }
-    }];
+    });
+    KPLogTrace(@"Exit");
 }
 
 - (void)deviceOrientationDidChange {
+    KPLogTrace(@"Enter");
     CGRect mainFrame;
     
-    if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceDown || [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceUp ) {
+    if ( _deviceOrientation == UIDeviceOrientationFaceDown || _deviceOrientation == UIDeviceOrientationFaceUp ) {
         return;
     }
     
-    if ( [self isIOS8] ) {
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-    } else if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
+    if ( isIOS(8) ) {
+        mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
+    } else if(UIDeviceOrientationIsLandscape(_deviceOrientation)){
+        mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
     } else {
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
+        mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
     }
     
     [self.view setFrame: mainFrame];
@@ -565,64 +669,75 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.webView setFrame: self.player.view.frame];
     [ self.view setTransform: fullScreenPlayerTransform ];
-    
-    [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
-    [self updatePlayerLayout];
+    self.triggerEvent(@"enterfullscreen", nil);
+    self.triggerEvent(@"updateLayout", nil);
     [self checkDeviceStatus];
+    KPLogTrace(@"Exit");
 }
 
 - (void)openFullscreen {
+    KPLogTrace(@"Enter");
     if ( !isFullScreen ) {
         [self toggleFullscreen];
     }
+    KPLogTrace(@"Exit");
 }
 
 - (void)closeFullscreen {
+    KPLogTrace(@"Enter");
     if ( isFullScreen ) {
         [self toggleFullscreen];
     }
+    KPLogTrace(@"Exit");
 }
 
 - (void)toggleFullscreen {
-    NSLog( @"toggleFullscreen Enter" );
-    
-    isCloseFullScreenByTap = YES;
-    isFullScreenToggled = YES;
-    
-    if ( !isFullScreen ) {
-        [self openFullScreen: openFullScreen];
-        [self checkDeviceStatus];
-    } else{
-        [self closeFullScreen];
+    KPLogTrace(@"Enter");
+    if (self.kPlayerEventsDict[KPlayerEventToggleFullScreen]) {
+        NSArray *listenersArr = self.kPlayerEventsDict[ KPlayerEventToggleFullScreen ];
+        if ( listenersArr != nil ) {
+            for (NSDictionary *eDict in listenersArr) {
+                ((void(^)())eDict.allValues.lastObject)();
+            }
+        }
+    } else {
+        [self updatePlayerLayout];
+        isCloseFullScreenByTap = YES;
+        isFullScreenToggled = YES;
+        
+        if ( !isFullScreen ) {
+            [self openFullScreen: openFullScreen];
+            [self checkDeviceStatus];
+        } else{
+            [self closeFullScreen];
+        }
     }
-    
-    NSLog( @"toggleFullscreen Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)openFullScreen: (BOOL)openFullscreen{
-    NSLog( @"openFullScreen Enter" );
-    
+    KPLogTrace(@"Enter");
     isFullScreen = YES;
     
     CGRect mainFrame;
     openFullScreen = openFullscreen;
     
-    if ( [self isIpad] || openFullscreen ) {
-        if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationUnknown ) {
-            if (UIDeviceOrientationPortrait == [UIApplication sharedApplication].statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == [UIApplication sharedApplication].statusBarOrientation) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-            }else if(UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)){
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
+    if ( isIpad || openFullscreen ) {
+        if ( isDeviceOrientation(UIDeviceOrientationUnknown) ) {
+            if (UIDeviceOrientationPortrait == _statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == _statusBarOrientation) {
+                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
+            }else if(UIDeviceOrientationIsLandscape(_statusBarOrientation)){
+                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
             }
         }else{
-            if ( UIDeviceOrientationPortrait == [[UIDevice currentDevice] orientation] || UIDeviceOrientationPortraitUpsideDown == [[UIDevice currentDevice] orientation] ) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-            }else if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
+            if ( UIDeviceOrientationPortrait == _deviceOrientation || UIDeviceOrientationPortraitUpsideDown == _deviceOrientation ) {
+                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
+            }else if(UIDeviceOrientationIsLandscape(_deviceOrientation)){
+                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
             }
         }
     }else{
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
+        mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
     }
     
     [self.view setFrame: mainFrame];
@@ -630,18 +745,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [UIApplication sharedApplication].statusBarHidden = YES;
 
     [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.webView setFrame: self.player.view.frame];
+    [self.webView setFrame: self.player.view.bounds];
     [ self.view setTransform: fullScreenPlayerTransform ];
     
-    [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
+    self.triggerEvent(@"enterfullscreen", nil);
     [self updatePlayerLayout];
-    
-    NSLog( @"openFullScreen Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)closeFullScreen{
-    NSLog( @"closeFullScreen Enter" );
-    
+    KPLogTrace(@"Enter");
     if ( openFullScreen && isCloseFullScreenByTap ) {
 //        [self stop];
     }
@@ -656,38 +769,44 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     [UIApplication sharedApplication].statusBarHidden = NO;
     
-    [self triggerEventsJavaScript:@"exitfullscreen" WithValue:nil];
-    
+    self.triggerEvent(@"exitfullscreen", nil);
     [self updatePlayerLayout];
-    
-    NSLog( @"closeFullScreen Exit" );
+    KPLogTrace(@"Exit");
 }
 
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args{
-    NSLog(@"handleHtml5LibCall Enter");
-    
+       KPLogTrace(@"Enter");
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
     if ( [args count] > 0 ) {
         functionName = [NSString stringWithFormat:@"%@:", functionName];
     }
     if ([self respondsToSelector:NSSelectorFromString(functionName)]) {
+        KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:NSSelectorFromString(functionName) withObject:args];
     }
     
 #pragma clang diagnostic pop
     
-    NSLog(@"handleHtml5LibCall Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)bindPlayerEvents{
-    NSLog(@"Binding Events Enter");
-    
+    KPLogTrace(@"Enter");
     if ( self ) {
 //        [[self player] bindPlayerEvents];
-        
-       NSArray *kPlayerEvents = [NSArray arrayWithObjects: @"canplay", @"durationchange", @"loadedmetadata", @"play", @"pause", @"ended", @"seeking", @"seeked", @"timeupdate", @"progress", @"fetchNativeAdID", nil];
+        NSArray *kPlayerEvents = @[@"canplay",
+                                   @"durationchange",
+                                   @"loadedmetadata",
+                                   @"play",
+                                   @"pause",
+                                   @"ended",
+                                   @"seeking",
+                                   @"seeked",
+                                   @"timeupdate",
+                                   @"progress",
+                                   @"fetchNativeAdID"];
         
         for (id kPlayerEvent in kPlayerEvents) {
             [[NSNotificationCenter defaultCenter] addObserver: self
@@ -696,44 +815,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                         object: nil];
         }
     }
-    
-    NSLog(@"Binding Events Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
-    NSLog(@"triggerLoadPlabackEvents Enter");
-    
-    if( [[note name]  isEqual: @"play"] ) {
-        isPlaying = YES;
-    }
-    
-    if ([[note name]  isEqual: @"pause"] || [[note name]  isEqual: @"stop"] ) {
-        isPlaying = NO;
-    }
-    
-    [self triggerEventsJavaScript: [note name] WithValue: [[note userInfo] valueForKey: [note name]]];
-    
-    NSLog(@"triggerLoadPlabackEvents Exit");
-}
-
-- (void)triggerEventsJavaScript: (NSString *)eventName WithValue: (NSString *) eventValue{
-    NSLog(@"triggerEventsJavaScript Enter");
-    
-    NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger('%@', '%@')", eventName, eventValue];
-    NSLog(@"%@", jsStringLog);
-    NSString* jsString = [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", eventName,eventValue];
-    [self writeJavascript: jsString];
-    NSLog(@"triggerEventsJavaScript Exit");
+    KPLogTrace(@"Enter");
+    isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
+    [self.webView triggerEvent:note.name withValue:note.userInfo[note.name]];
+    KPLogTrace(@"Exit");
 }
 
 - (void)setAttribute: (NSArray*)args{
-    NSLog(@"setAttribute Enter");
-    
+    KPLogTrace(@"Enter");
     NSString *attributeName = [args objectAtIndex:0];
-    Attribute attributeValue = [attributeName attributeNameEnumFromString];
     NSString *attributeVal = args[1];
     
-    switch ( attributeValue ) {
+    switch ( attributeName.attributeEnumFromString ) {
         case src:
             playerSource = attributeVal;
             [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
@@ -762,48 +859,47 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                  options:0
                                                                    error:nil];
             break;
-        case doubleClickRequestAds:
-            NSLog(@"doubleClickRequestAds");
-            [[self player] showAdAtURL:attributeVal];
-            break;
         default:
             break;
     }
-    NSLog(@"setAttribute Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)setPlayerSource: (NSURL *)src{
-    NSLog(@"setPlayerSource Enter");
+    KPLogTrace(@"Enter");
     [[self player] setContentURL:src];
-    
-    NSLog(@"setPlayerSource Exit");
+    KPLogTrace(@"Exit");
 }
 
-- (void)resizePlayerView: (CGFloat)top right:(CGFloat)right width:(CGFloat)width height:(CGFloat)height{
-    NSLog(@"resizePlayerView Enter");
-    
-    originalViewControllerFrame = CGRectMake( top, right, width, height );
-    
+- (void)resizePlayerView:(CGRect)newFrame {
+    KPLogTrace(@"Enter");
+    originalViewControllerFrame = newFrame;
     if ( !isFullScreen ) {
         self.view.frame = originalViewControllerFrame;
-        self.player.view.frame = CGRectMake( 0, 0, width, height );
+        self.player.view.frame = newFrame;
         self.webView.frame = self.player.view.frame;
     }
-    
-    NSLog(@"resizePlayerView Exit");
+    KPLogTrace(@"Exit");
+}
+
+- (void)setPlayerFrame:(CGRect)playerFrame {
+    KPLogTrace(@"Enter");
+    if ( !isFullScreen ) {
+        self.view.frame = playerFrame;
+        self.player.view.frame = CGRectMake( 0, 0, playerFrame.size.width, playerFrame.size.height );
+        self.webView.frame = self.player.view.frame;
+    }
+    KPLogTrace(@"Exit");
 }
 
 -(void)visible:(NSString *)boolVal{
-    NSLog(@"visible Enter");
-    
-    [self triggerEventsJavaScript:@"visible" WithValue:[NSString stringWithFormat:@"%@", boolVal]];
-    
-    NSLog(@"visible Exit");
+    KPLogTrace(@"Enter");
+    self.triggerEvent(@"visible", [NSString stringWithFormat:@"%@", boolVal]);
+    KPLogTrace(@"Exit");
 }
 
 - (void)stopAndRemovePlayer{
-    NSLog(@"stopAndRemovePlayer Enter");
-    
+    KPLogTrace(@"Enter");
     [self visible:@"false"];
     [[self player] stop];
     [[self player] setContentURL:nil];
@@ -818,47 +914,39 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self.webView = nil;
     
     [self removeAirPlayIcon];
-    
-    NSLog(@"stopAndRemovePlayer Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)removeAirPlayIcon {
-    NSLog(@"removeAirPlayIcon Enter");
-    
+    KPLogTrace(@"Enter");
     if ( volumeView ) {
         [volumeView removeFromSuperview];
         volumeView = nil;
     }
-    
-    NSLog(@"removeAirPlayIcon Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)doneFSBtnPressed {
-    NSLog(@"doneFSBtnPressed Enter");
-    
+    KPLogTrace(@"Enter");
     isCloseFullScreenByTap = YES;
     [self closeFullScreen];
-    
-    NSLog(@"doneFSBtnPressed Exit");
+    KPLogTrace(@"Exit");
 }
 
 #pragma mark - airplay plugin
 - (void)addNativeAirPlayButton {
-    NSLog(@"addNativeAirPlayButton Enter");
-    
+    KPLogTrace(@"Enter");
     // Add airplay
     self.view.backgroundColor = [UIColor clearColor];
     if ( !volumeView ) {
         volumeView = [ [MPVolumeView alloc] init ];
         [volumeView setShowsVolumeSlider: NO];
     }
-    
-    NSLog(@"addNativeAirPlayButton Exit");
+    KPLogTrace(@"Exit");
 }
 
 -(void)showNativeAirPlayButton: (NSArray*)airPlayBtnPositionArr {
-    NSLog(@"showNativeAirPlayButton Enter");
-    
+    KPLogTrace(@"Enter");
     if ( volumeView.hidden ) {
         volumeView.hidden = NO;
         
@@ -878,84 +966,72 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     [self.view addSubview: volumeView];
     [self.view bringSubviewToFront: volumeView];
-    
-    NSLog(@"showNativeAirPlayButton Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)switchPlayer:(Class)p {
+    KPLogTrace(@"Enter");
     [[self player] stop];
     self.player = [self getPlayerByClass: p];
     
 //    if ( [self.player isPreparedToPlay] ) {
 //        [self.player play];
 //    }
+    KPLogTrace(@"Exit");
 }
 
 -(void)showChromecastDeviceList {
-    NSLog(@"showChromecastDeviceList Enter");
-    
+    KPLogTrace(@"Enter");
     [ [KPViewController sharedChromecastDeviceController] chooseDevice: self];
-    
-    NSLog(@"showChromecastDeviceList Exit");
+    KPLogTrace(@"Exit");
 }
 
 -(void)hideNativeAirPlayButton {
-    NSLog(@"hideNativeAirPlayButton Enter");
-    
+    KPLogTrace(@"Enter");
     if ( !volumeView.hidden ) {
         volumeView.hidden = YES;
     }
-    
-    NSLog(@"hideNativeAirPlayButton Exit");
+    KPLogTrace(@"Exit");
 }
 
-- (BOOL)isIpad{
-    
-    return ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad);
+#pragma mark -
+#pragma mark Rotation methods
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+    return YES;
 }
 
-- (BOOL)isIOS7{
-    
-    NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    
-    if ([[vComp objectAtIndex:0] intValue] == 7) {
-        return YES;
-    }
-    
-    return NO;
+- (BOOL)shouldAutorotate{
+    return YES;
 }
 
-- (BOOL)isIOS8{
+-(NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
     
-    NSArray *vComp = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    
-    if ([[vComp objectAtIndex:0] intValue] == 8) {
-        return YES;
-    }
-    
-    return NO;
 }
+
 
 #pragma mark -
 
 -(void)didPinchInOut:(UIPinchGestureRecognizer *) recongizer {
-    NSLog( @"didPinchInOut Enter" );
-    
+    KPLogTrace(@"Enter");
     if (isFullScreen && recongizer.scale < 1) {
         [self toggleFullscreen];
     } else if (!isFullScreen && recongizer.scale > 1) {
         [self toggleFullscreen];
     }
-    
-    NSLog( @"didPinchInOut Exit" );
+    KPLogTrace(@"Exit");
 }
 
 - (void)didConnectToDevice:(GCKDevice*)device {
+    KPLogTrace(@"Enter");
     [self switchPlayer: [KPChromecast class]];
-    [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
+    self.triggerEvent(@"chromecastDeviceConnected", nil);
+    KPLogTrace(@"Exit");
 }
 
 - (void)didReceiveMediaStateChange {
+    KPLogTrace(@"Enter");
     if (![self.player isKindOfClass:[KPChromecast class]]) {
         return;
     }
@@ -968,65 +1044,59 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     } else if ( [[KPViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePaused ) {
         [chromecastPlayer triggerMediaNowPaused];
     }
+    KPLogTrace(@"Exit");
 }
 
 // Chromecast
 - (void)didLoad {
+    KPLogTrace(@"Enter");
     showChromecastBtn = NO;
     [[KPViewController sharedChromecastDeviceController] performScan: YES];
+    KPLogTrace(@"Exit");
 }
 
 + (id)sharedChromecastDeviceController {
+    KPLogTrace(@"Enter");
     static ChromecastDeviceController *chromecastDeviceController = nil;
     static dispatch_once_t onceToken;
 
     dispatch_once( &onceToken, ^{
        chromecastDeviceController = [[ChromecastDeviceController alloc] init];
     });
-    
+    KPLogTrace(@"Exit");
     return chromecastDeviceController;
 }
 
 - (void)didDiscoverDeviceOnNetwork {
+    KPLogTrace(@"Enter");
     if ( [[[KPViewController sharedChromecastDeviceController] deviceScanner] devices] ) {
         showChromecastBtn = YES;
     }
+    KPLogTrace(@"Exit");
 }
 
 -(void)notifyLayoutReady {
+    KPLogTrace(@"Enter");
     [self setChromecastVisiblity];
+    KPLogTrace(@"Exit");
 }
 
 - (void)setChromecastVisiblity {
+    KPLogTrace(@"Enter");
     if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
-        [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: showChromecastBtn ? @"true": @"false"];
+        self.setKDPAttribute(@"chromecast", @"visible", showChromecastBtn ? @"true": @"false");
     }
+    KPLogTrace(@"Exit");
 }
 
 - (void)didDisconnect {
+    KPLogTrace(@"Enter");
     [self switchPlayer: [KalturaPlayer class]];
-    [self triggerEventsJavaScript: @"chromecastDeviceDisConnected" WithValue: nil];
+    self.triggerEvent(@"chromecastDeviceDisConnected", nil);
+    KPLogTrace(@"Exit");
 }
+
 
 @end
 
-@implementation NSString (EnumParser)
 
-- (Attribute)attributeNameEnumFromString{
-    NSLog(@"attributeNameEnumFromString Enter");
-    
-    NSDictionary *Attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithInteger:src], @"src",
-                                [NSNumber numberWithInteger:currentTime], @"currentTime",
-#if !(TARGET_IPHONE_SIMULATOR)
-                                [NSNumber numberWithInteger:wvServerKey], @"wvServerKey",
-#endif
-                                [NSNumber numberWithInteger:nativeAction], @"nativeAction",
-                                [NSNumber numberWithInteger:doubleClickRequestAds], @"doubleClickRequestAds",
-                                nil
-                                ];
-    NSLog(@"attributeNameEnumFromString Exit");
-    return (Attribute)[[Attributes objectForKey:self] intValue];
-}
-
-@end
