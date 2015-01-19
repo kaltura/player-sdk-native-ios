@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import <AdSupport/AdSupport.h>
+//#import <AdSupport/AdSupport.h>
 #import <UIKit/UIKit.h>
 
 
@@ -19,4 +19,4 @@ CG_EXTERN BOOL isIOS8();
 
 #define isIOS8 __isIOS8
 
-#define advertiserID [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]
+//#define advertiserID [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString]
