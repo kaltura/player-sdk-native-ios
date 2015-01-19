@@ -6,7 +6,17 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
+
+
 #import "KPKalturaPlayWithAdsSupport.h"
+#import "NSString+Utilities.h"
+#import "NSMutableDictionary+AdSupport.h"
+
+@interface KPKalturaPlayWithAdsSupport() {
+    void(^_adEventUpdateBlock)(NSDictionary *adEventParams);
+}
+@property (nonatomic, copy) NSMutableDictionary *adEventParams;
+@end
 
 @implementation KPKalturaPlayWithAdsSupport
 
@@ -24,6 +34,13 @@
         [self.view.layer addSublayer:playerLayer];
     }
     return self;
+}
+
+- (NSMutableDictionary *)adEventParams {
+    if (!_adEventParams) {
+        _adEventParams = [NSMutableDictionary new];
+    }
+    return _adEventParams;
 }
 
 
@@ -61,34 +78,14 @@
     return _adsLoader;
 }
 
-- (void)showAdAtURL:(NSString *)adTagUrl {
+- (void)showAdAtURL:(NSString *)adTagUrl updateAdEvents:(void (^)(NSDictionary *))updateBlock {
+    _adEventUpdateBlock = [updateBlock copy];
     IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:adTagUrl
                                                   adDisplayContainer:self.adDisplayContainer
                                                          userContext:nil];
     
     [self.adsLoader requestAdsWithRequest:request];
 }
-
-//- (void)setupAdsLoader {
-//    self.adsLoader = [[IMAAdsLoader alloc] initWithSettings:nil];
-//    self.adsLoader.delegate = self;
-//}
-
-//- (void)setUpAdDisplayContainer {
-//    // Create our AdDisplayContainer. Initialize it with our videoView as the container. This
-//    // will result in ads being displayed over our content video.
-//    self.adDisplayContainer =
-//    [[IMAAdDisplayContainer alloc] initWithAdContainer:self.view.superview companionSlots:nil];
-//}
-
-//- (void)createAdsRenderingSettings {
-//    self.adsRenderingSettings = [[IMAAdsRenderingSettings alloc] init];
-//    self.adsRenderingSettings.webOpenerPresentingController = self;
-//}
-
-//- (void)createContentPlayhead {
-//    self.contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
-//}
 
 #pragma mark AdsLoader Delegates
 
@@ -103,6 +100,9 @@
     // Initialize the ads manager.
     [self.adsManager initializeWithContentPlayhead:self.contentPlayhead
                               adsRenderingSettings:self.adsRenderingSettings];
+    if (_adEventUpdateBlock) {
+        _adEventUpdateBlock(AdLoadedEventKey.nullVal);
+    }
 }
 
 - (void)adsLoader:(IMAAdsLoader *)loader failedWithErrorData:(IMAAdLoadingErrorData *)adErrorData {
@@ -116,9 +116,55 @@
 - (void)adsManager:(IMAAdsManager *)adsManager
  didReceiveAdEvent:(IMAAdEvent *)event {
     // When the SDK notified us that ads have been loaded, play them.
-    if (event.type == kIMAAdEvent_LOADED) {
-        [adsManager start];
+    NSDictionary *eventParams = nil;
+    switch (event.type) {
+        case kIMAAdEvent_LOADED:
+            [adsManager start];
+            self.adEventParams.isLinear = event.ad.isLinear;
+            self.adEventParams.adID = event.ad.adId;
+            self.adEventParams.adSystem = @"null";
+            self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
+            eventParams = self.adEventParams.toJSON.adLoaded;
+            break;
+        case kIMAAdEvent_STARTED:
+            self.adEventParams.isLinear = event.ad.isLinear;
+            self.adEventParams.adID = event.ad.adId;
+            self.adEventParams.adSystem = @"null";
+            self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
+            //self.adEventParams.context = @"null";
+            self.adEventParams.duration = event.ad.duration;
+            eventParams = self.adEventParams.toJSON.adStart;
+            break;
+        case kIMAAdEvent_COMPLETE:
+            self.adEventParams.adID = event.ad.adId;
+            eventParams = self.adEventParams.toJSON.adCompleted;
+            break;
+        case kIMAAdEvent_ALL_ADS_COMPLETED:
+            eventParams = AllAdsCompletedKey.nullVal;
+            break;
+//        case kIMAAdEvent_PAUSE:
+//            eventParams = ContentPauseRequestedKey.nullVal;
+//            break;
+//        case kIMAAdEvent_RESUME:
+//            eventParams = ContentResumeRequestedKey.nullVal;
+//            break;
+        case kIMAAdEvent_FIRST_QUARTILE:
+            eventParams = FirstQuartileKey.nullVal;
+            break;
+        case kIMAAdEvent_MIDPOINT:
+            eventParams = MidPointKey.nullVal;
+            break;
+        case kIMAAdEvent_THIRD_QUARTILE:
+            eventParams = ThirdQuartileKey.nullVal;
+            break;
+        default:
+            break;
     }
+    self.adEventParams = nil;
+    if (_adEventUpdateBlock) {
+        _adEventUpdateBlock(eventParams);
+    }
+    eventParams = nil;
 }
 
 - (void)adsManager:(IMAAdsManager *)adsManager
@@ -132,11 +178,17 @@
 - (void)adsManagerDidRequestContentPause:(IMAAdsManager *)adsManager {
     // The SDK is going to play ads, so pause the content.
     [self pause];
+    if (_adEventUpdateBlock) {
+        _adEventUpdateBlock(ContentPauseRequestedKey.nullVal);
+    }
 }
 
 - (void)adsManagerDidRequestContentResume:(IMAAdsManager *)adsManager {
     // The SDK is done playing ads (at least for now), so resume the content.
     [self play];
+    if (_adEventUpdateBlock) {
+        _adEventUpdateBlock(ContentResumeRequestedKey.nullVal);
+    }
 }
 
 @end

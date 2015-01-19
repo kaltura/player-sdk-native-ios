@@ -202,7 +202,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
         [[self webView] setPlayerControlsWebViewDelegate: self];
         
-        self.player = [self getPlayerByClass:[KalturaPlayer class]];
+        self.player = [self getPlayerByClass:[KPKalturaPlayWithAdsSupport class]];
         NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
 
         self.player.view.frame = playerViewFrame;
@@ -824,6 +824,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Enter");
     isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
     [self.webView triggerEvent:note.name withValue:note.userInfo[note.name]];
+    KPLogDebug(@"%@\n%@", note.name, note.userInfo[note.name]);
     KPLogTrace(@"Exit");
 }
 
@@ -861,8 +862,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                  options:0
                                                                    error:nil];
             break;
-        case doubleClickRequestAds:
-            [self switchPlayer:[KPKalturaPlayWithAdsSupport class]];
+        case doubleClickRequestAds: {
+            [[self player] showAdAtURL:attributeVal updateAdEvents:^(NSDictionary *eventParams) {
+                self.triggerEvent(eventParams.allKeys.firstObject, eventParams.allValues.firstObject);
+            }];
+        }
             break;
         
             

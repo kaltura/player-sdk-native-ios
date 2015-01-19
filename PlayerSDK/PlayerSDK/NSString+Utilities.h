@@ -34,6 +34,14 @@ typedef struct FunctionComponents {
 @property (nonatomic, assign, readonly) BOOL isToggleFullScreen;
 
 
+
+#pragma mark
+#pragma mark JavaScriptEvents Double Click helpers
+@property (nonatomic, copy, readonly) NSDictionary *nullVal;
+@property (nonatomic, copy, readonly) NSDictionary *adLoaded;
+@property (nonatomic, copy, readonly) NSDictionary *adStart;
+@property (nonatomic, copy, readonly) NSDictionary *adCompleted;
+
 #pragma mark
 #pragma mark JavaScriptEvents
 - (NSString *)evaluateWithID:(NSString *)ID;

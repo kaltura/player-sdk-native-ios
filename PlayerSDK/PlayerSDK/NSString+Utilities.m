@@ -13,6 +13,7 @@ static NSString *NativeActionKey = @"nativeAction";
 
 #import "NSString+Utilities.h"
 #import "KPLog.h"
+#import "NSMutableDictionary+AdSupport.h"
 
 @implementation NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param {
@@ -105,5 +106,21 @@ static NSString *NativeActionKey = @"nativeAction";
     NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger(\"%@\", '%@')", self, event];
     KPLogInfo(@"%@", jsStringLog);
     return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", self, event];
+}
+
+- (NSDictionary *)nullVal {
+    return @{self: @"null"};
+}
+
+- (NSDictionary *)adLoaded {
+    return @{AdLoadedKey: self};
+}
+
+- (NSDictionary *)adStart {
+    return @{AdStartKey: self};
+}
+
+- (NSDictionary *)adCompleted {
+    return @{AdCompletedKey: self};
 }
 @end

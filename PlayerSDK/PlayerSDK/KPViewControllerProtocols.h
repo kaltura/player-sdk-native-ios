@@ -117,5 +117,7 @@ typedef enum{
 - (void)setWideVideConfigurations;
 - (void)setControlStyle:(int)cs;
 
+- (void)showAdAtURL:(NSString *)adTagUrl updateAdEvents:(void(^)(NSDictionary *eventParams))updateBlock;
+
 @end
 

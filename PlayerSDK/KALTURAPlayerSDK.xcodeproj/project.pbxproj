@@ -25,6 +25,7 @@
 		B3410D381A6C0EA900275F00 /* KPKalturaPlayWithAdsSupport.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3410D211A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.h */; };
 		B3410D471A6C12E300275F00 /* libGoogleIMA3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3410D241A6C0E5A00275F00 /* libGoogleIMA3.a */; };
 		B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
+		B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B3410D4C1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m */; };
 		B34454271A46BE2700AB20DE /* KPLogManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B35B85761A43258200DCDBF7 /* KPLogManager.h */; };
 		B34454281A46BE2700AB20DE /* KPLog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B35B85751A43258200DCDBF7 /* KPLog.h */; };
 		B34454291A46BE2700AB20DE /* KPWebKitBrowserViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B32A5CEC1A2723730051DC7F /* KPWebKitBrowserViewController.h */; };
@@ -145,6 +146,8 @@
 		B3410D211A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPKalturaPlayWithAdsSupport.h; sourceTree = "<group>"; };
 		B3410D221A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPKalturaPlayWithAdsSupport.m; sourceTree = "<group>"; };
 		B3410D241A6C0E5A00275F00 /* libGoogleIMA3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleIMA3.a; sourceTree = "<group>"; };
+		B3410D4B1A6D45E000275F00 /* NSMutableDictionary+AdSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+AdSupport.h"; sourceTree = "<group>"; };
+		B3410D4C1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+AdSupport.m"; sourceTree = "<group>"; };
 		B35B85731A43258200DCDBF7 /* KPLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLogManager.m; sourceTree = "<group>"; };
 		B35B85741A43258200DCDBF7 /* KPLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLog.m; sourceTree = "<group>"; };
 		B35B85751A43258200DCDBF7 /* KPLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLog.h; sourceTree = "<group>"; };
@@ -275,6 +278,17 @@
 			name = IMA;
 			sourceTree = "<group>";
 		};
+		B3410D4A1A6D45B200275F00 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */,
+				B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */,
+				B3410D4B1A6D45E000275F00 /* NSMutableDictionary+AdSupport.h */,
+				B3410D4C1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
 		B3932AC81A092C4900AC0442 /* ShareViewContrller */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,6 +415,7 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B3410D4A1A6D45B200275F00 /* Categories */,
 				B35B85761A43258200DCDBF7 /* KPLogManager.h */,
 				B35B85731A43258200DCDBF7 /* KPLogManager.m */,
 				B35B85751A43258200DCDBF7 /* KPLog.h */,
@@ -408,8 +423,6 @@
 				B3C27BF31A2DEDFF003108CB /* KPViewControllerProtocols.h */,
 				B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */,
 				B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */,
-				B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */,
-				B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */,
 				B3932ACE1A0A0D7A00AC0442 /* ShareManager */,
 				BFFFA877182FB8E4005B3B24 /* KPViewController */,
 				BFE3E2F3199CAFCF00666F32 /* KalturaPlayer */,
@@ -635,6 +648,7 @@
 				B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */,
 				B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */,
 				B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */,
+				B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */,
 				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
 				B3C27BF21A2DEDCB003108CB /* KPPlayerDatasourceHandler.m in Sources */,
 				B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */,
