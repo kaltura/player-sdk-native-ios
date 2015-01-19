@@ -21,6 +21,10 @@
 		B32A5CF11A27308C0051DC7F /* KPWebKitBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B32A5CEF1A27308C0051DC7F /* KPWebKitBrowserViewController.xib */; };
 		B33E5DAC1A1CEA2000A14A1B /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */; };
 		B33E5DAD1A1CEF4400A14A1B /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */; };
+		B3410D231A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B3410D221A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.m */; };
+		B3410D381A6C0EA900275F00 /* KPKalturaPlayWithAdsSupport.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3410D211A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.h */; };
+		B3410D471A6C12E300275F00 /* libGoogleIMA3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3410D241A6C0E5A00275F00 /* libGoogleIMA3.a */; };
+		B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		B34454271A46BE2700AB20DE /* KPLogManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B35B85761A43258200DCDBF7 /* KPLogManager.h */; };
 		B34454281A46BE2700AB20DE /* KPLog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B35B85751A43258200DCDBF7 /* KPLog.h */; };
 		B34454291A46BE2700AB20DE /* KPWebKitBrowserViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B32A5CEC1A2723730051DC7F /* KPWebKitBrowserViewController.h */; };
@@ -88,6 +92,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				B3410D381A6C0EA900275F00 /* KPKalturaPlayWithAdsSupport.h in CopyFiles */,
 				B34454271A46BE2700AB20DE /* KPLogManager.h in CopyFiles */,
 				B34454281A46BE2700AB20DE /* KPLog.h in CopyFiles */,
 				B34454291A46BE2700AB20DE /* KPWebKitBrowserViewController.h in CopyFiles */,
@@ -123,6 +128,23 @@
 		B32A5CED1A2723730051DC7F /* KPWebKitBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPWebKitBrowserViewController.m; sourceTree = "<group>"; };
 		B32A5CEF1A27308C0051DC7F /* KPWebKitBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPWebKitBrowserViewController.xib; sourceTree = "<group>"; };
 		B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPBrowserViewController.xib; sourceTree = "<group>"; };
+		B3410D131A6C0D1900275F00 /* IMAAd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAd.h; sourceTree = "<group>"; };
+		B3410D141A6C0D1900275F00 /* IMAAdDisplayContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdDisplayContainer.h; sourceTree = "<group>"; };
+		B3410D151A6C0D1900275F00 /* IMAAdError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdError.h; sourceTree = "<group>"; };
+		B3410D161A6C0D1900275F00 /* IMAAdEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdEvent.h; sourceTree = "<group>"; };
+		B3410D171A6C0D1900275F00 /* IMAAdPlaybackInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdPlaybackInfo.h; sourceTree = "<group>"; };
+		B3410D181A6C0D1900275F00 /* IMAAdPodInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdPodInfo.h; sourceTree = "<group>"; };
+		B3410D191A6C0D1900275F00 /* IMAAdsLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdsLoader.h; sourceTree = "<group>"; };
+		B3410D1A1A6C0D1900275F00 /* IMAAdsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdsManager.h; sourceTree = "<group>"; };
+		B3410D1B1A6C0D1900275F00 /* IMAAdsRenderingSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdsRenderingSettings.h; sourceTree = "<group>"; };
+		B3410D1C1A6C0D1900275F00 /* IMAAdsRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAdsRequest.h; sourceTree = "<group>"; };
+		B3410D1D1A6C0D1900275F00 /* IMAAVPlayerContentPlayhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAAVPlayerContentPlayhead.h; sourceTree = "<group>"; };
+		B3410D1E1A6C0D1900275F00 /* IMACompanionAdSlot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMACompanionAdSlot.h; sourceTree = "<group>"; };
+		B3410D1F1A6C0D1900275F00 /* IMAContentPlayhead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAContentPlayhead.h; sourceTree = "<group>"; };
+		B3410D201A6C0D1900275F00 /* IMAUiElements.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMAUiElements.h; sourceTree = "<group>"; };
+		B3410D211A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPKalturaPlayWithAdsSupport.h; sourceTree = "<group>"; };
+		B3410D221A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPKalturaPlayWithAdsSupport.m; sourceTree = "<group>"; };
+		B3410D241A6C0E5A00275F00 /* libGoogleIMA3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleIMA3.a; sourceTree = "<group>"; };
 		B35B85731A43258200DCDBF7 /* KPLogManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLogManager.m; sourceTree = "<group>"; };
 		B35B85741A43258200DCDBF7 /* KPLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLog.m; sourceTree = "<group>"; };
 		B35B85751A43258200DCDBF7 /* KPLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLog.h; sourceTree = "<group>"; };
@@ -196,6 +218,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3410D471A6C12E300275F00 /* libGoogleIMA3.a in Frameworks */,
+				B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */,
 				BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,6 +252,27 @@
 				B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */,
 			);
 			name = ShareStrategies;
+			sourceTree = "<group>";
+		};
+		B3410D121A6C0CFD00275F00 /* IMA */ = {
+			isa = PBXGroup;
+			children = (
+				B3410D131A6C0D1900275F00 /* IMAAd.h */,
+				B3410D141A6C0D1900275F00 /* IMAAdDisplayContainer.h */,
+				B3410D151A6C0D1900275F00 /* IMAAdError.h */,
+				B3410D161A6C0D1900275F00 /* IMAAdEvent.h */,
+				B3410D171A6C0D1900275F00 /* IMAAdPlaybackInfo.h */,
+				B3410D181A6C0D1900275F00 /* IMAAdPodInfo.h */,
+				B3410D191A6C0D1900275F00 /* IMAAdsLoader.h */,
+				B3410D1A1A6C0D1900275F00 /* IMAAdsManager.h */,
+				B3410D1B1A6C0D1900275F00 /* IMAAdsRenderingSettings.h */,
+				B3410D1C1A6C0D1900275F00 /* IMAAdsRequest.h */,
+				B3410D1D1A6C0D1900275F00 /* IMAAVPlayerContentPlayhead.h */,
+				B3410D1E1A6C0D1900275F00 /* IMACompanionAdSlot.h */,
+				B3410D1F1A6C0D1900275F00 /* IMAContentPlayhead.h */,
+				B3410D201A6C0D1900275F00 /* IMAUiElements.h */,
+			);
+			name = IMA;
 			sourceTree = "<group>";
 		};
 		B3932AC81A092C4900AC0442 /* ShareViewContrller */ = {
@@ -305,8 +350,11 @@
 		BFE3E2F3199CAFCF00666F32 /* KalturaPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				B3410D121A6C0CFD00275F00 /* IMA */,
 				BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */,
 				BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */,
+				B3410D211A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.h */,
+				B3410D221A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.m */,
 			);
 			name = KalturaPlayer;
 			path = ..;
@@ -337,6 +385,7 @@
 		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B3410D241A6C0E5A00275F00 /* libGoogleIMA3.a */,
 				B39BEC941A0BA8C40085BA26 /* MessageUI.framework */,
 				B39BEC7C1A0A7F740085BA26 /* Social.framework */,
 				BFE3E2FB199CC9AB00666F32 /* GoogleCast.framework */,
@@ -591,6 +640,7 @@
 				B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
 				B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */,
+				B3410D231A6C0D4800275F00 /* KPKalturaPlayWithAdsSupport.m in Sources */,
 				B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */,
 				B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */,
 				B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */,
@@ -737,7 +787,10 @@
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/libWViPhoneAPI.a\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
+					"\"$(SRCROOT)/libGoogleIMA3.a\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -770,7 +823,10 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/libWViPhoneAPI.a\"";
+				LIBRARY_SEARCH_PATHS = (
+					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
+					"\"$(SRCROOT)/libGoogleIMA3.a\"",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
@@ -794,9 +850,16 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/WViPhoneAPI.h\"",
+					"\"$(SRCROOT)/GoogleIMA3.h\"",
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					.,
+					"$(PROJECT_DIR)/libWViPhoneAPI.a",
+					"$(PROJECT_DIR)/libGoogleIMA3.a",
 					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = NO;
@@ -824,10 +887,17 @@
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					"\"$(SRCROOT)/WViPhoneAPI.h\"",
+					"\"$(SRCROOT)/GoogleIMA3.h\"",
+				);
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					.,
+					"$(PROJECT_DIR)/libWViPhoneAPI.a",
+					"$(PROJECT_DIR)/libGoogleIMA3.a",
 					"$(PROJECT_DIR)",
 				);
 				ONLY_ACTIVE_ARCH = NO;

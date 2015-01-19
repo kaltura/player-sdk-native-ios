@@ -34,7 +34,8 @@ typedef enum{
     // DRM WideVine Key
     wvServerKey,
 #endif
-    nativeAction
+    nativeAction,
+    doubleClickRequestAds
 } Attribute;
 
 

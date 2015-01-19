@@ -31,7 +31,8 @@ static NSString *NativeActionKey = @"nativeAction";
 #if !(TARGET_IPHONE_SIMULATOR)
                             @"wvServerKey",
 #endif
-                            @"nativeAction"];
+                            @"nativeAction",
+                            @"doubleClickRequestAds"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }

@@ -24,6 +24,7 @@ static NSString *IsFullScreenKey = @"isFullScreen";
 #import "KPPlayerDatasourceHandler.h"
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
+#import "KPKalturaPlayWithAdsSupport.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -61,6 +62,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSDictionary *nativeActionParams;
     
     NSMutableArray *callBackReadyRegistrations;
+    KPKalturaPlayWithAdsSupport *IMAPlayer;
 }
 
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
@@ -859,6 +861,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                  options:0
                                                                    error:nil];
             break;
+        case doubleClickRequestAds:
+            [self switchPlayer:[KPKalturaPlayWithAdsSupport class]];
+            break;
+        
+            
         default:
             break;
     }
