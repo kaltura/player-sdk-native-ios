@@ -18,6 +18,7 @@
 @property (nonatomic, copy) NSMutableDictionary *adEventParams;
 @end
 
+
 @implementation KPKalturaPlayWithAdsSupport
 
 - (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
@@ -36,6 +37,7 @@
     return self;
 }
 
+
 - (NSMutableDictionary *)adEventParams {
     if (!_adEventParams) {
         _adEventParams = [NSMutableDictionary new];
@@ -53,6 +55,8 @@
     return _adsRenderingSettings;
 }
 
+
+// Create a content playhead so the SDK can track our content for VMAP and ad rules.
 - (IMAAVPlayerContentPlayhead *)contentPlayhead {
     if (!_contentPlayhead) {
         _contentPlayhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
@@ -61,7 +65,6 @@
 }
 
 // Create our AdDisplayContainer. Initialize it with our videoView as the container. This
-
 - (IMAAdDisplayContainer *)adDisplayContainer {
     if (!_adDisplayContainer) {
         _adDisplayContainer = [[IMAAdDisplayContainer alloc] initWithAdContainer:self.view.superview
@@ -94,6 +97,7 @@
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
     
+
     //[self createAdsRenderingSettings];
     // Create a content playhead so the SDK can track our content for VMAP and ad rules.
     //[self createContentPlayhead];
@@ -205,6 +209,7 @@
         _adEventUpdateBlock(timeParams.toJSON.adRemainingTimeChange);
         timeParams = nil;
     }
+
 }
 
 @end

@@ -29,5 +29,6 @@
 /// Main point of interaction with the SDK. Created by the SDK as the result of an ad request.
 @property(nonatomic, strong) IMAAdsManager *adsManager;
 
+- (void)showAdAtURL:(NSString *)adTagUrl updateAdEvents:(void (^)(NSDictionary *))updateBlock;
 
 @end
