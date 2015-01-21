@@ -120,11 +120,11 @@
     switch (event.type) {
         case kIMAAdEvent_LOADED:
             [adsManager start];
-            self.adEventParams.isLinear = event.ad.isLinear;
-            self.adEventParams.adID = event.ad.adId;
-            self.adEventParams.adSystem = @"null";
-            self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
-            eventParams = self.adEventParams.toJSON.adLoaded;
+//            self.adEventParams.isLinear = event.ad.isLinear;
+//            self.adEventParams.adID = event.ad.adId;
+//            self.adEventParams.adSystem = @"null";
+//            self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
+//            eventParams = self.adEventParams.toJSON.adLoaded;
             break;
         case kIMAAdEvent_STARTED:
             self.adEventParams.isLinear = event.ad.isLinear;
@@ -164,6 +164,9 @@
     if (_adEventUpdateBlock) {
         _adEventUpdateBlock(eventParams);
     }
+//    if (event.type == kIMAAdEvent_COMPLETE) {
+//        _adEventUpdateBlock = nil;
+//    }
     eventParams = nil;
 }
 
@@ -188,6 +191,19 @@
     [self play];
     if (_adEventUpdateBlock) {
         _adEventUpdateBlock(ContentResumeRequestedKey.nullVal);
+    }
+}
+
+- (void)adDidProgressToTime:(NSTimeInterval)mediaTime totalTime:(NSTimeInterval)totalTime {
+//    [self triggerKPlayerEvents: @"timeupdate"
+//                     withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", mediaTime]}];
+    if (_adEventUpdateBlock) {
+        NSMutableDictionary *timeParams = [NSMutableDictionary new];
+        timeParams.time = mediaTime;
+        timeParams.duration = totalTime;
+        timeParams.remain = totalTime - mediaTime;
+        _adEventUpdateBlock(timeParams.toJSON.adRemainingTimeChange);
+        timeParams = nil;
     }
 }
 

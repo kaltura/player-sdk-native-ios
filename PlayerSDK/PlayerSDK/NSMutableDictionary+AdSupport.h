@@ -18,6 +18,8 @@ static NSString *ContentResumeRequestedKey = @"contentResumeRequested";
 static NSString *FirstQuartileKey = @"firstQuartile";
 static NSString *MidPointKey = @"midpoint";
 static NSString *ThirdQuartileKey = @"thirdQuartile";
+static NSString *AdRemainingTimeChangeKey = @"adRemainingTimeChange";
+
 
 @interface NSMutableDictionary (AdSupport)
 @property (nonatomic, assign) BOOL isLinear;
@@ -26,6 +28,8 @@ static NSString *ThirdQuartileKey = @"thirdQuartile";
 @property (nonatomic, assign) int adPosition;
 @property (nonatomic, copy) NSString *context;
 @property (nonatomic, assign) NSTimeInterval duration;
+@property (nonatomic, assign) NSTimeInterval time;
+@property (nonatomic, assign) NSTimeInterval remain;
 
 @property (nonatomic, copy, readonly) NSString *toJSON;
 @end

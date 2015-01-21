@@ -109,7 +109,7 @@ static NSString *NativeActionKey = @"nativeAction";
 }
 
 - (NSDictionary *)nullVal {
-    return @{self: @"null"};
+    return @{self: @"(null)"};
 }
 
 - (NSDictionary *)adLoaded {
@@ -122,5 +122,9 @@ static NSString *NativeActionKey = @"nativeAction";
 
 - (NSDictionary *)adCompleted {
     return @{AdCompletedKey: self};
+}
+
+- (NSDictionary *)adRemainingTimeChange {
+    return @{AdRemainingTimeChangeKey: self};
 }
 @end

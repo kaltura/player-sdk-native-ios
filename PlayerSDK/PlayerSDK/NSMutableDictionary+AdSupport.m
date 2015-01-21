@@ -16,7 +16,8 @@ static NSString *AdPositionKey = @"adPosition";
 
 static NSString *ContextKey = @"context";
 static NSString *DurationKey = @"duration";
-
+static NSString *TimeKey = @"time";
+static NSString *RemainTimeKey = @"remain";
 
 
 
@@ -71,6 +72,22 @@ static NSString *DurationKey = @"duration";
 
 - (NSTimeInterval)duration {
     return [self[DurationKey] floatValue];
+}
+
+- (void)setTime:(NSTimeInterval)time {
+    self[TimeKey] = @(time);
+}
+
+- (NSTimeInterval)time {
+    return [self[TimeKey] floatValue];
+}
+
+- (void)setRemain:(NSTimeInterval)remain {
+    self[RemainTimeKey] = @(remain);
+}
+
+- (NSTimeInterval)remain {
+    return [self[RemainTimeKey] floatValue];
 }
 
 - (NSString *)toJSON {
