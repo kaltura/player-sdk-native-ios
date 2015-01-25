@@ -401,7 +401,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     if ( listenersArr != nil ) {
         for (NSDictionary *eDict in listenersArr) {
-            ((void(^)())eDict.allValues.lastObject)();
+            ((void(^)(NSString *))eDict.allValues.lastObject)(eventName);
         }
     }
     KPLogTrace(@"Exit");

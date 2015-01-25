@@ -98,7 +98,7 @@
  */
 - (void)addEventListener:(NSString *)event
                  eventID:(NSString *)eventID
-                 handler:(void(^)())handler;
+                 handler:(void(^)(NSString *eventName))handler;
 
 
 /*!
@@ -180,7 +180,7 @@
 @property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());
 
 /// Wrraps addEventListener:eventID:handler: method by block syntax.
-@property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event, NSString *eventID, void(^)());
+@property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event, NSString *eventID, void(^)(NSString *eventName));
 
 /// Wrraps removeEventListener:eventID: method by block syntax.
 @property (nonatomic, copy, readonly) void (^removeEventListener)(NSString *event, NSString *eventID);

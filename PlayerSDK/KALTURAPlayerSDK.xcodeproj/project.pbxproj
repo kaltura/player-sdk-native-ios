@@ -48,7 +48,6 @@
 		B3C27BFD1A2F2936003108CB /* NSString+Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */; };
 		B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
-		BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */; };
 		BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927ECD18BCEB62006667CA /* WVSettings.h */; };
 		BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFA2DBF61949F29B00831A71 /* KPViewController.h */; };
 		BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB741D7199BA3CD001E9DDD /* KalturaPlayer.m */; };
@@ -59,13 +58,7 @@
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
 		BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB741D6199BA3CD001E9DDD /* KalturaPlayer.h */; };
 		BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
-		BFFFA73A182F9E31005B3B24 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */; };
-		BFFFA73D182F9E31005B3B24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA72A182F9E31005B3B24 /* Foundation.framework */; };
-		BFFFA740182F9E31005B3B24 /* libKALTURAPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */; };
-		BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFFFA744182F9E31005B3B24 /* InfoPlist.strings */; };
-		BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */; };
 		BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */; };
-		BFFFA755182F9E66005B3B24 /* KPControlsWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */; };
 		BFFFA872182FB834005B3B24 /* KPControlsWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFFFA752182F9E66005B3B24 /* KPControlsWebView.h */; };
 /* End PBXBuildFile section */
 
@@ -76,13 +69,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = B3D7588A1A1CBEDF00CA5A96;
 			remoteInfo = Test;
-		};
-		BFFFA73E182F9E31005B3B24 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFFFA71F182F9E31005B3B24 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BFFFA726182F9E31005B3B24;
-			remoteInfo = PlayerSDK;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -114,7 +100,6 @@
 				BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */,
 				BFE3E2F5199CB40400666F32 /* KalturaPlayer.h in CopyFiles */,
 				BFA2DC12194B349F00831A71 /* KPViewController.h in CopyFiles */,
-				BF9133C919349A4400606682 /* PlayerSDKTests.h in CopyFiles */,
 				BF927ECE18BCEB62006667CA /* WVSettings.h in CopyFiles */,
 				BFFFA872182FB834005B3B24 /* KPControlsWebView.h in CopyFiles */,
 			);
@@ -198,12 +183,7 @@
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72A182F9E31005B3B24 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
-		BFFFA738182F9E31005B3B24 /* .octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = .octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA739182F9E31005B3B24 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		BFFFA743182F9E31005B3B24 /* PlayerSDKTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerSDKTests-Info.plist"; sourceTree = "<group>"; };
-		BFFFA745182F9E31005B3B24 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerSDKTests.h; sourceTree = "<group>"; };
-		BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerSDKTests.m; sourceTree = "<group>"; };
 		BFFFA752182F9E66005B3B24 /* KPControlsWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPControlsWebView.h; sourceTree = "<group>"; };
 		BFFFA753182F9E66005B3B24 /* KPControlsWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPControlsWebView.m; sourceTree = "<group>"; };
 		BFFFA775182FA012005B3B24 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -224,16 +204,6 @@
 				B3410D471A6C12E300275F00 /* libGoogleIMA3.a in Frameworks */,
 				B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */,
 				BFFFA72B182F9E31005B3B24 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		BFFFA734182F9E31005B3B24 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFFFA73A182F9E31005B3B24 /* SenTestingKit.framework in Frameworks */,
-				BFFFA73D182F9E31005B3B24 /* Foundation.framework in Frameworks */,
-				BFFFA740182F9E31005B3B24 /* libKALTURAPlayerSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +349,6 @@
 			children = (
 				BFFFA775182FA012005B3B24 /* UIKit.framework */,
 				BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */,
-				BFFFA741182F9E31005B3B24 /* PlayerSDKTests */,
 				B3D7588C1A1CBEDF00CA5A96 /* Test */,
 				BFFFA729182F9E31005B3B24 /* Frameworks */,
 				BFFFA728182F9E31005B3B24 /* Products */,
@@ -390,7 +359,6 @@
 			isa = PBXGroup;
 			children = (
 				BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */,
-				BFFFA738182F9E31005B3B24 /* .octest */,
 				B3D7588B1A1CBEDF00CA5A96 /* Test.bundle */,
 			);
 			name = Products;
@@ -440,25 +408,6 @@
 			isa = PBXGroup;
 			children = (
 				BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		BFFFA741182F9E31005B3B24 /* PlayerSDKTests */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA747182F9E31005B3B24 /* PlayerSDKTests.h */,
-				BFFFA748182F9E31005B3B24 /* PlayerSDKTests.m */,
-				BFFFA742182F9E31005B3B24 /* Supporting Files */,
-			);
-			path = PlayerSDKTests;
-			sourceTree = "<group>";
-		};
-		BFFFA742182F9E31005B3B24 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				BFFFA743182F9E31005B3B24 /* PlayerSDKTests-Info.plist */,
-				BFFFA744182F9E31005B3B24 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -525,25 +474,6 @@
 			productReference = BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		BFFFA737182F9E31005B3B24 /* KALTURAPlayerSDKTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDKTests" */;
-			buildPhases = (
-				BFFFA733182F9E31005B3B24 /* Sources */,
-				BFFFA734182F9E31005B3B24 /* Frameworks */,
-				BFFFA735182F9E31005B3B24 /* Resources */,
-				BFFFA736182F9E31005B3B24 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				BFFFA73F182F9E31005B3B24 /* PBXTargetDependency */,
-			);
-			name = KALTURAPlayerSDKTests;
-			productName = PlayerSDKTests;
-			productReference = BFFFA738182F9E31005B3B24 /* .octest */;
-			productType = "com.apple.product-type.bundle.ocunit-test";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -572,7 +502,6 @@
 			projectRoot = "";
 			targets = (
 				BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */,
-				BFFFA737182F9E31005B3B24 /* KALTURAPlayerSDKTests */,
 				B3D7588A1A1CBEDF00CA5A96 /* Test */,
 			);
 		};
@@ -597,31 +526,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BFFFA735182F9E31005B3B24 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFFFA746182F9E31005B3B24 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		BFFFA736182F9E31005B3B24 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B3D758871A1CBEDF00CA5A96 /* Sources */ = {
@@ -661,15 +566,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BFFFA733182F9E31005B3B24 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BFFFA749182F9E31005B3B24 /* PlayerSDKTests.m in Sources */,
-				BFFFA755182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -678,23 +574,7 @@
 			target = B3D7588A1A1CBEDF00CA5A96 /* Test */;
 			targetProxy = B3D758921A1CBEFF00CA5A96 /* PBXContainerItemProxy */;
 		};
-		BFFFA73F182F9E31005B3B24 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BFFFA726182F9E31005B3B24 /* KALTURAPlayerSDK */;
-			targetProxy = BFFFA73E182F9E31005B3B24 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		BFFFA744182F9E31005B3B24 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				BFFFA745182F9E31005B3B24 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		B3D7588F1A1CBEDF00CA5A96 /* Debug */ = {
@@ -924,36 +804,6 @@
 			};
 			name = Release;
 		};
-		BFFFA750182F9E31005B3B24 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				INFOPLIST_FILE = "PlayerSDKTests/PlayerSDKTests-Info.plist";
-				VALID_ARCHS = armv7;
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		BFFFA751182F9E31005B3B24 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerSDK/PlayerSDK-Prefix.pch";
-				INFOPLIST_FILE = "PlayerSDKTests/PlayerSDKTests-Info.plist";
-				VALID_ARCHS = armv7;
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -980,15 +830,6 @@
 			buildConfigurations = (
 				BFFFA74D182F9E31005B3B24 /* Debug */,
 				BFFFA74E182F9E31005B3B24 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		BFFFA74F182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDKTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				BFFFA750182F9E31005B3B24 /* Debug */,
-				BFFFA751182F9E31005B3B24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
