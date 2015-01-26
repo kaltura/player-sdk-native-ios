@@ -368,7 +368,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)addEventListener:(NSString *)event
                  eventID:(NSString *)eventID
-                 handler:(void (^)())handler {
+                 handler:(void (^)(NSString *))handler {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
@@ -385,7 +385,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }];
 }
 
-- (void(^)(NSString *, NSString *, void(^)()))addEventListener {
+- (void(^)(NSString *, NSString *, void(^)(NSString *)))addEventListener {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
     return ^(NSString *event, NSString *eventID, void(^completion)()){
@@ -863,8 +863,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                    error:nil];
             break;
         case doubleClickRequestAds: {
-            [[self player] showAdAtURL:attributeVal updateAdEvents:^(NSDictionary *eventParams) {
-                self.triggerEvent(eventParams.allKeys.firstObject, eventParams.allValues.firstObject);
+            __weak KPViewController *weakSelf = self;
+            [[weakSelf player] showAdAtURL:attributeVal updateAdEvents:^(NSDictionary *eventParams) {
+                [weakSelf.webView triggerEvent:eventParams.allKeys.firstObject withJSON:eventParams.allValues.firstObject];
             }];
         }
             break;

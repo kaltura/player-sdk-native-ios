@@ -138,6 +138,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     [self stringByEvaluatingJavaScriptFromString:[event triggerEvent:value]];
 }
 
+- (void)triggerEvent:(NSString *)event withJSON:(NSString *)json {
+    [self stringByEvaluatingJavaScriptFromString:[event triggerJSON:json]];
+}
+
 - (void)updateLayout {
     NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
     [self stringByEvaluatingJavaScriptFromString:updateLayoutJS];

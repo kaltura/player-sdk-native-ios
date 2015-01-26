@@ -81,6 +81,14 @@
     return _adsLoader;
 }
 
+- (void)bindPlayerEvents {
+    [super bindPlayerEvents];
+}
+
+- (void)play {
+    [super play];
+}
+
 - (void)showAdAtURL:(NSString *)adTagUrl updateAdEvents:(void (^)(NSDictionary *))updateBlock {
     _adEventUpdateBlock = [updateBlock copy];
     IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:adTagUrl
@@ -124,18 +132,21 @@
     switch (event.type) {
         case kIMAAdEvent_LOADED:
             [adsManager start];
-//            self.adEventParams.isLinear = event.ad.isLinear;
-//            self.adEventParams.adID = event.ad.adId;
-//            self.adEventParams.adSystem = @"null";
-//            self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
-//            eventParams = self.adEventParams.toJSON.adLoaded;
-            break;
-        case kIMAAdEvent_STARTED:
             self.adEventParams.isLinear = event.ad.isLinear;
             self.adEventParams.adID = event.ad.adId;
             self.adEventParams.adSystem = @"null";
             self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
+            eventParams = self.adEventParams.toJSON.adLoaded;
+            break;
+        case kIMAAdEvent_STARTED:
+//            self.adEventParams.isLinear = event.ad.isLinear;
+//            self.adEventParams.adID = event.ad.adId;
+//            self.adEventParams.adSystem = @"null";
+//            self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
             //self.adEventParams.context = @"null";
+//            if (_adEventUpdateBlock) {
+//                _adEventUpdateBlock(OnPlayKey.nullVal);
+//            }
             self.adEventParams.duration = event.ad.duration;
             eventParams = self.adEventParams.toJSON.adStart;
             break;

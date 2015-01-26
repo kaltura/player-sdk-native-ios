@@ -108,6 +108,10 @@ static NSString *NativeActionKey = @"nativeAction";
     return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", self, event];
 }
 
+- (NSString *)triggerJSON:(NSString *)json {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', %@)", self, json];
+}
+
 - (NSDictionary *)nullVal {
     return @{self: @"(null)"};
 }

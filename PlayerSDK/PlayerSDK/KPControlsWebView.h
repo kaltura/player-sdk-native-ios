@@ -49,6 +49,8 @@
 - (void)triggerEvent:(NSString *)event
            withValue:(NSString *)value;
 
+- (void)triggerEvent:(NSString *)event withJSON:(NSString *)json;
+
 - (void)updateLayout;
 @end
 
