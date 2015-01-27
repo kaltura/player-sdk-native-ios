@@ -24,7 +24,7 @@ static NSString *IsFullScreenKey = @"isFullScreen";
 #import "KPPlayerDatasourceHandler.h"
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
-#import "KPKalturaPlayWithAdsSupport.h"
+#import "KPIMAPlayerViewController.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() {
+@interface KPViewController() <IMAContentPlayhead>{
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
@@ -62,7 +62,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSDictionary *nativeActionParams;
     
     NSMutableArray *callBackReadyRegistrations;
-    KPKalturaPlayWithAdsSupport *IMAPlayer;
+    //KPKalturaPlayWithAdsSupport *IMAPlayer;
 }
 
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
@@ -202,7 +202,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
         [[self webView] setPlayerControlsWebViewDelegate: self];
         
-        self.player = [self getPlayerByClass:[KPKalturaPlayWithAdsSupport class]];
+        self.player = [self getPlayerByClass:[KalturaPlayer class]];
         NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
 
         self.player.view.frame = playerViewFrame;
@@ -863,14 +863,15 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                    error:nil];
             break;
         case doubleClickRequestAds: {
+            [self.player pause];
             __weak KPViewController *weakSelf = self;
-            [[weakSelf player] showAdAtURL:attributeVal updateAdEvents:^(NSDictionary *eventParams) {
-                [weakSelf.webView triggerEvent:eventParams.allKeys.firstObject withJSON:eventParams.allValues.firstObject];
+            KPIMAPlayerViewController *imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
+            [imaPlayer loadIMAAd:attributeVal eventsListener:^(NSDictionary *adEventParams) {
+                [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
             }];
+            
         }
             break;
-        
-            
         default:
             break;
     }
@@ -1108,6 +1109,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
+#pragma mark IMAContentPlayhead
+- (NSTimeInterval)currentTime {
+    return [self.player currentPlaybackTime];
+}
 
 @end
 

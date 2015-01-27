@@ -42,6 +42,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSDictionary *adStart;
 @property (nonatomic, copy, readonly) NSDictionary *adCompleted;
 @property (nonatomic, copy, readonly) NSDictionary *adRemainingTimeChange;
+@property (nonatomic, copy, readonly) NSDictionary *adTapped;
 
 #pragma mark
 #pragma mark JavaScriptEvents

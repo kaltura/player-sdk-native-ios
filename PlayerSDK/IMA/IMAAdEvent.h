@@ -29,10 +29,14 @@ typedef enum {
   kIMAAdEvent_PAUSE,
   /// Ad resumed.
   kIMAAdEvent_RESUME,
+  /// Ad has skipped.
+  kIMAAdEvent_SKIPPED,
+  /// Ad has started.
+  kIMAAdEvent_STARTED,
+  /// Ad tapped.
+  kIMAAdEvent_TAPPED,
   /// Third quartile of a linear ad was reached.
-  kIMAAdEvent_THIRD_QUARTILE,
-  // Ad has started.
-  kIMAAdEvent_STARTED
+  kIMAAdEvent_THIRD_QUARTILE
 } IMAAdEventType;
 
 /// Simple data class used to transport ad playback information.

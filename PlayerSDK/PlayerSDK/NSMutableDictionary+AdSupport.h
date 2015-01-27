@@ -19,7 +19,7 @@ static NSString *FirstQuartileKey = @"firstQuartile";
 static NSString *MidPointKey = @"midpoint";
 static NSString *ThirdQuartileKey = @"thirdQuartile";
 static NSString *AdRemainingTimeChangeKey = @"adRemainingTimeChange";
-static NSString *OnPlayKey = @"play";
+static NSString *AdClickedKey = @"adClicked";
 
 
 @interface NSMutableDictionary (AdSupport)
