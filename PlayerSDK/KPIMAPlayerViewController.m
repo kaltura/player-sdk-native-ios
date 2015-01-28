@@ -226,6 +226,10 @@
  didReceiveAdError:(IMAAdError *)error {
     // Something went wrong with the ads manager after ads were loaded. Log the error and play the
     // content.
+    
+    if (AdEventsListener) {
+        AdEventsListener(AdsLoadErrorKey.nullVal);
+    }
     NSLog(@"AdsManager error: %@", error.message);
     [self.contentPlayer play];
 }
@@ -255,7 +259,6 @@
         AdEventsListener(timeParams.toJSON.adRemainingTimeChange);
         timeParams = nil;
     }
-    
 }
 
 

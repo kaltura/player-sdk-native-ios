@@ -20,6 +20,7 @@ static NSString *MidPointKey = @"midpoint";
 static NSString *ThirdQuartileKey = @"thirdQuartile";
 static NSString *AdRemainingTimeChangeKey = @"adRemainingTimeChange";
 static NSString *AdClickedKey = @"adClicked";
+static NSString *AdsLoadErrorKey = @"adsLoadError";
 
 
 @interface NSMutableDictionary (AdSupport)
