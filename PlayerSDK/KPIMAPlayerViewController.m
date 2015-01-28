@@ -14,10 +14,29 @@
     void(^AdEventsListener)(NSDictionary *adEventParams);
     __weak UIViewController<KPIMAAdsPlayerDatasource> *_parentController;
 }
+
+/// Contains the params for the logic layer
 @property (nonatomic, copy) NSMutableDictionary *adEventParams;
+
+/// Content video player.
+@property(nonatomic, strong) AVPlayer *contentPlayer;
+
+
+// SDK
+/// Entry point for the SDK. Used to make ad requests.
+@property(nonatomic, strong) IMAAdsLoader *adsLoader;
+// Container which lets the SDK know where to render ads.
+@property(nonatomic, strong) IMAAdDisplayContainer *adDisplayContainer;
+// Rendering settings for ads.
+@property(nonatomic, strong) IMAAdsRenderingSettings *adsRenderingSettings;
+
+/// Main point of interaction with the SDK. Created by the SDK as the result of an ad request.
+@property(nonatomic, strong) IMAAdsManager *adsManager;
 @end
 
 @implementation KPIMAPlayerViewController
+
+#pragma mark Public Methods
 - (instancetype)initWithParent:(UIViewController<KPIMAAdsPlayerDatasource> *)parentController {
     self = [super init];
     if (self) {
@@ -26,20 +45,6 @@
         [parentController.view addSubview:self.view];
     }
     return self;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-    self.view.backgroundColor = [UIColor clearColor];
-    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _parentController.adPlayerHeight};
-    
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)loadIMAAd:(NSString *)adLink eventsListener:(void (^)(NSDictionary *))adListener {
@@ -74,6 +79,24 @@
 }
 
 
+#pragma mark View methods
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor clearColor];
+    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _parentController.adPlayerHeight};
+    
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+
+
+
+#pragma mark Lazy Initialization
 - (NSMutableDictionary *)adEventParams {
     if (!_adEventParams) {
         _adEventParams = [NSMutableDictionary new];
@@ -111,15 +134,13 @@
     return _adsLoader;
 }
 
+
+#pragma mark IMAAdsLoaderDelegate
 - (void)adsLoader:(IMAAdsLoader *)loader adsLoadedWithData:(IMAAdsLoadedData *)adsLoadedData {
     // Grab the instance of the IMAAdsManager and set ourselves as the delegate.
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
     
-    
-    //[self createAdsRenderingSettings];
-    // Create a content playhead so the SDK can track our content for VMAP and ad rules.
-    //[self createContentPlayhead];
     // Initialize the ads manager.
     [self.adsManager initializeWithContentPlayhead:_parentController
                               adsRenderingSettings:self.adsRenderingSettings];
@@ -134,8 +155,9 @@
     [self.contentPlayer play];
 }
 
-#pragma mark AdsManager Delegates
 
+
+#pragma mark AdsManager Delegates
 - (void)adsManager:(IMAAdsManager *)adsManager
  didReceiveAdEvent:(IMAAdEvent *)event {
     // When the SDK notified us that ads have been loaded, play them.
@@ -191,7 +213,6 @@
         AdEventsListener(eventParams);
     }
     if (event.type == kIMAAdEvent_ALL_ADS_COMPLETED) {
-        //[self dismissViewControllerAnimated:YES completion:nil];
         [self.view removeFromSuperview];
         [self removeFromParentViewController];
         if (AdEventsListener) {
@@ -237,8 +258,5 @@
     
 }
 
-- (void)dealloc {
-    
-}
 
 @end
