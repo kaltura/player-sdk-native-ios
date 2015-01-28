@@ -12,6 +12,12 @@
 #import "IMAAdsLoader.h"
 #import "IMAAVPlayerContentPlayhead.h"
 
+@protocol KPIMAAdsPlayerDatasource <IMAContentPlayhead>
+
+@property (nonatomic, assign, readonly) CGFloat adPlayerHeight;
+
+@end
+
 @interface KPIMAPlayerViewController : UIViewController <IMAAdsLoaderDelegate,
 IMAAdsManagerDelegate>
 
@@ -20,6 +26,7 @@ IMAAdsManagerDelegate>
 
 - (instancetype)initWithParent:(UIViewController *)parentController;
 - (void)loadIMAAd:(NSString *)adLink eventsListener:(void(^)(NSDictionary *adEventParams))adListener;
+- (void)destroy;
 
 // SDK
 /// Entry point for the SDK. Used to make ad requests.

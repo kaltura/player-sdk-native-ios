@@ -12,13 +12,13 @@
 
 @interface KPIMAPlayerViewController () <IMAWebOpenerDelegate>{
     void(^AdEventsListener)(NSDictionary *adEventParams);
-    __weak UIViewController<IMAContentPlayhead> *_parentController;
+    __weak UIViewController<KPIMAAdsPlayerDatasource> *_parentController;
 }
 @property (nonatomic, copy) NSMutableDictionary *adEventParams;
 @end
 
 @implementation KPIMAPlayerViewController
-- (instancetype)initWithParent:(UIViewController<IMAContentPlayhead> *)parentController {
+- (instancetype)initWithParent:(UIViewController<KPIMAAdsPlayerDatasource> *)parentController {
     self = [super init];
     if (self) {
         _parentController = parentController;
@@ -32,21 +32,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor clearColor];
-    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, self.view.frame.size.height - 50};
+    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _parentController.adPlayerHeight};
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    _parentController = nil;
-    AdEventsListener = nil;
-    _adEventParams = nil;
-    _adsLoader = nil;
-    _adDisplayContainer = nil;
-    _adsRenderingSettings = nil;
-    _adsManager = nil;
-    _contentPlayer = nil;
-    [super viewWillDisappear:animated];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -71,6 +60,17 @@
                                                          userContext:nil];
     
     [self.adsLoader requestAdsWithRequest:request];
+}
+
+- (void)destroy {
+    _parentController = nil;
+    AdEventsListener = nil;
+    _adEventParams = nil;
+    _adsLoader = nil;
+    _adDisplayContainer = nil;
+    _adsRenderingSettings = nil;
+    _adsManager = nil;
+    _contentPlayer = nil;
 }
 
 
@@ -150,14 +150,6 @@
             eventParams = self.adEventParams.toJSON.adLoaded;
             break;
         case kIMAAdEvent_STARTED:
-            //            self.adEventParams.isLinear = event.ad.isLinear;
-            //            self.adEventParams.adID = event.ad.adId;
-            //            self.adEventParams.adSystem = @"null";
-            //            self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
-            //            self.adEventParams.context = @"null";
-//            if (AdEventsListener) {
-//                AdEventsListener(OnPlayKey.nullVal);
-//            }
             self.adEventParams.duration = event.ad.duration;
             eventParams = self.adEventParams.toJSON.adStart;
             break;
@@ -184,21 +176,27 @@
             eventParams = ThirdQuartileKey.nullVal;
             break;
         case kIMAAdEvent_TAPPED:
-            self.adEventParams.isLinear = event.ad.isLinear;
-            eventParams = self.adEventParams.toJSON.adTapped;
             
+            
+            break;
+        case kIMAAdEvent_CLICKED:
+            self.adEventParams.isLinear = event.ad.isLinear;
+            eventParams = self.adEventParams.toJSON.adClicked;
             break;
         default:
             break;
     }
     self.adEventParams = nil;
-    if (AdEventsListener) {
+    if (AdEventsListener && eventParams) {
         AdEventsListener(eventParams);
     }
     if (event.type == kIMAAdEvent_ALL_ADS_COMPLETED) {
         //[self dismissViewControllerAnimated:YES completion:nil];
         [self.view removeFromSuperview];
         [self removeFromParentViewController];
+        if (AdEventsListener) {
+            AdEventsListener(nil);
+        }
     }
     eventParams = nil;
 }

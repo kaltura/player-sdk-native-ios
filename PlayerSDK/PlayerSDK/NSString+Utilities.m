@@ -120,7 +120,7 @@ static NSString *NativeActionKey = @"nativeAction";
     return @{AdLoadedKey: self};
 }
 
-- (NSDictionary *)adTapped {
+- (NSDictionary *)adClicked {
     return @{AdClickedKey: self};
 }
 

@@ -36,7 +36,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <IMAContentPlayhead>{
+@interface KPViewController() <KPIMAAdsPlayerDatasource>{
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
@@ -445,7 +445,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
               handler:(void(^)(NSString *))handler {
     KPLogTrace(@"Enter");
     self.kPlayerEvaluatedDict[expressionID] = handler;
-    [self.webView evaluate:expressionID evaluateID:expressionID];
+    [self.webView evaluate:expression evaluateID:expressionID];
     KPLogTrace(@"Exit");
 }
 
@@ -867,7 +867,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             __weak KPViewController *weakSelf = self;
             KPIMAPlayerViewController *imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
             [imaPlayer loadIMAAd:attributeVal eventsListener:^(NSDictionary *adEventParams) {
-                [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
+                if (adEventParams) {
+                    [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
+                } else {
+                    [imaPlayer destroy];
+                }
+                
             }];
             
         }
@@ -1109,11 +1114,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-#pragma mark IMAContentPlayhead
+#pragma mark KPIMAAdsPlayerDatasource
 - (NSTimeInterval)currentTime {
     return [self.player currentPlaybackTime];
 }
 
+- (CGFloat)adPlayerHeight {
+    return self.webView.videoHolderHeight;
+}
 @end
 
 

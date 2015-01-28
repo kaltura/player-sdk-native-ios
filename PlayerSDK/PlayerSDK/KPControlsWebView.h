@@ -28,9 +28,10 @@
 
 @property (nonatomic, weak) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 
+@property (nonatomic, assign, readonly) CGFloat videoHolderHeight;
+
 //- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 - (void)returnResult:(int)callbackId args:(id)firstObj, ...;
-
 
 - (void)addEventListener:(NSString *)event;
 
