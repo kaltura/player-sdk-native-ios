@@ -732,12 +732,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                 mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
             }
         }else{
-            if( [self isIpad] && [self isIOS8] ) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-            } else if ( UIDeviceOrientationPortrait == [[UIDevice currentDevice] orientation] || UIDeviceOrientationPortraitUpsideDown == [[UIDevice currentDevice] orientation] ) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-            } else if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
+            if ( UIDeviceOrientationPortrait == _deviceOrientation || UIDeviceOrientationPortraitUpsideDown == _deviceOrientation ) {
+                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.width, screenSize.height ) ;
+            }else if(UIDeviceOrientationIsLandscape(_deviceOrientation)){
+                mainFrame = CGRectMake( screenOrigin.x, screenOrigin.y, screenSize.height, screenSize.width ) ;
             }
       }
     }else{
