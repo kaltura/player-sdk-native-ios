@@ -142,6 +142,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     [self stringByEvaluatingJavaScriptFromString:[event triggerJSON:json]];
 }
 
+- (CGFloat)videoHolderHeight {
+    return [[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue];
+}
+
 - (void)updateLayout {
     NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
     [self stringByEvaluatingJavaScriptFromString:updateLayoutJS];

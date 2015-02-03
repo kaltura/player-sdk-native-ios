@@ -20,15 +20,26 @@ extern const int kIMAAutodetectBitrate;
 @optional
 
 /// Called when Safari is about to be opened.
-- (void)willOpenExternalBrowser;
+- (void)webOpenerWillOpenExternalBrowser:(NSObject *)webOpener;
 /// Called before in-app browser opens.
-- (void)willOpenInAppBrowser;
-/// Called when in-app browser finishes closing.
-- (void)didCloseInAppBrowser;
+- (void)webOpenerWillOpenInAppBrowser:(NSObject *)webOpener;
 /// Called when the in app browser is shown on the screen.
-- (void)didOpenInAppBrowser;
+- (void)webOpenerDidOpenInAppBrowser:(NSObject *)webOpener;
 /// Called when in-app browser is about to close.
+- (void)webOpenerWillCloseInAppBrowser:(NSObject *)webOpener;
+/// Called when in-app browser finishes closing.
+- (void)webOpenerDidCloseInAppBrowser:(NSObject *)webOpener;
+
+/// @deprecated Replaced by webOpenerWillOpenExternalBrowser:
+- (void)willOpenExternalBrowser;
+/// @deprecated Replaced by webOpenerWillOpenInAppBrowser:
+- (void)willOpenInAppBrowser;
+/// @deprecated Replaced by webOpenerDidOpenInAppBrowser:
+- (void)didOpenInAppBrowser;
+/// @deprecated Replaced by webOpenerWillCloseInAppBrowser:
 - (void)willCloseInAppBrowser;
+/// @deprecated Replaced by webOpenerDidCloseInAppBrowser:
+- (void)didCloseInAppBrowser;
 
 @end
 
