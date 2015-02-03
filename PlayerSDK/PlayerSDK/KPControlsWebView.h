@@ -11,7 +11,9 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+
 #import <UIKit/UIKit.h>
+
 
 @protocol PlayerControlsWebViewDelegate <NSObject>
 @required
@@ -21,13 +23,35 @@
 @interface KPControlsWebView : UIWebView <UIWebViewDelegate> {
   
   int alertCallbackId;
-   __unsafe_unretained id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 }
 
-@property (nonatomic, assign) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
 
-- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
+@property (nonatomic, weak) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
+
+@property (nonatomic, assign, readonly) CGFloat videoHolderHeight;
+
+//- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 - (void)returnResult:(int)callbackId args:(id)firstObj, ...;
 
+- (void)addEventListener:(NSString *)event;
+
+- (void)removeEventListener:(NSString *)event;
+
+- (void)evaluate:(NSString *)expression
+      evaluateID:(NSString *)evaluateID;
+
+- (void)sendNotification:(NSString *)notification
+                withName:(NSString *)notificationName;
+
+- (void)setKDPAttribute:(NSString *)pluginName
+           propertyName:(NSString *)propertyName
+                  value:(NSString *)value;
+
+- (void)triggerEvent:(NSString *)event
+           withValue:(NSString *)value;
+
+- (void)triggerEvent:(NSString *)event withJSON:(NSString *)json;
+
+- (void)updateLayout;
 @end
 

@@ -9,6 +9,8 @@
 #import "KalturaPlayer.h"
 #import "ChromecastDeviceController.h"
 #import "KPViewController.h"
+#import "KPViewControllerProtocols.h"
+
 
 @interface KPChromecast : NSObject <KalturaPlayer>
 

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #import "ChromecastDeviceController.h"
+#import "KPLog.h"
 //#import "SimpleImageFetcher.h"
 
 static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
@@ -96,12 +97,12 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 - (void)performScan:(BOOL)start {
 
   if (start) {
-    NSLog(@"Start Scan");
+    KPLogDebug(@"Start Scan");
     [self.deviceScanner addListener:self];
     [self.deviceFilter addDeviceFilterListener:self];
     [self.deviceScanner startScan];
   } else {
-    NSLog(@"Stop Scan");
+    KPLogDebug(@"Stop Scan");
     [self.deviceScanner stopScan];
     [self.deviceScanner removeListener:self];
     [self.deviceFilter removeDeviceFilterListener:self];
@@ -109,15 +110,15 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 }
 
 - (void)connectToDevice:(GCKDevice *)device {
-  NSLog(@"Device address: %@:%d", device.ipAddress, (unsigned int) device.servicePort);
-  self.selectedDevice = device;
+    KPLogInfo(@"Device address: %@:%d", device.ipAddress, (unsigned int) device.servicePort);
+    self.selectedDevice = device;
 
-  NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
-  NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
-  self.deviceManager =
+    NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+    NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
+    self.deviceManager =
       [[GCKDeviceManager alloc] initWithDevice:self.selectedDevice clientPackageName:appIdentifier];
-  self.deviceManager.delegate = self;
-  [self.deviceManager connect];
+    self.deviceManager.delegate = self;
+    [self.deviceManager connect];
 
   // Start animating the cast connect images.
 //  UIButton *chromecastButton = (UIButton *)self.chromecastBarButton.customView;
@@ -130,13 +131,13 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 }
 
 - (void)disconnectFromDevice {
-  NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
-  // New way of doing things: We're not going to stop the applicaton. We're just going
-  // to leave it.
-  [self.deviceManager leaveApplication];
-  // If you want to force application to stop, uncomment below
-  //[self.deviceManager stopApplication];
-  [self.deviceManager disconnect];
+    KPLogInfo(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
+    // New way of doing things: We're not going to stop the applicaton. We're just going
+    // to leave it.
+    [self.deviceManager leaveApplication];
+    // If you want to force application to stop, uncomment below
+    //[self.deviceManager stopApplication];
+    [self.deviceManager disconnect];
 }
 
 //- (void)updateToolbarForViewController:(UIViewController *)viewController {
@@ -185,7 +186,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 
 - (void)stopCastMedia {
   if (self.isConnected && self.mediaControlChannel && self.mediaControlChannel.mediaStatus) {
-    NSLog(@"Telling cast media control channel to stop");
+    KPLogInfo(@"Telling cast media control channel to stop");
     [self.mediaControlChannel stop];
   }
 }
@@ -265,7 +266,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 }
 
 - (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectWithError:(GCKError *)error {
-  NSLog(@"Received notification that device disconnected");
+  KPLogDebug(@"Received notification that device disconnected");
 
   if (error != nil) {
     [self showError:error];
@@ -310,7 +311,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 
 #pragma mark - GCKDeviceScannerListener
 - (void)deviceDidComeOnline:(GCKDevice *)device {
-  NSLog(@"device found!! %@", device.friendlyName);
+  KPLogInfo(@"device found!! %@", device.friendlyName);
 
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSString* lastDeviceID = [defaults objectForKey:@"lastDeviceID"];
@@ -328,7 +329,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 
 #pragma mark - GCKDeviceFilterListener
 - (void)deviceDidComeOnline:(GCKDevice *)device forDeviceFilter:(GCKDeviceFilter *)deviceFilter {
-  NSLog(@"filtered device found!! %@", device.friendlyName);
+  KPLogInfo(@"filtered device found!! %@", device.friendlyName);
 //  [self updateCastIconButtonStates];
   if ([self.delegate respondsToSelector:@selector(didDiscoverDeviceOnNetwork)]) {
     [self.delegate didDiscoverDeviceOnNetwork];
@@ -348,7 +349,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 
 - (void)mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel {
   [self updateStatsFromDevice];
-  NSLog(@"Media control channel status changed");
+  KPLogDebug(@"Media control channel status changed");
   _mediaControlChannel = mediaControlChannel;
   if ([self.delegate respondsToSelector:@selector(didReceiveMediaStateChange)]) {
     [self.delegate didReceiveMediaStateChange];
@@ -356,7 +357,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 }
 
 - (void)mediaControlChannelDidUpdateMetadata:(GCKMediaControlChannel *)mediaControlChannel {
-  NSLog(@"Media control channel metadata changed");
+  KPLogDebug(@"Media control channel metadata changed");
   _mediaControlChannel = mediaControlChannel;
   [self updateStatsFromDevice];
 
@@ -413,7 +414,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 #pragma mark - implementation
 
 - (void)showError:(NSError *)error {
-  NSLog(@"Received error: %@", error.description);
+  KPLogDebug(@"Received error: %@", error.description);
 //  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Cast Error", nil)
 //                                                  message:NSLocalizedString(@"An error occurred. Make sure your Chromecast is powered up and connected to the network.", nil)
 //                                                 delegate:nil
@@ -556,12 +557,12 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
     if (self.selectedDevice == nil) {
         if (buttonIndex < self.deviceScanner.devices.count) {
             self.selectedDevice = self.deviceScanner.devices[buttonIndex];
-            NSLog(@"Selecting device:%@", self.selectedDevice.friendlyName);
+            KPLogInfo(@"Selecting device:%@", self.selectedDevice.friendlyName);
             [self connectToDevice: [self selectedDevice]];
         }
     } else {
         if ( [[actionSheet buttonTitleAtIndex:buttonIndex] isEqualToString:@"Disconnect"] ) { //Disconnect button
-            NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
+            KPLogInfo(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
             // New way of doing things: We're not going to stop the applicaton. We're just going
             // to leave it.
             [self.deviceManager stopApplication];
