@@ -14,6 +14,7 @@ static NSString *NativeActionKey = @"nativeAction";
 #import "NSString+Utilities.h"
 #import "KPLog.h"
 #import "NSMutableDictionary+AdSupport.h"
+#import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param {
@@ -82,6 +83,25 @@ static NSString *NativeActionKey = @"nativeAction";
     return function;
 }
 
+- (NSString *)md5 {
+    const char *cStr = [self UTF8String];
+    unsigned char digest[16];
+    CC_MD5( cStr, (int)strlen(cStr), digest ); // This is the md5 call
+    
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return  output;
+}
+
+- (NSURL *)documentPath {
+    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
+                                                         inDomains:NSUserDomainMask] lastObject];
+    return [url URLByAppendingPathComponent:self];
+}
+
 - (NSString *)addJSListener {
     return [NSString stringWithFormat: @"NativeBridge.videoPlayer.addJsListener(\"%@\");", self];
 }
@@ -95,7 +115,7 @@ static NSString *NativeActionKey = @"nativeAction";
 }
 
 - (NSString *)sendNotificationWithBody:(NSString *)body {
-    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", self, body];
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", body, self];
 }
 
 - (NSString *)setKDPAttribute:(NSString *)attribute value:(NSString *)value {

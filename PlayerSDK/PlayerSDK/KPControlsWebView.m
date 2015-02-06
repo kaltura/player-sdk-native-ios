@@ -56,6 +56,7 @@
 
 
 
+
 // This selector is called when something is loaded in our webview
 // By something I don't mean anything but just "some" :
 //  - main html document
@@ -78,9 +79,11 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                                                          args:functionComponents.args];
         }
         return NO;
-    } else if( !requestString.isFrameURL ){
+    } else if( !requestString.isFrameURL ) {
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
+    } else {
+        NSLog(@"test");
     }
     
     return YES;

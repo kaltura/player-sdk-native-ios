@@ -34,6 +34,10 @@ typedef struct FunctionComponents {
 @property (nonatomic, assign, readonly) BOOL isToggleFullScreen;
 
 
+@property (nonatomic, copy, readonly) NSString *md5;
+@property (nonatomic, copy, readonly) NSURL *documentPath;
+
+
 
 #pragma mark
 #pragma mark JavaScriptEvents Double Click helpers

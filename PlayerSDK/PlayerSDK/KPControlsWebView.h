@@ -18,6 +18,7 @@
 @protocol PlayerControlsWebViewDelegate <NSObject>
 @required
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
+- (void)loadPage:(NSURLRequest *)request;
 @end
 
 @interface KPControlsWebView : UIWebView <UIWebViewDelegate> {
@@ -30,7 +31,7 @@
 
 @property (nonatomic, assign, readonly) CGFloat videoHolderHeight;
 
-//- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
+
 - (void)returnResult:(int)callbackId args:(id)firstObj, ...;
 
 - (void)addEventListener:(NSString *)event;
