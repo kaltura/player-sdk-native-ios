@@ -28,6 +28,7 @@
 #import "KPControlsWebView.h"
 #import "NSString+Utilities.h"
 #import "KPLog.h"
+#import "KDataBaseManager.h"
 
 
 @implementation KPControlsWebView
@@ -83,7 +84,14 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     } else {
-        NSLog(@"test");
+        [[KDataBaseManager shared] contentOfURL:requestString
+                                     completion:^(NSData *content, NSError *error) {
+                                         [self loadData:content
+                                               MIMEType:@"text/html"
+                                       textEncodingName:@"UTF-8"
+                                                baseURL:request.URL];
+                                     }];
+        return NO;
     }
     
     return YES;

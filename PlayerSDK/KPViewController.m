@@ -246,25 +246,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     /// Add the idfa to the iframeURL
     
-    //[ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
-    [NSURLConnection sendAsynchronousRequest:[ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ]
-                                       queue:[NSOperationQueue new]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-                               if (data) {
-                                   dispatch_async(dispatch_get_main_queue(), ^{
-                                       NSURL *baseURL = [NSURL URLWithString:iframeUrl];
-                                       dispatch_async(dispatch_get_main_queue(), ^{
-                                           [self.webView loadData:data MIMEType:@"text/html" textEncodingName:@"UTF-8" baseURL:baseURL];
-                                       });
-                                       
-                                       
-                                       [self registerReadyEvent:^{
-                                           [self changeMedia];
-                                       }];
-                                       
-                                   });
-                               }
-                           }];
+    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
     KPLogTrace(@"Exit");
 }
 

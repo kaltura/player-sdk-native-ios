@@ -35,7 +35,7 @@ typedef struct FunctionComponents {
 
 
 @property (nonatomic, copy, readonly) NSString *md5;
-@property (nonatomic, copy, readonly) NSURL *documentPath;
+@property (nonatomic, copy, readonly) NSString *documentPath;
 
 
 

@@ -96,10 +96,9 @@ static NSString *NativeActionKey = @"nativeAction";
     return  output;
 }
 
-- (NSURL *)documentPath {
-    NSURL *url = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory
-                                                         inDomains:NSUserDomainMask] lastObject];
-    return [url URLByAppendingPathComponent:self];
+- (NSString *)documentPath {
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    return ([paths count] > 0) ? [paths.firstObject stringByAppendingPathComponent:self] : nil;
 }
 
 - (NSString *)addJSListener {
