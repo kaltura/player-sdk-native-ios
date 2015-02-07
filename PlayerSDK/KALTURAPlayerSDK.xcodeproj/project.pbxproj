@@ -29,9 +29,6 @@
 		B34454291A46BE2700AB20DE /* KPWebKitBrowserViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B32A5CEC1A2723730051DC7F /* KPWebKitBrowserViewController.h */; };
 		B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B35B85731A43258200DCDBF7 /* KPLogManager.m */; };
 		B35B85781A43258200DCDBF7 /* KPLog.m in Sources */ = {isa = PBXBuildFile; fileRef = B35B85741A43258200DCDBF7 /* KPLog.m */; };
-		B37288811A84ACAE0076DD33 /* CacheModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B372887F1A84ACAE0076DD33 /* CacheModel.xcdatamodeld */; };
-		B372888D1A84D7880076DD33 /* KDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B372888C1A84D7880076DD33 /* KDataBaseManager.m */; };
-		B37288901A84FD140076DD33 /* KCachedPages.m in Sources */ = {isa = PBXBuildFile; fileRef = B372888A1A84AEEE0076DD33 /* KCachedPages.m */; };
 		B37288911A84FD790076DD33 /* IMAAd.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B322E0E31A77BE77005509B6 /* IMAAd.h */; };
 		B37288921A84FD790076DD33 /* IMAAdDisplayContainer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B322E0E41A77BE77005509B6 /* IMAAdDisplayContainer.h */; };
 		B37288931A84FD790076DD33 /* IMAAdError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B322E0E51A77BE77005509B6 /* IMAAdError.h */; };
@@ -167,11 +164,6 @@
 		B35B85741A43258200DCDBF7 /* KPLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPLog.m; sourceTree = "<group>"; };
 		B35B85751A43258200DCDBF7 /* KPLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLog.h; sourceTree = "<group>"; };
 		B35B85761A43258200DCDBF7 /* KPLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLogManager.h; sourceTree = "<group>"; };
-		B37288801A84ACAE0076DD33 /* CacheModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CacheModel.xcdatamodel; sourceTree = "<group>"; };
-		B37288891A84AEEE0076DD33 /* KCachedPages.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KCachedPages.h; sourceTree = "<group>"; };
-		B372888A1A84AEEE0076DD33 /* KCachedPages.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KCachedPages.m; sourceTree = "<group>"; };
-		B372888B1A84D7880076DD33 /* KDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KDataBaseManager.h; sourceTree = "<group>"; };
-		B372888C1A84D7880076DD33 /* KDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KDataBaseManager.m; sourceTree = "<group>"; };
 		B37288A21A85087E0076DD33 /* KArchiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KArchiver.h; sourceTree = "<group>"; };
 		B37288A31A85087E0076DD33 /* KArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KArchiver.m; sourceTree = "<group>"; };
 		B380C2801A1B7E3800BF172F /* GooglePlusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GooglePlusStrategy.h; sourceTree = "<group>"; };
@@ -301,11 +293,6 @@
 		B372887E1A84AC8C0076DD33 /* DataBase */ = {
 			isa = PBXGroup;
 			children = (
-				B37288891A84AEEE0076DD33 /* KCachedPages.h */,
-				B372888A1A84AEEE0076DD33 /* KCachedPages.m */,
-				B372887F1A84ACAE0076DD33 /* CacheModel.xcdatamodeld */,
-				B372888B1A84D7880076DD33 /* KDataBaseManager.h */,
-				B372888C1A84D7880076DD33 /* KDataBaseManager.m */,
 				B37288A21A85087E0076DD33 /* KArchiver.h */,
 				B37288A31A85087E0076DD33 /* KArchiver.m */,
 			);
@@ -598,7 +585,6 @@
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
 				B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */,
 				B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */,
-				B37288811A84ACAE0076DD33 /* CacheModel.xcdatamodeld in Sources */,
 				B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */,
 				B3C27BF91A2DFE12003108CB /* NSString+Utilities.m in Sources */,
 				B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */,
@@ -613,11 +599,9 @@
 				B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */,
 				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
 				B3C27BF21A2DEDCB003108CB /* KPPlayerDatasourceHandler.m in Sources */,
-				B372888D1A84D7880076DD33 /* KDataBaseManager.m in Sources */,
 				B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
 				B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */,
-				B37288901A84FD140076DD33 /* KCachedPages.m in Sources */,
 				B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */,
 				B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */,
 				B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */,
@@ -893,19 +877,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		B372887F1A84ACAE0076DD33 /* CacheModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				B37288801A84ACAE0076DD33 /* CacheModel.xcdatamodel */,
-			);
-			currentVersion = B37288801A84ACAE0076DD33 /* CacheModel.xcdatamodel */;
-			path = CacheModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = BFFFA71F182F9E31005B3B24 /* Project object */;
 }

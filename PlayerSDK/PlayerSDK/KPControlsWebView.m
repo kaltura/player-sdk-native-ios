@@ -28,8 +28,11 @@
 #import "KPControlsWebView.h"
 #import "NSString+Utilities.h"
 #import "KPLog.h"
-#import "KDataBaseManager.h"
+#import "KArchiver.h"
 
+@interface KPControlsWebView ()
+@property (nonatomic, copy) NSMutableArray *urls;
+@end
 
 @implementation KPControlsWebView
 
@@ -55,8 +58,24 @@
     return self;
 }
 
+- (NSMutableArray *)urls {
+    if (!_urls) {
+        _urls = [NSMutableArray new];
+    }
+    return _urls;
+}
 
-
+- (void)loadRequest:(NSURLRequest *)request {
+    [[KArchiver shared] contentOfURL:request.URL.absoluteString
+                          completion:^(NSData *content, NSError *error) {
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [self loadData:content
+                                        MIMEType:@"text/html"
+                                textEncodingName:@"UTF-8"
+                                         baseURL:request.URL];
+                              });
+                          }];
+}
 
 // This selector is called when something is loaded in our webview
 // By something I don't mean anything but just "some" :
@@ -83,17 +102,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     } else if( !requestString.isFrameURL ) {
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
-    } else {
-        [[KDataBaseManager shared] contentOfURL:requestString
-                                     completion:^(NSData *content, NSError *error) {
-                                         [self loadData:content
-                                               MIMEType:@"text/html"
-                                       textEncodingName:@"UTF-8"
-                                                baseURL:request.URL];
-                                     }];
-        return NO;
     }
-    
     return YES;
 }
 

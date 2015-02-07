@@ -13,4 +13,6 @@
 
 - (void)contentOfURL:(NSString *)url
           completion:(void(^)(NSData *content, NSError *error))completion;
+
+- (BOOL)isAlreadyLoaded:(NSString *)link;
 @end

@@ -15,42 +15,26 @@ static NSString *ContentKey = @"content";
 static NSString *BaseURLKey = @"baseUrl";
 static NSString *TimeStampKey = @"timeStamp";
 
-@interface NSMutableDictionary (Archiver)
-@property (nonatomic, copy) NSData *content;
-@property (nonatomic, copy) NSURL *baseURL;
-@property (nonatomic, copy) NSDate *timeStamp;
+@interface NSDictionary (Archiver)
+@property (nonatomic, copy, readonly) NSData *content;
+@property (nonatomic, copy, readonly) NSURL *baseURL;
+@property (nonatomic, copy, readonly) NSDate *timeStamp;
 @end
 
-@implementation NSMutableDictionary (Archiver)
+@implementation NSDictionary (Archiver)
 - (NSData *)content {
     return self[ContentKey];
-}
-
-- (void)setContent:(NSData *)content {
-    if (content && content.length) {
-        self[ContentKey] = content;
-    }
 }
 
 - (NSURL *)baseURL {
     return self[BaseURLKey];
 }
 
-- (void)setBaseURL:(NSURL *)baseURL {
-    if (baseURL && baseURL.absoluteString.length) {
-        self[BaseURLKey] = baseURL;
-    }
-}
 
 - (NSDate *)timeStamp {
     return self[TimeStampKey];
 }
 
-- (void)setTimeStamp:(NSDate *)timeStamp {
-    if (timeStamp) {
-        self[TimeStampKey] = timeStamp;
-    }
-}
 
 
 @end
@@ -60,6 +44,16 @@ static NSString *TimeStampKey = @"timeStamp";
 @end
 
 @implementation KArchiver
+
++ (KArchiver *)shared {
+    static id shared = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        shared = [self.class new];
+    });
+    return shared;
+}
+
 - (NSMutableDictionary *)cachedPages {
     if (!_cachedPages) {
         if (![[NSFileManager defaultManager] fileExistsAtPath:StorageName.documentPath]) {
@@ -74,7 +68,7 @@ static NSString *TimeStampKey = @"timeStamp";
 
 - (void)contentOfURL:(NSString *)url
           completion:(void (^)(NSData *, NSError *))completion {
-    if ([self.cachedPages[url.md5] content]) {
+    if (self.cachedPages[url.md5]) {
         completion([self.cachedPages[url.md5] content], nil);
     } else {
         NSURL *pageUrl = [NSURL URLWithString:url];
@@ -86,15 +80,24 @@ static NSString *TimeStampKey = @"timeStamp";
                                    if (connectionError) {
                                        completion(nil, connectionError);
                                    } else if (data) {
+                                       [self storeContent:data forURL:url];
                                        completion(data, nil);
-                                       
                                    }
                                }];
     }
 }
 
 - (void)storeContent:(NSData *)content forURL:(NSString *)url {
-    self
+    if (content && content.length && url && url.length) {
+        self.cachedPages[url.md5] = @{ContentKey: content,
+                                      BaseURLKey: url,
+                                      TimeStampKey: [NSDate date]};
+        [self synchronize];
+    }
+}
+
+- (BOOL)isAlreadyLoaded:(NSString *)link {
+    return self.cachedPages[link.md5] != nil;
 }
 
 - (void)synchronize {
