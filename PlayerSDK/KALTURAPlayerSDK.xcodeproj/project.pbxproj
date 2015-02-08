@@ -186,7 +186,6 @@
 		B3C27BF31A2DEDFF003108CB /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPViewControllerProtocols.h; sourceTree = "<group>"; };
 		B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
 		B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
-		B3D7588E1A1CBEDF00CA5A96 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B3E58C421A76714700603B10 /* KPIMAPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPIMAPlayerViewController.h; sourceTree = "<group>"; };
 		B3E58C431A76714700603B10 /* KPIMAPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPIMAPlayerViewController.m; sourceTree = "<group>"; };
 		B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceParamsHandler.h; sourceTree = "<group>"; };
@@ -331,22 +330,6 @@
 			name = ShareManager;
 			sourceTree = "<group>";
 		};
-		B3D7588C1A1CBEDF00CA5A96 /* Test */ = {
-			isa = PBXGroup;
-			children = (
-				B3D7588D1A1CBEDF00CA5A96 /* Supporting Files */,
-			);
-			path = Test;
-			sourceTree = "<group>";
-		};
-		B3D7588D1A1CBEDF00CA5A96 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				B3D7588E1A1CBEDF00CA5A96 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		BFA6F0D918BB796500F7C78F /* WideVine */ = {
 			isa = PBXGroup;
 			children = (
@@ -395,9 +378,7 @@
 			children = (
 				BFFFA775182FA012005B3B24 /* UIKit.framework */,
 				BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */,
-				B3D7588C1A1CBEDF00CA5A96 /* Test */,
 				B372892F1A8787D00076DD33 /* KPlayerResources */,
-				BFFFA729182F9E31005B3B24 /* Frameworks */,
 				BFFFA728182F9E31005B3B24 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -409,13 +390,6 @@
 				B372892E1A8787D00076DD33 /* KALTURAPlayerSDK.bundle */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		BFFFA729182F9E31005B3B24 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
@@ -725,7 +699,7 @@
 					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
 					"\"$(SRCROOT)/libGoogleIMA3.a\"",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
