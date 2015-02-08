@@ -145,10 +145,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                object: nil];
     [self didLoad];
     [KPViewController sharedChromecastDeviceController];
-    __weak KPViewController *weakSelf = self;
-    [self registerReadyEvent:^{
-        weakSelf.webView.entryId = @"1_gtjr7duj";
-    }];
+//    __weak KPViewController *weakSelf = self;
+//    [self registerReadyEvent:^{
+//        weakSelf.webView.entryId = @"1_gtjr7duj";
+//    }];
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
