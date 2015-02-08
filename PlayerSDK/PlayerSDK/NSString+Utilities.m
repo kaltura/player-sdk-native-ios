@@ -84,7 +84,7 @@ static NSString *NativeActionKey = @"nativeAction";
 }
 
 - (NSString *)md5 {
-    const char *cStr = [self UTF8String];
+    const char *cStr = [self.sorted.absoluteString UTF8String];
     unsigned char digest[16];
     CC_MD5( cStr, (int)strlen(cStr), digest ); // This is the md5 call
     
@@ -99,6 +99,22 @@ static NSString *NativeActionKey = @"nativeAction";
 - (NSString *)documentPath {
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return ([paths count] > 0) ? [paths.firstObject stringByAppendingPathComponent:self] : nil;
+}
+
+- (NSURL *)sorted {
+    NSURL *url = [NSURL URLWithString:self];
+    NSString *query = [url.query stringByRemovingPercentEncoding];
+    NSMutableArray *params = [[NSMutableArray alloc] initWithArray:[query componentsSeparatedByString:@"&"]];
+    if (params.count) {
+        [params removeObjectAtIndex:0];
+        params = [params sortedArrayUsingSelector:@selector(compare:)].mutableCopy;
+    }
+    NSString *sortedLink = [NSString stringWithFormat:@"%@://%@/%@?", url.scheme, url.host, url.path];
+    for (NSString *param in params) {
+        sortedLink = [sortedLink stringByAppendingFormat:@"%@&", param];
+    }
+    sortedLink = [[sortedLink substringToIndex:sortedLink.length - 1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [NSURL URLWithString:sortedLink];
 }
 
 - (NSString *)addJSListener {

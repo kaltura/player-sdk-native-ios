@@ -71,8 +71,7 @@ static NSString *TimeStampKey = @"timeStamp";
     if (self.cachedPages[url.md5]) {
         completion([self.cachedPages[url.md5] content], nil);
     } else {
-        NSURL *pageUrl = [NSURL URLWithString:url];
-        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:pageUrl]
+        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]]
                                            queue:[NSOperationQueue new]
                                completionHandler:^(NSURLResponse *response,
                                                    NSData *data,
@@ -86,6 +85,7 @@ static NSString *TimeStampKey = @"timeStamp";
                                }];
     }
 }
+
 
 - (void)storeContent:(NSData *)content forURL:(NSString *)url {
     if (content && content.length && url && url.length) {

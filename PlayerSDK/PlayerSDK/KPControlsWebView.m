@@ -30,9 +30,6 @@
 #import "KPLog.h"
 #import "KArchiver.h"
 
-@interface KPControlsWebView ()
-@property (nonatomic, copy) NSMutableArray *urls;
-@end
 
 @implementation KPControlsWebView
 
@@ -58,13 +55,6 @@
     return self;
 }
 
-- (NSMutableArray *)urls {
-    if (!_urls) {
-        _urls = [NSMutableArray new];
-    }
-    return _urls;
-}
-
 - (void)loadRequest:(NSURLRequest *)request {
     [[KArchiver shared] contentOfURL:request.URL.absoluteString
                           completion:^(NSData *content, NSError *error) {
@@ -75,6 +65,14 @@
                                          baseURL:request.URL];
                               });
                           }];
+}
+
+- (void)setEntryId:(NSString *)entryId {
+    if (![_entryId isEqualToString:entryId]) {
+        _entryId = entryId;
+        NSString *notificationName = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
+        [self sendNotification:@"changeMedia" withName:notificationName];
+    }
 }
 
 // This selector is called when something is loaded in our webview
@@ -102,6 +100,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     } else if( !requestString.isFrameURL ) {
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
+    } else {
+        NSLog(@"HTTP:: %@", requestString);
     }
     return YES;
 }
