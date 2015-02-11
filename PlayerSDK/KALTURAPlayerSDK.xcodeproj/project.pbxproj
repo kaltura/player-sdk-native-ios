@@ -58,6 +58,7 @@
 		B3C27BF61A2DF03E003108CB /* KPPlayerDatasourceHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF01A2DEDCB003108CB /* KPPlayerDatasourceHandler.h */; };
 		B3C27BF91A2DFE12003108CB /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */; };
 		B3C27BFD1A2F2936003108CB /* NSString+Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */; };
+		B3CC33C21A8BA60D00CC66CD /* KalturaPlayerSDK.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B3CC33C11A8BA60D00CC66CD /* KalturaPlayerSDK.podspec */; };
 		B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E58C431A76714700603B10 /* KPIMAPlayerViewController.m */; };
 		B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
 		BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = BF66631E18C48C7E001F5E51 /* WVSettings.m */; };
@@ -186,6 +187,7 @@
 		B3C27BF31A2DEDFF003108CB /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPViewControllerProtocols.h; sourceTree = "<group>"; };
 		B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
 		B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
+		B3CC33C11A8BA60D00CC66CD /* KalturaPlayerSDK.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = KalturaPlayerSDK.podspec; sourceTree = SOURCE_ROOT; };
 		B3E58C421A76714700603B10 /* KPIMAPlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPIMAPlayerViewController.h; sourceTree = "<group>"; };
 		B3E58C431A76714700603B10 /* KPIMAPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPIMAPlayerViewController.m; sourceTree = "<group>"; };
 		B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceParamsHandler.h; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				B3CC33C11A8BA60D00CC66CD /* KalturaPlayerSDK.podspec */,
 				B372887E1A84AC8C0076DD33 /* DataBase */,
 				B3410D4A1A6D45B200275F00 /* Categories */,
 				B35B85761A43258200DCDBF7 /* KPLogManager.h */,
@@ -534,6 +537,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3CC33C21A8BA60D00CC66CD /* KalturaPlayerSDK.podspec in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
