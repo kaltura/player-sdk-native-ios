@@ -8,134 +8,134 @@
 
 Pod::Spec.new do |s|
 
-  # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  These will help people to find your library, and whilst it
-  #  can feel like a chore to fill in it's definitely to your advantage. The
-  #  summary should be tweet-length, and the description more in depth.
-  #
+# ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  These will help people to find your library, and whilst it
+#  can feel like a chore to fill in it's definitely to your advantage. The
+#  summary should be tweet-length, and the description more in depth.
+#
 
-  s.name         = "KalturaPlayerSDK"
-  s.version      = "0.8"
-  s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
+s.name         = "KalturaPlayerSDK"
+s.version      = "1.0"
+s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
 
-  #s.description  = <<-DESC
-  #                 The Kaltura player-sdk-native component enables embedding the kaltura player into native environments.
-  #                 DESC
+#s.description  = <<-DESC
+#                 The Kaltura player-sdk-native component enables embedding the kaltura player into native environments.
+#                 DESC
 
-  s.homepage     = "https://github.com/kaltura/player-sdk-native-ios"
-  # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
-
-
-  # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Licensing your code is important. See http://choosealicense.com for more info.
-  #  CocoaPods will detect a license file if there is a named LICENSE*
-  #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
-  #
-
-  s.license      = { :type => 'COMMERCIAL', :text => 'COMMERCIAL' }
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+s.homepage     = "https://github.com/kaltura/player-sdk-native-ios"
+# s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
-  # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Specify the authors of the library, with email addresses. Email addresses
-  #  of the authors are extracted from the SCM log. E.g. $ git log. CocoaPods also
-  #  accepts just a name if you'd rather not provide an email address.
-  #
-  #  Specify a social_media_url where others can refer to, for example a twitter
-  #  profile URL.
-  #
+# ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  Licensing your code is important. See http://choosealicense.com for more info.
+#  CocoaPods will detect a license file if there is a named LICENSE*
+#  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
+#
 
-  s.author             = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
-  # Or just: s.author    = "Eliza Sapir"
-  # s.authors            = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
-  # s.social_media_url   = "http://twitter.com/Eliza Sapir"
-
-  # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  If this Pod runs only on iOS or OS X, then specify the platform and
-  #  the deployment target. You can optionally include the target after the platform.
-  #
-
-  # s.platform     = :ios
-   s.platform     = :ios, "6.0"
-
-  #  When using multiple platforms
-  # s.ios.deployment_target = "5.0"
-  # s.osx.deployment_target = "10.7"
+s.license      = { :type => 'COMMERCIAL', :text => 'COMMERCIAL' }
+# s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
-  # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Specify the location from where the source should be retrieved.
-  #  Supports git, hg, bzr, svn and HTTP.
-  #
+# ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  Specify the authors of the library, with email addresses. Email addresses
+#  of the authors are extracted from the SCM log. E.g. $ git log. CocoaPods also
+#  accepts just a name if you'd rather not provide an email address.
+#
+#  Specify a social_media_url where others can refer to, for example a twitter
+#  profile URL.
+#
 
-  s.source       = { :git => "https://github.com/kaltura/player-sdk-native-ios.git", :tag => "v0.8" }
-  s.library      = 'stdc++', 'z'
-  s.framework    = 'MediaPlayer', 'GoogleCast', 'SenTestingKit'
-  s.dependency "google-cast-sdk", "2.3.0.1" 
-  s.dependency "GoogleAds-IMA-iOS-SDK", "3.0.beta.4"
-  s.xcconfig = {
-      "FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release",
-      "OTHER_LDFLAGS" => "$(inherited) -ObjC"
-  }
-  s.requires_arc = true
+s.author             = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
+# Or just: s.author    = "Eliza Sapir"
+# s.authors            = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
+# s.social_media_url   = "http://twitter.com/Eliza Sapir"
 
+# ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  If this Pod runs only on iOS or OS X, then specify the platform and
+#  the deployment target. You can optionally include the target after the platform.
+#
 
-  # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  CocoaPods is smart about how it includes source code. For source files
-  #  giving a folder will include any h, m, mm, c & cpp files. For header
-  #  files it will include any header in the folder.
-  #  Not including the public_header_files will make all headers public.
-  #
+# s.platform     = :ios
+s.platform     = :ios, "6.0"
 
-  s.source_files  = "PlayerSDK/PlayerSDK/**/*.{h,m}", "PlayerSDK/**/*.{h,m}"
-  s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
-  #s.exclude_files = "Classes/Exclude"
-
-  # s.public_header_files = "Classes/**/*.h"
+#  When using multiple platforms
+# s.ios.deployment_target = "5.0"
+# s.osx.deployment_target = "10.7"
 
 
-  # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  A list of resources included with the Pod. These are copied into the
-  #  target bundle with a build phase script. Anything else will be cleaned.
-  #  You can preserve files from being cleaned, please don't preserve
-  #  non-essential files like tests, examples and documentation.
-  #
+# ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  Specify the location from where the source should be retrieved.
+#  Supports git, hg, bzr, svn and HTTP.
+#
 
-  # s.resource  = "icon.png"
-  # s.resources = "Resources/*.png"
-
-  # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
-
-
-  # ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Link your library with frameworks, or libraries. Libraries do not include
-  #  the lib prefix of their name.
-  #
-
-  # s.framework  = "SomeFramework"
-  # s.frameworks = "SomeFramework", "AnotherFramework"
-
-  # s.library   = "iconv"
-  # s.libraries = "iconv", "xml2"
+s.source       = { :git => "https://github.com/kaltura/player-sdk-native-ios/releases", :tag => "v1.0" }
+s.library      = 'stdc++', 'z', 'System', 'stdc++.6', 'xml2.2', 'c++', 'stdc++.6.0.9', 'xml2'
+s.framework    = 'MediaPlayer', 'GoogleCast', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit'
+s.dependency "google-cast-sdk", "2.5.2"
+s.dependency "GoogleAds-IMA-iOS-SDK", "3.0.beta.11"
+s.xcconfig = {
+"FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release",
+"OTHER_LDFLAGS" => "$(inherited) -ObjC"
+}
+s.requires_arc = true
 
 
-  # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  If your library depends on compiler flags you can set them in the xcconfig hash
-  #  where they will only apply to your library. If you depend on other Podspecs
-  #  you can include multiple dependencies to ensure it works.
+# ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  CocoaPods is smart about how it includes source code. For source files
+#  giving a folder will include any h, m, mm, c & cpp files. For header
+#  files it will include any header in the folder.
+#  Not including the public_header_files will make all headers public.
+#
 
-  # s.requires_arc = true
+s.source_files  = "PlayerSDK/PlayerSDK/**/*.{h,m}", "PlayerSDK/**/*.{h,m}"
+s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
+#s.exclude_files = "Classes/Exclude"
 
-  # s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
-  # s.dependency "JSONKit", "~> 1.4"
+# s.public_header_files = "Classes/**/*.h"
+
+
+# ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  A list of resources included with the Pod. These are copied into the
+#  target bundle with a build phase script. Anything else will be cleaned.
+#  You can preserve files from being cleaned, please don't preserve
+#  non-essential files like tests, examples and documentation.
+#
+
+# s.resource  = "icon.png"
+# s.resources = "Resources/*.png"
+
+# s.preserve_paths = "FilesToSave", "MoreFilesToSave"
+
+
+# ――― Project Linking ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  Link your library with frameworks, or libraries. Libraries do not include
+#  the lib prefix of their name.
+#
+
+# s.framework  = "SomeFramework"
+# s.frameworks = "SomeFramework", "AnotherFramework"
+
+# s.library   = "iconv"
+# s.libraries = "iconv", "xml2"
+
+
+# ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
+#
+#  If your library depends on compiler flags you can set them in the xcconfig hash
+#  where they will only apply to your library. If you depend on other Podspecs
+#  you can include multiple dependencies to ensure it works.
+
+# s.requires_arc = true
+
+# s.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
+# s.dependency "JSONKit", "~> 1.4"
 
 end
