@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
 #  summary should be tweet-length, and the description more in depth.
 #
 
-s.name         = "KalturaPlayerSDK"
+s.name         = "player-sdk-native-ios"
 s.version      = "1.0"
 s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
 
@@ -73,14 +73,14 @@ s.platform     = :ios, "6.0"
 #  Supports git, hg, bzr, svn and HTTP.
 #
 
-s.source       = { :git => "https://github.com/kaltura/player-sdk-native-ios.git", :tag => "v1.0" }
+s.source       = { :git => 'https://github.com/kaltura/player-sdk-native-ios.git', :tag => 'v1.0' }
 s.library      = 'stdc++', 'z', 'System', 'stdc++.6', 'xml2.2', 'c++', 'stdc++.6.0.9', 'xml2'
 s.framework    = 'MediaPlayer', 'GoogleCast', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit'
 s.dependency "google-cast-sdk", "2.5.2"
 s.dependency "GoogleAds-IMA-iOS-SDK", "3.0.beta.11"
 s.xcconfig = {
-"FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release",
-"OTHER_LDFLAGS" => "$(inherited) -ObjC"
+"FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/GoogleCastFramework-2.3.0-Release",
+"OTHER_LDFLAGS" => "$(inherited) -ObjC -all_load"
 }
 s.requires_arc = true
 
@@ -93,7 +93,7 @@ s.requires_arc = true
 #  Not including the public_header_files will make all headers public.
 #
 
-s.source_files  = "PlayerSDK/PlayerSDK/**/*.{h,m}", "PlayerSDK/**/*.{h,m}"
+s.source_files  = "PlayerSDK/**/*.{h,m}", "PlayerSDK/**/*.{h,m}"
 s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
 #s.exclude_files = "Classes/Exclude"
 
