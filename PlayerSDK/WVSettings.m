@@ -15,9 +15,9 @@
 
 static NSString *kPortalKey = @"kaltura";
 
--(WViOsApiStatus*)initializeWD: (NSString*) key {
+-(WViOsApiStatus)initializeWD: (NSString*) key {
     [self terminateWV];
-    WViOsApiStatus *wvInitStatus = WV_Initialize( WVCallback, [self initializeWDDict: key] );
+    WViOsApiStatus wvInitStatus = WV_Initialize( WVCallback, [self initializeWDDict: key] );
     
     return wvInitStatus;
     
@@ -74,7 +74,7 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
 
 - (void)playMovieFromUrlLater {
     KPLogTrace(@"Enter");
-    NSMutableString responseUrl = [NSMutableString string];
+    NSMutableString *responseUrl = [NSMutableString string];
     
     NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
     playerSource = [arr objectAtIndex: 0];
