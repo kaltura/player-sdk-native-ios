@@ -42,7 +42,7 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
 }
 
 - (void) terminateWV {
-    WViOsApiStatus *wvTerminateStatus = WV_Terminate();
+    WViOsApiStatus wvTerminateStatus = WV_Terminate();
     
     if (wvTerminateStatus == WViOsApiStatus_OK) {
         KPLogDebug(@"widevine was terminated");
@@ -50,7 +50,7 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
 }
 
 - (void) stopWV {
-    WViOsApiStatus* wvStopStatus = WV_Stop();
+    WViOsApiStatus wvStopStatus = WV_Stop();
     
     if (wvStopStatus == WViOsApiStatus_OK ) {
         KPLogDebug(@"widevine was stopped");
@@ -74,7 +74,7 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
 
 - (void)playMovieFromUrlLater {
     KPLogTrace(@"Enter");
-    NSMutableString *responseUrl = [NSMutableString string];
+    NSMutableString responseUrl = [NSMutableString string];
     
     NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
     playerSource = [arr objectAtIndex: 0];
