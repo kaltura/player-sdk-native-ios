@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     
     
-    BOOL *showChromecastBtn;
+    BOOL showChromecastBtn;
     
     NSDictionary *nativeActionParams;
     
