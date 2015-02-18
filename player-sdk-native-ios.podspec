@@ -48,7 +48,7 @@ s.license      = { :type => 'COMMERCIAL', :text => 'COMMERCIAL' }
 #  profile URL.
 #
 
-s.author             = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
+s.author             = { "Nissim Pardo" => "nissim.pardo@kaltura.com" }
 # Or just: s.author    = "Eliza Sapir"
 # s.authors            = { "Eliza Sapir" => "eliza.sapir@kaltura.com" }
 # s.social_media_url   = "http://twitter.com/Eliza Sapir"
@@ -75,13 +75,13 @@ s.platform     = :ios, "6.0"
 
 s.source       = { :git => 'https://github.com/kaltura/player-sdk-native-ios.git', :tag => 'v1.0' }
 s.library      = 'stdc++', 'z', 'System', 'stdc++.6', 'xml2.2', 'c++', 'stdc++.6.0.9', 'xml2'
-s.framework    = 'MediaPlayer', 'GoogleCast', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit'
-s.dependency "google-cast-sdk", "2.5.2"
+s.framework    = 'MediaPlayer', 'GoogleCast', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit', 'XCTest'
+
+s.xcconfig = {'FRAMEWORK_SEARCH_PATHS' => '$(PODS_ROOT)/google-cast-sdk/GoogleCastFramework-2.3.0-Release',
+"OTHER_LDFLAGS" => "$(inherited) -ObjC -all_load"}
+
+s.dependency "google-cast-sdk", "2.3.0"
 s.dependency "GoogleAds-IMA-iOS-SDK", "3.0.beta.11"
-s.xcconfig = {
-"FRAMEWORK_SEARCH_PATHS" => "$(PODS_ROOT)/GoogleCastFramework-2.3.0-Release",
-"OTHER_LDFLAGS" => "$(inherited) -ObjC -all_load"
-}
 s.requires_arc = true
 
 
@@ -93,11 +93,11 @@ s.requires_arc = true
 #  Not including the public_header_files will make all headers public.
 #
 
-s.source_files  = "PlayerSDK/**/*.{h,m}", "PlayerSDK/**/*.{h,m}"
+s.source_files  = "PlayerSDK/**/*.{h,m}", "PlayerSDK/PlayerSDK/**/*.{h,m}"
 s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
 #s.exclude_files = "Classes/Exclude"
 
-# s.public_header_files = "Classes/**/*.h"
+#s.public_header_files = "PlayerSDK/**/*.h"
 
 
 # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
