@@ -28,12 +28,18 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
                  didFinishWithResult:(MessageComposeResult)result {
-    if (result == MessageComposeResultSent) {
-        _completion(KPShareResultsSuccess, nil);
-    } else if (result == MessageComposeResultCancelled) {
-        _completion(KPShareResultsCancel, nil);
-    } else {
-        _completion(KPShareResultsFailed, nil);
-    }
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if (result == MessageComposeResultSent) {
+            _completion(KPShareResultsSuccess, nil);
+        } else if (result == MessageComposeResultCancelled) {
+            _completion(KPShareResultsCancel, nil);
+        } else {
+            _completion(KPShareResultsFailed, nil);
+        }
+    }];
+}
+
+- (void)dealloc {
+    
 }
 @end

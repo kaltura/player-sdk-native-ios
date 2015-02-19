@@ -52,6 +52,7 @@
 		B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */; };
 		B39BEC8F1A0B72760085BA26 /* MessageStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */; };
 		B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */; };
+		B3A701C71A962296007D48DA /* LinkedInStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A701C61A962296007D48DA /* LinkedInStrategy.m */; };
 		B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BEE1A2DE0BB003108CB /* KPPlayerConfig.m */; };
 		B3C27BF21A2DEDCB003108CB /* KPPlayerDatasourceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BF11A2DEDCB003108CB /* KPPlayerDatasourceHandler.m */; };
 		B3C27BF41A2DF024003108CB /* KPViewControllerProtocols.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF31A2DEDFF003108CB /* KPViewControllerProtocols.h */; };
@@ -181,6 +182,8 @@
 		B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageStrategy.m; sourceTree = "<group>"; };
 		B39BEC981A0BCB280085BA26 /* KPBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPBrowserViewController.h; sourceTree = "<group>"; };
 		B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPBrowserViewController.m; sourceTree = "<group>"; };
+		B3A701C51A962296007D48DA /* LinkedInStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LinkedInStrategy.h; sourceTree = "<group>"; };
+		B3A701C61A962296007D48DA /* LinkedInStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LinkedInStrategy.m; sourceTree = "<group>"; };
 		B3C27BED1A2DE0BB003108CB /* KPPlayerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPPlayerConfig.h; sourceTree = "<group>"; };
 		B3C27BEE1A2DE0BB003108CB /* KPPlayerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPPlayerConfig.m; sourceTree = "<group>"; };
 		B3C27BF01A2DEDCB003108CB /* KPPlayerDatasourceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPPlayerDatasourceHandler.h; sourceTree = "<group>"; };
@@ -244,6 +247,8 @@
 				B39BEC8B1A0B6EC40085BA26 /* MailStrategy.m */,
 				B39BEC8D1A0B72760085BA26 /* MessageStrategy.h */,
 				B39BEC8E1A0B72760085BA26 /* MessageStrategy.m */,
+				B3A701C51A962296007D48DA /* LinkedInStrategy.h */,
+				B3A701C61A962296007D48DA /* LinkedInStrategy.m */,
 			);
 			name = ShareStrategies;
 			sourceTree = "<group>";
@@ -576,6 +581,7 @@
 				B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
 				B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */,
+				B3A701C71A962296007D48DA /* LinkedInStrategy.m in Sources */,
 				B380C2821A1B7E3800BF172F /* GooglePlusStrategy.m in Sources */,
 				B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */,
 				B39BEC8C1A0B6EC40085BA26 /* MailStrategy.m in Sources */,
