@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "MessageStrategy.h"
+#import "smsStrategy.h"
 #import <MessageUI/MFMessageComposeViewController.h>
 
-@interface MessageStrategy() <MFMessageComposeViewControllerDelegate>{
+@interface smsStrategy() <MFMessageComposeViewControllerDelegate>{
     KPShareCompletionBlock _completion;
 }
 
 @end
 
-@implementation MessageStrategy
+@implementation smsStrategy
 - (UIViewController *)share:(id<KPShareParams>)shareParams completion:(KPShareCompletionBlock)completion {
     _completion = [completion copy];
     MFMessageComposeViewController *messageController = [MFMessageComposeViewController new];

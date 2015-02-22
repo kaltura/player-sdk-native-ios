@@ -12,7 +12,7 @@
 #import "KPShareManager.h"
 
 
-@interface MailStrategy : NSObject <KPShareStratrgy, MFMailComposeViewControllerDelegate> {
+@interface emailStrategy : NSObject <KPShareStratrgy, MFMailComposeViewControllerDelegate> {
     KPShareCompletionBlock _completion;
 }
 

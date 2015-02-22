@@ -12,7 +12,7 @@ static NSString *ActionTypeKey = @"actionType";
 
 static NSString *OpenURL = @"url";
 
-static NSString *NetworkKeyPath = @"shareNetwork.name";
+static NSString *NetworkKeyPath = @"id";
 static NSString *NetworkURLKeyPath = @"shareNetwork.template";
 static NSString *NetworkRedirectURLKeyPath = @"shareNetwork.redirectUrl";
 static NSString *SharedLinkKey = @"sharedLink";

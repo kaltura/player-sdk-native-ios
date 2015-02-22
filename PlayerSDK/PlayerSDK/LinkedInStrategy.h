@@ -8,6 +8,6 @@
 
 #import "GooglePlusStrategy.h"
 
-@interface LinkedInStrategy :GooglePlusStrategy
+@interface linkedinStrategy :googleplusStrategy
 
 @end

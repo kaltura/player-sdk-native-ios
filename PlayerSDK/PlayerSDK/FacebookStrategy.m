@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "FacebookStrategy.h"
+#import "facebookStrategy.h"
 
 
-@implementation FacebookStrategy
+@implementation facebookStrategy
 
 - (NSString *)composeType {
     return SLServiceTypeFacebook;

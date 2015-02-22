@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "MailStrategy.h"
+#import "emailStrategy.h"
 
 
-@implementation MailStrategy
+@implementation emailStrategy
 
 - (UIViewController *)share:(id<KPShareParams>)shareParams
                  completion:(KPShareCompletionBlock)completion {

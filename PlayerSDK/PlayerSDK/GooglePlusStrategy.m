@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "GooglePlusStrategy.h"
+#import "googleplusStrategy.h"
 
-@implementation GooglePlusStrategy
+@implementation googleplusStrategy
 - (UIViewController *)share:(id<KPShareParams>)shareParams completion:(KPShareCompletionBlock)completion {
     return [self shareWithBrowser:shareParams completion:completion];
 }
