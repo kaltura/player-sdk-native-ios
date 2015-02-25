@@ -47,6 +47,7 @@
 
 void setUserAgent();
 NSString *advertiserID();
+NSString *appVersion();
 BOOL isDeviceOrientation(UIDeviceOrientation orientation);
 BOOL isStatusBarOrientation(UIInterfaceOrientation orientation);
 

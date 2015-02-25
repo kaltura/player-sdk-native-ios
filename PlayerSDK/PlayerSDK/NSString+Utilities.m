@@ -15,6 +15,7 @@ static NSString *NativeActionKey = @"nativeAction";
 #import "KPLog.h"
 #import "NSMutableDictionary+AdSupport.h"
 #import <CommonCrypto/CommonDigest.h>
+#import "DeviceParamsHandler.h"
 
 @implementation NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param {
@@ -22,6 +23,11 @@ static NSString *NativeActionKey = @"nativeAction";
         return [self stringByAppendingFormat:@"&%@=%@", param.allKeys[0], param.allValues[0]];
     }
     return nil;
+}
+
+- (NSString *)appendVersion {
+    NSString *versionFlashvar = [NSString stringWithFormat:@"&flashvars[nativeVersion]=%@", appVersion()];
+    return [self stringByAppendingString:[versionFlashvar stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
 
