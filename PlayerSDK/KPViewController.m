@@ -699,7 +699,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         NSArray *listenersArr = self.kPlayerEventsDict[ KPlayerEventToggleFullScreen ];
         if ( listenersArr != nil ) {
             for (NSDictionary *eDict in listenersArr) {
-                ((void(^)())eDict.allValues.lastObject)();
+                ((void(^)())eDict.allValues.lastObject)(eDict.allKeys.lastObject);
             }
         }
     } else {
