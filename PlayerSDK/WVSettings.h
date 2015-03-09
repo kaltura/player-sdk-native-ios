@@ -13,7 +13,7 @@
 
 @interface WVSettings : NSObject
 
--(WViOsApiStatus*)initializeWD: (NSString*) key;
+-(WViOsApiStatus)initializeWD: (NSString*) key;
 - (void) stopWV;
 - (void)playMovieFromUrl: (NSString *)videoUrlString;
 

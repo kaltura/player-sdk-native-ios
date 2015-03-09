@@ -28,6 +28,7 @@
 #import "KPControlsWebView.h"
 #import "NSString+Utilities.h"
 #import "KPLog.h"
+#import "KArchiver.h"
 
 
 @implementation KPControlsWebView
@@ -54,7 +55,25 @@
     return self;
 }
 
+- (void)loadRequest:(NSURLRequest *)request {
+    [[KArchiver shared] contentOfURL:request.URL.absoluteString
+                          completion:^(NSData *content, NSError *error) {
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [self loadData:content
+                                        MIMEType:@"text/html"
+                                textEncodingName:@"UTF-8"
+                                         baseURL:request.URL];
+                              });
+                          }];
+}
 
+- (void)setEntryId:(NSString *)entryId {
+    if (![_entryId isEqualToString:entryId]) {
+        _entryId = entryId;
+        NSString *notificationName = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
+        [self sendNotification:@"changeMedia" withName:notificationName];
+    }
+}
 
 // This selector is called when something is loaded in our webview
 // By something I don't mean anything but just "some" :
@@ -78,11 +97,12 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                                                          args:functionComponents.args];
         }
         return NO;
-    } else if( !requestString.isFrameURL ){
+    } else if( !requestString.isFrameURL ) {
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
+    } else {
+        NSLog(@"HTTP:: %@", requestString);
     }
-    
     return YES;
 }
 

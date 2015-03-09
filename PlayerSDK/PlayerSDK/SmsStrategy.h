@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "KPShareManager.h"
 
-@interface MessageStrategy : NSObject <KPShareStratrgy>
+@interface SmsStrategy : NSObject <KPShareStratrgy>
 
 @end

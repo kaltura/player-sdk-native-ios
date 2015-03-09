@@ -62,6 +62,7 @@
 - (void)setNativeFullscreen;
 - (void)setWebViewURL: (NSString *)iframeUrl;
 + (id)sharedChromecastDeviceController;
+- (void)changeMedia:(NSString *)mediaID;
 - (void)load;
 
 // Kaltura Player External API

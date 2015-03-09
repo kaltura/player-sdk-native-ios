@@ -381,7 +381,7 @@
 
 - (void) initWV: (NSString *)src andKey: (NSString *)key {
     KPLogTrace(@"Enter");
-    WViOsApiStatus *wvInitStatus = [wvSettings initializeWD: key];
+    WViOsApiStatus wvInitStatus = [wvSettings initializeWD: key];
 
     if (wvInitStatus == WViOsApiStatus_OK) {
         KPLogDebug(@"widevine was inited");

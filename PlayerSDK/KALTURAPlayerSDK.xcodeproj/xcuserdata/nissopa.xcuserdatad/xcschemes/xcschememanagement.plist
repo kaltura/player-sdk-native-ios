@@ -4,35 +4,25 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>KALTURAPlayerSDK.xcscheme_^#shared#^_</key>
+		<key>KALTURAPlayerSDK.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>KALTURAPlayerSDKTests.xcscheme_^#shared#^_</key>
+		<key>KPlayerResources.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>1</integer>
 		</dict>
-		<key>Test.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>3</integer>
-		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>B3D7588A1A1CBEDF00CA5A96</key>
+		<key>B372892D1A8787D00076DD33</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>BFFFA726182F9E31005B3B24</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>BFFFA737182F9E31005B3B24</key>
 		<dict>
 			<key>primary</key>
 			<true/>

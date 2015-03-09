@@ -6,16 +6,16 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "MessageStrategy.h"
+#import "smsStrategy.h"
 #import <MessageUI/MFMessageComposeViewController.h>
 
-@interface MessageStrategy() <MFMessageComposeViewControllerDelegate>{
+@interface SmsStrategy() <MFMessageComposeViewControllerDelegate>{
     KPShareCompletionBlock _completion;
 }
 
 @end
 
-@implementation MessageStrategy
+@implementation SmsStrategy
 - (UIViewController *)share:(id<KPShareParams>)shareParams completion:(KPShareCompletionBlock)completion {
     _completion = [completion copy];
     MFMessageComposeViewController *messageController = [MFMessageComposeViewController new];
@@ -28,12 +28,18 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller
                  didFinishWithResult:(MessageComposeResult)result {
-    if (result == MessageComposeResultSent) {
-        _completion(KPShareResultsSuccess, nil);
-    } else if (result == MessageComposeResultCancelled) {
-        _completion(KPShareResultsCancel, nil);
-    } else {
-        _completion(KPShareResultsFailed, nil);
-    }
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if (result == MessageComposeResultSent) {
+            _completion(KPShareResultsSuccess, nil);
+        } else if (result == MessageComposeResultCancelled) {
+            _completion(KPShareResultsCancel, nil);
+        } else {
+            _completion(KPShareResultsFailed, nil);
+        }
+    }];
+}
+
+- (void)dealloc {
+    
 }
 @end

@@ -23,6 +23,8 @@ typedef struct FunctionComponents {
 @interface NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param;
 
+@property (nonatomic, copy, readonly) NSString *appendVersion;
+
 @property (nonatomic, assign, readonly) Attribute attributeEnumFromString;
 @property (nonatomic, assign, readonly) BOOL isJSFrame;
 @property (nonatomic, assign, readonly) BOOL isFrameURL;
@@ -33,6 +35,10 @@ typedef struct FunctionComponents {
 @property (nonatomic, assign, readonly) BOOL isStop;
 @property (nonatomic, assign, readonly) BOOL isToggleFullScreen;
 
+
+@property (nonatomic, copy, readonly) NSString *md5;
+@property (nonatomic, copy, readonly) NSString *documentPath;
+@property (nonatomic, copy, readonly) NSURL *sorted;
 
 
 #pragma mark

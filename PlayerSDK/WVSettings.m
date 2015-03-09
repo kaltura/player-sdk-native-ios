@@ -15,9 +15,9 @@
 
 static NSString *kPortalKey = @"kaltura";
 
--(WViOsApiStatus*)initializeWD: (NSString*) key {
+-(WViOsApiStatus)initializeWD: (NSString*) key {
     [self terminateWV];
-    WViOsApiStatus *wvInitStatus = WV_Initialize( WVCallback, [self initializeWDDict: key] );
+    WViOsApiStatus wvInitStatus = WV_Initialize( WVCallback, [self initializeWDDict: key] );
     
     return wvInitStatus;
     
@@ -42,7 +42,7 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
 }
 
 - (void) terminateWV {
-    WViOsApiStatus *wvTerminateStatus = WV_Terminate();
+    WViOsApiStatus wvTerminateStatus = WV_Terminate();
     
     if (wvTerminateStatus == WViOsApiStatus_OK) {
         KPLogDebug(@"widevine was terminated");
@@ -50,7 +50,7 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
 }
 
 - (void) stopWV {
-    WViOsApiStatus* wvStopStatus = WV_Stop();
+    WViOsApiStatus wvStopStatus = WV_Stop();
     
     if (wvStopStatus == WViOsApiStatus_OK ) {
         KPLogDebug(@"widevine was stopped");

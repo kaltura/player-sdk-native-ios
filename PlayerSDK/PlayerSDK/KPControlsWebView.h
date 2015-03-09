@@ -30,7 +30,9 @@
 
 @property (nonatomic, assign, readonly) CGFloat videoHolderHeight;
 
-//- (void)handleCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
+@property (nonatomic, copy) NSString *entryId;
+
+
 - (void)returnResult:(int)callbackId args:(id)firstObj, ...;
 
 - (void)addEventListener:(NSString *)event;

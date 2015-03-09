@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B3D7588A1A1CBEDF00CA5A96"
-               BuildableName = "Test.bundle"
-               BlueprintName = "Test"
+               BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
+               BuildableName = "libKALTURAPlayerSDK.a"
+               BlueprintName = "KALTURAPlayerSDK"
                ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B3D7588A1A1CBEDF00CA5A96"
-            BuildableName = "Test.bundle"
-            BlueprintName = "Test"
+            BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
+            BuildableName = "libKALTURAPlayerSDK.a"
+            BlueprintName = "KALTURAPlayerSDK"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B3D7588A1A1CBEDF00CA5A96"
-            BuildableName = "Test.bundle"
-            BlueprintName = "Test"
+            BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
+            BuildableName = "libKALTURAPlayerSDK.a"
+            BlueprintName = "KALTURAPlayerSDK"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

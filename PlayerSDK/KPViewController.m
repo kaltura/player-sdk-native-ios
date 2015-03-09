@@ -57,7 +57,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     
     
-    BOOL *showChromecastBtn;
+    BOOL showChromecastBtn;
     
     NSDictionary *nativeActionParams;
     
@@ -67,6 +67,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
+@property (nonatomic, strong) KPShareManager *shareManager;
 @end
 
 @implementation KPViewController 
@@ -153,6 +154,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                object: nil];
     [self didLoad];
     [KPViewController sharedChromecastDeviceController];
+//    __weak KPViewController *weakSelf = self;
+//    [self registerReadyEvent:^{
+//        weakSelf.webView.entryId = @"1_gtjr7duj";
+//    }];
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
@@ -253,12 +258,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     
     /// Add the idfa to the iframeURL
-    
-    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl] ] ];
-    
-    
-    
+    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl.appendVersion] ] ];
     KPLogTrace(@"Exit");
+}
+
+- (void)changeMedia:(NSString *)mediaID {
+    NSString *name = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
+    [self sendNotification:@"changeMedia" forName:name];
 }
 
 
@@ -315,13 +321,15 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)share {
     KPLogTrace(@"Enter");
-    KPShareManager *shareManager = [KPShareManager new];
-    shareManager.datasource = nativeActionParams;
-    UIViewController *shareController = [shareManager shareWithCompletion:^(KPShareResults result,
+    self.shareManager = [KPShareManager new];
+    self.shareManager.datasource = nativeActionParams;
+    __weak KPViewController *weakSelf = self;
+    UIViewController *shareController = [self.shareManager shareWithCompletion:^(KPShareResults result,
                                                                             KPShareError *shareError) {
         if (shareError.error) {
             KPLogError(@"%@", shareError.error.description);
         }
+        weakSelf.shareManager = nil;
     }];
     [self presentViewController:shareController animated:YES completion:nil];
     KPLogTrace(@"Exit");

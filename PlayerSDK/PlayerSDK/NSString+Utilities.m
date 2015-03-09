@@ -14,6 +14,8 @@ static NSString *NativeActionKey = @"nativeAction";
 #import "NSString+Utilities.h"
 #import "KPLog.h"
 #import "NSMutableDictionary+AdSupport.h"
+#import <CommonCrypto/CommonDigest.h>
+#import "DeviceParamsHandler.h"
 
 @implementation NSString (Utilities)
 - (NSString *)appendParam:(NSDictionary *)param {
@@ -21,6 +23,11 @@ static NSString *NativeActionKey = @"nativeAction";
         return [self stringByAppendingFormat:@"&%@=%@", param.allKeys[0], param.allValues[0]];
     }
     return nil;
+}
+
+- (NSString *)appendVersion {
+    NSString *versionFlashvar = [NSString stringWithFormat:@"&flashvars[nativeVersion]=%@", appVersion()];
+    return [self stringByAppendingString:[versionFlashvar stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
 
@@ -82,6 +89,40 @@ static NSString *NativeActionKey = @"nativeAction";
     return function;
 }
 
+- (NSString *)md5 {
+    const char *cStr = [self.sorted.absoluteString UTF8String];
+    unsigned char digest[16];
+    CC_MD5( cStr, (int)strlen(cStr), digest ); // This is the md5 call
+    
+    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+    
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+        [output appendFormat:@"%02x", digest[i]];
+    
+    return  output;
+}
+
+- (NSString *)documentPath {
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    return ([paths count] > 0) ? [paths.firstObject stringByAppendingPathComponent:self] : nil;
+}
+
+- (NSURL *)sorted {
+    NSURL *url = [NSURL URLWithString:self];
+    NSString *query = [url.query stringByRemovingPercentEncoding];
+    NSMutableArray *params = [[NSMutableArray alloc] initWithArray:[query componentsSeparatedByString:@"&"]];
+    if (params.count) {
+        [params removeObjectAtIndex:0];
+        params = [params sortedArrayUsingSelector:@selector(compare:)].mutableCopy;
+    }
+    NSString *sortedLink = [NSString stringWithFormat:@"%@://%@/%@?", url.scheme, url.host, url.path];
+    for (NSString *param in params) {
+        sortedLink = [sortedLink stringByAppendingFormat:@"%@&", param];
+    }
+    sortedLink = [[sortedLink substringToIndex:sortedLink.length - 1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [NSURL URLWithString:sortedLink];
+}
+
 - (NSString *)addJSListener {
     return [NSString stringWithFormat: @"NativeBridge.videoPlayer.addJsListener(\"%@\");", self];
 }
@@ -95,7 +136,7 @@ static NSString *NativeActionKey = @"nativeAction";
 }
 
 - (NSString *)sendNotificationWithBody:(NSString *)body {
-    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", self, body];
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", body, self];
 }
 
 - (NSString *)setKDPAttribute:(NSString *)attribute value:(NSString *)value {

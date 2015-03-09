@@ -24,6 +24,12 @@ NSString *advertiserID() {
     return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
 }
 
+NSString *appVersion() {
+    NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];
+    NSString * build = [[NSBundle mainBundle] objectForInfoDictionaryKey: (NSString *)kCFBundleVersionKey];
+    return [NSString stringWithFormat:@"iOS_%@_%@", version, build];
+}
+
 BOOL isDeviceOrientation(UIDeviceOrientation orientation) {
     return _deviceOrientation == orientation;
 }
