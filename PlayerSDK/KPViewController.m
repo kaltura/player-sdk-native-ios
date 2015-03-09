@@ -80,15 +80,23 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
 }
 
-- (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
+- (instancetype)initWithFrame:(CGRect)frame {
     self = [super init];
     if (self) {
         [self.view setFrame:frame];
         originalViewControllerFrame = frame;
+        return self;
+    }
+    return nil;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
+    self = [self initWithFrame:frame];
+    if (self) {
         [parentView addSubview:self.view];
         return self;
     }
-    return self;
+    return nil;
 }
 
 - (NSMutableDictionary *)players {
@@ -707,7 +715,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         NSArray *listenersArr = self.kPlayerEventsDict[ KPlayerEventToggleFullScreen ];
         if ( listenersArr != nil ) {
             for (NSDictionary *eDict in listenersArr) {
-                ((void(^)())eDict.allValues.lastObject)();
+                ((void(^)())eDict.allValues.lastObject)(eDict.allKeys.firstObject);
             }
         }
     } else {
