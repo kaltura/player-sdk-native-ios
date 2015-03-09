@@ -254,8 +254,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-- (void)changeMedia {
-    [self sendNotification:@"changeMedia" forName:@"'{\"entryId\":\"1_gtjr7duj\"}'"];
+- (void)changeMedia:(NSString *)mediaID {
+    NSString *name = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
+    [self sendNotification:@"changeMedia" forName:name];
 }
 
 
