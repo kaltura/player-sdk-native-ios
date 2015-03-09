@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-#import "linkedinStrategy.h"
+#import "LinkedinStrategy.h"
 
-@implementation linkedinStrategy
+@implementation LinkedinStrategy
 
 @end

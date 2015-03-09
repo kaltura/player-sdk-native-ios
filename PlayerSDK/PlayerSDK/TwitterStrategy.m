@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "twitterStrategy.h"
+#import "TwitterStrategy.h"
 
-@implementation twitterStrategy
+@implementation TwitterStrategy
 - (NSString *)composeType {
     return SLServiceTypeTwitter;
 }

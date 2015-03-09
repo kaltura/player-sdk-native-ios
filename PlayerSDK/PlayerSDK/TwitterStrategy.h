@@ -6,8 +6,8 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "facebookStrategy.h"
+#import "FacebookStrategy.h"
 
-@interface twitterStrategy : facebookStrategy
+@interface TwitterStrategy : FacebookStrategy
 
 @end

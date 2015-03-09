@@ -9,13 +9,13 @@
 #import "smsStrategy.h"
 #import <MessageUI/MFMessageComposeViewController.h>
 
-@interface smsStrategy() <MFMessageComposeViewControllerDelegate>{
+@interface SmsStrategy() <MFMessageComposeViewControllerDelegate>{
     KPShareCompletionBlock _completion;
 }
 
 @end
 
-@implementation smsStrategy
+@implementation SmsStrategy
 - (UIViewController *)share:(id<KPShareParams>)shareParams completion:(KPShareCompletionBlock)completion {
     _completion = [completion copy];
     MFMessageComposeViewController *messageController = [MFMessageComposeViewController new];

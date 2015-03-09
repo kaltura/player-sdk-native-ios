@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B30BADE91A21ED06008E5E67 /* NSDictionary+Strategy.m */; };
-		B32A5CDC1A2492C10051DC7F /* facebookStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC791A0A728A0085BA26 /* facebookStrategy.h */; };
-		B32A5CDD1A2492C10051DC7F /* twitterStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC811A0A80C00085BA26 /* twitterStrategy.h */; };
-		B32A5CDE1A2492C10051DC7F /* googleplusStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B380C2801A1B7E3800BF172F /* googleplusStrategy.h */; };
-		B32A5CDF1A2492C10051DC7F /* emailStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8A1A0B6EC40085BA26 /* emailStrategy.h */; };
-		B32A5CE01A2492C10051DC7F /* smsStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8D1A0B72760085BA26 /* smsStrategy.h */; };
+		B32A5CDC1A2492C10051DC7F /* FacebookStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */; };
+		B32A5CDD1A2492C10051DC7F /* TwitterStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */; };
+		B32A5CDE1A2492C10051DC7F /* GoogleplusStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B380C2801A1B7E3800BF172F /* GoogleplusStrategy.h */; };
+		B32A5CDF1A2492C10051DC7F /* EmailStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8A1A0B6EC40085BA26 /* EmailStrategy.h */; };
+		B32A5CE01A2492C10051DC7F /* SmsStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8D1A0B72760085BA26 /* SmsStrategy.h */; };
 		B32A5CE11A2492C10051DC7F /* KPShareManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */; };
 		B32A5CE21A2492C10051DC7F /* NSDictionary+Strategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B30BADE81A21ED06008E5E67 /* NSDictionary+Strategy.h */; };
 		B32A5CE71A25D4C00051DC7F /* KPBrowserViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC981A0BCB280085BA26 /* KPBrowserViewController.h */; };
@@ -45,12 +45,12 @@
 		B37289371A8789260076DD33 /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */; };
 		B37289381A8789300076DD33 /* KPWebKitBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B32A5CEF1A27308C0051DC7F /* KPWebKitBrowserViewController.xib */; };
 		B37FAA781A405AE0003FBA78 /* DeviceParamsHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */; };
-		B380C2821A1B7E3800BF172F /* googleplusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* googleplusStrategy.m */; };
+		B380C2821A1B7E3800BF172F /* GoogleplusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B380C2811A1B7E3800BF172F /* GoogleplusStrategy.m */; };
 		B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3932AD01A0A0DA000AC0442 /* KPShareManager.m */; };
-		B39BEC7B1A0A728A0085BA26 /* facebookStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC7A1A0A728A0085BA26 /* facebookStrategy.m */; };
-		B39BEC831A0A80C00085BA26 /* twitterStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC821A0A80C00085BA26 /* twitterStrategy.m */; };
-		B39BEC8C1A0B6EC40085BA26 /* emailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8B1A0B6EC40085BA26 /* emailStrategy.m */; };
-		B39BEC8F1A0B72760085BA26 /* smsStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8E1A0B72760085BA26 /* smsStrategy.m */; };
+		B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */; };
+		B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */; };
+		B39BEC8C1A0B6EC40085BA26 /* EmailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8B1A0B6EC40085BA26 /* EmailStrategy.m */; };
+		B39BEC8F1A0B72760085BA26 /* SmsStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC8E1A0B72760085BA26 /* SmsStrategy.m */; };
 		B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */; };
 		B3A701C71A962296007D48DA /* linkedinStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A701C61A962296007D48DA /* linkedinStrategy.m */; };
 		B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BEE1A2DE0BB003108CB /* KPPlayerConfig.m */; };
@@ -117,11 +117,11 @@
 				B3C27BF61A2DF03E003108CB /* KPPlayerDatasourceHandler.h in CopyFiles */,
 				B3C27BF41A2DF024003108CB /* KPViewControllerProtocols.h in CopyFiles */,
 				B32A5CE71A25D4C00051DC7F /* KPBrowserViewController.h in CopyFiles */,
-				B32A5CDC1A2492C10051DC7F /* facebookStrategy.h in CopyFiles */,
-				B32A5CDD1A2492C10051DC7F /* twitterStrategy.h in CopyFiles */,
-				B32A5CDE1A2492C10051DC7F /* googleplusStrategy.h in CopyFiles */,
-				B32A5CDF1A2492C10051DC7F /* emailStrategy.h in CopyFiles */,
-				B32A5CE01A2492C10051DC7F /* smsStrategy.h in CopyFiles */,
+				B32A5CDC1A2492C10051DC7F /* FacebookStrategy.h in CopyFiles */,
+				B32A5CDD1A2492C10051DC7F /* TwitterStrategy.h in CopyFiles */,
+				B32A5CDE1A2492C10051DC7F /* GoogleplusStrategy.h in CopyFiles */,
+				B32A5CDF1A2492C10051DC7F /* EmailStrategy.h in CopyFiles */,
+				B32A5CE01A2492C10051DC7F /* SmsStrategy.h in CopyFiles */,
 				B32A5CE11A2492C10051DC7F /* KPShareManager.h in CopyFiles */,
 				B32A5CE21A2492C10051DC7F /* NSDictionary+Strategy.h in CopyFiles */,
 				BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */,
@@ -168,18 +168,18 @@
 		B37288A31A85087E0076DD33 /* KArchiver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KArchiver.m; sourceTree = "<group>"; };
 		B372892E1A8787D00076DD33 /* KALTURAPlayerSDK.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KALTURAPlayerSDK.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37289311A8787D00076DD33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B380C2801A1B7E3800BF172F /* googleplusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = googleplusStrategy.h; sourceTree = "<group>"; };
-		B380C2811A1B7E3800BF172F /* googleplusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = googleplusStrategy.m; sourceTree = "<group>"; };
+		B380C2801A1B7E3800BF172F /* GoogleplusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleplusStrategy.h; sourceTree = "<group>"; };
+		B380C2811A1B7E3800BF172F /* GoogleplusStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleplusStrategy.m; sourceTree = "<group>"; };
 		B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPShareManager.h; sourceTree = "<group>"; };
 		B3932AD01A0A0DA000AC0442 /* KPShareManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPShareManager.m; sourceTree = "<group>"; };
-		B39BEC791A0A728A0085BA26 /* facebookStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = facebookStrategy.h; sourceTree = "<group>"; };
-		B39BEC7A1A0A728A0085BA26 /* facebookStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = facebookStrategy.m; sourceTree = "<group>"; };
-		B39BEC811A0A80C00085BA26 /* twitterStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = twitterStrategy.h; sourceTree = "<group>"; };
-		B39BEC821A0A80C00085BA26 /* twitterStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = twitterStrategy.m; sourceTree = "<group>"; };
-		B39BEC8A1A0B6EC40085BA26 /* emailStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = emailStrategy.h; sourceTree = "<group>"; };
-		B39BEC8B1A0B6EC40085BA26 /* emailStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = emailStrategy.m; sourceTree = "<group>"; };
-		B39BEC8D1A0B72760085BA26 /* smsStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = smsStrategy.h; sourceTree = "<group>"; };
-		B39BEC8E1A0B72760085BA26 /* smsStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = smsStrategy.m; sourceTree = "<group>"; };
+		B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FacebookStrategy.h; sourceTree = "<group>"; };
+		B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FacebookStrategy.m; sourceTree = "<group>"; };
+		B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TwitterStrategy.h; sourceTree = "<group>"; };
+		B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TwitterStrategy.m; sourceTree = "<group>"; };
+		B39BEC8A1A0B6EC40085BA26 /* EmailStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailStrategy.h; sourceTree = "<group>"; };
+		B39BEC8B1A0B6EC40085BA26 /* EmailStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailStrategy.m; sourceTree = "<group>"; };
+		B39BEC8D1A0B72760085BA26 /* SmsStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SmsStrategy.h; sourceTree = "<group>"; };
+		B39BEC8E1A0B72760085BA26 /* SmsStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SmsStrategy.m; sourceTree = "<group>"; };
 		B39BEC981A0BCB280085BA26 /* KPBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPBrowserViewController.h; sourceTree = "<group>"; };
 		B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPBrowserViewController.m; sourceTree = "<group>"; };
 		B3A701C51A962296007D48DA /* linkedinStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linkedinStrategy.h; sourceTree = "<group>"; };
@@ -237,16 +237,16 @@
 		B30BADEE1A223142008E5E67 /* ShareStrategies */ = {
 			isa = PBXGroup;
 			children = (
-				B39BEC791A0A728A0085BA26 /* facebookStrategy.h */,
-				B39BEC7A1A0A728A0085BA26 /* facebookStrategy.m */,
-				B39BEC811A0A80C00085BA26 /* twitterStrategy.h */,
-				B39BEC821A0A80C00085BA26 /* twitterStrategy.m */,
-				B380C2801A1B7E3800BF172F /* googleplusStrategy.h */,
-				B380C2811A1B7E3800BF172F /* googleplusStrategy.m */,
-				B39BEC8A1A0B6EC40085BA26 /* emailStrategy.h */,
-				B39BEC8B1A0B6EC40085BA26 /* emailStrategy.m */,
-				B39BEC8D1A0B72760085BA26 /* smsStrategy.h */,
-				B39BEC8E1A0B72760085BA26 /* smsStrategy.m */,
+				B39BEC791A0A728A0085BA26 /* FacebookStrategy.h */,
+				B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */,
+				B39BEC811A0A80C00085BA26 /* TwitterStrategy.h */,
+				B39BEC821A0A80C00085BA26 /* TwitterStrategy.m */,
+				B380C2801A1B7E3800BF172F /* GoogleplusStrategy.h */,
+				B380C2811A1B7E3800BF172F /* GoogleplusStrategy.m */,
+				B39BEC8A1A0B6EC40085BA26 /* EmailStrategy.h */,
+				B39BEC8B1A0B6EC40085BA26 /* EmailStrategy.m */,
+				B39BEC8D1A0B72760085BA26 /* SmsStrategy.h */,
+				B39BEC8E1A0B72760085BA26 /* SmsStrategy.m */,
 				B3A701C51A962296007D48DA /* linkedinStrategy.h */,
 				B3A701C61A962296007D48DA /* linkedinStrategy.m */,
 			);
@@ -563,7 +563,7 @@
 				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
 				B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */,
-				B39BEC7B1A0A728A0085BA26 /* facebookStrategy.m in Sources */,
+				B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */,
 				B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */,
 				B3C27BF91A2DFE12003108CB /* NSString+Utilities.m in Sources */,
 				B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */,
@@ -572,8 +572,8 @@
 				BF66631F18C48C7E001F5E51 /* WVSettings.m in Sources */,
 				BFB741D8199BA3CD001E9DDD /* KalturaPlayer.m in Sources */,
 				B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */,
-				B39BEC8F1A0B72760085BA26 /* smsStrategy.m in Sources */,
-				B39BEC831A0A80C00085BA26 /* twitterStrategy.m in Sources */,
+				B39BEC8F1A0B72760085BA26 /* SmsStrategy.m in Sources */,
+				B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */,
 				B37288A41A85087E0076DD33 /* KArchiver.m in Sources */,
 				B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */,
 				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
@@ -582,9 +582,9 @@
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
 				B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */,
 				B3A701C71A962296007D48DA /* linkedinStrategy.m in Sources */,
-				B380C2821A1B7E3800BF172F /* googleplusStrategy.m in Sources */,
+				B380C2821A1B7E3800BF172F /* GoogleplusStrategy.m in Sources */,
 				B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */,
-				B39BEC8C1A0B6EC40085BA26 /* emailStrategy.m in Sources */,
+				B39BEC8C1A0B6EC40085BA26 /* EmailStrategy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

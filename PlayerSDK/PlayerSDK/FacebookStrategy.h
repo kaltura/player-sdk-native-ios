@@ -11,7 +11,7 @@
 #import "KPBrowserViewController.h"
 #import <Social/Social.h>
 
-@interface facebookStrategy : NSObject <KPShareStratrgy>
+@interface FacebookStrategy : NSObject <KPShareStratrgy>
 
 /// SLServiceType for the Twitter and the Facebook networks
 @property (nonatomic, copy, readonly) NSString *composeType;

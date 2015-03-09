@@ -9,7 +9,7 @@
 #import "emailStrategy.h"
 
 
-@implementation emailStrategy
+@implementation EmailStrategy
 
 - (UIViewController *)share:(id<KPShareParams>)shareParams
                  completion:(KPShareCompletionBlock)completion {
