@@ -52,6 +52,7 @@
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
+- (instancetype)initWithFrame:(CGRect)frame;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView:(CGRect)newFrame;
@@ -61,6 +62,7 @@
 - (void)setNativeFullscreen;
 - (void)setWebViewURL: (NSString *)iframeUrl;
 + (id)sharedChromecastDeviceController;
+- (void)changeMedia:(NSString *)mediaID;
 - (void)load;
 
 // Kaltura Player External API
