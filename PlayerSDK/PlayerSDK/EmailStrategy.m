@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "MailStrategy.h"
+#import "emailStrategy.h"
 
 
-@implementation MailStrategy
+@implementation EmailStrategy
 
 - (UIViewController *)share:(id<KPShareParams>)shareParams
                  completion:(KPShareCompletionBlock)completion {
@@ -25,17 +25,21 @@
 - (void)mailComposeController:(MFMailComposeViewController *)controller
           didFinishWithResult:(MFMailComposeResult)result
                         error:(NSError *)error {
-    if (error) {
-        KPShareError *err = [KPShareError new];
-        err.error = error;
-        _completion(KPShareResultsFailed, err);
-    } else if (result == MFMailComposeResultSent) {
-        _completion(KPShareResultsSuccess, nil);
-    } else if (result == MFMailComposeResultCancelled) {
-        _completion(KPShareResultsCancel, nil);
-    }
+    [controller dismissViewControllerAnimated:YES completion:^{
+        if (error) {
+            KPShareError *err = [KPShareError new];
+            err.error = error;
+            _completion(KPShareResultsFailed, err);
+        } else if (result == MFMailComposeResultSent) {
+            _completion(KPShareResultsSuccess, nil);
+        } else if (result == MFMailComposeResultCancelled) {
+            _completion(KPShareResultsCancel, nil);
+        }
+    }];
 }
 
-
+- (void)dealloc {
+    
+}
 
 @end

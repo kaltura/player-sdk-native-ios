@@ -8,6 +8,6 @@
 
 #import "FacebookStrategy.h"
 
-@interface GooglePlusStrategy : FacebookStrategy
+@interface GoogleplusStrategy : FacebookStrategy
 
 @end
