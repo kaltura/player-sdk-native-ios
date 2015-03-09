@@ -52,6 +52,7 @@
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
+- (instancetype)initWithFrame:(CGRect)frame;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView:(CGRect)newFrame;
