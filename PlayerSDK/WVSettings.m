@@ -76,8 +76,8 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
     KPLogTrace(@"Enter");
     NSMutableString *responseUrl = [NSMutableString string];
     
-    NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
-    playerSource = [arr objectAtIndex: 0];
+//    NSArray *arr = [playerSource componentsSeparatedByString: @"?"];
+//    playerSource = [arr objectAtIndex: 0];
     
     WViOsApiStatus status = WV_Play(playerSource, responseUrl, 0);
     KPLogDebug(@"widevine response url: %@", responseUrl);
