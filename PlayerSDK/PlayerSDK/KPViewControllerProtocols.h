@@ -104,7 +104,7 @@ typedef enum{
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
 
 @optional
-- (id)view;
+- (instancetype)initWithFrame:(CGRect)frame;
 - (int)controlStyle;
 - (void)prepareToPlay;
 - (int)loadState;

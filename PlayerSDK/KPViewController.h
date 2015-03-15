@@ -98,9 +98,7 @@
  * @param NSString event id, will enable to remove the current event by id
  * @param handler Callback for the ready event.
  */
-- (void)addEventListener:(NSString *)event
-                 eventID:(NSString *)eventID
-                 handler:(void(^)(NSString *eventName))handler;
+- (void)addEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)(NSString *eventName))handler;
 
 
 /*!
@@ -113,8 +111,7 @@
  * @param NSString eventID, event id for removal.
  * @param handler Callback for the ready event.
  */
-- (void)removeEventListener:(NSString *)event
-                    eventID:(NSString *)eventID;
+- (void)removeEventListener:(NSString *)event eventID:(NSString *)eventID;
 
 
 
@@ -128,9 +125,7 @@
  * @param NSString expressionID, expression id use for several expressions.
  * @param handler Callback with the value of the expression.
  */
-- (void)asyncEvaluate:(NSString *)expression
-         expressionID:(NSString *)expressionID
-              handler:(void(^)(NSString *value))handler;
+- (void)asyncEvaluate:(NSString *)expression expressionID:(NSString *)expressionID handler:(void(^)(NSString *value))handler;
 
 
 
@@ -143,8 +138,7 @@
  * @param NSString notification, notification body
  * @param NSString notificationName, notification name s specific notification.
  */
-- (void)sendNotification:(NSString *)notification
-                 forName:(NSString *)notificationName;
+- (void)sendNotification:(NSString *)notification forName:(NSString *)notificationName;
 
 
 
@@ -158,9 +152,7 @@
  * @param NSString propertyName, property of the plugin
  * @param NSString value, sets the property
  */
-- (void)setKDPAttribute:(NSString *)pluginName
-           propertyName:(NSString *)propertyName
-                  value:(NSString *)value;
+- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value;
 
 
 
