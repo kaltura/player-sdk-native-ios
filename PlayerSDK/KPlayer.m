@@ -138,6 +138,7 @@
                                   usingBlock:^(CMTime time) {
                                       
     }];
+    [self addObserver:self forKeyPath:@"status" options:0 context:nil];
 }
 
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer {

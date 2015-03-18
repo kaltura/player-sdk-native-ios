@@ -7,8 +7,8 @@
 //
 
 #import <AVFoundation/AVFoundation.h>
-#import "KPViewControllerProtocols.h"
+#import "KPlayerManager.h"
 
-@interface KPlayer : AVPlayer<KalturaPlayer>
+@interface KPlayer : AVPlayer<KPlayer>
 
 @end
