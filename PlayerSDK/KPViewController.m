@@ -258,7 +258,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     
     /// Add the idfa to the iframeURL
-    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl.appendVersion] ] ];
+    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl.appendVersion.appendHover] ] ];
     KPLogTrace(@"Exit");
 }
 

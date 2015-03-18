@@ -24,6 +24,7 @@ typedef struct FunctionComponents {
 - (NSString *)appendParam:(NSDictionary *)param;
 
 @property (nonatomic, copy, readonly) NSString *appendVersion;
+@property (nonatomic, copy, readonly) NSString *appendHover;
 
 @property (nonatomic, assign, readonly) Attribute attributeEnumFromString;
 @property (nonatomic, assign, readonly) BOOL isJSFrame;
