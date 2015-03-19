@@ -25,6 +25,7 @@ static NSString *IsFullScreenKey = @"isFullScreen";
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
+#import "KPlayerController.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -36,7 +37,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPIMAAdsPlayerDatasource>{
+@interface KPViewController() <KPIMAAdsPlayerDatasource, KPlayerEventsDelegate>{
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
@@ -68,6 +69,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
+@property (nonatomic, strong) KPlayerController *playerController;
 @end
 
 @implementation KPViewController 
@@ -215,10 +217,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
         [[self webView] setPlayerControlsWebViewDelegate: self];
         
-        self.player = [self getPlayerByClass:[KalturaPlayer class]];
-        NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
-
-        self.player.view.frame = playerViewFrame;
+//        self.player = [self getPlayerByClass:[KalturaPlayer class]];
+//        NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
+//
+//        self.player.view.frame = playerViewFrame;
+        _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
+        [_playerController addPlayerToView:self.view];
+        [_playerController.player setDelegate:self];
         
         // WebView initialize for supporting NativeComponent(html5 player view)
         [ [[self webView] scrollView] setScrollEnabled: NO ];
@@ -228,10 +233,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         self.webView.backgroundColor = [UIColor clearColor];
         
         // Add NativeComponent (html5 player view) webView to player view
-        [[[self player] view] addSubview: [self webView]];
-        [[self view] addSubview: [[self player] view]];
-        
-        self.player.controlStyle = MPMovieControlStyleNone;
+        //[[[self player] view] addSubview: [self webView]];
+        //[[self view] addSubview: [[self player] view]];
+        [self.view addSubview:self.webView];
+        //self.player.controlStyle = MPMovieControlStyleNone;
     }
     
     [super viewWillAppear:NO];
@@ -284,29 +289,29 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-- (void)play {
-    KPLogTrace(@"Enter");
-    
-    [[self player] play];
-    
-    KPLogTrace(@"Exit");
-}
-
-- (void)pause {
-    
-    KPLogTrace(@"Enter");
-    [[self player] pause];
-    
-    KPLogTrace(@"Exit");
-}
-
-- (void)stop {
-    
-    KPLogTrace(@"Enter");
-    [[self player] stop];
-    
-    KPLogTrace(@"Exit");
-}
+//- (void)play {
+//    KPLogTrace(@"Enter");
+//    
+//    [[self player] play];
+//    
+//    KPLogTrace(@"Exit");
+//}
+//
+//- (void)pause {
+//    
+//    KPLogTrace(@"Enter");
+//    [[self player] pause];
+//    
+//    KPLogTrace(@"Exit");
+//}
+//
+//- (void)stop {
+//    
+//    KPLogTrace(@"Enter");
+//    [[self player] stop];
+//    
+//    KPLogTrace(@"Exit");
+//}
 
 - (void)doNativeAction {
     KPLogTrace(@"Enter");
@@ -800,14 +805,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ( [args count] > 0 ) {
         functionName = [NSString stringWithFormat:@"%@:", functionName];
     }
-    if ([self respondsToSelector:NSSelectorFromString(functionName)]) {
+    SEL selector = NSSelectorFromString(functionName);
+    if ([self respondsToSelector:selector]) {
         KPLogDebug(@"html5 call::%@ %@",functionName, args);
-        [self performSelector:NSSelectorFromString(functionName) withObject:args];
+        [self performSelector:selector withObject:args];
+    } else if ([_playerController.player respondsToSelector:selector]) {
+        [_playerController.player performSelector:selector withObject:args];
     }
     
 #pragma clang diagnostic pop
     
     KPLogTrace(@"Exit");
+}
+
+#pragma mark KPlayerEventsDelegate
+- (void)eventName:(NSString *)event value:(NSString *)value {
+    [self.webView triggerEvent:event withValue:value];
 }
 
 - (void)bindPlayerEvents{
@@ -851,13 +864,15 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
-            playerSource = attributeVal;
-            [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
+//            playerSource = attributeVal;
+//            [ self setPlayerSource: [NSURL URLWithString: attributeVal] ];
+            _playerController.src = attributeVal;
             break;
         case currentTime:
-            if( [[self player] isPreparedToPlay] ){
-                [ [self player] setCurrentPlaybackTime: [attributeVal doubleValue] ];
-            }
+//            if( [[self player] isPreparedToPlay] ){
+//                [ [self player] setCurrentPlaybackTime: [attributeVal doubleValue] ];
+//            }
+            _playerController.currentPlayBackTime = [attributeVal doubleValue];
             break;
         case visible:
             [self visible: attributeVal];

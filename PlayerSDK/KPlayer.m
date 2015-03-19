@@ -10,38 +10,99 @@
 #import "KPLog.h"
 #import "WVSettings.h"
 
-@interface KPlayer() {
-    BOOL isPlayCalled;
-#if !(TARGET_IPHONE_SIMULATOR)
-    // WideVine Params
-    BOOL isWideVine, isWideVineReady;
-    WVSettings* wvSettings;
-#endif
-}
+static NSString *PlayKey = @"play";
+static NSString *PauseKey = @"pause";
+static NSString *DurationChangedKey = @"durationchange";
+static NSString *LoadedMetaDataKey = @"loadedmetadata";
+static NSString *TimeUpdateKey = @"timeupdate";
+static NSString *ProgressKey = @"progress";
+static NSString *EndedKey = @"ended";
+static NSString *SeekedKey = @"seeked";
+static NSString *CanPlayKey = @"canplay";
+
+
+static NSString *RateKeyPath = @"rate";
+static NSString *StatusKeyPath = @"status";
+
+@interface KPlayer() 
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @end
 
 @implementation KPlayer
 @synthesize delegate = _delegate;
-@synthesize view = _view;
+@synthesize currentPlaybackTime = _currentPlaybackTime;
+@synthesize duration = _duration;
 
-- (instancetype)initWithFrame:(CGRect)frame {
+- (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
     if (self) {
-        _view = [[UIView alloc] initWithFrame:frame];
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
-        [_view.layer addSublayer:_layer];
+        _layer.frame = parentView.frame;
+        [parentView.layer addSublayer:_layer];
+        
+        [self addObserver:self
+               forKeyPath:RateKeyPath
+                  options:0
+                  context:nil];
+        [self addObserver:self
+               forKeyPath:StatusKeyPath
+                  options:0
+                  context:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(videoEnded)
+                                                     name:AVPlayerItemDidPlayToEndTimeNotification
+                                                   object:nil];
+        __weak KPlayer *weakSelf = self;
+        [self addPeriodicTimeObserverForInterval:CMTimeMake(20, 100)
+                                           queue:dispatch_get_main_queue()
+                                      usingBlock:^(CMTime time) {
+                                          [weakSelf.delegate eventName:TimeUpdateKey
+                                                                 value:@(CMTimeGetSeconds(time)).stringValue];
+//                                          [weakSelf.delegate eventName:ProgressKey
+//                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
+        }];
+        
         return self;
     }
     return nil;
 }
 
-- (UIView *)view {
-    return _view;
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
+    if ([keyPath isEqual:RateKeyPath]) {
+        if (self.rate) {
+            [self.delegate eventName:@"play" value:nil];
+        } else {
+            [self.delegate eventName:@"pause" value:nil];
+        }
+    } else if (StatusKeyPath) {
+        switch (self.status) {
+            case AVPlayerStatusFailed:
+                
+                break;
+            case AVPlayerStatusReadyToPlay:
+                [self.delegate eventName:DurationChangedKey value:@(self.duration).stringValue];
+                [self.delegate eventName:LoadedMetaDataKey value:@""];
+                [self.delegate eventName:CanPlayKey value:nil];
+                break;
+            case AVPlayerStatusUnknown:
+                break;
+        }
+    }
 }
 
+- (void)videoEnded {
+    [self.delegate eventName:EndedKey value:nil];
+}
 
-- (NSURL *)contentURL {
+- (void)setPlayerSource:(NSURL *)playerSource {
+    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
+    [self replaceCurrentItemWithPlayerItem:item];
+}
+
+- (NSURL *)playerSource {
     // get current asset
     AVAsset *currentPlayerAsset = self.currentItem.asset;
     // make sure the current asset is an AVURLAsset
@@ -52,97 +113,36 @@
     return [(AVURLAsset *)currentPlayerAsset URL];
 }
 
-- (void)setContentURL:(NSURL *)cs {
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:cs];
-    [self replaceCurrentItemWithPlayerItem:item];
+- (NSTimeInterval)duration {
+    AVPlayerItem *item = self.currentItem;
+    return CMTimeGetSeconds(item.asset.duration);
 }
 
-- (void)play {
-    KPLogTrace(@"Enter");
-    isPlayCalled = YES;
-    
-#if !(TARGET_IPHONE_SIMULATOR)
-    if ( isWideVine  && !isWideVineReady ) {
-        return;
-    }
-#endif
-    KPLogDebug(@"playbackState - %ld", self.playbackState);
-    if( !( self.playbackState == AVPlayerStatusReadyToPlay ) ) {
-        [super play];
-    }
-    
-    [self callSelectorOnDelegate: @selector(kPlayerDidPlay)];
-    KPLogTrace(@"Exit");
-}
-
-- (void)pause {
-    KPLogTrace(@"Enter");
-    isPlayCalled = NO;
-    
-    if (!self.rate) {
-        [super pause];
-    }
-    
-    [ self callSelectorOnDelegate: @selector(kPlayerDidPause) ];
-    KPLogTrace(@"Exit");
-}
-
-- (void)stop {
-    KPLogTrace(@"Enter");
-    isPlayCalled = NO;
-    
-    [super pause];
-    self.rate = 0.0;
-    
-#if !(TARGET_IPHONE_SIMULATOR)
-    // Stop WideVine
-    if ( isWideVine ) {
-        [wvSettings stopWV];
-        isWideVine = NO;
-        isWideVineReady = NO;
-    }
-#endif
-    
-    [ self callSelectorOnDelegate: @selector(kPlayerDidStop) ];
-    KPLogTrace(@"Exit");
-}
-
-
-- (void)callSelectorOnDelegate:(SEL) selector {
-    if ( _delegate && [_delegate respondsToSelector: selector] ) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        [_delegate performSelector: selector];
-#pragma clang diagnostic pop
-    }
+- (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
+    _currentPlaybackTime = currentPlaybackTime;
+    __weak KPlayer *weakSelf = self;
+    [self seekToTime:CMTimeMake(currentPlaybackTime, 1000)
+     toleranceBefore:kCMTimeZero
+      toleranceAfter:kCMTimeZero
+   completionHandler:^(BOOL finished) {
+       [weakSelf.delegate eventName:SeekedKey value:nil];
+   }];
 }
 
 - (NSTimeInterval)currentPlaybackTime {
-    return CMTimeGetSeconds(self.currentTime);
+    return _currentPlaybackTime;
 }
 
-- (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
-    [self seekToTime:(CMTime){currPlaybackTime, 1}];
+- (void)play {
+    if (!self.rate) {
+        [super play];
+    }
 }
 
-
-
-- (double)duration {
-    AVAsset *asset = self.currentItem.asset;
-    return CMTimeGetSeconds(asset.duration);
-}
-
-- (void)bindPlayerEvents {
-    [self addPeriodicTimeObserverForInterval:(CMTime){0.1, 100}
-                                       queue:dispatch_get_main_queue()
-                                  usingBlock:^(CMTime time) {
-                                      
-    }];
-    [self addObserver:self forKeyPath:@"status" options:0 context:nil];
-}
-
-- (void)updatePlaybackProgressFromTimer:(NSTimer *)timer {
-    
+- (void)pause {
+    if (self.rate) {
+        [super pause];
+    }
 }
 
 @end
