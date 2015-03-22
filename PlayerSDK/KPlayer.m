@@ -8,7 +8,7 @@
 
 #import "KPlayer.h"
 #import "KPLog.h"
-#import "WVSettings.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 static NSString *PlayKey = @"play";
 static NSString *PauseKey = @"pause";
@@ -24,8 +24,12 @@ static NSString *CanPlayKey = @"canplay";
 static NSString *RateKeyPath = @"rate";
 static NSString *StatusKeyPath = @"status";
 
-@interface KPlayer() 
+@interface KPlayer() {
+    MPVolumeView *volumeView;
+    NSArray *prevAirPlayBtnPositionArr;
+}
 @property (nonatomic, strong) AVPlayerLayer *layer;
+@property (nonatomic, strong) UIView *parentView;
 @end
 
 @implementation KPlayer
@@ -38,6 +42,7 @@ static NSString *StatusKeyPath = @"status";
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
         _layer.frame = parentView.frame;
+        _parentView = parentView;
         [parentView.layer addSublayer:_layer];
         
         [self addObserver:self
@@ -61,7 +66,8 @@ static NSString *StatusKeyPath = @"status";
 //                                          [weakSelf.delegate eventName:ProgressKey
 //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
         }];
-        
+        self.allowsExternalPlayback = YES;
+        self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         return self;
     }
     return nil;
@@ -144,5 +150,58 @@ static NSString *StatusKeyPath = @"status";
         [super pause];
     }
 }
+
+- (void)removeAirPlayIcon {
+    KPLogTrace(@"Enter");
+    if ( volumeView ) {
+        [volumeView removeFromSuperview];
+        volumeView = nil;
+    }
+    KPLogTrace(@"Exit");
+}
+- (void)addNativeAirPlayButton {
+    KPLogTrace(@"Enter");
+    // Add airplay
+    _parentView.backgroundColor = [UIColor clearColor];
+    if ( !volumeView ) {
+        volumeView = [ [MPVolumeView alloc] init ];
+        [volumeView setShowsVolumeSlider: NO];
+    }
+    KPLogTrace(@"Exit");
+}
+
+-(void)showNativeAirPlayButton: (NSArray*)airPlayBtnPositionArr {
+    KPLogTrace(@"Enter");
+    if ( volumeView.hidden ) {
+        volumeView.hidden = NO;
+        
+        if ( prevAirPlayBtnPositionArr == nil || ![prevAirPlayBtnPositionArr isEqualToArray: airPlayBtnPositionArr] ) {
+            prevAirPlayBtnPositionArr = airPlayBtnPositionArr;
+        }else {
+            return;
+        }
+    }
+    
+    CGFloat x = [airPlayBtnPositionArr[0] floatValue];
+    CGFloat y = [airPlayBtnPositionArr[1] floatValue];
+    CGFloat w = [airPlayBtnPositionArr[2] floatValue];
+    CGFloat h = [airPlayBtnPositionArr[3] floatValue];
+    
+    volumeView.frame = CGRectMake( x, y, w, h );
+    
+    [_parentView addSubview:volumeView];
+    [_parentView bringSubviewToFront:volumeView];
+    KPLogTrace(@"Exit");
+}
+
+-(void)hideNativeAirPlayButton {
+    KPLogTrace(@"Enter");
+    if ( !volumeView.hidden ) {
+        volumeView.hidden = YES;
+    }
+    KPLogTrace(@"Exit");
+}
+
+
 
 @end

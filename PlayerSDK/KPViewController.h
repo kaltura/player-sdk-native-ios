@@ -51,8 +51,11 @@
 @property (nonatomic, assign) CGRect playerFrame;
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
-- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-- (instancetype)initWithFrame:(CGRect)frame;
+//- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
+//- (instancetype)initWithFrame:(CGRect)frame;
+- (instancetype)initWithURL:(NSURL *)url;
+- (void)addPlayerToView:(UIView *)view parentController:(UIViewController *)parentController;
+
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
 - (void)resizePlayerView:(CGRect)newFrame;

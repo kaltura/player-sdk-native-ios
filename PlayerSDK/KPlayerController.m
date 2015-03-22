@@ -36,9 +36,6 @@
     }
 }
 
-- (void)setWideVineKey:(NSString *)wideVineKey {
-    
-}
 
 - (void)setSrc:(NSString *)src {
     [_player setPlayerSource:[NSURL URLWithString:src]];
@@ -46,5 +43,9 @@
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
     _player.currentPlaybackTime = currentPlayBackTime;
+}
+
+- (void)setDrmID:(NSString *)drmID {
+    
 }
 @end

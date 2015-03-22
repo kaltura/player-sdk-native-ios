@@ -9,14 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+@class DRMHandler;
 
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
 
 @protocol KPlayerEventsDelegate <NSObject>
 
-- (void)updateTime:(NSTimeInterval)time progress:(NSTimeInterval)progress;
-- (void)seekedToTime:(NSTimeInterval)seekedTime;
 - (void)eventName:(NSString *)event value:(NSString *)value;
 
 @end
@@ -27,6 +26,7 @@ static NSString *PlayerClassName = @"KPlayer";
 @property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
+@property (nonatomic, strong) DRMHandler *handlerDRM;
 
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (void)play;
@@ -47,6 +47,6 @@ static NSString *PlayerClassName = @"KPlayer";
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
-@property (nonatomic, copy) NSString *wideVineKey;
+@property (nonatomic, copy) NSString *drmID;
 
 @end

@@ -20,6 +20,7 @@
 		B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B32A5CED1A2723730051DC7F /* KPWebKitBrowserViewController.m */; };
 		B3301D5D1AB6FAD700E9778C /* KPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3301D5C1AB6FAD700E9778C /* KPlayerController.m */; };
 		B3301D751AB9D99300E9778C /* KPlayer+WideVine.m in Sources */ = {isa = PBXBuildFile; fileRef = B3301D741AB9D99300E9778C /* KPlayer+WideVine.m */; };
+		B3301D781ABB31A800E9778C /* DRMHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3301D771ABB31A800E9778C /* DRMHandler.m */; };
 		B3410D471A6C12E300275F00 /* libGoogleIMA3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3410D241A6C0E5A00275F00 /* libGoogleIMA3.a */; };
 		B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = B3410D4C1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m */; };
@@ -164,6 +165,8 @@
 		B3301D5C1AB6FAD700E9778C /* KPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPlayerController.m; sourceTree = "<group>"; };
 		B3301D731AB9D99300E9778C /* KPlayer+WideVine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KPlayer+WideVine.h"; sourceTree = "<group>"; };
 		B3301D741AB9D99300E9778C /* KPlayer+WideVine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KPlayer+WideVine.m"; sourceTree = "<group>"; };
+		B3301D761ABB31A800E9778C /* DRMHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DRMHandler.h; sourceTree = "<group>"; };
+		B3301D771ABB31A800E9778C /* DRMHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DRMHandler.m; sourceTree = "<group>"; };
 		B33E5DAB1A1CEA2000A14A1B /* KPBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KPBrowserViewController.xib; sourceTree = "<group>"; };
 		B3410D241A6C0E5A00275F00 /* libGoogleIMA3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGoogleIMA3.a; path = ../libGoogleIMA3.a; sourceTree = "<group>"; };
 		B3410D4B1A6D45E000275F00 /* NSMutableDictionary+AdSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+AdSupport.h"; sourceTree = "<group>"; };
@@ -390,6 +393,8 @@
 				B329CD091AB19AC6004AB647 /* KPlayer.m */,
 				B3301D731AB9D99300E9778C /* KPlayer+WideVine.h */,
 				B3301D741AB9D99300E9778C /* KPlayer+WideVine.m */,
+				B3301D761ABB31A800E9778C /* DRMHandler.h */,
+				B3301D771ABB31A800E9778C /* DRMHandler.m */,
 			);
 			name = KalturaPlayer;
 			path = ..;
@@ -590,6 +595,7 @@
 				B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */,
 				B39BEC8F1A0B72760085BA26 /* SmsStrategy.m in Sources */,
 				B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */,
+				B3301D781ABB31A800E9778C /* DRMHandler.m in Sources */,
 				B37288A41A85087E0076DD33 /* KArchiver.m in Sources */,
 				B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */,
 				B3301D5D1AB6FAD700E9778C /* KPlayerController.m in Sources */,
