@@ -41,10 +41,11 @@ static NSString *StatusKeyPath = @"status";
     self = [super init];
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
-        _layer.frame = parentView.frame;
+        _layer.frame = (CGRect){CGPointZero, parentView.frame.size};
+//        _layer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+//        _layer.needsDisplayOnBoundsChange = YES;
         _parentView = parentView;
         [parentView.layer addSublayer:_layer];
-        
         [self addObserver:self
                forKeyPath:RateKeyPath
                   options:0
