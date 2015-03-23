@@ -15,21 +15,21 @@
 
 static NSString *kPortalKey = @"kaltura";
 
--(WViOsApiStatus)initializeWD: (NSString*) key {
-    [self terminateWV];
-    WViOsApiStatus wvInitStatus = WV_Initialize( WVCallback, [self initializeWDDict: key] );
-    
-    return wvInitStatus;
-    
-}
+//-(WViOsApiStatus)initializeWD: (NSString*) key {
+//    [self terminateWV];
+//    WViOsApiStatus wvInitStatus = WV_Initialize( WVCallback, [self initializeWDDict: key] );
+//    
+//    return wvInitStatus;
+//    
+//}
 
-WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
-    KPLogTrace(@"Enter");
-    KPLogInfo( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
-    
-    KPLogTrace(@"Exit");
-    return WViOsApiStatus_OK;
-}
+//WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
+//    KPLogTrace(@"Enter");
+//    KPLogInfo( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
+//    
+//    KPLogTrace(@"Exit");
+//    return WViOsApiStatus_OK;
+//}
 
 -(NSDictionary*) initializeWDDict: (NSString*) key {
 

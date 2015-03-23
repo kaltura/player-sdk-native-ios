@@ -7,6 +7,7 @@
 //
 
 #import "KPlayerController.h"
+#import "DRMHandler.h"
 
 @interface KPlayerController()
 
@@ -46,6 +47,11 @@
 }
 
 - (void)setDrmID:(NSString *)drmID {
-    
+    __weak KPlayerController *weakSelf = self;
+    [DRMHandler DRMSource:_player.playerSource.absoluteString
+                      key:drmID
+               completion:^(NSString *DRMLink) {
+                   weakSelf.src = drmID;
+    }];
 }
 @end
