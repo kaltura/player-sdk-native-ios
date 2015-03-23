@@ -114,8 +114,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (UIView *)playerViewForParentViewController:(UIViewController *)parentViewController
                                         frame:(CGRect)frame {
     if (parentViewController && [parentViewController isKindOfClass:[UIViewController class]]) {
+        
         [parentViewController addChildViewController:self];
-        self.view.frame = embedFrame;
+        embedFrame = frame;
         [self.view addObserver:self
                     forKeyPath:@"frame"
                        options:NSKeyValueObservingOptionNew
@@ -246,7 +247,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Enter");
     //CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
-    
+//    self.view.frame = embedFrame;
     // Initialize NAtive Player
     if (!_playerController) {
         _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
@@ -255,7 +256,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     // Initialize HTML layer (controls)
     if (!self.webView) {
-        self.webView = [[KPControlsWebView alloc] initWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
+        self.webView = [[KPControlsWebView alloc] initWithFrame:self.view.frame];
         self.webView.playerControlsWebViewDelegate = self;
         [self.webView loadRequest:[NSURLRequest requestWithURL:videoURL]];
         [self.view addSubview:self.webView];
