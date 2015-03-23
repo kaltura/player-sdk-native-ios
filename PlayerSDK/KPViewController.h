@@ -54,17 +54,13 @@
 //- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 //- (instancetype)initWithFrame:(CGRect)frame;
 - (instancetype)initWithURL:(NSURL *)url;
-- (void)addPlayerToView:(UIView *)view parentController:(UIViewController *)parentController;
+- (UIView *)playerViewForParentViewController:(UIViewController *)parentViewController frame:(CGRect)frame;
 
 - (void)stopAndRemovePlayer;
-- (void)checkOrientationStatus;
-- (void)resizePlayerView:(CGRect)newFrame;
-- (void)openFullscreen;
-- (void)closeFullscreen;
+
+
 - (void)checkDeviceStatus;
-- (void)setNativeFullscreen;
-- (void)setWebViewURL: (NSString *)iframeUrl;
-+ (id)sharedChromecastDeviceController;
+
 - (void)changeMedia:(NSString *)mediaID;
 - (void)load;
 

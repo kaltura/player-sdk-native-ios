@@ -39,14 +39,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @interface KPViewController() <KPIMAAdsPlayerDatasource, KPlayerEventsDelegate>{
     // Player Params
-    BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
     CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation, deviceOrientation;
     NSString *playerSource;
     NSDictionary *appConfigDict;
-    BOOL openFullScreen;
+//    BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
     BOOL isFullScreenToggled;
@@ -65,6 +64,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSMutableArray *callBackReadyRegistrations;
     //KPKalturaPlayWithAdsSupport *IMAPlayer;
     NSURL *videoURL;
+    CGRect embedFrame;
 }
 
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
@@ -83,24 +83,24 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
 }
 
-- (instancetype)initWithFrame:(CGRect)frame {
-    self = [super init];
-    if (self) {
-        [self.view setFrame:frame];
-        originalViewControllerFrame = frame;
-        return self;
-    }
-    return nil;
-}
-
-- (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
-    self = [self initWithFrame:frame];
-    if (self) {
-        [parentView addSubview:self.view];
-        return self;
-    }
-    return nil;
-}
+//- (instancetype)initWithFrame:(CGRect)frame {
+//    self = [super init];
+//    if (self) {
+//        [self.view setFrame:frame];
+//        originalViewControllerFrame = frame;
+//        return self;
+//    }
+//    return nil;
+//}
+//
+//- (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
+//    self = [self initWithFrame:frame];
+//    if (self) {
+//        [parentView addSubview:self.view];
+//        return self;
+//    }
+//    return nil;
+//}
 
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
@@ -109,6 +109,27 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         return self;
     }
     return nil;
+}
+
+- (UIView *)playerViewForParentViewController:(UIViewController *)parentViewController
+                                        frame:(CGRect)frame {
+    if (parentViewController && [parentViewController isKindOfClass:[UIViewController class]]) {
+        [parentViewController addChildViewController:self];
+        self.view.frame = embedFrame;
+        [self.view addObserver:self
+                    forKeyPath:@"frame"
+                       options:NSKeyValueObservingOptionNew
+                       context:nil];
+        return self.view;
+    }
+    return nil;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isEqual:(self.view)] && [keyPath isEqualToString:@"frame"]) {
+        [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
+        self.webView.frame = (CGRect){CGPointZero, self.view.frame.size};
+    }
 }
 
 - (NSMutableDictionary *)players {
@@ -157,40 +178,42 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
-    UIPinchGestureRecognizer *pinch = [ [UIPinchGestureRecognizer alloc] initWithTarget: self action: @selector(didPinchInOut:) ];
+    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+                                                                                action:@selector(didPinchInOut:)];
     [self.view addGestureRecognizer:pinch];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(handleEnteredBackground:)
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
-    [self didLoad];
-    [KPViewController sharedChromecastDeviceController];
+//    [self didLoad];
+//    [KPViewController sharedChromecastDeviceController];
 //    __weak KPViewController *weakSelf = self;
 //    [self registerReadyEvent:^{
 //        weakSelf.webView.entryId = @"1_gtjr7duj";
 //    }];
+    
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    KPLogTrace(@"Enter");
-    [super viewDidAppear:animated];
-    if( [[NSUserDefaults standardUserDefaults] objectForKey: @"iframe_url"] != nil ) {
-        return;
-    }
-    
-    // Before player appears the user must set the kaltura iframe url
-    if ( kalPlayerViewControllerDelegate && [kalPlayerViewControllerDelegate respondsToSelector: @selector(getInitialKIframeUrl)] ) {
-        NSURL *url = [kalPlayerViewControllerDelegate getInitialKIframeUrl];
-        [self setWebViewURL: [NSString stringWithFormat: @"%@", url]];
-    } else {
-        KPLogError(@"Delegate MUST be set and respond to selector -getInitialKIframeUrl");
-        return;
-    }
-    KPLogTrace(@"Exit");
-}
+//- (void)viewDidAppear:(BOOL)animated {
+//    KPLogTrace(@"Enter");
+//    [super viewDidAppear:animated];
+//    if( [[NSUserDefaults standardUserDefaults] objectForKey: @"iframe_url"] != nil ) {
+//        return;
+//    }
+//    
+//    // Before player appears the user must set the kaltura iframe url
+//    if ( kalPlayerViewControllerDelegate && [kalPlayerViewControllerDelegate respondsToSelector: @selector(getInitialKIframeUrl)] ) {
+//        NSURL *url = [kalPlayerViewControllerDelegate getInitialKIframeUrl];
+//        [self setWebViewURL: [NSString stringWithFormat: @"%@", url]];
+//    } else {
+//        KPLogError(@"Delegate MUST be set and respond to selector -getInitialKIframeUrl");
+//        return;
+//    }
+//    KPLogTrace(@"Exit");
+//}
 
 - (void)handleEnteredBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
@@ -199,56 +222,44 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 
-- (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)class {
-    NSString *playerName = NSStringFromClass(class);
-    id<KalturaPlayer> newKPlayer = self.players[playerName];
-    
-    if ( newKPlayer == nil ) {
-        newKPlayer = [[class alloc] init];
-        self.players[playerName] = newKPlayer;
-        // if player is created for the first time add observer to all relevant notifications
-        [newKPlayer bindPlayerEvents];
-    }
-    
-    if ( [self player] ) {
-        
-        KPLogInfo(@"%f", [[self player] currentPlaybackTime]);
-        [newKPlayer copyParamsFromPlayer: [self player]];
-    }
-    
-    return newKPlayer;
-}
+//- (id<KalturaPlayer>)getPlayerByClass: (Class<KalturaPlayer>)class {
+//    NSString *playerName = NSStringFromClass(class);
+//    id<KalturaPlayer> newKPlayer = self.players[playerName];
+//    
+//    if ( newKPlayer == nil ) {
+//        newKPlayer = [[class alloc] init];
+//        self.players[playerName] = newKPlayer;
+//        // if player is created for the first time add observer to all relevant notifications
+//        [newKPlayer bindPlayerEvents];
+//    }
+//    
+//    if ( [self player] ) {
+//        
+//        KPLogInfo(@"%f", [[self player] currentPlaybackTime]);
+//        [newKPlayer copyParamsFromPlayer: [self player]];
+//    }
+//    
+//    return newKPlayer;
+//}
 
 - (void)viewWillAppear:(BOOL)animated {
     KPLogTrace(@"Enter");
-    CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
+    //CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
     
-    if ( !isFullScreen && !isResumePlayer ) {
-        self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
-        [[self webView] setPlayerControlsWebViewDelegate: self];
-        
-//        self.player = [self getPlayerByClass:[KalturaPlayer class]];
-//        NSAssert([self player], @"You MUST initilize and set player in order to make the view work!");
-//
-//        self.player.view.frame = playerViewFrame;
+    
+    // Initialize NAtive Player
+    if (!_playerController) {
         _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
         [_playerController addPlayerToView:self.view];
         [_playerController.player setDelegate:self];
-        
-        // WebView initialize for supporting NativeComponent(html5 player view)
-        [ [[self webView] scrollView] setScrollEnabled: NO ];
-        [ [[self webView] scrollView] setBounces: NO ];
-        [ [[self webView] scrollView] setBouncesZoom: NO ];
-        self.webView.opaque = NO;
-        self.webView.backgroundColor = [UIColor clearColor];
-        [self.webView loadRequest:[NSURLRequest requestWithURL:videoURL]];
-        // Add NativeComponent (html5 player view) webView to player view
-        //[[[self player] view] addSubview: [self webView]];
-        //[[self view] addSubview: [[self player] view]];
-        [self.view addSubview:self.webView];
-        //self.player.controlStyle = MPMovieControlStyleNone;
     }
-    
+    // Initialize HTML layer (controls)
+    if (!self.webView) {
+        self.webView = [[KPControlsWebView alloc] initWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
+        self.webView.playerControlsWebViewDelegate = self;
+        [self.webView loadRequest:[NSURLRequest requestWithURL:videoURL]];
+        [self.view addSubview:self.webView];
+    }
     [super viewWillAppear:NO];
     
     KPLogTrace(@"Exit");
@@ -265,17 +276,17 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 #pragma mark - WebView Methods
 
-- (void)setWebViewURL: (NSString *)iframeUrl {
-    KPLogTrace(@"Enter");
-    [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
-    
-//    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    
-    
-    /// Add the idfa to the iframeURL
-    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl.appendVersion] ] ];
-    KPLogTrace(@"Exit");
-}
+//- (void)setWebViewURL: (NSString *)iframeUrl {
+//    KPLogTrace(@"Enter");
+//    [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
+//    
+////    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+//    
+//    
+//    /// Add the idfa to the iframeURL
+//    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl.appendVersion] ] ];
+//    KPLogTrace(@"Exit");
+//}
 
 - (void)changeMedia:(NSString *)mediaID {
     NSString *name = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
@@ -833,31 +844,31 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self.webView triggerEvent:event withValue:value];
 }
 
-- (void)bindPlayerEvents{
-    KPLogTrace(@"Enter");
-    if ( self ) {
-//        [[self player] bindPlayerEvents];
-        NSArray *kPlayerEvents = @[@"canplay",
-                                   @"durationchange",
-                                   @"loadedmetadata",
-                                   @"play",
-                                   @"pause",
-                                   @"ended",
-                                   @"seeking",
-                                   @"seeked",
-                                   @"timeupdate",
-                                   @"progress",
-                                   @"fetchNativeAdID"];
-        
-        for (id kPlayerEvent in kPlayerEvents) {
-            [[NSNotificationCenter defaultCenter] addObserver: self
-                                                      selector: @selector(triggerKPlayerNotification:)
-                                                          name: kPlayerEvent
-                                                        object: nil];
-        }
-    }
-    KPLogTrace(@"Exit");
-}
+//- (void)bindPlayerEvents{
+//    KPLogTrace(@"Enter");
+//    if ( self ) {
+////        [[self player] bindPlayerEvents];
+//        NSArray *kPlayerEvents = @[@"canplay",
+//                                   @"durationchange",
+//                                   @"loadedmetadata",
+//                                   @"play",
+//                                   @"pause",
+//                                   @"ended",
+//                                   @"seeking",
+//                                   @"seeked",
+//                                   @"timeupdate",
+//                                   @"progress",
+//                                   @"fetchNativeAdID"];
+//        
+//        for (id kPlayerEvent in kPlayerEvents) {
+//            [[NSNotificationCenter defaultCenter] addObserver: self
+//                                                      selector: @selector(triggerKPlayerNotification:)
+//                                                          name: kPlayerEvent
+//                                                        object: nil];
+//        }
+//    }
+//    KPLogTrace(@"Exit");
+//}
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     KPLogTrace(@"Enter");
@@ -978,22 +989,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 
 
-- (void)switchPlayer:(Class)p {
-    KPLogTrace(@"Enter");
-    [[self player] stop];
-    self.player = [self getPlayerByClass: p];
-    
-//    if ( [self.player isPreparedToPlay] ) {
-//        [self.player play];
-//    }
-    KPLogTrace(@"Exit");
-}
+//- (void)switchPlayer:(Class)p {
+//    KPLogTrace(@"Enter");
+//    [[self player] stop];
+//    self.player = [self getPlayerByClass: p];
+//    
+////    if ( [self.player isPreparedToPlay] ) {
+////        [self.player play];
+////    }
+//    KPLogTrace(@"Exit");
+//}
 
--(void)showChromecastDeviceList {
-    KPLogTrace(@"Enter");
-    [ [KPViewController sharedChromecastDeviceController] chooseDevice: self];
-    KPLogTrace(@"Exit");
-}
+//-(void)showChromecastDeviceList {
+//    KPLogTrace(@"Enter");
+//    [ [KPViewController sharedChromecastDeviceController] chooseDevice: self];
+//    KPLogTrace(@"Exit");
+//}
 
 
 #pragma mark -
@@ -1031,78 +1042,78 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 //    KPLogTrace(@"Exit");
 //}
 
-- (void)didConnectToDevice:(GCKDevice*)device {
-    KPLogTrace(@"Enter");
-    [self switchPlayer: [KPChromecast class]];
-    self.triggerEvent(@"chromecastDeviceConnected", nil);
-    KPLogTrace(@"Exit");
-}
+//- (void)didConnectToDevice:(GCKDevice*)device {
+//    KPLogTrace(@"Enter");
+//    [self switchPlayer: [KPChromecast class]];
+//    self.triggerEvent(@"chromecastDeviceConnected", nil);
+//    KPLogTrace(@"Exit");
+//}
 
-- (void)didReceiveMediaStateChange {
-    KPLogTrace(@"Enter");
-    if (![self.player isKindOfClass:[KPChromecast class]]) {
-        return;
-    }
-    
-    KPChromecast *chromecastPlayer = (KPChromecast *) self.player;
-    
-    if ( [[KPViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePlaying ) {
-        [chromecastPlayer triggerMediaNowPlaying];
-//        [self triggerEventsJavaScript: @"play" WithValue: nil];
-    } else if ( [[KPViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePaused ) {
-        [chromecastPlayer triggerMediaNowPaused];
-    }
-    KPLogTrace(@"Exit");
-}
+//- (void)didReceiveMediaStateChange {
+//    KPLogTrace(@"Enter");
+//    if (![self.player isKindOfClass:[KPChromecast class]]) {
+//        return;
+//    }
+//    
+//    KPChromecast *chromecastPlayer = (KPChromecast *) self.player;
+//    
+//    if ( [[KPViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePlaying ) {
+//        [chromecastPlayer triggerMediaNowPlaying];
+////        [self triggerEventsJavaScript: @"play" WithValue: nil];
+//    } else if ( [[KPViewController sharedChromecastDeviceController] playerState] == GCKMediaPlayerStatePaused ) {
+//        [chromecastPlayer triggerMediaNowPaused];
+//    }
+//    KPLogTrace(@"Exit");
+//}
 
-// Chromecast
-- (void)didLoad {
-    KPLogTrace(@"Enter");
-    showChromecastBtn = NO;
-    [[KPViewController sharedChromecastDeviceController] performScan: YES];
-    KPLogTrace(@"Exit");
-}
+//// Chromecast
+//- (void)didLoad {
+//    KPLogTrace(@"Enter");
+//    showChromecastBtn = NO;
+//    [[KPViewController sharedChromecastDeviceController] performScan: YES];
+//    KPLogTrace(@"Exit");
+//}
+//
+//+ (id)sharedChromecastDeviceController {
+//    KPLogTrace(@"Enter");
+//    static ChromecastDeviceController *chromecastDeviceController = nil;
+//    static dispatch_once_t onceToken;
+//
+//    dispatch_once( &onceToken, ^{
+//       chromecastDeviceController = [[ChromecastDeviceController alloc] init];
+//    });
+//    KPLogTrace(@"Exit");
+//    return chromecastDeviceController;
+//}
+//
+//- (void)didDiscoverDeviceOnNetwork {
+//    KPLogTrace(@"Enter");
+//    if ( [[[KPViewController sharedChromecastDeviceController] deviceScanner] devices] ) {
+//        showChromecastBtn = YES;
+//    }
+//    KPLogTrace(@"Exit");
+//}
+//
+//-(void)notifyLayoutReady {
+//    KPLogTrace(@"Enter");
+//    [self setChromecastVisiblity];
+//    KPLogTrace(@"Exit");
+//}
+//
+//- (void)setChromecastVisiblity {
+//    KPLogTrace(@"Enter");
+//    if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
+//        self.setKDPAttribute(@"chromecast", @"visible", showChromecastBtn ? @"true": @"false");
+//    }
+//    KPLogTrace(@"Exit");
+//}
 
-+ (id)sharedChromecastDeviceController {
-    KPLogTrace(@"Enter");
-    static ChromecastDeviceController *chromecastDeviceController = nil;
-    static dispatch_once_t onceToken;
-
-    dispatch_once( &onceToken, ^{
-       chromecastDeviceController = [[ChromecastDeviceController alloc] init];
-    });
-    KPLogTrace(@"Exit");
-    return chromecastDeviceController;
-}
-
-- (void)didDiscoverDeviceOnNetwork {
-    KPLogTrace(@"Enter");
-    if ( [[[KPViewController sharedChromecastDeviceController] deviceScanner] devices] ) {
-        showChromecastBtn = YES;
-    }
-    KPLogTrace(@"Exit");
-}
-
--(void)notifyLayoutReady {
-    KPLogTrace(@"Enter");
-    [self setChromecastVisiblity];
-    KPLogTrace(@"Exit");
-}
-
-- (void)setChromecastVisiblity {
-    KPLogTrace(@"Enter");
-    if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
-        self.setKDPAttribute(@"chromecast", @"visible", showChromecastBtn ? @"true": @"false");
-    }
-    KPLogTrace(@"Exit");
-}
-
-- (void)didDisconnect {
-    KPLogTrace(@"Enter");
-    [self switchPlayer: [KalturaPlayer class]];
-    self.triggerEvent(@"chromecastDeviceDisConnected", nil);
-    KPLogTrace(@"Exit");
-}
+//- (void)didDisconnect {
+//    KPLogTrace(@"Enter");
+//    [self switchPlayer: [KalturaPlayer class]];
+//    self.triggerEvent(@"chromecastDeviceDisConnected", nil);
+//    KPLogTrace(@"Exit");
+//}
 
 #pragma mark KPIMAAdsPlayerDatasource
 - (NSTimeInterval)currentTime {
