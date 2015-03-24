@@ -860,7 +860,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
-            _playerController.drmID = attributeVal;
+            [_playerController switchPlayer:WideVinePlayerClass key:attributeVal];
             break;
 #endif
         case nativeAction:

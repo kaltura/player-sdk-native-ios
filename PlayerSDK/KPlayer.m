@@ -27,6 +27,7 @@ static NSString *StatusKeyPath = @"status";
 @interface KPlayer() {
     MPVolumeView *volumeView;
     NSArray *prevAirPlayBtnPositionArr;
+    id observer;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, strong) UIView *parentView;
@@ -46,22 +47,15 @@ static NSString *StatusKeyPath = @"status";
 //        _layer.needsDisplayOnBoundsChange = YES;
         _parentView = parentView;
         [parentView.layer addSublayer:_layer];
-        [self addObserver:self
-               forKeyPath:RateKeyPath
-                  options:0
-                  context:nil];
-        [self addObserver:self
-               forKeyPath:StatusKeyPath
-                  options:0
-                  context:nil];
+        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(videoEnded)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:nil];
         __weak KPlayer *weakSelf = self;
-        [self addPeriodicTimeObserverForInterval:CMTimeMake(20, 100)
-                                           queue:dispatch_get_main_queue()
-                                      usingBlock:^(CMTime time) {
+        observer = [self addPeriodicTimeObserverForInterval:CMTimeMake(20, 100)
+                                                      queue:dispatch_get_main_queue()
+                                                 usingBlock:^(CMTime time) {
                                           [weakSelf.delegate eventName:TimeUpdateKey
                                                                  value:@(CMTimeGetSeconds(time)).stringValue];
 //                                          [weakSelf.delegate eventName:ProgressKey
@@ -84,7 +78,7 @@ static NSString *StatusKeyPath = @"status";
         } else {
             [self.delegate eventName:@"pause" value:nil];
         }
-    } else if (StatusKeyPath) {
+    } else if ([keyPath isEqualToString:StatusKeyPath]) {
         switch (self.status) {
             case AVPlayerStatusFailed:
                 
@@ -100,13 +94,29 @@ static NSString *StatusKeyPath = @"status";
     }
 }
 
+
 - (void)videoEnded {
     [self.delegate eventName:EndedKey value:nil];
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
+    KPLogInfo(@"%@", playerSource);
+    if (self.currentItem) {
+        [self removeObserver:self forKeyPath:RateKeyPath context:nil];
+        [self removeObserver:self forKeyPath:StatusKeyPath context:nil];
+    }
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
-    [self replaceCurrentItemWithPlayerItem:item];
+    [self addObserver:self
+           forKeyPath:RateKeyPath
+              options:0
+              context:nil];
+    [self addObserver:self
+           forKeyPath:StatusKeyPath
+              options:0
+              context:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self replaceCurrentItemWithPlayerItem:item];
+    });
 }
 
 - (NSURL *)playerSource {
@@ -203,6 +213,17 @@ static NSString *StatusKeyPath = @"status";
     KPLogTrace(@"Exit");
 }
 
+- (void)removePlayer {
+    [_layer removeFromSuperlayer];
+    _layer = nil;
+    [self removeTimeObserver:observer];
+    [self removeObserver:self forKeyPath:StatusKeyPath context:nil];
+    [self removeObserver:self forKeyPath:RateKeyPath context:nil];
+    _delegate = nil;
+}
 
+- (void)dealloc {
+    
+}
 
 @end

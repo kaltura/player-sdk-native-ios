@@ -7,9 +7,12 @@
 //
 
 #import "KPlayerController.h"
-#import "DRMHandler.h"
+#import "KPLog.h"
 
-@interface KPlayerController()
+@interface KPlayerController() {
+    NSString *key;
+    id playerDelegate;
+}
 
 @property (nonatomic, strong) UIView *view;
 @end
@@ -28,17 +31,25 @@
 
 - (void)addPlayerToView:(UIView *)parentView {
     _view = parentView;
-    Class class = NSClassFromString(_playerClassName);
-    _player = [(id<KPlayer>)[class alloc] initWithParentView:parentView];
-    if (_player) {
-        
-    } else {
-        ///@todo error
+    if (!self.player) {
+        KPLogError(@"%@", @"NO PLAYER CREATED");
+    } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
+        self.player.DRMKey = key;
+        self.player.delegate = playerDelegate;
     }
+}
+
+- (id<KPlayer>)player {
+    if (!_player) {
+        Class class = NSClassFromString(_playerClassName);
+        _player = [(id<KPlayer>)[class alloc] initWithParentView:_view];
+    }
+    return _player;
 }
 
 
 - (void)setSrc:(NSString *)src {
+    _src = src;
     [_player setPlayerSource:[NSURL URLWithString:src]];
 }
 
@@ -46,12 +57,15 @@
     _player.currentPlaybackTime = currentPlayBackTime;
 }
 
-- (void)setDrmID:(NSString *)drmID {
-    __weak KPlayerController *weakSelf = self;
-    [DRMHandler DRMSource:_player.playerSource.absoluteString
-                      key:drmID
-               completion:^(NSString *DRMLink) {
-                   weakSelf.src = drmID;
-    }];
+
+
+- (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
+    playerDelegate = _player.delegate;
+    [_player removePlayer];
+    _player = nil;
+    _playerClassName = playerClassName;
+    key = _key;
+    [self addPlayerToView:_view];
+    self.src = _src;
 }
 @end

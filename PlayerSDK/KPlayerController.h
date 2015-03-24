@@ -14,6 +14,9 @@
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
 
+static NSString *ChromeCastPlayerClassName = @"";
+static NSString *WideVinePlayerClass = @"WVPlayer";
+
 @protocol KPlayerEventsDelegate <NSObject>
 
 - (void)eventName:(NSString *)event value:(NSString *)value;
@@ -26,13 +29,15 @@ static NSString *PlayerClassName = @"KPlayer";
 @property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
-@property (nonatomic, strong) DRMHandler *handlerDRM;
+
 
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (void)play;
 - (void)pause;
+- (void)removePlayer;
 
-
+@optional
+@property (nonatomic, copy) NSString *DRMKey;
 @end
 
 
@@ -42,11 +47,12 @@ static NSString *PlayerClassName = @"KPlayer";
 
 - (instancetype)initWithPlayerClassName:(NSString *)className;
 - (void)addPlayerToView:(UIView *)parentView;
+- (void)switchPlayer:(NSString *)playerClassName key:(NSString *)key;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
-@property (nonatomic, copy) NSString *drmID;
+
 
 @end
