@@ -47,11 +47,11 @@
     return self;
 }
 
-- (void)loadIMAAd:(NSString *)adLink eventsListener:(void (^)(NSDictionary *))adListener {
+- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void (^)(NSDictionary *))adListener  {
     AdEventsListener = [adListener copy];
     
     // Load AVPlayer with path to our content.
-    self.contentPlayer = [AVPlayer new];
+    self.contentPlayer = contentPlayer;
     
     // Create a player layer for the player.
     AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.contentPlayer];

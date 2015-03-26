@@ -41,7 +41,7 @@
  *  @param  NSString adLink contains the link to the XML file of the vast 
  *  @param  Block adListener which notifies the KPlayerViewController on the events of the ads
  */
-- (void)loadIMAAd:(NSString *)adLink eventsListener:(void(^)(NSDictionary *adEventParams))adListener;
+- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void(^)(NSDictionary *adEventParams))adListener;
 
 
 /// Releasing the memory of the IMA player
