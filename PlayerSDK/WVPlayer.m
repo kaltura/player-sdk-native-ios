@@ -12,11 +12,17 @@
 
 static NSString *kPortalKey = @"kaltura";
 
+@interface WVPlayer()
+@end
+
 @implementation WVPlayer
 @synthesize DRMKey;
 - (void)setPlayerSource:(NSURL *)playerSource {
-    [self.class DRMSource:playerSource.absoluteString key:self.DRMKey completion:^(NSString *drmUrl) {
+    [self.class DRMSource:playerSource.absoluteString
+                      key:self.DRMKey
+               completion:^(NSString *drmUrl) {
         super.playerSource = [NSURL URLWithString:drmUrl];
+//        [self play];
     }];
 }
 
@@ -28,13 +34,13 @@ static NSString *kPortalKey = @"kaltura";
 
 + (void)fetchDRMParams:(NSArray *)params {
     NSMutableString *responseUrl = [NSMutableString string];
-    WViOsApiStatus status = WV_Play(params[0], responseUrl, 0);
+    WViOsApiStatus status = WV_Play(params.firstObject, responseUrl, 0);
     KPLogDebug(@"widevine response url: %@", responseUrl);
     if ( status != WViOsApiStatus_OK ) {
         KPLogError(@"ERROR: %u",status);
         return;
     }
-    ((void(^)(NSString *))params[1])(responseUrl);
+    ((void(^)(NSString *))params.lastObject)(responseUrl);
 }
 
 

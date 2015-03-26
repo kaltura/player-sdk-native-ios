@@ -17,11 +17,8 @@ static NSString *PlayerClassName = @"KPlayer";
 static NSString *ChromeCastPlayerClassName = @"";
 static NSString *WideVinePlayerClass = @"WVPlayer";
 
-@protocol KPlayerEventsDelegate <NSObject>
 
-- (void)eventName:(NSString *)event value:(NSString *)value;
-
-@end
+@protocol KPlayerEventsDelegate;
 
 @protocol KPlayer <NSObject>
 
@@ -29,6 +26,7 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 @property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
+@property (nonatomic) BOOL isKPlayer;
 
 
 - (instancetype)initWithParentView:(UIView *)parentView;
@@ -40,7 +38,11 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 @property (nonatomic, copy) NSString *DRMKey;
 @end
 
+@protocol KPlayerEventsDelegate <NSObject>
 
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
+
+@end
 
 
 @interface KPlayerController : NSObject

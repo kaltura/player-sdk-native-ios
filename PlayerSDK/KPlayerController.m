@@ -8,10 +8,12 @@
 
 #import "KPlayerController.h"
 #import "KPLog.h"
+#import "NSString+Utilities.h"
 
-@interface KPlayerController() {
+@interface KPlayerController() <KPlayerEventsDelegate>{
     NSString *key;
     id playerDelegate;
+    BOOL isSeeked;
 }
 
 @property (nonatomic, strong) UIView *view;
@@ -35,7 +37,7 @@
         KPLogError(@"%@", @"NO PLAYER CREATED");
     } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
         self.player.DRMKey = key;
-        self.player.delegate = playerDelegate;
+        self.player.delegate = self;
     }
 }
 
@@ -61,11 +63,33 @@
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
     playerDelegate = _player.delegate;
-    [_player removePlayer];
-    _player = nil;
+    _player.delegate = self;
     _playerClassName = playerClassName;
     key = _key;
-    [self addPlayerToView:_view];
-    self.src = _src;
+}
+
+#pragma mark KPlayerEventsDelegate
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    static NSTimeInterval currentTime;
+    if (currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
+        currentTime = _player.currentPlaybackTime;
+        [_player removePlayer];
+        _player = nil;
+        [self addPlayerToView:_view];
+        self.src = _src;
+        isSeeked = event.isSeeked;
+    }
+    if (!currentPlayer.isKPlayer && event.canPlay) {
+        if (currentTime) {
+            _player.currentPlaybackTime = currentTime;
+        }
+        if (!isSeeked) {
+            [_player play];
+        }
+        self.player.delegate = playerDelegate;
+    }
+    if (!currentPlayer.isKPlayer && (event.isMetadata || event.isDurationChanged || event.isPlay || event.isSeeked)) {
+        [playerDelegate player:currentPlayer eventName:event value:value];
+    }
 }
 @end

@@ -70,6 +70,22 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self isEqualToString:KPlayerEventToggleFullScreen];
 }
 
+- (BOOL)isSeeked {
+    return [self isEqualToString:@"seeked"];
+}
+
+- (BOOL)canPlay {
+    return [self isEqualToString:@"canplay"];
+}
+
+- (BOOL)isDurationChanged {
+    return [self isEqualToString:@"durationchange"];
+}
+
+- (BOOL)isMetadata {
+    return [self isEqualToString:@"loadedmetadata"];
+}
+
 - (FunctionComponents)extractFunction {
     struct FunctionComponents function;
     function.name = nil;
