@@ -59,6 +59,10 @@
     _player.currentPlaybackTime = currentPlayBackTime;
 }
 
+- (void)setAdTagURL:(NSString *)adTagURL {
+    
+}
+
 
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {

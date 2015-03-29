@@ -40,7 +40,8 @@ static NSString *NativeActionKey = @"nativeAction";
                             @"wvServerKey",
 #endif
                             @"nativeAction",
-                            @"doubleClickRequestAds"];
+                            @"doubleClickRequestAds",
+                            @"language"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }

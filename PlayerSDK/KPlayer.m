@@ -130,6 +130,7 @@ static NSString *StatusKeyPath = @"status";
     });
 }
 
+
 - (NSURL *)playerSource {
     // get current asset
     AVAsset *currentPlayerAsset = self.currentItem.asset;

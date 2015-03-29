@@ -35,7 +35,8 @@ typedef enum{
     wvServerKey,
 #endif
     nativeAction,
-    doubleClickRequestAds
+    doubleClickRequestAds,
+    language
 } Attribute;
 
 

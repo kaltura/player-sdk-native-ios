@@ -64,6 +64,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSMutableArray *callBackReadyRegistrations;
     //KPKalturaPlayWithAdsSupport *IMAPlayer;
     NSURL *videoURL;
+    NSString *localeString;
 }
 
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
@@ -582,16 +583,20 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                  options:0
                                                                    error:nil];
             break;
+        case language:
+            localeString = attributeVal;
+            break;
         case doubleClickRequestAds: {
-            [self.player pause];
+//            [self.player pause];
             __weak KPViewController *weakSelf = self;
             KPIMAPlayerViewController *imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
-            [imaPlayer loadIMAAd:attributeVal eventsListener:^(NSDictionary *adEventParams) {
+            [imaPlayer loadIMAAd:attributeVal withContentPlayer:_playerController.player eventsListener:^(NSDictionary *adEventParams) {
                 if (adEventParams) {
                     [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
-                } else {
-                    [imaPlayer destroy];
                 }
+//                if ([adEventParams.allKeys.firstObject isEqualToString:AdCompletedKey]) {
+//                    <#statements#>
+//                }
                 
             }];
             
@@ -666,6 +671,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (CGFloat)adPlayerHeight {
     return self.webView.videoHolderHeight;
+}
+
+- (NSString *)locale {
+    return localeString.copy;
 }
 @end
 

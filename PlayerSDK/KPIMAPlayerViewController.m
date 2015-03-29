@@ -32,6 +32,8 @@
 
 /// Main point of interaction with the SDK. Created by the SDK as the result of an ad request.
 @property(nonatomic, strong) IMAAdsManager *adsManager;
+
+@property (nonatomic, strong) IMAAVPlayerContentPlayhead *playhead;
 @end
 
 @implementation KPIMAPlayerViewController
@@ -52,14 +54,6 @@
     
     // Load AVPlayer with path to our content.
     self.contentPlayer = contentPlayer;
-    
-    // Create a player layer for the player.
-    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.contentPlayer];
-    
-    // Size, position, and display the AVPlayer.
-    playerLayer.frame = self.view.layer.bounds;
-    [self.view.layer addSublayer:playerLayer];
-    
     IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:adLink
                                                   adDisplayContainer:self.adDisplayContainer
                                                          userContext:nil];
@@ -128,10 +122,22 @@
 
 - (IMAAdsLoader *)adsLoader {
     if (!_adsLoader) {
-        _adsLoader = [[IMAAdsLoader alloc] initWithSettings:nil];
+        IMASettings *settings = nil;
+        if (_parentController.locale && _parentController.locale.length) {
+            settings = [IMASettings new];
+            settings.language = _parentController.locale;
+        }
+        _adsLoader = [[IMAAdsLoader alloc] initWithSettings:settings];
         _adsLoader.delegate = self;
     }
     return _adsLoader;
+}
+
+- (IMAAVPlayerContentPlayhead *)playhead {
+    if (!_playhead) {
+        _playhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
+    }
+    return _playhead;
 }
 
 
@@ -142,7 +148,7 @@
     self.adsManager.delegate = self;
     
     // Initialize the ads manager.
-    [self.adsManager initializeWithContentPlayhead:_parentController
+    [self.adsManager initializeWithContentPlayhead:self.playhead
                               adsRenderingSettings:self.adsRenderingSettings];
     if (AdEventsListener) {
         AdEventsListener(AdLoadedEventKey.nullVal);
@@ -170,14 +176,17 @@
             self.adEventParams.adSystem = @"null";
             self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
             eventParams = self.adEventParams.toJSON.adLoaded;
+            
             break;
         case kIMAAdEvent_STARTED:
+            self.view.hidden = NO;
             self.adEventParams.duration = event.ad.duration;
             eventParams = self.adEventParams.toJSON.adStart;
             break;
         case kIMAAdEvent_COMPLETE:
             self.adEventParams.adID = event.ad.adId;
             eventParams = self.adEventParams.toJSON.adCompleted;
+            self.view.hidden = YES;
             break;
         case kIMAAdEvent_ALL_ADS_COMPLETED:
             eventParams = AllAdsCompletedKey.nullVal;

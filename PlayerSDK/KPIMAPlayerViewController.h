@@ -20,6 +20,8 @@
 /// Supplies the height of the video holder dynamically
 @property (nonatomic, assign, readonly) CGFloat adPlayerHeight;
 
+@property (nonatomic, copy) NSString *locale;
+
 @end
 
 @interface KPIMAPlayerViewController : UIViewController <IMAAdsLoaderDelegate, IMAAdsManagerDelegate>

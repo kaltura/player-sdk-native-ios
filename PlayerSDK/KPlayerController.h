@@ -26,7 +26,7 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 @property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
-@property (nonatomic) BOOL isKPlayer;
+@property (nonatomic, readonly) BOOL isKPlayer;
 
 
 - (instancetype)initWithParentView:(UIView *)parentView;
@@ -50,10 +50,12 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 - (instancetype)initWithPlayerClassName:(NSString *)className;
 - (void)addPlayerToView:(UIView *)parentView;
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)key;
+- (void)loadIMAPlayer:(NSString *)adTagURL;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
+@property (nonatomic, copy) NSString *adTagURL;
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
 
 
