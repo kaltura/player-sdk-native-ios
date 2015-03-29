@@ -61,6 +61,10 @@
     [self.adsLoader requestAdsWithRequest:request];
 }
 
+- (void)contentCompleted {
+    [self.adsLoader contentComplete];
+}
+
 - (void)destroy {
     _parentController = nil;
     AdEventsListener = nil;
@@ -146,7 +150,6 @@
     // Grab the instance of the IMAAdsManager and set ourselves as the delegate.
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
-    
     // Initialize the ads manager.
     [self.adsManager initializeWithContentPlayhead:self.playhead
                               adsRenderingSettings:self.adsRenderingSettings];
@@ -154,6 +157,7 @@
         AdEventsListener(AdLoadedEventKey.nullVal);
     }
 }
+
 
 - (void)adsLoader:(IMAAdsLoader *)loader failedWithErrorData:(IMAAdLoadingErrorData *)adErrorData {
     // Something went wrong loading ads. Log the error and play the content.
@@ -266,7 +270,6 @@
         timeParams.duration = totalTime;
         timeParams.remain = totalTime - mediaTime;
         AdEventsListener(timeParams.toJSON.adRemainingTimeChange);
-        timeParams = nil;
     }
 }
 

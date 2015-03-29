@@ -74,6 +74,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic) CGRect startFrame;
+@property (nonatomic, strong) KPIMAPlayerViewController *imaPlayer;
 @end
 
 @implementation KPViewController 
@@ -546,6 +547,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    if ([event isEqualToString:@"ended"]) {
+        [_imaPlayer contentCompleted];
+    } 
     [self.webView triggerEvent:event withValue:value];
 }
 
@@ -589,8 +593,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         case doubleClickRequestAds: {
 //            [self.player pause];
             __weak KPViewController *weakSelf = self;
-            KPIMAPlayerViewController *imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
-            [imaPlayer loadIMAAd:attributeVal withContentPlayer:_playerController.player eventsListener:^(NSDictionary *adEventParams) {
+             _imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
+            [_imaPlayer loadIMAAd:attributeVal withContentPlayer:_playerController.player eventsListener:^(NSDictionary *adEventParams) {
                 if (adEventParams) {
                     [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
                 }

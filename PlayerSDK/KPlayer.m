@@ -150,7 +150,7 @@ static NSString *StatusKeyPath = @"status";
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     _currentPlaybackTime = currentPlaybackTime;
     __weak KPlayer *weakSelf = self;
-    [self seekToTime:CMTimeMake(currentPlaybackTime, 1000)
+    [self seekToTime:CMTimeMake(currentPlaybackTime, 1)
      toleranceBefore:kCMTimeZero
       toleranceAfter:kCMTimeZero
    completionHandler:^(BOOL finished) {

@@ -49,5 +49,5 @@
 /// Releasing the memory of the IMA player
 - (void)destroy;
 
-
+- (void)contentCompleted;
 @end
