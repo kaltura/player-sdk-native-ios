@@ -12,7 +12,7 @@
 
 @interface KPIMAPlayerViewController () <IMAWebOpenerDelegate>{
     void(^AdEventsListener)(NSDictionary *adEventParams);
-    __weak UIViewController<KPIMAAdsPlayerDatasource> *_parentController;
+//    __weak UIViewController<KPIMAAdsPlayerDatasource> *_parentController;
 }
 
 /// Contains the params for the logic layer
@@ -39,15 +39,15 @@
 @implementation KPIMAPlayerViewController
 
 #pragma mark Public Methods
-- (instancetype)initWithParent:(UIViewController<KPIMAAdsPlayerDatasource> *)parentController {
-    self = [super init];
-    if (self) {
-        _parentController = parentController;
-        [parentController addChildViewController:self];
-        [parentController.view addSubview:self.view];
-    }
-    return self;
-}
+//- (instancetype)initWithParent:(UIViewController<KPIMAAdsPlayerDatasource> *)parentController {
+//    self = [super init];
+//    if (self) {
+//        _parentController = parentController;
+//        [parentController addChildViewController:self];
+//        [parentController.view addSubview:self.view];
+//    }
+//    return self;
+//}
 
 - (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void (^)(NSDictionary *))adListener  {
     AdEventsListener = [adListener copy];
@@ -66,7 +66,7 @@
 }
 
 - (void)destroy {
-    _parentController = nil;
+//    _parentController = nil;
     AdEventsListener = nil;
     _adEventParams = nil;
     _adsLoader = nil;
@@ -82,7 +82,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor clearColor];
-    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _parentController.adPlayerHeight};
+    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _adPlayerHeight};
     
 }
 
@@ -127,9 +127,9 @@
 - (IMAAdsLoader *)adsLoader {
     if (!_adsLoader) {
         IMASettings *settings = nil;
-        if (_parentController.locale && _parentController.locale.length) {
+        if (_locale && _locale.length) {
             settings = [IMASettings new];
-            settings.language = _parentController.locale;
+            settings.language = _locale;
         }
         _adsLoader = [[IMAAdsLoader alloc] initWithSettings:settings];
         _adsLoader.delegate = self;

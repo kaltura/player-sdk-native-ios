@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPIMAAdsPlayerDatasource, KPlayerEventsDelegate>{
+@interface KPViewController() <KPlayerEventsDelegate>{
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     CGRect originalViewControllerFrame;
@@ -204,7 +204,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     if (!_playerController) {
         _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
-        [_playerController addPlayerToView:self.view];
+        [_playerController addPlayerToController:self];
         [_playerController.player setDelegate:self];
     }
     // Initialize HTML layer (controls)
@@ -548,9 +548,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     if ([event isEqualToString:@"ended"]) {
-        [_imaPlayer contentCompleted];
+        [_playerController contentCompleted];
     } 
     [self.webView triggerEvent:event withValue:value];
+}
+
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
+    [self.webView triggerEvent:event withJSON:jsonString];
 }
 
 
@@ -588,22 +592,23 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                    error:nil];
             break;
         case language:
-            localeString = attributeVal;
+            _playerController.locale = attributeVal;
             break;
         case doubleClickRequestAds: {
 //            [self.player pause];
-            __weak KPViewController *weakSelf = self;
-             _imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
-            [_imaPlayer loadIMAAd:attributeVal withContentPlayer:_playerController.player eventsListener:^(NSDictionary *adEventParams) {
-                if (adEventParams) {
-                    [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
-                }
-//                if ([adEventParams.allKeys.firstObject isEqualToString:AdCompletedKey]) {
-//                    <#statements#>
+//            __weak KPViewController *weakSelf = self;
+//             _imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
+//            [_imaPlayer loadIMAAd:attributeVal withContentPlayer:_playerController.player eventsListener:^(NSDictionary *adEventParams) {
+//                if (adEventParams) {
+//                    [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
 //                }
-                
-            }];
-            
+////                if ([adEventParams.allKeys.firstObject isEqualToString:AdCompletedKey]) {
+////                    <#statements#>
+////                }
+//                
+//            }];
+            _playerController.adPlayerHeight = self.webView.videoHolderHeight;
+            _playerController.adTagURL = attributeVal;
         }
             break;
         default:

@@ -9,6 +9,7 @@
 #import "KPlayerController.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
+#import "KPIMAPlayerViewController.h"
 
 @interface KPlayerController() <KPlayerEventsDelegate>{
     NSString *key;
@@ -16,7 +17,8 @@
     BOOL isSeeked;
 }
 
-@property (nonatomic, strong) UIView *view;
+@property (nonatomic, strong) UIViewController *parentViewController;
+@property (nonatomic, strong) KPIMAPlayerViewController *adController;
 @end
 
 @implementation KPlayerController
@@ -31,8 +33,8 @@
 }
 
 
-- (void)addPlayerToView:(UIView *)parentView {
-    _view = parentView;
+- (void)addPlayerToController:(UIViewController *)parentViewController {
+    _parentViewController = parentViewController;
     if (!self.player) {
         KPLogError(@"%@", @"NO PLAYER CREATED");
     } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
@@ -44,7 +46,7 @@
 - (id<KPlayer>)player {
     if (!_player) {
         Class class = NSClassFromString(_playerClassName);
-        _player = [(id<KPlayer>)[class alloc] initWithParentView:_view];
+        _player = [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
     }
     return _player;
 }
@@ -60,10 +62,25 @@
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
-    
+    if (!_adController) {
+        _adController = [KPIMAPlayerViewController new];
+        _adController.adPlayerHeight = _adPlayerHeight;
+        _adController.locale = _locale;
+        [_parentViewController addChildViewController:_adController];
+        [_parentViewController.view addSubview:_adController.view];
+        __weak KPlayerController *weakSelf = self;
+        [_adController loadIMAAd:adTagURL
+               withContentPlayer:_player
+                  eventsListener:^(NSDictionary *adEventParams) {
+                      [weakSelf.player.delegate player:weakSelf.player eventName:adEventParams.allKeys.firstObject
+                                                  JSON:adEventParams.allValues.firstObject];
+                  }];
+    }
 }
 
-
+- (void)contentCompleted {
+    [_adController contentCompleted];
+}
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
     playerDelegate = _player.delegate;
@@ -79,7 +96,7 @@
         currentTime = _player.currentPlaybackTime;
         [_player removePlayer];
         _player = nil;
-        [self addPlayerToView:_view];
+        [self addPlayerToController:_parentViewController];
         self.src = _src;
         isSeeked = event.isSeeked;
     }

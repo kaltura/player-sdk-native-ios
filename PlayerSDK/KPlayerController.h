@@ -42,21 +42,24 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
 
+@optional
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString;
+
 @end
 
 
 @interface KPlayerController : NSObject
 
 - (instancetype)initWithPlayerClassName:(NSString *)className;
-- (void)addPlayerToView:(UIView *)parentView;
+- (void)addPlayerToController:(UIViewController *)parentViewController;
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)key;
-- (void)loadIMAPlayer:(NSString *)adTagURL;
+- (void)contentCompleted;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
 @property (nonatomic, copy) NSString *adTagURL;
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
-
-
+@property (nonatomic) CGFloat adPlayerHeight;
+@property (nonatomic, copy) NSString *locale;
 @end
