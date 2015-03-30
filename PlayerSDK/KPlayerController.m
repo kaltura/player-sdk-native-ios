@@ -11,14 +11,14 @@
 #import "NSString+Utilities.h"
 #import "KPIMAPlayerViewController.h"
 
-@interface KPlayerController() <KPlayerEventsDelegate>{
+@interface KPlayerController() <KPlayerDelegate>{
     NSString *key;
-    id playerDelegate;
     BOOL isSeeked;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
+@property (nonatomic) BOOL contentEnded;
 @end
 
 @implementation KPlayerController
@@ -39,7 +39,6 @@
         KPLogError(@"%@", @"NO PLAYER CREATED");
     } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
         self.player.DRMKey = key;
-        self.player.delegate = self;
     }
 }
 
@@ -47,6 +46,7 @@
     if (!_player) {
         Class class = NSClassFromString(_playerClassName);
         _player = [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
+        _player.delegate = self;
     }
     return _player;
 }
@@ -76,23 +76,18 @@
                           [weakSelf.player.delegate player:weakSelf.player
                                                  eventName:adEventParams.allKeys.firstObject
                                                       JSON:adEventParams.allValues.firstObject];
+                      } else if (weakSelf.contentEnded){
+                          [weakSelf.delegate allAdsCompleted];
                       } else {
-                          [weakSelf.player.delegate player:weakSelf.player
-                                                 eventName:@"ended"
-                                                     value:nil];
+                          //remove IMA
                       }
                       
                   }];
     }
 }
 
-- (void)contentCompleted {
-    [_adController contentCompleted];
-}
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
-    playerDelegate = _player.delegate;
-    _player.delegate = self;
     _playerClassName = playerClassName;
     key = _key;
 }
@@ -100,25 +95,32 @@
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     static NSTimeInterval currentTime;
-    if (currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
+    if (key && currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
         currentTime = _player.currentPlaybackTime;
         [_player removePlayer];
         _player = nil;
         [self addPlayerToController:_parentViewController];
         self.src = _src;
         isSeeked = event.isSeeked;
-    }
-    if (!currentPlayer.isKPlayer && event.canPlay) {
+    } else if (!currentPlayer.isKPlayer && event.canPlay) {
         if (currentTime) {
             _player.currentPlaybackTime = currentTime;
         }
         if (!isSeeked) {
             [_player play];
         }
-        self.player.delegate = playerDelegate;
-    }
-    if (!currentPlayer.isKPlayer && (event.isMetadata || event.isDurationChanged || event.isPlay || event.isSeeked)) {
-        [playerDelegate player:currentPlayer eventName:event value:value];
+    } else {
+        [_delegate player:currentPlayer eventName:event value:value];
     }
 }
+
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
+    [_delegate player:currentPlayer eventName:event JSON:jsonString];
+}
+
+- (void)contentCompleted:(id<KPlayer>)currentPlayer {
+    self.contentEnded = YES;
+    [_adController contentCompleted];
+}
+
 @end

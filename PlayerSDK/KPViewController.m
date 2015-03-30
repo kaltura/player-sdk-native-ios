@@ -37,15 +37,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerEventsDelegate>{
+@interface KPViewController() <KPlayerControllerDelegate>{
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     CGRect originalViewControllerFrame;
-    CGAffineTransform fullScreenPlayerTransform;
-    UIDeviceOrientation prevOrientation, deviceOrientation;
-    NSString *playerSource;
     NSDictionary *appConfigDict;
-//    BOOL openFullScreen;
     UIButton *btn;
     BOOL isCloseFullScreenByTap;
     
@@ -62,9 +58,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSDictionary *nativeActionParams;
     
     NSMutableArray *callBackReadyRegistrations;
-    //KPKalturaPlayWithAdsSupport *IMAPlayer;
     NSURL *videoURL;
-    NSString *localeString;
 }
 
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
@@ -74,7 +68,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic) CGRect startFrame;
-@property (nonatomic, strong) KPIMAPlayerViewController *imaPlayer;
 @end
 
 @implementation KPViewController 
@@ -123,13 +116,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)updateLayout {
     self.triggerEvent(@"enterfullscreen", nil);
 //    self.triggerEvent(@"updateLayout", nil);
-}
-
-- (NSMutableDictionary *)players {
-    if (!_players) {
-        _players = [NSMutableDictionary new];
-    }
-    return _players;
 }
 
 - (NSMutableDictionary *)kPlayerEventsDict {
@@ -202,10 +188,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)viewWillAppear:(BOOL)animated {
     KPLogTrace(@"Enter");
     
+    // Initialize players controller
     if (!_playerController) {
         _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
         [_playerController addPlayerToController:self];
-        [_playerController.player setDelegate:self];
+        _playerController.delegate = self;
     }
     // Initialize HTML layer (controls)
     if (!self.webView) {
@@ -516,7 +503,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         
         if ( !isFullScreen ) {
             //[self openFullScreen: openFullScreen];
-            [self checkDeviceStatus];
         } else{
             //[self closeFullScreen];
         }
@@ -545,16 +531,21 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-#pragma mark KPlayerEventsDelegate
+#pragma mark KPlayerDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    if ([event isEqualToString:@"ended"]) {
-        [_playerController contentCompleted];
-    } 
     [self.webView triggerEvent:event withValue:value];
 }
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     [self.webView triggerEvent:event withJSON:jsonString];
+}
+
+- (void)contentCompleted:(id<KPlayer>)currentPlayer {
+    [self player:currentPlayer eventName:EndedKey value:nil];
+}
+
+- (void)allAdsCompleted {
+    [self.webView triggerEvent:PostrollEndedKey withJSON:nil];
 }
 
 
@@ -594,22 +585,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         case language:
             _playerController.locale = attributeVal;
             break;
-        case doubleClickRequestAds: {
-//            [self.player pause];
-//            __weak KPViewController *weakSelf = self;
-//             _imaPlayer = [[KPIMAPlayerViewController alloc] initWithParent:self];
-//            [_imaPlayer loadIMAAd:attributeVal withContentPlayer:_playerController.player eventsListener:^(NSDictionary *adEventParams) {
-//                if (adEventParams) {
-//                    [weakSelf.webView triggerEvent:adEventParams.allKeys.firstObject withJSON:adEventParams.allValues.firstObject];
-//                }
-////                if ([adEventParams.allKeys.firstObject isEqualToString:AdCompletedKey]) {
-////                    <#statements#>
-////                }
-//                
-//            }];
+        case doubleClickRequestAds:
             _playerController.adPlayerHeight = self.webView.videoHolderHeight;
             _playerController.adTagURL = attributeVal;
-        }
             break;
         default:
             break;
@@ -672,19 +650,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 
-
-#pragma mark KPIMAAdsPlayerDatasource
-- (NSTimeInterval)currentTime {
-    return [self.player currentPlaybackTime];
-}
-
-- (CGFloat)adPlayerHeight {
-    return self.webView.videoHolderHeight;
-}
-
-- (NSString *)locale {
-    return localeString.copy;
-}
 @end
 
 

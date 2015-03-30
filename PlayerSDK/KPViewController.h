@@ -47,20 +47,13 @@
 @property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
 @property (nonatomic, strong) id<KalturaPlayer> player;
 @property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
-@property (nonatomic, retain) NSMutableDictionary *players;
 @property (nonatomic, assign) CGRect playerFrame;
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
-//- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-//- (instancetype)initWithFrame:(CGRect)frame;
 - (instancetype)initWithURL:(NSURL *)url;
 - (UIView *)playerViewForParentViewController:(UIViewController *)parentViewController frame:(CGRect)frame;
 
 - (void)stopAndRemovePlayer;
-
-
-- (void)checkDeviceStatus;
-
 - (void)changeMedia:(NSString *)mediaID;
 - (void)load;
 

@@ -185,6 +185,7 @@
             break;
         case kIMAAdEvent_ALL_ADS_COMPLETED:
             eventParams = AllAdsCompletedKey.nullVal;
+            AdEventsListener(nil);
             break;
             //        case kIMAAdEvent_PAUSE:
             //            eventParams = ContentPauseRequestedKey.nullVal;

@@ -17,12 +17,23 @@ static NSString *PlayerClassName = @"KPlayer";
 static NSString *ChromeCastPlayerClassName = @"";
 static NSString *WideVinePlayerClass = @"WVPlayer";
 
+static NSString *PlayKey = @"play";
+static NSString *PauseKey = @"pause";
+static NSString *DurationChangedKey = @"durationchange";
+static NSString *LoadedMetaDataKey = @"loadedmetadata";
+static NSString *TimeUpdateKey = @"timeupdate";
+static NSString *ProgressKey = @"progress";
+static NSString *EndedKey = @"ended";
+static NSString *SeekedKey = @"seeked";
+static NSString *CanPlayKey = @"canplay";
+static NSString *PostrollEndedKey = @"postEnded";
 
-@protocol KPlayerEventsDelegate;
+
+@protocol KPlayerDelegate;
 
 @protocol KPlayer <NSObject>
 
-@property (nonatomic, weak) id<KPlayerEventsDelegate> delegate;
+@property (nonatomic, weak) id<KPlayerDelegate> delegate;
 @property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
@@ -38,15 +49,19 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 @property (nonatomic, copy) NSString *DRMKey;
 @end
 
-@protocol KPlayerEventsDelegate <NSObject>
+@protocol KPlayerDelegate <NSObject>
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
-
-@optional
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString;
+- (void)contentCompleted:(id<KPlayer>)currentPlayer;
 
 @end
 
+@protocol KPlayerControllerDelegate <KPlayerDelegate>
+
+- (void)allAdsCompleted;
+
+@end
 
 @interface KPlayerController : NSObject
 
@@ -56,6 +71,7 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 - (void)contentCompleted;
 
 @property (nonatomic, strong) id<KPlayer> player;
+@property (nonatomic, weak) id<KPlayerControllerDelegate> delegate;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
 @property (nonatomic, copy) NSString *adTagURL;

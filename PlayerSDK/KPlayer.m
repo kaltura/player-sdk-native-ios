@@ -10,15 +10,7 @@
 #import "KPLog.h"
 #import <MediaPlayer/MediaPlayer.h>
 
-static NSString *PlayKey = @"play";
-static NSString *PauseKey = @"pause";
-static NSString *DurationChangedKey = @"durationchange";
-static NSString *LoadedMetaDataKey = @"loadedmetadata";
-static NSString *TimeUpdateKey = @"timeupdate";
-static NSString *ProgressKey = @"progress";
-static NSString *EndedKey = @"ended";
-static NSString *SeekedKey = @"seeked";
-static NSString *CanPlayKey = @"canplay";
+
 
 
 static NSString *RateKeyPath = @"rate";
@@ -107,7 +99,7 @@ static NSString *StatusKeyPath = @"status";
 
 
 - (void)videoEnded {
-    [self.delegate player:self eventName:EndedKey value:nil];
+    [_delegate contentCompleted:self];
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
