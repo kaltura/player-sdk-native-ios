@@ -30,6 +30,11 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self stringByAppendingString:[versionFlashvar stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
+- (NSString *)appendHover {
+    NSString *versionFlashvar = @"&flashvars[controlBarContainer.hover]=true";
+    return [self stringByAppendingString:[versionFlashvar stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+}
+
 
 - (Attribute)attributeEnumFromString {
     KPLogTrace(@"Enter");

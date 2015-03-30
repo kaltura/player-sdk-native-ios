@@ -83,7 +83,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
-        videoURL = url;
+        videoURL = [NSURL URLWithString:url.absoluteString.appendHover];
         return self;
     }
     return nil;
@@ -649,6 +649,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
 }
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 
 @end
 
