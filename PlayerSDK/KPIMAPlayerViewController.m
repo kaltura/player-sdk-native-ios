@@ -260,6 +260,10 @@
     }
 }
 
+- (void)dealloc {
+    
+}
+
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }

@@ -147,13 +147,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 //        weakSelf.webView.entryId = @"1_gtjr7duj";
 //    }];
     
-    [super viewDidLoad];
-    KPLogTrace(@"Exit");
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    KPLogTrace(@"Enter");
-    
     // Initialize players controller
     if (!_playerController) {
         _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
@@ -186,7 +179,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         }
         
     });
-    [super viewWillAppear:NO];
+
+    
+    [super viewDidLoad];
+    KPLogTrace(@"Exit");
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    KPLogTrace(@"Enter");
+    
+        [super viewWillAppear:NO];
     
     KPLogTrace(@"Exit");
 }
@@ -195,18 +197,19 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Enter");
     
     isResumePlayer = YES;
-    [_playerController removePlayer];
-    self.webView.playerControlsWebViewDelegate = nil;
-    [self.webView removeFromSuperview];
-    self.webView = nil;
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    self.shareManager = nil;
-    [callBackReadyRegistrations removeAllObjects];
-    callBackReadyRegistrations = nil;
-    [_kPlayerEvaluatedDict removeAllObjects];
-    [_kPlayerEventsDict removeAllObjects];
-    _kPlayerEvaluatedDict = nil;
-    _kPlayerEventsDict = nil;
+//    [_playerController removePlayer];
+//    self.webView.playerControlsWebViewDelegate = nil;
+//    [self.webView removeFromSuperview];
+//    self.webView = nil;
+//    [[NSNotificationCenter defaultCenter] removeObserver:self];
+//    [self.view removeObserver:self forKeyPath:@"frame" context:nil];
+//    self.shareManager = nil;
+//    [callBackReadyRegistrations removeAllObjects];
+//    callBackReadyRegistrations = nil;
+//    [_kPlayerEvaluatedDict removeAllObjects];
+//    [_kPlayerEventsDict removeAllObjects];
+//    _kPlayerEvaluatedDict = nil;
+//    _kPlayerEventsDict = nil;
     [super viewDidDisappear:animated];
     
     KPLogTrace(@"Exit");
@@ -623,6 +626,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
+
 
 @end
 
