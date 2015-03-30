@@ -19,7 +19,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "KPControlsWebView.h"
 #import "KPLog.h"
-#import "KalturaPlayer.h"
 #import "KPChromecast.h"
 #import "ChromecastDeviceController.h"
 #import "KPViewControllerProtocols.h"

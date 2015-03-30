@@ -22,7 +22,6 @@ static NSString *kPortalKey = @"kaltura";
                       key:self.DRMKey
                completion:^(NSString *drmUrl) {
         super.playerSource = [NSURL URLWithString:drmUrl];
-//        [self play];
     }];
 }
 
