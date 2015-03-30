@@ -12,11 +12,6 @@
 
 static NSString *AppConfigurationFileName = @"AppConfigurations";
 
-static NSString *PlayerPauseNotification = @"playerPauseNotification";
-static NSString *ToggleFullscreenNotification = @"toggleFullscreenNotification";
-
-static NSString *IsFullScreenKey = @"isFullScreen";
-
 #import "KPViewController.h"
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
@@ -37,30 +32,18 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerControllerDelegate>{
+@interface KPViewController() <KPlayerControllerDelegate, PlayerControlsWebViewDelegate>{
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
-    CGRect originalViewControllerFrame;
     NSDictionary *appConfigDict;
-    UIButton *btn;
     BOOL isCloseFullScreenByTap;
-    
-    // AirPlay Params
-    MPVolumeView *volumeView;
-    NSArray *prevAirPlayBtnPositionArr;
-    
     BOOL isJsCallbackReady;
-    
-    
-    
-    BOOL showChromecastBtn;
-    
     NSDictionary *nativeActionParams;
-    
     NSMutableArray *callBackReadyRegistrations;
     NSURL *videoURL;
 }
 
+@property (nonatomic, strong) KPControlsWebView* webView;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
@@ -71,8 +54,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @end
 
 @implementation KPViewController 
-@synthesize webView, player;
-@synthesize nativComponentDelegate;
+@synthesize webView;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -142,19 +124,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return platform;
 }
 
+#pragma mark View flow methods
 - (void)viewDidLoad {
     KPLogTrace(@"Enter");
     appConfigDict = extractDictionary(AppConfigurationFileName, @"plist");
     setUserAgent();
     [self initPlayerParams];
-    // Observer for pause player notifications
-    [ [NSNotificationCenter defaultCenter] addObserver: self
-                                              selector: @selector(pause)
-                                                  name: PlayerPauseNotification
-                                                object: nil ];
-    
-    
-    
     
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
@@ -175,15 +150,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
-
-
-- (void)handleEnteredBackground: (NSNotification *)not {
-    KPLogTrace(@"Enter");
-    self.sendNotification(nil, @"doPause");
-    KPLogTrace(@"Exit");
-}
-
-
 
 - (void)viewWillAppear:(BOOL)animated {
     KPLogTrace(@"Enter");
@@ -229,10 +195,33 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Enter");
     
     isResumePlayer = YES;
+    [_playerController removePlayer];
+    self.webView.playerControlsWebViewDelegate = nil;
+    [self.webView removeFromSuperview];
+    self.webView = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    self.shareManager = nil;
+    [callBackReadyRegistrations removeAllObjects];
+    callBackReadyRegistrations = nil;
+    [_kPlayerEvaluatedDict removeAllObjects];
+    [_kPlayerEventsDict removeAllObjects];
+    _kPlayerEvaluatedDict = nil;
+    _kPlayerEventsDict = nil;
     [super viewDidDisappear:animated];
     
     KPLogTrace(@"Exit");
 }
+
+
+
+- (void)handleEnteredBackground: (NSNotification *)not {
+    KPLogTrace(@"Enter");
+    self.sendNotification(nil, @"doPause");
+    KPLogTrace(@"Exit");
+}
+
+
+
 
 #pragma mark - WebView Methods
 
@@ -605,24 +594,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-- (void)stopAndRemovePlayer{
-    KPLogTrace(@"Enter");
-    [self visible:@"false"];
-    [[self player] stop];
-    [[self player] setContentURL:nil];
-    [[[self player] view] removeFromSuperview];
-    [[self webView] removeFromSuperview];
-    
-    if( isFullScreen ){
-        isFullScreen = NO;
-    }
-    
-    self.player = nil;
-    self.webView = nil;
-    
-//    [self removeAirPlayIcon];
-    KPLogTrace(@"Exit");
-}
 
 
 #pragma mark -

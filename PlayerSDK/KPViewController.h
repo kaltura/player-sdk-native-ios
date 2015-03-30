@@ -37,23 +37,17 @@
 
 
 
-@interface KPViewController : UIViewController <PlayerControlsWebViewDelegate, ChromecastControllerDelegate> {
-    id<KalturaPlayer> player;
-    NativeComponentPlugin *nativComponentDelegate;
-    id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
-}
+@interface KPViewController : UIViewController
 
-@property (nonatomic, strong) IBOutlet KPControlsWebView* webView;
-@property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
-@property (nonatomic, strong) id<KalturaPlayer> player;
-@property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
-@property (nonatomic, assign) CGRect playerFrame;
+
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
+
+@property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
+
 - (instancetype)initWithURL:(NSURL *)url;
 - (UIView *)playerViewForParentViewController:(UIViewController *)parentViewController frame:(CGRect)frame;
 
-- (void)stopAndRemovePlayer;
 - (void)changeMedia:(NSString *)mediaID;
 - (void)load;
 

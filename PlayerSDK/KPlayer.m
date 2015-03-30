@@ -166,6 +166,17 @@ static NSString *StatusKeyPath = @"status";
     }
 }
 
+- (void)removePlayer {
+    [self removeTimeObserver:observer];
+    observer = nil;
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self forKeyPath:RateKeyPath context:nil];
+    [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
+    [_layer removeFromSuperlayer];
+    _layer = nil;
+    self.delegate = nil;
+}
+
 - (void)removeAirPlayIcon {
     KPLogTrace(@"Enter");
     if ( volumeView ) {
@@ -215,16 +226,6 @@ static NSString *StatusKeyPath = @"status";
         volumeView.hidden = YES;
     }
     KPLogTrace(@"Exit");
-}
-
-- (void)removePlayer {
-    [_layer removeFromSuperlayer];
-    _layer = nil;
-    [self removeTimeObserver:observer];
-    [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
-    [self removeObserver:self forKeyPath:RateKeyPath context:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    _delegate = nil;
 }
 
 - (void)dealloc {

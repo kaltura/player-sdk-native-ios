@@ -92,6 +92,11 @@
     key = _key;
 }
 
+- (void)removePlayer {
+    [_player removePlayer];
+    _player = nil;
+}
+
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     static NSTimeInterval currentTime;

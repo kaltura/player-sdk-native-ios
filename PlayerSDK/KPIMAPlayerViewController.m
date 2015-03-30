@@ -12,7 +12,6 @@
 
 @interface KPIMAPlayerViewController () <IMAWebOpenerDelegate>{
     void(^AdEventsListener)(NSDictionary *adEventParams);
-//    __weak UIViewController<KPIMAAdsPlayerDatasource> *_parentController;
 }
 
 /// Contains the params for the logic layer
@@ -56,14 +55,16 @@
     [self.adsLoader contentComplete];
 }
 
-- (void)destroy {
-//    _parentController = nil;
+- (void)removeIMAPlayer {
     AdEventsListener = nil;
+    [_adEventParams removeAllObjects];
     _adEventParams = nil;
     _adsLoader = nil;
     _adDisplayContainer = nil;
     _adsRenderingSettings = nil;
     _adsManager = nil;
+    _contentPlayer = nil;
+    _playhead = nil;
     _contentPlayer = nil;
 }
 
@@ -134,6 +135,7 @@
     }
     return _playhead;
 }
+
 
 
 #pragma mark IMAAdsLoaderDelegate
@@ -217,13 +219,6 @@
     if (AdEventsListener && eventParams) {
         AdEventsListener(eventParams);
     }
-//    if (event.type == kIMAAdEvent_ALL_ADS_COMPLETED) {
-////        [self.view removeFromSuperview];
-////        [self removeFromParentViewController];
-//        if (AdEventsListener) {
-//            AdEventsListener(nil);
-//        }
-//    }
     eventParams = nil;
 }
 
