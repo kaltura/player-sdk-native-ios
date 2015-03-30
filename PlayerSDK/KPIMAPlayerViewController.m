@@ -39,15 +39,6 @@
 @implementation KPIMAPlayerViewController
 
 #pragma mark Public Methods
-//- (instancetype)initWithParent:(UIViewController<KPIMAAdsPlayerDatasource> *)parentController {
-//    self = [super init];
-//    if (self) {
-//        _parentController = parentController;
-//        [parentController addChildViewController:self];
-//        [parentController.view addSubview:self.view];
-//    }
-//    return self;
-//}
 
 - (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void (^)(NSDictionary *))adListener  {
     AdEventsListener = [adListener copy];
@@ -225,13 +216,13 @@
     if (AdEventsListener && eventParams) {
         AdEventsListener(eventParams);
     }
-    if (event.type == kIMAAdEvent_ALL_ADS_COMPLETED) {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
-        if (AdEventsListener) {
-            AdEventsListener(nil);
-        }
-    }
+//    if (event.type == kIMAAdEvent_ALL_ADS_COMPLETED) {
+////        [self.view removeFromSuperview];
+////        [self removeFromParentViewController];
+//        if (AdEventsListener) {
+//            AdEventsListener(nil);
+//        }
+//    }
     eventParams = nil;
 }
 

@@ -72,8 +72,16 @@
         [_adController loadIMAAd:adTagURL
                withContentPlayer:_player
                   eventsListener:^(NSDictionary *adEventParams) {
-                      [weakSelf.player.delegate player:weakSelf.player eventName:adEventParams.allKeys.firstObject
-                                                  JSON:adEventParams.allValues.firstObject];
+                      if (adEventParams) {
+                          [weakSelf.player.delegate player:weakSelf.player
+                                                 eventName:adEventParams.allKeys.firstObject
+                                                      JSON:adEventParams.allValues.firstObject];
+                      } else {
+                          [weakSelf.player.delegate player:weakSelf.player
+                                                 eventName:@"ended"
+                                                     value:nil];
+                      }
+                      
                   }];
     }
 }
