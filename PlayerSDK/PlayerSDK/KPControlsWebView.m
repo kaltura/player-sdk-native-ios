@@ -44,12 +44,10 @@
         
         // Set non-opaque in order to make "body{background-color:transparent}" working!
         self.opaque = NO;
-//        NSURL *url = [[NSBundle mainBundle] URLForResource:@"www/webview-document" withExtension:@"html"];
-//        [self loadRequest:[NSURLRequest requestWithURL:url]];
-        
-        // load our html file
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"webview-document" ofType:@"html"];
-//        [self loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:path]]];
+        self.scrollView.scrollEnabled = NO;
+        self.scrollView.bounces = NO;
+        self.scrollView.bouncesZoom = NO;
+        self.backgroundColor = [UIColor clearColor];
         
     }
     return self;

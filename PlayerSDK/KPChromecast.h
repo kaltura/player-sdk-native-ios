@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
-#import "KalturaPlayer.h"
 #import "ChromecastDeviceController.h"
 #import "KPViewController.h"
 #import "KPViewControllerProtocols.h"

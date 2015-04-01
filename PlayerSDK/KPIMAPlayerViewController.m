@@ -12,7 +12,6 @@
 
 @interface KPIMAPlayerViewController () <IMAWebOpenerDelegate>{
     void(^AdEventsListener)(NSDictionary *adEventParams);
-    __weak UIViewController<KPIMAAdsPlayerDatasource> *_parentController;
 }
 
 /// Contains the params for the logic layer
@@ -32,34 +31,19 @@
 
 /// Main point of interaction with the SDK. Created by the SDK as the result of an ad request.
 @property(nonatomic, strong) IMAAdsManager *adsManager;
+
+@property (nonatomic, strong) IMAAVPlayerContentPlayhead *playhead;
 @end
 
 @implementation KPIMAPlayerViewController
 
 #pragma mark Public Methods
-- (instancetype)initWithParent:(UIViewController<KPIMAAdsPlayerDatasource> *)parentController {
-    self = [super init];
-    if (self) {
-        _parentController = parentController;
-        [parentController addChildViewController:self];
-        [parentController.view addSubview:self.view];
-    }
-    return self;
-}
 
-- (void)loadIMAAd:(NSString *)adLink eventsListener:(void (^)(NSDictionary *))adListener {
+- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void (^)(NSDictionary *))adListener  {
     AdEventsListener = [adListener copy];
     
     // Load AVPlayer with path to our content.
-    self.contentPlayer = [AVPlayer new];
-    
-    // Create a player layer for the player.
-    AVPlayerLayer *playerLayer = [AVPlayerLayer playerLayerWithPlayer:self.contentPlayer];
-    
-    // Size, position, and display the AVPlayer.
-    playerLayer.frame = self.view.layer.bounds;
-    [self.view.layer addSublayer:playerLayer];
-    
+    self.contentPlayer = contentPlayer;
     IMAAdsRequest *request = [[IMAAdsRequest alloc] initWithAdTagUrl:adLink
                                                   adDisplayContainer:self.adDisplayContainer
                                                          userContext:nil];
@@ -67,14 +51,20 @@
     [self.adsLoader requestAdsWithRequest:request];
 }
 
-- (void)destroy {
-    _parentController = nil;
+- (void)contentCompleted {
+    [self.adsLoader contentComplete];
+}
+
+- (void)removeIMAPlayer {
     AdEventsListener = nil;
+    [_adEventParams removeAllObjects];
     _adEventParams = nil;
     _adsLoader = nil;
     _adDisplayContainer = nil;
     _adsRenderingSettings = nil;
     _adsManager = nil;
+    _contentPlayer = nil;
+    _playhead = nil;
     _contentPlayer = nil;
 }
 
@@ -84,7 +74,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor clearColor];
-    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _parentController.adPlayerHeight};
+    self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _adPlayerHeight};
     
 }
 
@@ -128,11 +118,24 @@
 
 - (IMAAdsLoader *)adsLoader {
     if (!_adsLoader) {
-        _adsLoader = [[IMAAdsLoader alloc] initWithSettings:nil];
+        IMASettings *settings = nil;
+        if (![_locale isKindOfClass:[NSNull class]] && _locale.length) {
+            settings = [IMASettings new];
+            settings.language = _locale;
+        }
+        _adsLoader = [[IMAAdsLoader alloc] initWithSettings:settings];
         _adsLoader.delegate = self;
     }
     return _adsLoader;
 }
+
+- (IMAAVPlayerContentPlayhead *)playhead {
+    if (!_playhead) {
+        _playhead = [[IMAAVPlayerContentPlayhead alloc] initWithAVPlayer:self.contentPlayer];
+    }
+    return _playhead;
+}
+
 
 
 #pragma mark IMAAdsLoaderDelegate
@@ -140,14 +143,14 @@
     // Grab the instance of the IMAAdsManager and set ourselves as the delegate.
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
-    
     // Initialize the ads manager.
-    [self.adsManager initializeWithContentPlayhead:_parentController
+    [self.adsManager initializeWithContentPlayhead:self.playhead
                               adsRenderingSettings:self.adsRenderingSettings];
     if (AdEventsListener) {
         AdEventsListener(AdLoadedEventKey.nullVal);
     }
 }
+
 
 - (void)adsLoader:(IMAAdsLoader *)loader failedWithErrorData:(IMAAdLoadingErrorData *)adErrorData {
     // Something went wrong loading ads. Log the error and play the content.
@@ -170,17 +173,21 @@
             self.adEventParams.adSystem = @"null";
             self.adEventParams.adPosition = event.ad.adPodInfo.adPosition;
             eventParams = self.adEventParams.toJSON.adLoaded;
+            
             break;
         case kIMAAdEvent_STARTED:
+            self.view.hidden = NO;
             self.adEventParams.duration = event.ad.duration;
             eventParams = self.adEventParams.toJSON.adStart;
             break;
         case kIMAAdEvent_COMPLETE:
             self.adEventParams.adID = event.ad.adId;
             eventParams = self.adEventParams.toJSON.adCompleted;
+            self.view.hidden = YES;
             break;
         case kIMAAdEvent_ALL_ADS_COMPLETED:
             eventParams = AllAdsCompletedKey.nullVal;
+            AdEventsListener(nil);
             break;
             //        case kIMAAdEvent_PAUSE:
             //            eventParams = ContentPauseRequestedKey.nullVal;
@@ -211,13 +218,6 @@
     self.adEventParams = nil;
     if (AdEventsListener && eventParams) {
         AdEventsListener(eventParams);
-    }
-    if (event.type == kIMAAdEvent_ALL_ADS_COMPLETED) {
-        [self.view removeFromSuperview];
-        [self removeFromParentViewController];
-        if (AdEventsListener) {
-            AdEventsListener(nil);
-        }
     }
     eventParams = nil;
 }
@@ -257,9 +257,14 @@
         timeParams.duration = totalTime;
         timeParams.remain = totalTime - mediaTime;
         AdEventsListener(timeParams.toJSON.adRemainingTimeChange);
-        timeParams = nil;
     }
 }
 
+- (void)dealloc {
+    
+}
 
+- (BOOL)prefersStatusBarHidden {
+    return YES;
+}
 @end

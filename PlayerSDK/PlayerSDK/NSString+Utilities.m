@@ -45,7 +45,8 @@ static NSString *NativeActionKey = @"nativeAction";
                             @"wvServerKey",
 #endif
                             @"nativeAction",
-                            @"doubleClickRequestAds"];
+                            @"doubleClickRequestAds",
+                            @"language"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }
@@ -73,6 +74,26 @@ static NSString *NativeActionKey = @"nativeAction";
 
 - (BOOL)isToggleFullScreen {
     return [self isEqualToString:KPlayerEventToggleFullScreen];
+}
+
+- (BOOL)isSeeked {
+    return [self isEqualToString:@"seeked"];
+}
+
+- (BOOL)canPlay {
+    return [self isEqualToString:@"canplay"];
+}
+
+- (BOOL)isDurationChanged {
+    return [self isEqualToString:@"durationchange"];
+}
+
+- (BOOL)isMetadata {
+    return [self isEqualToString:@"loadedmetadata"];
+}
+
+- (BOOL)isFrameKeypath {
+    return [self isEqualToString:@"frame"];
 }
 
 - (FunctionComponents)extractFunction {

@@ -22,7 +22,7 @@
 - (void)copyParamsFromPlayer:(id<KalturaPlayer>) player {
     KPLogTrace(@"Enter");
     if (self) {
-        chromecastDeviceController = (ChromecastDeviceController *)[KPViewController sharedChromecastDeviceController];
+//        chromecastDeviceController = (ChromecastDeviceController *)[KPViewController sharedChromecastDeviceController];
         
 //        if ( [self isPreparedToPlay] ) {
         [self setCurrentPlaybackTime: [player currentPlaybackTime]];

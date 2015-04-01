@@ -19,51 +19,32 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "KPControlsWebView.h"
 #import "KPLog.h"
-#import "KalturaPlayer.h"
-#import "KPChromecast.h"
-#import "ChromecastDeviceController.h"
 #import "KPViewControllerProtocols.h"
+#import "KPPlayerConfig.h"
 
 
 
 
-@class KPViewController;
-@class NativeComponentPlugin;
-@class KPEventListener;
 
 @protocol KPViewControllerDelegate;
-@protocol KalturaPlayer;
-@protocol KPViewControllerDatasource;
+
+@interface KPViewController : UIViewController
 
 
-
-@interface KPViewController : UIViewController <PlayerControlsWebViewDelegate, ChromecastControllerDelegate> {
-    id<KalturaPlayer> player;
-    NativeComponentPlugin *nativComponentDelegate;
-    id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
-}
-
-@property (nonatomic, strong) IBOutlet KPControlsWebView* webView;
-@property (nonatomic, retain) NativeComponentPlugin *nativComponentDelegate;
-@property (nonatomic, strong) id<KalturaPlayer> player;
-@property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
-@property (nonatomic, retain) NSMutableDictionary *players;
-@property (nonatomic, assign) CGRect playerFrame;
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
-- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-- (instancetype)initWithFrame:(CGRect)frame;
-- (void)stopAndRemovePlayer;
-- (void)checkOrientationStatus;
-- (void)resizePlayerView:(CGRect)newFrame;
-- (void)openFullscreen;
-- (void)closeFullscreen;
-- (void)checkDeviceStatus;
-- (void)setNativeFullscreen;
-- (void)setWebViewURL: (NSString *)iframeUrl;
-+ (id)sharedChromecastDeviceController;
+
+- (instancetype)initWithURL:(NSURL *)url;
+
+- (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration;
+
+- (void)loadPlayerIntoViewController:(UIViewController *)parentViewController;
+
 - (void)changeMedia:(NSString *)mediaID;
-- (void)load;
+
+@property (nonatomic, strong) KPPlayerConfig *configuration;
+@property (nonatomic, strong) NSURL *source;
+
 
 // Kaltura Player External API
 
@@ -98,9 +79,7 @@
  * @param NSString event id, will enable to remove the current event by id
  * @param handler Callback for the ready event.
  */
-- (void)addEventListener:(NSString *)event
-                 eventID:(NSString *)eventID
-                 handler:(void(^)(NSString *eventName))handler;
+- (void)addEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)(NSString *eventName))handler;
 
 
 /*!
@@ -113,8 +92,7 @@
  * @param NSString eventID, event id for removal.
  * @param handler Callback for the ready event.
  */
-- (void)removeEventListener:(NSString *)event
-                    eventID:(NSString *)eventID;
+- (void)removeEventListener:(NSString *)event eventID:(NSString *)eventID;
 
 
 
@@ -128,9 +106,7 @@
  * @param NSString expressionID, expression id use for several expressions.
  * @param handler Callback with the value of the expression.
  */
-- (void)asyncEvaluate:(NSString *)expression
-         expressionID:(NSString *)expressionID
-              handler:(void(^)(NSString *value))handler;
+- (void)asyncEvaluate:(NSString *)expression expressionID:(NSString *)expressionID handler:(void(^)(NSString *value))handler;
 
 
 
@@ -143,8 +119,7 @@
  * @param NSString notification, notification body
  * @param NSString notificationName, notification name s specific notification.
  */
-- (void)sendNotification:(NSString *)notification
-                 forName:(NSString *)notificationName;
+- (void)sendNotification:(NSString *)notification forName:(NSString *)notificationName;
 
 
 
@@ -158,9 +133,7 @@
  * @param NSString propertyName, property of the plugin
  * @param NSString value, sets the property
  */
-- (void)setKDPAttribute:(NSString *)pluginName
-           propertyName:(NSString *)propertyName
-                  value:(NSString *)value;
+- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value;
 
 
 
