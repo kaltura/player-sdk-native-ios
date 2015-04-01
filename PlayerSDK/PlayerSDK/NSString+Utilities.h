@@ -26,16 +26,20 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSString *appendVersion;
 @property (nonatomic, copy, readonly) NSString *appendHover;
 
-@property (nonatomic, assign, readonly) Attribute attributeEnumFromString;
-@property (nonatomic, assign, readonly) BOOL isJSFrame;
-@property (nonatomic, assign, readonly) BOOL isFrameURL;
-@property (nonatomic, assign, readonly) FunctionComponents extractFunction;
+@property (nonatomic, readonly) Attribute attributeEnumFromString;
+@property (nonatomic, readonly) BOOL isJSFrame;
+@property (nonatomic, readonly) BOOL isFrameURL;
+@property (nonatomic, readonly) FunctionComponents extractFunction;
 
-@property (nonatomic, assign, readonly) BOOL isPlay;
-@property (nonatomic, assign, readonly) BOOL isPause;
-@property (nonatomic, assign, readonly) BOOL isStop;
-@property (nonatomic, assign, readonly) BOOL isToggleFullScreen;
-
+@property (nonatomic, readonly) BOOL isPlay;
+@property (nonatomic, readonly) BOOL isPause;
+@property (nonatomic, readonly) BOOL isStop;
+@property (nonatomic, readonly) BOOL isToggleFullScreen;
+@property (nonatomic, readonly) BOOL isSeeked;
+@property (nonatomic, readonly) BOOL canPlay;
+@property (nonatomic, readonly) BOOL isDurationChanged;
+@property (nonatomic, readonly) BOOL isMetadata;
+@property (nonatomic, readonly) BOOL isFrameKeypath;
 
 @property (nonatomic, copy, readonly) NSString *md5;
 @property (nonatomic, copy, readonly) NSString *documentPath;

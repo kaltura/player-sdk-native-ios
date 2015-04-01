@@ -204,13 +204,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)handleEnteredBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
-    [[NSUserDefaults standardUserDefaults] setObject: iframeUrl forKey:@"iframe_url"];
-    
-//    iframeUrl = [iframeUrl stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
-    
-    
-    /// Add the idfa to the iframeURL
-    [ [self webView] loadRequest: [ NSURLRequest requestWithURL: [NSURL URLWithString: iframeUrl.appendVersion.appendHover] ] ];
+    self.sendNotification(nil, @"doPause");
     KPLogTrace(@"Exit");
 }
 
