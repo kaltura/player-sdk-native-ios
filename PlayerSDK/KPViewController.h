@@ -19,19 +19,16 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import "KPControlsWebView.h"
 #import "KPLog.h"
-#import "KPChromecast.h"
-#import "ChromecastDeviceController.h"
 #import "KPViewControllerProtocols.h"
+#import "KPPlayerConfig.h"
 
 
 
 
 @class KPViewController;
-@class NativeComponentPlugin;
 @class KPEventListener;
 
 @protocol KPViewControllerDelegate;
-@protocol KalturaPlayer;
 @protocol KPViewControllerDatasource;
 
 
@@ -42,13 +39,17 @@
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
 
-@property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
-
 - (instancetype)initWithURL:(NSURL *)url;
-- (UIView *)playerViewForParentViewController:(UIViewController *)parentViewController frame:(CGRect)frame;
+
+- (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration;
+
+- (void)loadPlayerIntoViewController:(UIViewController *)parentViewController;
 
 - (void)changeMedia:(NSString *)mediaID;
-- (void)load;
+
+@property (nonatomic, strong) KPPlayerConfig *configuration;
+@property (nonatomic, strong) NSURL *source;
+
 
 // Kaltura Player External API
 

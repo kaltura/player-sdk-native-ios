@@ -35,6 +35,7 @@ static NSString *StatusKeyPath = @"status";
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
         _layer.frame = (CGRect){CGPointZero, parentView.frame.size};
+        _layer.backgroundColor = [UIColor blackColor].CGColor;
         _parentView = parentView;
         if (parentView.subviews.count) {
             UIWebView *wv = parentView.subviews.lastObject;

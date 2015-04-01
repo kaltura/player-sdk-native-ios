@@ -16,7 +16,6 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPShareManager.h"
 #import "NSDictionary+Strategy.h"
 #import "KPBrowserViewController.h"
-#import "KPPlayerDatasourceHandler.h"
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
@@ -51,6 +50,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic) CGRect startFrame;
+@property (nonatomic, strong) UIView *superView;
 @end
 
 @implementation KPViewController 
@@ -62,6 +62,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
 }
 
+
+#pragma mark Initialize methods
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
@@ -71,35 +73,34 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return nil;
 }
 
-- (UIView *)playerViewForParentViewController:(UIViewController *)parentViewController
-                                        frame:(CGRect)frame {
-    if (parentViewController && [parentViewController isKindOfClass:[UIViewController class]]) {
-        _isModifiedFrame = YES;
-        [parentViewController addChildViewController:self];
-        self.view.frame = frame;
-        [self.view addObserver:self
-                    forKeyPath:@"frame"
-                       options:NSKeyValueObservingOptionNew
-                       context:nil];
-        return self.view;
+- (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration {
+    self = [self initWithURL:configuration.videoURL];
+    if (self) {
+        return self;
     }
     return nil;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([object isEqual:self.view] && [keyPath isEqualToString:@"frame"]) {
-        [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
-        self.webView.frame = (CGRect){CGPointZero, self.view.frame.size};
-        [self performSelector:@selector(updateLayout) withObject:nil afterDelay:2];
+
+- (void)loadPlayerIntoViewController:(UIViewController *)parentViewController {
+    if (parentViewController && [parentViewController isKindOfClass:[UIViewController class]]) {
+        _isModifiedFrame = YES;
+        [parentViewController addChildViewController:self];
         
     }
 }
 
-- (void)updateLayout {
-    self.triggerEvent(@"enterfullscreen", nil);
-//    self.triggerEvent(@"updateLayout", nil);
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+    if ([object isEqual:self.view] && [keyPath isEqualToString:@"frame"]) {
+        
+        [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
+        self.webView.frame = (CGRect){CGPointZero, self.view.frame.size};
+        
+    }
 }
 
+
+#pragma mark Lazy init
 - (NSMutableDictionary *)kPlayerEventsDict {
     if (!_kPlayerEventsDict) {
         _kPlayerEventsDict = [NSMutableDictionary new];
@@ -140,12 +141,20 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                              selector: @selector(handleEnteredBackground:)
                                                  name: UIApplicationDidEnterBackgroundNotification
                                                object: nil];
+    
+    [self.view addObserver:self
+                forKeyPath:@"frame"
+                   options:NSKeyValueObservingOptionNew
+                   context:nil];
 //    [self didLoad];
 //    [KPViewController sharedChromecastDeviceController];
 //    __weak KPViewController *weakSelf = self;
 //    [self registerReadyEvent:^{
 //        weakSelf.webView.entryId = @"1_gtjr7duj";
 //    }];
+    
+    
+    
     
     // Initialize players controller
     if (!_playerController) {
@@ -165,53 +174,35 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         if (!weakSelf.isModifiedFrame) {
             weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         } else {
-            
+            weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId) {
+                weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
+                
+                if (weakSelf.isFullScreenToggled) {
+                    weakSelf.startFrame = self.view.frame;
+                    weakSelf.view.frame = [UIScreen mainScreen].bounds;
+                    [weakSelf.topWindow addSubview:weakSelf.view];
+                } else {
+                    weakSelf.view.frame = weakSelf.startFrame;
+                    [weakSelf.superView addSubview:weakSelf.view];
+                }
+            });
         }
     }];
-    self.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId) {
-        weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
-        
-        if (weakSelf.isFullScreenToggled) {
-            weakSelf.startFrame = self.view.frame;
-            weakSelf.view.frame = [UIScreen mainScreen].bounds;
-        } else {
-            weakSelf.view.frame = weakSelf.startFrame;
-        }
-        
-    });
-
-    
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    KPLogTrace(@"Enter");
-    
-        [super viewWillAppear:NO];
-    
-    KPLogTrace(@"Exit");
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if (!_superView) {
+        _superView = self.view.superview;
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     KPLogTrace(@"Enter");
-    
     isResumePlayer = YES;
-//    [_playerController removePlayer];
-//    self.webView.playerControlsWebViewDelegate = nil;
-//    [self.webView removeFromSuperview];
-//    self.webView = nil;
-//    [[NSNotificationCenter defaultCenter] removeObserver:self];
-//    [self.view removeObserver:self forKeyPath:@"frame" context:nil];
-//    self.shareManager = nil;
-//    [callBackReadyRegistrations removeAllObjects];
-//    callBackReadyRegistrations = nil;
-//    [_kPlayerEvaluatedDict removeAllObjects];
-//    [_kPlayerEventsDict removeAllObjects];
-//    _kPlayerEvaluatedDict = nil;
-//    _kPlayerEventsDict = nil;
     [super viewDidDisappear:animated];
-    
     KPLogTrace(@"Exit");
 }
 
@@ -224,6 +215,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 
+- (UIWindow *)topWindow {
+    if ([UIApplication sharedApplication].keyWindow) {
+        return [UIApplication sharedApplication].keyWindow;
+    }
+    return [UIApplication sharedApplication].windows.firstObject;
+}
 
 
 #pragma mark - WebView Methods
@@ -233,12 +230,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSString *name = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
     [self sendNotification:@"changeMedia" forName:name];
 }
-
-
-- (void)load {
-    [self.webView loadRequest:[KPPlayerDatasourceHandler videoRequest:self.datasource]];
-}
-
 
 #pragma mark - Player Methods
 
@@ -263,6 +254,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
+
+
+#pragma mark Native Action methods
 - (void)share {
     KPLogTrace(@"Enter");
     self.shareManager = [KPShareManager new];
@@ -489,15 +483,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             }
         }
     } else {
-        //[self updatePlayerLayout];
         isCloseFullScreenByTap = YES;
         _isFullScreenToggled = YES;
-        
-        if ( !isFullScreen ) {
-            //[self openFullScreen: openFullScreen];
-        } else{
-            //[self closeFullScreen];
-        }
     }
     KPLogTrace(@"Exit");
 }
@@ -617,9 +604,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (!_isModifiedFrame || _isFullScreenToggled) {
-        self.webView.frame = [UIScreen mainScreen].bounds;
-        NSLog(@"Screen - %@", NSStringFromCGRect(self.view.frame));
-        [self.view.layer.sublayers.firstObject setFrame:self.view.frame];
+        self.view.frame = [UIScreen mainScreen].bounds;
     }
 }
 

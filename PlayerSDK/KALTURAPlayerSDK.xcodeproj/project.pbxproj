@@ -57,10 +57,8 @@
 		B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC991A0BCB280085BA26 /* KPBrowserViewController.m */; };
 		B3A701C71A962296007D48DA /* linkedinStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B3A701C61A962296007D48DA /* linkedinStrategy.m */; };
 		B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BEE1A2DE0BB003108CB /* KPPlayerConfig.m */; };
-		B3C27BF21A2DEDCB003108CB /* KPPlayerDatasourceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BF11A2DEDCB003108CB /* KPPlayerDatasourceHandler.m */; };
 		B3C27BF41A2DF024003108CB /* KPViewControllerProtocols.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF31A2DEDFF003108CB /* KPViewControllerProtocols.h */; };
 		B3C27BF51A2DF03E003108CB /* KPPlayerConfig.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BED1A2DE0BB003108CB /* KPPlayerConfig.h */; };
-		B3C27BF61A2DF03E003108CB /* KPPlayerDatasourceHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF01A2DEDCB003108CB /* KPPlayerDatasourceHandler.h */; };
 		B3C27BF91A2DFE12003108CB /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */; };
 		B3C27BFD1A2F2936003108CB /* NSString+Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */; };
 		B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E58C431A76714700603B10 /* KPIMAPlayerViewController.m */; };
@@ -113,7 +111,6 @@
 				B37FAA781A405AE0003FBA78 /* DeviceParamsHandler.h in CopyFiles */,
 				B3C27BFD1A2F2936003108CB /* NSString+Utilities.h in CopyFiles */,
 				B3C27BF51A2DF03E003108CB /* KPPlayerConfig.h in CopyFiles */,
-				B3C27BF61A2DF03E003108CB /* KPPlayerDatasourceHandler.h in CopyFiles */,
 				B3C27BF41A2DF024003108CB /* KPViewControllerProtocols.h in CopyFiles */,
 				B32A5CE71A25D4C00051DC7F /* KPBrowserViewController.h in CopyFiles */,
 				B32A5CDC1A2492C10051DC7F /* FacebookStrategy.h in CopyFiles */,
@@ -189,8 +186,6 @@
 		B3A701C61A962296007D48DA /* linkedinStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = linkedinStrategy.m; sourceTree = "<group>"; };
 		B3C27BED1A2DE0BB003108CB /* KPPlayerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPPlayerConfig.h; sourceTree = "<group>"; };
 		B3C27BEE1A2DE0BB003108CB /* KPPlayerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPPlayerConfig.m; sourceTree = "<group>"; };
-		B3C27BF01A2DEDCB003108CB /* KPPlayerDatasourceHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPPlayerDatasourceHandler.h; sourceTree = "<group>"; };
-		B3C27BF11A2DEDCB003108CB /* KPPlayerDatasourceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPPlayerDatasourceHandler.m; sourceTree = "<group>"; };
 		B3C27BF31A2DEDFF003108CB /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPViewControllerProtocols.h; sourceTree = "<group>"; };
 		B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
 		B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
@@ -450,8 +445,6 @@
 				B3C27BEE1A2DE0BB003108CB /* KPPlayerConfig.m */,
 				BFA2DBF61949F29B00831A71 /* KPViewController.h */,
 				BFA2DBF71949F29B00831A71 /* KPViewController.m */,
-				B3C27BF01A2DEDCB003108CB /* KPPlayerDatasourceHandler.h */,
-				B3C27BF11A2DEDCB003108CB /* KPPlayerDatasourceHandler.m */,
 			);
 			name = KPViewController;
 			path = ..;
@@ -579,7 +572,6 @@
 				B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */,
 				B3301D5D1AB6FAD700E9778C /* KPlayerController.m in Sources */,
 				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
-				B3C27BF21A2DEDCB003108CB /* KPPlayerDatasourceHandler.m in Sources */,
 				B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */,
 				BFFFA754182F9E66005B3B24 /* KPControlsWebView.m in Sources */,
 				B3C27BEF1A2DE0BB003108CB /* KPPlayerConfig.m in Sources */,

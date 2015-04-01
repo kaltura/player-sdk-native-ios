@@ -13,7 +13,25 @@ static NSString *KPPlayerConfigNativeCallOutKey = @"nativeCallout";
 static NSString *KPPlayerConfigChromecastKey = @"chromecast.plugin";
 static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 
+
 @interface KPPlayerConfig : NSObject
+
+- (instancetype)initWithDomain:(NSString *)domain
+                      uiConfID:(NSString *)uiConfId
+                      playerID:(NSString *)playerID;
+
+@property (nonatomic, copy) NSString *domain;
+@property (nonatomic, copy) NSString *wid;
+@property (nonatomic, copy) NSString *cacheSt;
+@property (nonatomic, copy) NSString *urid;
+
+@property (nonatomic, copy, readonly) NSString *uiConfId;
+@property (nonatomic, copy) NSString *entryId;
+@property (nonatomic, copy, readonly) NSString *playerId;
+
+
+@property (nonatomic) BOOL debug;
+@property (nonatomic) BOOL forceMobileHTML5;
 
 /** Adds flags for the video request
  *
@@ -22,6 +40,5 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
  */
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value;;
 
-/// Contains all the added flags
-@property (nonatomic, copy, readonly) NSDictionary *flashvarsDict;
+- (NSURL *)videoURL;
 @end

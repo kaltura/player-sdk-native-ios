@@ -119,7 +119,7 @@
 - (IMAAdsLoader *)adsLoader {
     if (!_adsLoader) {
         IMASettings *settings = nil;
-        if (_locale && _locale.length) {
+        if (![_locale isKindOfClass:[NSNull class]] && _locale.length) {
             settings = [IMASettings new];
             settings.language = _locale;
         }
