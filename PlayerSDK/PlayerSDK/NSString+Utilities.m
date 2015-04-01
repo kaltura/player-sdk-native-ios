@@ -92,6 +92,10 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self isEqualToString:@"loadedmetadata"];
 }
 
+- (BOOL)isFrameKeypath {
+    return [self isEqualToString:@"frame"];
+}
+
 - (FunctionComponents)extractFunction {
     struct FunctionComponents function;
     function.name = nil;

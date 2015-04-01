@@ -54,23 +54,7 @@ typedef enum{
 
 @end
 
-#import "KPPlayerConfig.h"
-@protocol KPViewControllerDatasource <NSObject>
-@optional
-/// Address of the video server
-@property (nonatomic, copy, readonly) NSString *serverAddress;
 
-@property (nonatomic, copy, readonly) NSString *wid;
-@property (nonatomic, copy, readonly) NSString *uiConfId;
-@property (nonatomic, copy, readonly) NSString *cacheSt;
-@property (nonatomic, copy, readonly) NSString *entryId;
-@property (nonatomic, copy, readonly) KPPlayerConfig *configFlags;
-@property (nonatomic, copy, readonly) NSString *playerId;
-@property (nonatomic, copy, readonly) NSString *urid;
-@property (nonatomic, copy, readonly) NSString *debug;
-@property (nonatomic, copy, readonly) NSString *forceMobileHTML5;
-
-@end
 
 
 

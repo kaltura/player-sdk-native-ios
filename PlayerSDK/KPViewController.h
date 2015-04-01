@@ -25,13 +25,8 @@
 
 
 
-@class KPViewController;
-@class KPEventListener;
 
 @protocol KPViewControllerDelegate;
-@protocol KPViewControllerDatasource;
-
-
 
 @interface KPViewController : UIViewController
 

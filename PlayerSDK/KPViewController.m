@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic, strong) KPlayerController *playerController;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
-@property (nonatomic) CGRect startFrame;
 @property (nonatomic, strong) UIView *superView;
 @end
 
@@ -91,15 +90,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
-    if ([object isEqual:self.view] && [keyPath isEqualToString:@"frame"]) {
-        
-        [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
-        self.webView.frame = (CGRect){CGPointZero, self.view.frame.size};
-        
+    if (keyPath.isFrameKeypath) {
+        if ([object isEqual:self.view]) {
+            [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
+            self.webView.frame = (CGRect){CGPointZero, self.view.frame.size};
+        }
     }
 }
 
 
+#pragma mark -
 #pragma mark Lazy init
 - (NSMutableDictionary *)kPlayerEventsDict {
     if (!_kPlayerEventsDict) {
@@ -125,6 +125,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return platform;
 }
 
+
+#pragma mark -
 #pragma mark View flow methods
 - (void)viewDidLoad {
     KPLogTrace(@"Enter");
@@ -146,16 +148,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                 forKeyPath:@"frame"
                    options:NSKeyValueObservingOptionNew
                    context:nil];
-//    [self didLoad];
-//    [KPViewController sharedChromecastDeviceController];
-//    __weak KPViewController *weakSelf = self;
-//    [self registerReadyEvent:^{
-//        weakSelf.webView.entryId = @"1_gtjr7duj";
-//    }];
-    
-    
-    
-    
+
     // Initialize players controller
     if (!_playerController) {
         _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
@@ -169,6 +162,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:videoURL]];
         [self.view addSubview:self.webView];
     }
+    
+    // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
         if (!weakSelf.isModifiedFrame) {
@@ -178,11 +173,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                 weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
                 
                 if (weakSelf.isFullScreenToggled) {
-                    weakSelf.startFrame = self.view.frame;
                     weakSelf.view.frame = [UIScreen mainScreen].bounds;
                     [weakSelf.topWindow addSubview:weakSelf.view];
                 } else {
-                    weakSelf.view.frame = weakSelf.startFrame;
+                    weakSelf.view.frame = weakSelf.superView.bounds;
                     [weakSelf.superView addSubview:weakSelf.view];
                 }
             });
@@ -222,10 +216,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return [UIApplication sharedApplication].windows.firstObject;
 }
 
-
-#pragma mark - WebView Methods
-
-
 - (void)changeMedia:(NSString *)mediaID {
     NSString *name = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
     [self sendNotification:@"changeMedia" forName:name];
@@ -242,47 +232,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-
-- (void)doNativeAction {
-    KPLogTrace(@"Enter");
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    SEL nativeAction = NSSelectorFromString(nativeActionParams.actionType);
-    [self performSelector:nativeAction withObject:nil];
-#pragma clang diagnostic pop
-    KPLogTrace(@"Exit");
-}
-
-
-
-#pragma mark Native Action methods
-- (void)share {
-    KPLogTrace(@"Enter");
-    self.shareManager = [KPShareManager new];
-    self.shareManager.datasource = nativeActionParams;
-    __weak KPViewController *weakSelf = self;
-    UIViewController *shareController = [self.shareManager shareWithCompletion:^(KPShareResults result,
-                                                                            KPShareError *shareError) {
-        if (shareError.error) {
-            KPLogError(@"%@", shareError.error.description);
-        }
-        weakSelf.shareManager = nil;
-    }];
-    [self presentViewController:shareController animated:YES completion:nil];
-    KPLogTrace(@"Exit");
-}
-
-- (void)openURL {
-    KPLogTrace(@"Enter");
-    KPBrowserViewController *browser = [KPBrowserViewController currentBrowser];
-    browser.url = nativeActionParams.openURL;
-    [self presentViewController:browser animated:YES completion:nil];
-    KPLogTrace(@"Exit");
-}
-
+#pragma mark -
 #pragma Kaltura Player External API - KDP API
-
 - (void)registerReadyEvent:(void (^)())handler {
     KPLogTrace(@"Enter");
     if (isJsCallbackReady) {
@@ -307,18 +258,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     };
 }
 
-- (void)notifyJsReady {
-    
-    KPLogTrace(@"Enter");
-    isJsCallbackReady = YES;
-    NSArray *registrations = callBackReadyRegistrations.copy;
-    for (void(^handler)() in registrations) {
-        handler();
-        [callBackReadyRegistrations removeObject:handler];
-    }
-    callBackReadyRegistrations = nil;
-    KPLogTrace(@"Exit");
-}
+
 
 - (void)addEventListener:(NSString *)event
                  eventID:(NSString *)eventID
@@ -347,20 +287,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         KPLogTrace(@"Exit");
     };
 }
-
-- (void)notifyKPlayerEvent: (NSArray *)arr {
-    KPLogTrace(@"Enter");
-    NSString *eventName = arr[0];
-    NSArray *listenersArr = self.kPlayerEventsDict[ eventName ];
-    
-    if ( listenersArr != nil ) {
-        for (NSDictionary *eDict in listenersArr) {
-            ((void(^)(NSString *))eDict.allValues.lastObject)(eventName);
-        }
-    }
-    KPLogTrace(@"Exit");
-}
-
 
 - (void)removeEventListener:(NSString *)event
                     eventID:(NSString *)eventID {
@@ -473,22 +399,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 
-- (void)toggleFullscreen {
-    KPLogTrace(@"Enter");
-    if (self.kPlayerEventsDict[KPlayerEventToggleFullScreen]) {
-        NSArray *listenersArr = self.kPlayerEventsDict[ KPlayerEventToggleFullScreen ];
-        if ( listenersArr != nil ) {
-            for (NSDictionary *eDict in listenersArr) {
-                ((void(^)())eDict.allValues.lastObject)(eDict.allKeys.firstObject);
-            }
-        }
-    } else {
-        isCloseFullScreenByTap = YES;
-        _isFullScreenToggled = YES;
-    }
-    KPLogTrace(@"Exit");
-}
 
+#pragma mark HTML lib events triggerd by WebView Delegate
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args{
        KPLogTrace(@"Enter");
@@ -510,31 +422,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-#pragma mark KPlayerDelegate
-- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    [self.webView triggerEvent:event withValue:value];
-}
-
-- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
-    [self.webView triggerEvent:event withJSON:jsonString];
-}
-
-- (void)contentCompleted:(id<KPlayer>)currentPlayer {
-    [self player:currentPlayer eventName:EndedKey value:nil];
-}
-
-- (void)allAdsCompleted {
-    [self.webView triggerEvent:PostrollEndedKey withJSON:nil];
-}
-
-
-- (void)triggerKPlayerNotification: (NSNotification *)note{
-    KPLogTrace(@"Enter");
-    isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
-    [self.webView triggerEvent:note.name withValue:note.userInfo[note.name]];
-    KPLogDebug(@"%@\n%@", note.name, note.userInfo[note.name]);
-    KPLogTrace(@"Exit");
-}
 
 - (void)setAttribute: (NSArray*)args{
     KPLogTrace(@"Enter");
@@ -574,15 +461,118 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-
-
-
-
 -(void)visible:(NSString *)boolVal{
     KPLogTrace(@"Enter");
     self.triggerEvent(@"visible", [NSString stringWithFormat:@"%@", boolVal]);
     KPLogTrace(@"Exit");
 }
+
+- (void)toggleFullscreen {
+    KPLogTrace(@"Enter");
+    if (self.kPlayerEventsDict[KPlayerEventToggleFullScreen]) {
+        NSArray *listenersArr = self.kPlayerEventsDict[ KPlayerEventToggleFullScreen ];
+        if ( listenersArr != nil ) {
+            for (NSDictionary *eDict in listenersArr) {
+                ((void(^)())eDict.allValues.lastObject)(eDict.allKeys.firstObject);
+            }
+        }
+    } else {
+        isCloseFullScreenByTap = YES;
+        _isFullScreenToggled = YES;
+    }
+    KPLogTrace(@"Exit");
+}
+
+- (void)notifyKPlayerEvent: (NSArray *)arr {
+    KPLogTrace(@"Enter");
+    NSString *eventName = arr[0];
+    NSArray *listenersArr = self.kPlayerEventsDict[ eventName ];
+    
+    if ( listenersArr != nil ) {
+        for (NSDictionary *eDict in listenersArr) {
+            ((void(^)(NSString *))eDict.allValues.lastObject)(eventName);
+        }
+    }
+    KPLogTrace(@"Exit");
+}
+
+- (void)notifyJsReady {
+    
+    KPLogTrace(@"Enter");
+    isJsCallbackReady = YES;
+    NSArray *registrations = callBackReadyRegistrations.copy;
+    for (void(^handler)() in registrations) {
+        handler();
+        [callBackReadyRegistrations removeObject:handler];
+    }
+    callBackReadyRegistrations = nil;
+    KPLogTrace(@"Exit");
+}
+
+- (void)doNativeAction {
+    KPLogTrace(@"Enter");
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+    SEL nativeAction = NSSelectorFromString(nativeActionParams.actionType);
+    [self performSelector:nativeAction withObject:nil];
+#pragma clang diagnostic pop
+    KPLogTrace(@"Exit");
+}
+
+#pragma mark Native Action methods
+- (void)share {
+    KPLogTrace(@"Enter");
+    self.shareManager = [KPShareManager new];
+    self.shareManager.datasource = nativeActionParams;
+    __weak KPViewController *weakSelf = self;
+    UIViewController *shareController = [self.shareManager shareWithCompletion:^(KPShareResults result,
+                                                                                 KPShareError *shareError) {
+        if (shareError.error) {
+            KPLogError(@"%@", shareError.error.description);
+        }
+        weakSelf.shareManager = nil;
+    }];
+    [self presentViewController:shareController animated:YES completion:nil];
+    KPLogTrace(@"Exit");
+}
+
+- (void)openURL {
+    KPLogTrace(@"Enter");
+    KPBrowserViewController *browser = [KPBrowserViewController currentBrowser];
+    browser.url = nativeActionParams.openURL;
+    [self presentViewController:browser animated:YES completion:nil];
+    KPLogTrace(@"Exit");
+}
+
+
+
+#pragma mark KPlayerDelegate
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    [self.webView triggerEvent:event withValue:value];
+}
+
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
+    [self.webView triggerEvent:event withJSON:jsonString];
+}
+
+- (void)contentCompleted:(id<KPlayer>)currentPlayer {
+    [self player:currentPlayer eventName:EndedKey value:nil];
+}
+
+- (void)allAdsCompleted {
+    [self.webView triggerEvent:PostrollEndedKey withJSON:nil];
+}
+
+
+- (void)triggerKPlayerNotification: (NSNotification *)note{
+    KPLogTrace(@"Enter");
+    isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
+    [self.webView triggerEvent:note.name withValue:note.userInfo[note.name]];
+    KPLogDebug(@"%@\n%@", note.name, note.userInfo[note.name]);
+    KPLogTrace(@"Exit");
+}
+
 
 
 

@@ -39,6 +39,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, readonly) BOOL canPlay;
 @property (nonatomic, readonly) BOOL isDurationChanged;
 @property (nonatomic, readonly) BOOL isMetadata;
+@property (nonatomic, readonly) BOOL isFrameKeypath;
 
 @property (nonatomic, copy, readonly) NSString *md5;
 @property (nonatomic, copy, readonly) NSString *documentPath;
