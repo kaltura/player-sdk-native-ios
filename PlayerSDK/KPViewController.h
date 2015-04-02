@@ -34,15 +34,58 @@
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
 
+/*!
+ *  @function initWithURL:
+ *  
+ *  @abstract
+ *  Initialize Player instance
+ *
+ *  @param NSURL url of player content
+ */
 - (instancetype)initWithURL:(NSURL *)url;
 
+/*!
+ *  @function initWithConfiguration:
+ *
+ *  @abstract
+ *  Initialize Player instance
+ *
+ *  @param KPPlayerConfig configuration parameters of the player content
+ */
 - (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration;
 
+/*!
+ *  @function loadPlayerIntoViewController:
+ *
+ *  @abstract
+ *  Loads the player controller into the parent controller
+ *
+ *  @param UIViewController parentViewController the controller which will call the player
+ */
 - (void)loadPlayerIntoViewController:(UIViewController *)parentViewController;
 
-- (void)changeMedia:(NSString *)mediaID;
+/*!
+ *  @function removePlayer
+ *
+ *  @abstract
+ *  Cleaning all the memory of the player
+ *
+ */
+- (void)removePlayer;
+
+
+/*!
+ *  @function changeMedia:
+ *
+ *  @abstract
+ *  Change the entryID without the need of sending new request
+ *
+ *  @param NSString entryID the entryID of the new video
+ */
+- (void)changeMedia:(NSString *)entryID;
 
 @property (nonatomic, strong) KPPlayerConfig *configuration;
+
 @property (nonatomic, strong) NSURL *source;
 
 

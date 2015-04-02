@@ -27,15 +27,5 @@
 	<key>IDESourceControlProjectWCCIdentifier</key>
 	<string>C8599C6442C2751A61AE351C616FCB28200CC541</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
-	<array>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C8599C6442C2751A61AE351C616FCB28200CC541</string>
-			<key>IDESourceControlWCCName</key>
-			<string>player-sdk-native-ios</string>
-		</dict>
-	</array>
 </dict>
 </plist>

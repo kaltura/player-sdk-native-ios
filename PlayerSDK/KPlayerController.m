@@ -95,6 +95,8 @@
 - (void)removePlayer {
     [_player removePlayer];
     _player = nil;
+    [_adController removeIMAPlayer];
+    _adController = nil;
 }
 
 #pragma mark KPlayerEventsDelegate
@@ -126,6 +128,10 @@
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.contentEnded = YES;
     [_adController contentCompleted];
+}
+
+- (void)dealloc {
+    KPLogInfo(@"Dealloc");
 }
 
 @end

@@ -47,7 +47,10 @@ static NSString *StatusKeyPath = @"status";
             [parentView.layer addSublayer:_layer];
         }
         
-        NSLog(@"%@", parentView.subviews);
+        [self addObserver:self
+               forKeyPath:RateKeyPath
+                  options:0
+                  context:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(videoEnded)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
@@ -110,10 +113,6 @@ static NSString *StatusKeyPath = @"status";
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
-    [self addObserver:self
-           forKeyPath:RateKeyPath
-              options:0
-              context:nil];
     [item addObserver:self
            forKeyPath:StatusKeyPath
               options:0
@@ -168,10 +167,16 @@ static NSString *StatusKeyPath = @"status";
 }
 
 - (void)removePlayer {
+    [self pause];
     [self removeTimeObserver:observer];
     observer = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self removeObserver:self forKeyPath:RateKeyPath context:nil];
+    @try {
+        [self removeObserver:self forKeyPath:RateKeyPath context:nil];
+    }
+    @catch (NSException *exception) {
+        KPLogError(@"Not registered to Rate key");
+    }
     [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     [_layer removeFromSuperlayer];
     _layer = nil;
@@ -230,7 +235,7 @@ static NSString *StatusKeyPath = @"status";
 }
 
 - (void)dealloc {
-    
+    KPLogInfo(@"Dealloc");
 }
 
 @end

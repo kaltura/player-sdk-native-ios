@@ -85,8 +85,29 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (parentViewController && [parentViewController isKindOfClass:[UIViewController class]]) {
         _isModifiedFrame = YES;
         [parentViewController addChildViewController:self];
-        
     }
+}
+
+- (void)removePlayer {
+    [self.webView removeFromSuperview];
+    self.webView.delegate = nil;
+    self.webView = nil;
+    [self.playerController removePlayer];
+    self.playerController = nil;
+    [callBackReadyRegistrations removeAllObjects];
+    callBackReadyRegistrations = nil;
+    appConfigDict = nil;
+    nativeActionParams = nil;
+    videoURL = nil;
+    [self.kPlayerEvaluatedDict removeAllObjects];
+    self.kPlayerEvaluatedDict = nil;
+    [self.kPlayerEventsDict removeAllObjects];
+    self.kPlayerEventsDict = nil;
+    [self.view removeObserver:self forKeyPath:@"frame" context:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self.view removeFromSuperview];
+    [self removeFromParentViewController];
+    self.superView = nil;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -602,7 +623,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return YES;
 }
 
-
+- (void)dealloc {
+    KPLogInfo(@"Dealloc");
+}
 @end
 
 

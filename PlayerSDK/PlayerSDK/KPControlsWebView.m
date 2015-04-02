@@ -180,4 +180,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     [self returnResult:alertCallbackId args:[NSNumber numberWithBool:result],nil];
 }
 
+- (void)dealloc {
+    KPLogInfo(@"Dealloc");
+}
+
 @end

@@ -8,6 +8,7 @@
 
 #import "KPIMAPlayerViewController.h"
 #import "NSString+Utilities.h"
+#import "KPLog.h"
 
 
 @interface KPIMAPlayerViewController () <IMAWebOpenerDelegate>{
@@ -56,16 +57,21 @@
 }
 
 - (void)removeIMAPlayer {
+    [self.adsManager pause];
+    [self.adsManager destroy];
+    _adsManager = nil;
+    
     AdEventsListener = nil;
     [_adEventParams removeAllObjects];
     _adEventParams = nil;
     _adsLoader = nil;
     _adDisplayContainer = nil;
     _adsRenderingSettings = nil;
-    _adsManager = nil;
     _contentPlayer = nil;
     _playhead = nil;
     _contentPlayer = nil;
+    [self.view removeFromSuperview];
+    [self removeFromParentViewController];
 }
 
 
@@ -261,7 +267,7 @@
 }
 
 - (void)dealloc {
-    
+    KPLogInfo(@"Dealloc");
 }
 
 - (BOOL)prefersStatusBarHidden {
