@@ -81,9 +81,13 @@ static NSString *StatusKeyPath = @"status";
                        context:(void *)context {
     if ([keyPath isEqual:RateKeyPath]) {
         if (self.rate) {
-            [self.delegate player:self eventName:PlayKey value:nil];
+            [self.delegate player:self
+                        eventName:PlayKey
+                            value:nil];
         } else {
-            [self.delegate player:self eventName:PauseKey value:nil];
+            [self.delegate player:self
+                        eventName:PauseKey
+                            value:nil];
         }
     } else if ([keyPath isEqualToString:StatusKeyPath]) {
         switch (self.status) {
@@ -91,9 +95,17 @@ static NSString *StatusKeyPath = @"status";
                 
                 break;
             case AVPlayerStatusReadyToPlay:
-                [self.delegate player:self eventName:DurationChangedKey value:@(self.duration).stringValue];
-                [self.delegate player:self eventName:LoadedMetaDataKey value:@""];
-                [self.delegate player:self eventName:CanPlayKey value:nil];
+                [self.delegate player:self
+                            eventName:DurationChangedKey
+                                value:@(self.duration).stringValue];
+                
+                [self.delegate player:self
+                            eventName:LoadedMetaDataKey
+                                value:@""];
+                
+                [self.delegate player:self
+                            eventName:CanPlayKey
+                                value:nil];
                 break;
             case AVPlayerStatusUnknown:
                 break;
@@ -109,7 +121,7 @@ static NSString *StatusKeyPath = @"status";
 - (void)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
     if (self.currentItem) {
-        [self removeObserver:self forKeyPath:RateKeyPath context:nil];
+        [self pause];
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];

@@ -35,6 +35,11 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self stringByAppendingString:[versionFlashvar stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
+- (NSString *)appendIFrameEmbed {
+    NSString *iFrameEmbed = @"&iframeembed=true";
+    return [self stringByAppendingString:[iFrameEmbed stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+}
+
 
 - (Attribute)attributeEnumFromString {
     KPLogTrace(@"Enter");

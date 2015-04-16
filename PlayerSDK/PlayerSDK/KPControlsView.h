@@ -1,39 +1,32 @@
 //
-//  MyWebView.h
-//  UIWebView-Call-ObjC
+//  KPControlsView.h
+//  KALTURAPlayerSDK
 //
-//  Created by NativeBridge on 02/09/10.
-//
-
-//This class is the HTML5 player, that rides over the native player
-
-// Copyright (c) 2013 Kaltura, Inc. All rights reserved.
-// License: http://corp.kaltura.com/terms-of-use
+//  Created by Nissim Pardo on 4/12/15.
+//  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "KArchiver.h"
+#import "KPLog.h"
+#import "NSString+Utilities.h"
 
-
-@protocol PlayerControlsWebViewDelegate <NSObject>
+@protocol KPControlsViewDelegate <NSObject>
 @required
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
 @end
 
-@interface KPControlsWebView : UIWebView <UIWebViewDelegate> {
-  
-  int alertCallbackId;
-}
+@protocol KPControlsView <NSObject>
 
-
-@property (nonatomic, weak) id <PlayerControlsWebViewDelegate> playerControlsWebViewDelegate;
-
-@property (nonatomic, assign, readonly) CGFloat videoHolderHeight;
-
+@property (nonatomic, weak) id<KPControlsViewDelegate> controlsDelegate;
 @property (nonatomic, copy) NSString *entryId;
+//@property (nonatomic, assign, readonly) CGFloat videoHolderHeight;
+@property (nonatomic) CGRect controlsFrame;
 
+- (instancetype)initWithFrame:(CGRect)frame;
 
-- (void)returnResult:(int)callbackId args:(id)firstObj, ...;
+- (void)loadRequest:(NSURLRequest *)request;
 
 - (void)addEventListener:(NSString *)event;
 
@@ -55,5 +48,13 @@
 - (void)triggerEvent:(NSString *)event withJSON:(NSString *)json;
 
 - (void)updateLayout;
+
+- (void)removeControls;
+
+- (void)fetchvideoHolderHeight:(void(^)(CGFloat height))fetcher;
+
 @end
 
+@interface KPControlsView : UIView
++ (id<KPControlsView>)defaultControlsViewWithFrame:(CGRect)frame;
+@end

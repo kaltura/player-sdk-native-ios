@@ -17,7 +17,6 @@
 @protocol KalturaPlayer;
 
 #import <MediaPlayer/MediaPlayer.h>
-#import "KPControlsWebView.h"
 #import "KPLog.h"
 #import "KPViewControllerProtocols.h"
 #import "KPPlayerConfig.h"

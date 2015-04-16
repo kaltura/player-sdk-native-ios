@@ -1,0 +1,145 @@
+//
+//  KPControlsUIWebview.m
+//  KALTURAPlayerSDK
+//
+//  Created by Nissim Pardo on 4/12/15.
+//  Copyright (c) 2015 Kaltura. All rights reserved.
+//
+
+#import "KPControlsUIWebview.h"
+
+
+@interface KPControlsUIWebview() <UIWebViewDelegate>
+
+@end
+
+@implementation KPControlsUIWebview
+@synthesize entryId = _entryId, controlsDelegate, controlsFrame = _controlsFrame;
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Set delegate in order to "shouldStartLoadWithRequest" to be called
+        self.delegate = self;
+        
+        // Set non-opaque in order to make "body{background-color:transparent}" working!
+        self.opaque = NO;
+        self.scrollView.scrollEnabled = NO;
+        self.scrollView.bounces = NO;
+        self.scrollView.bouncesZoom = NO;
+        self.backgroundColor = [UIColor clearColor];
+        return self;
+    }
+    return nil;
+}
+
+- (void)loadRequest:(NSURLRequest *)request {
+    [[KArchiver shared] contentOfURL:request.URL.absoluteString
+                          completion:^(NSData *content, NSError *error) {
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [self loadData:content
+                                        MIMEType:@"text/html"
+                                textEncodingName:@"UTF-8"
+                                         baseURL:request.URL];
+                              });
+                          }];
+}
+
+- (void)setEntryId:(NSString *)entryId {
+    if (![_entryId isEqualToString:entryId]) {
+        _entryId = entryId;
+        NSString *notificationName = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
+        [self sendNotification:@"changeMedia" withName:notificationName];
+    }
+}
+
+- (void)fetchvideoHolderHeight:(void (^)(CGFloat))fetcher {
+    fetcher([[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue]);
+}
+
+- (void)setControlsFrame:(CGRect)controlsFrame {
+    self.frame = controlsFrame;
+}
+
+- (CGRect)controlsFrame {
+    return self.frame;
+}
+
+- (void)removeControls {
+    self.delegate = nil;
+    self.controlsDelegate = nil;
+    self.entryId = nil;
+    [self removeFromSuperview];
+}
+
+- (void)addEventListener:(NSString *)event {
+    [self stringByEvaluatingJavaScriptFromString:event.addJSListener];
+}
+
+- (void)removeEventListener:(NSString *)event {
+    [self stringByEvaluatingJavaScriptFromString:event.removeJSListener];
+}
+
+- (void)evaluate:(NSString *)expression evaluateID:(NSString *)evaluateID {
+    [self stringByEvaluatingJavaScriptFromString:[expression evaluateWithID:evaluateID]];
+}
+
+- (void)sendNotification:(NSString *)notification withName:(NSString *)notificationName {
+    [self stringByEvaluatingJavaScriptFromString:[notificationName sendNotificationWithBody:notification]];
+}
+
+- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value {
+    [self stringByEvaluatingJavaScriptFromString:[pluginName setKDPAttribute:propertyName value:value]];
+}
+
+- (void)triggerEvent:(NSString *)event withValue:(NSString *)value {
+    [self stringByEvaluatingJavaScriptFromString:[event triggerEvent:value]];
+}
+
+- (void)triggerEvent:(NSString *)event withJSON:(NSString *)json {
+    [self stringByEvaluatingJavaScriptFromString:[event triggerJSON:json]];
+}
+
+//- (CGFloat)videoHolderHeight {
+//    return [[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue];
+//}
+
+- (void)updateLayout {
+    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
+    [self stringByEvaluatingJavaScriptFromString:updateLayoutJS];
+}
+
+#pragma mark UIWebviewDelegate
+// This selector is called when something is loaded in our webview
+// By something I don't mean anything but just "some" :
+//  - main html document
+//  - sub iframes document
+//
+// But all images, xmlhttprequest, css, ... files/requests doesn't generate such events :/
+- (BOOL)webView:(UIWebView *)webView2
+shouldStartLoadWithRequest:(NSURLRequest *)request
+ navigationType:(UIWebViewNavigationType)navigationType {
+    
+    NSString *requestString = request.URL.absoluteString;
+    KPLogDebug(@"requestString %@", requestString);
+    if (requestString.isJSFrame) {
+        FunctionComponents functionComponents = requestString.extractFunction;
+        if (functionComponents.error) {
+            KPLogError(@"JSON parsing error: %@", functionComponents.error);
+        } else {
+            [self.controlsDelegate handleHtml5LibCall:functionComponents.name
+                                           callbackId:functionComponents.callBackID
+                                                 args:functionComponents.args];
+        }
+        return NO;
+    } else if( !requestString.isFrameURL ) {
+        [[UIApplication sharedApplication] openURL: request.URL];
+        return NO;
+    } else {
+        NSLog(@"HTTP:: %@", requestString);
+    }
+    return YES;
+}
+
+
+@end

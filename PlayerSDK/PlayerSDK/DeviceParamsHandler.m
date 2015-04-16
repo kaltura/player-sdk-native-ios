@@ -38,6 +38,14 @@ BOOL isStatusBarOrientation(UIInterfaceOrientation orientation) {
     return _statusBarOrientation == orientation;
 }
 
+CGRect screenBounds() {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (UIInterfaceOrientationIsPortrait(orientation) || isIOS(8)) {
+        return [UIScreen mainScreen].bounds;
+    }
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    return (CGRect){CGPointZero, size.height, size.width};
+}
 
 
 @implementation DeviceParamsHandler

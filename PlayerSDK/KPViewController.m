@@ -20,6 +20,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
 #import "KPlayerController.h"
+#import "KPControlsView.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -31,7 +32,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerControllerDelegate, PlayerControlsWebViewDelegate>{
+@interface KPViewController() <KPlayerControllerDelegate, KPControlsViewDelegate>{
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -42,7 +43,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSURL *videoURL;
 }
 
-@property (nonatomic, strong) KPControlsWebView* webView;
+@property (nonatomic, strong) id<KPControlsView> controlsView;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
@@ -53,7 +54,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @end
 
 @implementation KPViewController 
-@synthesize webView;
+@synthesize controlsView;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -66,7 +67,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
-        videoURL = [NSURL URLWithString:url.absoluteString.appendHover];
+        videoURL = [NSURL URLWithString:url.absoluteString.appendHover.appendIFrameEmbed];
         return self;
     }
     return nil;
@@ -89,9 +90,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)removePlayer {
-    [self.webView removeFromSuperview];
-    self.webView.delegate = nil;
-    self.webView = nil;
+    [self.controlsView removeControls];
+    self.controlsView = nil;
     [self.playerController removePlayer];
     self.playerController = nil;
     [callBackReadyRegistrations removeAllObjects];
@@ -110,11 +110,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self.superView = nil;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context {
     if (keyPath.isFrameKeypath) {
         if ([object isEqual:self.view]) {
             [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
-            self.webView.frame = (CGRect){CGPointZero, self.view.frame.size};
+            self.controlsView.controlsFrame = (CGRect){CGPointZero, self.view.frame.size};
         }
     }
 }
@@ -177,11 +180,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _playerController.delegate = self;
     }
     // Initialize HTML layer (controls)
-    if (!self.webView) {
-        self.webView = [[KPControlsWebView alloc] initWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
-        self.webView.playerControlsWebViewDelegate = self;
-        [self.webView loadRequest:[NSURLRequest requestWithURL:videoURL]];
-        [self.view addSubview:self.webView];
+    if (!self.controlsView) {
+        self.controlsView = [KPControlsView defaultControlsViewWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
+        self.controlsView.controlsDelegate = self;
+        [self.controlsView loadRequest:[NSURLRequest requestWithURL:videoURL]];
+        [self.view addSubview:(UIView *)self.controlsView];
     }
     
     // Handle full screen events
@@ -194,7 +197,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                 weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
                 
                 if (weakSelf.isFullScreenToggled) {
-                    weakSelf.view.frame = [UIScreen mainScreen].bounds;
+                    weakSelf.view.frame = screenBounds();
                     [weakSelf.topWindow addSubview:weakSelf.view];
                 } else {
                     weakSelf.view.frame = weakSelf.superView.bounds;
@@ -206,6 +209,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
+
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -294,7 +298,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [listenerArr addObject:@{eventID: handler}];
         self.kPlayerEventsDict[event] = listenerArr;
         if (listenerArr.count == 1 && !event.isToggleFullScreen) {
-            [weakSelf.webView addEventListener:event];
+            [weakSelf.controlsView addEventListener:event];
         }
         KPLogTrace(@"Exit");
     }];
@@ -326,7 +330,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ( !listenersArr.count ) {
         listenersArr = nil;
         if (!event.isToggleFullScreen) {
-            [self.webView removeEventListener:event];
+            [self.controlsView removeEventListener:event];
         }
     }
     KPLogTrace(@"Exit");
@@ -346,7 +350,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
               handler:(void(^)(NSString *))handler {
     KPLogTrace(@"Enter");
     self.kPlayerEvaluatedDict[expressionID] = handler;
-    [self.webView evaluate:expression evaluateID:expressionID];
+    [self.controlsView evaluate:expression evaluateID:expressionID];
     KPLogTrace(@"Exit");
 }
 
@@ -374,7 +378,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ( !notification || [ notification isKindOfClass: [NSNull class] ] ) {
         notification = @"null";
     }
-    [self.webView sendNotification:notification withName:notificationName];
+    [self.controlsView sendNotification:notification withName:notificationName];
     KPLogTrace(@"Exit");
 }
 
@@ -391,7 +395,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
            propertyName:(NSString *)propertyName
                   value:(NSString *)value {
     KPLogTrace(@"Enter");
-    [self.webView setKDPAttribute:pluginName propertyName:propertyName value:value];
+    [self.controlsView setKDPAttribute:pluginName propertyName:propertyName value:value];
     KPLogTrace(@"Exit");
 }
 
@@ -406,7 +410,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)triggerEvent:(NSString *)event withValue:(NSString *)value {
     KPLogTrace(@"Enter");
-    [self.webView triggerEvent:event withValue:value];
+    [self.controlsView triggerEvent:event withValue:value];
     KPLogTrace(@"Exit");
 }
 
@@ -472,9 +476,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         case language:
             _playerController.locale = attributeVal;
             break;
-        case doubleClickRequestAds:
-            _playerController.adPlayerHeight = self.webView.videoHolderHeight;
-            _playerController.adTagURL = attributeVal;
+        case doubleClickRequestAds: {
+            [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    _playerController.adPlayerHeight = height;
+                    _playerController.adTagURL = attributeVal;
+                });
+            }];
+        }
             break;
         default:
             break;
@@ -570,11 +579,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 #pragma mark KPlayerDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    [self.webView triggerEvent:event withValue:value];
+    [self.controlsView triggerEvent:event withValue:value];
 }
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
-    [self.webView triggerEvent:event withJSON:jsonString];
+    [self.controlsView triggerEvent:event withJSON:jsonString];
 }
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
@@ -582,14 +591,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)allAdsCompleted {
-    [self.webView triggerEvent:PostrollEndedKey withJSON:nil];
+    [self.controlsView triggerEvent:PostrollEndedKey withJSON:nil];
 }
 
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     KPLogTrace(@"Enter");
     isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
-    [self.webView triggerEvent:note.name withValue:note.userInfo[note.name]];
+    [self.controlsView triggerEvent:note.name withValue:note.userInfo[note.name]];
     KPLogDebug(@"%@\n%@", note.name, note.userInfo[note.name]);
     KPLogTrace(@"Exit");
 }
@@ -615,7 +624,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (!_isModifiedFrame || _isFullScreenToggled) {
-        self.view.frame = [UIScreen mainScreen].bounds;
+        [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
+        self.controlsView.controlsFrame = screenBounds();
     }
 }
 

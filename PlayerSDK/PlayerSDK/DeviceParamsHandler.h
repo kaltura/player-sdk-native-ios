@@ -53,6 +53,8 @@ BOOL isStatusBarOrientation(UIInterfaceOrientation orientation);
 
 BOOL compareOrientations(UIDeviceOrientation compareTo, UIDeviceOrientation orientations, ...);
 
+CGRect screenBounds();
+
 @interface DeviceParamsHandler : NSObject
 + (BOOL)compareOrientation:(UIDeviceOrientation)compareTo listOfOrientations:(UIDeviceOrientation)list, ...;
 @end
