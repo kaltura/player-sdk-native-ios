@@ -156,9 +156,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self initPlayerParams];
     
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
-    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
-                                                                                action:@selector(didPinchInOut:)];
-    [self.view addGestureRecognizer:pinch];
+//    UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
+//                                                                                action:@selector(didPinchInOut:)];
+//    [self.view addGestureRecognizer:pinch];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
                                              selector: @selector(handleEnteredBackground:)
