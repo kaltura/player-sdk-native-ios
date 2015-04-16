@@ -48,7 +48,7 @@ s.requires_arc = true
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.source_files  = "PlayerSDK/**/*.{h,m}", "PlayerSDK/PlayerSDK/**/*.{h,m}"
 s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
-#s.exclude_files = "Classes/Exclude"
+s.exclude_files = "PlayerSDK/DRMHandler.{h,m}"
 
 # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 #
