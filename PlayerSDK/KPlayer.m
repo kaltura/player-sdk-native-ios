@@ -22,7 +22,7 @@ static NSString *StatusKeyPath = @"status";
     id observer;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
-@property (nonatomic, strong) UIView *parentView;
+@property (nonatomic, weak) UIView *parentView;
 @end
 
 @implementation KPlayer
@@ -37,6 +37,7 @@ static NSString *StatusKeyPath = @"status";
         _layer.frame = (CGRect){CGPointZero, parentView.frame.size};
         _layer.backgroundColor = [UIColor blackColor].CGColor;
         _parentView = parentView;
+        
         if (parentView.subviews.count) {
             UIWebView *wv = parentView.subviews.lastObject;
             [parentView.subviews.lastObject removeFromSuperview];

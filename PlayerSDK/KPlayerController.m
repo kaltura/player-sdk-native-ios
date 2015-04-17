@@ -16,7 +16,7 @@
     BOOL isSeeked;
 }
 
-@property (nonatomic, strong) UIViewController *parentViewController;
+@property (nonatomic, weak) UIViewController *parentViewController;
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
 @property (nonatomic) BOOL contentEnded;
 @end

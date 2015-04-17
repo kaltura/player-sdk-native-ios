@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic, strong) KPlayerController *playerController;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
-@property (nonatomic, strong) UIView *superView;
 @end
 
 @implementation KPViewController 
@@ -80,6 +79,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return nil;
 }
 
+- (void)dealloc{
+    [self removePlayer];
+    KPLogInfo(@"Dealloc");
+}
 
 - (void)loadPlayerIntoViewController:(UIViewController *)parentViewController {
     if (parentViewController && [parentViewController isKindOfClass:[UIViewController class]]) {
@@ -107,7 +110,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
-    self.superView = nil;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
@@ -197,8 +199,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                     weakSelf.view.frame = [UIScreen mainScreen].bounds;
                     [weakSelf.topWindow addSubview:weakSelf.view];
                 } else {
-                    weakSelf.view.frame = weakSelf.superView.bounds;
-                    [weakSelf.superView addSubview:weakSelf.view];
+                    weakSelf.view.frame = weakSelf.view.superview.bounds;
+                    [weakSelf.view.superview addSubview:weakSelf.view];
                 }
             });
         }
@@ -209,9 +211,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if (!_superView) {
-        _superView = self.view.superview;
-    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -432,7 +431,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     SEL selector = NSSelectorFromString(functionName);
     if ([self respondsToSelector:selector]) {
-        KPLogDebug(@"html5 call::%@ %@",functionName, args);
+        KPLogTrace(@"html5 call::%@ %@",functionName, args);
         [self performSelector:selector withObject:args];
     } else if ([_playerController.player respondsToSelector:selector]) {
         [_playerController.player performSelector:selector withObject:args];
@@ -623,9 +622,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return YES;
 }
 
-- (void)dealloc {
-    KPLogInfo(@"Dealloc");
-}
 @end
 
 
