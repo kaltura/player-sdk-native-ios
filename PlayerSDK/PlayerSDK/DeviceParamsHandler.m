@@ -15,7 +15,8 @@ void setUserAgent() {
     UIWebView* wv = [[UIWebView alloc] initWithFrame:CGRectZero];
     NSString* defaultUA = [wv stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSString* finalUA = [defaultUA stringByAppendingString:suffixUA];
-    [[NSUserDefaults standardUserDefaults] setObject: finalUA forKey:@"UserAgent"];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:finalUA, @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
 }
 
 
