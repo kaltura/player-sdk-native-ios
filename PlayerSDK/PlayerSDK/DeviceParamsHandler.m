@@ -11,7 +11,7 @@
 #import "DeviceParamsHandler.h"
 
 void setUserAgent() {
-    NSString* suffixUA = @"kalturaNativeCordovaPlayer";
+    NSString* suffixUA = @" kalturaNativeCordovaPlayer";
     UIWebView* wv = [[UIWebView alloc] initWithFrame:CGRectZero];
     NSString* defaultUA = [wv stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
     NSString* finalUA = [defaultUA stringByAppendingString:suffixUA];
