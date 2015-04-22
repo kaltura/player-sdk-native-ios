@@ -68,6 +68,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self = [super init];
     if (self) {
         videoURL = [NSURL URLWithString:url.absoluteString.appendHover.appendIFrameEmbed];
+        
         return self;
     }
     return nil;
@@ -484,6 +485,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                 });
             }];
         }
+            break;
+        case captions:
+//            _playerController changeSubtitleLanguage
             break;
         default:
             break;

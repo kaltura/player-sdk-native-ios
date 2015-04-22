@@ -51,7 +51,8 @@ static NSString *NativeActionKey = @"nativeAction";
 #endif
                             @"nativeAction",
                             @"doubleClickRequestAds",
-                            @"language"];
+                            @"language",
+                            @"textTrackSelected"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }

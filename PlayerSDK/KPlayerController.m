@@ -92,12 +92,17 @@
     key = _key;
 }
 
+- (void)changeSubtitleLanguage:(NSString *)isoCode {
+    [_player changeSubtitleLanguage:isoCode];
+}
+
 - (void)removePlayer {
     [_player removePlayer];
     _player = nil;
     [_adController removeIMAPlayer];
     _adController = nil;
 }
+
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {

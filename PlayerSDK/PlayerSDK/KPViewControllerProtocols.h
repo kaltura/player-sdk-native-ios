@@ -36,7 +36,8 @@ typedef enum{
 #endif
     nativeAction,
     doubleClickRequestAds,
-    language
+    language,
+    captions
 } Attribute;
 
 

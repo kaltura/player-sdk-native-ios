@@ -9,6 +9,7 @@
 #import "KPlayer.h"
 #import "KPLog.h"
 #import <MediaPlayer/MediaPlayer.h>
+#import "NSMutableDictionary+AdSupport.h"
 
 
 
@@ -23,6 +24,7 @@ static NSString *StatusKeyPath = @"status";
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, strong) UIView *parentView;
+@property (nonatomic, strong) AVMediaSelectionGroup *audioSelectionGroup;
 @end
 
 @implementation KPlayer
@@ -66,6 +68,7 @@ static NSString *StatusKeyPath = @"status";
         }];
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+        
         return self;
     }
     return nil;
@@ -73,6 +76,13 @@ static NSString *StatusKeyPath = @"status";
 
 - (BOOL)isKPlayer {
     return [self isMemberOfClass:[KPlayer class]];
+}
+
+- (AVMediaSelectionGroup *)audioSelectionGroup {
+    if (!_audioSelectionGroup) {
+        _audioSelectionGroup = [self.currentItem.asset mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
+    }
+    return _audioSelectionGroup;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -94,7 +104,7 @@ static NSString *StatusKeyPath = @"status";
             case AVPlayerStatusFailed:
                 
                 break;
-            case AVPlayerStatusReadyToPlay:
+            case AVPlayerStatusReadyToPlay: {
                 [self.delegate player:self
                             eventName:DurationChangedKey
                                 value:@(self.duration).stringValue];
@@ -106,6 +116,31 @@ static NSString *StatusKeyPath = @"status";
                 [self.delegate player:self
                             eventName:CanPlayKey
                                 value:nil];
+                NSMutableArray *captions = nil;
+                if (self.audioSelectionGroup.options.count) {
+                    captions = [NSMutableArray new];
+                    for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
+                        if ([option.mediaType isEqualToString:@"sbtl"]) {
+                            NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
+                            [captions addObject:@{@"kind": @"subtitle",
+                                                  @"language": langCode,
+                                                  @"scrlang": langCode,
+                                                  @"label": langCode,
+                                                  @"index": @(captions.count),
+                                                  @"title": option.displayName}];
+                        }
+                    }
+                    NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
+                    [self.delegate player:self
+                                eventName:@"textTracksReceived"
+                                     JSON:languages.toJSON];
+                    self.closedCaptionDisplayEnabled = YES;
+                    
+                }
+//                [self.currentItem selectMediaOption:self.audioSelectionGroup.options[0]
+//                              inMediaSelectionGroup:self.audioSelectionGroup];
+                
+            }
                 break;
             case AVPlayerStatusUnknown:
                 break;
@@ -193,6 +228,10 @@ static NSString *StatusKeyPath = @"status";
     [_layer removeFromSuperlayer];
     _layer = nil;
     self.delegate = nil;
+}
+
+- (void)changeSubtitleLanguage:(NSString *)languageCode {
+//    self.currentItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
 }
 
 - (void)removeAirPlayIcon {

@@ -43,6 +43,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (void)play;
 - (void)pause;
+- (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
 
 @optional
@@ -68,6 +69,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (instancetype)initWithPlayerClassName:(NSString *)className;
 - (void)addPlayerToController:(UIViewController *)parentViewController;
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)key;
+- (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
 
 @property (nonatomic, strong) id<KPlayer> player;
