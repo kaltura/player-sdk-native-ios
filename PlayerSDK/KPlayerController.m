@@ -78,8 +78,8 @@
                                                       JSON:adEventParams.allValues.firstObject];
                       } else if (weakSelf.contentEnded){
                           [weakSelf.delegate allAdsCompleted];
-                      } else {
-                          //remove IMA
+                      } else if (!adEventParams) {
+                          [weakSelf.adController removeIMAPlayer];
                       }
                       
                   }];

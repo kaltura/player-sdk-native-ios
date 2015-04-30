@@ -107,7 +107,7 @@
         _adsRenderingSettings = [IMAAdsRenderingSettings new];
         _adsRenderingSettings.webOpenerPresentingController = self;
         _adsRenderingSettings.webOpenerDelegate = self;
-        _adsRenderingSettings.uiElements = @[];
+//        _adsRenderingSettings.uiElements = @[];
     }
     return _adsRenderingSettings;
 }

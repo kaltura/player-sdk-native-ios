@@ -478,6 +478,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             _playerController.locale = attributeVal;
             break;
         case doubleClickRequestAds: {
+            
             [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     _playerController.adPlayerHeight = height;
