@@ -16,7 +16,6 @@
 
 @protocol KalturaPlayer;
 
-#import <MediaPlayer/MediaPlayer.h>
 #import "KPLog.h"
 #import "KPViewControllerProtocols.h"
 #import "KPPlayerConfig.h"
@@ -193,25 +192,25 @@
 
 
 
-/// Wrraps registerReadyEvent: method by block syntax.
+/// Wraps registerReadyEvent: method by block syntax.
 @property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());
 
-/// Wrraps addEventListener:eventID:handler: method by block syntax.
+/// Wraps addEventListener:eventID:handler: method by block syntax.
 @property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event, NSString *eventID, void(^)(NSString *eventName));
 
-/// Wrraps removeEventListener:eventID: method by block syntax.
+/// Wraps removeEventListener:eventID: method by block syntax.
 @property (nonatomic, copy, readonly) void (^removeEventListener)(NSString *event, NSString *eventID);
 
-/// Wrraps asyncEvaluate:expressionID:handler: method by block syntax.
+/// Wraps asyncEvaluate:expressionID:handler: method by block syntax.
 @property (nonatomic, copy, readonly) void (^asyncEvaluate)(NSString *expression, NSString *expressionID, void(^)(NSString *value));
 
-/// Wrraps sendNotification:expressionID:forName: method by block syntax.
+/// Wraps sendNotification:expressionID:forName: method by block syntax.
 @property (nonatomic, copy, readonly) void (^sendNotification)(NSString *notification, NSString *notificationName);
 
-/// Wrraps setKDPAttribute:propertyName:value: method by block syntax.
+/// Wraps setKDPAttribute:propertyName:value: method by block syntax.
 @property (nonatomic, copy, readonly) void (^setKDPAttribute)(NSString *pluginName, NSString *propertyName, NSString *value);
 
-/// Wrraps triggerEvent:withValue: method by block syntax.
+/// Wraps triggerEvent:withValue: method by block syntax.
 @property (nonatomic, copy, readonly) void (^triggerEvent)(NSString *event, NSString *value);
 
 

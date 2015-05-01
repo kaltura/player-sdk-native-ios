@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0630"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "B372892D1A8787D00076DD33"
                BuildableName = "KALTURAPlayerSDK.bundle"
-               BlueprintName = "KPlayerResources"
+               BlueprintName = "KALTURAPlayerSDKResources"
                ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,7 +44,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B372892D1A8787D00076DD33"
             BuildableName = "KALTURAPlayerSDK.bundle"
-            BlueprintName = "KPlayerResources"
+            BlueprintName = "KALTURAPlayerSDKResources"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,7 +62,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "B372892D1A8787D00076DD33"
             BuildableName = "KALTURAPlayerSDK.bundle"
-            BlueprintName = "KPlayerResources"
+            BlueprintName = "KALTURAPlayerSDKResources"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
