@@ -8,6 +8,7 @@
 
 #import "KPPlayerConfig.h"
 #import "DeviceParamsHandler.h"
+#import "NSString+Utilities.h"
 
 /// Key names of the video request
 static NSString *WidKey = @"wid";
@@ -119,5 +120,17 @@ static NSString *ForceHtml5Key = @"forceMobileHTML5";
     return _url;
 }
 
-
+- (NSURL *)appendConfiguration:(NSURL *)videoURL {
+    NSString *url = videoURL.absoluteString;
+    if (_advertiserID) {
+        url = [url appendIDFA:_advertiserID];
+    }
+    if (_enableOmniture) {
+        url = url.appendIFrameEmbed;
+    }
+    if (_enableHover) {
+        url = url.appendHover;
+    }
+    return [NSURL URLWithString:url];
+}
 @end

@@ -7,7 +7,6 @@
 //
 
 
-#import <AdSupport/AdSupport.h>
 #import "DeviceParamsHandler.h"
 
 void setUserAgent() {
@@ -19,10 +18,6 @@ void setUserAgent() {
     [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
 }
 
-
-NSString *advertiserID() {
-    return [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-}
 
 NSString *appVersion() {
     NSString * version = [[NSBundle mainBundle] objectForInfoDictionaryKey: @"CFBundleShortVersionString"];

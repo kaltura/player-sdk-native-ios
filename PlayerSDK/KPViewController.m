@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
-        videoURL = [NSURL URLWithString:url.absoluteString.appendHover.appendIFrameEmbed];
+        videoURL = [NSURL URLWithString:url.absoluteString];
         
         return self;
     }
@@ -77,6 +77,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration {
     self = [self initWithURL:configuration.videoURL];
     if (self) {
+        _configuration = configuration;
         return self;
     }
     return nil;
@@ -150,6 +151,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return platform;
 }
 
+- (KPPlayerConfig *)configuration {
+    if (!_configuration) {
+        _configuration = [KPPlayerConfig new];
+    }
+    return _configuration;
+}
+
 
 #pragma mark -
 #pragma mark View flow methods
@@ -184,7 +192,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (!self.controlsView) {
         self.controlsView = [KPControlsView defaultControlsViewWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
         self.controlsView.controlsDelegate = self;
-        [self.controlsView loadRequest:[NSURLRequest requestWithURL:videoURL]];
+        [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
         [self.view addSubview:(UIView *)self.controlsView];
     }
     

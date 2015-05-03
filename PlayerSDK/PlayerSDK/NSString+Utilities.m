@@ -40,6 +40,11 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self stringByAppendingString:[iFrameEmbed stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
 }
 
+- (NSString *)appendIDFA:(NSString *)IDFA {
+    NSString *IDFAFlashvar = [[NSString stringWithFormat:@"&flashvars[nativeAdId]=%@", IDFA] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    return [self stringByAppendingString:IDFAFlashvar];
+}
+
 
 - (Attribute)attributeEnumFromString {
     KPLogTrace(@"Enter");

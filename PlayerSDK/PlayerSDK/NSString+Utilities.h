@@ -27,6 +27,8 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSString *appendHover;
 @property (nonatomic, copy, readonly) NSString *appendIFrameEmbed;
 
+- (NSString *)appendIDFA:(NSString *)IDFA;
+
 @property (nonatomic, readonly) Attribute attributeEnumFromString;
 @property (nonatomic, readonly) BOOL isJSFrame;
 @property (nonatomic, readonly) BOOL isFrameURL;

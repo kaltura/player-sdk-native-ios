@@ -46,7 +46,6 @@
 #define screenOrigin [[UIScreen mainScreen] bounds].origin
 
 void setUserAgent();
-NSString *advertiserID();
 NSString *appVersion();
 BOOL isDeviceOrientation(UIDeviceOrientation orientation);
 BOOL isStatusBarOrientation(UIInterfaceOrientation orientation);
