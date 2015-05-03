@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "B372892D1A8787D00076DD33"
-               BuildableName = "KALTURAPlayerSDKResources.bundle"
-               BlueprintName = "KALTURAPlayerSDKResources"
+               BlueprintIdentifier = "B3166DD01AF26C4700E99B77"
+               BuildableName = "Framework"
+               BlueprintName = "Framework"
                ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -35,16 +35,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B372892D1A8787D00076DD33"
-            BuildableName = "KALTURAPlayerSDKResources.bundle"
-            BlueprintName = "KALTURAPlayerSDKResources"
+            BlueprintIdentifier = "B3166DD01AF26C4700E99B77"
+            BuildableName = "Framework"
+            BlueprintName = "Framework"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -55,14 +55,14 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Debug"
       debugDocumentVersioning = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B372892D1A8787D00076DD33"
-            BuildableName = "KALTURAPlayerSDKResources.bundle"
-            BlueprintName = "KALTURAPlayerSDKResources"
+            BlueprintIdentifier = "B3166DD01AF26C4700E99B77"
+            BuildableName = "Framework"
+            BlueprintName = "Framework"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
