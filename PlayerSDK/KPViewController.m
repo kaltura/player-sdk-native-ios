@@ -225,6 +225,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (!_superView) {
         _superView = self.view.superview;
     }
+    if (isIOS(7) && _configuration.supportedInterfaceOrientations != UIInterfaceOrientationMaskAll) {
+        [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
+        self.controlsView.controlsFrame = screenBounds();
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -631,7 +635,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 -(NSUInteger)supportedInterfaceOrientations
 {
-    return UIInterfaceOrientationMaskAll;
+    return self.configuration.supportedInterfaceOrientations;
     
 }
 

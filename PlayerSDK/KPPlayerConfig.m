@@ -28,10 +28,19 @@ static NSString *ForceHtml5Key = @"forceMobileHTML5";
 
 @implementation KPPlayerConfig
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
+        return self;
+    }
+    return nil;
+}
+
 - (instancetype)initWithDomain:(NSString *)domain
                       uiConfID:(NSString *)uiConfId
                       playerID:(NSString *)playerID {
-    self = [super init];
+    self = [self init];
     if (self && domain && uiConfId && playerID) {
         _domain = domain;
         _uiConfId = uiConfId;
@@ -58,13 +67,9 @@ static NSString *ForceHtml5Key = @"forceMobileHTML5";
 }
 
 - (NSDictionary *)flashvarsDict {
-    [self addDefaultFlags];
     return self.paramsDict.copy;
 }
 
-- (void)addDefaultFlags {
-    [self addConfigKey:KPPlayerConfigNativeAdIdKey withValue:advertiserID()];
-}
 
 - (void)setEntryId:(NSString *)entryId {
     if (entryId) {

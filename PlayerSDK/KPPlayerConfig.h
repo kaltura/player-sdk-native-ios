@@ -7,11 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
 /// KPPlayerConfig keys
 static NSString *KPPlayerConfigNativeCallOutKey = @"nativeCallout";
 static NSString *KPPlayerConfigChromecastKey = @"chromecast.plugin";
 static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
+
+
 
 
 @interface KPPlayerConfig : NSObject
@@ -34,6 +37,10 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 
 @property (nonatomic) BOOL debug;
 @property (nonatomic) BOOL forceMobileHTML5;
+
+
+/// Enables the SDK user to define interface orientation of the player
+@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations;
 
 /** Adds flags for the video request
  *
