@@ -82,14 +82,18 @@
  */
 - (void)changeMedia:(NSString *)entryID;
 
-@property (nonatomic, strong) KPPlayerConfig *configuration;
 
-@property (nonatomic, strong) NSURL *source;
+/// Enables to change the player configuration
+@property (nonatomic, strong) KPPlayerConfig *configuration;
 
 
 // Kaltura Player External API
 
+
+/// Returns the current time of the playback
 @property (nonatomic, readonly) NSTimeInterval currentPlaybackTime;
+
+/// Assigning this handler will disable the default share action and will supply the share params for custom use.
 - (void)setShareHandler:(void(^)(NSDictionary *shareParams))shareHandler;
 
 
