@@ -89,6 +89,8 @@
 
 // Kaltura Player External API
 
+@property (nonatomic, readonly) NSTimeInterval currentPlaybackTime;
+
 
 /*!
  * @function registerReadyEvent

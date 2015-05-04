@@ -112,6 +112,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self.superView = nil;
 }
 
+- (NSTimeInterval)currentPlaybackTime {
+    return _playerController.player.currentPlaybackTime;
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
