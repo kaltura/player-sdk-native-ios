@@ -90,6 +90,7 @@
 // Kaltura Player External API
 
 @property (nonatomic, readonly) NSTimeInterval currentPlaybackTime;
+- (void)setShareHandler:(void(^)(NSDictionary *shareParams))shareHandler;
 
 
 /*!

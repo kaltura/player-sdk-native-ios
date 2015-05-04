@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSDictionary *nativeActionParams;
     NSMutableArray *callBackReadyRegistrations;
     NSURL *videoURL;
+    void(^_shareHandler)(NSDictionary *);
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
@@ -114,6 +115,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (NSTimeInterval)currentPlaybackTime {
     return _playerController.player.currentPlaybackTime;
+}
+
+- (void)setShareHandler:(void (^)(NSDictionary *))shareHandler {
+    _shareHandler = shareHandler;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -574,17 +579,21 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 #pragma mark Native Action methods
 - (void)share {
     KPLogTrace(@"Enter");
-    self.shareManager = [KPShareManager new];
-    self.shareManager.datasource = nativeActionParams;
-    __weak KPViewController *weakSelf = self;
-    UIViewController *shareController = [self.shareManager shareWithCompletion:^(KPShareResults result,
-                                                                                 KPShareError *shareError) {
-        if (shareError.error) {
-            KPLogError(@"%@", shareError.error.description);
-        }
-        weakSelf.shareManager = nil;
-    }];
-    [self presentViewController:shareController animated:YES completion:nil];
+    if (_shareHandler) {
+        _shareHandler(nativeActionParams);
+    } else {
+        self.shareManager = [KPShareManager new];
+        self.shareManager.datasource = nativeActionParams;
+        __weak KPViewController *weakSelf = self;
+        UIViewController *shareController = [self.shareManager shareWithCompletion:^(KPShareResults result,
+                                                                                     KPShareError *shareError) {
+            if (shareError.error) {
+                KPLogError(@"%@", shareError.error.description);
+            }
+            weakSelf.shareManager = nil;
+        }];
+        [self presentViewController:shareController animated:YES completion:nil];
+    }
     KPLogTrace(@"Exit");
 }
 
