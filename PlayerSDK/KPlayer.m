@@ -61,8 +61,9 @@ static NSString *StatusKeyPath = @"status";
         observer = [self addPeriodicTimeObserverForInterval:CMTimeMake(20, 100)
                                                       queue:dispatch_get_main_queue()
                                                  usingBlock:^(CMTime time) {
-                                          [weakSelf.delegate player:weakSelf eventName:TimeUpdateKey
-                                                                 value:@(CMTimeGetSeconds(time)).stringValue];
+                                                     [weakSelf updateCurrentTime:CMTimeGetSeconds(time)];
+                                                     [weakSelf.delegate player:weakSelf eventName:TimeUpdateKey
+                                                                         value:@(CMTimeGetSeconds(time)).stringValue];
 //                                          [weakSelf.delegate eventName:ProgressKey
 //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
         }];
@@ -187,14 +188,16 @@ static NSString *StatusKeyPath = @"status";
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    _currentPlaybackTime = currentPlaybackTime;
-    __weak KPlayer *weakSelf = self;
-    [self seekToTime:CMTimeMake(currentPlaybackTime, 1)
-     toleranceBefore:kCMTimeZero
-      toleranceAfter:kCMTimeZero
-   completionHandler:^(BOOL finished) {
-       [weakSelf.delegate player:self eventName:SeekedKey value:nil];
-   }];
+    if (currentPlaybackTime < self.duration) {
+        _currentPlaybackTime = currentPlaybackTime;
+        __weak KPlayer *weakSelf = self;
+        [self seekToTime:CMTimeMake(currentPlaybackTime, 1)
+         toleranceBefore:kCMTimeZero
+          toleranceAfter:kCMTimeZero
+       completionHandler:^(BOOL finished) {
+           [weakSelf.delegate player:self eventName:SeekedKey value:nil];
+       }];
+    }
 }
 
 - (NSTimeInterval)currentPlaybackTime {
@@ -283,6 +286,10 @@ static NSString *StatusKeyPath = @"status";
         volumeView.hidden = YES;
     }
     KPLogTrace(@"Exit");
+}
+
+- (void)updateCurrentTime:(NSTimeInterval)currentTime {
+    _currentPlaybackTime = currentTime;
 }
 
 - (void)dealloc {

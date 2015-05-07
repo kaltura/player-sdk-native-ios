@@ -117,6 +117,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return _playerController.player.currentPlaybackTime;
 }
 
+- (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
+    _playerController.player.currentPlaybackTime = currentPlaybackTime;
+}
+
+- (NSTimeInterval)duration {
+    return _playerController.player.duration;
+}
+
 - (void)setShareHandler:(void (^)(NSDictionary *))shareHandler {
     _shareHandler = shareHandler;
 }
