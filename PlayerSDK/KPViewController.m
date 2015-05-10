@@ -52,6 +52,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
+@property (nonatomic) NSTimeInterval seekValue;
 @end
 
 @implementation KPViewController 
@@ -118,11 +119,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
+    if (!_playerController) {
+        _seekValue = currentPlaybackTime;
+    }
     _playerController.player.currentPlaybackTime = currentPlaybackTime;
 }
 
 - (NSTimeInterval)duration {
     return _playerController.player.duration;
+}
+
+- (NSURL *)playerSource {
+    return _playerController.player.playerSource;
+}
+
+- (void)setPlayerSource:(NSURL *)playerSource {
+    _playerController.player.playerSource = playerSource;
 }
 
 - (void)setShareHandler:(void (^)(NSDictionary *))shareHandler {

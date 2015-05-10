@@ -188,7 +188,7 @@ static NSString *StatusKeyPath = @"status";
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if (currentPlaybackTime < self.duration) {
+    if (isnan(self.duration) || currentPlaybackTime < self.duration) {
         _currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
         [self seekToTime:CMTimeMake(currentPlaybackTime, 1)

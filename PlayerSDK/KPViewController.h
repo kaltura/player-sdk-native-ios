@@ -89,10 +89,13 @@
 
 // Kaltura Player External API
 
+/// Change the source and returns the current source
+@property (nonatomic, copy) NSURL *playerSource;
 
-/// Returns the current time of the playback and performs seek to the set value
+/// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 
+/// @return Duration of the current video
 @property (nonatomic, readonly) NSTimeInterval duration;
 
 /// Assigning this handler will disable the default share action and will supply the share params for custom use.
