@@ -231,7 +231,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         if (!weakSelf.isModifiedFrame) {
             weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         } else {
-            weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId) {
+            weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
                 weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
                 
                 if (weakSelf.isFullScreenToggled) {
@@ -329,7 +329,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)addEventListener:(NSString *)event
                  eventID:(NSString *)eventID
-                 handler:(void (^)(NSString *))handler {
+                 handler:(void (^)(NSString *, NSString *))handler {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
@@ -346,10 +346,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }];
 }
 
-- (void(^)(NSString *, NSString *, void(^)(NSString *)))addEventListener {
+- (void(^)(NSString *, NSString *, void(^)(NSString *, NSString *)))addEventListener {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
-    return ^(NSString *event, NSString *eventID, void(^completion)()){
+    return ^(NSString *event, NSString *eventID, void(^completion)(NSString *, NSString *)){
         [weakSelf addEventListener:event eventID:eventID handler:completion];
         KPLogTrace(@"Exit");
     };
@@ -561,12 +561,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)notifyKPlayerEvent: (NSArray *)arr {
     KPLogTrace(@"Enter");
-    NSString *eventName = arr[0];
+    NSString *eventName = arr.firstObject;
+    NSString *params = arr.lastObject;
     NSArray *listenersArr = self.kPlayerEventsDict[ eventName ];
     
     if ( listenersArr != nil ) {
         for (NSDictionary *eDict in listenersArr) {
-            ((void(^)(NSString *))eDict.allValues.lastObject)(eventName);
+            ((void(^)(NSString *, NSString *))eDict.allValues.lastObject)(eventName, params);
         }
     }
     KPLogTrace(@"Exit");

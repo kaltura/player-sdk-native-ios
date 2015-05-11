@@ -132,7 +132,7 @@
  * @param NSString event id, will enable to remove the current event by id
  * @param handler Callback for the ready event.
  */
-- (void)addEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)(NSString *eventName))handler;
+- (void)addEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)(NSString *eventName, NSString *params))handler;
 
 
 /*!
@@ -208,7 +208,7 @@
 @property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());
 
 /// Wraps addEventListener:eventID:handler: method by block syntax.
-@property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event, NSString *eventID, void(^)(NSString *eventName));
+@property (nonatomic, copy, readonly) void (^addEventListener)(NSString *event, NSString *eventID, void(^)(NSString *eventName, NSString *params));
 
 /// Wraps removeEventListener:eventID: method by block syntax.
 @property (nonatomic, copy, readonly) void (^removeEventListener)(NSString *event, NSString *eventID);
