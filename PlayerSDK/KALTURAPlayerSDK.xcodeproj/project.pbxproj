@@ -681,7 +681,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 armv7 i386";
 			};
 			name = Debug;
 		};
@@ -689,7 +689,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 armv7 i386";
 			};
 			name = Release;
 		};
@@ -728,6 +728,7 @@
 				PRODUCT_NAME = KALTURAPlayerSDKResources;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Debug;
@@ -764,6 +765,7 @@
 				PRODUCT_NAME = KALTURAPlayerSDKResources;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "arm64 armv7";
 				WRAPPER_EXTENSION = bundle;
 			};
 			name = Release;
@@ -884,7 +886,7 @@
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 armv7 i386";
 			};
 			name = Debug;
 		};
@@ -921,7 +923,7 @@
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PROJECT_NAME)";
 				SKIP_INSTALL = YES;
 				STRIP_STYLE = "non-global";
-				VALID_ARCHS = "arm64 armv7";
+				VALID_ARCHS = "arm64 armv7 i386";
 			};
 			name = Release;
 		};
