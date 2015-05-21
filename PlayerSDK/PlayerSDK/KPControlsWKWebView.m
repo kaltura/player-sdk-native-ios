@@ -16,9 +16,27 @@
 @synthesize entryId= _entryId, controlsDelegate, controlsFrame = _controlsFrame;
 
 - (instancetype)initWithFrame:(CGRect)frame {
-    self = [super initWithFrame:frame];
+    // Javascript that disables pinch-to-zoom by inserting the HTML viewport meta tag into <head>
+    NSString *source = @"var meta = document.createElement('meta'); \
+    meta.name = 'viewport'; \
+    meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'; \
+    var head = document.getElementsByTagName('head')[0];\
+    head.appendChild(meta);";
+    WKUserScript *script = [[WKUserScript alloc] initWithSource:source injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+    
+    // Create the user content controller and add the script to it
+    WKUserContentController *userContentController = [WKUserContentController new];
+    [userContentController addUserScript:script];
+    
+    // Create the configuration with the user content controller
+    WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
+    configuration.userContentController = userContentController;
+    
+    
+    self = [super initWithFrame:frame configuration:configuration];
     if (self) {
         self.navigationDelegate = self;
+        self.translatesAutoresizingMaskIntoConstraints = NO;
         self.opaque = NO;
         self.scrollView.scrollEnabled = NO;
         self.scrollView.bounces = NO;
@@ -30,23 +48,23 @@
 }
 
 - (void)loadRequest:(NSURLRequest *)request {
+//    [super loadRequest:request];
     [[KArchiver shared] contentOfURL:request.URL.absoluteString
                           completion:^(NSData *content, NSError *error) {
                               dispatch_async(dispatch_get_main_queue(), ^{
                                   NSString *html = [[NSString alloc] initWithData:content encoding:NSUTF8StringEncoding];
-                                  html = [html stringByReplacingOccurrencesOfString:@"</head>"
-                                                                         withString:@"</head><meta name=\"viewport\" content=\"initial-scale=1.0\" />"];
                                   [self loadHTMLString:html
                                                baseURL:request.URL];
                               });
                           }];
 }
 
+
 - (void)setEntryId:(NSString *)entryId {
     if (![self.entryId isEqualToString:entryId]) {
         _entryId = entryId;
-        NSString *notificationName = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
-        [self sendNotification:@"changeMedia" withName:notificationName];
+        NSString *entry = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
+        [self sendNotification:@"changeMedia" withParams:entry];
     }
 }
 
@@ -85,23 +103,23 @@
 }
 
 - (void)evaluate:(NSString *)expression evaluateID:(NSString *)evaluateID {
-    [self evaluateJavaScript:[expression evaluateWithID:evaluateID] completionHandler:nil];
+    [self evaluateJavaScript:asyncEvaluate(expression, evaluateID) completionHandler:nil];
 }
 
-- (void)sendNotification:(NSString *)notification withName:(NSString *)notificationName {
-    [self evaluateJavaScript:[notificationName sendNotificationWithBody:notification] completionHandler:nil];
+- (void)sendNotification:(NSString *)notification withParams:(NSString *)params {
+    [self evaluateJavaScript:sendNotification(notification, params) completionHandler:nil];
 }
 
 - (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value {
-    [self evaluateJavaScript:[pluginName setKDPAttribute:propertyName value:value] completionHandler:nil];
+    [self evaluateJavaScript:setKDPAttribute(pluginName, propertyName, value) completionHandler:nil];
 }
 
 - (void)triggerEvent:(NSString *)event withValue:(NSString *)value {
-    [self evaluateJavaScript:[event triggerEvent:value] completionHandler:nil];
+    [self evaluateJavaScript:triggerEvent(event, value) completionHandler:nil];
 }
 
 - (void)triggerEvent:(NSString *)event withJSON:(NSString *)json {
-    [self evaluateJavaScript:[event triggerJSON:json] completionHandler:nil];
+    [self evaluateJavaScript:triggerEventWithJSON(event, json) completionHandler:nil];
 }
 
 
@@ -130,6 +148,14 @@
         NSLog(@"HTTP:: %@", requestString);
     }
     decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    
+}
+
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    
 }
 
 @end

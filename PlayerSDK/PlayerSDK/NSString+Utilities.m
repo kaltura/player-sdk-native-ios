@@ -168,28 +168,6 @@ static NSString *NativeActionKey = @"nativeAction";
     return [NSString stringWithFormat: @"NativeBridge.videoPlayer.removeJsListener(\"%@\");", self];
 }
 
-- (NSString *)evaluateWithID:(NSString *)ID {
-    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", self, ID];
-}
-
-- (NSString *)sendNotificationWithBody:(NSString *)body {
-    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", body, self];
-}
-
-- (NSString *)setKDPAttribute:(NSString *)attribute value:(NSString *)value {
-    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", self, attribute, value];
-}
-
-- (NSString *)triggerEvent:(NSString *)event {
-    NSString* jsStringLog = [NSString stringWithFormat:@"trigger --> NativeBridge.videoPlayer.trigger(\"%@\", '%@')", self, event];
-    KPLogInfo(@"%@", jsStringLog);
-    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", self, event];
-}
-
-- (NSString *)triggerJSON:(NSString *)json {
-    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', %@)", self, json];
-}
-
 - (NSDictionary *)nullVal {
     return @{self: @"(null)"};
 }

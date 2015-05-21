@@ -12,6 +12,13 @@
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 
+NSString *sendNotification(NSString *notification, NSString *params);
+NSString *setKDPAttribute(NSString *pluginName, NSString *propertyName, NSString *value);
+NSString *triggerEvent(NSString *event, NSString *value);
+NSString *triggerEventWithJSON(NSString *event, NSString *jsonString);
+NSString *asyncEvaluate(NSString *expression, NSString *evaluateID);
+
+
 @protocol KPControlsViewDelegate <NSObject>
 @required
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
@@ -36,7 +43,7 @@
       evaluateID:(NSString *)evaluateID;
 
 - (void)sendNotification:(NSString *)notification
-                withName:(NSString *)notificationName;
+              withParams:(NSString *)params;
 
 - (void)setKDPAttribute:(NSString *)pluginName
            propertyName:(NSString *)propertyName
@@ -52,6 +59,7 @@
 - (void)removeControls;
 
 - (void)fetchvideoHolderHeight:(void(^)(CGFloat height))fetcher;
+
 
 @end
 

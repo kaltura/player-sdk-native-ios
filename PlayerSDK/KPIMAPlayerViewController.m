@@ -242,7 +242,7 @@
 
 - (void)adsManagerDidRequestContentPause:(IMAAdsManager *)adsManager {
     // The SDK is going to play ads, so pause the content.
-    [self.contentPlayer pause];
+//    [self.contentPlayer pause];
     if (AdEventsListener) {
         AdEventsListener(ContentPauseRequestedKey.nullVal);
     }
@@ -250,7 +250,7 @@
 
 - (void)adsManagerDidRequestContentResume:(IMAAdsManager *)adsManager {
     // The SDK is done playing ads (at least for now), so resume the content.
-    [self.contentPlayer play];
+//    [self.contentPlayer play];
     if (AdEventsListener) {
         AdEventsListener(ContentResumeRequestedKey.nullVal);
     }

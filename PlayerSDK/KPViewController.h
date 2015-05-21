@@ -132,7 +132,7 @@
  * @param NSString event id, will enable to remove the current event by id
  * @param handler Callback for the ready event.
  */
-- (void)addEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)(NSString *eventName, NSString *params))handler;
+- (void)addKPlayerEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void(^)(NSString *eventName, NSString *params))handler;
 
 
 /*!
@@ -145,7 +145,7 @@
  * @param NSString eventID, event id for removal.
  * @param handler Callback for the ready event.
  */
-- (void)removeEventListener:(NSString *)event eventID:(NSString *)eventID;
+- (void)removeKPlayerEventListener:(NSString *)event eventID:(NSString *)eventID;
 
 
 
@@ -169,10 +169,10 @@
  * @abstract
  * Notifies the player on specific events
  *
- * @param NSString notification, notification body
- * @param NSString notificationName, notification name s specific notification.
+ * @param NSString notificationName, notification name
+ * @param NSString params, json string for passing parameters to the controls layer (webview).
  */
-- (void)sendNotification:(NSString *)notification forName:(NSString *)notificationName;
+- (void)sendNotification:(NSString *)notificationName withParams:(NSString *)params;
 
 
 

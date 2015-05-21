@@ -258,6 +258,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         self.controlsView.controlsFrame = screenBounds();
     }
+    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
+    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
+    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
+    [(UIView *)self.controlsView addSubview:reloadButton];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -271,8 +276,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)handleEnteredBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
-    self.sendNotification(nil, @"doPause");
+    self.sendNotification(@"doPause", nil);
     KPLogTrace(@"Exit");
+}
+
+- (void)didPinchInOut:(UIPinchGestureRecognizer *)gestureRecognizer {
+    
+}
+
+- (void)reload:(UIButton *)sender {
+    [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
 }
 
 
@@ -284,8 +297,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)changeMedia:(NSString *)mediaID {
-    NSString *name = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
-    [self sendNotification:@"changeMedia" forName:name];
+    NSString *entry = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
+    [self sendNotification:@"changeMedia" withParams:entry];
 }
 
 #pragma mark - Player Methods
@@ -327,9 +340,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 
 
-- (void)addEventListener:(NSString *)event
-                 eventID:(NSString *)eventID
-                 handler:(void (^)(NSString *, NSString *))handler {
+- (void)addKPlayerEventListener:(NSString *)event
+                        eventID:(NSString *)eventID
+                        handler:(void (^)(NSString *, NSString *))handler {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
@@ -350,13 +363,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
     return ^(NSString *event, NSString *eventID, void(^completion)(NSString *, NSString *)){
-        [weakSelf addEventListener:event eventID:eventID handler:completion];
+        [weakSelf addKPlayerEventListener:event eventID:eventID handler:completion];
         KPLogTrace(@"Exit");
     };
 }
 
-- (void)removeEventListener:(NSString *)event
-                    eventID:(NSString *)eventID {
+- (void)removeKPlayerEventListener:(NSString *)event
+                           eventID:(NSString *)eventID {
     KPLogTrace(@"Enter");
     NSMutableArray *listenersArr = self.kPlayerEventsDict[event];
     if ( listenersArr == nil || [listenersArr count] == 0 ) {
@@ -382,7 +395,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
     return ^(NSString *event, NSString *eventID) {
-        [weakSelf removeEventListener:event eventID:eventID];
+        [weakSelf removeKPlayerEventListener:event eventID:eventID];
         KPLogTrace(@"Exit");
     };
 }
@@ -415,20 +428,20 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-- (void)sendNotification:(NSString *)notification forName:(NSString *)notificationName {
+- (void)sendNotification:(NSString *)notificationName withParams:(NSString *)params {
     KPLogTrace(@"Enter");
-    if ( !notification || [ notification isKindOfClass: [NSNull class] ] ) {
-        notification = @"null";
+    if ( !notificationName || [ notificationName isKindOfClass: [NSNull class] ] ) {
+        notificationName = @"null";
     }
-    [self.controlsView sendNotification:notification withName:notificationName];
+    [self.controlsView sendNotification:notificationName withParams:params];
     KPLogTrace(@"Exit");
 }
 
 - (void(^)(NSString *, NSString *))sendNotification {
     KPLogTrace(@"Enter");
     __weak KPViewController *weakSelf = self;
-    return ^(NSString *notification, NSString *notificationName){
-        [weakSelf sendNotification:notification forName:notificationName];
+    return ^(NSString *notification, NSString *params){
+        [weakSelf sendNotification:notification withParams:params];
         KPLogTrace(@"Exit");
     };
 }

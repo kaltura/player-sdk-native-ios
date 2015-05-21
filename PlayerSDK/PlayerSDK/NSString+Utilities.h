@@ -60,11 +60,6 @@ typedef struct FunctionComponents {
 
 #pragma mark
 #pragma mark JavaScriptEvents
-- (NSString *)evaluateWithID:(NSString *)ID;
-- (NSString *)sendNotificationWithBody:(NSString *)body;
-- (NSString *)setKDPAttribute:(NSString *)attribute value:(NSString *)value;
-- (NSString *)triggerEvent:(NSString *)event;
-- (NSString *)triggerJSON:(NSString *)json;
 @property (nonatomic, copy, readonly) NSString *addJSListener;
 @property (nonatomic, copy, readonly) NSString *removeJSListener;
 
