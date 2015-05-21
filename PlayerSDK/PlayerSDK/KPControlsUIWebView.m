@@ -48,8 +48,8 @@
 - (void)setEntryId:(NSString *)entryId {
     if (![_entryId isEqualToString:entryId]) {
         _entryId = entryId;
-        NSString *notificationName = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
-        [self sendNotification:@"changeMedia" withName:notificationName];
+        NSString *entry = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
+        [self sendNotification:@"changeMedia" withParams:entry];
     }
 }
 
@@ -81,23 +81,23 @@
 }
 
 - (void)evaluate:(NSString *)expression evaluateID:(NSString *)evaluateID {
-    [self stringByEvaluatingJavaScriptFromString:[expression evaluateWithID:evaluateID]];
+    [self stringByEvaluatingJavaScriptFromString:asyncEvaluate(expression, evaluateID)];
 }
 
-- (void)sendNotification:(NSString *)notification withName:(NSString *)notificationName {
-    [self stringByEvaluatingJavaScriptFromString:[notificationName sendNotificationWithBody:notification]];
+- (void)sendNotification:(NSString *)notification withParams:(NSString *)params {
+    [self stringByEvaluatingJavaScriptFromString:sendNotification(notification, params)];
 }
 
 - (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value {
-    [self stringByEvaluatingJavaScriptFromString:[pluginName setKDPAttribute:propertyName value:value]];
+    [self stringByEvaluatingJavaScriptFromString:setKDPAttribute(pluginName, propertyName, value)];
 }
 
 - (void)triggerEvent:(NSString *)event withValue:(NSString *)value {
-    [self stringByEvaluatingJavaScriptFromString:[event triggerEvent:value]];
+    [self stringByEvaluatingJavaScriptFromString:triggerEvent(event, value)];
 }
 
 - (void)triggerEvent:(NSString *)event withJSON:(NSString *)json {
-    [self stringByEvaluatingJavaScriptFromString:[event triggerJSON:json]];
+    [self stringByEvaluatingJavaScriptFromString:triggerEventWithJSON(event, json)];
 }
 
 //- (CGFloat)videoHolderHeight {
