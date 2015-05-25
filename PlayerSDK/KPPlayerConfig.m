@@ -130,12 +130,10 @@ static NSString *ForceHtml5Key = @"forceMobileHTML5";
     if (_advertiserID) {
         url = [url appendIDFA:_advertiserID];
     }
-    if (_enableOmniture) {
-        url = url.appendIFrameEmbed;
-    }
     if (_enableHover) {
         url = url.appendHover;
     }
+    url = url.appendIFrameEmbed;
     return [NSURL URLWithString:url];
 }
 @end
