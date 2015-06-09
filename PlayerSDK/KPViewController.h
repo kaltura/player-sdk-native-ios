@@ -21,7 +21,7 @@
 #import "KPPlayerConfig.h"
 
 
-
+#import <GoogleCast/GoogleCast.h>
 
 
 @protocol KPViewControllerDelegate;
@@ -225,6 +225,13 @@
 /// Wraps triggerEvent:withValue: method by block syntax.
 @property (nonatomic, copy, readonly) void (^triggerEvent)(NSString *event, NSString *value);
 
+@property GCKMediaControlChannel *mediaControlChannel;
+@property GCKApplicationMetadata *applicationMetadata;
+@property GCKDevice *selectedDevice;
+@property(nonatomic, strong) GCKDeviceScanner *deviceScanner;
+@property(nonatomic, strong) UIButton *chromecastButton;
+@property(nonatomic, strong) GCKDeviceManager *deviceManager;
+@property(nonatomic, readonly) GCKMediaInformation *mediaInformation;
 
 @end
 

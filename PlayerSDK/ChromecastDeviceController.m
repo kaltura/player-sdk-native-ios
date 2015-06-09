@@ -508,7 +508,7 @@ static NSString *const kReceiverAppID = @"DB6462E9";  //Replace with your app id
 //  }
 //}
 
-- (void)chooseDevice:(id)sender {
+- (void)chooseDevice {
     //Choose device
     if (self.selectedDevice == nil) {
         //Choose device
