@@ -257,12 +257,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (isIOS(7) && _configuration.supportedInterfaceOrientations != UIInterfaceOrientationMaskAll) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         self.controlsView.controlsFrame = screenBounds();
-    }
-    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
-    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
-    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
-    [(UIView *)self.controlsView addSubview:reloadButton];
+    } 
+//    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
+//    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
+//    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
+//    [(UIView *)self.controlsView addSubview:reloadButton];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

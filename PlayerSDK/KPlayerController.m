@@ -79,9 +79,9 @@
                       } else if (weakSelf.contentEnded){
                           [weakSelf.delegate allAdsCompleted];
                       } else if (!adEventParams) {
+                          [weakSelf.delegate allAdsCompleted];
                           [weakSelf.adController removeIMAPlayer];
                       }
-                      
                   }];
     }
 }

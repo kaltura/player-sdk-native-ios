@@ -9,6 +9,6 @@
 #import <WebKit/WebKit.h>
 #import "KPControlsView.h"
 
-@interface KPControlsWKWebview : WKWebView <KPControlsView>
+@interface KPControlsWKWebview : WKWebView <KPControlsView, WKUIDelegate>
 
 @end
