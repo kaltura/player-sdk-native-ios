@@ -22,6 +22,7 @@
 
 
 #import <GoogleCast/GoogleCast.h>
+#import "ChromecastDeviceController.h"
 
 
 @protocol KPViewControllerDelegate;
@@ -232,6 +233,9 @@
 @property(nonatomic, strong) UIButton *chromecastButton;
 @property(nonatomic, strong) GCKDeviceManager *deviceManager;
 @property(nonatomic, readonly) GCKMediaInformation *mediaInformation;
+
+/* The device manager used for the currently casting media. */
+@property(weak, nonatomic) ChromecastDeviceController *castDeviceController;
 
 @end
 

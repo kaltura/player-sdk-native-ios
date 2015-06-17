@@ -21,6 +21,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPIMAPlayerViewController.h"
 #import "KPlayerController.h"
 #import "KPControlsView.h"
+#import "KCCPlayer.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -32,10 +33,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerControllerDelegate, KPControlsViewDelegate, GCKDeviceScannerListener,
-GCKDeviceManagerDelegate,
-GCKMediaControlChannelDelegate,
-UIActionSheetDelegate>{
+@interface KPViewController() <KPlayerControllerDelegate, KPControlsViewDelegate, UIActionSheetDelegate, ChromecastDeviceControllerDelegate,
+GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -190,11 +189,17 @@ UIActionSheetDelegate>{
     return _configuration;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:NO];
+    // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
+    [ChromecastDeviceController sharedInstance].delegate = self;
+}
 
 #pragma mark -
 #pragma mark View flow methods
 - (void)viewDidLoad {
     KPLogTrace(@"Enter");
+    
     appConfigDict = extractDictionary(AppConfigurationFileName, @"plist");
     setUserAgent();
     [self initPlayerParams];
@@ -248,52 +253,26 @@ UIActionSheetDelegate>{
         }
     }];
     
-    //Initialize device scanner
-    self.deviceScanner = [[GCKDeviceScanner alloc] init];
-    
-    [self.deviceScanner addListener:self];
-    [self.deviceScanner startScan];
+    self.castDeviceController = [ChromecastDeviceController sharedInstance];
+    // Assign ourselves as the delegate.
+    self.castDeviceController.delegate = self;
+    // Turn on the Cast logging for debug purposes.
+    [self.castDeviceController enableLogging];
+//    ((KCCPlayer *)_playerController.player).chromecastDeviceController.applicationID = @"DB6462E9";
+    // Set the receiver application ID to initialise scanning.
+   self.castDeviceController.applicationID = @"DB6462E9";
     
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
 
 #pragma mark - GCKDeviceScannerListener
-- (void)deviceDidComeOnline:(GCKDevice *)device {
-    NSLog(@"device found!! %@", device.friendlyName);
-}
+//- (void)deviceDidComeOnline:(GCKDevice *)device {
+//    NSLog(@"device found!! %@", device.friendlyName);
+//}
 
-- (void)connectToDevice {
-    if (self.selectedDevice == nil)
-        return;
-    
-    NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
-    self.deviceManager =
-    [[GCKDeviceManager alloc] initWithDevice:self.selectedDevice
-                           clientPackageName:[info objectForKey:@"CFBundleIdentifier"]];
-    self.deviceManager.delegate = self;
-    [self.deviceManager connect];
-}
-
-- (void)deviceManagerDidConnect:(GCKDeviceManager *)deviceManager {
-    NSLog(@"connected!!");
-    
-    [self.deviceManager launchApplication:@"DB6462E9"];
-}
-
-- (void)deviceManager:(GCKDeviceManager *)deviceManager
-didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
-            sessionID:(NSString *)sessionID
-  launchedApplication:(BOOL)launchedApplication {
-    
-    NSLog(@"application has launched");
-    self.mediaControlChannel = [[GCKMediaControlChannel alloc] init];
-    self.mediaControlChannel.delegate = self;
-    [self.deviceManager addChannel:self.mediaControlChannel];
-    [self.mediaControlChannel requestStatus];
-    
-        [self castVideo];
-    
+- (void)didDiscoverDeviceOnNetwork {
+    NSLog(@"");
 }
 
 - (void)chooseDevice {
@@ -307,7 +286,7 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
                       destructiveButtonTitle:nil
                            otherButtonTitles:nil];
         
-        for (GCKDevice *device in self.deviceScanner.devices) {
+        for (GCKDevice *device in self.castDeviceController.deviceScanner.devices) {
             [sheet addButtonWithTitle:device.friendlyName];
         }
         
@@ -353,10 +332,14 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
 #pragma mark UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (self.selectedDevice == nil) {
-        if (buttonIndex < self.deviceScanner.devices.count) {
-            self.selectedDevice = self.deviceScanner.devices[buttonIndex];
+        if (buttonIndex < self.castDeviceController.deviceScanner.devices.count) {
+            self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
             NSLog(@"Selecting device:%@", self.selectedDevice.friendlyName);
-            [self connectToDevice];
+//            [self connectToDevice];
+            self.playerController.player = nil;
+            [_playerController switchPlayer:@"KCCPlayer" key:nil];
+            [((KCCPlayer *)_playerController.player).chromecastDeviceController connectToDevice:self.selectedDevice];
+            
         }
     } else {
         if (buttonIndex == 1) {  //Disconnect button
@@ -387,16 +370,16 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
     NSLog(@"Cast Video");
     
     //Show alert if not connected
-    if (!self.deviceManager || !self.deviceManager.isConnected) {
-        UIAlertView *alert =
-        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Not Connected", nil)
-                                   message:NSLocalizedString(@"Please connect to Cast device", nil)
-                                  delegate:nil
-                         cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                         otherButtonTitles:nil];
-        [alert show];
-        return;
-    }
+//    if (!self.deviceManager || !self.deviceManager.isConnected) {
+//        UIAlertView *alert =
+//        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Not Connected", nil)
+//                                   message:NSLocalizedString(@"Please connect to Cast device", nil)
+//                                  delegate:nil
+//                         cancelButtonTitle:NSLocalizedString(@"OK", nil)
+//                         otherButtonTitles:nil];
+//        [alert show];
+//        return;
+//    }
     
     //Define Media metadata
     GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
@@ -424,13 +407,17 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
                                     streamDuration:0
                                         customData:nil];
     
-    //cast video
-    [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+    [_playerController.player setPlayerSource:[NSURL URLWithString:_playerController.src]];
+    [_playerController.player play];
     
+    //cast video
+//    [((KCCPlayer *)_playerController.player) setChromecastDeviceController: [ChromecastDeviceController sharedInstance]];
+//    [((KCCPlayer *)_playerController.player).chromecastDeviceController.mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+//    [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
 }
 
 -(void)notifyLayoutReady {
-    [self setKDPAttribute: @"chromecast" propertyName: @"visible" value: @"true"];
+    [self setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
 }
 
 
@@ -448,6 +435,12 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
     [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
     [(UIView *)self.controlsView addSubview:reloadButton];
+    
+//    if (_castDeviceController.deviceManager.applicationConnectionState
+//        != GCKConnectionStateConnected) {
+//        // If we're not connected, exit.
+//        [self maybePopController];
+//    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -852,23 +845,18 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
     KPLogTrace(@"Exit");
 }
 
-
-
-
 #pragma mark -
 #pragma mark Rotation methods
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return YES;
 }
 
-- (BOOL)shouldAutorotate{
+- (BOOL)shouldAutorotate {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations
-{
+-(NSUInteger)supportedInterfaceOrientations {
     return self.configuration.supportedInterfaceOrientations;
-    
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

@@ -40,13 +40,13 @@ static NSString *PostrollEndedKey = @"postEnded";
 @property (nonatomic, readonly) BOOL isKPlayer;
 
 
-- (instancetype)initWithParentView:(UIView *)parentView;
 - (void)play;
 - (void)pause;
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
 
 @optional
+- (instancetype)initWithParentView:(UIView *)parentView;
 @property (nonatomic, copy) NSString *DRMKey;
 @end
 

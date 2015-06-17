@@ -46,6 +46,7 @@
     if (!_player) {
         Class class = NSClassFromString(_playerClassName);
         _player = [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
+        _player.playerSource = [NSURL URLWithString: _src];
         _player.delegate = self;
     }
     return _player;
@@ -88,6 +89,7 @@
 
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
+    _player = nil;
     _playerClassName = playerClassName;
     key = _key;
 }
