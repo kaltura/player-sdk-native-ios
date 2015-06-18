@@ -101,6 +101,10 @@
     self.delegate = nil;
 }
 
+- (BOOL)isKPlayer {
+    return nil;
+}
+
 /// @todo check that dealloc was called
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
