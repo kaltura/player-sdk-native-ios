@@ -295,30 +295,30 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
         
         //show device selection
         [sheet showInView:[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject]];
-    }
-//    } else {
-//        // Gather stats from device.
-//        [self updateStatsFromDevice];
-//        
-//        NSString *friendlyName = [NSString stringWithFormat:NSLocalizedString(@"Casting to %@", nil),
-//                                  self.selectedDevice.friendlyName];
-//        NSString *mediaTitle = [self.mediaInformation.metadata stringForKey:kGCKMetadataKeyTitle];
-//        
-//        UIActionSheet *sheet = [[UIActionSheet alloc] init];
-//        sheet.title = friendlyName;
-//        sheet.delegate = self;
-//        if (mediaTitle != nil) {
-//            [sheet addButtonWithTitle:mediaTitle];
-//        }
-//        
-//        //Offer disconnect option
-//        [sheet addButtonWithTitle:@"Disconnect"];
-//        [sheet addButtonWithTitle:@"Cancel"];
-//        sheet.destructiveButtonIndex = (mediaTitle != nil ? 1 : 0);
-//        sheet.cancelButtonIndex = (mediaTitle != nil ? 2 : 1);
-//        
-//        [sheet showInView:_chromecastButton];
 //    }
+    } else {
+        // Gather stats from device.
+//        [self updateStatsFromDevice];
+        
+        NSString *friendlyName = [NSString stringWithFormat:NSLocalizedString(@"Casting to %@", nil),
+                                  self.selectedDevice.friendlyName];
+        NSString *mediaTitle = [self.mediaInformation.metadata stringForKey:kGCKMetadataKeyTitle];
+        
+        UIActionSheet *sheet = [[UIActionSheet alloc] init];
+        sheet.title = friendlyName;
+        sheet.delegate = self;
+        if (mediaTitle != nil) {
+            [sheet addButtonWithTitle:mediaTitle];
+        }
+        
+        //Offer disconnect option
+        [sheet addButtonWithTitle:@"Disconnect"];
+        [sheet addButtonWithTitle:@"Cancel"];
+        sheet.destructiveButtonIndex = (mediaTitle != nil ? 1 : 0);
+        sheet.cancelButtonIndex = (mediaTitle != nil ? 2 : 1);
+        
+//        [sheet showInView:_chromecastButton];
+    }
 }
 
 -(void)showChromecastDeviceList {

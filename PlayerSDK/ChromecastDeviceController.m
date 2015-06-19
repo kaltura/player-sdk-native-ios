@@ -132,6 +132,7 @@ NSString * const kCastViewController = @"castViewController";
 //  }
 }
 
+
 /**
  *  Set the application ID and initialise a scan.
  *
@@ -351,7 +352,8 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
   _mediaInformation = mediaControlChannel.mediaStatus.mediaInformation;
   self.lastContentID = _mediaInformation.contentID;
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castMediaStatusChange" object:self];
-  [self updateCastIconButtonStates];
+    
+//  [self updateCastIconButtonStates];
 }
 
 - (void)mediaControlChannelDidUpdateMetadata:(GCKMediaControlChannel *)mediaControlChannel {

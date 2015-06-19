@@ -10,6 +10,13 @@
 #import "KPLog.h"
 #import <GoogleCast/GoogleCast.h>
 
+@interface KCCPlayer()
+
+/* A timer to trigger a callback to update the times/slider position. */
+@property(weak, nonatomic) NSTimer* updateStreamTimer;
+
+@end
+
 @implementation KCCPlayer
 
 @synthesize delegate = _delegate;
@@ -21,14 +28,88 @@
     self.chromecastDeviceController = [ChromecastDeviceController sharedInstance];
     self.chromecastDeviceController.delegate = self;
     
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(castMediaStatusChanged:)
+                                                 name: @"castMediaStatusChange"
+                                               object: nil];
+    
+    // Start the timer
+    if (self.updateStreamTimer) {
+        [self.updateStreamTimer invalidate];
+        self.updateStreamTimer = nil;
+    }
+    
+    self.updateStreamTimer =
+    [NSTimer scheduledTimerWithTimeInterval:1.0
+                                     target:self
+                                   selector:@selector(updateProgressFromCast:)
+                                   userInfo:nil
+                                    repeats:YES];
+    
     if (self) {
         return self;
     }
     return nil;
 }
 
+///@todo remove the timer when view disappears
+//- (void)viewWillDisappear:(BOOL)animated {
+//    // I think we can safely stop the timer here
+//    [self.updateStreamTimer invalidate];
+//    self.updateStreamTimer = nil;
+
+- (void) castMediaStatusChanged:(NSNotification *)notification {
+    KPLogTrace(@"Enter");
+    
+    switch (((ChromecastDeviceController*)notification.object).playerState) {
+        case GCKMediaPlayerStateBuffering:
+        case GCKMediaPlayerStatePlaying:
+            [_delegate player:self eventName:@"play" value:nil];
+            break;
+        case GCKMediaPlayerStateUnknown:
+        case GCKMediaPlayerStatePaused:
+            [_delegate player:self eventName:@"pause" value:nil];
+            break;
+
+        default:
+            KPLogDebug(@"castMediaStatusChanged: %d", ((ChromecastDeviceController*)notification.object).playerState);
+            break;
+    }
+}
+
+- (void)updateProgressFromCast:(NSTimer*)timer {
+//    if (!_readyToShowInterface)
+//        return;
+    
+//    if (self.chromecastDeviceController.playerState != GCKMediaPlayerStateBuffering) {
+//        [self.castActivityIndicator stopAnimating];
+//    } else {
+//        [self.castActivityIndicator startAnimating];
+//    }
+    
+//    if (([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) &&
+//            self.chromecastDeviceController.streamDuration > 0) {
+//        _lastKnownTime = self.chromecastDeviceController.streamPosition;
+//        self.currTime.text = [self getFormattedTime:_castDeviceController.streamPosition];
+//        self.totalTime.text = [self getFormattedTime:_castDeviceController.streamDuration];
+//        [self.slider
+//         setValue:(self.chromecastDeviceController.streamPosition / self.chromecastDeviceController.streamDuration)
+//         animated:YES];
+//        [self triggerKPlayerEvents: @"timeupdate"
+//                         withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self currentPlaybackTime]]}];
+    _currentPlaybackTime = _chromecastDeviceController.streamPosition;
+        [_delegate player:self eventName:@"timeupdate" value:[NSString stringWithFormat:@"%f", self.currentPlaybackTime]];
+    
+//        [weakSelf.delegate player:weakSelf eventName:TimeUpdateKey
+//                            value:@(CMTimeGetSeconds(time)).stringValue];
+    
+//    [self updateToolbarControls];
+}
+
 - (void)didConnectToDevice:(GCKDevice *)device {
     KPLogTrace(@"didConnectToDevice");
+    [_delegate player:self eventName:@"chromecastDeviceConnected" value:nil];
+    //    [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
@@ -67,8 +148,9 @@
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     if (isnan(self.duration) || currentPlaybackTime < self.duration) {
-        _currentPlaybackTime = currentPlaybackTime;
-        [self.chromecastDeviceController.mediaControlChannel seekToTimeInterval:currentPlaybackTime];
+        _currentPlaybackTime = self.chromecastDeviceController.streamPosition;
+//        [self.chromecastDeviceController setPlaybackPercent:<#(float)#>]
+        [self.chromecastDeviceController.mediaControlChannel seekToTimeInterval:self.chromecastDeviceController.streamPosition];
         [_delegate player:self eventName:SeekedKey value:nil];
     }
 }
@@ -100,6 +182,12 @@
     self.chromecastDeviceController = nil;
     self.delegate = nil;
 }
+//
+//- (void) mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel {
+//    if (mediaControlChannel.mediaStatus == self.chromecastDeviceController.mediaControlChannel.mediaStatus) {
+//        <#statements#>
+//    }
+//}
 
 - (BOOL)isKPlayer {
     return nil;
