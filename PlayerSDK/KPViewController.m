@@ -55,6 +55,10 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
 @property (nonatomic) NSTimeInterval seekValue;
+
+#pragma mark - chromecast
+@property GCKDevice *selectedDevice;
+
 @end
 
 @implementation KPViewController 
@@ -276,10 +280,11 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
 }
 
 - (void)chooseDevice {
+    UIActionSheet *sheet;
     //Choose device
     if (self.selectedDevice == nil) {
         //Choose device
-        UIActionSheet *sheet =
+       sheet =
         [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Connect to Device", nil)
                                     delegate:self
                            cancelButtonTitle:nil
@@ -294,17 +299,16 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
 //        sheet.cancelButtonIndex = sheet.numberOfButtons - 1;
         
         //show device selection
-        [sheet showInView:[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject]];
 //    }
     } else {
         // Gather stats from device.
 //        [self updateStatsFromDevice];
         
         NSString *friendlyName = [NSString stringWithFormat:NSLocalizedString(@"Casting to %@", nil),
-                                  self.selectedDevice.friendlyName];
-        NSString *mediaTitle = [self.mediaInformation.metadata stringForKey:kGCKMetadataKeyTitle];
+                            self.selectedDevice.friendlyName];
+        NSString *mediaTitle = [self.castDeviceController.mediaInformation.metadata stringForKey:kGCKMetadataKeyTitle];
         
-        UIActionSheet *sheet = [[UIActionSheet alloc] init];
+        sheet = [[UIActionSheet alloc] init];
         sheet.title = friendlyName;
         sheet.delegate = self;
         if (mediaTitle != nil) {
@@ -316,9 +320,9 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
         [sheet addButtonWithTitle:@"Cancel"];
         sheet.destructiveButtonIndex = (mediaTitle != nil ? 1 : 0);
         sheet.cancelButtonIndex = (mediaTitle != nil ? 2 : 1);
-        
-//        [sheet showInView:_chromecastButton];
     }
+    
+    [sheet showInView:[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject]];
 }
 
 -(void)showChromecastDeviceList {
@@ -334,86 +338,37 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
     if (self.selectedDevice == nil) {
         if (buttonIndex < self.castDeviceController.deviceScanner.devices.count) {
             self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
-            NSLog(@"Selecting device:%@", self.selectedDevice.friendlyName);
-//            [self connectToDevice];
+//            NSLog(@"Selecting device:%@", ((GCKDevice *)(self.castDeviceController.deviceScanner.devices[buttonIndex])).friendlyName);
             self.playerController.player = nil;
             [_playerController switchPlayer:@"KCCPlayer" key:nil];
             [((KCCPlayer *)_playerController.player).chromecastDeviceController connectToDevice:self.selectedDevice];
             
         }
     } else {
-        if (buttonIndex == 1) {  //Disconnect button
+        if (buttonIndex == 0) {  //Disconnect button
             NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
             // New way of doing things: We're not going to stop the applicaton. We're just going
             // to leave it.
-            [self.deviceManager leaveApplication];
+//            [self.castDeviceController.deviceManager leaveApplication];
             // If you want to force application to stop, uncomment below
-            //[self.deviceManager stopApplicationWithSessionID:self.applicationMetadata.sessionID];
-            [self.deviceManager disconnect];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//            [defaults setObject:sessionID forKey:@"lastSessionID"];
+            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
             
+            [self.castDeviceController.deviceManager disconnect];
             [self deviceDisconnected];
-        } else if (buttonIndex == 0) {
-            // Join the existing session.
-            
         }
+//        else if (buttonIndex == 0) {
+//            // Join the existing session.
+//            
+//        }
     }
 }
 
 - (void)deviceDisconnected {
-    self.mediaControlChannel = nil;
-    self.deviceManager = nil;
     self.selectedDevice = nil;
-}
-
-//Cast video
-- (void)castVideo {
-    NSLog(@"Cast Video");
-    
-    //Show alert if not connected
-//    if (!self.deviceManager || !self.deviceManager.isConnected) {
-//        UIAlertView *alert =
-//        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Not Connected", nil)
-//                                   message:NSLocalizedString(@"Please connect to Cast device", nil)
-//                                  delegate:nil
-//                         cancelButtonTitle:NSLocalizedString(@"OK", nil)
-//                         otherButtonTitles:nil];
-//        [alert show];
-//        return;
-//    }
-    
-    //Define Media metadata
-    GCKMediaMetadata *metadata = [[GCKMediaMetadata alloc] init];
-    
-    [metadata setString:@"Big Buck Bunny (2008)" forKey:kGCKMetadataKeyTitle];
-    
-    [metadata setString:@"Big Buck Bunny tells the story of a giant rabbit with a heart bigger than "
-     "himself. When one sunny day three rodents rudely harass him, something "
-     "snaps... and the rabbit ain't no bunny anymore! In the typical cartoon "
-     "tradition he prepares the nasty rodents a comical revenge."
-                 forKey:kGCKMetadataKeySubtitle];
-    
-    [metadata addImage:[[GCKImage alloc]
-                        initWithURL:[[NSURL alloc] initWithString:@"http://commondatastorage.googleapis.com/"
-                                     "gtv-videos-bucket/sample/images/BigBuckBunny.jpg"]
-                        width:480
-                        height:360]];
-    
-    //define Media information
-    GCKMediaInformation *mediaInformation =
-    [[GCKMediaInformation alloc] initWithContentID: _playerController.src
-                                        streamType:GCKMediaStreamTypeNone
-                                       contentType:@"video/mp4"
-                                          metadata:metadata
-                                    streamDuration:0
-                                        customData:nil];
-    
-    [_playerController.player setPlayerSource:[NSURL URLWithString:_playerController.src]];
-    [_playerController.player play];
-    
-    //cast video
-//    [((KCCPlayer *)_playerController.player) setChromecastDeviceController: [ChromecastDeviceController sharedInstance]];
-//    [((KCCPlayer *)_playerController.player).chromecastDeviceController.mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
-//    [_mediaControlChannel loadMedia:mediaInformation autoplay:TRUE playPosition:0];
+    self.playerController.player = nil;
+    [_playerController switchPlayer:@"KPlayer" key:nil];
 }
 
 -(void)notifyLayoutReady {

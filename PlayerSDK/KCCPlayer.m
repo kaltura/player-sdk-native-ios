@@ -29,10 +29,10 @@
     self.chromecastDeviceController.delegate = self;
     
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(castMediaStatusChanged:)
+                                             selector: @selector(didReceiveMediaStateChange:)
                                                  name: @"castMediaStatusChange"
                                                object: nil];
-    
+
     // Start the timer
     if (self.updateStreamTimer) {
         [self.updateStreamTimer invalidate];
@@ -58,17 +58,25 @@
 //    [self.updateStreamTimer invalidate];
 //    self.updateStreamTimer = nil;
 
-- (void) castMediaStatusChanged:(NSNotification *)notification {
+- (void)didReceiveMediaStateChange:(NSNotification *)notification {
     KPLogTrace(@"Enter");
     
     switch (((ChromecastDeviceController*)notification.object).playerState) {
         case GCKMediaPlayerStateBuffering:
         case GCKMediaPlayerStatePlaying:
-            [_delegate player:self eventName:@"play" value:nil];
+            [_delegate player:self eventName:CanPlayKey value:nil];
+            [self.delegate player:self
+                        eventName:DurationChangedKey
+                            value:@(self.duration).stringValue];
+            [_delegate player:self eventName:PlayKey value:nil];
+            
+            [self.delegate player:self
+                        eventName:LoadedMetaDataKey
+                            value:@""];
             break;
         case GCKMediaPlayerStateUnknown:
         case GCKMediaPlayerStatePaused:
-            [_delegate player:self eventName:@"pause" value:nil];
+            [_delegate player:self eventName:PauseKey value:nil];
             break;
 
         default:
@@ -109,7 +117,11 @@
 - (void)didConnectToDevice:(GCKDevice *)device {
     KPLogTrace(@"didConnectToDevice");
     [_delegate player:self eventName:@"chromecastDeviceConnected" value:nil];
-    //    [self triggerEventsJavaScript: @"chromecastDeviceConnected" WithValue: nil];
+}
+
+- (void)didDisconnect {
+    KPLogTrace(@"didDisconnect");
+    [_delegate player:self eventName:@"chromecastDeviceDisConnected" value:nil];
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
@@ -162,8 +174,9 @@
 - (void)play {
     BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
-    
-    if (self.chromecastDeviceController.mediaControlChannel && !playing) {
+    if (self.chromecastDeviceController.mediaControlChannel &&
+        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
+        !playing) {
         [self.chromecastDeviceController.mediaControlChannel play];
     }
 }
@@ -171,7 +184,9 @@
 - (void)pause {
     BOOL paused = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePaused
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateUnknown);
-    if (self.chromecastDeviceController.mediaControlChannel && !paused) {
+    if (self.chromecastDeviceController.mediaControlChannel &&
+        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
+        !paused) {
         [self.chromecastDeviceController.mediaControlChannel pause];
     }
 }

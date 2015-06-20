@@ -226,14 +226,6 @@
 /// Wraps triggerEvent:withValue: method by block syntax.
 @property (nonatomic, copy, readonly) void (^triggerEvent)(NSString *event, NSString *value);
 
-@property GCKMediaControlChannel *mediaControlChannel;
-@property GCKApplicationMetadata *applicationMetadata;
-@property GCKDevice *selectedDevice;
-@property(nonatomic, strong) GCKDeviceScanner *deviceScanner;
-@property(nonatomic, strong) UIButton *chromecastButton;
-@property(nonatomic, strong) GCKDeviceManager *deviceManager;
-@property(nonatomic, readonly) GCKMediaInformation *mediaInformation;
-
 /* The device manager used for the currently casting media. */
 @property(weak, nonatomic) ChromecastDeviceController *castDeviceController;
 
