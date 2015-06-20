@@ -33,8 +33,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerControllerDelegate, KPControlsViewDelegate, UIActionSheetDelegate, ChromecastDeviceControllerDelegate,
-GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
+@interface KPViewController() <KPlayerControllerDelegate,
+                                KPControlsViewDelegate,
+                                UIActionSheetDelegate,
+                                ChromecastDeviceControllerDelegate> {
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -44,6 +46,7 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
     NSMutableArray *callBackReadyRegistrations;
     NSURL *videoURL;
     void(^_shareHandler)(NSDictionary *);
+    BOOL isActionSheetPresented;
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
@@ -325,16 +328,24 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
     [sheet showInView:[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject]];
 }
 
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+    isActionSheetPresented = YES;
+}
+
 -(void)showChromecastDeviceList {
     NSLog(@"showChromecastDeviceList Enter");
     
-    [ self chooseDevice];
+    if (!isActionSheetPresented) {
+        [self chooseDevice];
+    }
     
     NSLog(@"showChromecastDeviceList Exit");
 }
 
 #pragma mark UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    isActionSheetPresented = NO;
+    
     if (self.selectedDevice == nil) {
         if (buttonIndex < self.castDeviceController.deviceScanner.devices.count) {
             self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
@@ -349,11 +360,11 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
             NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
             // New way of doing things: We're not going to stop the applicaton. We're just going
             // to leave it.
-//            [self.castDeviceController.deviceManager leaveApplication];
+            [self.castDeviceController.deviceManager leaveApplication];
             // If you want to force application to stop, uncomment below
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //            [defaults setObject:sessionID forKey:@"lastSessionID"];
-            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
+//            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
             
             [self.castDeviceController.deviceManager disconnect];
             [self deviceDisconnected];
@@ -442,6 +453,7 @@ GCKDeviceManagerDelegate, GCKMediaControlChannelDelegate>{
     isPlaying = NO;
     isResumePlayer = NO;
     _isFullScreenToggled = NO;
+    isActionSheetPresented = NO;
     KPLogTrace(@"Exit");
 }
 
