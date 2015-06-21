@@ -240,11 +240,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [self.view addSubview:(UIView *)self.controlsView];
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleCastScanStatusUpdated)
+                                                 name: @"castScanStatusUpdated"
+                                               object: nil];
+    
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
         if (!weakSelf.isModifiedFrame) {
-            weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
+            weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"true");
         } else {
             weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
                 weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
@@ -261,16 +266,20 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }];
     
     self.castDeviceController = [ChromecastDeviceController sharedInstance];
+    [self.castDeviceController clearPreviousSession];
     // Assign ourselves as the delegate.
     self.castDeviceController.delegate = self;
     // Turn on the Cast logging for debug purposes.
     [self.castDeviceController enableLogging];
-//    ((KCCPlayer *)_playerController.player).chromecastDeviceController.applicationID = @"DB6462E9";
     // Set the receiver application ID to initialise scanning.
-   self.castDeviceController.applicationID = @"DB6462E9";
+   [self.castDeviceController setApplicationID:@"DB6462E9"];
     
     [super viewDidLoad];
     KPLogTrace(@"Exit");
+}
+
+- (void)handleCastScanStatusUpdated {
+    
 }
 
 #pragma mark - GCKDeviceScannerListener
@@ -280,6 +289,15 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)didDiscoverDeviceOnNetwork {
     NSLog(@"");
+//    [self registerReadyEvent:^{
+//        [self sendNotification:@"showChromecastComponent" withParams:nil];
+//    }];
+//    setKDPAttribute(@"fullScreenBtn", @"visible", @"true");
+    __weak KPViewController *weakSelf = self;
+    [self registerReadyEvent:^{
+        [weakSelf setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
+    }];
+//    [self sendNotification:@"showChromecastComponent" withParams:nil];
 }
 
 - (void)chooseDevice {
@@ -350,10 +368,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         if (buttonIndex < self.castDeviceController.deviceScanner.devices.count) {
             self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
 //            NSLog(@"Selecting device:%@", ((GCKDevice *)(self.castDeviceController.deviceScanner.devices[buttonIndex])).friendlyName);
-            self.playerController.player = nil;
             [_playerController switchPlayer:@"KCCPlayer" key:nil];
             [((KCCPlayer *)_playerController.player).chromecastDeviceController connectToDevice:self.selectedDevice];
-            
         }
     } else {
         if (buttonIndex == 0) {  //Disconnect button
@@ -367,7 +383,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 //            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
             
             [self.castDeviceController.deviceManager disconnect];
-            [self deviceDisconnected];
+            [self deviceDisconnect];
         }
 //        else if (buttonIndex == 0) {
 //            // Join the existing session.
@@ -376,16 +392,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
 }
 
-- (void)deviceDisconnected {
+- (void)deviceDisconnect {
     self.selectedDevice = nil;
+    self.castDeviceController.deviceManager = nil;
     self.playerController.player = nil;
     [_playerController switchPlayer:@"KPlayer" key:nil];
 }
-
--(void)notifyLayoutReady {
-    [self setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
-}
-
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -414,6 +426,16 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     isResumePlayer = YES;
     [super viewDidDisappear:animated];
     KPLogTrace(@"Exit");
+}
+
+#pragma mark - GCKDeviceScannerListener
+- (void)deviceDidComeOnline:(GCKDevice *)device {
+    NSLog(@"device found!! %@", device.friendlyName);
+}
+
+- (void)deviceDidGoOffline:(GCKDevice *)device {
+    
+    [self setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"false"];
 }
 
 

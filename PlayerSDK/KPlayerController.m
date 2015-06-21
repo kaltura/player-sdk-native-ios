@@ -14,6 +14,7 @@
 @interface KPlayerController() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
+    NSTimeInterval currentDuration;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
@@ -47,6 +48,8 @@
         Class class = NSClassFromString(_playerClassName);
         _player = [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
         _player.playerSource = [NSURL URLWithString: _src];
+        _player.currentPlaybackTime = _currentPlayBackTime;
+        _player.duration = currentDuration;
         _player.delegate = self;
     }
     return _player;
@@ -89,6 +92,7 @@
 
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
+    currentDuration = _player.duration;
     _player = nil;
     _playerClassName = playerClassName;
     key = _key;

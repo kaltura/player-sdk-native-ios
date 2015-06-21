@@ -150,22 +150,6 @@ NSString * const kCastViewController = @"castViewController";
 
 # pragma mark - UI Management
 
-- (void)chooseDevice:(id)sender {
-  BOOL showPicker = YES;
-  if ([_delegate respondsToSelector:@selector(shouldDisplayModalDeviceController)]) {
-    showPicker = [_delegate shouldDisplayModalDeviceController];
-  }
-//  if (self.controller && showPicker) {
-//    UINavigationController *dtvc = (UINavigationController *)
-//        [_storyboard instantiateViewControllerWithIdentifier:kDeviceTableViewController];
-//    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-//      dtvc.modalPresentationStyle = UIModalPresentationFormSheet;
-//    }
-//    ((DeviceTableViewController *)dtvc.viewControllers[0]).delegate = self;
-//    [self.controller presentViewController:dtvc animated:YES completion:nil];
-//  }
-}
-
 - (void)dismissDeviceTable {
 //  [self.controller dismissViewControllerAnimated:YES completion:nil];
 }
@@ -359,6 +343,17 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
 - (void)mediaControlChannelDidUpdateMetadata:(GCKMediaControlChannel *)mediaControlChannel {
   NSLog(@"Media control channel metadata changed");
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castMediaStatusChange" object:self];
+}
+
+- (void)mediaControlChannel:(GCKMediaControlChannel *)mediaControlChannel didCompleteLoadWithSessionID:(NSInteger)sessionID {
+    /// @todo maybe better use delegate
+    NSLog(@"Media control channel metadata changed");
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"castApplicationCompleteLoadWithSessionID"
+                                                        object:@{@"sessionID":@(sessionID)}];
+    
+    if ([_delegate respondsToSelector:@selector(didCompleteLoadWithSessionID:)]) {
+        [_delegate didCompleteLoadWithSessionID:sessionID];
+    }
 }
 
 # pragma mark - Device & Media Management

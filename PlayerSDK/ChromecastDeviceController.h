@@ -45,11 +45,9 @@ extern NSString * const kCastViewController;
 - (void)didDiscoverDeviceOnNetwork;
 
 /**
- *  Whether or not the device controller should be displayed.
- *
- *  @return YES to display, NO to prevent.
+ * Called when a request to load media has completed.
  */
-- (BOOL)shouldDisplayModalDeviceController;
+- (void)didCompleteLoadWithSessionID:(NSInteger)sessionID;
 
 @end
 
