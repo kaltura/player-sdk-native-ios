@@ -13,6 +13,7 @@
 @interface KCCPlayer() {
     NSString* contentID;
     NSTimeInterval* streamPosition;
+    BOOL isPlaying;
 }
 
 /* A timer to trigger a callback to update the times/slider position. */
@@ -30,11 +31,6 @@
     self = [super init];
     self.chromecastDeviceController = [ChromecastDeviceController sharedInstance];
     self.chromecastDeviceController.delegate = self;
-    
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(didReceiveMediaStateChange:)
-                                                 name: @"castMediaStatusChange"
-                                               object: nil];
 
     // Start the timer
     if (self.updateStreamTimer) {
@@ -48,6 +44,7 @@
                                    selector:@selector(updateProgressFromCast:)
                                    userInfo:nil
                                     repeats:YES];
+    isPlaying = NO;
     
     if (self) {
         return self;
@@ -65,40 +62,16 @@
 //    [self.updateStreamTimer invalidate];
 //    self.updateStreamTimer = nil;
 
-- (void)didReceiveMediaStateChange:(NSNotification *)notification {
-    KPLogTrace(@"Enter");
-    
-    switch (self.chromecastDeviceController.playerState) {
-        case GCKMediaPlayerStatePlaying:
-            if (self.chromecastDeviceController.playerState != GCKMediaPlayerStatePaused) {
-                KPLogDebug(@"GCKMediaPlayerStatePlaying");
-                [_delegate player:self eventName:PlayKey value:nil];
-            }
-            break;
-        case GCKMediaPlayerStatePaused:
-            if (self.chromecastDeviceController.playerState != GCKMediaPlayerStatePlaying) {
-                KPLogDebug(@"GCKMediaPlayerStatePaused");
-                [_delegate player:self eventName:PauseKey value:nil];
-            }
-            break;
-        case GCKMediaPlayerStateIdle:
-            KPLogError(@"didReceiveMediaStateChange: GCKMediaPlayerStateIdle");
-            break;
-
-        default:
-            KPLogDebug(@"castMediaStatusChanged: %d", self.chromecastDeviceController.playerState);
-            break;
-    }
-}
-
 - (void)updateCurrentTime:(NSTimeInterval)currentTime {
     _currentPlaybackTime = currentTime;
 }
 
 - (void)updateProgressFromCast:(NSTimer*)timer {
-    KPLogDebug(@"updateProgressFromCast");
-    [self updateCurrentTime:self.chromecastDeviceController.streamPosition];
-    [_delegate player:self eventName:TimeUpdateKey value:[NSString stringWithFormat:@"%f", _currentPlaybackTime]];
+    if (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying) {
+        KPLogDebug(@"updateProgressFromCast");
+        [self updateCurrentTime:self.chromecastDeviceController.streamPosition];
+        [_delegate player:self eventName:TimeUpdateKey value:[NSString stringWithFormat:@"%f", _currentPlaybackTime]];
+    }
 }
 
 - (void)didCompleteLoadWithSessionID:(NSInteger)sessionID {
@@ -109,7 +82,35 @@
     [self.delegate player:self
                 eventName:LoadedMetaDataKey
                     value:@""];
-    [_delegate player:self eventName:CanPlayKey value:nil];
+    [self.delegate player:self eventName:CanPlayKey value:nil];
+}
+
+- (void)didUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel {
+    KPLogTrace(@"didUpdateStatus");
+    
+    switch (self.chromecastDeviceController.playerState) {
+        case GCKMediaPlayerStatePlaying:
+            if (!isPlaying) {
+                KPLogDebug(@"GCKMediaPlayerStatePlaying");
+                [_delegate player:self eventName:PlayKey value:nil];
+                isPlaying = YES;
+            }
+            break;
+        case GCKMediaPlayerStatePaused:
+            if (isPlaying) {
+                KPLogDebug(@"GCKMediaPlayerStatePaused");
+//                [_delegate player:self eventName:PauseKey value:nil];
+                isPlaying = NO;
+            }
+            break;
+        case GCKMediaPlayerStateIdle:
+            KPLogError(@"didReceiveMediaStateChange: GCKMediaPlayerStateIdle");
+            break;
+            
+        default:
+            KPLogDebug(@"castMediaStatusChanged: %d", self.chromecastDeviceController.playerState);
+            break;
+    }
 }
 
 - (void)didConnectToDevice:(GCKDevice *)device {
@@ -130,7 +131,7 @@
                                         customData: nil];
     [self.chromecastDeviceController setMediaInformation: mediaInformation];
     [self.chromecastDeviceController.mediaControlChannel loadMedia:mediaInformation
-                                                          autoplay:YES
+                                                          autoplay:NO
                                                       playPosition:_currentPlaybackTime];
     [_delegate player:self eventName:@"chromecastDeviceConnected" value:nil];
 }
@@ -170,7 +171,11 @@
     return _chromecastDeviceController.streamPosition;;
 }
 
-- (void)play {[_delegate player:self eventName:PlayKey value:nil];
+- (void)play {
+    if (self.chromecastDeviceController.playerState == GCKMediaPlayerStateIdle) {
+        return;
+    }
+    
     BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
     if (self.chromecastDeviceController.mediaControlChannel &&
@@ -181,6 +186,10 @@
 }
 
 - (void)pause {
+    if (self.chromecastDeviceController.playerState == GCKMediaPlayerStateIdle) {
+        return;
+    }
+    
     BOOL paused = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePaused
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateUnknown);
     if (self.chromecastDeviceController.mediaControlChannel &&

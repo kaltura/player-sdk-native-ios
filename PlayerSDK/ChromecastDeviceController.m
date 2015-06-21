@@ -337,6 +337,10 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
   self.lastContentID = _mediaInformation.contentID;
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castMediaStatusChange" object:self];
     
+    if ([_delegate respondsToSelector:@selector(didUpdateStatus:)]) {
+        [_delegate didUpdateStatus:mediaControlChannel];
+    }
+    
 //  [self updateCastIconButtonStates];
 }
 

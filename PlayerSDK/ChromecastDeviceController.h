@@ -49,6 +49,11 @@ extern NSString * const kCastViewController;
  */
 - (void)didCompleteLoadWithSessionID:(NSInteger)sessionID;
 
+/**
+ * Called when updated player status information is received.
+ */
+- (void)didUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel;
+
 @end
 
 @interface ChromecastDeviceController : NSObject <

@@ -93,7 +93,8 @@
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
     currentDuration = _player.duration;
-    _player = nil;
+    [self.player removePlayer];
+    self.player = nil;
     _playerClassName = playerClassName;
     key = _key;
 }
@@ -125,7 +126,7 @@
             _player.currentPlaybackTime = currentTime;
         }
         if (!isSeeked) {
-            [_player play];
+            //[_player play];
         }
     } else {
         [_delegate player:currentPlayer eventName:event value:value];

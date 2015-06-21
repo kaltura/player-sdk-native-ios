@@ -289,15 +289,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)didDiscoverDeviceOnNetwork {
     NSLog(@"");
-//    [self registerReadyEvent:^{
-//        [self sendNotification:@"showChromecastComponent" withParams:nil];
-//    }];
-//    setKDPAttribute(@"fullScreenBtn", @"visible", @"true");
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
         [weakSelf setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
     }];
-//    [self sendNotification:@"showChromecastComponent" withParams:nil];
 }
 
 - (void)chooseDevice {
@@ -376,11 +371,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
             // New way of doing things: We're not going to stop the applicaton. We're just going
             // to leave it.
-            [self.castDeviceController.deviceManager leaveApplication];
+//            [self.castDeviceController.deviceManager leaveApplication];
             // If you want to force application to stop, uncomment below
-//            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 //            [defaults setObject:sessionID forKey:@"lastSessionID"];
-//            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
+            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
             
             [self.castDeviceController.deviceManager disconnect];
             [self deviceDisconnect];
@@ -434,8 +429,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)deviceDidGoOffline:(GCKDevice *)device {
-    
-    [self setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"false"];
 }
 
 
