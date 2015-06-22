@@ -99,7 +99,7 @@
         case GCKMediaPlayerStatePaused:
             if (isPlaying) {
                 KPLogDebug(@"GCKMediaPlayerStatePaused");
-//                [_delegate player:self eventName:PauseKey value:nil];
+                [_delegate player:self eventName:PauseKey value:nil];
                 isPlaying = NO;
             }
             break;
@@ -172,10 +172,6 @@
 }
 
 - (void)play {
-    if (self.chromecastDeviceController.playerState == GCKMediaPlayerStateIdle) {
-        return;
-    }
-    
     BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
     if (self.chromecastDeviceController.mediaControlChannel &&
@@ -186,10 +182,6 @@
 }
 
 - (void)pause {
-    if (self.chromecastDeviceController.playerState == GCKMediaPlayerStateIdle) {
-        return;
-    }
-    
     BOOL paused = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePaused
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateUnknown);
     if (self.chromecastDeviceController.mediaControlChannel &&

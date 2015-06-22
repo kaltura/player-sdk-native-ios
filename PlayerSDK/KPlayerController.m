@@ -125,6 +125,7 @@
         if (currentTime) {
             _player.currentPlaybackTime = currentTime;
         }
+        ///@todo check if it's widevine player
         if (!isSeeked) {
             //[_player play];
         }
