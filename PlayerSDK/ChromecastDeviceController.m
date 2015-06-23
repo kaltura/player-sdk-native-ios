@@ -364,10 +364,6 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
     }
 }
 
-- (void) mediaControlChannel:(GCKMediaControlChannel *)mediaControlChannel requestDidCompleteWithID:(NSInteger)requestID {
-    NSLog(@"");
-}
-
 # pragma mark - Device & Media Management
 
 - (void)connectToDevice:(GCKDevice *)device {
