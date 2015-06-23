@@ -156,7 +156,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                        context:(void *)context {
     if (keyPath.isFrameKeypath) {
         if ([object isEqual:self.view]) {
-            [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
+            AVPlayerLayer *playerLayer = self.view.layer.sublayers.firstObject;
+            
+            if ([playerLayer isKindOfClass:[AVPlayerLayer class]]) {
+                [playerLayer setFrame:(CGRect){CGPointZero, self.view.frame.size}];
+            }
+            
             self.controlsView.controlsFrame = (CGRect){CGPointZero, self.view.frame.size};
         }
     }
