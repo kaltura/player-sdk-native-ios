@@ -102,6 +102,12 @@ extern NSString * const kCastViewController;
 @property(nonatomic, readonly) GCKMediaPlayerState playerState;
 
 /**
+ * The current idle reason. This value is only meaningful if the player state is
+ * GCKMediaPlayerStateIdle.
+ */
+@property(nonatomic, readonly) GCKMediaPlayerIdleReason idleReason;
+
+/**
  *  Helper accessor for the duration of the currently casting media.
  */
 @property(nonatomic, readonly) NSTimeInterval streamDuration;

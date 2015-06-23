@@ -39,7 +39,7 @@
     }
     
     self.updateStreamTimer =
-    [NSTimer scheduledTimerWithTimeInterval:1.0
+    [NSTimer scheduledTimerWithTimeInterval:0.2
                                      target:self
                                    selector:@selector(updateProgressFromCast:)
                                    userInfo:nil
@@ -104,11 +104,28 @@
             }
             break;
         case GCKMediaPlayerStateIdle:
+            [self didReceiveIdleReason];
             KPLogError(@"didReceiveMediaStateChange: GCKMediaPlayerStateIdle");
             break;
             
         default:
             KPLogDebug(@"castMediaStatusChanged: %d", self.chromecastDeviceController.playerState);
+            break;
+    }
+}
+
+- (void)didReceiveIdleReason {
+    KPLogTrace(@"didReceiveIdleReason");
+    
+    switch (self.chromecastDeviceController.idleReason) {
+        case GCKMediaPlayerIdleReasonNone:
+        case GCKMediaPlayerIdleReasonFinished:
+            if ((NSInteger)_currentPlaybackTime == (NSInteger)_duration) {
+                [_delegate contentCompleted:self];
+            }
+            break;
+            
+        default:
             break;
     }
 }
@@ -167,17 +184,18 @@
     }
 }
 
-- (NSTimeInterval)currentPlaybackTime {
-    return _chromecastDeviceController.streamPosition;;
-}
-
 - (void)play {
     BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
     if (self.chromecastDeviceController.mediaControlChannel &&
         _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
         !playing) {
+        NSTimeInterval currTime = _currentPlaybackTime;
         [self.chromecastDeviceController.mediaControlChannel play];
+        
+        if ( (NSInteger)currTime > 0 && currTime <= _duration) {
+            [self setCurrentPlaybackTime:currTime];
+        }
     }
 }
 

@@ -114,6 +114,10 @@ NSString * const kCastViewController = @"castViewController";
   return _mediaControlChannel.mediaStatus.playerState;
 }
 
+- (GCKMediaPlayerIdleReason)playerIdleReason{
+    return _mediaControlChannel.mediaStatus.idleReason;
+}
+
 - (NSTimeInterval)streamDuration {
   return _mediaInformation.streamDuration;
 }
@@ -358,6 +362,10 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
     if ([_delegate respondsToSelector:@selector(didCompleteLoadWithSessionID:)]) {
         [_delegate didCompleteLoadWithSessionID:sessionID];
     }
+}
+
+- (void) mediaControlChannel:(GCKMediaControlChannel *)mediaControlChannel requestDidCompleteWithID:(NSInteger)requestID {
+    NSLog(@"");
 }
 
 # pragma mark - Device & Media Management

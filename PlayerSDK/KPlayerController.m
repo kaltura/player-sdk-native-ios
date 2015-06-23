@@ -47,10 +47,10 @@
     if (!_player) {
         Class class = NSClassFromString(_playerClassName);
         _player = [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
-        _player.playerSource = [NSURL URLWithString: _src];
-        _player.currentPlaybackTime = _currentPlayBackTime;
-        _player.duration = currentDuration;
         _player.delegate = self;
+        _player.playerSource = [NSURL URLWithString: _src];
+        _player.duration = currentDuration;
+        _player.currentPlaybackTime = _currentPlayBackTime;
     }
     return _player;
 }
@@ -62,6 +62,7 @@
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
+    _currentPlayBackTime = currentPlayBackTime;
     _player.currentPlaybackTime = currentPlayBackTime;
 }
 
