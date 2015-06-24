@@ -9,15 +9,18 @@
 #import "KPlayerController.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
+#ifdef IMA
 #import "KPIMAPlayerViewController.h"
-
+#endif
 @interface KPlayerController() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
+#ifdef IMA
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
+#endif
 @property (nonatomic) BOOL contentEnded;
 @end
 
@@ -62,6 +65,7 @@
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
+#ifdef IMA
     if (!_adController) {
         _adController = [KPIMAPlayerViewController new];
         _adController.adPlayerHeight = _adPlayerHeight;
@@ -84,6 +88,7 @@
                       }
                   }];
     }
+#endif
 }
 
 
@@ -99,8 +104,10 @@
 - (void)removePlayer {
     [_player removePlayer];
     _player = nil;
+#ifdef IMA
     [_adController removeIMAPlayer];
     _adController = nil;
+#endif
 }
 
 
@@ -132,7 +139,9 @@
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.contentEnded = YES;
+#ifdef IMA
     [_adController contentCompleted];
+#endif
 }
 
 - (void)dealloc {
