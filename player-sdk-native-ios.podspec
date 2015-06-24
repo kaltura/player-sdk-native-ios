@@ -33,7 +33,7 @@ s.link_with 'KALTURAPlayerSDK', 'KALTURAPlayerSDKNoIMA'
 
 
 # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source       = { :git => 'https://github.com/kaltura/player-sdk-native-ios.git', :tag => 'v1.1' }
+s.source       = { :git => 'https://github.com/kaltura/player-sdk-native-ios.git', :tag => 'v1.1.1' }
 s.library      = 'stdc++', 'z', 'System', 'stdc++.6', 'xml2.2', 'c++', 'stdc++.6.0.9', 'xml2'
 s.framework    = 'MediaPlayer', 'GoogleCast', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit'
 
