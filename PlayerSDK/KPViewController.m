@@ -18,11 +18,9 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPBrowserViewController.h"
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
-#import "KPIMAPlayerViewController.h"
 #import "KPlayerController.h"
 #import "KPControlsView.h"
 #import "KCCPlayer.h"
-
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
@@ -368,7 +366,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         if (buttonIndex < self.castDeviceController.deviceScanner.devices.count) {
             self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
 //            NSLog(@"Selecting device:%@", ((GCKDevice *)(self.castDeviceController.deviceScanner.devices[buttonIndex])).friendlyName);
-            [_playerController setCurrentPlayBackTime:_playerController.player.currentPlaybackTime];
+//            [_playerController setCurrentPlayBackTime:_playerController.player.currentPlaybackTime];
             [_playerController switchPlayer:@"KCCPlayer" key:nil];
             [((KCCPlayer *)_playerController.player).chromecastDeviceController connectToDevice:self.selectedDevice];
         }
@@ -396,7 +394,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)deviceDisconnect {
     self.selectedDevice = nil;
     self.castDeviceController.deviceManager = nil;
-    self.playerController.player = nil;
     [_playerController switchPlayer:@"KPlayer" key:nil];
 }
 
