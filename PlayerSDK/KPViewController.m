@@ -17,6 +17,7 @@
 #import "KPBrowserViewController.h"
 #import "KPPlayerDatasourceHandler.h"
 #import "NSString+Utilities.h"
+#import "Utilities.h"
 
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
@@ -29,7 +30,6 @@ static NSURL *urlScheme;
     // Player Params
     BOOL isSeeking;
     BOOL isFullScreen, isPlaying, isResumePlayer;
-    CGRect originalViewControllerFrame;
     CGAffineTransform fullScreenPlayerTransform;
     UIDeviceOrientation prevOrientation, deviceOrientation;
     NSString *playerSource;
@@ -49,6 +49,7 @@ static NSURL *urlScheme;
     BOOL *showChromecastBtn;
     
     NSDictionary *nativeActionParams;
+    UIView *superView;
 }
 
 @synthesize webView, player;
@@ -58,7 +59,6 @@ static NSURL *urlScheme;
 - (instancetype)initWithFrame:(CGRect)frame forView:(UIView *)parentView {
     self = [super init];
     [self.view setFrame:frame];
-    originalViewControllerFrame = frame;
     [parentView addSubview:self.view];
     return self;
 }
@@ -73,6 +73,15 @@ static NSURL *urlScheme;
     @synchronized(self) {
         return urlScheme;
     }
+}
+
+CGRect screenBounds() {
+    UIInterfaceOrientation orientation = [UIApplication sharedApplication].statusBarOrientation;
+    if (UIInterfaceOrientationIsPortrait(orientation) || isIOS8()) {
+        return [UIScreen mainScreen].bounds;
+    }
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    return (CGRect){CGPointZero, size.height, size.width};
 }
 
 - (void)viewDidLoad {
@@ -172,9 +181,8 @@ static NSURL *urlScheme;
 
 - (void)viewWillAppear:(BOOL)animated {
     NSLog(@"viewWillAppear Enter");
-    
+    superView = self.view.superview;
     CGRect playerViewFrame = CGRectMake( 0, 0, self.view.frame.size.width, self.view.frame.size.height );
-    
     if ( !isFullScreen && !isResumePlayer ) {
         self.webView = [ [KPControlsWebView alloc] initWithFrame: playerViewFrame ];
         [[self webView] setPlayerControlsWebViewDelegate: self];
@@ -450,240 +458,16 @@ static NSURL *urlScheme;
     NSLog( @"updatePlayerLayout Exit" );
 }
 
-- (void)setOrientationTransform: (CGFloat) angle{
-    NSLog( @"setOrientationTransform Enter" );
-    
-    // UIWindow frame in ios 8 different for Landscape mode
-    if( [self isIOS8] && !isFullScreenToggled ) {
-        [self.view setTransform: CGAffineTransformIdentity];
-        return;
-    }
-    
-    isFullScreenToggled = NO;
-    if ( isFullScreen ) {
-        // Init Transform for Fullscreen
-        fullScreenPlayerTransform = CGAffineTransformMakeRotation( ( angle * M_PI ) / 180.0f );
-        fullScreenPlayerTransform = CGAffineTransformTranslate( fullScreenPlayerTransform, 0.0, 0.0);
-        
-        self.view.center = [[UIApplication sharedApplication] delegate].window.center;
-        [self.view setTransform: fullScreenPlayerTransform];
-        
-        // Add Mask Support to WebView & Player
-        self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
-        self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth |UIViewAutoresizingFlexibleHeight;
-    }else{
-        [self.view setTransform: CGAffineTransformIdentity];
-    }
-    
-    NSLog( @"setOrientationTransform Exit" );
-}
-
-- (void)checkDeviceStatus{
-    NSLog( @"checkDeviceStatus Enter" );
-    
-    deviceOrientation = [[UIDevice currentDevice] orientation];
-    
-    if ( [self isIpad] || openFullScreen ) {
-        if (deviceOrientation == UIDeviceOrientationUnknown) {
-            if ( [UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeLeft ) {
-                [self setOrientationTransform: 90];
-            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationLandscapeRight){
-                [self setOrientationTransform: -90];
-            }else if([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortrait){
-                [self setOrientationTransform: 180];
-                [self.view setTransform: CGAffineTransformIdentity];
-            }else if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortraitUpsideDown){
-                [self setOrientationTransform: -180];
-            }
-        }else{
-            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
-                [self setOrientationTransform: 90];
-            }else if(deviceOrientation == UIDeviceOrientationLandscapeRight){
-                [self setOrientationTransform: -90];
-            }else if(deviceOrientation == UIDeviceOrientationPortrait){
-                [self setOrientationTransform: 180];
-                [self.view setTransform: CGAffineTransformIdentity];
-            }else if (deviceOrientation == UIDeviceOrientationPortraitUpsideDown){
-                [self setOrientationTransform: -180];
-            }
-        }
-    }else{
-        if (deviceOrientation == UIDeviceOrientationUnknown ||
-            deviceOrientation == UIDeviceOrientationPortrait ||
-            deviceOrientation == UIDeviceOrientationPortraitUpsideDown ||
-            deviceOrientation == UIDeviceOrientationFaceDown ||
-            deviceOrientation == UIDeviceOrientationFaceUp) {
-            [self setOrientationTransform: 90];
-        }else{
-            if ( deviceOrientation == UIDeviceOrientationLandscapeLeft ) {
-                [self setOrientationTransform: 90];
-            }else if( deviceOrientation == UIDeviceOrientationLandscapeRight ){
-                [self setOrientationTransform: -90];
-            }
-        }
-    }
-    
-    NSLog( @"checkDeviceStatus Exit" );
-}
-
-- (void)checkOrientationStatus{
-    NSLog( @"checkOrientationStatus Enter" );
-    
-    isCloseFullScreenByTap = NO;
-    
-    // Handle rotation issues when player is playing
-    if ( isPlaying ) {
-        [self closeFullScreen];
-        [self openFullScreen: openFullScreen];
-        if ( isFullScreen ) {
-            [self checkDeviceStatus];
-        }
-        
-        if ( ![self isIpad] && (deviceOrientation == UIDeviceOrientationPortrait || deviceOrientation == UIDeviceOrientationPortraitUpsideDown) ) {
-            if ( !openFullScreen ) {
-                [self closeFullScreen];
-            }
-        }
-    }else {
-        [self closeFullScreen];
-    }
-    
-    NSLog( @"checkOrientationStatus Exit" );
-}
-
-- (void)setNativeFullscreen {
-    [UIApplication sharedApplication].statusBarHidden = YES;
-    [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
-    
-    // Disable fullscreen button if the player is set to fullscreen by default
-    [self registerJSCallbackReady: ^() {
-        NSLog(@"jsCallbackReady");
-        if ( [self respondsToSelector: @selector(setKDPAttribute:propertyName:value:)] ) {
-            [self setKDPAttribute: @"fullScreenBtn" propertyName: @"visible" value: @"false"];
-        }
-    }];
-}
-
-- (void)deviceOrientationDidChange {
-    CGRect mainFrame;
-    
-    if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceDown || [[UIDevice currentDevice] orientation] == UIDeviceOrientationFaceUp ) {
-        return;
-    }
-    
-    if ( [self isIOS8] ) {
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-    } else if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-    } else {
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-    }
-    
-    [self.view setFrame: mainFrame];
-    
-    [UIApplication sharedApplication].statusBarHidden = YES;
-    
-    [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.webView setFrame: self.player.view.frame];
-    [ self.view setTransform: fullScreenPlayerTransform ];
-    
-    [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
-    [self updatePlayerLayout];
-    [self checkDeviceStatus];
-}
-
-- (void)openFullscreen {
-    if ( !isFullScreen ) {
-        [self toggleFullscreen];
-    }
-}
-
-- (void)closeFullscreen {
-    if ( isFullScreen ) {
-        [self toggleFullscreen];
-    }
-}
 
 - (void)toggleFullscreen {
-    NSLog( @"toggleFullscreen Enter" );
-    
-    isCloseFullScreenByTap = YES;
-    isFullScreenToggled = YES;
-    
-    if ( !isFullScreen ) {
-        [self openFullScreen: openFullScreen];
-        [self checkDeviceStatus];
-    } else{
-        [self closeFullScreen];
+    isFullScreen = !isFullScreen;
+    if (isFullScreen) {
+        [UIApplication sharedApplication].statusBarHidden = YES;
+        [self resizePlayerView:screenBounds()];
     }
-    
-    NSLog( @"toggleFullscreen Exit" );
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"toggleFullscreenNotification" object:@(isFullScreen)];
 }
 
-- (void)openFullScreen: (BOOL)openFullscreen{
-    NSLog( @"openFullScreen Enter" );
-    
-    isFullScreen = YES;
-    
-    CGRect mainFrame;
-    openFullScreen = openFullscreen;
-    
-    if ( [self isIpad] || openFullscreen ) {
-        if ( [[UIDevice currentDevice] orientation] == UIDeviceOrientationUnknown ) {
-            if (UIDeviceOrientationPortrait == [UIApplication sharedApplication].statusBarOrientation || UIDeviceOrientationPortraitUpsideDown == [UIApplication sharedApplication].statusBarOrientation) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-            }else if(UIDeviceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)){
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-            }
-        }else{
-            if ( UIDeviceOrientationPortrait == [[UIDevice currentDevice] orientation] || UIDeviceOrientationPortraitUpsideDown == [[UIDevice currentDevice] orientation] ) {
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height ) ;
-            }else if(UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation])){
-                mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-            }
-        }
-    }else{
-        mainFrame = CGRectMake( [[UIScreen mainScreen] bounds].origin.x, [[UIScreen mainScreen] bounds].origin.y, [[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width ) ;
-    }
-    
-    [self.view setFrame: mainFrame];
-    
-    [UIApplication sharedApplication].statusBarHidden = YES;
-
-    [self.player.view setFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.webView setFrame: self.player.view.frame];
-    [ self.view setTransform: fullScreenPlayerTransform ];
-    
-    [self triggerEventsJavaScript: @"enterfullscreen" WithValue: nil];
-    [self updatePlayerLayout];
-    
-    NSLog( @"openFullScreen Exit" );
-}
-
-- (void)closeFullScreen{
-    NSLog( @"closeFullScreen Enter" );
-    
-    if ( openFullScreen && isCloseFullScreenByTap ) {
-//        [self stop];
-    }
-    
-    CGRect originalFrame = CGRectMake( 0, 0, originalViewControllerFrame.size.width, originalViewControllerFrame.size.height );
-    isFullScreen = NO;
-    
-    [self.view setTransform: CGAffineTransformIdentity];
-    self.view.frame = originalViewControllerFrame;
-    self.player.view.frame = originalFrame;
-    self.webView.frame = [[[self player] view] frame];
-    
-    [UIApplication sharedApplication].statusBarHidden = NO;
-    
-    [self triggerEventsJavaScript:@"exitfullscreen" WithValue:nil];
-    
-    [self updatePlayerLayout];
-    
-    NSLog( @"closeFullScreen Exit" );
-}
 
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args{
@@ -796,18 +580,15 @@ static NSURL *urlScheme;
     NSLog(@"setPlayerSource Exit");
 }
 
-- (void)resizePlayerView: (CGFloat)top right:(CGFloat)right width:(CGFloat)width height:(CGFloat)height{
-    NSLog(@"resizePlayerView Enter");
-    
-    originalViewControllerFrame = CGRectMake( top, right, width, height );
-    
-    if ( !isFullScreen ) {
-        self.view.frame = originalViewControllerFrame;
-        self.player.view.frame = CGRectMake( 0, 0, width, height );
-        self.webView.frame = self.player.view.frame;
-    }
-    
-    NSLog(@"resizePlayerView Exit");
+- (void)resizePlayerView:(CGRect)newFrame {
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                         self.view.frame = newFrame;
+                         self.player.view.frame = (CGRect){CGPointZero, newFrame.size};
+                         self.webView.frame = self.player.view.frame;
+                     }];
+    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
+    [self writeJavascript: updateLayoutJS];
 }
 
 -(void)visible:(NSString *)boolVal{
@@ -848,15 +629,6 @@ static NSURL *urlScheme;
     }
     
     NSLog(@"removeAirPlayIcon Exit");
-}
-
-- (void)doneFSBtnPressed {
-    NSLog(@"doneFSBtnPressed Enter");
-    
-    isCloseFullScreenByTap = YES;
-    [self closeFullScreen];
-    
-    NSLog(@"doneFSBtnPressed Exit");
 }
 
 #pragma mark - airplay plugin
@@ -1023,6 +795,12 @@ static NSURL *urlScheme;
 - (void)didDisconnect {
     [self switchPlayer: [KalturaPlayer class]];
     [self triggerEventsJavaScript: @"chromecastDeviceDisConnected" WithValue: nil];
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+    if (isFullScreen) {
+        [self resizePlayerView:screenBounds()];
+    }
 }
 
 @end
