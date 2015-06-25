@@ -461,11 +461,11 @@ CGRect screenBounds() {
 
 - (void)toggleFullscreen {
     isFullScreen = !isFullScreen;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"toggleFullscreenNotification" object:@(isFullScreen)];
     if (isFullScreen) {
         [UIApplication sharedApplication].statusBarHidden = YES;
-        [self resizePlayerView:screenBounds()];
+        [self resizePlayerView:screenBounds() withAnimation:YES];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"toggleFullscreenNotification" object:@(isFullScreen)];
 }
 
 
@@ -580,8 +580,8 @@ CGRect screenBounds() {
     NSLog(@"setPlayerSource Exit");
 }
 
-- (void)resizePlayerView:(CGRect)newFrame {
-    [UIView animateWithDuration:0.25
+- (void)resizePlayerView:(CGRect)newFrame withAnimation:(BOOL)withAnimation {
+    [UIView animateWithDuration:withAnimation ? 0.25 : 0.0
                      animations:^{
                          self.view.frame = newFrame;
                          self.player.view.frame = (CGRect){CGPointZero, newFrame.size};
@@ -799,7 +799,7 @@ CGRect screenBounds() {
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (isFullScreen) {
-        [self resizePlayerView:screenBounds()];
+        [self resizePlayerView:screenBounds() withAnimation:NO];
     }
 }
 

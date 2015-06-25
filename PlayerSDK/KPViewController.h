@@ -53,7 +53,7 @@
 - (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
 - (void)stopAndRemovePlayer;
 - (void)checkOrientationStatus;
-- (void)resizePlayerView:(CGRect)newFrame;
+- (void)resizePlayerView:(CGRect)newFrame withAnimation:(BOOL)withAnimation;
 - (void)openFullscreen;
 - (void)closeFullscreen;
 - (void)checkDeviceStatus;
