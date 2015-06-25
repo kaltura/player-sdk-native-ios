@@ -9,9 +9,7 @@
 #import "KPlayerController.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
-#ifdef DOUBLECLICK
 #import "KPIMAPlayerViewController.h"
-#endif
 
 @interface KPlayerController() <KPlayerDelegate>{
     NSString *key;
@@ -20,11 +18,7 @@
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
-
-#ifdef DOUBLECLICK
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
-#endif
-
 @property (nonatomic) BOOL contentEnded;
 @end
 
@@ -56,7 +50,6 @@
         _player.delegate = self;
         _player.playerSource = [NSURL URLWithString: _src];
         _player.duration = currentDuration;
-//        _player.currentPlaybackTime = _currentPlayBackTime;
     }
     return _player;
 }
@@ -73,7 +66,6 @@
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
-#ifdef DOUBLECLICK
     if (!_adController) {
         _adController = [KPIMAPlayerViewController new];
         _adController.adPlayerHeight = _adPlayerHeight;
@@ -96,7 +88,6 @@
                       
                   }];
     }
-#endif
 }
 
 
@@ -115,10 +106,8 @@
 - (void)removePlayer {
     [_player removePlayer];
     _player = nil;
-#ifdef DOUBLECLICK
     [_adController removeIMAPlayer];
     _adController = nil;
-#endif
 }
 
 
@@ -155,9 +144,7 @@
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.contentEnded = YES;
-#ifdef DOUBLECLICK
     [_adController contentCompleted];
-#endif
 }
 
 - (void)dealloc {
