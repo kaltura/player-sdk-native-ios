@@ -121,9 +121,12 @@
         [self addPlayerToController:_parentViewController];
         self.src = _src;
         isSeeked = event.isSeeked;
+        ///@todo understand why this if statment is needed
     } else if (!currentPlayer.isKPlayer && event.canPlay) {
         if (currentTime) {
             _player.currentPlaybackTime = currentTime;
+        } else if (_currentPlayBackTime) {
+            _player.currentPlaybackTime = _currentPlayBackTime;
         }
         ///@todo check if it's widevine player
         if (!isSeeked) {
@@ -131,8 +134,8 @@
         }
         
     } else if (event.canPlay && _currentPlayBackTime) {
+        ///@todo add an optimization to show progressbar updated
         _player.currentPlaybackTime = _currentPlayBackTime;
-        [_delegate player:_player eventName:SeekedKey value:@(_currentPlayBackTime).stringValue];
     } else {
         [_delegate player:currentPlayer eventName:event value:value];
     }

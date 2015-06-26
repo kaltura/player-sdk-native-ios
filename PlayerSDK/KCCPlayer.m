@@ -188,7 +188,7 @@
     BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
     if (self.chromecastDeviceController.mediaControlChannel &&
-        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
+        _chromecastDeviceController.deviceManager.isConnected &&
         !playing) {
         NSTimeInterval currTime = _currentPlaybackTime;
         [self.chromecastDeviceController.mediaControlChannel play];
@@ -203,7 +203,7 @@
     BOOL paused = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePaused
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateUnknown);
     if (self.chromecastDeviceController.mediaControlChannel &&
-        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
+        _chromecastDeviceController.deviceManager.isConnected &&
         !paused) {
         [self.chromecastDeviceController.mediaControlChannel pause];
     }
