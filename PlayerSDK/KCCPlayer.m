@@ -85,6 +85,13 @@
     [self.delegate player:self eventName:CanPlayKey value:nil];
 }
 
+- (void)castConnectingToDevice {
+    KPLogTrace(@"castConnectingToDevice");
+    [_delegate player:self
+            eventName:@"chromecastShowConnectingMsg"
+                value:nil];
+}
+
 - (void)didUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel {
     KPLogTrace(@"didUpdateStatus");
     
@@ -188,7 +195,7 @@
     BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
     if (self.chromecastDeviceController.mediaControlChannel &&
-        _chromecastDeviceController.deviceManager.isConnected &&
+        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
         !playing) {
         NSTimeInterval currTime = _currentPlaybackTime;
         [self.chromecastDeviceController.mediaControlChannel play];
@@ -203,7 +210,7 @@
     BOOL paused = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePaused
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateUnknown);
     if (self.chromecastDeviceController.mediaControlChannel &&
-        _chromecastDeviceController.deviceManager.isConnected &&
+        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
         !paused) {
         [self.chromecastDeviceController.mediaControlChannel pause];
     }

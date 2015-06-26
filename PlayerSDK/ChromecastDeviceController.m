@@ -375,9 +375,13 @@ didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
       [[GCKDeviceManager alloc] initWithDevice:device clientPackageName:appIdentifier];
   self.deviceManager.delegate = self;
   [self.deviceManager connect];
-
-  // Start animating the cast connect images.
-//  self.castIconButton.status = CIBCastConnecting;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"castConnectingToDevice"
+                                                        object:nil];
+    
+    if ([_delegate respondsToSelector:@selector(castConnectingToDevice)]) {
+        [_delegate castConnectingToDevice];
+    }
 }
 
 - (BOOL)loadMedia:(GCKMediaInformation *)media

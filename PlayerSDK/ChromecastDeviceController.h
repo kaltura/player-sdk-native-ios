@@ -45,6 +45,11 @@ extern NSString * const kCastViewController;
 - (void)didDiscoverDeviceOnNetwork;
 
 /**
+ * Called when Cast device is connecting
+ */
+- (void)castConnectingToDevice;
+
+/**
  * Called when a request to load media has completed.
  */
 - (void)didCompleteLoadWithSessionID:(NSInteger)sessionID;
