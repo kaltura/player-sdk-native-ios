@@ -83,6 +83,7 @@
                 eventName:LoadedMetaDataKey
                     value:@""];
     [self.delegate player:self eventName:CanPlayKey value:nil];
+    [self setCurrentPlaybackTime:0];
 }
 
 - (void)castConnectingToDevice {
@@ -127,8 +128,11 @@
     switch (self.chromecastDeviceController.idleReason) {
         case GCKMediaPlayerIdleReasonNone:
         case GCKMediaPlayerIdleReasonFinished:
-            if ((NSInteger)_currentPlaybackTime == (NSInteger)_duration) {
-                [_delegate contentCompleted:self];
+            if (round(_currentPlaybackTime) == round(_duration)) {
+                ///@todo improve 'contentCompleted' to send "ended" event
+                [_delegate player:self eventName:EndedKey value:nil];
+//                [_delegate contentCompleted:self];
+                [self loadMedia];
             }
             break;
             
@@ -144,11 +148,16 @@
         [self.chromecastDeviceController clearPreviousSession];
     }
     
+    [self loadMedia];
+    [_delegate player:self eventName:@"chromecastDeviceConnected" value:nil];
+}
+
+- (void)loadMedia {
     ///@todo replace null with relevant values
     GCKMediaInformation *mediaInformation =
     [[GCKMediaInformation alloc] initWithContentID: [self.playerSource absoluteString]
                                         streamType: GCKMediaStreamTypeNone
-                                    ///@todo get content tipe from avplayer
+     ///@todo get content tipe from avplayer
                                        contentType: self.chromecastDeviceController.mediaInformation.contentType
                                           metadata: self.chromecastDeviceController.mediaInformation.metadata
                                     streamDuration: self.duration
@@ -157,7 +166,6 @@
     [self.chromecastDeviceController.mediaControlChannel loadMedia:mediaInformation
                                                           autoplay:NO
                                                       playPosition:_currentPlaybackTime];
-    [_delegate player:self eventName:@"chromecastDeviceConnected" value:nil];
 }
 
 - (void)didDisconnect {
@@ -198,9 +206,10 @@
         _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
         !playing) {
         NSTimeInterval currTime = _currentPlaybackTime;
+        [_chromecastDeviceController clearPreviousSession];
         [self.chromecastDeviceController.mediaControlChannel play];
         
-        if ( (NSInteger)currTime > 0 && currTime <= _duration) {
+        if ( (NSInteger)currTime > 0 && round(currTime) <= round(_duration)) {
             [self setCurrentPlaybackTime:currTime];
         }
     }
