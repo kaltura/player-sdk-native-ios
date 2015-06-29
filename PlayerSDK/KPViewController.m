@@ -367,7 +367,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
 //            NSLog(@"Selecting device:%@", ((GCKDevice *)(self.castDeviceController.deviceScanner.devices[buttonIndex])).friendlyName);
 //            [_playerController setCurrentPlayBackTime:_playerController.player.currentPlaybackTime];
-            [_playerController switchPlayer:@"KCCPlayer" key:nil];
+            [_playerController switchPlayer:ChromeCastPlayerClassName key:nil];
             [((KCCPlayer *)_playerController.player).chromecastDeviceController connectToDevice:self.selectedDevice];
         }
     } else {
@@ -394,7 +394,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)deviceDisconnect {
     self.selectedDevice = nil;
     self.castDeviceController.deviceManager = nil;
-    [_playerController switchPlayer:@"KPlayer" key:nil];
+    [_playerController switchPlayer:PlayerClassName key:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

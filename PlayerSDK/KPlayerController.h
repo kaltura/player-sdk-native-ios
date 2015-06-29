@@ -14,7 +14,7 @@
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
 
-static NSString *ChromeCastPlayerClassName = @"";
+static NSString *ChromeCastPlayerClassName = @"KCCPlayer";
 static NSString *WideVinePlayerClass = @"WVPlayer";
 
 static NSString *PlayKey = @"play";
