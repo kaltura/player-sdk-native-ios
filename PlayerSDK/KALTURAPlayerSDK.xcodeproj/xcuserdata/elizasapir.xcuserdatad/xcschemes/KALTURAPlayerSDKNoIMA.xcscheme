@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BF6759951B3ACFCA00528718"
-               BuildableName = "libKALTURAPlayerSDK copy.a"
+               BuildableName = "libKALTURAPlayerSDKNoIMA.a"
                BlueprintName = "KALTURAPlayerSDKNoIMA"
                ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BF6759951B3ACFCA00528718"
-            BuildableName = "libKALTURAPlayerSDK copy.a"
+            BuildableName = "libKALTURAPlayerSDKNoIMA.a"
             BlueprintName = "KALTURAPlayerSDKNoIMA"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BF6759951B3ACFCA00528718"
-            BuildableName = "libKALTURAPlayerSDK copy.a"
+            BuildableName = "libKALTURAPlayerSDKNoIMA.a"
             BlueprintName = "KALTURAPlayerSDKNoIMA"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>

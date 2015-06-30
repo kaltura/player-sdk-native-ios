@@ -114,10 +114,10 @@
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     static NSTimeInterval currentTime;
+
     if (key && currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
         currentTime = _player.currentPlaybackTime;
-        [_player removePlayer];
-        _player = nil;
+        [self removePlayer];
         [self addPlayerToController:_parentViewController];
         self.src = _src;
         isSeeked = event.isSeeked;
