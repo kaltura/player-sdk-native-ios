@@ -82,6 +82,9 @@
 		B3C27BFD1A2F2936003108CB /* NSString+Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */; };
 		B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E58C431A76714700603B10 /* KPIMAPlayerViewController.m */; };
 		B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
+		BF29CCED1B42D8360003A6CC /* TVCDeclerations.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF29CCEB1B42D8360003A6CC /* TVCDeclerations.h */; };
+		BF29CCEE1B42D8360003A6CC /* TVMediaToPlayInfo.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF29CCEC1B42D8360003A6CC /* TVMediaToPlayInfo.h */; };
+		BF29CCF11B42D85A0003A6CC /* TVMediaToPlayInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = BF29CCF01B42D85A0003A6CC /* TVMediaToPlayInfo.m */; };
 		BF6759991B3ACFCA00528718 /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
 		BF67599A1B3ACFCA00528718 /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
 		BF67599B1B3ACFCA00528718 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
@@ -201,6 +204,8 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BF29CCED1B42D8360003A6CC /* TVCDeclerations.h in CopyFiles */,
+				BF29CCEE1B42D8360003A6CC /* TVMediaToPlayInfo.h in CopyFiles */,
 				B37288911A84FD790076DD33 /* IMAAd.h in CopyFiles */,
 				B37288921A84FD790076DD33 /* IMAAdDisplayContainer.h in CopyFiles */,
 				B37288931A84FD790076DD33 /* IMAAdError.h in CopyFiles */,
@@ -309,6 +314,9 @@
 		B3E58C431A76714700603B10 /* KPIMAPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPIMAPlayerViewController.m; sourceTree = "<group>"; };
 		B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceParamsHandler.h; sourceTree = "<group>"; };
 		B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceParamsHandler.m; sourceTree = "<group>"; };
+		BF29CCEB1B42D8360003A6CC /* TVCDeclerations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVCDeclerations.h; path = ../TVCDeclerations.h; sourceTree = "<group>"; };
+		BF29CCEC1B42D8360003A6CC /* TVMediaToPlayInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TVMediaToPlayInfo.h; path = ../TVMediaToPlayInfo.h; sourceTree = "<group>"; };
+		BF29CCF01B42D85A0003A6CC /* TVMediaToPlayInfo.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TVMediaToPlayInfo.m; path = ../TVMediaToPlayInfo.m; sourceTree = "<group>"; };
 		BF6759DE1B3ACFCA00528718 /* libKALTURAPlayerSDKNoIMA.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDKNoIMA.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WViPhoneAPI.h; path = ../WViPhoneAPI.h; sourceTree = "<group>"; };
 		BFA2DBF61949F29B00831A71 /* KPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewController.h; sourceTree = "<group>"; };
@@ -453,6 +461,16 @@
 			name = ShareManager;
 			sourceTree = "<group>";
 		};
+		BF29CCEF1B42D8430003A6CC /* OTT */ = {
+			isa = PBXGroup;
+			children = (
+				BF29CCF01B42D85A0003A6CC /* TVMediaToPlayInfo.m */,
+				BF29CCEB1B42D8360003A6CC /* TVCDeclerations.h */,
+				BF29CCEC1B42D8360003A6CC /* TVMediaToPlayInfo.h */,
+			);
+			name = OTT;
+			sourceTree = "<group>";
+		};
 		BFA6F0D918BB796500F7C78F /* WideVine */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,6 +539,7 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				BF29CCEF1B42D8430003A6CC /* OTT */,
 				B372887E1A84AC8C0076DD33 /* DataBase */,
 				B3410D4A1A6D45B200275F00 /* Categories */,
 				B35B85761A43258200DCDBF7 /* KPLogManager.h */,
@@ -762,6 +781,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF29CCF11B42D85A0003A6CC /* TVMediaToPlayInfo.m in Sources */,
 				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
 				B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */,
