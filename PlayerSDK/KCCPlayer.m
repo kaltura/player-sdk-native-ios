@@ -152,6 +152,9 @@
     [_delegate player:self eventName:@"chromecastDeviceConnected" value:nil];
 }
 
+/**
+ *  Creates and loads playback of a new media item
+ */
 - (void)loadMedia {
     ///@todo replace null with relevant values
     GCKMediaInformation *mediaInformation =
@@ -191,6 +194,9 @@
     return playerSrc;
 }
 
+/**
+ *  Seeks to a new position within the current media item
+ */
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     if (isnan(self.duration) || currentPlaybackTime < self.duration) {
         _currentPlaybackTime = currentPlaybackTime;
@@ -199,6 +205,9 @@
     }
 }
 
+/**
+ *  Begins (or resumes) playback of the current media item
+ */
 - (void)play {
     BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
@@ -215,10 +224,16 @@
     }
 }
 
+/**
+ *  Set player's position to the begining
+ */
 - (void)replay {
     [self setCurrentPlaybackTime:0];
 }
 
+/**
+ *  Pauses playback of the current media item
+ */
 - (void)pause {
     BOOL paused = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePaused
                     || self.chromecastDeviceController.playerState == GCKMediaPlayerStateUnknown);
