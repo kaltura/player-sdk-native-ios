@@ -71,6 +71,7 @@
         KPLogDebug(@"updateProgressFromCast");
         [self updateCurrentTime:self.chromecastDeviceController.streamPosition];
         [_delegate player:self eventName:TimeUpdateKey value:[NSString stringWithFormat:@"%f", _currentPlaybackTime]];
+        NSLog(@"%f", _currentPlaybackTime);
     }
 }
 
@@ -83,7 +84,6 @@
                 eventName:LoadedMetaDataKey
                     value:@""];
     [self.delegate player:self eventName:CanPlayKey value:nil];
-    [self setCurrentPlaybackTime:0];
 }
 
 - (void)castConnectingToDevice {
@@ -213,6 +213,10 @@
             [self setCurrentPlaybackTime:currTime];
         }
     }
+}
+
+- (void)replay {
+    [self setCurrentPlaybackTime:0];
 }
 
 - (void)pause {
