@@ -15,6 +15,7 @@
 NSString *const DoPlayKey = @"doPlay";
 NSString *const DoPauseKey = @"doPause";
 NSString *const DoStopKey = @"doStop";
+NSString *const DoSeekKey = @"doSeek";
 
 - (void)prepareToPlay {
     
@@ -38,12 +39,15 @@ NSString *const DoStopKey = @"doStop";
     }
 }
 
+///@todo setCurrentPlaybackRate
 - (void)setCurrentPlaybackRate:(float)currentPlaybackRate {
-    
+
 }
 
-- (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    
+- (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
+    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
+        [_delegate sendKPNotification:DoSeekKey withParams:[@(currPlaybackTime) stringValue]];
+    }
 }
 
 - (BOOL)isPreparedToPlay {
