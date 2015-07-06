@@ -48,7 +48,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
-@property (nonatomic, strong) KPlayerFactory *playerController;
+@property (nonatomic, strong) KPlayerFactory *playerFactory;
+@property (nonatomic, strong) KPController *playerController;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
@@ -96,8 +97,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)removePlayer {
     [self.controlsView removeControls];
     self.controlsView = nil;
-    [self.playerController removePlayer];
-    self.playerController = nil;
+    [self.playerFactory removePlayer];
+    self.playerFactory = nil;
     [callBackReadyRegistrations removeAllObjects];
     callBackReadyRegistrations = nil;
     appConfigDict = nil;
@@ -115,26 +116,26 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (NSTimeInterval)currentPlaybackTime {
-    return _playerController.player.currentPlaybackTime;
+    return _playerFactory.player.currentPlaybackTime;
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if (!_playerController) {
+    if (!_playerFactory) {
         _seekValue = currentPlaybackTime;
     }
-    _playerController.player.currentPlaybackTime = currentPlaybackTime;
+    _playerFactory.player.currentPlaybackTime = currentPlaybackTime;
 }
 
 - (NSTimeInterval)duration {
-    return _playerController.player.duration;
+    return _playerFactory.player.duration;
 }
 
 - (NSURL *)playerSource {
-    return _playerController.player.playerSource;
+    return _playerFactory.player.playerSource;
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
-    _playerController.player.playerSource = playerSource;
+    _playerFactory.player.playerSource = playerSource;
 }
 
 - (void)setShareHandler:(void (^)(NSDictionary *))shareHandler {
@@ -211,12 +212,19 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                    options:NSKeyValueObservingOptionNew
                    context:nil];
 
-    // Initialize players controller
+    // Initialize player factory
+    if (!_playerFactory) {
+        _playerFactory = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
+        [_playerFactory addPlayerToController:self];
+        _playerFactory.delegate = self;
+    }
+    
+    // Initialize player controller
     if (!_playerController) {
-        _playerController = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
-        [_playerController addPlayerToController:self];
+        _playerController = [KPController new];
         _playerController.delegate = self;
     }
+    
     // Initialize HTML layer (controls)
     if (!self.controlsView) {
         self.controlsView = [KPControlsView defaultControlsViewWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
@@ -493,8 +501,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ([self respondsToSelector:selector]) {
         KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:selector withObject:args];
-    } else if ([_playerController.player respondsToSelector:selector]) {
-        [_playerController.player performSelector:selector withObject:args];
+    } else if ([_playerFactory.player respondsToSelector:selector]) {
+        [_playerFactory.player performSelector:selector withObject:args];
     }
     
 #pragma clang diagnostic pop
@@ -510,17 +518,17 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
-            _playerController.src = attributeVal;
+            _playerFactory.src = attributeVal;
             break;
         case currentTime:
-            _playerController.currentPlayBackTime = [attributeVal doubleValue];
+            _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
             break;
         case visible:
             [self visible: attributeVal];
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
-            [_playerController switchPlayer:WideVinePlayerClass key:attributeVal];
+            [_playerFactory switchPlayer:WideVinePlayerClass key:attributeVal];
             break;
 #endif
         case nativeAction:
@@ -529,14 +537,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                    error:nil];
             break;
         case language:
-            _playerController.locale = attributeVal;
+            _playerFactory.locale = attributeVal;
             break;
         case doubleClickRequestAds: {
             
             [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    _playerController.adPlayerHeight = height;
-                    _playerController.adTagURL = attributeVal;
+                    _playerFactory.adPlayerHeight = height;
+                    _playerFactory.adTagURL = attributeVal;
                 });
             }];
         }
@@ -667,9 +675,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-
-
-
 #pragma mark -
 #pragma mark Rotation methods
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -700,6 +705,17 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
 }
+
+#pragma mark KPControllerDelegate
+
+-(void)sendKPNotification:(NSString *)kpNotificationName withParams:(NSString *)kpParams {
+    KPLogTrace(@"Enter");
+
+    [self sendNotification:kpNotificationName withParams:kpParams];
+    
+    KPLogTrace(@"Exit");
+}
+
 @end
 
 

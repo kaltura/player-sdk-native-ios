@@ -12,20 +12,30 @@
 @synthesize currentPlaybackRate;
 @synthesize currentPlaybackTime;
 
+NSString *const DoPlayKey = @"doPlay";
+NSString *const DoPauseKey = @"doPause";
+NSString *const DoStopKey = @"doStop";
+
 - (void)prepareToPlay {
     
 }
 
 - (void)play {
-    
+    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
+        [_delegate sendKPNotification:DoPlayKey withParams:nil];
+    }
 }
 
 - (void)pause {
-    
+    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
+        [_delegate sendKPNotification:DoPauseKey withParams:nil];
+    }
 }
 
 - (void)stop {
-    
+    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
+        [_delegate sendKPNotification:DoStopKey withParams:nil];
+    }
 }
 
 - (void)setCurrentPlaybackRate:(float)currentPlaybackRate {
@@ -39,7 +49,5 @@
 - (BOOL)isPreparedToPlay {
     return nil;
 }
-
-
 
 @end

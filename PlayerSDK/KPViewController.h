@@ -19,10 +19,11 @@
 #import "KPLog.h"
 #import "KPViewControllerProtocols.h"
 #import "KPPlayerConfig.h"
+#import "KPController.h"
 
 @protocol KPViewControllerDelegate;
 
-@interface KPViewController : UIViewController
+@interface KPViewController : UIViewController <KPControllerDelegate>
 
 
 
