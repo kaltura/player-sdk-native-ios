@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 #ifdef IMA
 #import "KPIMAPlayerViewController.h"
 #endif
-@interface KPlayerController() <KPlayerDelegate>{
+@interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
 }
@@ -24,7 +24,7 @@
 @property (nonatomic) BOOL contentEnded;
 @end
 
-@implementation KPlayerController
+@implementation KPlayerFactory
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -72,7 +72,7 @@
         _adController.locale = _locale;
         [_parentViewController addChildViewController:_adController];
         [_parentViewController.view addSubview:_adController.view];
-        __weak KPlayerController *weakSelf = self;
+        __weak KPlayerFactory *weakSelf = self;
         [_adController loadIMAAd:adTagURL
                withContentPlayer:_player
                   eventsListener:^(NSDictionary *adEventParams) {

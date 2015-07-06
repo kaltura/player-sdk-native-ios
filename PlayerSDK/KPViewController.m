@@ -19,7 +19,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 #import "KPControlsView.h"
 
 #include <sys/types.h>
@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerControllerDelegate, KPControlsViewDelegate>{
+@interface KPViewController() <KPlayerFactoryDelegate, KPControlsViewDelegate>{
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -48,7 +48,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
-@property (nonatomic, strong) KPlayerController *playerController;
+@property (nonatomic, strong) KPlayerFactory *playerController;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
@@ -213,7 +213,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
     // Initialize players controller
     if (!_playerController) {
-        _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
+        _playerController = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
         [_playerController addPlayerToController:self];
         _playerController.delegate = self;
     }

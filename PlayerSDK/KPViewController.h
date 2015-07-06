@@ -20,10 +20,6 @@
 #import "KPViewControllerProtocols.h"
 #import "KPPlayerConfig.h"
 
-
-
-
-
 @protocol KPViewControllerDelegate;
 
 @interface KPViewController : UIViewController
