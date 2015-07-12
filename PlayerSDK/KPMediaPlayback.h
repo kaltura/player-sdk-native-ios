@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
+#import "KMediaPlayerDefines.h"
+
 /*!
  @protocol		KPMediaPlayback
  

@@ -25,8 +25,6 @@
 
 @interface KPViewController : UIViewController <KPControllerDelegate>
 
-
-
 + (void)setLogLevel:(KPLogLevel)logLevel;
 
 /*!
@@ -79,6 +77,8 @@
  */
 - (void)changeMedia:(NSString *)entryID;
 
+@property (nonatomic, strong) KPController *playerController;
+
 
 /// Enables to change the player configuration
 @property (nonatomic, strong) KPPlayerConfig *configuration;
@@ -89,11 +89,11 @@
 /// Change the source and returns the current source
 @property (nonatomic, copy) NSURL *playerSource;
 
-/// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
-@property (nonatomic) NSTimeInterval currentPlaybackTime;
+///// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
+//@property (nonatomic) NSTimeInterval currentPlaybackTime;
 
-/// @return Duration of the current video
-@property (nonatomic, readonly) NSTimeInterval duration;
+///// @return Duration of the current video
+//@property (nonatomic, readonly) NSTimeInterval duration;
 
 /// Assigning this handler will disable the default share action and will supply the share params for custom use.
 - (void)setShareHandler:(void(^)(NSDictionary *shareParams))shareHandler;

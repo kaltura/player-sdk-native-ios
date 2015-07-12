@@ -49,7 +49,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
 @property (nonatomic, strong) KPlayerFactory *playerFactory;
-@property (nonatomic, strong) KPController *playerController;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
@@ -651,6 +650,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 #pragma mark KPlayerDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    
+    ///@todo refactor
+    if(event.isPlay) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:nil
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
+    } else if(event.isPause) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:nil
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
+    } else if(event.isStop) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:nil
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
+    }
+    
     [self.controlsView triggerEvent:event withValue:value];
 }
 
@@ -665,7 +680,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)allAdsCompleted {
     [self.controlsView triggerEvent:PostrollEndedKey withJSON:nil];
 }
-
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     KPLogTrace(@"Enter");

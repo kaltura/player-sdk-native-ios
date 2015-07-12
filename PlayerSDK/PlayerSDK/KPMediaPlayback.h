@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
+#import "KMediaPlayerDefines.h"
+
 /*!
  @protocol		KPMediaPlayback
  
@@ -40,7 +42,7 @@
  @method        pause:
  @abstract      Pauses playback of the current item. (required)
  
-If playback is not currently underway, this method has no effect. To resume playback of the current item from the pause point, call the play method.
+ If playback is not currently underway, this method has no effect. To resume playback of the current item from the pause point, call the play method.
  */
 - (void)pause;
 
@@ -48,7 +50,7 @@ If playback is not currently underway, this method has no effect. To resume play
  @method        stop:
  @abstract      Ends playback of the current item. (required)
  
-This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.
+ This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.
  */
 - (void)stop;
 
@@ -58,25 +60,24 @@ This method stops playback of the current item and resets the playhead to the st
 /* The current playback rate for the player. (required) */
 @property(nonatomic) float currentPlaybackRate;
 
-///@todo impliment the following methods
 // The seeking rate will increase the longer scanning is active.
 
-///*!
-// @method        beginSeekingForward:
-// @abstract      Begins seeking forward through the media content. (required)
-//  */
-//- (void)beginSeekingForward;
-//
-///*!
-// @method        beginSeekingBackward:
-// @abstract      Begins seeking backward through the media content. (required)
-// */
-//- (void)beginSeekingBackward;
-//
-///*!
-// @method        endSeeking:
-// @abstract      Ends forward and backward seeking through the media content. (required)
-// */
-//- (void)endSeeking;
+/*!
+ @method        beginSeekingForward:
+ @abstract      Begins seeking forward through the media content. (required)
+ */
+- (void)beginSeekingForward;
+
+/*!
+ @method        beginSeekingBackward:
+ @abstract      Begins seeking backward through the media content. (required)
+ */
+- (void)beginSeekingBackward;
+
+/*!
+ @method        endSeeking:
+ @abstract      Ends forward and backward seeking through the media content. (required)
+ */
+- (void)endSeeking;
 
 @end
