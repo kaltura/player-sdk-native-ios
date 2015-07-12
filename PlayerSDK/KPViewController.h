@@ -99,6 +99,22 @@
 - (void)setShareHandler:(void(^)(NSDictionary *shareParams))shareHandler;
 
 
+#pragma mark -
+#pragma Kaltura Player External API - KDP API
+// -----------------------------------------------------------------------------
+// KDP API Types
+
+typedef NS_ENUM(NSInteger, KDPAPIState) {
+    /*  Player is not ready to work with the JavaScript API. */
+    KDPAPIStateUnknown,
+    /*  Player is ready to work with the JavaScript API (jsCallbackReady). */
+    KDPAPIStateReady
+};
+
+/* The current kdp api state of the KDP API. (read-only)
+ The kdp api state is affected by programmatic call to jsCallbackReady. */
+@property (nonatomic, readonly) KDPAPIState kdpAPIState;
+
 /*!
  * @function registerReadyEvent
  *

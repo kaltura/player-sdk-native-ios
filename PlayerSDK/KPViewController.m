@@ -230,6 +230,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         self.controlsView.controlsDelegate = self;
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
         [self.view addSubview:(UIView *)self.controlsView];
+        _kdpAPIState = KDPAPIStateUnknown;
     }
     
     // Handle full screen events
@@ -603,6 +604,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [callBackReadyRegistrations removeObject:handler];
     }
     callBackReadyRegistrations = nil;
+    _kdpAPIState = KDPAPIStateReady;
     KPLogTrace(@"Exit");
 }
 
