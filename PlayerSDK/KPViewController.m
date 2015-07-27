@@ -21,6 +21,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPIMAPlayerViewController.h"
 #import "KPlayerFactory.h"
 #import "KPControlsView.h"
+#import "KPController_Private.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -122,6 +123,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (!_playerFactory) {
         _seekValue = currentPlaybackTime;
     }
+    
     _playerFactory.player.currentPlaybackTime = currentPlaybackTime;
 }
 
@@ -187,6 +189,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return _configuration;
 }
 
+
+- (void)updateTime{
+    if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
+        [_delegate updateCurrentPlaybackTime:_playerFactory.currentPlayBackTime];
+    }
+}
 
 #pragma mark -
 #pragma mark View flow methods
@@ -324,6 +332,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 #pragma Kaltura Player External API - KDP API
 - (void)registerReadyEvent:(void (^)())handler {
     KPLogTrace(@"Enter");
+    
     if (isJsCallbackReady) {
         handler();
     } else {
@@ -651,21 +660,28 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 
 #pragma mark KPlayerDelegate
-- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value { ///@todo:assign state
     ///@todo refactor
     if(event.isPlay) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                             object:nil
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
+        [NSTimer scheduledTimerWithTimeInterval:1.0
+                                         target:self
+                                       selector:@selector(updateTime)
+                                       userInfo:nil
+                                        repeats:YES];
     } else if(event.isPause) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                             object:nil
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStatePaused];
     } else if(event.isStop) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                             object:nil
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
     }
     
     [self.controlsView triggerEvent:event withValue:value];

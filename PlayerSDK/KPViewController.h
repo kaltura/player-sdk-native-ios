@@ -36,7 +36,7 @@
  *  @param NSURL url of player content
  */
 - (instancetype)initWithURL:(NSURL *)url;
-
+ 
 /*!
  *  @function initWithConfiguration:
  *
@@ -76,6 +76,8 @@
  *  @param NSString entryID the entryID of the new video
  */
 - (void)changeMedia:(NSString *)entryID;
+
+@property (nonatomic, retain) id<KPViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) KPController *playerController;
 

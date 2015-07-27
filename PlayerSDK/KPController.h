@@ -48,7 +48,7 @@ typedef NS_OPTIONS(NSUInteger, KPMediaLoadState) {
 
 // -----------------------------------------------------------------------------
 // Media Player Keys
- NSString * const KMediaPlaybackStateKey;
+extern NSString * const KMediaPlaybackStateKey;
 
 @protocol KPMediaPlayback;
 

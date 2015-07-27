@@ -16,24 +16,10 @@ NSString *const DoPlayKey = @"doPlay";
 NSString *const DoPauseKey = @"doPause";
 NSString *const DoStopKey = @"doStop";
 NSString *const DoSeekKey = @"doSeek";
+NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
 
-- (instancetype)init {
-    self = [super init];
-    
-    if (self) {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(playbackStateDidChange:)
-                                                     name:KPMediaPlaybackStateDidChangeNotification
-                                                   object:nil];
-        
-        return self;
-    }
-    
-    return nil;
-}
-
-- (void)playbackStateDidChange:(NSNotification *) notification {
-    _playbackState = [notification.userInfo[KMediaPlaybackStateKey] integerValue];
+- (void)setPlaybackState: (KPMediaPlaybackState)newState {
+    _playbackState = newState;
 }
 
 ///@todo prepareToPlay
@@ -78,7 +64,7 @@ NSString *const DoSeekKey = @"doSeek";
 
 - (void)setContentURL:(NSURL *)contentURL {
     if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:@"changeMedia" withParams:[NSString stringWithFormat:@"{'mediaProxy': 'sources':['src':%@]}", [contentURL absoluteString]]];
+        [_delegate sendKPNotification:@"changeMedia" withParams:[NSString stringWithFormat:@"{\"mediaProxy\": {\"sources\":[{\"src\":\"%@\", \"type\":\"%@\"}]}}", [contentURL absoluteString],@"application/vnd.apple.mpegurl"]];
     }
 }
 
@@ -92,12 +78,6 @@ NSString *const DoSeekKey = @"doSeek";
 
 - (BOOL)isPreparedToPlay {
     return nil;
-}
-
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:KPMediaPlaybackStateDidChangeNotification
-                                                  object:nil];
 }
 
 @end
