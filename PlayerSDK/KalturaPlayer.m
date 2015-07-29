@@ -31,6 +31,7 @@
     BOOL isJsCallbackReady;
     NSMutableDictionary *kPlayerEventsDict;
     NSMutableDictionary *kPlayerEvaluatedDict;
+    void(^mediaLoadedBlock)();
     
 #if !(TARGET_IPHONE_SIMULATOR)
     // WideVine Params
@@ -219,6 +220,10 @@
             NSLog(@"MPMovieLoadStatePlayable");
             break;
         case MPMovieLoadStatePlaythroughOK:
+            if(mediaLoadedBlock) {
+                mediaLoadedBlock();
+                mediaLoadedBlock = nil;
+            }
             loadStateName = @"MPMovieLoadStatePlaythroughOK";
             NSLog(@"MPMovieLoadStatePlaythroughOK");
             break;
@@ -233,6 +238,12 @@
     [self triggerKPlayerEvents: loadStateName withValue: nil];
     
     NSLog(@"triggerLoadPlabackEvents Exit");
+}
+
+- (void)prepareToPlayWithCompletionBlock:(void(^)())completion {
+    mediaLoadedBlock = [completion copy];
+    self.shouldAutoplay = NO;
+    [self prepareToPlay];
 }
 
 - (void)triggerMoviePlabackEvents: (NSNotification *)note{

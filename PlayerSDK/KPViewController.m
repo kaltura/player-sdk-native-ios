@@ -546,6 +546,11 @@ CGRect screenBounds() {
         case currentTime:
             if( [[self player] isPreparedToPlay] ){
                 [ [self player] setCurrentPlaybackTime: [attributeVal doubleValue] ];
+            }else {
+                if([[self player] respondsToSelector:@selector(prepareToPlayWithCompletionBlock:)])
+                [[self player] prepareToPlayWithCompletionBlock:^{
+                    [[self player] setCurrentPlaybackTime:[attributeVal doubleValue]];
+                }];
             }
             break;
         case visible:

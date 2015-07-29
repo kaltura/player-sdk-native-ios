@@ -30,5 +30,6 @@
 - (void)setCurrentPlaybackTime:(double)cs;
 - (void)initWV: (NSString *)src andKey: (NSString *)key;
 - (void)setWideVideConfigurations;
+- (void)prepareToPlayWithCompletionBlock:(void(^)())completion;
 
 @end

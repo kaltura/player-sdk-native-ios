@@ -83,6 +83,7 @@ typedef void (^JSCallbackReadyHandler)();
 - (id)view;
 - (int)controlStyle;
 - (void)prepareToPlay;
+- (void)prepareToPlayWithCompletionBlock:(void(^)())completion;
 - (int)loadState;
 
 - (void)didLoad;
