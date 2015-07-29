@@ -189,13 +189,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return _configuration;
 }
 
-
-- (void)updateTime{
-    if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
-        [_delegate updateCurrentPlaybackTime:_playerFactory.currentPlayBackTime];
-    }
-}
-
 #pragma mark -
 #pragma mark View flow methods
 - (void)viewDidLoad {
@@ -667,11 +660,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                             object:nil
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
         [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
-        [NSTimer scheduledTimerWithTimeInterval:1.0
-                                         target:self
-                                       selector:@selector(updateTime)
-                                       userInfo:nil
-                                        repeats:YES];
     } else if(event.isPause) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                             object:nil
@@ -682,6 +670,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                             object:nil
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
         [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
+    } else if (event.isTimeUpdate) {
+        if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
+            [_delegate updateCurrentPlaybackTime:_playerFactory.currentPlayBackTime];
+        }
     }
     
     [self.controlsView triggerEvent:event withValue:value];

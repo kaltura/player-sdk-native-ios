@@ -83,6 +83,10 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self isEqualToString:@"stop"];
 }
 
+- (BOOL)isTimeUpdate {
+    return [self isEqualToString:@"timeupdate"];
+}
+
 - (BOOL)isToggleFullScreen {
     return [self isEqualToString:KPlayerEventToggleFullScreen];
 }
