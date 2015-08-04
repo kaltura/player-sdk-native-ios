@@ -62,6 +62,7 @@ NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
     }
 }
 
+///@todo setsource refactor
 - (void)setContentURL:(NSURL *)contentURL {
     if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
         [_delegate sendKPNotification:@"changeMedia" withParams:[NSString stringWithFormat:@"{\"mediaProxy\": {\"sources\":[{\"src\":\"%@\", \"type\":\"%@\"}]}}", [contentURL absoluteString],@"application/vnd.apple.mpegurl"]];
