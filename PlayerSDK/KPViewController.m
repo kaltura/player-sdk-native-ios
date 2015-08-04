@@ -21,6 +21,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPIMAPlayerViewController.h"
 #import "KPlayerController.h"
 #import "KPControlsView.h"
+#import "KPURLProtocol.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -70,7 +71,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self = [super init];
     if (self) {
         videoURL = [NSURL URLWithString:url.absoluteString];
-        
+        [NSURLProtocol registerClass:[KPURLProtocol class]];
         return self;
     }
     return nil;
@@ -258,11 +259,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         self.controlsView.controlsFrame = screenBounds();
     } 
-//    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
-//    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
-//    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
-//    [(UIView *)self.controlsView addSubview:reloadButton];
+    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
+    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
+    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
+    [(UIView *)self.controlsView addSubview:reloadButton];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

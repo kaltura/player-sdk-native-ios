@@ -45,6 +45,10 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self stringByAppendingString:IDFAFlashvar];
 }
 
+- (NSString *)sqlite {
+    return [self stringByAppendingString:@".sqlite"];
+}
+
 
 - (Attribute)attributeEnumFromString {
     KPLogTrace(@"Enter");

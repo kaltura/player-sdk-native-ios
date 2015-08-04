@@ -14,10 +14,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>KALTURAPlayerSDKNoIMA.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>KPlayerResources.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
+		</dict>
+		<key>Test.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
 		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
@@ -33,6 +43,11 @@
 			<true/>
 		</dict>
 		<key>B372892D1A8787D00076DD33</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF6759951B3ACFCA00528718</key>
 		<dict>
 			<key>primary</key>
 			<true/>
