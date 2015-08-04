@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>substrings</key>
+	<dict>
+		<key>thumbnail</key>
+		<string>14</string>
+		<key>skins</key>
+		<string>14</string>
+		<key>data:image</key>
+		<string>14</string>
+	</dict>
+	<key>withDomain</key>
+	<dict>
+		<key>load.php</key>
+		<string>14</string>
+		<key>mwEmbedFrame.php</key>
+		<integer>1</integer>
+		<key>mwEmbedLoader.php</key>
+		<string>7</string>
+	</dict>
+</dict>
+</plist>

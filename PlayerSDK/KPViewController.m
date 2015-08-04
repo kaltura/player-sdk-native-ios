@@ -22,6 +22,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPlayerController.h"
 #import "KPControlsView.h"
 #import "KPURLProtocol.h"
+#import "KPDataBaseManager.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -72,6 +73,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (self) {
         videoURL = [NSURL URLWithString:url.absoluteString];
         [NSURLProtocol registerClass:[KPURLProtocol class]];
+        dataBaseMgr.host = url.host;
         return self;
     }
     return nil;

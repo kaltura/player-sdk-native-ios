@@ -16,10 +16,14 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
-
+@property (strong, nonatomic, readonly) NSBundle *bundle;
+@property (strong, nonatomic, readonly) NSDictionary *cacheConditions;
+@property (strong, nonatomic, readonly) NSDictionary *withDomain;
+@property (strong, nonatomic, readonly) NSDictionary *subStrings;
 @end
 
 @implementation KPDataBaseManager
+@synthesize bundle = _bundle, cacheConditions = _cacheConditions, withDomain = _withDomain, subStrings = _subStrings;
 
 + (KPDataBaseManager *)shared {
     static KPDataBaseManager *instance = nil;
@@ -32,8 +36,7 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 
 // Returns the managed object context for the application.
 // If the context doesn't already exist, it is created and bound to the persistent store coordinator for the application.
-- (NSManagedObjectContext *)managedObjectContext
-{
+- (NSManagedObjectContext *)managedObjectContext {
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
     }
@@ -48,23 +51,18 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 
 // Returns the managed object model for the application.
 // If the model doesn't already exist, it is created from the application's model.
-- (NSManagedObjectModel *)managedObjectModel
-{
+- (NSManagedObjectModel *)managedObjectModel {
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSBundle *kalturaBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
-                                                       URLForResource:@"KALTURAPlayerSDKResources"
-                                                       withExtension:@"bundle"]];
-    NSURL *modelURL = [kalturaBundle URLForResource:CoreDataFileName withExtension:@"momd"];
+    NSURL *modelURL = [self.bundle URLForResource:CoreDataFileName withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
 
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     if (_persistentStoreCoordinator != nil) {
         return _persistentStoreCoordinator;
     }
@@ -118,10 +116,41 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 }
 
 // Returns the URL to the application's Documents directory.
-- (NSURL *)applicationDocumentsDirectory
-{
+- (NSURL *)applicationDocumentsDirectory {
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
+
+- (NSBundle *)bundle {
+    if (!_bundle) {
+        _bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
+                                           URLForResource:@"KALTURAPlayerSDKResources"
+                                           withExtension:@"bundle"]];
+    }
+    return _bundle;
+}
+
+- (NSDictionary *)cacheConditions {
+    if (!_cacheConditions) {
+        NSString *path = [self.bundle pathForResource:@"CachedStrings" ofType:@"plist"];
+        _cacheConditions = [NSDictionary dictionaryWithContentsOfFile:path];
+    }
+    return _cacheConditions;
+}
+
+- (NSDictionary *)withDomain {
+    if (!_withDomain) {
+        _withDomain = self.cacheConditions[@"withDomain"];
+    }
+    return _withDomain;
+}
+
+- (NSDictionary *)subStrings {
+    if (!_subStrings) {
+        _subStrings = self.cacheConditions[@"substrings"];
+    }
+    return _subStrings;
+}
+
 @end
 
 @implementation NSString (CoreData)
@@ -143,18 +172,20 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 @implementation CachedURLParams
 
 - (void)storeCacheResponse {
-    CachedURLResponse *response = [NSEntityDescription insertNewObjectForEntityForName:@"CachedURLResponse"
-                                                                inManagedObjectContext:dataBaseMgr.managedObjectContext];
-    KPLogTrace(@"Cache URL: %@", self.url.absoluteString);
-    response.data = self.data;
-    response.url = self.url.absoluteString;
-    response.timestamp = [NSDate date];
-    response.mimeType = self.response.MIMEType;
-    response.encoding = self.response.textEncodingName;
-    NSError *error = nil;
-    [dataBaseMgr.managedObjectContext save:&error];
-    if (error) {
-        KPLogError(@"%@", error);
+    if (self.shouldBeCached) {
+        CachedURLResponse *response = [NSEntityDescription insertNewObjectForEntityForName:@"CachedURLResponse"
+                                                                    inManagedObjectContext:dataBaseMgr.managedObjectContext];
+        KPLogTrace(@"Cache URL: %@", self.url.absoluteString);
+        response.data = self.data;
+        response.url = self.url.absoluteString;
+        response.timestamp = [NSDate date];
+        response.mimeType = self.response.MIMEType;
+        response.encoding = self.response.textEncodingName;
+        NSError *error = nil;
+        [dataBaseMgr.managedObjectContext save:&error];
+        if (error) {
+            KPLogError(@"%@", error);
+        }
     }
 }
 
@@ -163,5 +194,22 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
         _data = [[NSMutableData alloc] init];
     }
     return _data;
+}
+
+- (BOOL)shouldBeCached {
+    if ([self.url.host isEqualToString:dataBaseMgr.host]) {
+        for (NSString *key in dataBaseMgr.withDomain.allKeys) {
+            if ([self.url.absoluteString containsString:key]) {
+                return YES;
+            }
+        }
+    } else {
+        for (NSString *key in dataBaseMgr.subStrings.allKeys) {
+            if ([self.url.absoluteString containsString:key]) {
+                return YES;
+            }
+        }
+    }
+    return NO;
 }
 @end

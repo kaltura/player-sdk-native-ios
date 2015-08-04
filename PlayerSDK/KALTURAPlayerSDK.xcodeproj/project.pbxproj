@@ -48,6 +48,7 @@
 		B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B35B85731A43258200DCDBF7 /* KPLogManager.m */; };
 		B35B85781A43258200DCDBF7 /* KPLog.m in Sources */ = {isa = PBXBuildFile; fileRef = B35B85741A43258200DCDBF7 /* KPLog.m */; };
 		B36674381A90914A00C3A4A7 /* player-sdk-native-ios.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B36674371A90914A00C3A4A7 /* player-sdk-native-ios.podspec */; };
+		B3687E7C1B70B20E00A1ABB4 /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3687E7A1B70B20600A1ABB4 /* CachedStrings.plist */; };
 		B37288911A84FD790076DD33 /* IMAAd.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B322E0E31A77BE77005509B6 /* IMAAd.h */; };
 		B37288921A84FD790076DD33 /* IMAAdDisplayContainer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B322E0E41A77BE77005509B6 /* IMAAdDisplayContainer.h */; };
 		B37288931A84FD790076DD33 /* IMAAdError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B322E0E51A77BE77005509B6 /* IMAAdError.h */; };
@@ -203,6 +204,7 @@
 		B35B85751A43258200DCDBF7 /* KPLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLog.h; sourceTree = "<group>"; };
 		B35B85761A43258200DCDBF7 /* KPLogManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPLogManager.h; sourceTree = "<group>"; };
 		B36674371A90914A00C3A4A7 /* player-sdk-native-ios.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = "player-sdk-native-ios.podspec"; path = "../player-sdk-native-ios.podspec"; sourceTree = "<group>"; };
+		B3687E7A1B70B20600A1ABB4 /* CachedStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CachedStrings.plist; sourceTree = "<group>"; };
 		B372892E1A8787D00076DD33 /* KALTURAPlayerSDKResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KALTURAPlayerSDKResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37289311A8787D00076DD33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B380C2801A1B7E3800BF172F /* GoogleplusStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleplusStrategy.h; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				B3DBE4531B6F684100709E00 /* KPURLProtocolCaching.xcdatamodeld */,
 				B3DBE45C1B6F6A6100709E00 /* KPDataBaseManager.h */,
 				B3DBE45D1B6F6A6100709E00 /* KPDataBaseManager.m */,
+				B3687E7A1B70B20600A1ABB4 /* CachedStrings.plist */,
 			);
 			name = Cache;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3687E7C1B70B20E00A1ABB4 /* CachedStrings.plist in Resources */,
 				B37289381A8789300076DD33 /* KPWebKitBrowserViewController.xib in Resources */,
 				B37289371A8789260076DD33 /* KPBrowserViewController.xib in Resources */,
 			);
