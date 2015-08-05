@@ -42,6 +42,7 @@
         KPLogError(@"%@", @"NO PLAYER CREATED");
     } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
         self.player.DRMKey = key;
+//        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
     }
 }
 
@@ -54,10 +55,41 @@
     return _player;
 }
 
+- (NSString *)getMimeType:(NSURL * )mediaUrl {
+    __block NSString *mimeType = nil;
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:mediaUrl]
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               mimeType = [response MIMEType];
+                           }];
+    return mimeType;
+}
+
+- (NSArray *)getSortedPlayersList {
+    
+    return @[@"KPlayer",@"WVPlayer"];
+}
 
 - (void)setSrc:(NSString *)src {
-    _src = src;
-    [_player setPlayerSource:[NSURL URLWithString:src]];
+    NSString *mimeType = [self getMimeType:[NSURL URLWithString:src]];
+    NSArray *playersList = [self getSortedPlayersList];
+    
+    for (NSString *playerName in playersList) {
+        Class className = NSClassFromString(playerName);
+        SEL selector = @selector(isPlayableMIMEType:);
+        if ([className respondsToSelector:selector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+            BOOL isPlayable = [[className performSelector:selector withObject:mimeType] boolValue];
+            
+            if (isPlayable) {
+                self.playerClassName = playerName;
+                self.src = src;
+                [self.player setPlayerSource:[NSURL URLWithString:src]];
+            }
+#pragma clang diagnostic pop
+        }
+    }
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {

@@ -45,9 +45,11 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)pause;
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
++ (BOOL)isPlayableMIMEType:(NSString *)mimeType;
 
 @optional
 @property (nonatomic, copy) NSString *DRMKey;
+@property (nonatomic, copy) NSDictionary *DRMDict;
 @end
 
 @protocol KPlayerDelegate <NSObject>
@@ -55,6 +57,10 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString;
 - (void)contentCompleted:(id<KPlayer>)currentPlayer;
+
+@end
+
+@protocol KDRM <NSObject>
 
 @end
 

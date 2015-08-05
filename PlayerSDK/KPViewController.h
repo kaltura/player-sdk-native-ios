@@ -91,6 +91,8 @@
 /// Change the source and returns the current source
 @property (nonatomic, copy) NSURL *playerSource;
 
+@property (nonatomic, copy) NSDictionary *drmDict;
+
 ///// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
 //@property (nonatomic) NSTimeInterval currentPlaybackTime;
 

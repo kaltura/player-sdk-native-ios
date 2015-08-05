@@ -58,6 +58,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @implementation KPViewController 
 @synthesize controlsView;
+@synthesize drmDict;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -521,6 +522,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     switch ( attributeName.attributeEnumFromString ) {
         case src:
             _playerFactory.src = attributeVal;
+            if (self.drmDict != nil) {
+                [_playerFactory.player setDRMDict:self.drmDict];
+            }
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
