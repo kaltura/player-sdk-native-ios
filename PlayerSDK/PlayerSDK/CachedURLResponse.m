@@ -2,7 +2,7 @@
 //  CachedURLResponse.m
 //  KALTURAPlayerSDK
 //
-//  Created by Nissim Pardo on 8/3/15.
+//  Created by Nissim Pardo on 8/5/15.
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
@@ -16,5 +16,6 @@
 @dynamic mimeType;
 @dynamic timestamp;
 @dynamic url;
+@dynamic lastUsed;
 
 @end

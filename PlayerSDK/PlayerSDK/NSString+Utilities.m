@@ -46,7 +46,7 @@ static NSString *NativeActionKey = @"nativeAction";
 }
 
 - (NSString *)sqlite {
-    return [self stringByAppendingString:@".sqlite"];
+    return [self stringByAppendingString:@".sqlite-wal"];
 }
 
 

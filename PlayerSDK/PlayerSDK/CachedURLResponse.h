@@ -2,7 +2,7 @@
 //  CachedURLResponse.h
 //  KALTURAPlayerSDK
 //
-//  Created by Nissim Pardo on 8/3/15.
+//  Created by Nissim Pardo on 8/5/15.
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
@@ -17,5 +17,6 @@
 @property (nonatomic, retain) NSString * mimeType;
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * url;
+@property (nonatomic, retain) NSDate * lastUsed;
 
 @end

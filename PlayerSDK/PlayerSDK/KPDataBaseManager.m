@@ -68,7 +68,7 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     }
     
     NSURL *storeURL = [self.applicationDocumentsDirectory URLByAppendingPathComponent:CoreDataFileName.sqlite];
-    
+    [self cacheSize];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
@@ -150,6 +150,23 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     }
     return _subStrings;
 }
+
+- (float)cacheSize {
+    NSArray *suffixes = @[@".sqlite", @".sqlite-wal", @".sqlite-shm"];
+    float size = 0;
+    for (NSString *suffix in suffixes) {
+        NSString *fileName = [CoreDataFileName stringByAppendingString:suffix];
+        NSURL *storeURL = [dataBaseMgr.applicationDocumentsDirectory URLByAppendingPathComponent:fileName];
+        NSString *filePath = storeURL.path;
+        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath
+                                                                                    error:nil];
+        NSString *fileSize = attributes[NSFileSize];
+        size += fileSize.floatValue;
+    }
+    NSLog(@"FileSize:%f mb", size / 1024 / 1024);
+    return size;
+}
+
 
 @end
 
