@@ -138,7 +138,7 @@
 		BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
 		BFE4117A1B651E1400D47693 /* KPController_Private.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFE411791B651C5F00D47693 /* KPController_Private.h */; };
-		BFE8CE8D1B579FBA004B44D5 /* htmlKplayer.html in Resources */ = {isa = PBXBuildFile; fileRef = BFE8CE8C1B579FBA004B44D5 /* htmlKplayer.html */; };
+		BFECF6991B72C9DC002EE1EC /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFECF6981B72C9DC002EE1EC /* MobileCoreServices.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -333,7 +333,7 @@
 		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
 		BFE411791B651C5F00D47693 /* KPController_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPController_Private.h; sourceTree = "<group>"; };
 		BFE4117B1B667D7A00D47693 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		BFE8CE8C1B579FBA004B44D5 /* htmlKplayer.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = htmlKplayer.html; path = ../../../../../../Downloads/htmlKplayer.html; sourceTree = "<group>"; };
+		BFECF6981B72C9DC002EE1EC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -357,6 +357,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFECF6991B72C9DC002EE1EC /* MobileCoreServices.framework in Frameworks */,
 				B3410D471A6C12E300275F00 /* libGoogleIMA3.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,7 +429,6 @@
 		B372892F1A8787D00076DD33 /* KPlayerResources */ = {
 			isa = PBXGroup;
 			children = (
-				BFE8CE8C1B579FBA004B44D5 /* htmlKplayer.html */,
 				B37289301A8787D00076DD33 /* Supporting Files */,
 			);
 			path = KPlayerResources;
@@ -518,6 +518,7 @@
 		BFFFA71E182F9E31005B3B24 = {
 			isa = PBXGroup;
 			children = (
+				BFECF6981B72C9DC002EE1EC /* MobileCoreServices.framework */,
 				BFE4117B1B667D7A00D47693 /* CoreMedia.framework */,
 				BF12E6861B4D4F130083D71A /* KMediaPlayerDefines.h */,
 				B36674371A90914A00C3A4A7 /* player-sdk-native-ios.podspec */,
@@ -698,7 +699,6 @@
 			files = (
 				B37289381A8789300076DD33 /* KPWebKitBrowserViewController.xib in Resources */,
 				B37289371A8789260076DD33 /* KPBrowserViewController.xib in Resources */,
-				BFE8CE8D1B579FBA004B44D5 /* htmlKplayer.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

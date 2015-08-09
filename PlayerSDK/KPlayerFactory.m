@@ -12,6 +12,8 @@
 #ifdef IMA
 #import "KPIMAPlayerViewController.h"
 #endif
+#import <MobileCoreServices/MobileCoreServices.h>  
+
 @interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
@@ -53,7 +55,6 @@
     }
     return _player;
 }
-
 
 - (void)setSrc:(NSString *)src {
     _src = src;

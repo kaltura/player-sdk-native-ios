@@ -17,8 +17,9 @@ static NSString *CacheStKey = @"cache_st";
 static NSString *EntryIdKey = @"entry_id";
 static NSString *PlayerIdKey = @"playerId";
 static NSString *UridKey = @"urid";
-static NSString *DebugKey = @"debug";
 static NSString *ForceHtml5Key = @"forceMobileHTML5";
+static NSString *DebugKey = @"debugKalturaPlayer";
+static NSString *FlashVarKey = @"flashvars";
 
 @interface KPPlayerConfig()
 
