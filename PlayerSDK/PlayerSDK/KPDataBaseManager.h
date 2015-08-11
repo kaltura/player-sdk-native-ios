@@ -16,6 +16,9 @@
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, copy) NSString *host;
 @property (nonatomic) float cacheSize;
+
+@property (strong, nonatomic, readonly) NSDictionary *withDomain;
+@property (strong, nonatomic, readonly) NSDictionary *subStrings;
 @end
 
 

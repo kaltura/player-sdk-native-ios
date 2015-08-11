@@ -4,21 +4,21 @@
 <dict>
 	<key>substrings</key>
 	<dict>
-		<key>thumbnail</key>
-		<string>14</string>
-		<key>skins</key>
-		<string>14</string>
 		<key>data:image</key>
 		<string>14</string>
 	</dict>
 	<key>withDomain</key>
 	<dict>
+		<key>thumbnail</key>
+		<integer>0</integer>
+		<key>skins</key>
+		<integer>0</integer>
 		<key>load.php</key>
-		<string>14</string>
+		<integer>14</integer>
 		<key>mwEmbedFrame.php</key>
 		<integer>1</integer>
 		<key>mwEmbedLoader.php</key>
-		<string>7</string>
+		<integer>7</integer>
 	</dict>
 </dict>
 </plist>
