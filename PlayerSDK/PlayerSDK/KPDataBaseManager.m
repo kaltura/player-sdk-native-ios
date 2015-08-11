@@ -12,6 +12,9 @@
 
 static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 
+#define MB (1024*1024)
+#define GB (MB*1024)
+
 @interface KPDataBaseManager()
 
 @property (strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -68,7 +71,6 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     }
     
     NSURL *storeURL = [self.applicationDocumentsDirectory URLByAppendingPathComponent:CoreDataFileName.sqlite];
-    [self cacheSize];
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
@@ -120,6 +122,7 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
+// The SDK's bundle
 - (NSBundle *)bundle {
     if (!_bundle) {
         _bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
@@ -129,6 +132,8 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     return _bundle;
 }
 
+
+// Fetches the White list urls
 - (NSDictionary *)cacheConditions {
     if (!_cacheConditions) {
         NSString *path = [self.bundle pathForResource:@"CachedStrings" ofType:@"plist"];
@@ -137,6 +142,7 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     return _cacheConditions;
 }
 
+// The url list which have to be checked by the domain first
 - (NSDictionary *)withDomain {
     if (!_withDomain) {
         _withDomain = self.cacheConditions[@"withDomain"];
@@ -144,6 +150,8 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     return _withDomain;
 }
 
+
+// The url list which should contain substring fron the White list
 - (NSDictionary *)subStrings {
     if (!_subStrings) {
         _subStrings = self.cacheConditions[@"substrings"];
@@ -151,20 +159,30 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     return _subStrings;
 }
 
-- (float)cacheSize {
-    NSArray *suffixes = @[@".sqlite", @".sqlite-wal", @".sqlite-shm"];
+- (float)cachedSize {
+//    NSArray *suffixes = @[@".sqlite", @".sqlite-wal", @".sqlite-shm"];
+//    float size = 0;
+//    for (NSString *suffix in suffixes) {
+//        NSString *fileName = [CoreDataFileName stringByAppendingString:suffix];
+//        NSURL *storeURL = [dataBaseMgr.applicationDocumentsDirectory URLByAppendingPathComponent:fileName];
+//        NSString *filePath = storeURL.path;
+//        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath
+//                                                                                    error:nil];
+//        NSString *fileSize = attributes[NSFileSize];
+//        size += fileSize.floatValue;
+//    }
+//    NSLog(@"FileSize:%f mb", size / MB);
     float size = 0;
-    for (NSString *suffix in suffixes) {
-        NSString *fileName = [CoreDataFileName stringByAppendingString:suffix];
-        NSURL *storeURL = [dataBaseMgr.applicationDocumentsDirectory URLByAppendingPathComponent:fileName];
-        NSString *filePath = storeURL.path;
-        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:filePath
-                                                                                    error:nil];
-        NSString *fileSize = attributes[NSFileSize];
-        size += fileSize.floatValue;
+    NSError *error = nil;
+    NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"CachedURLResponse"];
+    NSArray *matches = [dataBaseMgr.managedObjectContext executeFetchRequest:request error:&error];
+    if (error) {
+        KPLogError(@"Failed to Fetch from Core Data %@", error);
     }
-    NSLog(@"FileSize:%f mb", size / 1024 / 1024);
-    return size;
+    for (CachedURLResponse *response in matches) {
+        size += response.data.length;
+    }
+    return size / MB;
 }
 
 
@@ -172,6 +190,8 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 
 @implementation NSString (CoreData)
 
+
+// Looks for cahced response with the current URL
 - (CachedURLResponse *)cachedResponse {
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"CachedURLResponse"];
     request.predicate = [NSPredicate predicateWithFormat:@"url == %@", self];
@@ -181,6 +201,7 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
         KPLogError(@"%@", error);
         return nil;
     }
+    ((CachedURLResponse *)matches[0]).lastUsed = [NSDate date];
     return matches.lastObject;
 }
 
@@ -190,6 +211,27 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 
 - (void)storeCacheResponse {
     if (self.shouldBeCached) {
+        float cachedSize = dataBaseMgr.cachedSize;
+        
+        // Checks the size of the cache and if erasing is needed then erase the less used urls
+        if (cachedSize > self.freeDiskSpace || cachedSize > dataBaseMgr.cacheSize) {
+            float overflowSize = cachedSize - dataBaseMgr.cacheSize;
+            NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"CachedURLResponse"];
+            
+            request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastUsed" ascending:YES]];
+            NSArray *matches = [dataBaseMgr.managedObjectContext executeFetchRequest:request error:nil];
+            
+            for (CachedURLResponse *response in matches) {
+                if (overflowSize > 0) {
+                    overflowSize -= (float)response.data.length / MB;
+                    [dataBaseMgr.managedObjectContext deleteObject:response];
+                } else {
+                    break;
+                }
+            }
+        }
+        
+        // Store the page
         CachedURLResponse *response = [NSEntityDescription insertNewObjectForEntityForName:@"CachedURLResponse"
                                                                     inManagedObjectContext:dataBaseMgr.managedObjectContext];
         KPLogTrace(@"Cache URL: %@", self.url.absoluteString);
@@ -198,6 +240,7 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
         response.timestamp = [NSDate date];
         response.mimeType = self.response.MIMEType;
         response.encoding = self.response.textEncodingName;
+        response.lastUsed = [NSDate date];
         NSError *error = nil;
         [dataBaseMgr.managedObjectContext save:&error];
         if (error) {
@@ -213,6 +256,11 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
     return _data;
 }
 
+- (long long)freeDiskSpace {
+    return [[[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize] longLongValue];
+}
+
+// Checks the White list
 - (BOOL)shouldBeCached {
     if ([self.url.host isEqualToString:dataBaseMgr.host]) {
         for (NSString *key in dataBaseMgr.withDomain.allKeys) {

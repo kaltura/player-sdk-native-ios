@@ -15,6 +15,7 @@
 + (KPDataBaseManager *)shared;
 @property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic, copy) NSString *host;
+@property (nonatomic) float cacheSize;
 @end
 
 

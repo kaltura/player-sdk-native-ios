@@ -72,8 +72,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self = [super init];
     if (self) {
         videoURL = [NSURL URLWithString:url.absoluteString];
-        [NSURLProtocol registerClass:[KPURLProtocol class]];
-        dataBaseMgr.host = url.host;
         return self;
     }
     return nil;
@@ -83,6 +81,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self = [self initWithURL:configuration.videoURL];
     if (self) {
         _configuration = configuration;
+        // If the developer set the cache size, the cache system is triggered.
+        if (_configuration.cacheSize > 0) {
+            [NSURLProtocol registerClass:[KPURLProtocol class]];
+            dataBaseMgr.host = configuration.videoURL.host;
+            dataBaseMgr.cacheSize = _configuration.cacheSize;
+        }
         return self;
     }
     return nil;
