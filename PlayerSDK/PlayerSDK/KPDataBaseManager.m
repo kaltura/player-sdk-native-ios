@@ -215,7 +215,7 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
         
         // Checks the size of the cache and if erasing is needed then erase the less used urls
         if (cachedSize > self.freeDiskSpace || cachedSize > dataBaseMgr.cacheSize) {
-            float overflowSize = cachedSize - dataBaseMgr.cacheSize;
+            float overflowSize = cachedSize - dataBaseMgr.cacheSize + (float)self.data.length / MB;
             NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"CachedURLResponse"];
             
             request.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"lastUsed" ascending:YES]];
