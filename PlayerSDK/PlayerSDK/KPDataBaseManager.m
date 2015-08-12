@@ -21,7 +21,6 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 @property (strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (strong, nonatomic, readonly) NSBundle *bundle;
 @property (strong, nonatomic, readonly) NSDictionary *cacheConditions;
-
 @end
 
 @implementation KPDataBaseManager
@@ -231,4 +230,5 @@ static NSString *const CoreDataFileName = @"KPURLProtocolCaching";
 - (long long)freeDiskSpace {
     return [[[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize] longLongValue];
 }
+
 @end
