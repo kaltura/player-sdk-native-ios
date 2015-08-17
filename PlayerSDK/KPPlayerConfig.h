@@ -49,7 +49,14 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
  *  @param NSString The name of the flag
  *  @param NSString The value for the flag
  */
-- (void)addConfigKey:(NSString *)key withValue:(NSString *)value;;
+- (void)addConfigKey:(NSString *)key withValue:(NSString *)value;
+
+/** Converts dictionary to JSON and Adds flags to the video request
+ *
+ *  @param NSString The name of the flag
+ *  @param NSDictionary The dictionary for the flag
+ */
+- (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary;
 
 - (NSURL *)videoURL;
 

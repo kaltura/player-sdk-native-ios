@@ -38,6 +38,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, readonly) BOOL isPlay;
 @property (nonatomic, readonly) BOOL isPause;
 @property (nonatomic, readonly) BOOL isStop;
+@property (nonatomic, readonly) BOOL isTimeUpdate;
 @property (nonatomic, readonly) BOOL isToggleFullScreen;
 @property (nonatomic, readonly) BOOL isSeeked;
 @property (nonatomic, readonly) BOOL canPlay;

@@ -6,22 +6,27 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
+#ifdef IMA
 #import "KPIMAPlayerViewController.h"
+#endif
+#import <MobileCoreServices/MobileCoreServices.h>  
 
-@interface KPlayerController() <KPlayerDelegate>{
+@interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
+#ifdef IMA
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
+#endif
 @property (nonatomic) BOOL contentEnded;
 @end
 
-@implementation KPlayerController
+@implementation KPlayerFactory
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -51,7 +56,6 @@
     return _player;
 }
 
-
 - (void)setSrc:(NSString *)src {
     _src = src;
     [_player setPlayerSource:[NSURL URLWithString:src]];
@@ -62,13 +66,14 @@
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
+#ifdef IMA
     if (!_adController) {
         _adController = [KPIMAPlayerViewController new];
         _adController.adPlayerHeight = _adPlayerHeight;
         _adController.locale = _locale;
         [_parentViewController addChildViewController:_adController];
         [_parentViewController.view addSubview:_adController.view];
-        __weak KPlayerController *weakSelf = self;
+        __weak KPlayerFactory *weakSelf = self;
         [_adController loadIMAAd:adTagURL
                withContentPlayer:_player
                   eventsListener:^(NSDictionary *adEventParams) {
@@ -84,6 +89,7 @@
                       }
                   }];
     }
+#endif
 }
 
 
@@ -99,18 +105,20 @@
 - (void)removePlayer {
     [_player removePlayer];
     _player = nil;
+#ifdef IMA
     [_adController removeIMAPlayer];
     _adController = nil;
+#endif
 }
 
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     static NSTimeInterval currentTime;
+
     if (key && currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
         currentTime = _player.currentPlaybackTime;
-        [_player removePlayer];
-        _player = nil;
+        [self removePlayer];
         [self addPlayerToController:_parentViewController];
         self.src = _src;
         isSeeked = event.isSeeked;
@@ -132,7 +140,9 @@
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.contentEnded = YES;
+#ifdef IMA
     [_adController contentCompleted];
+#endif
 }
 
 - (void)dealloc {
