@@ -22,6 +22,8 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPlayerFactory.h"
 #import "KPControlsView.h"
 #import "KPController_Private.h"
+#import "KPURLProtocol.h"
+#import "KPDataBaseManager.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
