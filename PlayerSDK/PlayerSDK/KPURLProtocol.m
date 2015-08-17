@@ -23,16 +23,19 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 @implementation KPURLProtocol
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
+        return NO;
+    }
     if ([request.URL.host isEqualToString:dataBaseMgr.host]) {
         for (NSString *key in dataBaseMgr.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                return ![NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request];
+                return YES;
             }
         }
     } else {
         for (NSString *key in dataBaseMgr.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                return ![NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request];
+                return YES;
             }
         }
     }
