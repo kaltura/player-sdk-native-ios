@@ -161,14 +161,17 @@ static NSString *StatusKeyPath = @"status";
         [self pause];
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
-    [item addObserver:self
-           forKeyPath:StatusKeyPath
-              options:0
-              context:nil];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self replaceCurrentItemWithPlayerItem:item];
-    });
+    AVAsset *asset = [AVAsset assetWithURL:playerSource];
+    if (asset.isPlayable) {
+        AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
+        [item addObserver:self
+               forKeyPath:StatusKeyPath
+                  options:0
+                  context:nil];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self replaceCurrentItemWithPlayerItem:item];
+        });
+    }
 }
 
 
