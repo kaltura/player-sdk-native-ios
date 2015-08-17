@@ -32,12 +32,12 @@ static NSString *kPortalKey = @"kaltura";
 //}
 
 + (void)DRMSource:(NSString *)src key:(NSDictionary *)dict completion:(void (^)(NSString *))completion {
-    NSDictionary *d = @{
-        WVDRMServerKey: [dict objectForKey:@"WVDRMServerKey"],
-        WVPortalKey: [dict objectForKey:@"WVPortalKey"],
-        WVCAUserDataKey: [dict objectForKey:@"WVCAUserDataKey"] != nil ? [dict objectForKey:@"WVCAUserDataKey"] : nil
-      };
-    WV_Initialize(WVCallback, d);
+//    NSDictionary *d = @{
+//        WVDRMServerKey: [dict objectForKey:@"WVDRMServerKey"],
+//        WVPortalKey: [dict objectForKey:@"WVPortalKey"],
+//        WVCAUserDataKey: [dict objectForKey:@"WVCAUserDataKey"] != nil ? [dict objectForKey:@"WVCAUserDataKey"] : nil
+//      };
+    WV_Initialize(WVCallback, dict);
     [self performSelector:@selector(fetchDRMParams:) withObject:@[src, completion] afterDelay:0.1];
 }
 

@@ -521,9 +521,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
-            _playerFactory.src = attributeVal;
+            
             if (self.drmDict != nil) {
+//                [_playerFactory addPlayerToController:_parentViewController];
+//                [_playerFactory switchPlayer:WideVinePlayerClass key:@""];
+                [_playerFactory removePlayer];
+                _playerFactory.playerClassName = @"WVPlayer";
                 [_playerFactory.player setDRMDict:self.drmDict];
+                _playerFactory.src = attributeVal;
             }
             break;
         case currentTime:

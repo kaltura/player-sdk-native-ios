@@ -12,6 +12,8 @@
 #ifdef IMA
 #import "KPIMAPlayerViewController.h"
 #endif
+#import <MobileCoreServices/MobileCoreServices.h>  
+
 @interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
@@ -71,25 +73,31 @@
 }
 
 - (void)setSrc:(NSString *)src {
-    NSString *mimeType = [self getMimeType:[NSURL URLWithString:src]];
-    NSArray *playersList = [self getSortedPlayersList];
+//    NSString *mimeType = [self getMimeType:[NSURL URLWithString:src]];
+//    NSArray *playersList = [self getSortedPlayersList];
     
-    for (NSString *playerName in playersList) {
-        Class className = NSClassFromString(playerName);
-        SEL selector = @selector(isPlayableMIMEType:);
-        if ([className respondsToSelector:selector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            BOOL isPlayable = [[className performSelector:selector withObject:mimeType] boolValue];
-            
-            if (isPlayable) {
-                self.playerClassName = playerName;
-                self.src = src;
-                [self.player setPlayerSource:[NSURL URLWithString:src]];
-            }
-#pragma clang diagnostic pop
-        }
-    }
+//    Class className = NSClassFromString(@"WVPlayer");
+//    [self removePlayer];
+//    self.playerClassName = @"WVPlayer";
+//    self.src = src;
+    [self.player setPlayerSource:[NSURL URLWithString:src]];
+//    
+//    for (NSString *playerName in playersList) {
+//        Class className = NSClassFromString(playerName);
+//        SEL selector = @selector(isPlayableMIMEType:);
+//        if ([className respondsToSelector:selector]) {
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+//            BOOL isPlayable = [[className performSelector:selector withObject:mimeType] boolValue];
+//            
+//            if (isPlayable) {
+//                self.playerClassName = playerName;
+//                self.src = src;
+//                [self.player setPlayerSource:[NSURL URLWithString:src]];
+//            }
+//#pragma clang diagnostic pop
+//        }
+//    }
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
