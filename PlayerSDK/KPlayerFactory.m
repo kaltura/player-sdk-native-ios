@@ -44,6 +44,7 @@
         KPLogError(@"%@", @"NO PLAYER CREATED");
     } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
         self.player.DRMKey = key;
+//        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
     }
 }
 
@@ -56,9 +57,18 @@
     return _player;
 }
 
+- (NSString *)getMimeType:(NSURL * )mediaUrl {
+    __block NSString *mimeType = nil;
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:mediaUrl]
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               mimeType = [response MIMEType];
+                           }];
+    return mimeType;
+}
+
 - (void)setSrc:(NSString *)src {
-    _src = src;
-    [_player setPlayerSource:[NSURL URLWithString:src]];
+    [self.player setPlayerSource:[NSURL URLWithString:src]];
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
@@ -98,6 +108,25 @@
     key = _key;
 }
 
+- (id<KPlayer>)createPlayerFromClassName:(NSString *)className {
+    if (className) {
+        Class class = NSClassFromString(className);
+        
+        return [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
+    }
+    
+    return nil;
+}
+
+- (void)changePlayer:(id<KPlayer>)player {
+    player.delegate = _player.delegate;
+    player.playerSource = _player.playerSource;
+    player.duration = _player.duration;
+    player.currentPlaybackTime = _player.currentPlaybackTime;
+    [self removePlayer];
+    _player = player;
+}
+
 - (void)changeSubtitleLanguage:(NSString *)isoCode {
     [_player changeSubtitleLanguage:isoCode];
 }
@@ -114,24 +143,7 @@
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    static NSTimeInterval currentTime;
-
-    if (key && currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
-        currentTime = _player.currentPlaybackTime;
-        [self removePlayer];
-        [self addPlayerToController:_parentViewController];
-        self.src = _src;
-        isSeeked = event.isSeeked;
-    } else if (!currentPlayer.isKPlayer && event.canPlay) {
-        if (currentTime) {
-            _player.currentPlaybackTime = currentTime;
-        }
-        if (!isSeeked) {
-            [_player play];
-        }
-    } else {
-        [_delegate player:currentPlayer eventName:event value:value];
-    }
+    [_delegate player:currentPlayer eventName:event value:value];
 }
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {

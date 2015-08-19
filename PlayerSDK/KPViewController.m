@@ -58,6 +58,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @implementation KPViewController 
 @synthesize controlsView;
+@synthesize drmDict;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -512,7 +513,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-
 - (void)setAttribute: (NSArray*)args{
     KPLogTrace(@"Enter");
     NSString *attributeName = [args objectAtIndex:0];
@@ -521,6 +521,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     switch ( attributeName.attributeEnumFromString ) {
         case src:
             _playerFactory.src = attributeVal;
+            
+            if (self.drmDict != nil) {
+                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:@"WVPlayer"]];
+                [_playerFactory.player setDRMDict:self.drmDict];
+            }
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];

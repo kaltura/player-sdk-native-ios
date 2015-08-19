@@ -179,9 +179,18 @@ static NSString *StatusKeyPath = @"status";
     if (![currentPlayerAsset isKindOfClass:AVURLAsset.class]) {
         return nil;
     }
+//    [AVURLAsset isPlayableExtendedMIMEType:<#(NSString *)#>]
+//    
+//    [AVURLAsset audiovisualMIMETypes];
+    
     // return the NSURL
     return [(AVURLAsset *)currentPlayerAsset URL];
 }
+
++ (BOOL)isPlayableMIMEType:(NSString *)mimeType {
+    return @([AVURLAsset isPlayableExtendedMIMEType:mimeType]);
+}
+
 
 - (NSTimeInterval)duration {
     AVPlayerItem *item = self.currentItem;
