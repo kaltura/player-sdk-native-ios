@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-@class DRMHandler;
 
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
@@ -45,11 +44,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)pause;
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
-+ (BOOL)isPlayableMIMEType:(NSString *)mimeType;
 
-@optional
-@property (nonatomic, copy) NSString *DRMKey;
-@property (nonatomic, copy) NSDictionary *DRMDict;
 @end
 
 @protocol KPlayerDelegate <NSObject>

@@ -1,27 +1,27 @@
 //
-//  WVPlayer.m
+//  KDRMManager.m
 //  KALTURAPlayerSDK
 //
 //  Created by Nissim Pardo on 3/24/15.
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 #if !(TARGET_IPHONE_SIMULATOR)
-#import "WVPlayer.h"
+#import "KDRMManager.h"
 #import "WViPhoneAPI.h"
 #import "KPLog.h"
 
 static NSString *kPortalKey = @"kaltura";
 
-@interface WVPlayer()
+@interface KDRMManager()
 @end
 
-@implementation WVPlayer
+@implementation KDRMManager
 @synthesize DRMKey, DRMDict;
 - (void)setPlayerSource:(NSURL *)playerSource {
     [self.class DRMSource:playerSource.absoluteString
                       key:self.DRMDict
                completion:^(NSString *drmUrl) {
-        super.playerSource = [NSURL URLWithString:drmUrl];
+//        super.playerSource = [NSURL URLWithString:drmUrl];
     }];
 }
 
@@ -59,10 +59,6 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
     
     KPLogTrace(@"Exit");
     return WViOsApiStatus_OK;
-}
-
-+ (BOOL)isPlayableMIMEType:(NSString *)mimeType {
-    return @([AVURLAsset isPlayableExtendedMIMEType:mimeType]);
 }
 
 @end

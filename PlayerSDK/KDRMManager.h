@@ -1,5 +1,5 @@
 //
-//  WVPlayer.h
+//  KDRMManager.h
 //  KALTURAPlayerSDK
 //
 //  Created by Nissim Pardo on 3/24/15.
@@ -8,9 +8,10 @@
 
 #if !(TARGET_IPHONE_SIMULATOR)
 
-#import "KPlayer.h"
+@interface KDRMManager : NSObject
 
-@interface WVPlayer : KPlayer
+@property (nonatomic, copy) NSString *DRMKey;
+@property (nonatomic, copy) NSDictionary *DRMDict;
 
 @end
 
