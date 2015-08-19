@@ -75,6 +75,8 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (instancetype)initWithPlayerClassName:(NSString *)className;
 - (void)addPlayerToController:(UIViewController *)parentViewController;
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)key;
+- (id<KPlayer>)createPlayerFromClassName:(NSString *)className;
+- (void)changePlayer:(id<KPlayer>)player;
 - (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
 

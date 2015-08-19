@@ -513,7 +513,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-
 - (void)setAttribute: (NSArray*)args{
     KPLogTrace(@"Enter");
     NSString *attributeName = [args objectAtIndex:0];
@@ -521,14 +520,15 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
+            _playerFactory.src = attributeVal;
             
             if (self.drmDict != nil) {
 //                [_playerFactory addPlayerToController:_parentViewController];
-//                [_playerFactory switchPlayer:WideVinePlayerClass key:@""];
-                [_playerFactory removePlayer];
-                _playerFactory.playerClassName = @"WVPlayer";
+//                [_playerFactory switchPlayer:WideVinePlayerClass key:@""]
+                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:@"WVPlayer"]];
                 [_playerFactory.player setDRMDict:self.drmDict];
-                _playerFactory.src = attributeVal;
+//                [_playerFactory removePlayer];
+//                _playerFactory.playerClassName = @"WVPlayer";
             }
             break;
         case currentTime:

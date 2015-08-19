@@ -67,37 +67,8 @@
     return mimeType;
 }
 
-- (NSArray *)getSortedPlayersList {
-    
-    return @[@"KPlayer",@"WVPlayer"];
-}
-
 - (void)setSrc:(NSString *)src {
-//    NSString *mimeType = [self getMimeType:[NSURL URLWithString:src]];
-//    NSArray *playersList = [self getSortedPlayersList];
-    
-//    Class className = NSClassFromString(@"WVPlayer");
-//    [self removePlayer];
-//    self.playerClassName = @"WVPlayer";
-//    self.src = src;
     [self.player setPlayerSource:[NSURL URLWithString:src]];
-//    
-//    for (NSString *playerName in playersList) {
-//        Class className = NSClassFromString(playerName);
-//        SEL selector = @selector(isPlayableMIMEType:);
-//        if ([className respondsToSelector:selector]) {
-//#pragma clang diagnostic push
-//#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-//            BOOL isPlayable = [[className performSelector:selector withObject:mimeType] boolValue];
-//            
-//            if (isPlayable) {
-//                self.playerClassName = playerName;
-//                self.src = src;
-//                [self.player setPlayerSource:[NSURL URLWithString:src]];
-//            }
-//#pragma clang diagnostic pop
-//        }
-//    }
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
@@ -137,6 +108,25 @@
     key = _key;
 }
 
+- (id<KPlayer>)createPlayerFromClassName:(NSString *)className {
+    if (className) {
+        Class class = NSClassFromString(className);
+        
+        return [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
+    }
+    
+    return nil;
+}
+
+- (void)changePlayer:(id<KPlayer>)player {
+    player.delegate = _player.delegate;
+    player.playerSource = _player.playerSource;
+    player.duration = _player.duration;
+    player.currentPlaybackTime = _player.currentPlaybackTime;
+    [self removePlayer];
+    _player = player;
+}
+
 - (void)changeSubtitleLanguage:(NSString *)isoCode {
     [_player changeSubtitleLanguage:isoCode];
 }
@@ -153,24 +143,7 @@
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    static NSTimeInterval currentTime;
-
-    if (key && currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
-        currentTime = _player.currentPlaybackTime;
-        [self removePlayer];
-        [self addPlayerToController:_parentViewController];
-        self.src = _src;
-        isSeeked = event.isSeeked;
-    } else if (!currentPlayer.isKPlayer && event.canPlay) {
-        if (currentTime) {
-            _player.currentPlaybackTime = currentTime;
-        }
-        if (!isSeeked) {
-            [_player play];
-        }
-    } else {
-        [_delegate player:currentPlayer eventName:event value:value];
-    }
+    [_delegate player:currentPlayer eventName:event value:value];
 }
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
