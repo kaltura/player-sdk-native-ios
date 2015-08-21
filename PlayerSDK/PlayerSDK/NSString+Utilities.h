@@ -26,7 +26,6 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSString *appendVersion;
 @property (nonatomic, copy, readonly) NSString *appendHover;
 @property (nonatomic, copy, readonly) NSString *appendIFrameEmbed;
-@property (nonatomic, copy, readonly) NSString *sqlite;
 
 - (NSString *)appendIDFA:(NSString *)IDFA;
 
@@ -38,7 +37,6 @@ typedef struct FunctionComponents {
 @property (nonatomic, readonly) BOOL isPlay;
 @property (nonatomic, readonly) BOOL isPause;
 @property (nonatomic, readonly) BOOL isStop;
-@property (nonatomic, readonly) BOOL isTimeUpdate;
 @property (nonatomic, readonly) BOOL isToggleFullScreen;
 @property (nonatomic, readonly) BOOL isSeeked;
 @property (nonatomic, readonly) BOOL canPlay;

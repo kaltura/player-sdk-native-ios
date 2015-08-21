@@ -9,7 +9,6 @@
 #import "KPPlayerConfig.h"
 #import "DeviceParamsHandler.h"
 #import "NSString+Utilities.h"
-#import "KPLog.h"
 
 /// Key names of the video request
 static NSString *WidKey = @"wid";
@@ -18,9 +17,8 @@ static NSString *CacheStKey = @"cache_st";
 static NSString *EntryIdKey = @"entry_id";
 static NSString *PlayerIdKey = @"playerId";
 static NSString *UridKey = @"urid";
+static NSString *DebugKey = @"debug";
 static NSString *ForceHtml5Key = @"forceMobileHTML5";
-static NSString *DebugKey = @"debugKalturaPlayer";
-static NSString *FlashVarKey = @"flashvars";
 
 @interface KPPlayerConfig()
 
@@ -47,9 +45,8 @@ static NSString *FlashVarKey = @"flashvars";
         _domain = domain;
         _uiConfId = uiConfId;
         _playerId = playerID;
-        [self addParam:uiConfId forKey:UiConfIdKey];
-        [self addParam:playerID forKey:PlayerIdKey];
-        
+        self.paramsDict[UiConfIdKey] = uiConfId;
+        self.paramsDict[PlayerIdKey] = playerID;
         return self;
     }
     return nil;
@@ -62,40 +59,10 @@ static NSString *FlashVarKey = @"flashvars";
     return _paramsDict;
 }
 
-- (NSString *)createFlashvarKeyFormat:(NSString *)flashvarKey {
-    if (flashvarKey && flashvarKey.length) {
-        return [NSString stringWithFormat:@"%@[%@]", FlashVarKey, flashvarKey];
-    }
-    
-    return nil;
-}
-
-- (void)addParam:(NSString *)param forKey:(NSString *)key {
-    if(param && param.length && key && key.length) {
-        self.paramsDict[key] = param;
-    }
-}
-
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value; {
     if (key && key.length && value && value.length) {
-        [self addParam:value forKey:[self createFlashvarKeyFormat:key]];
-    }
-}
-
-- (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary {
-    if (key && key.length && dictionary && dictionary.count) {
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary
-                                                           options:NSJSONWritingPrettyPrinted
-                                                             error:&error];
-        
-        if (!jsonData) {
-            KPLogError(@"Got an error: %@", error);
-        } else {
-            NSString *jsonString = [[NSString alloc] initWithData:jsonData
-                                                         encoding:NSUTF8StringEncoding];
-            [self addParam:jsonString forKey:[self createFlashvarKeyFormat:key]];
-        }
+        NSString *configKey = [NSString stringWithFormat:@"flashvars[%@]", key];
+        self.paramsDict[configKey] = [value stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
     }
 }
 
@@ -107,38 +74,42 @@ static NSString *FlashVarKey = @"flashvars";
 - (void)setEntryId:(NSString *)entryId {
     if (entryId) {
         _entryId = entryId;
-        [self addParam:entryId forKey:EntryIdKey];
+        self.paramsDict[EntryIdKey] = entryId;
     }
 }
 
 - (void)setUrid:(NSString *)urid {
     if (urid) {
         _urid = urid;
-        [self addParam:urid forKey:UridKey];
+        self.paramsDict[UridKey] = urid;
     }
 }
 
 - (void)setWid:(NSString *)wid {
     if (wid) {
         _wid = wid;
-        [self addParam:wid forKey:WidKey];
-
+        self.paramsDict[WidKey] = wid;
     }
 }
 
 - (void)setCacheSt:(NSString *)cacheSt {
     if (cacheSt) {
         _cacheSt = cacheSt;
-        [self addParam:cacheSt forKey:CacheStKey];
-
+        self.paramsDict[CacheStKey] = cacheSt;
     }
 }
 
 - (void)setDebug:(BOOL)debug {
     if (debug) {
         _debug = YES;
-        [self addParam:@"true" forKey:DebugKey];
+        self.paramsDict[DebugKey] = @"true";
+    }
+}
 
+- (void)setForceMobileHTML5:(BOOL)forceMobileHTML5 {
+    if (forceMobileHTML5) {
+        _forceMobileHTML5 = YES;
+        self.paramsDict[ForceHtml5Key] = @"true";
     }
 }
 

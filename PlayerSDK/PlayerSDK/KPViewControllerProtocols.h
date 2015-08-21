@@ -45,8 +45,8 @@ typedef enum{
 
 @required
 
-- (NSURL *)getInitialKIframeUrl;
-- (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
+@property (nonatomic, retain) id<KPViewControllerDelegate> kalPlayerViewControllerDelegate;
+-(NSURL *)getInitialKIframeUrl;
 
 @optional
 - (void) kPlayerDidPlay;

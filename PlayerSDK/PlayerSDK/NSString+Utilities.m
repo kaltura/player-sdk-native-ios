@@ -45,10 +45,6 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self stringByAppendingString:IDFAFlashvar];
 }
 
-- (NSString *)sqlite {
-    return [self stringByAppendingString:@".sqlite-wal"];
-}
-
 
 - (Attribute)attributeEnumFromString {
     KPLogTrace(@"Enter");
@@ -85,10 +81,6 @@ static NSString *NativeActionKey = @"nativeAction";
 
 - (BOOL)isStop {
     return [self isEqualToString:@"stop"];
-}
-
-- (BOOL)isTimeUpdate {
-    return [self isEqualToString:@"timeupdate"];
 }
 
 - (BOOL)isToggleFullScreen {

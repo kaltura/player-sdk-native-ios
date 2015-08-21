@@ -58,13 +58,13 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 @end
 
-@protocol KPlayerFactoryDelegate <KPlayerDelegate>
+@protocol KPlayerControllerDelegate <KPlayerDelegate>
 
 - (void)allAdsCompleted;
 
 @end
 
-@interface KPlayerFactory : NSObject
+@interface KPlayerController : NSObject
 
 - (instancetype)initWithPlayerClassName:(NSString *)className;
 - (void)addPlayerToController:(UIViewController *)parentViewController;
@@ -73,7 +73,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)removePlayer;
 
 @property (nonatomic, strong) id<KPlayer> player;
-@property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
+@property (nonatomic, weak) id<KPlayerControllerDelegate> delegate;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
 @property (nonatomic, copy) NSString *adTagURL;
