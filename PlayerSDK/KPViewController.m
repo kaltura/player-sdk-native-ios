@@ -59,6 +59,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @implementation KPViewController 
 @synthesize controlsView;
+@synthesize drmDict;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -503,7 +504,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     KPLogTrace(@"Exit");
 }
-
 
 - (void)setAttribute: (NSArray*)args{
     KPLogTrace(@"Enter");

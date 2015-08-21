@@ -39,6 +39,7 @@
         KPLogError(@"%@", @"NO PLAYER CREATED");
     } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
         self.player.DRMKey = key;
+//        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
     }
 }
 
@@ -53,8 +54,7 @@
 
 
 - (void)setSrc:(NSString *)src {
-    _src = src;
-    [_player setPlayerSource:[NSURL URLWithString:src]];
+    [self.player setPlayerSource:[NSURL URLWithString:src]];
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
@@ -90,6 +90,25 @@
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
     _playerClassName = playerClassName;
     key = _key;
+}
+
+- (id<KPlayer>)createPlayerFromClassName:(NSString *)className {
+    if (className) {
+        Class class = NSClassFromString(className);
+        
+        return [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
+    }
+    
+    return nil;
+}
+
+- (void)changePlayer:(id<KPlayer>)player {
+    player.delegate = _player.delegate;
+    player.playerSource = _player.playerSource;
+    player.duration = _player.duration;
+    player.currentPlaybackTime = _player.currentPlaybackTime;
+    [self removePlayer];
+    _player = player;
 }
 
 - (void)changeSubtitleLanguage:(NSString *)isoCode {
