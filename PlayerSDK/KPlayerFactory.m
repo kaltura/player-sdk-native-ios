@@ -6,12 +6,12 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 #import "KPIMAPlayerViewController.h"
 
-@interface KPlayerController() <KPlayerDelegate>{
+@interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
 }
@@ -21,7 +21,7 @@
 @property (nonatomic) BOOL contentEnded;
 @end
 
-@implementation KPlayerController
+@implementation KPlayerFactory
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -39,7 +39,6 @@
         KPLogError(@"%@", @"NO PLAYER CREATED");
     } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
         self.player.DRMKey = key;
-//        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
     }
 }
 
@@ -52,6 +51,15 @@
     return _player;
 }
 
+- (NSString *)getMimeType:(NSURL * )mediaUrl {
+    __block NSString *mimeType = nil;
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:mediaUrl]
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               mimeType = [response MIMEType];
+                           }];
+    return mimeType;
+}
 
 - (void)setSrc:(NSString *)src {
     [self.player setPlayerSource:[NSURL URLWithString:src]];
@@ -68,7 +76,7 @@
         _adController.locale = _locale;
         [_parentViewController addChildViewController:_adController];
         [_parentViewController.view addSubview:_adController.view];
-        __weak KPlayerController *weakSelf = self;
+        __weak KPlayerFactory *weakSelf = self;
         [_adController loadIMAAd:adTagURL
                withContentPlayer:_player
                   eventsListener:^(NSDictionary *adEventParams) {
@@ -128,25 +136,9 @@
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    static NSTimeInterval currentTime;
-    if (key && currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
-        currentTime = _player.currentPlaybackTime;
-        [_player removePlayer];
-        _player = nil;
-        [self addPlayerToController:_parentViewController];
-        self.src = _src;
-        isSeeked = event.isSeeked;
-    } else if (!currentPlayer.isKPlayer && event.canPlay) {
-        if (currentTime) {
-            _player.currentPlaybackTime = currentTime;
-        }
-        if (!isSeeked) {
-            [_player play];
-        }
-    } else {
         [_delegate player:currentPlayer eventName:event value:value];
-    }
 }
+
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     [_delegate player:currentPlayer eventName:event JSON:jsonString];

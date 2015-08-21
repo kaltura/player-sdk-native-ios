@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 
 
 @interface KPlayer : AVPlayer <KPlayer>
