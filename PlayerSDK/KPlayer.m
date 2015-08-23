@@ -155,12 +155,19 @@ static NSString *StatusKeyPath = @"status";
     [_delegate contentCompleted:self];
 }
 
-- (void)setPlayerSource:(NSURL *)playerSource {
+- (BOOL)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
     if (self.currentItem) {
         [self pause];
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
+    
+    if (!asset.isPlayable) {
+        return NO;
+        KPLogDebug(@"the follwoing source: %@ is not playable", playerSource);
+    }
+    
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
     [item addObserver:self
            forKeyPath:StatusKeyPath
@@ -169,6 +176,8 @@ static NSString *StatusKeyPath = @"status";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self replaceCurrentItemWithPlayerItem:item];
     });
+    
+    return YES;
 }
 
 

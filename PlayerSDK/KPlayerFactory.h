@@ -14,7 +14,6 @@ static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
 
 static NSString *ChromeCastPlayerClassName = @"";
-static NSString *WideVinePlayerClass = @"WVPlayer";
 
 static NSString *PlayKey = @"play";
 static NSString *PauseKey = @"pause";
@@ -33,13 +32,15 @@ static NSString *PostrollEndedKey = @"postEnded";
 @protocol KPlayer <NSObject>
 
 @property (nonatomic, weak) id<KPlayerDelegate> delegate;
-@property (nonatomic, copy) NSURL *playerSource;
+//@property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic, readonly) BOOL isKPlayer;
 
 
 - (instancetype)initWithParentView:(UIView *)parentView;
+- (BOOL)setPlayerSource:(NSURL *)playerSource;
+- (NSURL *)playerSource;
 - (void)play;
 - (void)pause;
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
@@ -83,4 +84,6 @@ static NSString *PostrollEndedKey = @"postEnded";
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
+/// Changes DRM params and returns the current DRM params
+@property (nonatomic, copy) NSDictionary *drmParams;
 @end

@@ -58,7 +58,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @implementation KPViewController 
 @synthesize controlsView;
-@synthesize drmDict;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -218,6 +217,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _playerFactory = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
         [_playerFactory addPlayerToController:self];
         _playerFactory.delegate = self;
+        _playerFactory.drmParams = self.configuration.drmParams;
     }
     
     // Initialize player controller
@@ -520,12 +520,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
+            // send notification with url
+            // add binder to
+            
             _playerFactory.src = attributeVal;
             
-            if (self.drmDict != nil) {
-                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:@"WVPlayer"]];
-                [_playerFactory.player setDRMDict:self.drmDict];
-            }
+//            if (self.drmDict != nil && [attributeVal rangeOfString:@"wvm"].location != NSNotFound) {
+//                [KDRMManager DRMSource:attributeVal
+//                                   key:self.drmDict
+//                            completion:^(NSString *drmUrl) {
+//                                if (drmUrl) {
+//                                    _playerFactory.src = drmUrl;
+//                                }
+//                }];
+//            } else {
+//                _playerFactory.src = attributeVal;
+//            }
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
@@ -535,7 +545,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
-            [_playerFactory switchPlayer:WideVinePlayerClass key:attributeVal];
+//            [_playerFactory switchPlayer:WideVinePlayerClass key:attributeVal];
             break;
 #endif
         case nativeAction:

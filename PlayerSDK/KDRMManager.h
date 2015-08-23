@@ -13,6 +13,8 @@
 @property (nonatomic, copy) NSString *DRMKey;
 @property (nonatomic, copy) NSDictionary *DRMDict;
 
++ (void)DRMSource:(NSString *)src key:(NSDictionary *)dict completion:(void (^)(NSString *))completion;
+
 @end
 
 #endif
