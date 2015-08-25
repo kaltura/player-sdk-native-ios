@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "KArchiver.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 

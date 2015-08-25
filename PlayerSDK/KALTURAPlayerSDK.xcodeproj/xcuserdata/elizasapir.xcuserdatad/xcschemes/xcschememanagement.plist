@@ -12,9 +12,19 @@
 		<key>KALTURAPlayerSDK.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
 		</dict>
-		<key>KPlayerResources.xcscheme</key>
+		<key>KALTURAPlayerSDKNoDoubleClick.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+		<key>KALTURAPlayerSDKNoIMA.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
+		<key>KALTURAPlayerSDKResources.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
@@ -22,17 +32,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>B3166DC41AF25ED200E99B77</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>B3166DD01AF26C4700E99B77</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B372892D1A8787D00076DD33</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF6759401B3AC9EE00528718</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF6759951B3ACFCA00528718</key>
 		<dict>
 			<key>primary</key>
 			<true/>
