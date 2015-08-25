@@ -33,6 +33,17 @@
     return nil;
 }
 
+- (void)loadRequest:(NSURLRequest *)request {
+    [[KArchiver shared] contentOfURL:request.URL.absoluteString
+                          completion:^(NSData *content, NSError *error) {
+                              dispatch_async(dispatch_get_main_queue(), ^{
+                                  [self loadData:content
+                                        MIMEType:@"text/html"
+                                textEncodingName:@"UTF-8"
+                                         baseURL:request.URL];
+                              });
+                          }];
+}
 
 - (void)setEntryId:(NSString *)entryId {
     if (![_entryId isEqualToString:entryId]) {

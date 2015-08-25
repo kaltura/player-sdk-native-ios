@@ -16,28 +16,18 @@ static NSString *kPortalKey = @"kaltura";
 @end
 
 @implementation WVPlayer
-@synthesize DRMKey, DRMDict;
+@synthesize DRMKey;
 - (void)setPlayerSource:(NSURL *)playerSource {
     [self.class DRMSource:playerSource.absoluteString
-                      key:self.DRMDict
+                      key:self.DRMKey
                completion:^(NSString *drmUrl) {
         super.playerSource = [NSURL URLWithString:drmUrl];
     }];
 }
 
 
-//+ (void)DRMSource:(NSString *)src key:(NSString *)key completion:(void (^)(NSString *))completion {
-//    WV_Initialize(WVCallback, @{WVDRMServerKey: key, WVPortalKey: kPortalKey});
-//    [self performSelector:@selector(fetchDRMParams:) withObject:@[src, completion] afterDelay:0.1];
-//}
-
-+ (void)DRMSource:(NSString *)src key:(NSDictionary *)dict completion:(void (^)(NSString *))completion {
-//    NSDictionary *d = @{
-//        WVDRMServerKey: [dict objectForKey:@"WVDRMServerKey"],
-//        WVPortalKey: [dict objectForKey:@"WVPortalKey"],
-//        WVCAUserDataKey: [dict objectForKey:@"WVCAUserDataKey"] != nil ? [dict objectForKey:@"WVCAUserDataKey"] : nil
-//      };
-    WV_Initialize(WVCallback, dict);
++ (void)DRMSource:(NSString *)src key:(NSString *)key completion:(void (^)(NSString *))completion {
+    WV_Initialize(WVCallback, @{WVDRMServerKey: key, WVPortalKey: kPortalKey});
     [self performSelector:@selector(fetchDRMParams:) withObject:@[src, completion] afterDelay:0.1];
 }
 
@@ -59,10 +49,6 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
     
     KPLogTrace(@"Exit");
     return WViOsApiStatus_OK;
-}
-
-+ (BOOL)isPlayableMIMEType:(NSString *)mimeType {
-    return @([AVURLAsset isPlayableExtendedMIMEType:mimeType]);
 }
 
 @end

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "NSMutableDictionary+AdSupport.h"
-
+#import "IMAAdsLoader.h"
+#import "IMAAVPlayerContentPlayhead.h"
 
 /**
  *  Supplies the playhead position for midroll ads
@@ -23,7 +24,7 @@
 //
 //@end
 
-@interface KPIMAPlayerViewController : UIViewController 
+@interface KPIMAPlayerViewController : UIViewController <IMAAdsLoaderDelegate, IMAAdsManagerDelegate>
 
 
 /**
