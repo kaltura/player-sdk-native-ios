@@ -17,6 +17,9 @@ NSString *const DoPauseKey = @"doPause";
 NSString *const DoStopKey = @"doStop";
 NSString *const DoSeekKey = @"doSeek";
 NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
+NSString *const KMediaSource = @"KMediaSource";
+
+NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackStateDidChangeNotification";
 
 - (void)setPlaybackState: (KPMediaPlaybackState)newState {
     _playbackState = newState;

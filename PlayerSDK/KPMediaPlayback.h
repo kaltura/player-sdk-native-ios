@@ -42,7 +42,7 @@
  @method        pause:
  @abstract      Pauses playback of the current item. (required)
  
-If playback is not currently underway, this method has no effect. To resume playback of the current item from the pause point, call the play method.
+ If playback is not currently underway, this method has no effect. To resume playback of the current item from the pause point, call the play method.
  */
 - (void)pause;
 
@@ -50,7 +50,7 @@ If playback is not currently underway, this method has no effect. To resume play
  @method        stop:
  @abstract      Ends playback of the current item. (required)
  
-This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.
+ This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.
  */
 - (void)stop;
 
@@ -65,7 +65,7 @@ This method stops playback of the current item and resets the playhead to the st
 /*!
  @method        beginSeekingForward:
  @abstract      Begins seeking forward through the media content. (required)
-  */
+ */
 - (void)beginSeekingForward;
 
 /*!

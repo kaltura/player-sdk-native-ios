@@ -62,8 +62,7 @@ static NSString *StatusKeyPath = @"status";
                                                       queue:dispatch_get_main_queue()
                                                  usingBlock:^(CMTime time) {
                                                      [weakSelf updateCurrentTime:CMTimeGetSeconds(time)];
-                                                     [weakSelf.delegate player:weakSelf
-                                                                     eventName:TimeUpdateKey
+                                                     [weakSelf.delegate player:weakSelf eventName:TimeUpdateKey
                                                                          value:@(CMTimeGetSeconds(time)).stringValue];
 //                                          [weakSelf.delegate eventName:ProgressKey
 //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
@@ -161,17 +160,14 @@ static NSString *StatusKeyPath = @"status";
         [self pause];
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
-    AVAsset *asset = [AVAsset assetWithURL:playerSource];
-    if (asset.isPlayable) {
-        AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
-        [item addObserver:self
-               forKeyPath:StatusKeyPath
-                  options:0
-                  context:nil];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self replaceCurrentItemWithPlayerItem:item];
-        });
-    }
+    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
+    [item addObserver:self
+           forKeyPath:StatusKeyPath
+              options:0
+              context:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self replaceCurrentItemWithPlayerItem:item];
+    });
 }
 
 
@@ -182,9 +178,18 @@ static NSString *StatusKeyPath = @"status";
     if (![currentPlayerAsset isKindOfClass:AVURLAsset.class]) {
         return nil;
     }
+//    [AVURLAsset isPlayableExtendedMIMEType:<#(NSString *)#>]
+//    
+//    [AVURLAsset audiovisualMIMETypes];
+    
     // return the NSURL
     return [(AVURLAsset *)currentPlayerAsset URL];
 }
+
++ (BOOL)isPlayableMIMEType:(NSString *)mimeType {
+    return @([AVURLAsset isPlayableExtendedMIMEType:mimeType]);
+}
+
 
 - (NSTimeInterval)duration {
     AVPlayerItem *item = self.currentItem;

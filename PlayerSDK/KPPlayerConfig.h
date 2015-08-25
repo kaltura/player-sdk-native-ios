@@ -40,7 +40,6 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 /// By setting the size of the cache the SDK will cache the data in the limit of the cacheSize value.
 @property (nonatomic) float cacheSize;
 
-
 /// Enables the SDK user to define interface orientation of the player
 @property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations;
 
@@ -49,14 +48,7 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
  *  @param NSString The name of the flag
  *  @param NSString The value for the flag
  */
-- (void)addConfigKey:(NSString *)key withValue:(NSString *)value;
-
-/** Converts dictionary to JSON and Adds flags to the video request
- *
- *  @param NSString The name of the flag
- *  @param NSDictionary The dictionary for the flag
- */
-- (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary;
+- (void)addConfigKey:(NSString *)key withValue:(NSString *)value;;
 
 - (NSURL *)videoURL;
 

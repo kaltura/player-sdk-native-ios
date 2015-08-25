@@ -13,6 +13,8 @@
 // Media Player Types
 
 typedef NS_ENUM(NSInteger, KPMediaPlaybackState) {
+    KPMediaPlaybackStateLoaded,
+    KPMediaPlaybackStateReady,
     /* Playback is currently stopped. */
     KPMediaPlaybackStateStopped,
     /* Playback is currently under way. */
@@ -44,7 +46,7 @@ typedef NS_OPTIONS(NSUInteger, KPMediaLoadState) {
 // Media Player Notifications
 
 /* Posted when the playback state changes, either programatically or by the user. */
- NSString * const KPMediaPlaybackStateDidChangeNotification;
+extern NSString * const KPMediaPlaybackStateDidChangeNotification;
 
 // -----------------------------------------------------------------------------
 // Media Player Keys

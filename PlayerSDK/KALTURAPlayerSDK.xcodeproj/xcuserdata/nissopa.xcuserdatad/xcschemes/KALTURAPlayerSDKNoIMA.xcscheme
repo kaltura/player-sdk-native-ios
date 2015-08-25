@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0630"
+   LastUpgradeVersion = "0640"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
-               BuildableName = "libKALTURAPlayerSDK.a"
-               BlueprintName = "KALTURAPlayerSDK"
+               BlueprintIdentifier = "BF6759951B3ACFCA00528718"
+               BuildableName = "libKALTURAPlayerSDKNoIMA.a"
+               BlueprintName = "KALTURAPlayerSDKNoIMA"
                ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -42,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
-            BuildableName = "libKALTURAPlayerSDK.a"
-            BlueprintName = "KALTURAPlayerSDK"
+            BlueprintIdentifier = "BF6759951B3ACFCA00528718"
+            BuildableName = "libKALTURAPlayerSDKNoIMA.a"
+            BlueprintName = "KALTURAPlayerSDKNoIMA"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -60,9 +60,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "BFFFA726182F9E31005B3B24"
-            BuildableName = "libKALTURAPlayerSDK.a"
-            BlueprintName = "KALTURAPlayerSDK"
+            BlueprintIdentifier = "BF6759951B3ACFCA00528718"
+            BuildableName = "libKALTURAPlayerSDKNoIMA.a"
+            BlueprintName = "KALTURAPlayerSDKNoIMA"
             ReferencedContainer = "container:KALTURAPlayerSDK.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

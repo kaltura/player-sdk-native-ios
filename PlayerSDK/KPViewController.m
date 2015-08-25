@@ -23,7 +23,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPControlsView.h"
 #import "KPController_Private.h"
 #import "KPURLProtocol.h"
-#import "KPDataBaseManager.h"
+#import "KCacheManager.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -60,6 +60,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @implementation KPViewController 
 @synthesize controlsView;
+@synthesize drmDict;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -73,6 +74,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self = [super init];
     if (self) {
         videoURL = [NSURL URLWithString:url.absoluteString];
+        
         return self;
     }
     return nil;
@@ -85,8 +87,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         // If the developer set the cache size, the cache system is triggered.
         if (_configuration.cacheSize > 0) {
             [NSURLProtocol registerClass:[KPURLProtocol class]];
-            dataBaseMgr.host = configuration.videoURL.host;
-            dataBaseMgr.cacheSize = _configuration.cacheSize;
+            CacheManager.host = configuration.videoURL.host;
+            CacheManager.cacheSize = _configuration.cacheSize;
         }
         return self;
     }
@@ -244,6 +246,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification object:weakSelf userInfo:@{KMediaPlaybackStateKey: @(KPMediaPlaybackStateLoaded)}];
+        [weakSelf.playerController setPlaybackState:KPMediaPlaybackStateLoaded];
         if (!weakSelf.isModifiedFrame) {
             weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         } else {
@@ -274,11 +278,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         self.controlsView.controlsFrame = screenBounds();
     } 
-    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
-    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
-    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
-    [(UIView *)self.controlsView addSubview:reloadButton];
+//    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
+//    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
+//    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
+//    [(UIView *)self.controlsView addSubview:reloadButton];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -519,7 +523,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-
 - (void)setAttribute: (NSArray*)args{
     KPLogTrace(@"Enter");
     NSString *attributeName = [args objectAtIndex:0];
@@ -528,6 +531,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     switch ( attributeName.attributeEnumFromString ) {
         case src:
             _playerFactory.src = attributeVal;
+            
+            if (self.drmDict != nil) {
+                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:@"WVPlayer"]];
+                [_playerFactory.player setDRMDict:self.drmDict];
+            }
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
@@ -662,25 +670,30 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 #pragma mark KPlayerDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value { ///@todo:assign state
     ///@todo refactor
-    if(event.isPlay) {
+    if (event.isMetadata) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                            object:nil
+                                                            object:self
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateReady)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStateReady];
+    } else if(event.isPlay) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:self
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
         [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
     } else if(event.isPause) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                            object:nil
+                                                            object:self
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
         [self.playerController setPlaybackState:KPMediaPlaybackStatePaused];
     } else if(event.isStop) {
         [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                            object:nil
+                                                            object:self
                                                           userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
         [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
     } else if (event.isTimeUpdate) {
         if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
             [_delegate updateCurrentPlaybackTime:_playerFactory.currentPlayBackTime];
-        }
+    }
     }
     
     [self.controlsView triggerEvent:event withValue:value];

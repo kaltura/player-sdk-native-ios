@@ -49,7 +49,6 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self stringByAppendingString:@".sqlite-wal"];
 }
 
-
 - (Attribute)attributeEnumFromString {
     KPLogTrace(@"Enter");
     NSArray *attributes = @[@"src",

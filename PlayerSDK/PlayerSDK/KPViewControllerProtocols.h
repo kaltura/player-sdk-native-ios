@@ -45,7 +45,7 @@ typedef enum{
 
 @required
 
-- (NSURL *)getInitialKIframeUrl;
+-(NSURL *)getInitialKIframeUrl;
 - (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 
 @optional
