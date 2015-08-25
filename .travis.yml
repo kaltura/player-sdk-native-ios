@@ -1,0 +1,3 @@
+language: objective-c
+xcode_project: PlayerSDK/KALTURAPlayerSDK.xcodeproj
+xcode_scheme: KALTURAPlayerSDK
