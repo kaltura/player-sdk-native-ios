@@ -23,7 +23,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPControlsView.h"
 #import "KPController_Private.h"
 #import "KPURLProtocol.h"
-#import "KPDataBaseManager.h"
+#import "KCacheManager.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -87,8 +87,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         // If the developer set the cache size, the cache system is triggered.
         if (_configuration.cacheSize > 0) {
             [NSURLProtocol registerClass:[KPURLProtocol class]];
-            dataBaseMgr.host = configuration.videoURL.host;
-            dataBaseMgr.cacheSize = _configuration.cacheSize;
+            CacheManager.host = configuration.videoURL.host;
+            CacheManager.cacheSize = _configuration.cacheSize;
         }
         return self;
     }

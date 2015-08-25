@@ -1,28 +1,28 @@
 //
-//  KPDataBaseManager.h
+//  KCacheManager.h
 //  KALTURAPlayerSDK
 //
-//  Created by Nissim Pardo on 8/3/15.
+//  Created by Nissim Pardo on 8/23/15.
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "CachedURLResponse.h"
 
-#define dataBaseMgr [KPDataBaseManager shared]
+#define CacheManager [KCacheManager shared]
 
-@interface KPDataBaseManager : NSObject
-+ (KPDataBaseManager *)shared;
-@property (nonatomic, strong) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic, copy) NSString *host;
+@interface KCacheManager : NSObject
++ (KCacheManager *)shared;
+
 @property (nonatomic) float cacheSize;
+@property (nonatomic, copy) NSString *host;
+
 @property (strong, nonatomic, readonly) NSDictionary *withDomain;
 @property (strong, nonatomic, readonly) NSDictionary *subStrings;
 @end
 
 
 @interface NSString(CoreData)
-@property (nonatomic, readonly) CachedURLResponse *cachedResponse;
+@property (nonatomic, readonly) NSDictionary *cachedResponse;
 @end
 
 @interface CachedURLParams: NSObject
@@ -33,4 +33,3 @@
 
 - (void)storeCacheResponse;
 @end
-

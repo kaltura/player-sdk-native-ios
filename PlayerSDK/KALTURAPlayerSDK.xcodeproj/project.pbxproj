@@ -64,10 +64,7 @@
 		B3F968F41B8747DA004065CE /* KPPlayerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F968F11B8747DA004065CE /* KPPlayerConfig.m */; };
 		B3F968F51B8747DA004065CE /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F968F31B8747DA004065CE /* KPViewController.m */; };
 		B3F968F81B87480C004065CE /* KPController.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F968F71B87480C004065CE /* KPController.m */; };
-		B3F969011B8748B0004065CE /* CachedURLResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F968FA1B8748B0004065CE /* CachedURLResponse.m */; };
 		B3F969021B8748B0004065CE /* KPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F968FC1B8748B0004065CE /* KPURLProtocol.m */; };
-		B3F969031B8748B0004065CE /* KPURLProtocolCaching.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = B3F968FD1B8748B0004065CE /* KPURLProtocolCaching.xcdatamodel */; };
-		B3F969041B8748B0004065CE /* KPDataBaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F968FF1B8748B0004065CE /* KPDataBaseManager.m */; };
 		B3F969051B8748B0004065CE /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = B3F969001B8748B0004065CE /* CachedStrings.plist */; };
 		B3F969081B8748FF004065CE /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F969071B8748FF004065CE /* NSString+Utilities.m */; };
 		B3F969311B875766004065CE /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968F21B8747DA004065CE /* KPViewController.h */; };
@@ -76,6 +73,10 @@
 		B3F969341B8757ED004065CE /* KPController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968F61B87480C004065CE /* KPController.h */; };
 		B3F969351B8757FD004065CE /* KPMediaPlayback.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968EF1B874794004065CE /* KPMediaPlayback.h */; };
 		B3F969361B87580F004065CE /* KMediaPlayerDefines.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968EE1B874794004065CE /* KMediaPlayerDefines.h */; };
+		B3F969501B89EB34004065CE /* NSFileManager+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F9694F1B89EB34004065CE /* NSFileManager+Cache.m */; };
+		B3F969531B89EB51004065CE /* KCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F969521B89EB51004065CE /* KCacheManager.m */; };
+		B3F969561B89F7C3004065CE /* NSMutableDictionary+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F969551B89F7C3004065CE /* NSMutableDictionary+Cache.m */; };
+		B3F969591B89F84C004065CE /* NSDictionary+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F969581B89F84C004065CE /* NSDictionary+Cache.m */; };
 		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
 		BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
 		BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
@@ -197,17 +198,20 @@
 		B3F968F31B8747DA004065CE /* KPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPViewController.m; sourceTree = "<group>"; };
 		B3F968F61B87480C004065CE /* KPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPController.h; sourceTree = "<group>"; };
 		B3F968F71B87480C004065CE /* KPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPController.m; sourceTree = "<group>"; };
-		B3F968F91B8748AF004065CE /* CachedURLResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedURLResponse.h; sourceTree = "<group>"; };
-		B3F968FA1B8748B0004065CE /* CachedURLResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedURLResponse.m; sourceTree = "<group>"; };
 		B3F968FB1B8748B0004065CE /* KPURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPURLProtocol.h; sourceTree = "<group>"; };
 		B3F968FC1B8748B0004065CE /* KPURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPURLProtocol.m; sourceTree = "<group>"; };
-		B3F968FD1B8748B0004065CE /* KPURLProtocolCaching.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KPURLProtocolCaching.xcdatamodel; sourceTree = "<group>"; };
-		B3F968FE1B8748B0004065CE /* KPDataBaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPDataBaseManager.h; sourceTree = "<group>"; };
-		B3F968FF1B8748B0004065CE /* KPDataBaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPDataBaseManager.m; sourceTree = "<group>"; };
 		B3F969001B8748B0004065CE /* CachedStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CachedStrings.plist; sourceTree = "<group>"; };
 		B3F969061B8748FF004065CE /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
 		B3F969071B8748FF004065CE /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
 		B3F969091B874940004065CE /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewControllerProtocols.h; sourceTree = "<group>"; };
+		B3F9694E1B89EB34004065CE /* NSFileManager+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Cache.h"; sourceTree = "<group>"; };
+		B3F9694F1B89EB34004065CE /* NSFileManager+Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Cache.m"; sourceTree = "<group>"; };
+		B3F969511B89EB51004065CE /* KCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCacheManager.h; sourceTree = "<group>"; };
+		B3F969521B89EB51004065CE /* KCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCacheManager.m; sourceTree = "<group>"; };
+		B3F969541B89F7C3004065CE /* NSMutableDictionary+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Cache.h"; sourceTree = "<group>"; };
+		B3F969551B89F7C3004065CE /* NSMutableDictionary+Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+Cache.m"; sourceTree = "<group>"; };
+		B3F969571B89F84C004065CE /* NSDictionary+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Cache.h"; sourceTree = "<group>"; };
+		B3F969581B89F84C004065CE /* NSDictionary+Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Cache.m"; sourceTree = "<group>"; };
 		BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WViPhoneAPI.h; path = ../WViPhoneAPI.h; sourceTree = "<group>"; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
 		BFE34297199BE70600C63F74 /* KPChromecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPChromecast.h; sourceTree = "<group>"; };
@@ -309,6 +313,21 @@
 			name = ShareManager;
 			sourceTree = "<group>";
 		};
+		B3F9694D1B89EB0C004065CE /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9694E1B89EB34004065CE /* NSFileManager+Cache.h */,
+				B3F9694F1B89EB34004065CE /* NSFileManager+Cache.m */,
+				B3F969511B89EB51004065CE /* KCacheManager.h */,
+				B3F969521B89EB51004065CE /* KCacheManager.m */,
+				B3F969541B89F7C3004065CE /* NSMutableDictionary+Cache.h */,
+				B3F969551B89F7C3004065CE /* NSMutableDictionary+Cache.m */,
+				B3F969571B89F84C004065CE /* NSDictionary+Cache.h */,
+				B3F969581B89F84C004065CE /* NSDictionary+Cache.m */,
+			);
+			name = Cache;
+			sourceTree = "<group>";
+		};
 		BFA6F0D918BB796500F7C78F /* WideVine */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,13 +400,9 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
-				B3F968F91B8748AF004065CE /* CachedURLResponse.h */,
-				B3F968FA1B8748B0004065CE /* CachedURLResponse.m */,
+				B3F9694D1B89EB0C004065CE /* Cache */,
 				B3F968FB1B8748B0004065CE /* KPURLProtocol.h */,
 				B3F968FC1B8748B0004065CE /* KPURLProtocol.m */,
-				B3F968FD1B8748B0004065CE /* KPURLProtocolCaching.xcdatamodel */,
-				B3F968FE1B8748B0004065CE /* KPDataBaseManager.h */,
-				B3F968FF1B8748B0004065CE /* KPDataBaseManager.m */,
 				B3F969001B8748B0004065CE /* CachedStrings.plist */,
 				B3410D4A1A6D45B200275F00 /* Categories */,
 				B35B85761A43258200DCDBF7 /* KPLogManager.h */,
@@ -569,17 +584,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3F969011B8748B0004065CE /* CachedURLResponse.m in Sources */,
 				B3F968F81B87480C004065CE /* KPController.m in Sources */,
 				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */,
 				B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */,
 				B329CD0A1AB19AC6004AB647 /* KPlayer.m in Sources */,
 				B3F968EC1B874785004065CE /* KPlayerFactory.m in Sources */,
+				B3F969531B89EB51004065CE /* KCacheManager.m in Sources */,
 				B3F969081B8748FF004065CE /* NSString+Utilities.m in Sources */,
 				B3F968F41B8747DA004065CE /* KPPlayerConfig.m in Sources */,
 				B34C89391ADA65AA007C6A5D /* KPControlsView.m in Sources */,
 				B34C893F1ADA705F007C6A5D /* KPControlsWKWebview.m in Sources */,
+				B3F969501B89EB34004065CE /* NSFileManager+Cache.m in Sources */,
 				B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */,
 				B3F968F51B8747DA004065CE /* KPViewController.m in Sources */,
 				B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */,
@@ -587,12 +603,12 @@
 				B35B85781A43258200DCDBF7 /* KPLog.m in Sources */,
 				B35A5DA41AC1A1DA001E7D98 /* WVPlayer.m in Sources */,
 				B30BADEA1A21ED06008E5E67 /* NSDictionary+Strategy.m in Sources */,
-				B3F969031B8748B0004065CE /* KPURLProtocolCaching.xcdatamodel in Sources */,
+				B3F969561B89F7C3004065CE /* NSMutableDictionary+Cache.m in Sources */,
 				B39BEC8F1A0B72760085BA26 /* SmsStrategy.m in Sources */,
 				B39BEC831A0A80C00085BA26 /* TwitterStrategy.m in Sources */,
+				B3F969591B89F84C004065CE /* NSDictionary+Cache.m in Sources */,
 				B3410D4D1A6D45E000275F00 /* NSMutableDictionary+AdSupport.m in Sources */,
 				B3932AD11A0A0DA000AC0442 /* KPShareManager.m in Sources */,
-				B3F969041B8748B0004065CE /* KPDataBaseManager.m in Sources */,
 				B34C893C1ADA6847007C6A5D /* KPControlsUIWebview.m in Sources */,
 				B32A5CEE1A2723730051DC7F /* KPWebKitBrowserViewController.m in Sources */,
 				B3F969021B8748B0004065CE /* KPURLProtocol.m in Sources */,

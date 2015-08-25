@@ -7,7 +7,8 @@
 //
 
 #import "KPURLProtocol.h"
-#import "KPDataBaseManager.h"
+#import "KCacheManager.h"
+#import "NSDictionary+Cache.h"
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 
@@ -26,14 +27,14 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
     if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
         return NO;
     }
-    if ([request.URL.host isEqualToString:dataBaseMgr.host]) {
-        for (NSString *key in dataBaseMgr.withDomain.allKeys) {
+    if ([request.URL.host isEqualToString:CacheManager.host]) {
+        for (NSString *key in CacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
                 return YES;
             }
         }
     } else {
-        for (NSString *key in dataBaseMgr.subStrings.allKeys) {
+        for (NSString *key in CacheManager.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
                 return YES;
             }
@@ -48,31 +49,31 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 
 - (void) startLoading {
     
-//    CachedURLResponse *cachedResponse = self.request.URL.absoluteString.cachedResponse;
-//    if (cachedResponse) {
-//        
-//        NSData *data = cachedResponse.data;
-//        NSString *mimeType = cachedResponse.mimeType;
-//        NSString *encoding = cachedResponse.encoding;
-//        
-//        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:self.request.URL
-//                                                            MIMEType:mimeType
-//                                               expectedContentLength:data.length
-//                                                    textEncodingName:encoding];
-//        
-//        [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-//        [self.client URLProtocol:self didLoadData:data];
-//        [self.client URLProtocolDidFinishLoading:self];
-//        
-//    } else {
-//        _cacheParams = [CachedURLParams new];
-//        _cacheParams.url = self.request.URL;
+    NSDictionary *cachedResponse = self.request.URL.absoluteString.cachedResponse;
+    if (cachedResponse) {
+        
+        NSData *data = cachedResponse.data;
+        NSString *mimeType = cachedResponse.mimeType;
+        NSString *encoding = cachedResponse.encoding;
+        
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:self.request.URL
+                                                            MIMEType:mimeType
+                                               expectedContentLength:data.length
+                                                    textEncodingName:encoding];
+        
+        [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [self.client URLProtocol:self didLoadData:data];
+        [self.client URLProtocolDidFinishLoading:self];
+        
+    } else {
+        _cacheParams = [CachedURLParams new];
+        _cacheParams.url = self.request.URL;
         NSMutableURLRequest *newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES forKey:KPURLProtocolHandledKey inRequest:newRequest];
     
         self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
         
-//    }
+    }
     
 }
 
