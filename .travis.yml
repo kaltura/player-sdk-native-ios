@@ -1,3 +1,13 @@
 language: objective-c
 xcode_project: PlayerSDK/KALTURAPlayerSDK.xcodeproj
 xcode_scheme: KALTURAPlayerSDK
+notifications:
+  email:
+    recipients:
+      - itay.kinnrot@kaltura.com
+      - eliza.sapir@kaltura.com
+      - nissim.pardo@kaltura.com
+      - noam.tamim@kaltura.com
+    on_success: change
+    on_failure: always
+    
