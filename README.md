@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kaltura/player-sdk-native-ios.svg?branch=master)](https://travis-ci.org/kaltura/player-sdk-native-ios)
+
 Player SDK Native iOS
 =================
 For detailed usage guide see [Knowledge Center iOS player SDK usage guide](http://knowledge.kaltura.com/kaltura-player-sdk-ios)
