@@ -6,25 +6,22 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
-#ifdef IMA
 #import "KPIMAPlayerViewController.h"
-#endif
-@interface KPlayerController() <KPlayerDelegate>{
+
+@interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
-#ifdef IMA
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
-#endif
 @property (nonatomic) BOOL contentEnded;
 @end
 
-@implementation KPlayerController
+@implementation KPlayerFactory
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -54,10 +51,18 @@
     return _player;
 }
 
+- (NSString *)getMimeType:(NSURL * )mediaUrl {
+    __block NSString *mimeType = nil;
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:mediaUrl]
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               mimeType = [response MIMEType];
+                           }];
+    return mimeType;
+}
 
 - (void)setSrc:(NSString *)src {
-    _src = src;
-    [_player setPlayerSource:[NSURL URLWithString:src]];
+    [self.player setPlayerSource:[NSURL URLWithString:src]];
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
@@ -65,14 +70,13 @@
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
-#ifdef IMA
     if (!_adController) {
         _adController = [KPIMAPlayerViewController new];
         _adController.adPlayerHeight = _adPlayerHeight;
         _adController.locale = _locale;
         [_parentViewController addChildViewController:_adController];
         [_parentViewController.view addSubview:_adController.view];
-        __weak KPlayerController *weakSelf = self;
+        __weak KPlayerFactory *weakSelf = self;
         [_adController loadIMAAd:adTagURL
                withContentPlayer:_player
                   eventsListener:^(NSDictionary *adEventParams) {
@@ -83,12 +87,11 @@
                       } else if (weakSelf.contentEnded){
                           [weakSelf.delegate allAdsCompleted];
                       } else if (!adEventParams) {
-                          [weakSelf.delegate allAdsCompleted];
                           [weakSelf.adController removeIMAPlayer];
+                          weakSelf.adController = nil;
                       }
                   }];
     }
-#endif
 }
 
 
@@ -97,41 +100,45 @@
     key = _key;
 }
 
+- (id<KPlayer>)createPlayerFromClassName:(NSString *)className {
+    if (className) {
+        Class class = NSClassFromString(className);
+        
+        return [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
+    }
+    
+    return nil;
+}
+
+- (void)changePlayer:(id<KPlayer>)player {
+    player.delegate = _player.delegate;
+    player.playerSource = _player.playerSource;
+    player.duration = _player.duration;
+    player.currentPlaybackTime = _player.currentPlaybackTime;
+    [self removePlayer];
+    _player = player;
+}
+
 - (void)changeSubtitleLanguage:(NSString *)isoCode {
     [_player changeSubtitleLanguage:isoCode];
 }
 
 - (void)removePlayer {
+    if (_adController) {
+        [_adController removeIMAPlayer];
+    }
     [_player removePlayer];
     _player = nil;
-#ifdef IMA
-    [_adController removeIMAPlayer];
+    
     _adController = nil;
-#endif
 }
 
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    static NSTimeInterval currentTime;
-    if (key && currentPlayer.isKPlayer && (event.isPlay || event.isSeeked)) {
-        currentTime = _player.currentPlaybackTime;
-        [_player removePlayer];
-        _player = nil;
-        [self addPlayerToController:_parentViewController];
-        self.src = _src;
-        isSeeked = event.isSeeked;
-    } else if (!currentPlayer.isKPlayer && event.canPlay) {
-        if (currentTime) {
-            _player.currentPlaybackTime = currentTime;
-        }
-        if (!isSeeked) {
-            [_player play];
-        }
-    } else {
         [_delegate player:currentPlayer eventName:event value:value];
-    }
 }
+
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     [_delegate player:currentPlayer eventName:event JSON:jsonString];
@@ -139,9 +146,7 @@
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.contentEnded = YES;
-#ifdef IMA
     [_adController contentCompleted];
-#endif
 }
 
 - (void)dealloc {

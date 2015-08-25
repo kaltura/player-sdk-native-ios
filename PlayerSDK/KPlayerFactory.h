@@ -45,9 +45,11 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)pause;
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
++ (BOOL)isPlayableMIMEType:(NSString *)mimeType;
 
 @optional
 @property (nonatomic, copy) NSString *DRMKey;
+@property (nonatomic, copy) NSDictionary *DRMDict;
 @end
 
 @protocol KPlayerDelegate <NSObject>
@@ -58,22 +60,28 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 @end
 
-@protocol KPlayerControllerDelegate <KPlayerDelegate>
+@protocol KDRM <NSObject>
+
+@end
+
+@protocol KPlayerFactoryDelegate <KPlayerDelegate>
 
 - (void)allAdsCompleted;
 
 @end
 
-@interface KPlayerController : NSObject
+@interface KPlayerFactory : NSObject
 
 - (instancetype)initWithPlayerClassName:(NSString *)className;
 - (void)addPlayerToController:(UIViewController *)parentViewController;
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)key;
+- (id<KPlayer>)createPlayerFromClassName:(NSString *)className;
+- (void)changePlayer:(id<KPlayer>)player;
 - (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
 
 @property (nonatomic, strong) id<KPlayer> player;
-@property (nonatomic, weak) id<KPlayerControllerDelegate> delegate;
+@property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
 @property (nonatomic, copy) NSString *adTagURL;
