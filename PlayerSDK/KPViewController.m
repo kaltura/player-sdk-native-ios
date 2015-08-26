@@ -58,7 +58,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @implementation KPViewController 
 @synthesize controlsView;
-@synthesize drmDict;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -218,6 +217,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _playerFactory = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
         [_playerFactory addPlayerToController:self];
         _playerFactory.delegate = self;
+        _playerFactory.drmParams = self.configuration.drmParams;
     }
     
     // Initialize player controller
@@ -521,11 +521,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     switch ( attributeName.attributeEnumFromString ) {
         case src:
             _playerFactory.src = attributeVal;
-            
-            if (self.drmDict != nil) {
-                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:@"WVPlayer"]];
-                [_playerFactory.player setDRMDict:self.drmDict];
-            }
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
@@ -534,8 +529,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             [self visible: attributeVal];
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
+        ///@todo: test & refactor by sending the dictionary via web layer
         case wvServerKey:
-            [_playerFactory switchPlayer:WideVinePlayerClass key:attributeVal];
+            _playerFactory.drmParams = @{
+                                         @"WVDRMServerKey": attributeVal,
+                                         @"WVPortalKey": @"kaltura"
+                                       };
             break;
 #endif
         case nativeAction:

@@ -32,8 +32,8 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 @property (nonatomic, copy) NSString *entryId;
 @property (nonatomic, copy, readonly) NSString *playerId;
 @property (nonatomic, copy) NSString *advertiserID;
+@property (nonatomic, copy) NSDictionary *drmParams;
 @property (nonatomic) BOOL enableHover;
-
 @property (nonatomic) BOOL debug;
 @property (nonatomic) BOOL forceMobileHTML5;
 

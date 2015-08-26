@@ -7,6 +7,7 @@
 //
 
 #import "KPlayerFactory.h"
+#import "KDRMManager.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 #ifdef IMA
@@ -42,10 +43,11 @@
     _parentViewController = parentViewController;
     if (!self.player) {
         KPLogError(@"%@", @"NO PLAYER CREATED");
-    } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
-        self.player.DRMKey = key;
-//        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
     }
+//    else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
+//        self.player.DRMKey = key;
+////        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
+//    }
 }
 
 - (id<KPlayer>)player {
@@ -68,7 +70,19 @@
 }
 
 - (void)setSrc:(NSString *)src {
-    [self.player setPlayerSource:[NSURL URLWithString:src]];
+    if (![self.player setPlayerSource:[NSURL URLWithString:src]]) {
+        if (self.drmParams != nil) {
+            [KDRMManager DRMSource:src
+                               key:self.drmParams
+                        completion:^(NSString *drmUrl) {
+                            if (drmUrl &&
+                                ![self.player setPlayerSource:[NSURL URLWithString:drmUrl]]) {
+                                KPLogError(@"Media Source is not playable!");
+                            }
+                        }];
+        }
+
+    }
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {

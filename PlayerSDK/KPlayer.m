@@ -139,9 +139,6 @@ static NSString *StatusKeyPath = @"status";
                     self.closedCaptionDisplayEnabled = YES;
                     
                 }
-//                [self.currentItem selectMediaOption:self.audioSelectionGroup.options[0]
-//                              inMediaSelectionGroup:self.audioSelectionGroup];
-                
             }
                 break;
             case AVPlayerStatusUnknown:
@@ -150,17 +147,25 @@ static NSString *StatusKeyPath = @"status";
     }
 }
 
-
 - (void)videoEnded {
     [_delegate contentCompleted:self];
 }
 
-- (void)setPlayerSource:(NSURL *)playerSource {
+- (BOOL)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
+    
     if (self.currentItem) {
         [self pause];
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
+    
+    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
+    
+    if (!asset.isPlayable) {
+        return NO;
+        KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
+    }
+    
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
     [item addObserver:self
            forKeyPath:StatusKeyPath
@@ -169,8 +174,9 @@ static NSString *StatusKeyPath = @"status";
     dispatch_async(dispatch_get_main_queue(), ^{
         [self replaceCurrentItemWithPlayerItem:item];
     });
+    
+    return YES;
 }
-
 
 - (NSURL *)playerSource {
     // get current asset
@@ -179,18 +185,10 @@ static NSString *StatusKeyPath = @"status";
     if (![currentPlayerAsset isKindOfClass:AVURLAsset.class]) {
         return nil;
     }
-//    [AVURLAsset isPlayableExtendedMIMEType:<#(NSString *)#>]
-//    
-//    [AVURLAsset audiovisualMIMETypes];
     
     // return the NSURL
     return [(AVURLAsset *)currentPlayerAsset URL];
 }
-
-+ (BOOL)isPlayableMIMEType:(NSString *)mimeType {
-    return @([AVURLAsset isPlayableExtendedMIMEType:mimeType]);
-}
-
 
 - (NSTimeInterval)duration {
     AVPlayerItem *item = self.currentItem;
