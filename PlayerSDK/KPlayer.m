@@ -139,9 +139,6 @@ static NSString *StatusKeyPath = @"status";
                     self.closedCaptionDisplayEnabled = YES;
                     
                 }
-//                [self.currentItem selectMediaOption:self.audioSelectionGroup.options[0]
-//                              inMediaSelectionGroup:self.audioSelectionGroup];
-                
             }
                 break;
             case AVPlayerStatusUnknown:
@@ -150,22 +147,23 @@ static NSString *StatusKeyPath = @"status";
     }
 }
 
-
 - (void)videoEnded {
     [_delegate contentCompleted:self];
 }
 
 - (BOOL)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
+    
     if (self.currentItem) {
         [self pause];
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
+    
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
     
     if (!asset.isPlayable) {
         return NO;
-        KPLogDebug(@"the follwoing source: %@ is not playable", playerSource);
+        KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
     }
     
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
@@ -179,7 +177,6 @@ static NSString *StatusKeyPath = @"status";
     
     return YES;
 }
-
 
 - (NSURL *)playerSource {
     // get current asset

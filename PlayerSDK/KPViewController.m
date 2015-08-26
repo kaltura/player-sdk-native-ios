@@ -520,22 +520,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
-            // send notification with url
-            // add binder to
-            
             _playerFactory.src = attributeVal;
-            
-//            if (self.drmDict != nil && [attributeVal rangeOfString:@"wvm"].location != NSNotFound) {
-//                [KDRMManager DRMSource:attributeVal
-//                                   key:self.drmDict
-//                            completion:^(NSString *drmUrl) {
-//                                if (drmUrl) {
-//                                    _playerFactory.src = drmUrl;
-//                                }
-//                }];
-//            } else {
-//                _playerFactory.src = attributeVal;
-//            }
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
