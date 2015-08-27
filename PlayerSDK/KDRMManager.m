@@ -30,7 +30,13 @@
 
 + (void)fetchDRMParams:(NSArray *)params {
     NSMutableString *responseUrl = [NSMutableString string];
-    WViOsApiStatus status = WV_Play(params.firstObject, responseUrl, 0);
+    WViOsApiStatus status = WV_Play(params.firstObject, responseUrl, nil);
+    
+    if (status == WViOsApiStatus_AlreadyPlaying) {
+        WV_Stop();
+        status = WV_Play(params.firstObject, responseUrl, nil);
+    }
+    
     KPLogDebug(@"widevine response url: %@", responseUrl);
     if ( status != WViOsApiStatus_OK ) {
         KPLogError(@"ERROR: %u",status);
