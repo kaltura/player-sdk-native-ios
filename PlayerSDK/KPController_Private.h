@@ -10,4 +10,12 @@
 
 @interface KPController ()
 @property (nonatomic, readwrite) KPMediaPlaybackState playbackState;
+
+#pragma mark - audio tracks & subtitle tracks
+@property (nonatomic, readwrite) NSInteger currentAudioTrack;
+@property (nonatomic, readwrite) NSArray *audioTracks;
+
+@property (nonatomic, readwrite) NSInteger currentSubtitleTrack;
+@property (nonatomic, readwrite) NSArray *subtitleTracks;
+
 @end

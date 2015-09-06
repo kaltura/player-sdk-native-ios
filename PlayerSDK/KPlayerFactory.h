@@ -52,6 +52,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString;
+- (void)player:(id<KPlayer>)currentPlayer withMultiTracks:(NSDictionary *)tracksArray;
 - (void)contentCompleted:(id<KPlayer>)currentPlayer;
 
 @end

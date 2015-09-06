@@ -83,7 +83,38 @@ extern NSString * const KMediaPlaybackStateKey;
 @property (nonatomic, readonly) KPMediaPlaybackState playbackState;
 
 - (void)seek:(NSTimeInterval)playbackTime;
+///@todo:
 - (void)addPeriodicTimeForInterval:(NSTimeInterval)interval usingBlock:(void (^)(NSTimeInterval time))block;
+
+#pragma mark - audio tracks & subtitle tracks
+
+@property (nonatomic, readonly) NSInteger currentAudioTrack;
+@property (nonatomic, readonly) NSArray *audioTracks;
+
+@property (nonatomic, readonly) NSInteger currentSubtitleTrack;
+@property (nonatomic, readonly) NSArray *subtitleTracks;
+
+/*
+ * Has audio, video, subtitle stream.
+ * @If media has video or audio stream this function return YES, otherwise return NO.
+ */
+- (BOOL)hasAudio;
+- (BOOL)hasVideo;
+- (BOOL)hasSubtitle;
+
+/*!
+ @method        switchAudioTracker:
+ @abstract      Switch to special audio tracker. (optional)
+ @index:        index of the audio tracker.
+ */
+- (void)switchAudioTracker:(int)index;
+
+/*!
+ @method        switchSubtitleStream:
+ @abstract      Switch to special subtitle stream. (optional)
+ @index:        index of the subtitle stream.
+ */
+- (void)switchSubtitleStream:(int)index;
 
 @end
 

@@ -164,6 +164,10 @@
     [_delegate player:currentPlayer eventName:event JSON:jsonString];
 }
 
+- (void)player:(id<KPlayer>)currentPlayer withMultiTracks:(NSDictionary *)tracksDict {
+    [_delegate player:currentPlayer withMultiTracks:tracksDict];
+}
+
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.contentEnded = YES;
 #ifdef IMA

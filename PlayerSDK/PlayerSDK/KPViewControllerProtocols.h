@@ -41,6 +41,8 @@ typedef enum{
 } Attribute;
 
 
+@protocol KalturaPlayer;
+
 @protocol KPViewControllerDelegate <NSObject>
 
 @required
@@ -49,9 +51,10 @@ typedef enum{
 - (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 
 @optional
-- (void) kPlayerDidPlay;
-- (void) kPlayerDidPause;
-- (void) kPlayerDidStop;
+- (void)kPlayerDidPlay;
+- (void)kPlayerDidPause;
+- (void)kPlayerDidStop;
+- (void)playerDidRecievedMediaCharacteristics:(id<KalturaPlayer>)player;
 
 @end
 

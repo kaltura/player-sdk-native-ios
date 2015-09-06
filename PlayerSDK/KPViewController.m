@@ -26,7 +26,6 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
     KPActionTypeOpenHomePage,
@@ -520,7 +519,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
-            _playerFactory.src = attributeVal;
+            _playerFactory.src = @"https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8";
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
@@ -685,6 +684,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     [self.controlsView triggerEvent:event withJSON:jsonString];
+}
+
+- (void)player:(id<KPlayer>)currentPlayer withMultiTracks:(NSDictionary *)tracksArray {
+    [self.playerController setSubtitleTracks:tracksArray];
+    [_delegate playerDidRecievedMediaCharacteristics:currentPlayer];
 }
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {

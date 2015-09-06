@@ -17,8 +17,12 @@
 
 @protocol KPMediaPlayback
 
+@required
+#pragma mark - required Kaltura player methods
+
 // Prepares the current queue for playback, interrupting any active (non-mixible) audio sessions.
 // Automatically invoked when -play is called if the player is not already prepared.
+///@todo:
 - (void)prepareToPlay;
 
 /*!

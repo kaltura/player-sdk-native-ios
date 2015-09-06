@@ -81,4 +81,13 @@ NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
     return nil;
 }
 
+- (void)setSubtitleTracks:(NSArray *)subtitleTracks {
+    _subtitleTracks = subtitleTracks;
+    _audioTracks = subtitleTracks;
+}
+
+- (void)setAudioTracks:(NSArray *)audioTracks {
+    _audioTracks = audioTracks;
+}
+
 @end

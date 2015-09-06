@@ -56,7 +56,7 @@ static NSString *StatusKeyPath = @"status";
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(videoEnded)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
-                                                   object:nil];
+                                                   object:nil]; 
         __weak KPlayer *weakSelf = self;
         observer = [self addPeriodicTimeObserverForInterval:CMTimeMake(20, 100)
                                                       queue:dispatch_get_main_queue()
@@ -118,6 +118,7 @@ static NSString *StatusKeyPath = @"status";
                 [self.delegate player:self
                             eventName:CanPlayKey
                                 value:nil];
+                
                 NSMutableArray *captions = nil;
                 if (self.audioSelectionGroup.options.count) {
                     captions = [NSMutableArray new];
@@ -137,6 +138,9 @@ static NSString *StatusKeyPath = @"status";
                                 eventName:@"textTracksReceived"
                                      JSON:languages.toJSON];
                     self.closedCaptionDisplayEnabled = YES;
+                    
+                    [self.delegate player:self
+                          withMultiTracks:captions];
                     
                 }
             }
@@ -167,6 +171,7 @@ static NSString *StatusKeyPath = @"status";
     }
     
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
+    
     [item addObserver:self
            forKeyPath:StatusKeyPath
               options:0
@@ -192,6 +197,7 @@ static NSString *StatusKeyPath = @"status";
 
 - (NSTimeInterval)duration {
     AVPlayerItem *item = self.currentItem;
+    
     return CMTimeGetSeconds(item.asset.duration);
 }
 
