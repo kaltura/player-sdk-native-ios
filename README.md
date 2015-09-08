@@ -2,7 +2,6 @@
 
 Player SDK Native iOS
 =================
-For detailed usage guide see [Knowledge Center iOS player SDK usage guide](http://knowledge.kaltura.com/kaltura-player-sdk-ios)
 
 **Note**: The Kaltura native player component is in beta. If your a Kaltura customer please contact your Kaltura customer success manager to help facilitate use of this component. 
 
@@ -17,8 +16,6 @@ For a full list of native embed advantages see native controls table within the 
 
 The Kaltura player-sdk-native component can be embedded into both native apps, and hybrid native apps ( via standard dynamic embed syntax ) 
 
-![alt text](http://html5video.org/presentations/HTML5PartDeux.FOSDEM.2014/player-native.png "player in native")
-![alt text](http://html5video.org/presentations/HTML5PartDeux.FOSDEM.2014/player-native2.png "player in webview")
 
 Future support will include: 
 * PlayReady DRM
