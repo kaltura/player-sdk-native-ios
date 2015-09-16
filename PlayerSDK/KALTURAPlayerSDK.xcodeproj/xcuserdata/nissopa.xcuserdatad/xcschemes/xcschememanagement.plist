@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>KALTURAPlayerSDKNoIMA.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
 		<key>KPlayerResources.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -33,6 +38,11 @@
 			<true/>
 		</dict>
 		<key>B372892D1A8787D00076DD33</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BF6759951B3ACFCA00528718</key>
 		<dict>
 			<key>primary</key>
 			<true/>
