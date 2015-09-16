@@ -73,7 +73,6 @@
 		B3F969341B8757ED004065CE /* KPController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968F61B87480C004065CE /* KPController.h */; };
 		B3F969351B8757FD004065CE /* KPMediaPlayback.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968EF1B874794004065CE /* KPMediaPlayback.h */; };
 		B3F969361B87580F004065CE /* KMediaPlayerDefines.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968EE1B874794004065CE /* KMediaPlayerDefines.h */; };
-		B3F969501B89EB34004065CE /* NSFileManager+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F9694F1B89EB34004065CE /* NSFileManager+Cache.m */; };
 		B3F969531B89EB51004065CE /* KCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F969521B89EB51004065CE /* KCacheManager.m */; };
 		B3F969561B89F7C3004065CE /* NSMutableDictionary+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F969551B89F7C3004065CE /* NSMutableDictionary+Cache.m */; };
 		B3F969591B89F84C004065CE /* NSDictionary+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F969581B89F84C004065CE /* NSDictionary+Cache.m */; };
@@ -204,8 +203,6 @@
 		B3F969061B8748FF004065CE /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
 		B3F969071B8748FF004065CE /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
 		B3F969091B874940004065CE /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewControllerProtocols.h; sourceTree = "<group>"; };
-		B3F9694E1B89EB34004065CE /* NSFileManager+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFileManager+Cache.h"; sourceTree = "<group>"; };
-		B3F9694F1B89EB34004065CE /* NSFileManager+Cache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSFileManager+Cache.m"; sourceTree = "<group>"; };
 		B3F969511B89EB51004065CE /* KCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCacheManager.h; sourceTree = "<group>"; };
 		B3F969521B89EB51004065CE /* KCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCacheManager.m; sourceTree = "<group>"; };
 		B3F969541B89F7C3004065CE /* NSMutableDictionary+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Cache.h"; sourceTree = "<group>"; };
@@ -316,8 +313,6 @@
 		B3F9694D1B89EB0C004065CE /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				B3F9694E1B89EB34004065CE /* NSFileManager+Cache.h */,
-				B3F9694F1B89EB34004065CE /* NSFileManager+Cache.m */,
 				B3F969511B89EB51004065CE /* KCacheManager.h */,
 				B3F969521B89EB51004065CE /* KCacheManager.m */,
 				B3F969541B89F7C3004065CE /* NSMutableDictionary+Cache.h */,
@@ -595,7 +590,6 @@
 				B3F968F41B8747DA004065CE /* KPPlayerConfig.m in Sources */,
 				B34C89391ADA65AA007C6A5D /* KPControlsView.m in Sources */,
 				B34C893F1ADA705F007C6A5D /* KPControlsWKWebview.m in Sources */,
-				B3F969501B89EB34004065CE /* NSFileManager+Cache.m in Sources */,
 				B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */,
 				B3F968F51B8747DA004065CE /* KPViewController.m in Sources */,
 				B39BEC9A1A0BCB280085BA26 /* KPBrowserViewController.m in Sources */,
