@@ -115,10 +115,36 @@ Using Kaltura player
 - (KPViewController *)player {
     if (!_player) {
         // Account Params
-        KPPlayerConfig *config = [[KPPlayerConfig alloc] initWithDomain:@"http://cdnapi.kaltura.com/html5/html5lib/v2.33/mwEmbedFrame.php"
-                                                               uiConfID:@"26698911"];
-                                  
-        config.wid = @"_1831271";
+        KPPlayerConfig *config = [[KPPlayerConfig alloc] initWithDomain:@"http://cdnapi.kaltura.com"
+                                           uiConfID:@"26698911"
+                                           partnerId:@"1831271"];
+    
+    
+    // Video Entry
+    config.entryId = @"1_o426d3i4";
+        
+        // Setting this property will cache the html pages in the limit size
+        config.cacheSize = 0.8;
+        _player = [[KPViewController alloc] initWithConfiguration:config];
+    }
+    return _player;
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+ 
+    [self presentViewController:self.player animated:YES completion:nil];
+}
+
+```
+###To Initialize PlayerViewController for Inline
+```
+- (KPViewController *)player {
+    if (!_player) {
+        // Account Params
+        KPPlayerConfig *config = [[KPPlayerConfig alloc] initWithDomain:@"http://cdnapi.kaltura.com"
+                                           uiConfID:@"26698911"
+                                           partnerId:@"1831271"];
         
         
         // Video Entry
@@ -131,27 +157,6 @@ Using Kaltura player
     return _player;
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    __weak ViewController *weakSelf = self;
-    [self.player addKPlayerEventListener:@"play" eventID:@"play1" handler:^(NSString *eventName, NSString *params) {
-        // Code which depends on the Play event
-    }];
-    
-    [self.player addKPlayerEventListener:@"pause" eventID:@"pause1" handler:^(NSString *eventName, NSString *params) {
-        // Code which depends on the Pause event
-    }];
-    [self presentViewController:self.player animated:YES completion:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [self.player removeKPlayerEventListener:@"play" eventID:@"play1"];
-    [self.player removeKPlayerEventListener:@"pause" eventID:@"pause1"];
-    [super viewWillDisappear:animated];
-}
-```
-###To Initialize PlayerViewController for Inline
-```
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     self.player.view.frame = (CGRect){0, 0, 320, 180};
@@ -159,24 +164,7 @@ Using Kaltura player
     [self.view addSubView:_player.view];
 }
 
-- (KPViewController *)player {
-    if (!_player) {
-        // Account Params
-        KPPlayerConfig *config = [[KPPlayerConfig alloc] initWithDomain:@"http://cdnapi.kaltura.com/html5/html5lib/v2.33/mwEmbedFrame.php"
-                                                               uiConfID:@"26698911"];
-                                  
-        config.wid = @"_1831271";
-        
-        
-        // Video Entry
-        config.entryId = @"1_o426d3i4";
-        
-        // Setting this property will cache the html pages in the limit size
-        config.cacheSize = 0.8;
-        _player = [[KPViewController alloc] initWithConfiguration:config];
-    }
-    return _player;
-}
+
 ```
 The player includes the same KDP api available in webviews this includes: 
 * kdp.asyncEvaluate( property, callback );
