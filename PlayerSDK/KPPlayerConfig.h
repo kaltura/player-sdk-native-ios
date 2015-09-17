@@ -21,21 +21,16 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 
 - (instancetype)initWithDomain:(NSString *)domain
                       uiConfID:(NSString *)uiConfId
-                      playerID:(NSString *)playerID;
+                      partnerId:(NSString *)partnerId;
 
-@property (nonatomic, copy) NSString *domain;
-@property (nonatomic, copy) NSString *wid;
-@property (nonatomic, copy) NSString *cacheSt;
-@property (nonatomic, copy) NSString *urid;
+@property (nonatomic, readonly) NSString *domain;
+@property (nonatomic, readonly) NSString *partnerId;
 
-@property (nonatomic, copy, readonly) NSString *uiConfId;
+@property (nonatomic, readonly) NSString *uiConfId;
 @property (nonatomic, copy) NSString *entryId;
-@property (nonatomic, copy, readonly) NSString *playerId;
 @property (nonatomic, copy) NSString *advertiserID;
 @property (nonatomic) BOOL enableHover;
 
-@property (nonatomic) BOOL debug;
-@property (nonatomic) BOOL forceMobileHTML5;
 
 
 /// Enables the SDK user to define interface orientation of the player

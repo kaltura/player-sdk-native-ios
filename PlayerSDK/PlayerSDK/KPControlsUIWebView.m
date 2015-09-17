@@ -141,5 +141,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     return YES;
 }
 
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    
+}
 
 @end

@@ -11,19 +11,14 @@
 #import "NSString+Utilities.h"
 
 /// Key names of the video request
-static NSString *WidKey = @"wid";
-static NSString *UiConfIdKey = @"uiconf_id";
-static NSString *CacheStKey = @"cache_st";
 static NSString *EntryIdKey = @"entry_id";
-static NSString *PlayerIdKey = @"playerId";
-static NSString *UridKey = @"urid";
-static NSString *DebugKey = @"debug";
-static NSString *ForceHtml5Key = @"forceMobileHTML5";
+
 
 @interface KPPlayerConfig()
 
 @property (nonatomic, copy) NSMutableDictionary *paramsDict;
 @property (nonatomic, copy) NSURL *url;
+
 @end
 
 @implementation KPPlayerConfig
@@ -39,14 +34,12 @@ static NSString *ForceHtml5Key = @"forceMobileHTML5";
 
 - (instancetype)initWithDomain:(NSString *)domain
                       uiConfID:(NSString *)uiConfId
-                      playerID:(NSString *)playerID {
+                      partnerId:(NSString *)partnerId {
     self = [self init];
-    if (self && domain && uiConfId && playerID) {
+    if (self && domain && uiConfId && partnerId) {
         _domain = domain;
         _uiConfId = uiConfId;
-        _playerId = playerID;
-        self.paramsDict[UiConfIdKey] = uiConfId;
-        self.paramsDict[PlayerIdKey] = playerID;
+        _partnerId = partnerId;
         return self;
     }
     return nil;
@@ -78,44 +71,9 @@ static NSString *ForceHtml5Key = @"forceMobileHTML5";
     }
 }
 
-- (void)setUrid:(NSString *)urid {
-    if (urid) {
-        _urid = urid;
-        self.paramsDict[UridKey] = urid;
-    }
-}
-
-- (void)setWid:(NSString *)wid {
-    if (wid) {
-        _wid = wid;
-        self.paramsDict[WidKey] = wid;
-    }
-}
-
-- (void)setCacheSt:(NSString *)cacheSt {
-    if (cacheSt) {
-        _cacheSt = cacheSt;
-        self.paramsDict[CacheStKey] = cacheSt;
-    }
-}
-
-- (void)setDebug:(BOOL)debug {
-    if (debug) {
-        _debug = YES;
-        self.paramsDict[DebugKey] = @"true";
-    }
-}
-
-- (void)setForceMobileHTML5:(BOOL)forceMobileHTML5 {
-    if (forceMobileHTML5) {
-        _forceMobileHTML5 = YES;
-        self.paramsDict[ForceHtml5Key] = @"true";
-    }
-}
-
 - (NSURL *)videoURL {
     if (!_url) {
-        NSString *link = [_domain stringByAppendingString:@"?"];
+        NSString *link = [_domain stringByAppendingFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@/partner_id/%@?", _partnerId, _partnerId, _uiConfId, _partnerId];
         for (NSString *key in self.paramsDict.allKeys) {
             link = [link stringByAppendingFormat:@"%@=%@&", key, self.paramsDict[key]];
         }
