@@ -32,6 +32,8 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 @property (nonatomic) BOOL enableHover;
 
 
+/// By setting the size of the cache the SDK will cache the data in the limit of the cacheSize value.
+@property (nonatomic) float cacheSize;
 
 /// Enables the SDK user to define interface orientation of the player
 @property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations;

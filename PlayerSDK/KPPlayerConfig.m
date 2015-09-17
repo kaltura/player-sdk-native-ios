@@ -55,7 +55,7 @@ static NSString *EntryIdKey = @"entry_id";
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value; {
     if (key && key.length && value && value.length) {
         NSString *configKey = [NSString stringWithFormat:@"flashvars[%@]", key];
-        self.paramsDict[configKey] = value;
+        self.paramsDict[configKey] = [value stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
     }
 }
 

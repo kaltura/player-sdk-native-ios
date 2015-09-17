@@ -19,6 +19,7 @@
 #import "KPLog.h"
 #import "KPViewControllerProtocols.h"
 #import "KPPlayerConfig.h"
+#import "KPController.h"
 
 
 
@@ -82,6 +83,10 @@
  */
 - (void)changeMedia:(NSString *)entryID;
 
+@property (nonatomic, retain) id<KPViewControllerDelegate> delegate;
+
+@property (nonatomic, strong) KPController *playerController;
+
 
 /// Enables to change the player configuration
 @property (nonatomic, strong) KPPlayerConfig *configuration;
@@ -92,8 +97,7 @@
 /// Change the source and returns the current source
 @property (nonatomic, copy) NSURL *playerSource;
 
-/// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
-@property (nonatomic) NSTimeInterval currentPlaybackTime;
+@property (nonatomic, copy) NSDictionary *drmDict;
 
 /// @return Duration of the current video
 @property (nonatomic, readonly) NSTimeInterval duration;
@@ -101,6 +105,22 @@
 /// Assigning this handler will disable the default share action and will supply the share params for custom use.
 - (void)setShareHandler:(void(^)(NSDictionary *shareParams))shareHandler;
 
+
+#pragma mark -
+#pragma Kaltura Player External API - KDP API
+// -----------------------------------------------------------------------------
+// KDP API Types
+
+typedef NS_ENUM(NSInteger, KDPAPIState) {
+    /*  Player is not ready to work with the JavaScript API. */
+    KDPAPIStateUnknown,
+    /*  Player is ready to work with the JavaScript API (jsCallbackReady). */
+    KDPAPIStateReady
+};
+
+/* The current kdp api state of the KDP API. (read-only)
+ The kdp api state is affected by programmatic call to jsCallbackReady. */
+@property (nonatomic, readonly) KDPAPIState kdpAPIState;
 
 /*!
  * @function registerReadyEvent

@@ -19,8 +19,11 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 #import "KPControlsView.h"
+#import "KPController_Private.h"
+#import "KPURLProtocol.h"
+#import "KCacheManager.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -32,7 +35,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerControllerDelegate, KPControlsViewDelegate>{
+@interface KPViewController() <KPlayerFactoryDelegate, KPControlsViewDelegate>{
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -48,7 +51,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
-@property (nonatomic, strong) KPlayerController *playerController;
+@property (nonatomic, strong) KPlayerFactory *playerFactory;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
@@ -57,6 +60,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 @implementation KPViewController 
 @synthesize controlsView;
+@synthesize drmDict;
 
 + (void)setLogLevel:(KPLogLevel)logLevel {
     @synchronized(self) {
@@ -80,6 +84,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self = [self initWithURL:configuration.videoURL];
     if (self) {
         _configuration = configuration;
+        // If the developer set the cache size, the cache system is triggered.
+        if (_configuration.cacheSize > 0) {
+            [NSURLProtocol registerClass:[KPURLProtocol class]];
+            CacheManager.host = configuration.videoURL.host;
+            CacheManager.cacheSize = _configuration.cacheSize;
+        }
         return self;
     }
     return nil;
@@ -96,8 +106,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)removePlayer {
     [self.controlsView removeControls];
     self.controlsView = nil;
-    [self.playerController removePlayer];
-    self.playerController = nil;
+    [self.playerFactory removePlayer];
+    self.playerFactory = nil;
     [callBackReadyRegistrations removeAllObjects];
     callBackReadyRegistrations = nil;
     appConfigDict = nil;
@@ -115,26 +125,27 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (NSTimeInterval)currentPlaybackTime {
-    return _playerController.player.currentPlaybackTime;
+    return _playerFactory.player.currentPlaybackTime;
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if (!_playerController) {
+    if (!_playerFactory) {
         _seekValue = currentPlaybackTime;
     }
-    _playerController.player.currentPlaybackTime = currentPlaybackTime;
+    
+    _playerFactory.player.currentPlaybackTime = currentPlaybackTime;
 }
 
 - (NSTimeInterval)duration {
-    return _playerController.player.duration;
+    return _playerFactory.player.duration;
 }
 
 - (NSURL *)playerSource {
-    return _playerController.player.playerSource;
+    return _playerFactory.player.playerSource;
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
-    _playerController.player.playerSource = playerSource;
+    _playerFactory.player.playerSource = playerSource;
 }
 
 - (void)setShareHandler:(void (^)(NSDictionary *))shareHandler {
@@ -187,7 +198,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return _configuration;
 }
 
-
 #pragma mark -
 #pragma mark View flow methods
 - (void)viewDidLoad {
@@ -211,23 +221,33 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                    options:NSKeyValueObservingOptionNew
                    context:nil];
 
-    // Initialize players controller
+    // Initialize player factory
+    if (!_playerFactory) {
+        _playerFactory = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
+        [_playerFactory addPlayerToController:self];
+        _playerFactory.delegate = self;
+    }
+    
+    // Initialize player controller
     if (!_playerController) {
-        _playerController = [[KPlayerController alloc] initWithPlayerClassName:PlayerClassName];
-        [_playerController addPlayerToController:self];
+        _playerController = [KPController new];
         _playerController.delegate = self;
     }
+    
     // Initialize HTML layer (controls)
     if (!self.controlsView) {
         self.controlsView = [KPControlsView defaultControlsViewWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
         self.controlsView.controlsDelegate = self;
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
         [self.view addSubview:(UIView *)self.controlsView];
+        _kdpAPIState = KDPAPIStateUnknown;
     }
     
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification object:weakSelf userInfo:@{KMediaPlaybackStateKey: @(KPMediaPlaybackStateLoaded)}];
+        [weakSelf.playerController setPlaybackState:KPMediaPlaybackStateLoaded];
         if (!weakSelf.isModifiedFrame) {
             weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         } else {
@@ -316,6 +336,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 #pragma Kaltura Player External API - KDP API
 - (void)registerReadyEvent:(void (^)())handler {
     KPLogTrace(@"Enter");
+    
     if (isJsCallbackReady) {
         handler();
     } else {
@@ -493,15 +514,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if ([self respondsToSelector:selector]) {
         KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:selector withObject:args];
-    } else if ([_playerController.player respondsToSelector:selector]) {
-        [_playerController.player performSelector:selector withObject:args];
+    } else if ([_playerFactory.player respondsToSelector:selector]) {
+        [_playerFactory.player performSelector:selector withObject:args];
     }
     
 #pragma clang diagnostic pop
     
     KPLogTrace(@"Exit");
 }
-
 
 - (void)setAttribute: (NSArray*)args{
     KPLogTrace(@"Enter");
@@ -510,17 +530,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src:
-            _playerController.src = attributeVal;
+            _playerFactory.src = attributeVal;
+            
+            if (self.drmDict != nil) {
+                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:@"WVPlayer"]];
+                [_playerFactory.player setDRMDict:self.drmDict];
+            }
             break;
         case currentTime:
-            _playerController.currentPlayBackTime = [attributeVal doubleValue];
+            _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
             break;
         case visible:
             [self visible: attributeVal];
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
-            [_playerController switchPlayer:WideVinePlayerClass key:attributeVal];
+            [_playerFactory switchPlayer:WideVinePlayerClass key:attributeVal];
             break;
 #endif
         case nativeAction:
@@ -529,14 +554,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                    error:nil];
             break;
         case language:
-            _playerController.locale = attributeVal;
+            _playerFactory.locale = attributeVal;
             break;
         case doubleClickRequestAds: {
             
             [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    _playerController.adPlayerHeight = height;
-                    _playerController.adTagURL = attributeVal;
+                    _playerFactory.adPlayerHeight = height;
+                    _playerFactory.adTagURL = attributeVal;
                 });
             }];
         }
@@ -596,6 +621,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [callBackReadyRegistrations removeObject:handler];
     }
     callBackReadyRegistrations = nil;
+    _kdpAPIState = KDPAPIStateReady;
     KPLogTrace(@"Exit");
 }
 
@@ -642,7 +668,34 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 
 #pragma mark KPlayerDelegate
-- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value { ///@todo:assign state
+    ///@todo refactor
+    if (event.isMetadata) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:self
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateReady)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStateReady];
+    } else if(event.isPlay) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:self
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
+    } else if(event.isPause) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:self
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStatePaused];
+    } else if(event.isStop) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                            object:self
+                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
+        [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
+    } else if (event.isTimeUpdate) {
+        if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
+            [_delegate updateCurrentPlaybackTime:_playerFactory.currentPlayBackTime];
+    }
+    }
+    
     [self.controlsView triggerEvent:event withValue:value];
 }
 
@@ -658,7 +711,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self.controlsView triggerEvent:PostrollEndedKey withJSON:nil];
 }
 
-
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     KPLogTrace(@"Enter");
     isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);
@@ -666,9 +718,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogDebug(@"%@\n%@", note.name, note.userInfo[note.name]);
     KPLogTrace(@"Exit");
 }
-
-
-
 
 #pragma mark -
 #pragma mark Rotation methods
@@ -700,6 +749,17 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
 }
+
+#pragma mark KPControllerDelegate
+
+-(void)sendKPNotification:(NSString *)kpNotificationName withParams:(NSString *)kpParams {
+    KPLogTrace(@"Enter");
+
+    [self sendNotification:kpNotificationName withParams:kpParams];
+    
+    KPLogTrace(@"Exit");
+}
+
 @end
 
 
