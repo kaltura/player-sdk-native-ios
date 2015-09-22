@@ -117,7 +117,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     self.kPlayerEvaluatedDict = nil;
     [self.kPlayerEventsDict removeAllObjects];
     self.kPlayerEventsDict = nil;
-    [self.view removeObserver:self forKeyPath:@"frame" context:nil];
+    @try {
+        [self.view removeObserver:self forKeyPath:@"frame" context:nil];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"frame not observed");
+    }
+    
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
