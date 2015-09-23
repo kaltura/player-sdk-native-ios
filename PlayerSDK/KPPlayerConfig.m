@@ -73,7 +73,13 @@ static NSString *EntryIdKey = @"entry_id";
 
 - (NSURL *)videoURL {
     if (!_url) {
-        NSString *link = [_domain stringByAppendingFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@/partner_id/%@?", _partnerId, _partnerId, _uiConfId, _partnerId];
+        NSString *link = [_domain stringByAppendingFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@", _partnerId, _partnerId, _uiConfId];
+        if (_entryId) {
+            link = [link stringByAppendingFormat:@"/entry_id/%@?", _entryId];
+        } else {
+            link = [link stringByAppendingString:@"?"];
+        }
+        link = [link stringByAppendingFormat:@"wid=_%@&", _partnerId];
         for (NSString *key in self.paramsDict.allKeys) {
             link = [link stringByAppendingFormat:@"%@=%@&", key, self.paramsDict[key]];
         }
