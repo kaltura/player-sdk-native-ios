@@ -10,4 +10,5 @@
 
 @interface KPController ()
 @property (nonatomic, readwrite) KPMediaPlaybackState playbackState;
+@property (nonatomic, readwrite) KPMediaLoadState loadState;
 @end

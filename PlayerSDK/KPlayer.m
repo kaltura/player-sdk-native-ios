@@ -65,9 +65,9 @@ static NSString *StatusKeyPath = @"status";
                                                      [weakSelf.delegate player:weakSelf
                                                                      eventName:TimeUpdateKey
                                                                          value:@(CMTimeGetSeconds(time)).stringValue];
-//                                          [weakSelf.delegate eventName:ProgressKey
-//                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
-        }];
+                                                     //                                          [weakSelf.delegate eventName:ProgressKey
+                                                     //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
+                                                 }];
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         
@@ -91,6 +91,10 @@ static NSString *StatusKeyPath = @"status";
                       ofObject:(id)object
                         change:(NSDictionary *)change
                        context:(void *)context {
+    
+    NSNumber *oldValue = [change valueForKey:NSKeyValueChangeOldKey];
+    NSNumber *newValue = [change valueForKey:NSKeyValueChangeNewKey];
+    
     if ([keyPath isEqual:RateKeyPath]) {
         if (self.rate) {
             [self.delegate player:self
@@ -104,45 +108,44 @@ static NSString *StatusKeyPath = @"status";
     } else if ([keyPath isEqualToString:StatusKeyPath]) {
         switch (self.status) {
             case AVPlayerStatusFailed:
-                
                 break;
-            case AVPlayerStatusReadyToPlay: {
-                [self.delegate player:self
-                            eventName:DurationChangedKey
-                                value:@(self.duration).stringValue];
-                
-                [self.delegate player:self
-                            eventName:LoadedMetaDataKey
-                                value:@""];
-                
-                [self.delegate player:self
-                            eventName:CanPlayKey
-                                value:nil];
-                NSMutableArray *captions = nil;
-                if (self.audioSelectionGroup.options.count) {
-                    captions = [NSMutableArray new];
-                    for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
-                        if ([option.mediaType isEqualToString:@"sbtl"]) {
-                            NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
-                            [captions addObject:@{@"kind": @"subtitle",
-                                                  @"language": langCode,
-                                                  @"scrlang": langCode,
-                                                  @"label": langCode,
-                                                  @"index": @(captions.count),
-                                                  @"title": option.displayName}];
-                        }
-                    }
-                    NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
+            case AVPlayerItemStatusReadyToPlay: {
+                if (oldValue.intValue != newValue.intValue) {
                     [self.delegate player:self
-                                eventName:@"textTracksReceived"
-                                     JSON:languages.toJSON];
-                    self.closedCaptionDisplayEnabled = YES;
+                                eventName:DurationChangedKey
+                                    value:@(self.duration).stringValue];
+                    [self.delegate player:self
+                                eventName:LoadedMetaDataKey
+                                    value:@""];
                     
+                    [self.delegate player:self
+                                eventName:CanPlayKey
+                                    value:nil];
+                    NSMutableArray *captions = nil;
+                    if (self.audioSelectionGroup.options.count) {
+                        captions = [NSMutableArray new];
+                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
+                            if ([option.mediaType isEqualToString:@"sbtl"]) {
+                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
+                                [captions addObject:@{@"kind": @"subtitle",
+                                                      @"language": langCode,
+                                                      @"scrlang": langCode,
+                                                      @"label": langCode,
+                                                      @"index": @(captions.count),
+                                                      @"title": option.displayName}];
+                            }
+                        }
+                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
+                        [self.delegate player:self
+                                    eventName:@"textTracksReceived"
+                                         JSON:languages.toJSON];
+                        self.closedCaptionDisplayEnabled = YES;
+                    }
                 }
-            }
                 break;
             case AVPlayerStatusUnknown:
                 break;
+            }
         }
     }
 }
@@ -169,7 +172,7 @@ static NSString *StatusKeyPath = @"status";
     AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
     [item addObserver:self
            forKeyPath:StatusKeyPath
-              options:0
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
               context:nil];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self replaceCurrentItemWithPlayerItem:item];
@@ -199,12 +202,10 @@ static NSString *StatusKeyPath = @"status";
     if (isnan(self.duration) || currentPlaybackTime < self.duration) {
         _currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
-        [self seekToTime:CMTimeMake(currentPlaybackTime, 1)
-         toleranceBefore:kCMTimeZero
-          toleranceAfter:kCMTimeZero
-       completionHandler:^(BOOL finished) {
-           [weakSelf.delegate player:self eventName:SeekedKey value:nil];
-       }];
+        [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
+                   completionHandler:^(BOOL finished) {
+                       [weakSelf.delegate player:self eventName:SeekedKey value:nil];
+                   }];
     }
 }
 
@@ -242,7 +243,7 @@ static NSString *StatusKeyPath = @"status";
 }
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
-//    self.currentItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
+    //    self.currentItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
 }
 
 - (void)removeAirPlayIcon {

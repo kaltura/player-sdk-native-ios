@@ -159,33 +159,40 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 #pragma mark -
 #pragma mark Lazy init
 - (NSMutableDictionary *)kPlayerEventsDict {
+    
     if (!_kPlayerEventsDict) {
         _kPlayerEventsDict = [NSMutableDictionary new];
     }
+    
     return _kPlayerEventsDict;
 }
 
 - (NSMutableDictionary *)kPlayerEvaluatedDict {
+    
     if (!_kPlayerEvaluatedDict) {
         _kPlayerEvaluatedDict = [NSMutableDictionary new];
     }
+    
     return _kPlayerEvaluatedDict;
 }
 
-- (NSString *) platform {
+- (NSString *)platform {
     size_t size;
     sysctlbyname("hw.machine", NULL, &size, NULL, 0);
     char *machine = malloc(size);
     sysctlbyname("hw.machine", machine, &size, NULL, 0);
     NSString *platform = [NSString stringWithUTF8String:machine];
     free(machine);
+    
     return platform;
 }
 
 - (KPPlayerConfig *)configuration {
+    
     if (!_configuration) {
         _configuration = [KPPlayerConfig new];
     }
+    
     return _configuration;
 }
 
@@ -315,10 +322,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 -(void)initPlayerParams {
     KPLogTrace(@"Enter");
+    
     isFullScreen = NO;
     isPlaying = NO;
     isResumePlayer = NO;
     _isFullScreenToggled = NO;
+    
     KPLogTrace(@"Exit");
 }
 
@@ -657,27 +666,50 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 
 #pragma mark KPlayerDelegate
-- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value { ///@todo:assign state
-    ///@todo refactor
-    if(event.isPlay) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                            object:nil
-                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
-        [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
-    } else if(event.isPause) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                            object:nil
-                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
-        [self.playerController setPlaybackState:KPMediaPlaybackStatePaused];
-    } else if(event.isStop) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                            object:nil
-                                                          userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
-        [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
-    } else if (event.isTimeUpdate) {
-        if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
-            [_delegate updateCurrentPlaybackTime:_playerFactory.currentPlayBackTime];
-        }
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    void(^kPlayerStateBlock)() = @{
+                                      CanPlayKey:
+                                          ^{
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaLoadStateDidChangeNotification
+                                                                                                  object:nil
+                                                                                                userInfo:@{KMediaLoadStateKey:@(KPMediaLoadStatePlayable)}];
+                                              [self.playerController setLoadState:KPMediaLoadStatePlayable];
+                                              
+                                              if([_delegate respondsToSelector:@selector(kPlayerLoadStateDidChange:)]) {
+                                                  [_delegate kPlayerLoadStateDidChange:KPMediaLoadStatePlayable];
+                                              }
+                                          },
+                                      PlayKey:
+                                          ^{
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                                                                  object:nil
+                                                                                                userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
+                                              [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
+                                          },
+                                      PauseKey:
+                                          ^{
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                                                                  object:nil
+                                                                                                userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
+                                              [self.playerController setPlaybackState:KPMediaPlaybackStatePaused];
+                                          },
+                                      StopKey:
+                                          ^{
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                                                                  object:nil
+                                                                                                userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
+                                              [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
+                                          },
+                                      TimeUpdateKey:
+                                          ^{
+                                              if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
+                                                  [_delegate updateCurrentPlaybackTime:_playerFactory.currentPlayBackTime];
+                                              }
+                                          }
+                                      }[event];
+
+    if (kPlayerStateBlock != nil) {
+        kPlayerStateBlock();
     }
     
     [self.controlsView triggerEvent:event withValue:value];
@@ -738,8 +770,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 -(void)sendKPNotification:(NSString *)kpNotificationName withParams:(NSString *)kpParams {
     KPLogTrace(@"Enter");
-
-    [self sendNotification:kpNotificationName withParams:kpParams];
+    
+    if (kpNotificationName) {
+        [self sendNotification:kpNotificationName withParams:kpParams];
+    }
     
     KPLogTrace(@"Exit");
 }

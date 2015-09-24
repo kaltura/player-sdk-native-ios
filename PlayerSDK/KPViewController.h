@@ -21,7 +21,12 @@
 #import "KPPlayerConfig.h"
 #import "KPController.h"
 
-@protocol KPViewControllerDelegate;
+@protocol KPViewControllerDelegate <NSObject>
+@required
+- (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
+@optional
+- (void)kPlayerLoadStateDidChange:(KPMediaLoadState)state;
+@end
 
 @interface KPViewController : UIViewController <KPControllerDelegate>
 

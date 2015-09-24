@@ -86,8 +86,8 @@
 		BF0387F41B4EABCC00532BD0 /* KPMediaPlayback.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFB3FE1E1B4962DB003E3AB3 /* KPMediaPlayback.h */; };
 		BF12E67C1B4AFF140083D71A /* KPViewController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFB43D551B49470C00DD07C1 /* KPViewController.h */; };
 		BF12E67D1B4AFFC80083D71A /* KPMediaPlayback.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFB3FE1E1B4962DB003E3AB3 /* KPMediaPlayback.h */; };
+		BF5D7EEF1BB017A0003F8883 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D7EEE1BB017A0003F8883 /* NSMutableArray+QueueAdditions.m */; };
 		BF63823D1B4A3D4200100C08 /* KPController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFA3572F1B45707F00CD821A /* KPController.h */; };
-		BF6759991B3ACFCA00528718 /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
 		BF67599A1B3ACFCA00528718 /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
 		BF67599B1B3ACFCA00528718 /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */; };
 		BF67599C1B3ACFCA00528718 /* FacebookStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = B39BEC7A1A0A728A0085BA26 /* FacebookStrategy.m */; };
@@ -128,13 +128,10 @@
 		BF6759D31B3ACFCA00528718 /* SmsStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B39BEC8D1A0B72760085BA26 /* SmsStrategy.h */; };
 		BF6759D41B3ACFCA00528718 /* KPShareManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3932ACF1A0A0DA000AC0442 /* KPShareManager.h */; };
 		BF6759D51B3ACFCA00528718 /* NSDictionary+Strategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B30BADE81A21ED06008E5E67 /* NSDictionary+Strategy.h */; };
-		BF6759D61B3ACFCA00528718 /* KPChromecast.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
 		BF6759D71B3ACFCA00528718 /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 		BF6759DA1B3ACFCA00528718 /* player-sdk-native-ios.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B36674371A90914A00C3A4A7 /* player-sdk-native-ios.podspec */; };
 		BFA357311B45707F00CD821A /* KPController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA357301B45707F00CD821A /* KPController.m */; };
-		BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFE34297199BE70600C63F74 /* KPChromecast.h */; };
 		BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFA2DBF71949F29B00831A71 /* KPViewController.m */; };
-		BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE34298199BE70600C63F74 /* KPChromecast.m */; };
 		BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
 		BFE4117A1B651E1400D47693 /* KPController_Private.h in Copy Files */ = {isa = PBXBuildFile; fileRef = BFE411791B651C5F00D47693 /* KPController_Private.h */; };
@@ -196,7 +193,6 @@
 				BF6759D31B3ACFCA00528718 /* SmsStrategy.h in CopyFiles */,
 				BF6759D41B3ACFCA00528718 /* KPShareManager.h in CopyFiles */,
 				BF6759D51B3ACFCA00528718 /* NSDictionary+Strategy.h in CopyFiles */,
-				BF6759D61B3ACFCA00528718 /* KPChromecast.h in CopyFiles */,
 				BF6759D71B3ACFCA00528718 /* ChromecastDeviceController.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,7 +239,6 @@
 				B32A5CE01A2492C10051DC7F /* SmsStrategy.h in Copy Files */,
 				B32A5CE11A2492C10051DC7F /* KPShareManager.h in Copy Files */,
 				B32A5CE21A2492C10051DC7F /* NSDictionary+Strategy.h in Copy Files */,
-				BFDF5FCE19B3240A00C9F9AC /* KPChromecast.h in Copy Files */,
 				BFE3437B19A4A97800BBD1FD /* ChromecastDeviceController.h in Copy Files */,
 			);
 			name = "Copy Files";
@@ -322,14 +317,14 @@
 		B3F0F7001A3726CA00615DC4 /* DeviceParamsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceParamsHandler.h; sourceTree = "<group>"; };
 		B3F0F7011A3726CA00615DC4 /* DeviceParamsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceParamsHandler.m; sourceTree = "<group>"; };
 		BF12E6861B4D4F130083D71A /* KMediaPlayerDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KMediaPlayerDefines.h; sourceTree = "<group>"; };
+		BF5D7EED1BB017A0003F8883 /* NSMutableArray+QueueAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueueAdditions.h"; path = "../NSMutableArray+QueueAdditions.h"; sourceTree = "<group>"; };
+		BF5D7EEE1BB017A0003F8883 /* NSMutableArray+QueueAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueueAdditions.m"; path = "../NSMutableArray+QueueAdditions.m"; sourceTree = "<group>"; };
 		BF6759DE1B3ACFCA00528718 /* libKALTURAPlayerSDKNoIMA.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDKNoIMA.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFA2DBF71949F29B00831A71 /* KPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPViewController.m; sourceTree = "<group>"; };
 		BFA3572F1B45707F00CD821A /* KPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPController.h; sourceTree = "<group>"; };
 		BFA357301B45707F00CD821A /* KPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPController.m; sourceTree = "<group>"; };
 		BFB3FE1E1B4962DB003E3AB3 /* KPMediaPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPMediaPlayback.h; path = PlayerSDK/KPMediaPlayback.h; sourceTree = "<group>"; };
 		BFB43D551B49470C00DD07C1 /* KPViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPViewController.h; sourceTree = "<group>"; };
-		BFE34297199BE70600C63F74 /* KPChromecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPChromecast.h; sourceTree = "<group>"; };
-		BFE34298199BE70600C63F74 /* KPChromecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPChromecast.m; sourceTree = "<group>"; };
 		BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChromecastDeviceController.h; sourceTree = SOURCE_ROOT; };
 		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
 		BFE411791B651C5F00D47693 /* KPController_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPController_Private.h; sourceTree = "<group>"; };
@@ -408,6 +403,8 @@
 		B3410D4A1A6D45B200275F00 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				BF5D7EED1BB017A0003F8883 /* NSMutableArray+QueueAdditions.h */,
+				BF5D7EEE1BB017A0003F8883 /* NSMutableArray+QueueAdditions.m */,
 				B3C27BF71A2DFE12003108CB /* NSString+Utilities.h */,
 				B3C27BF81A2DFE12003108CB /* NSString+Utilities.m */,
 				B3410D4B1A6D45E000275F00 /* NSMutableDictionary+AdSupport.h */,
@@ -486,8 +483,6 @@
 		BFE3E2F2199CAF6200666F32 /* KPChromecast */ = {
 			isa = PBXGroup;
 			children = (
-				BFE34297199BE70600C63F74 /* KPChromecast.h */,
-				BFE34298199BE70600C63F74 /* KPChromecast.m */,
 			);
 			name = KPChromecast;
 			path = ..;
@@ -747,7 +742,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BF6759991B3ACFCA00528718 /* KPChromecast.m in Sources */,
 				BF67599A1B3ACFCA00528718 /* KPViewController.m in Sources */,
 				BF67599B1B3ACFCA00528718 /* DeviceParamsHandler.m in Sources */,
 				BF67599C1B3ACFCA00528718 /* FacebookStrategy.m in Sources */,
@@ -780,7 +774,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFDF5FD019B3243600C9F9AC /* KPChromecast.m in Sources */,
 				BFDF5FCF19B3241D00C9F9AC /* KPViewController.m in Sources */,
 				B3F0F7021A3726CA00615DC4 /* DeviceParamsHandler.m in Sources */,
 				B39BEC7B1A0A728A0085BA26 /* FacebookStrategy.m in Sources */,
@@ -808,6 +801,7 @@
 				B380C2821A1B7E3800BF172F /* GoogleplusStrategy.m in Sources */,
 				B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */,
 				B39BEC8C1A0B6EC40085BA26 /* EmailStrategy.m in Sources */,
+				BF5D7EEF1BB017A0003F8883 /* NSMutableArray+QueueAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

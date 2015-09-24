@@ -17,6 +17,7 @@ static NSString *ChromeCastPlayerClassName = @"";
 
 static NSString *PlayKey = @"play";
 static NSString *PauseKey = @"pause";
+static NSString *StopKey = @"stop";
 static NSString *DurationChangedKey = @"durationchange";
 static NSString *LoadedMetaDataKey = @"loadedmetadata";
 static NSString *TimeUpdateKey = @"timeupdate";

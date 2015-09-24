@@ -95,7 +95,7 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self isEqualToString:@"seeked"];
 }
 
-- (BOOL)canPlay {
+- (BOOL)isCanPlay {
     return [self isEqualToString:@"canplay"];
 }
 

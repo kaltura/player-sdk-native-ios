@@ -17,9 +17,14 @@ NSString *const DoPauseKey = @"doPause";
 NSString *const DoStopKey = @"doStop";
 NSString *const DoSeekKey = @"doSeek";
 NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
+NSString *const KMediaLoadStateKey = @"mediaLoadState";
 
-- (void)setPlaybackState: (KPMediaPlaybackState)newState {
+- (void)setPlaybackState:(KPMediaPlaybackState)newState {
     _playbackState = newState;
+}
+
+- (void)setLoadState:(KPMediaLoadState)newState {
+    _loadState = newState;
 }
 
 ///@todo prepareToPlay
@@ -57,6 +62,11 @@ NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
+    
+    if (currPlaybackTime == 0) {
+        currPlaybackTime = 0.01;
+    }
+    
     if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
         [_delegate sendKPNotification:DoSeekKey withParams:[@(currPlaybackTime) stringValue]];
     }
