@@ -8,7 +8,7 @@
 
 #import "KPControlsWKWebview.h"
 
-@interface KPControlsWKWebview() <WKNavigationDelegate>
+@interface KPControlsWKWebview() <WKNavigationDelegate, WKUIDelegate>
 
 @end
 
@@ -36,6 +36,7 @@
     self = [super initWithFrame:frame configuration:configuration];
     if (self) {
         self.navigationDelegate = self;
+        self.UIDelegate = self;
         self.translatesAutoresizingMaskIntoConstraints = NO;
         self.opaque = NO;
         self.scrollView.scrollEnabled = NO;
@@ -47,16 +48,24 @@
     return nil;
 }
 
+
+
+- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler
+{
+    NSLog(@"JavaScript message: %@",  message);
+    completionHandler();
+}
+
 - (void)loadRequest:(NSURLRequest *)request {
-//    [super loadRequest:request];
-    [[KArchiver shared] contentOfURL:request.URL.absoluteString
-                          completion:^(NSData *content, NSError *error) {
-                              dispatch_async(dispatch_get_main_queue(), ^{
-                                  NSString *html = [[NSString alloc] initWithData:content encoding:NSUTF8StringEncoding];
-                                  [self loadHTMLString:html
-                                               baseURL:request.URL];
-                              });
-                          }];
+    [super loadRequest:request];
+//    [[KArchiver shared] contentOfURL:request.URL.absoluteString
+//                          completion:^(NSData *content, NSError *error) {
+//                              dispatch_async(dispatch_get_main_queue(), ^{
+//                                  NSString *html = [[NSString alloc] initWithData:content encoding:NSUTF8StringEncoding];
+//                                  [self loadHTMLString:html
+//                                               baseURL:request.URL];
+//                              });
+//                          }];
 }
 
 
