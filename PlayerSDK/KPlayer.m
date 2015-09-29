@@ -208,6 +208,9 @@ static NSString *StatusKeyPath = @"status";
 - (void)play {
     if (!self.rate) {
         [super play];
+        // test airplay
+//        [self addNativeAirPlayButton];
+//        [self showNativeAirPlayButton:@[@50,@50,@50,@50]];
     }
 }
 
@@ -253,6 +256,7 @@ static NSString *StatusKeyPath = @"status";
     if ( !volumeView ) {
         volumeView = [ [MPVolumeView alloc] init ];
         [volumeView setShowsVolumeSlider: NO];
+        [volumeView sizeToFit];
     }
     KPLogTrace(@"Exit");
 }
