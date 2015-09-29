@@ -21,6 +21,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPIMAPlayerViewController.h"
 #import "KPlayerFactory.h"
 #import "KPControlsView.h"
+#import "KCCPlayer.h"
 #import "KPController_Private.h"
 #import "KPURLProtocol.h"
 #import "KCacheManager.h"
@@ -35,7 +36,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeSkip
 };
 
-@interface KPViewController() <KPlayerFactoryDelegate, KPControlsViewDelegate>{
+@interface KPViewController() <KPlayerFactoryDelegate,
+                                KPControlsViewDelegate,
+                                UIActionSheetDelegate,
+                                ChromecastDeviceControllerDelegate> {
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -45,6 +49,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSMutableArray *callBackReadyRegistrations;
     NSURL *videoURL;
     void(^_shareHandler)(NSDictionary *);
+    BOOL isActionSheetPresented;
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
@@ -56,6 +61,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
 @property (nonatomic) NSTimeInterval seekValue;
+
+#pragma mark - chromecast
+@property GCKDevice *selectedDevice;
+
 @end
 
 @implementation KPViewController 
@@ -198,6 +207,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return _configuration;
 }
 
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:NO];
+    // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
+    [ChromecastDeviceController sharedInstance].delegate = self;
+}
+
 #pragma mark -
 #pragma mark View flow methods
 - (void)viewDidLoad {
@@ -243,6 +258,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _kdpAPIState = KDPAPIStateUnknown;
     }
     
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(handleCastScanStatusUpdated)
+                                                 name: @"castScanStatusUpdated"
+                                               object: nil];
+    
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
@@ -264,10 +284,135 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             });
         }
     }];
+    
+    self.castDeviceController = [ChromecastDeviceController sharedInstance];
+    [self.castDeviceController clearPreviousSession];
+    // Assign ourselves as the delegate.
+    self.castDeviceController.delegate = self;
+    // Turn on the Cast logging for debug purposes.
+    [self.castDeviceController enableLogging];
+    // Set the receiver application ID to initialise scanning.
+   [self.castDeviceController setApplicationID:@"DB6462E9"];
+    
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
 
+- (void)handleCastScanStatusUpdated {
+
+}
+
+#pragma mark - GCKDeviceScannerListener
+//- (void)deviceDidComeOnline:(GCKDevice *)device {
+//    NSLog(@"device found!! %@", device.friendlyName);
+//}
+
+- (void)didDiscoverDeviceOnNetwork {
+    NSLog(@"");
+    __weak KPViewController *weakSelf = self;
+    [self registerReadyEvent:^{
+        [weakSelf setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
+    }];
+}
+
+- (void)chooseDevice {
+    UIActionSheet *sheet;
+    //Choose device
+    if (self.selectedDevice == nil) {
+        //Choose device
+       sheet =
+        [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Connect to Device", nil)
+                                    delegate:self
+                           cancelButtonTitle:nil
+                      destructiveButtonTitle:nil
+                           otherButtonTitles:nil];
+        
+        for (GCKDevice *device in self.castDeviceController.deviceScanner.devices) {
+            [sheet addButtonWithTitle:device.friendlyName];
+        }
+        
+        [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
+//        sheet.cancelButtonIndex = sheet.numberOfButtons - 1;
+        
+        //show device selection
+//    }
+    } else {
+        // Gather stats from device.
+//        [self updateStatsFromDevice];
+        
+        NSString *friendlyName = [NSString stringWithFormat:NSLocalizedString(@"Casting to %@", nil),
+                            self.selectedDevice.friendlyName];
+        NSString *mediaTitle = [self.castDeviceController.mediaInformation.metadata stringForKey:kGCKMetadataKeyTitle];
+        
+        sheet = [[UIActionSheet alloc] init];
+        sheet.title = friendlyName;
+        sheet.delegate = self;
+        if (mediaTitle != nil) {
+            [sheet addButtonWithTitle:mediaTitle];
+        }
+        
+        //Offer disconnect option
+        [sheet addButtonWithTitle:@"Disconnect"];
+        [sheet addButtonWithTitle:@"Cancel"];
+        sheet.destructiveButtonIndex = (mediaTitle != nil ? 1 : 0);
+        sheet.cancelButtonIndex = (mediaTitle != nil ? 2 : 1);
+    }
+    
+    [sheet showInView:[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject]];
+}
+
+- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
+    isActionSheetPresented = YES;
+}
+
+-(void)showChromecastDeviceList {
+    NSLog(@"showChromecastDeviceList Enter");
+    
+    if (!isActionSheetPresented) {
+        [self chooseDevice];
+    }
+    
+    NSLog(@"showChromecastDeviceList Exit");
+}
+
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    isActionSheetPresented = NO;
+    
+    if (self.selectedDevice == nil) {
+        if (buttonIndex < self.castDeviceController.deviceScanner.devices.count) {
+            self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
+//            NSLog(@"Selecting device:%@", ((GCKDevice *)(self.castDeviceController.deviceScanner.devices[buttonIndex])).friendlyName);
+//            [_playerController setCurrentPlayBackTime:_playerController.player.currentPlaybackTime];
+            [_playerFactory switchPlayer:ChromeCastPlayerClassName key:nil];
+            [((KCCPlayer *)_playerFactory.player).chromecastDeviceController connectToDevice:self.selectedDevice];
+        }
+    } else {
+        if (buttonIndex == 0) {  //Disconnect button
+            NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
+            // New way of doing things: We're not going to stop the applicaton. We're just going
+            // to leave it.
+//            [self.castDeviceController.deviceManager leaveApplication];
+            // If you want to force application to stop, uncomment below
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//            [defaults setObject:sessionID forKey:@"lastSessionID"];
+            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
+            
+            [self.castDeviceController.deviceManager disconnect];
+            [self deviceDisconnect];
+        }
+//        else if (buttonIndex == 0) {
+//            // Join the existing session.
+//            
+//        }
+    }
+}
+
+- (void)deviceDisconnect {
+    self.selectedDevice = nil;
+    self.castDeviceController.deviceManager = nil;
+    [_playerFactory switchPlayer:PlayerClassName key:nil];
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -292,7 +437,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
+#pragma mark - GCKDeviceScannerListener
+- (void)deviceDidComeOnline:(GCKDevice *)device {
+    NSLog(@"device found!! %@", device.friendlyName);
+}
 
+- (void)deviceDidGoOffline:(GCKDevice *)device {
+}
 
 - (void)handleEnteredBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
@@ -329,6 +480,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     isPlaying = NO;
     isResumePlayer = NO;
     _isFullScreenToggled = NO;
+    isActionSheetPresented = NO;
     KPLogTrace(@"Exit");
 }
 
@@ -729,10 +881,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations
-{
+-(NSUInteger)supportedInterfaceOrientations {
     return self.configuration.supportedInterfaceOrientations;
-    
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

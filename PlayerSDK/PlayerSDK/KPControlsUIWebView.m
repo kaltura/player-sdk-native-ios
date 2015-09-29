@@ -89,6 +89,10 @@
     [self stringByEvaluatingJavaScriptFromString:triggerEventWithJSON(event, json)];
 }
 
+- (void)showChromecastComponent:(BOOL)show {
+    [self stringByEvaluatingJavaScriptFromString:showChromecastComponent(show)];
+}
+
 //- (CGFloat)videoHolderHeight {
 //    return [[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue];
 //}

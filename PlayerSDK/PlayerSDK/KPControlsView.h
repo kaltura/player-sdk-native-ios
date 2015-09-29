@@ -16,6 +16,7 @@ NSString *setKDPAttribute(NSString *pluginName, NSString *propertyName, NSString
 NSString *triggerEvent(NSString *event, NSString *value);
 NSString *triggerEventWithJSON(NSString *event, NSString *jsonString);
 NSString *asyncEvaluate(NSString *expression, NSString *evaluateID);
+NSString *showChromecastComponent(BOOL show);
 
 
 @protocol KPControlsViewDelegate <NSObject>
@@ -59,6 +60,7 @@ NSString *asyncEvaluate(NSString *expression, NSString *evaluateID);
 
 - (void)fetchvideoHolderHeight:(void(^)(CGFloat height))fetcher;
 
+- (void)showChromecastComponent:(BOOL)show;
 
 @end
 
