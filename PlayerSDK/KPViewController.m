@@ -412,7 +412,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)deviceDisconnect {
     self.selectedDevice = nil;
     self.castDeviceController.deviceManager = nil;
-    [_playerFactory switchPlayer:PlayerClassName key:nil];
+//    [_playerFactory switchPlayer:PlayerClassName key:nil];
+    [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:PlayerClassName]];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
