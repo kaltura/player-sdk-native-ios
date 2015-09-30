@@ -2,16 +2,21 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
+
 @class GCKDevice;
+@class GCKFilterCriteria;
 @protocol GCKDeviceScannerListener;
 
 /**
  * A class that (asynchronously) scans for available devices and sends corresponding notifications
  * to its listener(s). This class is implicitly a singleton; since it does a network scan, it isn't
- * useful to have more than one instance of it in use.
+ * useful to have more than one instance of it in use. <b>All methods and properties of this class
+ * may only be accessed from the main thread.</b>
  *
  * @ingroup Discovery
  */
+GCK_EXPORT
 @interface GCKDeviceScanner : NSObject
 
 /** The array of discovered devices. */
@@ -23,10 +28,28 @@
 /** Whether a scan is currently in progress. */
 @property(nonatomic, readonly) BOOL scanning;
 
+/** The current filtering criteria. */
+@property(nonatomic, copy) GCKFilterCriteria *filterCriteria;
+
 /**
- * Designated initializer. Constructs a new GCKDeviceScanner.
+ * Whether the scan should be a passive scan. A passive scan sends discovery queries less
+ * frequently, so it is more efficient, but the results will not be as fresh. It's appropriate to
+ * do a passive scan when the user is not actively selecting a Cast target.
  */
-- (id)init;
+@property(nonatomic, assign) BOOL passiveScan;
+
+/**
+ * Constructs a new GCKDeviceScanner.
+ * @deprecated {Use @link #initWithFilterCriteria: @endlink instead.}
+ */
+- (instancetype)init GCK_DEPRECATED;
+
+/**
+ * Designated initializer. Constructs a new GCKDeviceScanner with the given filter criteria.
+ *
+ * @param filterCriteria The filter criteria. May not be <code>nil</code>.
+ */
+- (instancetype)initWithFilterCriteria:(GCKFilterCriteria *)filterCriteria;
 
 /**
  * Starts a new device scan. The scan must eventually be stopped by calling
@@ -61,6 +84,7 @@
  *
  * @ingroup Discovery
  */
+GCK_EXPORT
 @protocol GCKDeviceScannerListener <NSObject>
 
 @optional
@@ -78,5 +102,15 @@
  * @param device The device.
  */
 - (void)deviceDidGoOffline:(GCKDevice *)device;
+
+/**
+ * Called when there is a change to one or more properties of the device that do not affect
+ * connectivity to the device. This includes all properties except the device ID, IP address,
+ * and service port; if any of these properties changes, the device will be reported as "offline"
+ * and a new device with the updated properties will be reported as "online".
+ *
+ * @param device The device.
+ */
+- (void)deviceDidChange:(GCKDevice *)device;
 
 @end

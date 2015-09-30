@@ -29,6 +29,10 @@ NSString *asyncEvaluate(NSString *expression, NSString *evaluateID) {
     return [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, evaluateID];
 }
 
+NSString *showChromecastComponent(BOOL show) {
+    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.showChromecastComponent(\"%@\");", @(show).stringValue];
+}
+
 @implementation KPControlsView
 + (id<KPControlsView>)defaultControlsViewWithFrame:(CGRect)frame {
     NSString *className = isIOS(8) ? @"KPControlsWKWebview" : @"KPControlsUIWebview";

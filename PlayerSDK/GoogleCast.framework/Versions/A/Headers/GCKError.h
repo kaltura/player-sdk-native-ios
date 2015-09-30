@@ -2,15 +2,21 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
+
 /** @file GCKError.h
- *  @brief Error codes
+ *  Error codes
  */
 
 /**
  * @enum GCKErrorCode
- * @brief Description of error codes
+ * Description of error codes
  */
 typedef NS_ENUM(NSInteger, GCKErrorCode) {
+  /**
+   * Error Code indicating no error.
+   */
+  GCKErrorCodeNoError = 0,
 
   /**
    * Error code indicating a network I/O error.
@@ -39,19 +45,50 @@ typedef NS_ENUM(NSInteger, GCKErrorCode) {
   GCKErrorCodeCancelled = 5,
 
   /**
+   * Error code indicating that a request has been replaced by another request of the same type.
+   */
+  GCKErrorCodeReplaced = 6,
+
+  /**
    * Error code indicating that the request was disallowed and could not be completed.
    */
-  GCKErrorCodeNotAllowed = 6,
+  GCKErrorCodeNotAllowed = 7,
+
+  /**
+   * Error code indicating that a request could not be made because the same type of request is
+   * still in process.
+   */
+  GCKErrorCodeDuplicateRequest = 8,
+
+  /**
+   * Error code indicating that the request is not allowed in the current state.
+   */
+  GCKErrorCodeInvalidState = 9,
 
   /**
    * Error code indicating that a requested application could not be found.
    */
-  GCKErrorCodeApplicationNotFound = 7,
+  GCKErrorCodeApplicationNotFound = 20,
 
   /**
    * Error code indicating that a requested application is not currently running.
    */
-  GCKErrorCodeApplicationNotRunning = 8,
+  GCKErrorCodeApplicationNotRunning = 21,
+
+  /**
+   * Error code indicating that the application session ID was not valid.
+   */
+  GCKErrorCodeInvalidApplicationSessionID = 22,
+
+  /**
+   * Error code indicating that a media load failed on the receiver side.
+   */
+  GCKErrorCodeMediaLoadFailed = 30,
+
+  /**
+   * Error code indicating that a media media command failed because of the media player state.
+   */
+  GCKErrorCodeInvalidMediaPlayerState = 31,
 
   /**
    * Error code indicating the app entered the background.
@@ -64,27 +101,6 @@ typedef NS_ENUM(NSInteger, GCKErrorCode) {
   GCKErrorCodeDisconnected = 92,
 
   /**
-   * Error code indicating that a request could not be made because the same type of request is
-   * still in process.
-   */
-  GCKErrorCodeDuplicateRequest = 93,
-
-  /**
-   * Error code indicating that a media load failed on the receiver side.
-   */
-  GCKErrorCodeMediaLoadFailed = 94,
-
-  /**
-   * Error code indicating that a media media command failed because of the media player state.
-   */
-  GCKErrorCodeInvalidMediaPlayerState = 95,
-
-  /**
-   * Error code indicating that the application session ID was not valid.
-   */
-  GCKErrorCodeInvalidApplicationSessionID = 96,
-
-  /**
    * Error code indicating that an unknown, unexpected error has occurred.
    */
   GCKErrorCodeUnknown = 99,
@@ -93,29 +109,24 @@ typedef NS_ENUM(NSInteger, GCKErrorCode) {
 /**
  * The key for the customData JSON object associated with the error in the userInfo dictionary.
  */
-extern NSString *const kGCKErrorCustomDataKey;
+GCK_EXTERN NSString *const kGCKErrorCustomDataKey;
+
+/**
+ * The error domain for GCKErrorCode.
+ */
+GCK_EXTERN NSString *const kGCKErrorDomain;
 
 /**
  * The class for all GCK framework errors.
  *
  * @ingroup Utilities
  */
+GCK_EXPORT
 @interface GCKError : NSError
 
 /**
  * Returns the name of the enum value for a given error code.
  */
 + (NSString *)enumDescriptionForCode:(GCKErrorCode)code;
-
-/** @cond INTERNAL */
-
-/**
- * Designated initializer.
- */
-- (id)initWithCode:(GCKErrorCode)code additionalUserInfo:(NSDictionary *)additionalUserInfo;
-
-- (id)initWithCode:(GCKErrorCode)code;
-
-/** @endcond */
 
 @end

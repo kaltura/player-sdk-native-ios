@@ -22,6 +22,8 @@
 #import "KPController.h"
 
 
+#import <GoogleCast/GoogleCast.h>
+#import "ChromecastDeviceController.h"
 
 
 
@@ -97,6 +99,8 @@
 /// Change the source and returns the current source
 @property (nonatomic, copy) NSURL *playerSource;
 
+/// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
+@property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic, copy) NSDictionary *drmDict;
 
 /// @return Duration of the current video
@@ -245,6 +249,8 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 /// Wraps triggerEvent:withValue: method by block syntax.
 @property (nonatomic, copy, readonly) void (^triggerEvent)(NSString *event, NSString *value);
 
+/* The device manager used for the currently casting media. */
+@property(weak, nonatomic) ChromecastDeviceController *castDeviceController;
 
 @end
 

@@ -2,16 +2,21 @@
 
 #import <Foundation/Foundation.h>
 
+#import "GCKDefines.h"
 
 typedef NS_ENUM(NSInteger, GCKSenderApplicationInfoPlatform) {
   GCKSenderApplicationInfoPlatformAndroid = 1,
   GCKSenderApplicationInfoPlatformiOS = 2,
   GCKSenderApplicationInfoPlatformChrome = 3,
+  GCKSenderApplicationInfoPlatformOSX = 4,
 };
 
 /**
  * Container class for information about a sender application.
+ *
+ * @ingroup DeviceControl
  */
+GCK_EXPORT
 @interface GCKSenderApplicationInfo : NSObject<NSCopying>
 
 /** The sender app's platform. */
@@ -22,28 +27,6 @@ typedef NS_ENUM(NSInteger, GCKSenderApplicationInfoPlatform) {
 
 /** The sender app's launch URL. */
 @property(nonatomic, strong, readonly) NSURL *launchURL;
-
-/** @cond INTERNAL */
-
-/**
- * Designated initializer. Constructs a new SenderApplicationInfo object.
- *
- * @param platform The sender platform.
- * @param appIdentifier The sender application's unique identifer.
- * @param launchUrl The URL for launching the application on the sender platform.
- */
-- (id)initWithPlatform:(GCKSenderApplicationInfoPlatform)platform
-         appIdentifier:(NSString *)appIdentifier
-             launchURL:(NSURL *)launchURL;
-
-/**
- * Constructs a new SenderApplicationInfo object from JSON data.
- *
- * @param JSONObject The JSON data.
- */
-- (id)initWithJSONObject:(id)JSONObject;
-
-/** @endcond */
 
 @end
 

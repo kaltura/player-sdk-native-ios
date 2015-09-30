@@ -89,6 +89,10 @@
     [self stringByEvaluatingJavaScriptFromString:triggerEventWithJSON(event, json)];
 }
 
+- (void)showChromecastComponent:(BOOL)show {
+    [self stringByEvaluatingJavaScriptFromString:showChromecastComponent(show)];
+}
+
 //- (CGFloat)videoHolderHeight {
 //    return [[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue];
 //}
@@ -130,5 +134,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     return YES;
 }
 
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    
+}
 
 @end

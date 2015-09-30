@@ -44,19 +44,19 @@
 
 - (void)setContentURL:(NSURL *)url {
     ccContentURL = url;
-    [chromecastDeviceController loadMedia: url
-                             thumbnailURL: nil
-                                    title: @""
-                                 subtitle: @""
-                                 mimeType: @""
-                                startTime: [self currentPlaybackTime]
-                                 autoPlay: YES];
+//    [chromecastDeviceController loadMedia: url
+//                             thumbnailURL: nil
+//                                    title: @""
+//                                 subtitle: @""
+//                                 mimeType: @""
+//                                startTime: [self currentPlaybackTime]
+//                                 autoPlay: YES];
 }
 
 -(void)play {
     KPLogTrace(@"Enter");
     if ( chromecastDeviceController.playerState !=  GCKMediaPlayerStatePlaying ) {
-        [chromecastDeviceController pauseCastMedia: NO];
+//        [chromecastDeviceController pauseCastMedia: NO];
     }
     KPLogTrace(@"Exit");
 }
@@ -64,14 +64,14 @@
 -(void)pause {
     KPLogTrace(@"Enter");
     if ( chromecastDeviceController.playerState != GCKMediaPlayerStatePaused ) {
-         [chromecastDeviceController pauseCastMedia: YES];
+//         [chromecastDeviceController pauseCastMedia: YES];
     }
     KPLogTrace(@"Exit");
 }
 
 -(void)stop {
     KPLogTrace(@"Enter");
-    [chromecastDeviceController stopCastMedia];
+//    [chromecastDeviceController stopCastMedia];
     KPLogTrace(@"Exit");
 }
 
@@ -89,7 +89,7 @@
 
 - (CGFloat)getCurrentTime {
 //    if ( [self isPreparedToPlay] ) {
-        [chromecastDeviceController updateStatsFromDevice];
+//        [chromecastDeviceController updateStatsFromDevice];
         
         return [chromecastDeviceController streamPosition];
 //    }
@@ -105,7 +105,7 @@
 }
 
 - (BOOL)isPreparedToPlay {
-    return chromecastDeviceController && [chromecastDeviceController isConnected];
+//    return chromecastDeviceController && [chromecastDeviceController isConnected];
 }
 
 - (void)bindPlayerEvents {
@@ -172,7 +172,7 @@
                      objectForKey:@"AVSystemController_AudioVolumeNotificationParameter"]
                     floatValue];
     
-    [chromecastDeviceController changeVolume: volume];
+//    [chromecastDeviceController changeVolume: volume];
     
 }
 
