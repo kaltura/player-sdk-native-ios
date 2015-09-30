@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "KPlayerController.h"
+#import "KPlayerFactory.h"
 #import "ChromecastDeviceController.h"
 
 @interface KCCPlayer : NSObject <KPlayer, ChromecastDeviceControllerDelegate>

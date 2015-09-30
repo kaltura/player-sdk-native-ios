@@ -384,7 +384,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
 //            NSLog(@"Selecting device:%@", ((GCKDevice *)(self.castDeviceController.deviceScanner.devices[buttonIndex])).friendlyName);
 //            [_playerController setCurrentPlayBackTime:_playerController.player.currentPlaybackTime];
-            [_playerFactory switchPlayer:ChromeCastPlayerClassName key:nil];
+//            [_playerFactory switchPlayer:ChromeCastPlayerClassName key:nil];
+            [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:ChromeCastPlayerClassName]];
             [((KCCPlayer *)_playerFactory.player).chromecastDeviceController connectToDevice:self.selectedDevice];
         }
     } else {
@@ -685,7 +686,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             _playerFactory.src = attributeVal;
             
             if (self.drmDict != nil) {
-                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:@"WVPlayer"]];
+                [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:WideVinePlayerClass]];
                 [_playerFactory.player setDRMDict:self.drmDict];
             }
             break;

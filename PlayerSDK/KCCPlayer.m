@@ -8,7 +8,7 @@
 
 #import "KCCPlayer.h"
 #import "KPLog.h"
-#import <GoogleCast/GoogleCast.h>
+#import "/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/GoogleCast.framework/Versions/A/Headers/GoogleCast.h"
 
 @interface KCCPlayer() {
     NSString* contentID;
@@ -70,7 +70,9 @@
     if (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying) {
         KPLogDebug(@"updateProgressFromCast");
         [self updateCurrentTime:self.chromecastDeviceController.streamPosition];
-        [_delegate player:self eventName:TimeUpdateKey value:[NSString stringWithFormat:@"%f", _currentPlaybackTime]];
+        [_delegate player:self
+                eventName:TimeUpdateKey
+                    value:[NSString stringWithFormat:@"%f", _currentPlaybackTime]];
         NSLog(@"%f", _currentPlaybackTime);
     }
 }
