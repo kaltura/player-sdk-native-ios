@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @interface KPViewController() <KPlayerFactoryDelegate,
                                 KPControlsViewDelegate,
                                 UIActionSheetDelegate,
-                                ChromecastDeviceControllerDelegate> {
+                                ChromecastDeviceControllerDelegate, KPControllerDelegate> {
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -883,7 +883,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return YES;
 }
 
--(NSUInteger)supportedInterfaceOrientations {
+-(UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return self.configuration.supportedInterfaceOrientations;
 }
 
