@@ -8,7 +8,7 @@
 
 #import "KCCPlayer.h"
 #import "KPLog.h"
-#import "/Users/elizasapir/Desktop/GitRepositories/player-sdk-native-ios/PlayerSDK/GoogleCast.framework/Versions/A/Headers/GoogleCast.h"
+#import <GoogleCast/GoogleCast.h>
 
 @interface KCCPlayer() {
     NSString* contentID;
