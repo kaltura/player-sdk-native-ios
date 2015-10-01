@@ -281,6 +281,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                     weakSelf.view.frame = weakSelf.superView.bounds;
                     [weakSelf.superView addSubview:weakSelf.view];
                 }
+                [weakSelf.controlsView updateLayout];
             });
         }
     }];

@@ -98,8 +98,7 @@
 //}
 
 - (void)updateLayout {
-    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
-    [self stringByEvaluatingJavaScriptFromString:updateLayoutJS];
+    [self sendNotification:@"doUpdateLayout" withParams:nil];
 }
 
 #pragma mark UIWebviewDelegate
