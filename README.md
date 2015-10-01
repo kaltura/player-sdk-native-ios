@@ -170,3 +170,8 @@ The player includes the same KDP api available in webviews this includes:
 * kdp.asyncEvaluate( property, callback );
 * kdp.setKDPAttribute( property, value );
 * kdp.addListener( name, callback );
+
+License and Copyright Information
+===
+
+All mwEmbed code is released under the AGPLv3 unless a different license for a particular library is specified in the applicable library path
