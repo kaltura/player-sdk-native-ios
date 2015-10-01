@@ -174,4 +174,4 @@ The player includes the same KDP api available in webviews this includes:
 License and Copyright Information
 ===
 
-All mwEmbed code is released under the AGPLv3 unless a different license for a particular library is specified in the applicable library path
+All player-sdk-native-ios code is released under the AGPLv3 unless a different license for a particular library is specified in the applicable library path
