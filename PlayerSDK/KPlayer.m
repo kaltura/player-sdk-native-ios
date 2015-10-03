@@ -34,6 +34,8 @@ static NSString *StatusKeyPath = @"status";
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
+    [self createAudioSession];
+ 
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
         _layer.frame = (CGRect){CGPointZero, parentView.frame.size};
@@ -73,6 +75,18 @@ static NSString *StatusKeyPath = @"status";
         return self;
     }
     return nil;
+}
+
+- (void)createAudioSession {
+    NSError *myErr;
+    
+    if (![[AVAudioSession sharedInstance]
+          setCategory:AVAudioSessionCategoryPlayback
+          error:&myErr]) {
+        
+        // Handle the error
+        NSLog(@"Audio Session error %@, %@", myErr, [myErr userInfo]);
+    }
 }
 
 - (BOOL)isKPlayer {
@@ -269,6 +283,8 @@ static NSString *StatusKeyPath = @"status";
     KPLogTrace(@"Enter");
     if ( volumeView.hidden ) {
         volumeView.hidden = NO;
+        
+        
         
         if ( prevAirPlayBtnPositionArr == nil || ![prevAirPlayBtnPositionArr isEqualToArray: airPlayBtnPositionArr] ) {
             prevAirPlayBtnPositionArr = airPlayBtnPositionArr;
