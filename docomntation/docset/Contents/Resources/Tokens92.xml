@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKSenderApplicationInfoPlatform.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKSenderApplicationInfoPlatform</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
+            
+			
+			<NodeRef refid="92"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKSenderApplicationInfoPlatformAndroid</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>GCKSenderApplicationInfoPlatformAndroid</Declaration>
+            
+            <DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
+            
+            <NodeRef refid="92"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKSenderApplicationInfoPlatformiOS</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>GCKSenderApplicationInfoPlatformiOS</Declaration>
+            
+            <DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
+            
+            <NodeRef refid="92"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKSenderApplicationInfoPlatformChrome</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>GCKSenderApplicationInfoPlatformChrome</Declaration>
+            
+            <DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
+            
+            <NodeRef refid="92"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKSenderApplicationInfoPlatformOSX</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>GCKSenderApplicationInfoPlatformOSX</Declaration>
+            
+            <DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
+            
+            <NodeRef refid="92"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

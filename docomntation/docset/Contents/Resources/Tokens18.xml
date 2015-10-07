@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKLogger.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKLogger</TokenIdentifier>
+			<Abstract type="html">A singleton object used for logging by the framework. By default, log messages are written to
+NSLog() in debug builds and are discarded otherwise. If a delegate is assigned, the formatted
+log messages are passed to the delegate instead.</Abstract>
+			<DeclaredIn>GCKLogger.h</DeclaredIn>
+            
+			
+			<NodeRef refid="18"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLogger/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate to pass log messages to.</Abstract>
+			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKLoggerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="18"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLogger/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate to pass log messages to.</Abstract>
+			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKLoggerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="18"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKLogger/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate to pass log messages to.</Abstract>
+			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKLoggerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="18"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKLogger/sharedInstance</TokenIdentifier>
+			<Abstract type="html">Returns the GCKLogger singleton instance.</Abstract>
+			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			
+			<Declaration>+ (GCKLogger *)sharedInstance</Declaration>
+			
+			
+			<Anchor>//api/name/sharedInstance</Anchor>
+            <NodeRef refid="18"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLogger/logFromFunction:message:</TokenIdentifier>
+			<Abstract type="html">Logs a message.</Abstract>
+			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			
+			<Declaration>- (void)logFromFunction:(const char *)function message:(NSString *)format, ...</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>function</Name>
+					<Abstract type="html">The calling function, normally &lt;code&gt;func&lt;/code&gt;.</Abstract>
+				</Parameter><Parameter>
+					<Name>format</Name>
+					<Abstract type="html">The format string.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/logFromFunction:message:</Anchor>
+            <NodeRef refid="18"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

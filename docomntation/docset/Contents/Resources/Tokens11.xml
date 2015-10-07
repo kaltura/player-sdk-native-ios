@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKDeviceScanner.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKDeviceScanner</TokenIdentifier>
+			<Abstract type="html">A class that (asynchronously) scans for available devices and sends corresponding notifications
+to its listener(s). This class is implicitly a singleton; since it does a network scan, it isn&apos;t
+useful to have more than one instance of it in use. &lt;b&gt;All methods and properties of this class
+may only be accessed from the main thread.&lt;/b&gt;</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+            
+			
+			<NodeRef refid="11"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/setDevices:</TokenIdentifier>
+			<Abstract type="html">The array of discovered devices.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, copy) NSArray *devices</Declaration>
+			
+			
+			<Anchor>//api/name/devices</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/devices</TokenIdentifier>
+			<Abstract type="html">The array of discovered devices.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, copy) NSArray *devices</Declaration>
+			
+			
+			<Anchor>//api/name/devices</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceScanner/devices</TokenIdentifier>
+			<Abstract type="html">The array of discovered devices.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, copy) NSArray *devices</Declaration>
+			
+			
+			<Anchor>//api/name/devices</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/setHasDiscoveredDevices:</TokenIdentifier>
+			<Abstract type="html">Whether the current/latest scan has discovered any devices.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL hasDiscoveredDevices</Declaration>
+			
+			
+			<Anchor>//api/name/hasDiscoveredDevices</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/hasDiscoveredDevices</TokenIdentifier>
+			<Abstract type="html">Whether the current/latest scan has discovered any devices.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL hasDiscoveredDevices</Declaration>
+			
+			
+			<Anchor>//api/name/hasDiscoveredDevices</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceScanner/hasDiscoveredDevices</TokenIdentifier>
+			<Abstract type="html">Whether the current/latest scan has discovered any devices.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL hasDiscoveredDevices</Declaration>
+			
+			
+			<Anchor>//api/name/hasDiscoveredDevices</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/setScanning:</TokenIdentifier>
+			<Abstract type="html">Whether a scan is currently in progress.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL scanning</Declaration>
+			
+			
+			<Anchor>//api/name/scanning</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/scanning</TokenIdentifier>
+			<Abstract type="html">Whether a scan is currently in progress.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL scanning</Declaration>
+			
+			
+			<Anchor>//api/name/scanning</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceScanner/scanning</TokenIdentifier>
+			<Abstract type="html">Whether a scan is currently in progress.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL scanning</Declaration>
+			
+			
+			<Anchor>//api/name/scanning</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/setFilterCriteria:</TokenIdentifier>
+			<Abstract type="html">The current filtering criteria.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) GCKFilterCriteria *filterCriteria</Declaration>
+			
+			
+			<Anchor>//api/name/filterCriteria</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/filterCriteria</TokenIdentifier>
+			<Abstract type="html">The current filtering criteria.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) GCKFilterCriteria *filterCriteria</Declaration>
+			
+			
+			<Anchor>//api/name/filterCriteria</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceScanner/filterCriteria</TokenIdentifier>
+			<Abstract type="html">The current filtering criteria.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) GCKFilterCriteria *filterCriteria</Declaration>
+			
+			
+			<Anchor>//api/name/filterCriteria</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/setPassiveScan:</TokenIdentifier>
+			<Abstract type="html">Whether the scan should be a passive scan. A passive scan sends discovery queries less
+frequently, so it is more efficient, but the results will not be as fresh. It&apos;s appropriate to
+do a passive scan when the user is not actively selecting a Cast target.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) BOOL passiveScan</Declaration>
+			
+			
+			<Anchor>//api/name/passiveScan</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/passiveScan</TokenIdentifier>
+			<Abstract type="html">Whether the scan should be a passive scan. A passive scan sends discovery queries less
+frequently, so it is more efficient, but the results will not be as fresh. It&apos;s appropriate to
+do a passive scan when the user is not actively selecting a Cast target.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) BOOL passiveScan</Declaration>
+			
+			
+			<Anchor>//api/name/passiveScan</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceScanner/passiveScan</TokenIdentifier>
+			<Abstract type="html">Whether the scan should be a passive scan. A passive scan sends discovery queries less
+frequently, so it is more efficient, but the results will not be as fresh. It&apos;s appropriate to
+do a passive scan when the user is not actively selecting a Cast target.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign) BOOL passiveScan</Declaration>
+			
+			
+			<Anchor>//api/name/passiveScan</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/init</TokenIdentifier>
+			<Abstract type="html">Constructs a new GCKDeviceScanner. (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; {Use @link #initWithFilterCriteria: @endlink instead.}&lt;/span&gt;)</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)init</Declaration>
+			
+			
+			<Anchor>//api/name/init</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/initWithFilterCriteria:</TokenIdentifier>
+			<Abstract type="html">Designated initializer. Constructs a new GCKDeviceScanner with the given filter criteria.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithFilterCriteria:(GCKFilterCriteria *)filterCriteria</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>filterCriteria</Name>
+					<Abstract type="html">The filter criteria. May not be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithFilterCriteria:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/startScan</TokenIdentifier>
+			<Abstract type="html">Starts a new device scan. The scan must eventually be stopped by calling
+@link #stopScan @endlink.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (void)startScan</Declaration>
+			
+			
+			<Anchor>//api/name/startScan</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/stopScan</TokenIdentifier>
+			<Abstract type="html">Stops any in-progress device scan. This method &lt;b&gt;must&lt;/b&gt; be called at some point after
+@link #startScan @endlink was called and before this object is released by its owner.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (void)stopScan</Declaration>
+			
+			
+			<Anchor>//api/name/stopScan</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/addListener:</TokenIdentifier>
+			<Abstract type="html">Adds a listener for receiving notifications.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (void)addListener:(id&lt;GCKDeviceScannerListener&gt;)listener</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>listener</Name>
+					<Abstract type="html">The listener to add.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addListener:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceScanner/removeListener:</TokenIdentifier>
+			<Abstract type="html">Removes a listener that was previously added with @link #addListener: @endlink.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (void)removeListener:(id&lt;GCKDeviceScannerListener&gt;)listener</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>listener</Name>
+					<Abstract type="html">The listener to remove.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/removeListener:</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

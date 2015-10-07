@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKColor.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKColor</TokenIdentifier>
+			<Abstract type="html">A class that represents an RGBA color.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+            
+			
+			<NodeRef refid="8"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKColor/initWithRed:green:blue:alpha:</TokenIdentifier>
+			<Abstract type="html">Designated initializer. Constructs a GCKColor object with the given red, green, blue, and alpha
+values.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha</Declaration>
+			
+			
+			<Anchor>//api/name/initWithRed:green:blue:alpha:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKColor/initWithRed:green:blue:</TokenIdentifier>
+			<Abstract type="html">Constructs a GCKColor object with the given red, green, blue values and an alpha value of 1.0
+(full opacity).</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue</Declaration>
+			
+			
+			<Anchor>//api/name/initWithRed:green:blue:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKColor/initWithUIColor:</TokenIdentifier>
+			<Abstract type="html">Constructs a GCKColor object from a UIColor.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithUIColor:(UIColor *)color</Declaration>
+			
+			
+			<Anchor>//api/name/initWithUIColor:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKColor/initWithNSColor:</TokenIdentifier>
+			<Abstract type="html">Constructs a GCKColor object from an NSColor.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithNSColor:(NSColor *)color</Declaration>
+			
+			
+			<Anchor>//api/name/initWithNSColor:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKColor/initWithCGColor:</TokenIdentifier>
+			<Abstract type="html">Constructs a GCKColor object from a CGColor.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithCGColor:(CGColorRef)color</Declaration>
+			
+			
+			<Anchor>//api/name/initWithCGColor:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKColor/initWithCSSString:</TokenIdentifier>
+			<Abstract type="html">Constructs a GCKColor object from a CSS string representation in the form &quot;#RRGGBBAA&quot;.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithCSSString:(NSString *)CSSString</Declaration>
+			
+			
+			<Anchor>//api/name/initWithCSSString:</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKColor/CSSString</TokenIdentifier>
+			<Abstract type="html">Returns a CSS string representation of the color, in the form &quot;#RRGGBBAA&quot;.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>- (NSString *)CSSString</Declaration>
+			
+			
+			<Anchor>//api/name/CSSString</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/black</TokenIdentifier>
+			<Abstract type="html">The color black.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)black</Declaration>
+			
+			
+			<Anchor>//api/name/black</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/red</TokenIdentifier>
+			<Abstract type="html">The color red.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)red</Declaration>
+			
+			
+			<Anchor>//api/name/red</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/green</TokenIdentifier>
+			<Abstract type="html">The color green.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)green</Declaration>
+			
+			
+			<Anchor>//api/name/green</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/blue</TokenIdentifier>
+			<Abstract type="html">The color blue.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)blue</Declaration>
+			
+			
+			<Anchor>//api/name/blue</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/cyan</TokenIdentifier>
+			<Abstract type="html">The color cyan.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)cyan</Declaration>
+			
+			
+			<Anchor>//api/name/cyan</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/magenta</TokenIdentifier>
+			<Abstract type="html">The color magenta.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)magenta</Declaration>
+			
+			
+			<Anchor>//api/name/magenta</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/yellow</TokenIdentifier>
+			<Abstract type="html">The color yellow.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)yellow</Declaration>
+			
+			
+			<Anchor>//api/name/yellow</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKColor/white</TokenIdentifier>
+			<Abstract type="html">The color white.</Abstract>
+			<DeclaredIn>GCKColor.h</DeclaredIn>
+			
+			<Declaration>+ (GCKColor *)white</Declaration>
+			
+			
+			<Anchor>//api/name/white</Anchor>
+            <NodeRef refid="8"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

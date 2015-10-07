@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKImage.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKImage</TokenIdentifier>
+			<Abstract type="html">A class that represents an image that is located on a web server.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+            
+			
+			<NodeRef refid="15"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKImage/setURL:</TokenIdentifier>
+			<Abstract type="html">The image URL.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, strong) NSURL *URL</Declaration>
+			
+			
+			<Anchor>//api/name/URL</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKImage/URL</TokenIdentifier>
+			<Abstract type="html">The image URL.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, strong) NSURL *URL</Declaration>
+			
+			
+			<Anchor>//api/name/URL</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKImage/URL</TokenIdentifier>
+			<Abstract type="html">The image URL.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, strong) NSURL *URL</Declaration>
+			
+			
+			<Anchor>//api/name/URL</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKImage/setWidth:</TokenIdentifier>
+			<Abstract type="html">The image width, in pixels.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKImage/width</TokenIdentifier>
+			<Abstract type="html">The image width, in pixels.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKImage/width</TokenIdentifier>
+			<Abstract type="html">The image width, in pixels.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKImage/setHeight:</TokenIdentifier>
+			<Abstract type="html">The image height, in pixels.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger height</Declaration>
+			
+			
+			<Anchor>//api/name/height</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKImage/height</TokenIdentifier>
+			<Abstract type="html">The image height, in pixels.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger height</Declaration>
+			
+			
+			<Anchor>//api/name/height</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKImage/height</TokenIdentifier>
+			<Abstract type="html">The image height, in pixels.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger height</Declaration>
+			
+			
+			<Anchor>//api/name/height</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKImage/initWithURL:width:height:</TokenIdentifier>
+			<Abstract type="html">Constructs a new {@link GCKImage} with the given URL and dimensions. Designated initializer.
+Asserts that the URL is not be null or empty, and the dimensions are not invalid.</Abstract>
+			<DeclaredIn>GCKImage.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithURL:(NSURL *)URL width:(NSInteger)width height:(NSInteger)height</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>URL</Name>
+					<Abstract type="html">The URL of the image.</Abstract>
+				</Parameter><Parameter>
+					<Name>width</Name>
+					<Abstract type="html">The width of the image, in pixels.</Abstract>
+				</Parameter><Parameter>
+					<Name>height</Name>
+					<Abstract type="html">The height of the image, in pixels.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithURL:width:height:</Anchor>
+            <NodeRef refid="15"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

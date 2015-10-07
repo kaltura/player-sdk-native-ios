@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKMediaTextTrackStyleFontStyle.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKMediaTextTrackStyleFontStyle</TokenIdentifier>
+			<Abstract type="html">Font style.</Abstract>
+			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+			
+			<NodeRef refid="88"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleFontStyleUnknown</TokenIdentifier>
+            <Abstract type="html">Unknown.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleFontStyleUnknown</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="88"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleFontStyleNormal</TokenIdentifier>
+            <Abstract type="html">Normal.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleFontStyleNormal</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="88"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleFontStyleBold</TokenIdentifier>
+            <Abstract type="html">Bold.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleFontStyleBold</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="88"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleFontStyleItalic</TokenIdentifier>
+            <Abstract type="html">Italic.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleFontStyleItalic</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="88"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleFontStyleBoldItalic</TokenIdentifier>
+            <Abstract type="html">Bold italic.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleFontStyleBoldItalic</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="88"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

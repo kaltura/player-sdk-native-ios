@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/GCKDeviceManagerDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/GCKDeviceManagerDelegate</TokenIdentifier>
+			<Abstract type="html">The delegate for GCKDeviceManager notifications. Unless indicated otherwise, the caller should
+&lt;b&gt;not&lt;/b&gt; release the delegating GCKDeviceManager object from within a delegate method.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+            
+			
+			<NodeRef refid="58"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManagerDidConnect:</TokenIdentifier>
+			<Abstract type="html">Called when a connection has been established to the device.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManagerDidConnect:(GCKDeviceManager *)deviceManager</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManagerDidConnect:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didFailToConnectWithError:</TokenIdentifier>
+			<Abstract type="html">Called when the connection to the device has failed. It is safe to release the GCKDeviceManager
+object from within this callback.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectWithError:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error that caused the connection to fail.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didFailToConnectWithError:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didDisconnectWithError:</TokenIdentifier>
+			<Abstract type="html">Called when the connection to the device has been terminated. It is safe to release the
+GCKDeviceManager object from within this callback.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectWithError:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error that caused the disconnection; nil if there was no error (e.g. intentional
+disconnection).</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didDisconnectWithError:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didSuspendConnectionWithReason:</TokenIdentifier>
+			<Abstract type="html">Called when the connection to the device has been suspended, possibly temporarily. When a
+connection is suspended, the device manager will automatically attempt to re-establish the
+connection at the appropriate time. The calling application should not attempt to force a
+reconnect itself.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didSuspendConnectionWithReason:(GCKConnectionSuspendReason)reason</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>reason</Name>
+					<Abstract type="html">The reason for the suspension.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didSuspendConnectionWithReason:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManagerDidResumeConnection:rejoinedApplication:</TokenIdentifier>
+			<Abstract type="html">Called when a previously suspended device connection has been re-established.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManagerDidResumeConnection:(GCKDeviceManager *)deviceManager rejoinedApplication:(BOOL)rejoinedApplication</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>rejoinedApplication</Name>
+					<Abstract type="html">If a connection had been established to a receiver application at the
+time of the suspension, this flag indicates whether that application has been successfully
+re-joined. This value would be &lt;code&gt;NO&lt;/code&gt; if, for example, the application was terminated
+during the time that the device manager was attempting to re-establish its connection to the
+device.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManagerDidResumeConnection:rejoinedApplication:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didConnectToCastApplication:sessionID:launchedApplication:</TokenIdentifier>
+			<Abstract type="html">Called when an application has been launched or joined.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata sessionID:(NSString *)sessionID launchedApplication:(BOOL)launchedApplication</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>applicationMetadata</Name>
+					<Abstract type="html">Metadata about the application.</Abstract>
+				</Parameter><Parameter>
+					<Name>sessionID</Name>
+					<Abstract type="html">The session ID.</Abstract>
+				</Parameter><Parameter>
+					<Name>launchedApplication</Name>
+					<Abstract type="html">&lt;code&gt;YES&lt;/code&gt; if the application was launched as part of the
+connection, or &lt;code&gt;NO&lt;/code&gt; if the application was already running and was joined.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didConnectToCastApplication:sessionID:launchedApplication:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didFailToConnectToApplicationWithError:</TokenIdentifier>
+			<Abstract type="html">Called when connecting to an application fails.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToConnectToApplicationWithError:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error that caused the failure.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didFailToConnectToApplicationWithError:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didDisconnectFromApplicationWithError:</TokenIdentifier>
+			<Abstract type="html">Called when disconnected from the current application.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectFromApplicationWithError:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error that caused the disconnect, or &lt;code&gt;nil&lt;/code&gt; if this was a normal
+disconnect.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didDisconnectFromApplicationWithError:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didFailToStopApplicationWithError:</TokenIdentifier>
+			<Abstract type="html">Called when a stop application request fails.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didFailToStopApplicationWithError:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error that caused the failure.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didFailToStopApplicationWithError:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didReceiveApplicationMetadata:</TokenIdentifier>
+			<Abstract type="html">Called whenever the application metadata for the currently running application has changed.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveApplicationMetadata:(GCKApplicationMetadata *)metadata</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>metadata</Name>
+					<Abstract type="html">The application metadata. May be nil if no application is currently running.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didReceiveApplicationMetadata:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didReceiveApplicationStatusText:</TokenIdentifier>
+			<Abstract type="html">Called whenever the currently running application status text has changed.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveApplicationStatusText:(NSString *)applicationStatusText</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>applicationStatusText</Name>
+					<Abstract type="html">The application status text. May be nil if no application is
+currently running or if the application did not report any status text.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didReceiveApplicationStatusText:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:volumeDidChangeToLevel:isMuted:</TokenIdentifier>
+			<Abstract type="html">Called whenever the volume changes.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager volumeDidChangeToLevel:(float)volumeLevel isMuted:(BOOL)isMuted</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>volumeLevel</Name>
+					<Abstract type="html">The current device volume level.</Abstract>
+				</Parameter><Parameter>
+					<Name>isMuted</Name>
+					<Abstract type="html">The current device mute state.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:volumeDidChangeToLevel:isMuted:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didReceiveActiveInputStatus:</TokenIdentifier>
+			<Abstract type="html">Called whenever the active input status changes.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveActiveInputStatus:(GCKActiveInputStatus)activeInputStatus</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>activeInputStatus</Name>
+					<Abstract type="html">The active input status.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didReceiveActiveInputStatus:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:didReceiveStandbyStatus:</TokenIdentifier>
+			<Abstract type="html">Called whenever the standby status changes.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager didReceiveStandbyStatus:(GCKStandbyStatus)standbyStatus</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>standbyStatus</Name>
+					<Abstract type="html">The standby status.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:didReceiveStandbyStatus:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceManagerDelegate/deviceManager:request:didFailWithError:</TokenIdentifier>
+			<Abstract type="html">Called when an asynchronous operation has failed.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceManager:(GCKDeviceManager *)deviceManager request:(NSInteger)requestID didFailWithError:(NSError *)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>deviceManager</Name>
+					<Abstract type="html">The device manager.</Abstract>
+				</Parameter><Parameter>
+					<Name>requestID</Name>
+					<Abstract type="html">The ID of the request that failed.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">The error.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceManager:request:didFailWithError:</Anchor>
+            <NodeRef refid="58"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKMediaTextTrackStyleEdgeType.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKMediaTextTrackStyleEdgeType</TokenIdentifier>
+			<Abstract type="html">Edge type.</Abstract>
+			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+			
+			<NodeRef refid="86"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleEdgeTypeUnknown</TokenIdentifier>
+            <Abstract type="html">Unknown.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleEdgeTypeUnknown</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="86"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleEdgeTypeNone</TokenIdentifier>
+            <Abstract type="html">None.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleEdgeTypeNone</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="86"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleEdgeTypeOutline</TokenIdentifier>
+            <Abstract type="html">Outline.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleEdgeTypeOutline</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="86"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleEdgeTypeDropShadow</TokenIdentifier>
+            <Abstract type="html">Drop shadow.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleEdgeTypeDropShadow</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="86"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleEdgeTypeRaised</TokenIdentifier>
+            <Abstract type="html">Raised.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleEdgeTypeRaised</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="86"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleEdgeTypeDepressed</TokenIdentifier>
+            <Abstract type="html">Depressed.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleEdgeTypeDepressed</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="86"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

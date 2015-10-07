@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKErrorCode.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKErrorCode</TokenIdentifier>
+			<Abstract type="html">@enum GCKErrorCode
+Description of error codes</Abstract>
+			<DeclaredIn>GCKError.h</DeclaredIn>
+            
+			
+			<NodeRef refid="79"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeNoError</TokenIdentifier>
+            <Abstract type="html">Error Code indicating no error.
+   </Abstract>
+            <Declaration>GCKErrorCodeNoError</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeNetworkError</TokenIdentifier>
+            <Abstract type="html">Error code indicating a network I/O error.
+   </Abstract>
+            <Declaration>GCKErrorCodeNetworkError</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeTimeout</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an operation has timed out.
+   </Abstract>
+            <Declaration>GCKErrorCodeTimeout</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeDeviceAuthenticationFailure</TokenIdentifier>
+            <Abstract type="html">Error code indicating an authentication error.
+   </Abstract>
+            <Declaration>GCKErrorCodeDeviceAuthenticationFailure</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeInvalidRequest</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an invalid request was made.
+   </Abstract>
+            <Declaration>GCKErrorCodeInvalidRequest</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeCancelled</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an in-progress request has been cancelled, most likely because
+another action has preempted it.
+   </Abstract>
+            <Declaration>GCKErrorCodeCancelled</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeReplaced</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a request has been replaced by another request of the same type.
+   </Abstract>
+            <Declaration>GCKErrorCodeReplaced</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeNotAllowed</TokenIdentifier>
+            <Abstract type="html">Error code indicating that the request was disallowed and could not be completed.
+   </Abstract>
+            <Declaration>GCKErrorCodeNotAllowed</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeDuplicateRequest</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a request could not be made because the same type of request is
+still in process.
+   </Abstract>
+            <Declaration>GCKErrorCodeDuplicateRequest</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeInvalidState</TokenIdentifier>
+            <Abstract type="html">Error code indicating that the request is not allowed in the current state.
+   </Abstract>
+            <Declaration>GCKErrorCodeInvalidState</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeApplicationNotFound</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a requested application could not be found.
+   </Abstract>
+            <Declaration>GCKErrorCodeApplicationNotFound</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeApplicationNotRunning</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a requested application is not currently running.
+   </Abstract>
+            <Declaration>GCKErrorCodeApplicationNotRunning</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeInvalidApplicationSessionID</TokenIdentifier>
+            <Abstract type="html">Error code indicating that the application session ID was not valid.
+   </Abstract>
+            <Declaration>GCKErrorCodeInvalidApplicationSessionID</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeMediaLoadFailed</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a media load failed on the receiver side.
+   </Abstract>
+            <Declaration>GCKErrorCodeMediaLoadFailed</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeInvalidMediaPlayerState</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a media media command failed because of the media player state.
+   </Abstract>
+            <Declaration>GCKErrorCodeInvalidMediaPlayerState</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeAppDidEnterBackground</TokenIdentifier>
+            <Abstract type="html">Error code indicating the app entered the background.
+   </Abstract>
+            <Declaration>GCKErrorCodeAppDidEnterBackground</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeDisconnected</TokenIdentifier>
+            <Abstract type="html">Error code indicating a disconnection occurred during the request.
+   </Abstract>
+            <Declaration>GCKErrorCodeDisconnected</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKErrorCodeUnknown</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an unknown, unexpected error has occurred.
+   </Abstract>
+            <Declaration>GCKErrorCodeUnknown</Declaration>
+            
+            <DeclaredIn>GCKError.h</DeclaredIn>
+            
+            <NodeRef refid="79"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

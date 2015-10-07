@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKMediaTextTrackStyleWindowType.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKMediaTextTrackStyleWindowType</TokenIdentifier>
+			<Abstract type="html">Window type.</Abstract>
+			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+			
+			<NodeRef refid="89"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleWindowTypeUnknown</TokenIdentifier>
+            <Abstract type="html">Unknown.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleWindowTypeUnknown</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="89"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleWindowTypeNone</TokenIdentifier>
+            <Abstract type="html">None.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleWindowTypeNone</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="89"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleWindowTypeNormal</TokenIdentifier>
+            <Abstract type="html">Normal.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleWindowTypeNormal</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="89"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaTextTrackStyleWindowTypeRoundedCorners</TokenIdentifier>
+            <Abstract type="html">Rounded corners.</Abstract>
+            <Declaration>GCKMediaTextTrackStyleWindowTypeRoundedCorners</Declaration>
+            
+            <DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+            
+            <NodeRef refid="89"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSString+Cache.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSString(Cache)</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KCacheManager.m</DeclaredIn>
+            
+			
+			<NodeRef refid="55"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSString/setDeleteFile:</TokenIdentifier>
+			<Abstract type="html">Deletes file by name</Abstract>
+			<DeclaredIn>KCacheManager.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL deleteFile</Declaration>
+			
+			<ReturnValue><Abstract type="html">BOOL YES if the file deleted succesfully</Abstract></ReturnValue>
+			<Anchor>//api/name/deleteFile</Anchor>
+            <NodeRef refid="55"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSString/deleteFile</TokenIdentifier>
+			<Abstract type="html">Deletes file by name</Abstract>
+			<DeclaredIn>KCacheManager.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL deleteFile</Declaration>
+			
+			<ReturnValue><Abstract type="html">BOOL YES if the file deleted succesfully</Abstract></ReturnValue>
+			<Anchor>//api/name/deleteFile</Anchor>
+            <NodeRef refid="55"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/NSString/deleteFile</TokenIdentifier>
+			<Abstract type="html">Deletes file by name</Abstract>
+			<DeclaredIn>KCacheManager.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL deleteFile</Declaration>
+			
+			<ReturnValue><Abstract type="html">BOOL YES if the file deleted succesfully</Abstract></ReturnValue>
+			<Anchor>//api/name/deleteFile</Anchor>
+            <NodeRef refid="55"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
