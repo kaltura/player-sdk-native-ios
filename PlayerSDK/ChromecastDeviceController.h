@@ -12,33 +12,20 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#import <GoogleCast/GoogleCast.h>
 #import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
+#import <GoogleCast/GCKDeviceScanner.h>
+#import <GoogleCast/GCKMediaStatus.h>
 
-typedef NS_ENUM(NSInteger, ChromecastControllerFeatures) {
-  // Constant for no features.
-  ChromecastControllerFeaturesNone = 0x0,
-  // Constant for controller device volume from hardware volume buttons.
-  ChromecastControllerFeatureHWVolumeControl = 0x1,
-  // Constant for adding notification support.
-  ChromecastControllerFeatureNotifications = 0x2,
-  // Constant for adding lock screen controls.
-  ChromecastControllerFeatureLockscreenControl = 0x4
-};
+@class GCKDevice;
+@class GCKDeviceManager;
+@class GCKMediaControlChannel;
+@class GCKMediaInformation;
 
-/**
- * The delegate to ChromecastDeviceController. Allows responsding to device and
- * media states and reflecting that in the UI.
- */
-@protocol ChromecastControllerDelegate<NSObject>
+extern NSString * const kCastViewController;
+
+@protocol ChromecastDeviceControllerDelegate <NSObject>
 
 @optional
-
-/**
- * Called when chromecast devices are discoverd on the network.
- */
-- (void)didDiscoverDeviceOnNetwork;
 
 /**
  * Called when connection to the device was established.
@@ -48,117 +35,163 @@ typedef NS_ENUM(NSInteger, ChromecastControllerFeatures) {
 - (void)didConnectToDevice:(GCKDevice*)device;
 
 /**
- * Called when connection to the device was closed.
+ *  Called when the device disconnects.
  */
 - (void)didDisconnect;
 
 /**
- * Called when the playback state of media on the device changes.
+ * Called when Cast devices are discoverd on the network.
  */
-- (void)didReceiveMediaStateChange;
+- (void)didDiscoverDeviceOnNetwork;
 
 /**
- * Called to display the modal device view controller from the cast icon.
+ * Called when Cast device is connecting
  */
-- (void)shouldDisplayModalDeviceController;
+- (void)castConnectingToDevice;
 
 /**
- * Called to display the remote media playback view controller.
+ * Called when a request to load media has completed.
  */
-- (void)shouldPresentPlaybackController;
+- (void)didCompleteLoadWithSessionID:(NSInteger)sessionID;
+
+/**
+ * Called when updated player status information is received.
+ */
+- (void)didUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel;
 
 @end
 
+@interface ChromecastDeviceController : NSObject <
+    GCKDeviceScannerListener
+>
+
 /**
- * Controller for managing the Chromecast device. Provides methods to connect to
- * the device, launch an application, load media and control its playback.
+ *  The storyboard contianing the Cast component views used by the controllers in
+ *  the CastComponents group.
  */
-@interface ChromecastDeviceController : NSObject<GCKDeviceScannerListener,
-                                                 GCKDeviceFilterListener,
-                                                 GCKDeviceManagerDelegate,
-                                                 GCKMediaControlChannelDelegate,
-                                                 UIActionSheetDelegate>
+//@property(nonatomic, readonly) UIStoryboard *storyboard;
 
-/** The device scanner used to detect devices on the network. */
-@property(nonatomic, strong) GCKDeviceScanner* deviceScanner;
+/**
+ *  The delegate for this object.
+ */
+@property(nonatomic, weak) id<ChromecastDeviceControllerDelegate> delegate;
 
-/** The device scanner used to detect devices on the network. */
-@property(nonatomic, strong) GCKDeviceFilter* deviceFilter;
+/**
+ *  The Cast application ID to launch.
+ */
+@property(nonatomic, copy) NSString *applicationID;
 
-/** The device manager used to manage conencted chromecast device. */
+/**
+ *  The device manager used to manage a connection to a Cast device.
+ */
 @property(nonatomic, strong) GCKDeviceManager* deviceManager;
 
-/** Get the friendly name of the device. */
-@property(readonly, getter=getDeviceName) NSString* deviceName;
+/**
+ *  The device scanner used to detect devices on the network.
+ */
+@property(nonatomic, strong) GCKDeviceScanner* deviceScanner;
 
-/** Length of the media loaded on the device. */
-@property(nonatomic, readonly) NSTimeInterval streamDuration;
+/**
+ *  The media information of the loaded media on the device.
+ */
+@property(nonatomic, strong) GCKMediaInformation* mediaInformation;
 
-/** Current playback position of the media loaded on the device. */
-@property(nonatomic, readonly) NSTimeInterval streamPosition;
+/** 
+ *  The media control channel for the playing media. 
+ */
+@property GCKMediaControlChannel *mediaControlChannel;
 
-/** The media player state of the media on the device. */
+/**
+ *  Helper accessor for the media player state of the media on the device.
+ */
 @property(nonatomic, readonly) GCKMediaPlayerState playerState;
 
-/** The media information of the loaded media on the device. */
-@property(nonatomic, readonly) GCKMediaInformation* mediaInformation;
+/**
+ * The current idle reason. This value is only meaningful if the player state is
+ * GCKMediaPlayerStateIdle.
+ */
+@property(nonatomic, readonly) GCKMediaPlayerIdleReason idleReason;
 
-///** The UIBarButtonItem denoting the chromecast device. */
-//@property(nonatomic, readonly) UIBarButtonItem* chromecastBarButton;
+/**
+ *  Helper accessor for the duration of the currently casting media.
+ */
+@property(nonatomic, readonly) NSTimeInterval streamDuration;
 
-/** The delegate attached to this controller. */
-@property(nonatomic, assign) id<ChromecastControllerDelegate> delegate;
+/**
+ *  The current playback position of the currently casting media.
+ */
+@property(nonatomic, readonly) NSTimeInterval streamPosition;
 
-/** The volume the device is currently at **/
-@property(nonatomic) float deviceVolume;
+/**
+ *  Main access point for the class. Use this to retrieve an object you can use.
+ *
+ *  @return ChromecastDeviceController
+ */
++ (instancetype)sharedInstance;
 
-/** Initialize the controller with features for various experiences. */
-- (id)initWithFeatures:(ChromecastControllerFeatures)features;
+/**
+ *  Sets the position of the playback on the Cast device.
+ *
+ *  @param newPercent 0.0-1.0
+ */
+- (void)setPlaybackPercent:(float)newPercent;
 
-/** Update the toolbar representing the playback state of media on the device. */
-//- (void)updateToolbarForViewController:(UIViewController*)viewController;
-
-/** Perform a device scan to discover devices on the network. */
-- (void)performScan:(BOOL)start;
-
-/** Connect to a specific Chromecast device. */
+/**
+ *  Connect to the given Cast device.
+ *
+ *  @param device A GCKDevice from the deviceScanner list.
+ */
 - (void)connectToDevice:(GCKDevice*)device;
 
-/** Disconnect from a Chromecast device. */
-- (void)disconnectFromDevice;
-
-/** Load a media on the device with supplied media metadata. */
-- (BOOL)loadMedia:(NSURL*)url
-     thumbnailURL:(NSURL*)thumbnailURL
-            title:(NSString*)title
-         subtitle:(NSString*)subtitle
-         mimeType:(NSString*)mimeType
+/**
+ *  Load media onto the currently connected device.
+ *
+ *  @param media     The GCKMediaInformation to play, with the URL as the contentID
+ *  @param startTime Time to start from if starting a fresh cast
+ *  @param autoPlay  Whether to start playing as soon as the media is loaded.
+ *
+ *  @return YES if we can load the media.
+ */
+- (BOOL)loadMedia:(GCKMediaInformation *)media
         startTime:(NSTimeInterval)startTime
          autoPlay:(BOOL)autoPlay;
 
-/** Returns true if connected to a Chromecast device. */
-- (BOOL)isConnected;
+/** 
+ *  Enable Cast enhancing of the controller by adding icons
+ *  and other UI elements. Signals that this view controller should be 
+ *  used for presenting UI elements.
+ *
+ *  @param controller The UIViewController to decorate.
+ */
+//- (void)decorateViewController:(UIViewController *)controller;
 
-/** Returns true if media is loaded on the device. */
-- (BOOL)isPlayingMedia;
+/**
+ *  Request an update for the minicontroller toolbar. Passed UIViewController must have a
+ *  toolbar - for example if it is under a UINavigationBar.
+ *
+ *  @param viewController UIViewController to update the toolbar on.
+ */
+//- (void)updateToolbarForViewController:(UIViewController *)viewController;
 
-/** Pause or play the currently loaded media on the Chromecast device. */
-- (void)pauseCastMedia:(BOOL)shouldPause;
+/**
+ *  Return the last known stream position for the given contentID. This will generally only
+ *  be useful for the last Cast media, and allows a local player to resume playback at the
+ *  position noted before disconnect. In many cases it will return 0.
+ *
+ *  @param contentID The string of the identifier of the media to be displayed.
+ *
+ *  @return the position in the stream of the media, if any.
+ */
+- (NSTimeInterval)streamPositionForPreviouslyCastMedia:(NSString *)contentID;
 
-/** Request an update of media playback stats from the Chromecast device. */
-- (void)updateStatsFromDevice;
+/**
+ *  Prevent automatically reconnecting to the Cast device if we see it again.
+ */
+- (void)clearPreviousSession;
 
-/** Sets the position of the playback on the Chromecast device. */
-- (void)setPlaybackPercent:(float)newPercent;
-
-/** Stops the media playing on the Chromecast device. */
-- (void)stopCastMedia;
-
-/** Increase or decrease the volume on the Chromecast device. */
-- (void)changeVolumeIncrease:(BOOL)goingUp;
-
-- (void)changeVolume: (float)idealVolume;
-
-- (void)chooseDevice:(id)sender;
+/**
+ *  Enable basic logging of all GCKLogger messages to the console.
+ */
+- (void)enableLogging;
 
 @end

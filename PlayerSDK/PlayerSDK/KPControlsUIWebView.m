@@ -89,13 +89,16 @@
     [self stringByEvaluatingJavaScriptFromString:triggerEventWithJSON(event, json)];
 }
 
+- (void)showChromecastComponent:(BOOL)show {
+    [self stringByEvaluatingJavaScriptFromString:showChromecastComponent(show)];
+}
+
 //- (CGFloat)videoHolderHeight {
 //    return [[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue];
 //}
 
 - (void)updateLayout {
-    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
-    [self stringByEvaluatingJavaScriptFromString:updateLayoutJS];
+    [self sendNotification:@"doUpdateLayout" withParams:nil];
 }
 
 #pragma mark UIWebviewDelegate

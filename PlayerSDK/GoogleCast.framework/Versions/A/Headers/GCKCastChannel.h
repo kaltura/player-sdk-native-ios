@@ -2,82 +2,81 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol GCKCastChannelHandler;
+#import "GCKDefines.h"
 
-/**
- * An invalid request ID; if a method returns this request ID, it means that the request could
- * not be made.
- */
-extern const NSInteger kGCKInvalidRequestID;
+@class GCKDeviceManager;
 
 /**
  * A GCKCastChannel is used to send and receive messages that are tagged with a specific
  * namespace. In this way, multiple channels may be multiplexed over a single connection
- * to the device.
+ * to a Cast device.
  * <p>
- * Subclasses should implement the @link GCKCastChannel#didReceiveTextMessage: @endlink and/or
- * @link GCKCastChannel#didReceiveBinaryMessage: @endlink methods to process incoming messages,
- * and will typically provide additional methods for sending messages that are specific to a
- * given namespace.
+ * Subclasses should implement the @link GCKCastChannel#didReceiveTextMessage: @endlink method to
+ * process incoming messages, and will typically provide additional methods for sending messages
+ * that are specific to a given namespace.
  *
  * @ingroup Messages
  */
+GCK_EXPORT
 @interface GCKCastChannel : NSObject
 
 /** The channel's namespace. */
 @property(nonatomic, copy, readonly) NSString *protocolNamespace;
 
+/** A flag indicating whether this channel is currently connected. */
 @property(nonatomic, readonly) BOOL isConnected;
+
+/** The device manager with which this channel is registered, if any. */
+@property(nonatomic, weak, readonly) GCKDeviceManager *deviceManager;
 
 /**
  * Designated initializer. Constructs a new GCKCastChannel with the given namespace.
  *
  * @param protocolNamespace The namespace.
  */
-- (id)initWithNamespace:(NSString *)protocolNamespace;
+- (instancetype)initWithNamespace:(NSString *)protocolNamespace NS_DESIGNATED_INITIALIZER;
 
 /**
- * Called when a text message has been received for this channel. The default implementation is a
+ * Called when a text message has been received on this channel. The default implementation is a
  * no-op.
  *
- * @param message The message string.
+ * @param message The message.
  */
 - (void)didReceiveTextMessage:(NSString *)message;
 
 /**
- * Sends a text message.
+ * Sends a text message on this channel.
  *
- * @param message The message string.
+ * @param message The message.
  * @return <code>YES</code> on success or <code>NO</code> if the message could not be sent (because
- * the handler is not connected, or because the send buffer is too full at the moment).
+ * the channel is not connected, or because the send buffer is too full at the moment).
  */
 - (BOOL)sendTextMessage:(NSString *)message;
 
 /**
  * Generates a request ID for a new message.
+ *
+ * @return The generated ID, or <code>kGCKInvalidRequestID</code> if the channel is not currently
+ * connected.
  */
 - (NSInteger)generateRequestID;
 
 /**
  * A convenience method which wraps generateRequestID in an NSNumber.
+ *
+ * @return The generated ID, or <code>nil</code> if the channel is not currently connected.
  */
 - (NSNumber *)generateRequestNumber;
 
 /**
- * Called when this channel is added to a connected handler, or when then disconnected
- * handler to which this channel has been added becomes connected.
- *
- * This implementation updates isConnected, so if subclasses override this method they should
- * call through to the super implementation.
+ * Called when this channel has been connected, indicating that messages can now be exchanged with
+ * the Cast device over this channel. The default implementation is a no-op.
  */
 - (void)didConnect;
 
 /**
- * Called when this channel is removed from a connected handler, or when then connected
- * handler to which this channel has been added becomes disconnected.
- *
- * This implementation updates isConnected, so if subclasses override this method they should
- * call through to the super implementation.
+ * Called when this channel has been disconnected, indicating that messages can no longer be
+ * exchanged with the Cast device over this channel. The default implementation is a no-op.
  */
 - (void)didDisconnect;
 

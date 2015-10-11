@@ -2,7 +2,17 @@
 
 #import <Foundation/Foundation.h>
 
-/** Enum defining the device status at the time the device was scanned. */
+#import "GCKDefines.h"
+
+/**
+ * @file GCKDevice.h
+ * GCKDeviceStatus enum.
+ */
+
+/**
+ * @enum GCKDeviceStatus
+ * Enum defining the device status at the time the device was scanned.
+ */
 typedef NS_ENUM(NSInteger, GCKDeviceStatus) {
   /** Unknown status. */
   GCKDeviceStatusUnknown = -1,
@@ -13,10 +23,35 @@ typedef NS_ENUM(NSInteger, GCKDeviceStatus) {
 };
 
 /**
+ * @enum GCKDeviceCapability
+ * Enum defining device capabilities.
+ */
+typedef NS_ENUM(NSInteger, GCKDeviceCapability) {
+  /** Device capability flag for video out. */
+  GCKDeviceCapabilityVideoOut = 1 << 0,
+  /** Device capability flag for video in. */
+  GCKDeviceCapabilityVideoIn = 1 << 1,
+  /** Device capability flag for audio out. */
+  GCKDeviceCapabilityAudioOut = 1 << 2,
+  /** Device capability flag for audio in. */
+  GCKDeviceCapabilityAudioIn = 1 << 3
+};
+
+/** @deprecated {Use GCKDeviceCapabilityVideoOut} */
+GCK_EXTERN const NSInteger kGCKDeviceCapabilityVideoOut GCK_DEPRECATED;
+/** @deprecated {Use GCKDeviceCapabilityVideoIn} */
+GCK_EXTERN const NSInteger kGCKDeviceCapabilityVideoIn GCK_DEPRECATED;
+/** @deprecated {Use GCKDeviceCapabilityAudioOut} */
+GCK_EXTERN const NSInteger kGCKDeviceCapabilityAudioOut GCK_DEPRECATED;
+/** @deprecated {Use GCKDeviceCapabilityAudioIn} */
+GCK_EXTERN const NSInteger kGCKDeviceCapabilityAudioIn GCK_DEPRECATED;
+
+/**
  * An object representing a first-screen device.
  *
  * @ingroup Discovery
  */
+GCK_EXPORT
 @interface GCKDevice : NSObject <NSCopying, NSCoding>
 
 /** The device's IPv4 address, in dot-notation. Used when making network requests. */
@@ -45,11 +80,31 @@ typedef NS_ENUM(NSInteger, GCKDeviceStatus) {
 /** The device's status at the time that it was most recently scanned. */
 @property(nonatomic, readonly) GCKDeviceStatus status;
 
+/** The status text reported by the currently running receiver application, if any. */
+@property(nonatomic, copy) NSString *statusText;
+
+/** The device's version. */
+@property(nonatomic, copy) NSString *deviceVersion;
+
 /** Designated initializer. Constructs a new GCKDevice with the given IP address.
  *
  * @param ipAddress The device's IPv4 address, in dot-notation.
  * @param servicePort The device's service port.
  */
-- (id)initWithIPAddress:(NSString *)ipAddress servicePort:(UInt32)servicePort;
+- (instancetype)initWithIPAddress:(NSString *)ipAddress servicePort:(UInt32)servicePort;
+
+/**
+ * Tests if this device refers to the same physical device as another. Returns YES if both
+ * GCKDevice objects have the same IP address, service port, device ID, and version.
+ */
+- (BOOL)isSameDeviceAs:(const GCKDevice *)other;
+
+/**
+ * Returns YES if the device supports the given capabilities.
+ *
+ * @param deviceCapabilities A bitwise-OR of one or more of the <code>GCKDeviceCapability*</code>
+ * constants.
+ */
+- (BOOL)hasCapabilities:(NSInteger)deviceCapabilities;
 
 @end

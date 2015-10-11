@@ -21,7 +21,7 @@
  *
  *  @return BOOL YES if the OS is equal or bigger
  */
-#define isIOS(version) [[[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."][0] intValue] == (version)
+#define isIOS(version) [[[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."][0] intValue] >= (version)
 
 
 /*!
