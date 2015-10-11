@@ -12,14 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//#import "CastIconButton.h"
-//#import "CastInstructionsViewController.h"
-//#import "CastMiniController.h"
-//#import "CastViewController.h"
-#import "ChromecastDeviceController.h"
-//#import "DeviceTableViewController.h"
 
-#import <GoogleCast/GoogleCast.h>
+#import "ChromecastDeviceController.h"
+
+
 
 /**
  *  Constant for the storyboard ID for the device table view controller.
@@ -31,13 +27,8 @@ static NSString * const kDeviceTableViewController = @"deviceTableViewController
  */
 NSString * const kCastViewController = @"castViewController";
 
-@interface ChromecastDeviceController() <
-//    CastMiniControllerDelegate,
-//    DeviceTableViewControllerDelegate,
-    GCKDeviceManagerDelegate,
-    GCKLoggerDelegate,
-    GCKMediaControlChannelDelegate
->
+@interface ChromecastDeviceController()
+
 
 /**
  *  The core storyboard containing the UI for the Cast components.
@@ -110,11 +101,11 @@ NSString * const kCastViewController = @"castViewController";
 
 # pragma mark - Acessors
 
-- (GCKMediaPlayerState)playerState {
+- (KPGCMediaPlayerState)playerState {
   return _mediaControlChannel.mediaStatus.playerState;
 }
 
-- (GCKMediaPlayerIdleReason)playerIdleReason{
+- (KPGCMediaPlayerIdleReason)playerIdleReason{
     return _mediaControlChannel.mediaStatus.idleReason;
   }
 
@@ -144,7 +135,7 @@ NSString * const kCastViewController = @"castViewController";
  */
 - (void)setApplicationID:(NSString *)applicationID {
     _applicationID = applicationID;
-    self.deviceScanner = [GCKDeviceScanner new];
+    self.deviceScanner = [NSClassFromString(@"GCKDeviceScanner") new];
 
     // Always start a scan as soon as we have an application ID.
     NSLog(@"Starting Scan");
@@ -196,7 +187,7 @@ NSString * const kCastViewController = @"castViewController";
 
 #pragma mark - GCKDeviceManagerDelegate
 
-- (void)deviceManagerDidConnect:(GCKDeviceManager *)deviceManager {
+- (void)deviceManagerDidConnect:(id<KPGCDeviceManager>)deviceManager {
 //  BOOL appMatch = [deviceManager.applicationMetadata.applicationID isEqualToString:_applicationID];
 //  if (!_isReconnecting || !appMatch) {
 //    // Explicit connect request when a different app (or none) is Casting.
@@ -215,11 +206,11 @@ NSString * const kCastViewController = @"castViewController";
 //  [self updateCastIconButtonStates];
 }
 
-- (void)deviceManager:(GCKDeviceManager *)deviceManager
-    didConnectToCastApplication:(GCKApplicationMetadata *)applicationMetadata
+- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
+    didConnectToCastApplication:(id<KPGCApplicationMetadata>)applicationMetadata
                       sessionID:(NSString *)sessionID
             launchedApplication:(BOOL)launchedApplication {
-  self.mediaControlChannel = [[GCKMediaControlChannel alloc] init];
+  self.mediaControlChannel = [[NSClassFromString(@"GCKMediaControlChannel") alloc] init];
   self.mediaControlChannel.delegate = self;
   [self.deviceManager addChannel:self.mediaControlChannel];
   [self.mediaControlChannel requestStatus];
@@ -240,31 +231,31 @@ NSString * const kCastViewController = @"castViewController";
   [defaults synchronize];
 }
 
-- (void)deviceManager:(GCKDeviceManager *)deviceManager
+- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
     volumeDidChangeToLevel:(float)volumeLevel
                    isMuted:(BOOL)isMuted {
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castVolumeChanged" object:self];
   }
 
-- (void)deviceManager:(GCKDeviceManager *)deviceManager
+- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
     didFailToConnectToApplicationWithError:(NSError *)error {
   [self updateCastIconButtonStates];
 }
 
-- (void)deviceManager:(GCKDeviceManager *)deviceManager
-    didFailToConnectWithError:(GCKError *)error {
+- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
+    didFailToConnectWithError:(id<KPGCError>)error {
   [self clearPreviousSession];
 
   [self updateCastIconButtonStates];
 }
 
-- (void)deviceManager:(GCKDeviceManager *)deviceManager didDisconnectWithError:(GCKError *)error {
+- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager didDisconnectWithError:(id<KPGCError>)error {
   NSLog(@"Received notification that device disconnected");
 
   if (!error || (
-      error.code == GCKErrorCodeDeviceAuthenticationFailure ||
-      error.code == GCKErrorCodeDisconnected ||
-      error.code == GCKErrorCodeApplicationNotFound)) {
+      error.code == KPGCErrorCodeDeviceAuthenticationFailure ||
+      error.code == KPGCErrorCodeDisconnected ||
+      error.code == KPGCErrorCodeApplicationNotFound)) {
     [self clearPreviousSession];
   }
 
@@ -276,7 +267,7 @@ NSString * const kCastViewController = @"castViewController";
 }
 }
 
-- (void)deviceManager:(GCKDeviceManager *)deviceManager
+- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
     didDisconnectFromApplicationWithError:(NSError *)error {
   NSLog(@"Received notification that app disconnected");
 
@@ -305,7 +296,7 @@ NSString * const kCastViewController = @"castViewController";
 
 #pragma mark - GCKDeviceScannerListener
 
-- (void)deviceDidComeOnline:(GCKDevice *)device {
+- (void)deviceDidComeOnline:(id<KPGCDevice>)device {
   NSLog(@"device found - %@", device.friendlyName);
 
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -323,19 +314,19 @@ NSString * const kCastViewController = @"castViewController";
   [self updateCastIconButtonStates];
 }
 
-- (void)deviceDidGoOffline:(GCKDevice *)device {
+- (void)deviceDidGoOffline:(id<KPGCDevice>)device {
   NSLog(@"device went offline - %@", device.friendlyName);
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castScanStatusUpdated" object:self];
   [self updateCastIconButtonStates];
 }
 
-- (void)deviceDidChange:(GCKDevice *)device {
+- (void)deviceDidChange:(id<KPGCDevice>)device {
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castScanStatusUpdated" object:self];
 }
 
 #pragma mark - GCKMediaControlChannelDelegate methods
 
-- (void)mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel {
+- (void)mediaControlChannelDidUpdateStatus:(id<KPGCMediaControlChannel>)mediaControlChannel {
   NSLog(@"Media control channel status changed");
   _mediaInformation = mediaControlChannel.mediaStatus.mediaInformation;
   self.lastContentID = _mediaInformation.contentID;
@@ -348,12 +339,12 @@ NSString * const kCastViewController = @"castViewController";
 //    [self updateCastIconButtonStates];
 }
 
-- (void)mediaControlChannelDidUpdateMetadata:(GCKMediaControlChannel *)mediaControlChannel {
+- (void)mediaControlChannelDidUpdateMetadata:(id<KPGCMediaControlChannel>)mediaControlChannel {
   NSLog(@"Media control channel metadata changed");
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castMediaStatusChange" object:self];
   }
 
-- (void)mediaControlChannel:(GCKMediaControlChannel *)mediaControlChannel didCompleteLoadWithSessionID:(NSInteger)sessionID {
+- (void)mediaControlChannel:(id<KPGCMediaControlChannel>)mediaControlChannel didCompleteLoadWithSessionID:(NSInteger)sessionID {
     /// @todo maybe better use delegate
     NSLog(@"Media control channel metadata changed");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"castApplicationCompleteLoadWithSessionID"
@@ -366,13 +357,13 @@ NSString * const kCastViewController = @"castViewController";
 
 # pragma mark - Device & Media Management
 
-- (void)connectToDevice:(GCKDevice *)device {
+- (void)connectToDevice:(id<KPGCDevice>)device {
   NSLog(@"Connecting to device address: %@:%d", device.ipAddress, (unsigned int)device.servicePort);
 
   NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
   NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
   self.deviceManager =
-      [[GCKDeviceManager alloc] initWithDevice:device clientPackageName:appIdentifier];
+      [[NSClassFromString(@"GCKDeviceManager") alloc] initWithDevice:device clientPackageName:appIdentifier];
   self.deviceManager.delegate = self;
   [self.deviceManager connect];
 
@@ -384,7 +375,7 @@ NSString * const kCastViewController = @"castViewController";
 }
 }
 
-- (BOOL)loadMedia:(GCKMediaInformation *)media
+- (BOOL)loadMedia:(id<KPGCMediaInformation>)media
         startTime:(NSTimeInterval)startTime
          autoPlay:(BOOL)autoPlay {
 //  if (!self.deviceManager || self.deviceManager.connectionState != GCKConnectionStateConnected ) {
@@ -415,7 +406,7 @@ NSString * const kCastViewController = @"castViewController";
 #pragma mark - GCKLoggerDelegate implementation
 
 - (void)enableLogging {
-  [[GCKLogger sharedInstance] setDelegate:self];
+  [[NSClassFromString(@"GCKLogger") sharedInstance] setDelegate:self];
 }
 
 - (void)logFromFunction:(const char *)function message:(NSString *)message {

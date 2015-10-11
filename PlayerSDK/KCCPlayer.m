@@ -8,7 +8,7 @@
 
 #import "KCCPlayer.h"
 #import "KPLog.h"
-#import <GoogleCast/GoogleCast.h>
+
 
 @interface KCCPlayer() {
     NSString* contentID;
@@ -67,7 +67,7 @@
 }
 
 - (void)updateProgressFromCast:(NSTimer*)timer {
-    if (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying) {
+    if (self.chromecastDeviceController.playerState == KPGCMediaPlayerStatePlaying) {
         KPLogDebug(@"updateProgressFromCast");
         [self updateCurrentTime:self.chromecastDeviceController.streamPosition];
         [_delegate player:self
@@ -95,25 +95,25 @@
                 value:nil];
 }
 
-- (void)didUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel {
+- (void)didUpdateStatus:(id<KPGCMediaControlChannel>)mediaControlChannel {
     KPLogTrace(@"didUpdateStatus");
     
     switch (self.chromecastDeviceController.playerState) {
-        case GCKMediaPlayerStatePlaying:
+        case KPGCMediaPlayerStatePlaying:
             if (!isPlaying) {
                 KPLogDebug(@"GCKMediaPlayerStatePlaying");
                 [_delegate player:self eventName:PlayKey value:nil];
                 isPlaying = YES;
             }
             break;
-        case GCKMediaPlayerStatePaused:
+        case KPGCMediaPlayerStatePaused:
             if (isPlaying) {
                 KPLogDebug(@"GCKMediaPlayerStatePaused");
                 [_delegate player:self eventName:PauseKey value:nil];
                 isPlaying = NO;
             }
             break;
-        case GCKMediaPlayerStateIdle:
+        case KPGCMediaPlayerStateIdle:
             [self didReceiveIdleReason];
             KPLogError(@"didReceiveMediaStateChange: GCKMediaPlayerStateIdle");
             break;
@@ -128,8 +128,8 @@
     KPLogTrace(@"didReceiveIdleReason");
     
     switch (self.chromecastDeviceController.idleReason) {
-        case GCKMediaPlayerIdleReasonNone:
-        case GCKMediaPlayerIdleReasonFinished:
+        case KPGCMediaPlayerIdleReasonNone:
+        case KPGCMediaPlayerIdleReasonFinished:
             if (round(_currentPlaybackTime) == round(_duration)) {
                 ///@todo improve 'contentCompleted' to send "ended" event
                 [_delegate player:self eventName:EndedKey value:nil];
@@ -143,7 +143,7 @@
     }
 }
 
-- (void)didConnectToDevice:(GCKDevice *)device {
+- (void)didConnectToDevice:(id<KPGCDevice>)device {
     KPLogTrace(@"didConnectToDevice");
     
     if (self.chromecastDeviceController.mediaInformation) {
@@ -159,9 +159,9 @@
  */
 - (void)loadMedia {
     ///@todo replace null with relevant values
-    GCKMediaInformation *mediaInformation =
-    [[GCKMediaInformation alloc] initWithContentID: [self.playerSource absoluteString]
-                                        streamType: GCKMediaStreamTypeNone
+    id mediaInformation =
+    [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID: [self.playerSource absoluteString]
+                                        streamType: KPGCMediaStreamTypeNone
      ///@todo get content tipe from avplayer
                                        contentType: self.chromecastDeviceController.mediaInformation.contentType
                                           metadata: self.chromecastDeviceController.mediaInformation.metadata
@@ -211,10 +211,10 @@
  *  Begins (or resumes) playback of the current media item
  */
 - (void)play {
-    BOOL playing = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying
-                    || self.chromecastDeviceController.playerState == GCKMediaPlayerStateBuffering);
+    BOOL playing = (self.chromecastDeviceController.playerState == KPGCMediaPlayerStatePlaying
+                    || self.chromecastDeviceController.playerState == KPGCMediaPlayerStateBuffering);
     if (self.chromecastDeviceController.mediaControlChannel &&
-        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
+        _chromecastDeviceController.deviceManager.applicationConnectionState == KPGCConnectionStateConnected &&
         !playing) {
         NSTimeInterval currTime = _currentPlaybackTime;
         [_chromecastDeviceController clearPreviousSession];
@@ -237,10 +237,10 @@
  *  Pauses playback of the current media item
  */
 - (void)pause {
-    BOOL paused = (self.chromecastDeviceController.playerState == GCKMediaPlayerStatePaused
-                    || self.chromecastDeviceController.playerState == GCKMediaPlayerStateUnknown);
+    BOOL paused = (self.chromecastDeviceController.playerState == KPGCMediaPlayerStatePaused
+                    || self.chromecastDeviceController.playerState == KPGCMediaPlayerStateUnknown);
     if (self.chromecastDeviceController.mediaControlChannel &&
-        _chromecastDeviceController.deviceManager.applicationConnectionState == GCKConnectionStateConnected &&
+        _chromecastDeviceController.deviceManager.applicationConnectionState == KPGCConnectionStateConnected &&
         !paused) {
         [self.chromecastDeviceController.mediaControlChannel pause];
     }
