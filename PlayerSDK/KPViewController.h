@@ -22,7 +22,6 @@
 #import "KPController.h"
 
 
-#import <GoogleCast/GoogleCast.h>
 #import "ChromecastDeviceController.h"
 
 

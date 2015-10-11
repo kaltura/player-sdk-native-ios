@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic) NSTimeInterval seekValue;
 
 #pragma mark - chromecast
-@property GCKDevice *selectedDevice;
+@property  id<KPGCDevice>selectedDevice;
 
 @end
 
@@ -326,7 +326,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)chooseDevice {
     UIActionSheet *sheet;
     //Choose device
-    if (self.selectedDevice == nil) {
+    if (!self.selectedDevice) {
         //Choose device
        sheet =
         [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Connect to Device", nil)
@@ -335,7 +335,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                       destructiveButtonTitle:nil
                            otherButtonTitles:nil];
         
-        for (GCKDevice *device in self.castDeviceController.deviceScanner.devices) {
+        for (id<KPGCDevice> device in self.castDeviceController.deviceScanner.devices) {
             [sheet addButtonWithTitle:device.friendlyName];
         }
         
@@ -350,7 +350,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         
         NSString *friendlyName = [NSString stringWithFormat:NSLocalizedString(@"Casting to %@", nil),
                             self.selectedDevice.friendlyName];
-        NSString *mediaTitle = [self.castDeviceController.mediaInformation.metadata stringForKey:kGCKMetadataKeyTitle];
+        /**
+         *  @todo replace Title with GoogleCast constant
+         */
+        NSString *mediaTitle = [self.castDeviceController.mediaInformation.metadata stringForKey:@"Title"];
         
         sheet = [[UIActionSheet alloc] init];
         sheet.title = friendlyName;
@@ -448,11 +451,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 #pragma mark - GCKDeviceScannerListener
-- (void)deviceDidComeOnline:(GCKDevice *)device {
+- (void)deviceDidComeOnline:(id<KPGCDevice>)device {
     NSLog(@"device found!! %@", device.friendlyName);
 }
 
-- (void)deviceDidGoOffline:(GCKDevice *)device {
+- (void)deviceDidGoOffline:(id<KPGCDevice>)device {
 }
 
 - (void)handleEnteredBackground: (NSNotification *)not {
