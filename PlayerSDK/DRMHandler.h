@@ -6,8 +6,10 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
+#if !(TARGET_IPHONE_SIMULATOR)
 #import <Foundation/Foundation.h>
 
 @interface DRMHandler : NSObject
 + (void)DRMSource:(NSString *)src key:(NSString *)key completion:(void(^)(NSString *DRMLink))completion;
 @end
+#endif

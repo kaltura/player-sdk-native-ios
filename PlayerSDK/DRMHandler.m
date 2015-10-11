@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
+#if !(TARGET_IPHONE_SIMULATOR)
 #import "DRMHandler.h"
 #import "WViPhoneAPI.h"
 #import "KPLog.h"
@@ -41,5 +42,5 @@ WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
     return WViOsApiStatus_OK;
 }
 
-
 @end
+#endif
