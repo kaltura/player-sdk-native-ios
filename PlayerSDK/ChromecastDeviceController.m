@@ -77,6 +77,9 @@ NSString * const kCastViewController = @"castViewController";
 #pragma mark - Lifecycle
 
 + (instancetype)sharedInstance {
+    if (!NSClassFromString(@"GCKDeviceScanner")) {
+        return nil;
+    }
   static dispatch_once_t p = 0;
   __strong static id _sharedDeviceController = nil;
 

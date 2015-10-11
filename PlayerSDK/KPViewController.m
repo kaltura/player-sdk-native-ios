@@ -265,10 +265,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _kdpAPIState = KDPAPIStateUnknown;
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(handleCastScanStatusUpdated)
-                                                 name: @"castScanStatusUpdated"
-                                               object: nil];
+    
     
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
@@ -294,13 +291,19 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }];
     
     self.castDeviceController = [ChromecastDeviceController sharedInstance];
-    [self.castDeviceController clearPreviousSession];
-    // Assign ourselves as the delegate.
-    self.castDeviceController.delegate = self;
-    // Turn on the Cast logging for debug purposes.
-    [self.castDeviceController enableLogging];
-    // Set the receiver application ID to initialise scanning.
-   [self.castDeviceController setApplicationID:@"DB6462E9"];
+    if (self.castDeviceController) {
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(handleCastScanStatusUpdated)
+                                                     name: @"castScanStatusUpdated"
+                                                   object: nil];
+        [self.castDeviceController clearPreviousSession];
+        // Assign ourselves as the delegate.
+        self.castDeviceController.delegate = self;
+        // Turn on the Cast logging for debug purposes.
+        [self.castDeviceController enableLogging];
+        // Set the receiver application ID to initialise scanning.
+        [self.castDeviceController setApplicationID:@"DB6462E9"];
+    }
     
     [super viewDidLoad];
     KPLogTrace(@"Exit");
