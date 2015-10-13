@@ -21,19 +21,18 @@
 #import "KPPlayerConfig.h"
 #import "KPController.h"
 
+@class KPViewController;
 @protocol KPViewControllerDelegate <NSObject>
 @required
 - (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 @optional
-- (void)kPlayerLoadStateDidChange:(KPMediaLoadState)state;
+- (void)KPlayer:(KPViewController *)player playerStateDidChange:(KPMediaLoadState)state;
+- (void)KPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
 @end
 
 #import <GoogleCast/GoogleCast.h>
 #import "ChromecastDeviceController.h"
 
-
-
-@protocol KPViewControllerDelegate;
 
 @interface KPViewController : UIViewController
 

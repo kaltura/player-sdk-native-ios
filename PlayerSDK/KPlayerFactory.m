@@ -67,6 +67,8 @@
 - (void)setSrc:(NSString *)src {
     if (![self.player setPlayerSource:[NSURL URLWithString:src]]) {
         if (self.drmParams != nil) {
+#if !(TARGET_IPHONE_SIMULATOR)
+
             [KDRMManager DRMSource:src
                                key:self.drmParams
                         completion:^(NSString *drmUrl) {
@@ -75,6 +77,7 @@
                                 KPLogError(@"Media Source is not playable!");
                             }
                         }];
+#endif
         }
 
     }
