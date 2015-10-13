@@ -175,7 +175,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (keyPath.isFrameKeypath) {
         if ([object isEqual:self.view]) {
             [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
-            self.controlsView.controlsFrame = (CGRect){CGPointZero, self.view.frame.size};
+            ((UIView *)self.controlsView).frame = (CGRect){CGPointZero, self.view.frame.size};
         }
     }
 }
@@ -218,6 +218,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [super viewWillAppear:NO];
     // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
     [ChromecastDeviceController sharedInstance].delegate = self;
+    NSLog(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
 }
 
 #pragma mark -
@@ -227,7 +228,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     appConfigDict = extractDictionary(AppConfigurationFileName, @"plist");
     setUserAgent();
     [self initPlayerParams];
-    
+    self.controlsView.shouldUpdateLayout = YES;
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(didPinchInOut:)];
@@ -277,7 +278,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         } else {
             weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
                 weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
-                
+                weakSelf.controlsView.shouldUpdateLayout = YES;
                 if (weakSelf.isFullScreenToggled) {
                     weakSelf.view.frame = screenBounds();
                     [weakSelf.topWindow addSubview:weakSelf.view];
@@ -285,7 +286,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                     weakSelf.view.frame = weakSelf.superView.bounds;
                     [weakSelf.superView addSubview:weakSelf.view];
                 }
-                [weakSelf.controlsView updateLayout];
             });
         }
     }];
@@ -437,13 +437,18 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     if (isIOS(7) && _configuration.supportedInterfaceOrientations != UIInterfaceOrientationMaskAll) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
-        self.controlsView.controlsFrame = screenBounds();
-    } 
+        ((UIView *)self.controlsView).frame = screenBounds();
+    }
+    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
 //    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
 //    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
 //    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
 //    [(UIView *)self.controlsView addSubview:reloadButton];
+}
+
+- (void)updateControlsView {
+//    ((UIView *)self.controlsView).frame = self.view.frame;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -904,7 +909,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (!_isModifiedFrame || _isFullScreenToggled) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
-        self.controlsView.controlsFrame = screenBounds();
+        ((UIView *)self.controlsView).frame = screenBounds();
     }
 }
 

@@ -28,6 +28,7 @@ NSString *showChromecastComponent(BOOL show);
 
 @property (nonatomic, weak) id<KPControlsViewDelegate> controlsDelegate;
 @property (nonatomic, copy) NSString *entryId;
+@property (nonatomic) BOOL shouldUpdateLayout;
 //@property (nonatomic, assign, readonly) CGFloat videoHolderHeight;
 @property (nonatomic) CGRect controlsFrame;
 
