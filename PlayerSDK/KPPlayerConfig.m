@@ -9,16 +9,15 @@
 #import "KPPlayerConfig.h"
 #import "DeviceParamsHandler.h"
 #import "NSString+Utilities.h"
+#import "KPLog.h"
 
 /// Key names of the video request
 static NSString *EntryIdKey = @"entry_id";
-
 
 @interface KPPlayerConfig()
 
 @property (nonatomic, copy) NSMutableDictionary *paramsDict;
 @property (nonatomic, copy) NSURL *url;
-
 @end
 
 @implementation KPPlayerConfig
@@ -52,10 +51,40 @@ static NSString *EntryIdKey = @"entry_id";
     return _paramsDict;
 }
 
+- (NSString *)createFlashvarKeyFormat:(NSString *)flashvarKey {
+    if (flashvarKey && flashvarKey.length) {
+        return [NSString stringWithFormat:@"flashvars[%@]", flashvarKey];
+    }
+    
+    return nil;
+}
+
+- (void)addParam:(NSString *)param forKey:(NSString *)key {
+    if(param && param.length && key && key.length) {
+        self.paramsDict[key] = param;
+    }
+}
+
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value; {
     if (key && key.length && value && value.length) {
-        NSString *configKey = [NSString stringWithFormat:@"flashvars[%@]", key];
-        self.paramsDict[configKey] = [value stringByReplacingOccurrencesOfString:@"&" withString:@"%26"];
+        [self addParam:value forKey:[self createFlashvarKeyFormat:key]];
+    }
+}
+
+- (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary {
+    if (key && key.length && dictionary && dictionary.count) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&error];
+        
+        if (!jsonData) {
+            KPLogError(@"Got an error: %@", error);
+        } else {
+            NSString *jsonString = [[NSString alloc] initWithData:jsonData
+                                                         encoding:NSUTF8StringEncoding];
+            [self addParam:jsonString forKey:[self createFlashvarKeyFormat:key]];
+        }
     }
 }
 
@@ -67,7 +96,7 @@ static NSString *EntryIdKey = @"entry_id";
 - (void)setEntryId:(NSString *)entryId {
     if (entryId) {
         _entryId = entryId;
-        self.paramsDict[EntryIdKey] = entryId;
+        [self addParam:entryId forKey:EntryIdKey];
     }
 }
 

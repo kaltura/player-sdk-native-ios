@@ -29,21 +29,28 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 @property (nonatomic, readonly) NSString *uiConfId;
 @property (nonatomic, copy) NSString *entryId;
 @property (nonatomic, copy) NSString *advertiserID;
+@property (nonatomic, copy) NSDictionary *drmParams;
 @property (nonatomic) BOOL enableHover;
 
 
-/// By setting the size of the cache the SDK will cache the data in the limit of the cacheSize value.
-@property (nonatomic) float cacheSize;
-
 /// Enables the SDK user to define interface orientation of the player
 @property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations;
+
+@property (nonatomic) float cacheSize;
 
 /** Adds flags for the video request
  *
  *  @param NSString The name of the flag
  *  @param NSString The value for the flag
  */
-- (void)addConfigKey:(NSString *)key withValue:(NSString *)value;;
+- (void)addConfigKey:(NSString *)key withValue:(NSString *)value;
+
+/** Converts dictionary to JSON and Adds flags to the video request
+ *
+ *  @param NSString The name of the flag
+ *  @param NSDictionary The dictionary for the flag
+ */
+- (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary;
 
 - (NSURL *)videoURL;
 

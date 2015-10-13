@@ -21,6 +21,12 @@
 #import "KPPlayerConfig.h"
 #import "KPController.h"
 
+@protocol KPViewControllerDelegate <NSObject>
+@required
+- (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
+@optional
+- (void)kPlayerLoadStateDidChange:(KPMediaLoadState)state;
+@end
 
 #import <GoogleCast/GoogleCast.h>
 #import "ChromecastDeviceController.h"
@@ -44,7 +50,7 @@
  *  @param NSURL url of player content
  */
 - (instancetype)initWithURL:(NSURL *)url;
-
+ 
 /*!
  *  @function initWithConfiguration:
  *
@@ -99,12 +105,11 @@
 /// Change the source and returns the current source
 @property (nonatomic, copy) NSURL *playerSource;
 
-/// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
-@property (nonatomic) NSTimeInterval currentPlaybackTime;
-@property (nonatomic, copy) NSDictionary *drmDict;
+///// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
+//@property (nonatomic) NSTimeInterval currentPlaybackTime;
 
-/// @return Duration of the current video
-@property (nonatomic, readonly) NSTimeInterval duration;
+///// @return Duration of the current video
+//@property (nonatomic, readonly) NSTimeInterval duration;
 
 /// Assigning this handler will disable the default share action and will supply the share params for custom use.
 - (void)setShareHandler:(void(^)(NSDictionary *shareParams))shareHandler;
