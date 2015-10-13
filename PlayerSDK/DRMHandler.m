@@ -8,22 +8,22 @@
 
 #if !(TARGET_IPHONE_SIMULATOR)
 #import "DRMHandler.h"
-#import "WViPhoneAPI.h"
+//#import "WViPhoneAPI.h"
 #import "KPLog.h"
 
 static NSString *kPortalKey = @"kaltura";
 
 @implementation DRMHandler
 + (void)DRMSource:(NSString *)src key:(NSString *)key completion:(void (^)(NSString *))completion {
-    WV_Initialize(WVCallback, @{WVDRMServerKey: key, WVPortalKey: kPortalKey});
+    WV_Initialize(WVCallback, @{KPWVDRMServerKey: key, KPWVPortalKey: kPortalKey});
     [self performSelector:@selector(fetchDRMParams:) withObject:@[src, completion] afterDelay:0.1];
 }
 
 + (void)fetchDRMParams:(NSArray *)params {
     NSMutableString *responseUrl = [NSMutableString string];
-    WViOsApiStatus status = WV_Play(params[0], responseUrl, 0);
+    KPWViOsApiStatus status = WV_Play(params[0], responseUrl, 0);
     KPLogDebug(@"widevine response url: %@", responseUrl);
-    if ( status != WViOsApiStatus_OK ) {
+    if ( status != KPWViOsApiStatus_OK ) {
         KPLogError(@"ERROR: %u",status);
         return;
     }
@@ -34,12 +34,12 @@ static NSString *kPortalKey = @"kaltura";
     
 }
 
-WViOsApiStatus WVCallback( WViOsApiEvent event, NSDictionary *attributes ) {
+KPWViOsApiStatus WVCallback( KPWViOsApiEvent event, NSDictionary *attributes ) {
     KPLogTrace(@"Enter");
     KPLogInfo( @"callback %d %@\n", event, NSStringFromWViOsApiEvent( event ) );
     
     KPLogTrace(@"Exit");
-    return WViOsApiStatus_OK;
+    return KPWViOsApiStatus_OK;
 }
 
 @end

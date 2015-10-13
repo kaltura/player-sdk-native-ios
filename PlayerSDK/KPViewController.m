@@ -707,6 +707,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         case wvServerKey:
+            [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:WideVinePlayerClass]];
+            [_playerFactory.player setDRMDict:self.drmDict];
             [_playerFactory switchPlayer:WideVinePlayerClass key:attributeVal];
             break;
 #endif
