@@ -8,7 +8,6 @@
 
 #if !(TARGET_IPHONE_SIMULATOR)
 #import "DRMHandler.h"
-//#import "WViPhoneAPI.h"
 #import "KPLog.h"
 
 static NSString *kPortalKey = @"kaltura";

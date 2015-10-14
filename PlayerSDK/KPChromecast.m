@@ -13,7 +13,6 @@
     NSURL *ccContentURL;
 }
 
-@synthesize delegate;
 @synthesize view;
 @synthesize playbackState;
 @synthesize loadState;

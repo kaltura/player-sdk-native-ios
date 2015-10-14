@@ -7,6 +7,7 @@
 //
 
 #import "KPlayerFactory.h"
+#import "KDRMManager.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 #import "KPIMAPlayerViewController.h"
@@ -37,9 +38,11 @@
     _parentViewController = parentViewController;
     if (!self.player) {
         KPLogError(@"%@", @"NO PLAYER CREATED");
-    } else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
-        self.player.DRMKey = key;
     }
+//    else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
+//        self.player.DRMKey = key;
+////        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
+//    }
 }
 
 - (id<KPlayer>)player {
@@ -62,7 +65,23 @@
 }
 
 - (void)setSrc:(NSString *)src {
-    [self.player setPlayerSource:[NSURL URLWithString:src]];
+    if (![self.player setPlayerSource:[NSURL URLWithString:src]]) {
+        
+        if (self.drmParams != nil) {
+#if !(TARGET_IPHONE_SIMULATOR)
+
+            [KDRMManager DRMSource:src
+                               key:self.drmParams
+                        completion:^(NSString *drmUrl) {
+                            if (drmUrl &&
+                                ![self.player setPlayerSource:[NSURL URLWithString:drmUrl]]) {
+                                KPLogError(@"Media Source is not playable!");
+                            }
+                        }];
+#endif
+        }
+
+    }
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
@@ -136,9 +155,8 @@
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-        [_delegate player:currentPlayer eventName:event value:value];
+    [_delegate player:currentPlayer eventName:event value:value];
 }
-
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     [_delegate player:currentPlayer eventName:event JSON:jsonString];

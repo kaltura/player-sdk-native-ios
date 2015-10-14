@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
-@class DRMHandler;
 
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
@@ -19,6 +18,7 @@ static NSString *WideVinePlayerClass = @"WVPlayer";
 
 static NSString *PlayKey = @"play";
 static NSString *PauseKey = @"pause";
+static NSString *StopKey = @"stop";
 static NSString *DurationChangedKey = @"durationchange";
 static NSString *LoadedMetaDataKey = @"loadedmetadata";
 static NSString *TimeUpdateKey = @"timeupdate";
@@ -34,22 +34,21 @@ static NSString *PostrollEndedKey = @"postEnded";
 @protocol KPlayer <NSObject>
 
 @property (nonatomic, weak) id<KPlayerDelegate> delegate;
-@property (nonatomic, copy) NSURL *playerSource;
+//@property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic, readonly) BOOL isKPlayer;
 
 
 - (instancetype)initWithParentView:(UIView *)parentView;
+- (BOOL)setPlayerSource:(NSURL *)playerSource;
+- (NSURL *)playerSource;
 - (void)play;
 - (void)pause;
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
 + (BOOL)isPlayableMIMEType:(NSString *)mimeType;
 
-@optional
-@property (nonatomic, copy) NSString *DRMKey;
-@property (nonatomic, copy) NSDictionary *DRMDict;
 @end
 
 @protocol KPlayerDelegate <NSObject>
@@ -88,4 +87,6 @@ static NSString *PostrollEndedKey = @"postEnded";
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
+/// Changes DRM params and returns the current DRM params
+@property (nonatomic, copy) NSDictionary *drmParams;
 @end

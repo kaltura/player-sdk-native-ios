@@ -21,8 +21,12 @@ NSString *const KMediaSource = @"KMediaSource";
 
 NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackStateDidChangeNotification";
 
-- (void)setPlaybackState: (KPMediaPlaybackState)newState {
+- (void)setPlaybackState:(KPMediaPlaybackState)newState {
     _playbackState = newState;
+}
+
+- (void)setLoadState:(KPMediaLoadState)newState {
+    _loadState = newState;
 }
 
 ///@todo prepareToPlay
@@ -60,6 +64,11 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currPlaybackTime {
+    
+    if (currPlaybackTime == 0) {
+        currPlaybackTime = 0.01;
+    }
+    
     if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
         [_delegate sendKPNotification:DoSeekKey withParams:[@(currPlaybackTime) stringValue]];
     }

@@ -41,20 +41,6 @@ typedef enum{
 } Attribute;
 
 
-@protocol KPViewControllerDelegate <NSObject>
-
-@required
-
--(NSURL *)getInitialKIframeUrl;
-- (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
-
-@optional
-- (void) kPlayerDidPlay;
-- (void) kPlayerDidPause;
-- (void) kPlayerDidStop;
-
-@end
-
 
 
 
@@ -69,7 +55,6 @@ typedef enum{
 @property(readonly) int loadState;
 @property(readonly) BOOL isPreparedToPlay;
 
-@property (nonatomic, retain) id<KPViewControllerDelegate> delegate;
 + (id)alloc;
 
 - (NSURL *)contentURL;

@@ -81,8 +81,10 @@ extern NSString * const KMediaPlaybackStateKey;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 
 /* The current playback state of the movie player. (read-only)
- The playback state is affected by programmatic calls to play, pause, or stop the movie player. */
+ The playback state is affected by programmatic calls to play, pause, or stop the kPlayer. */
 @property (nonatomic, readonly) KPMediaPlaybackState playbackState;
+/* The current load state of the kPlayer. (read-only). */
+@property (nonatomic, readonly) KPMediaLoadState loadState;
 
 - (void)seek:(NSTimeInterval)playbackTime;
 - (void)addPeriodicTimeForInterval:(NSTimeInterval)interval usingBlock:(void (^)(NSTimeInterval time))block;
