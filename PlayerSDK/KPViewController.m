@@ -695,10 +695,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 #if !(TARGET_IPHONE_SIMULATOR)
         ///@todo: test & refactor by sending the dictionary via web layer
         case wvServerKey:
-            _playerFactory.drmParams = @{
-                                         @"WVDRMServerKey": attributeVal,
-                                         @"WVPortalKey": @"kaltura"
-                                       };
+            [_playerFactory setDRMSource:attributeVal];
             break;
 #endif
         case nativeAction:

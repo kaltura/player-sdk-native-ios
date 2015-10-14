@@ -39,10 +39,6 @@
     if (!self.player) {
         KPLogError(@"%@", @"NO PLAYER CREATED");
     }
-//    else if ([self.player respondsToSelector:@selector(setDRMKey:)]) {
-//        self.player.DRMKey = key;
-////        self.player.DRMDict = @{@"WVDRMServerKey": key, @"WVPortalKey": @"kaltura"};
-//    }
 }
 
 - (id<KPlayer>)player {
@@ -65,21 +61,32 @@
 }
 
 - (void)setSrc:(NSString *)src {
+    // origin src should be saved
+    _src = src;
+    
     if (![self.player setPlayerSource:[NSURL URLWithString:src]]) {
-        if (self.drmParams != nil) {
+        [self setDRMSource:nil];
+    }
+}
+
+- (void)setDRMSource: (NSString *)drmKey {
+    if (drmKey) {
+        self.drmParams = @{
+                                     @"WVDRMServerKey": drmKey,
+                                     @"WVPortalKey": WVPortalKey
+                                     };
+    }
+    if (self.drmParams != nil) {
 #if !(TARGET_IPHONE_SIMULATOR)
-
-            [KDRMManager DRMSource:src
-                               key:self.drmParams
-                        completion:^(NSString *drmUrl) {
-                            if (drmUrl &&
-                                ![self.player setPlayerSource:[NSURL URLWithString:drmUrl]]) {
-                                KPLogError(@"Media Source is not playable!");
-                            }
-                        }];
+        [KDRMManager DRMSource:self.src
+                           key:self.drmParams
+                    completion:^(NSString *drmUrl) {
+                        if (drmUrl &&
+                            ![self.player setPlayerSource:[NSURL URLWithString:drmUrl]]) {
+                            KPLogError(@"Media Source is not playable!");
+                        }
+                    }];
 #endif
-        }
-
     }
 }
 

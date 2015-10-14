@@ -27,6 +27,7 @@ static NSString *EndedKey = @"ended";
 static NSString *SeekedKey = @"seeked";
 static NSString *CanPlayKey = @"canplay";
 static NSString *PostrollEndedKey = @"postEnded";
+static NSString *WVPortalKey = @"kaltura";
 
 
 @protocol KPlayerDelegate;
@@ -78,6 +79,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)changePlayer:(id<KPlayer>)player;
 - (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
+- (void)setDRMSource: (NSString *)drmKey;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
