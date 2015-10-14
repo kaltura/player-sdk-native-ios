@@ -42,6 +42,17 @@
 
 #pragma mark Public Methods
 
+- (instancetype)init {
+    if (!NSClassFromString(@"IMAAdsRequest")) {
+        return nil;
+    }
+    self = [super init];
+    if (self) {
+        return self;
+    }
+    return nil;
+}
+
 - (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void (^)(NSDictionary *))adListener  {
     AdEventsListener = [adListener copy];
     
@@ -222,7 +233,7 @@
             eventParams = self.adEventParams.toJSON.adClicked;
             break;
         case kAdEvent_SKIPPED:
-//            AdEventsListener(nil);
+            AdEventsListener(nil);
             break;
         default:
             break;
