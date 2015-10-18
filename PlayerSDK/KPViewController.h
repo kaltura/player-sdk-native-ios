@@ -30,7 +30,6 @@
 - (void)KPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
 @end
 
-#import <GoogleCast/GoogleCast.h>
 #import "ChromecastDeviceController.h"
 
 
