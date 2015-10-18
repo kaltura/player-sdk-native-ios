@@ -740,6 +740,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -786,6 +787,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -821,6 +823,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
 				DSTROOT = /tmp/PlayerSDK.dst;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/nissopa/Desktop/KalturaIOSProjects/KalturaPlayerDemo,
@@ -863,6 +866,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
 				DSTROOT = /tmp/PlayerSDK.dst;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					/Users/nissopa/Desktop/KalturaIOSProjects/KalturaPlayerDemo,

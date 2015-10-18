@@ -54,7 +54,7 @@
 
 -(void)play {
     KPLogTrace(@"Enter");
-    if ( chromecastDeviceController.playerState !=  GCKMediaPlayerStatePlaying ) {
+    if ( chromecastDeviceController.playerState !=  KPGCMediaPlayerStatePlaying ) {
 //        [chromecastDeviceController pauseCastMedia: NO];
     }
     KPLogTrace(@"Exit");
@@ -62,7 +62,7 @@
 
 -(void)pause {
     KPLogTrace(@"Enter");
-    if ( chromecastDeviceController.playerState != GCKMediaPlayerStatePaused ) {
+    if ( chromecastDeviceController.playerState != KPGCMediaPlayerStatePaused ) {
 //         [chromecastDeviceController pauseCastMedia: YES];
     }
     KPLogTrace(@"Exit");
@@ -118,7 +118,7 @@
 // TODO: triggerMediaNowPlaying call it directly with no events
 - (void)triggerMediaNowPlaying {
     KPLogTrace(@"Enter");
-    if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePlaying ) {
+    if ( chromecastDeviceController.playerState == KPGCMediaPlayerStatePlaying ) {
         [self triggerKPlayerEvents: @"play" withValue: nil];
         [NSTimer scheduledTimerWithTimeInterval: .2
                                          target: self
@@ -136,7 +136,7 @@
 
 - (void)triggerMediaNowPaused {
     KPLogTrace(@"Enter");
-    if ( chromecastDeviceController.playerState == GCKMediaPlayerStatePaused ) {
+    if ( chromecastDeviceController.playerState == KPGCMediaPlayerStatePaused ) {
         [self triggerKPlayerEvents: @"pause" withValue: nil];
     }
     KPLogTrace(@"Exit");
@@ -150,7 +150,7 @@
 
 - (void)sendCurrentTime:(NSTimer *)timer {
     if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
-        && ( [self playbackState] == GCKMediaPlayerStatePlaying ) ) {
+        && ( [self playbackState] == KPGCMediaPlayerStatePlaying ) ) {
         [self triggerKPlayerEvents: @"timeupdate"
                          withValue: @{@"timeupdate": [NSString stringWithFormat:@"%f", [self currentPlaybackTime]]}];
     }
@@ -158,7 +158,7 @@
 
 - (void)updatePlaybackProgressFromTimer:(NSTimer *)timer {
     if ( ( [[UIApplication sharedApplication] applicationState] == UIApplicationStateActive )
-        && ( [self playbackState] == GCKMediaPlayerStatePlaying ) ) {
+        && ( [self playbackState] == KPGCMediaPlayerStatePlaying ) ) {
         CGFloat progress = [self playableDuration] / [self duration];
         [self triggerKPlayerEvents: @"progress"
                          withValue: @{@"progress": [NSString stringWithFormat:@"%f", progress]}];

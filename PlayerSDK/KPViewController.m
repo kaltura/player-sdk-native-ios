@@ -63,7 +63,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 @property (nonatomic) NSTimeInterval seekValue;
 
 #pragma mark - chromecast
-@property GCKDevice *selectedDevice;
+@property  id<KPGCDevice>selectedDevice;
 
 @end
 
@@ -174,7 +174,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     if (keyPath.isFrameKeypath) {
         if ([object isEqual:self.view]) {
             [self.view.layer.sublayers.firstObject setFrame:(CGRect){CGPointZero, self.view.frame.size}];
-            self.controlsView.controlsFrame = (CGRect){CGPointZero, self.view.frame.size};
+            ((UIView *)self.controlsView).frame = (CGRect){CGPointZero, self.view.frame.size};
         }
     }
 }
@@ -224,6 +224,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [super viewWillAppear:NO];
     // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
     [ChromecastDeviceController sharedInstance].delegate = self;
+    NSLog(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
 }
 
 #pragma mark -
@@ -233,7 +234,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     appConfigDict = extractDictionary(AppConfigurationFileName, @"plist");
     setUserAgent();
     [self initPlayerParams];
-    
+    self.controlsView.shouldUpdateLayout = YES;
     // Pinch Gesture Recognizer - Player Enter/ Exit FullScreen mode
     UIPinchGestureRecognizer *pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self
                                                                                 action:@selector(didPinchInOut:)];
@@ -272,10 +273,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _kdpAPIState = KDPAPIStateUnknown;
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(handleCastScanStatusUpdated)
-                                                 name: @"castScanStatusUpdated"
-                                               object: nil];
+    
     
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
@@ -284,17 +282,35 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [weakSelf.playerController setPlaybackState:KPMediaPlaybackStateLoaded];
         if (!weakSelf.isModifiedFrame) {
             weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
-        } 
+        } else {
+            weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
+                weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
+                weakSelf.controlsView.shouldUpdateLayout = YES;
+                if (weakSelf.isFullScreenToggled) {
+                    weakSelf.view.frame = screenBounds();
+                    [weakSelf.topWindow addSubview:weakSelf.view];
+                } else {
+                    weakSelf.view.frame = weakSelf.superView.bounds;
+                    [weakSelf.superView addSubview:weakSelf.view];
+                }
+            });
+        }
     }];
     
     self.castDeviceController = [ChromecastDeviceController sharedInstance];
-    [self.castDeviceController clearPreviousSession];
-    // Assign ourselves as the delegate.
-    self.castDeviceController.delegate = self;
-    // Turn on the Cast logging for debug purposes.
-    [self.castDeviceController enableLogging];
-    // Set the receiver application ID to initialise scanning.
-   [self.castDeviceController setApplicationID:@"DB6462E9"];
+    if (self.castDeviceController) {
+        [[NSNotificationCenter defaultCenter] addObserver: self
+                                                 selector: @selector(handleCastScanStatusUpdated)
+                                                     name: @"castScanStatusUpdated"
+                                                   object: nil];
+        [self.castDeviceController clearPreviousSession];
+        // Assign ourselves as the delegate.
+        self.castDeviceController.delegate = self;
+        // Turn on the Cast logging for debug purposes.
+        [self.castDeviceController enableLogging];
+        // Set the receiver application ID to initialise scanning.
+        [self.castDeviceController setApplicationID:@"DB6462E9"];
+    }
     
     [super viewDidLoad];
     KPLogTrace(@"Exit");
@@ -320,7 +336,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)chooseDevice {
     UIActionSheet *sheet;
     //Choose device
-    if (self.selectedDevice == nil) {
+    if (!self.selectedDevice) {
         //Choose device
        sheet =
         [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Connect to Device", nil)
@@ -329,7 +345,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                       destructiveButtonTitle:nil
                            otherButtonTitles:nil];
         
-        for (GCKDevice *device in self.castDeviceController.deviceScanner.devices) {
+        for (id<KPGCDevice> device in self.castDeviceController.deviceScanner.devices) {
             [sheet addButtonWithTitle:device.friendlyName];
         }
         
@@ -344,7 +360,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         
         NSString *friendlyName = [NSString stringWithFormat:NSLocalizedString(@"Casting to %@", nil),
                             self.selectedDevice.friendlyName];
-        NSString *mediaTitle = [self.castDeviceController.mediaInformation.metadata stringForKey:kGCKMetadataKeyTitle];
+        /**
+         *  @todo replace Title with GoogleCast constant
+         */
+        NSString *mediaTitle = [self.castDeviceController.mediaInformation.metadata stringForKey:@"Title"];
         
         sheet = [[UIActionSheet alloc] init];
         sheet.title = friendlyName;
@@ -422,13 +441,18 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     if (isIOS(7) && _configuration.supportedInterfaceOrientations != UIInterfaceOrientationMaskAll) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
-        self.controlsView.controlsFrame = screenBounds();
-    } 
+        ((UIView *)self.controlsView).frame = screenBounds();
+    }
+    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
 //    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
 //    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
 //    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 //    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
 //    [(UIView *)self.controlsView addSubview:reloadButton];
+}
+
+- (void)updateControlsView {
+//    ((UIView *)self.controlsView).frame = self.view.frame;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -439,11 +463,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 #pragma mark - GCKDeviceScannerListener
-- (void)deviceDidComeOnline:(GCKDevice *)device {
+- (void)deviceDidComeOnline:(id<KPGCDevice>)device {
     NSLog(@"device found!! %@", device.friendlyName);
 }
 
-- (void)deviceDidGoOffline:(GCKDevice *)device {
+- (void)deviceDidGoOffline:(id<KPGCDevice>)device {
 }
 
 - (void)handleEnteredBackground: (NSNotification *)not {
@@ -906,7 +930,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
     if (!_isModifiedFrame || _isFullScreenToggled) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
-        self.controlsView.controlsFrame = screenBounds();
+        ((UIView *)self.controlsView).frame = screenBounds();
     }
 }
 
