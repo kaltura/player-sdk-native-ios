@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.org/kaltura/player-sdk-native-ios.svg?branch=master)](https://travis-ci.org/kaltura/player-sdk-native-ios)
+[![Version](https://img.shields.io/cocoapods/v/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
+[![License](https://img.shields.io/badge/license-AGPLv3-grey.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
+[![Platform](https://img.shields.io/cocoapods/p/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
 
 Player SDK Native iOS
 =================
@@ -28,8 +31,16 @@ Architecture Overview
 ![alt text](http://html5video.org/presentations/HTML5PartDeux.FOSDEM.2014/koverview.jpg "Architecture Overview")
 
 
-Quick Start Guide
+Getting Started
 ======
+
+**KalturaPlayerSDK** can be added to any project (big or small) in a matter of minutes (maybe even seconds if you're super speedy). Cocoapods is fully supported.
+
+##SDK Cocoapods Installation :
+
+The easiest way to install KalturaPlayerSDK is to use <a href="http://cocoapods.org/" target="_blank">CocoaPods</a>. To do so, simply add the following line to your `Podfile`:
+	<pre><code>pod 'KalturaPlayerSDK'</code></pre>
+
 ##SDK Traditional Installation :
 
 ```

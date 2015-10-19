@@ -18,7 +18,7 @@ s.homepage     = "https://github.com/kaltura/player-sdk-native-ios"
 
 
 # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.license      = { :type => 'COMMERCIAL', :text => 'COMMERCIAL' }
+s.license      = { :type => 'AGPLv3', :text => 'AGPLv3' }
 
 
 
