@@ -97,6 +97,9 @@
 - (void)setAdTagURL:(NSString *)adTagURL {
     if (!_adController) {
         _adController = [KPIMAPlayerViewController new];
+        if (!_adController) {
+            return;
+        }
         _adController.adPlayerHeight = _adPlayerHeight;
         _adController.locale = _locale;
         [_parentViewController addChildViewController:_adController];
