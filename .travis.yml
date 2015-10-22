@@ -10,4 +10,8 @@ notifications:
       - noam.tamim@kaltura.com
     on_success: change
     on_failure: always
-    
+deploy:
+  provider: script
+  script: ./cocoapods-push.sh
+  on:
+    tags: true
