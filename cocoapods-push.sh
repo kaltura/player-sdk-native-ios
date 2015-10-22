@@ -6,6 +6,8 @@ machine trunk.cocoapods.org
   password $COCOAPODS_PASSWORD
 EOF
 
+chmod 0600 ~/.netrc
+
 pod spec lint --allow-warnings
 pod trunk push --allow-warnings KalturaPlayerSDK.podspec
 

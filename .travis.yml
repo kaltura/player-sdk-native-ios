@@ -1,6 +1,8 @@
 language: objective-c
 xcode_project: PlayerSDK/KALTURAPlayerSDK.xcodeproj
 xcode_scheme: KALTURAPlayerSDK
+before_install:
+  - gem install cocoapods # Since Travis is not always on latest version
 notifications:
   email:
     recipients:
@@ -13,5 +15,5 @@ notifications:
 deploy:
   provider: script
   script: ./cocoapods-push.sh
-  on:
-    tags: true
+  # on:
+    # tags: true
