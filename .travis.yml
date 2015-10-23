@@ -15,5 +15,6 @@ notifications:
 deploy:
   provider: script
   script: ./cocoapods-push.sh
-  # on:
-    # tags: true
+  on:   # only deploy if building a tag, AND the tag is in the format digits.digits.digits
+    tags: true
+    condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$
