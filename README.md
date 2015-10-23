@@ -172,7 +172,7 @@ Using Kaltura player
     [super viewDidAppear:animated];
     self.player.view.frame = (CGRect){0, 0, 320, 180};
     [self.player loadPlayerIntoViewController:self];
-    [self.view addSubView:_player.view];
+    [self.view addSubview:_player.view];
 }
 
 
