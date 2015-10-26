@@ -1,6 +1,8 @@
 language: objective-c
 xcode_project: PlayerSDK/KALTURAPlayerSDK.xcodeproj
 xcode_scheme: KALTURAPlayerSDK
+before_install:
+  - gem install cocoapods # Since Travis is not always on latest version
 notifications:
   email:
     recipients:
@@ -10,4 +12,9 @@ notifications:
       - noam.tamim@kaltura.com
     on_success: change
     on_failure: always
-    
+deploy:
+  provider: script
+  script: ./cocoapods-push.sh
+  on:   # only deploy if building a tag, AND the tag is in the format digits.digits.digits
+    tags: true
+    condition: $TRAVIS_TAG =~ ^v[0-9]+\.[0-9]+\.[0-9]+$
