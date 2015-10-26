@@ -848,7 +848,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 #pragma mark KPlayerDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
-    __block KPMediaPlaybackState playbackState = nil;
+    __block KPMediaPlaybackState playbackState = KPMediaPlaybackStateUnknown;
     
     void(^kPlayerStateBlock)() = @{
                                       CanPlayKey:
@@ -858,17 +858,15 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaLoadStatePlayable)}];
                                               
                                               if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange::)]) {
-                                                  [_delegate kPlayer:self playerLoadStateDidChange:@(KPMediaLoadStatePlayable)];
+                                                  [_delegate kPlayer:self playerLoadStateDidChange:KPMediaLoadStatePlayable];
                                               }
-                                              
-                                              self.playerController.playbackState = KPMediaLoadStatePlayable;
                                           },
                                       PlayKey:
                                           ^{
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
-                                              playbackState = @(KPMediaPlaybackStatePlaying);
+                                              playbackState = KPMediaPlaybackStatePlaying;
                                               [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
                                           },
                                       PauseKey:
@@ -876,7 +874,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
-                                              playbackState = @(KPMediaPlaybackStatePaused);
+                                              playbackState = KPMediaPlaybackStatePaused;
                                               [self.playerController setPlaybackState:KPMediaPlaybackStatePaused];
                                           },
                                       StopKey:
@@ -884,7 +882,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
-                                              playbackState = @(KPMediaPlaybackStateStopped);
+                                              playbackState = KPMediaPlaybackStateStopped;
                                               [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
                                           },
                                       TimeUpdateKey:
@@ -899,7 +897,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         kPlayerStateBlock();
     }
     
-    if (playbackState) {
+    if (playbackState != KPMediaPlaybackStateUnknown) {
         [self playerPlaybackStateDidChange:playbackState];
     }
     
