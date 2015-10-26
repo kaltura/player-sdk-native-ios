@@ -26,16 +26,15 @@
 @required
 - (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 @optional
-- (void)KPlayer:(KPViewController *)player playerStateDidChange:(KPMediaLoadState)state;
-- (void)KPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
+- (void)kPlayer:(KPViewController *)player playerLoadStateDidChange:(KPMediaLoadState)state;
+- (void)kPlayer:(KPViewController *)player playerPlaybackStateDidChange:(KPMediaPlaybackState)state;
+- (void)kPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
 @end
 
 #import "ChromecastDeviceController.h"
 
 
 @interface KPViewController : UIViewController
-
-
 
 + (void)setLogLevel:(KPLogLevel)logLevel;
 

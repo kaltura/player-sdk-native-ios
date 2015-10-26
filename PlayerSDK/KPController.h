@@ -13,6 +13,7 @@
 // Media Player Types
 
 typedef NS_ENUM(NSInteger, KPMediaPlaybackState) {
+    KPMediaPlaybackStateUnknown,
     KPMediaPlaybackStateLoaded,
     KPMediaPlaybackStateReady,
     /* Playback is currently stopped. */
