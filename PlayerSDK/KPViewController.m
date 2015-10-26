@@ -766,10 +766,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         self.view.frame = self.superView.bounds;
         [self.superView addSubview:self.view];
     }
+    
     [self.controlsView updateLayout];
-    if ([_delegate respondsToSelector:@selector(KPlayer:playerFullScreenToggled:)]) {
-        [_delegate KPlayer:self playerFullScreenToggled:_isFullScreenToggled];
+    
+    if ([_delegate respondsToSelector:@selector(kPlayer:playerFullScreenToggled:)]) {
+        [_delegate kPlayer:self playerFullScreenToggled:_isFullScreenToggled];
     }
+    
     KPLogTrace(@"Exit");
 }
 
@@ -852,16 +855,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaLoadStatePlayable)}];
                                               self.playerController.playbackState = KPMediaLoadStatePlayable;
-                                              
-                                              if([_delegate respondsToSelector:@selector(kPlayerLoadStateDidChange:)]) {
-                                                  [_delegate updateCurrentPlaybackTime:KPMediaLoadStatePlayable];
-                                              }
                                           },
                                       PlayKey:
                                           ^{
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePlaying)}];
+                                              [self playerPlaybackStateDidChange:@(KPMediaPlaybackStatePlaying)];
                                               [self.playerController setPlaybackState:KPMediaPlaybackStatePlaying];
                                           },
                                       PauseKey:
@@ -869,6 +869,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStatePaused)}];
+                                              [self playerPlaybackStateDidChange:@(KPMediaPlaybackStatePaused)];
                                               [self.playerController setPlaybackState:KPMediaPlaybackStatePaused];
                                           },
                                       StopKey:
@@ -876,6 +877,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaPlaybackStateStopped)}];
+                                              [self playerPlaybackStateDidChange:@(KPMediaPlaybackStateStopped)];
                                               [self.playerController setPlaybackState:KPMediaPlaybackStateStopped];
                                           },
                                       TimeUpdateKey:
@@ -891,6 +893,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
     
     [self.controlsView triggerEvent:event withValue:value];
+}
+
+- (void)playerPlaybackStateDidChange:(KPMediaPlaybackState)playbackState {
+    if ([_delegate respondsToSelector:@selector(kPlayer:playerPlaybackStateDidChange:)]) {
+        [_delegate kPlayer:self playerPlaybackStateDidChange:playbackState];
+    }
 }
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
