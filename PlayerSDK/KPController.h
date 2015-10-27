@@ -22,6 +22,8 @@ typedef NS_ENUM(NSInteger, KPMediaPlaybackState) {
     KPMediaPlaybackStatePlaying,
     /* Playback is currently paused. */
     KPMediaPlaybackStatePaused,
+    /* Playback is currently ended. */
+    KPMediaPlaybackStateEnded,
     ///@todo
     /* Playback is temporarily interrupted, perhaps because the buffer ran out of content. */
     KPMediaPlaybackStateInterrupted,

@@ -882,6 +882,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
+                                      EndedKey:
+                                          ^{
+                                              playbackState = KPMediaPlaybackStateEnded;
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
+                                                                                                  object:self
+                                                                                                userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
+                                          },
                                       TimeUpdateKey:
                                           ^{
                                               if([_delegate respondsToSelector:@selector(updateCurrentPlaybackTime:)]) {
