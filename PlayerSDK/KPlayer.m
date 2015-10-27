@@ -164,6 +164,9 @@ static NSString *StatusKeyPath = @"status";
 }
 
 - (void)videoEnded {
+    [self.delegate player:self
+                eventName:EndedKey
+                    value:nil];
     [_delegate contentCompleted:self];
 }
 
