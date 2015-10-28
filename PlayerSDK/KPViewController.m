@@ -718,7 +718,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         ///@todo: test & refactor by sending the dictionary via web layer
-        case wvServerKey:
+        case licenseUri:
             [_playerFactory setDRMSource:attributeVal];
             break;
 #endif

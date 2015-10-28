@@ -32,7 +32,7 @@ typedef enum{
     visible,
 #if !(TARGET_IPHONE_SIMULATOR)
     // DRM WideVine Key
-    wvServerKey,
+    licenseUri,
 #endif
     nativeAction,
     doubleClickRequestAds,
