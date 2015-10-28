@@ -857,7 +857,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaLoadStatePlayable)}];
                                               
-                                              if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange::)]) {
+                                              if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange:)]) {
                                                   [_delegate kPlayer:self playerLoadStateDidChange:KPMediaLoadStatePlayable];
                                               }
                                           },
