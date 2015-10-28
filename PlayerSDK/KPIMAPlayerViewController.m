@@ -10,8 +10,6 @@
 #import "NSString+Utilities.h"
 #import "KPLog.h"
 #import "IMAHandler.h"
-//@import GoogleInteractiveMediaAds;
-
 
 @interface KPIMAPlayerViewController () {
     void(^AdEventsListener)(NSDictionary *adEventParams);
@@ -120,8 +118,7 @@
     if (!_adsRenderingSettings) {
         _adsRenderingSettings = [NSClassFromString(@"IMAAdsRenderingSettings") new];
         _adsRenderingSettings.webOpenerPresentingController = self;
-        _adsRenderingSettings.webOpenerDelegate = self;
-        //        _adsRenderingSettings.uiElements = @[];
+        _adsRenderingSettings.webOpenerDelegate = _datasource;
     }
     return _adsRenderingSettings;
 }

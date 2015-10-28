@@ -256,6 +256,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [_playerFactory addPlayerToController:self];
         _playerFactory.delegate = self;
         _playerFactory.drmParams = self.configuration.drmParams;
+        _playerFactory.kIMAWebOpenerDelegate = _kIMAWebOpenerDelegate;
     }
     
     // Initialize player controller
@@ -843,8 +844,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self presentViewController:browser animated:YES completion:nil];
     KPLogTrace(@"Exit");
 }
-
-
 
 #pragma mark KPlayerDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
