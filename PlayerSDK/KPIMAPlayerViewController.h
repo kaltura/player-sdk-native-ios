@@ -10,6 +10,9 @@
 #import <AVFoundation/AVFoundation.h>
 #import "NSMutableDictionary+AdSupport.h"
 
+@protocol IMAWebOpenerDataSource <NSObject>
+- (id)imaWebOpenerDelegate;
+@end
 
 /**
  *  Supplies the playhead position for midroll ads
@@ -52,4 +55,5 @@
 
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
+@property (nonatomic, weak) id<IMAWebOpenerDataSource> datasource;
 @end
