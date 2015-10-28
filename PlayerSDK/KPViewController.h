@@ -23,9 +23,8 @@
 
 @class KPViewController;
 @protocol KPViewControllerDelegate <NSObject>
-@required
-- (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 @optional
+- (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 - (void)kPlayer:(KPViewController *)player playerLoadStateDidChange:(KPMediaLoadState)state;
 - (void)kPlayer:(KPViewController *)player playerPlaybackStateDidChange:(KPMediaPlaybackState)state;
 - (void)kPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
