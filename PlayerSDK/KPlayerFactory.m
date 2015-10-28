@@ -10,7 +10,6 @@
 #import "KDRMManager.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
-#import "KPIMAPlayerViewController.h"
 
 @interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
@@ -18,7 +17,6 @@
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
-@property (nonatomic, strong) KPIMAPlayerViewController *adController;
 @property (nonatomic) BOOL contentEnded;
 @end
 
@@ -104,6 +102,7 @@
         _adController.locale = _locale;
         [_parentViewController addChildViewController:_adController];
         [_parentViewController.view addSubview:_adController.view];
+        _adController.datasource = _kIMAWebOpenerDelegate;
         __weak KPlayerFactory *weakSelf = self;
         [_adController loadIMAAd:adTagURL
                withContentPlayer:_player

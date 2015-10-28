@@ -42,7 +42,7 @@
 		B34C89391ADA65AA007C6A5D /* KPControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = B34C89381ADA65AA007C6A5D /* KPControlsView.m */; };
 		B34C893C1ADA6847007C6A5D /* KPControlsUIWebview.m in Sources */ = {isa = PBXBuildFile; fileRef = B34C893B1ADA6847007C6A5D /* KPControlsUIWebview.m */; };
 		B34C893F1ADA705F007C6A5D /* KPControlsWKWebview.m in Sources */ = {isa = PBXBuildFile; fileRef = B34C893E1ADA705F007C6A5D /* KPControlsWKWebview.m */; };
-		B3553D1F1BCD2F4F005179F3 /* KDRMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3553D1E1BCD2F4F005179F3 /* KDRMManager.m */; settings = {ASSET_TAGS = (); }; };
+		B3553D1F1BCD2F4F005179F3 /* KDRMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B3553D1E1BCD2F4F005179F3 /* KDRMManager.m */; };
 		B35B85771A43258200DCDBF7 /* KPLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B35B85731A43258200DCDBF7 /* KPLogManager.m */; };
 		B35B85781A43258200DCDBF7 /* KPLog.m in Sources */ = {isa = PBXBuildFile; fileRef = B35B85741A43258200DCDBF7 /* KPLog.m */; };
 		B36674381A90914A00C3A4A7 /* player-sdk-native-ios.podspec in Resources */ = {isa = PBXBuildFile; fileRef = B36674371A90914A00C3A4A7 /* player-sdk-native-ios.podspec */; };
@@ -193,15 +193,15 @@
 		B3F968F01B8747DA004065CE /* KPPlayerConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPPlayerConfig.h; sourceTree = "<group>"; };
 		B3F968F11B8747DA004065CE /* KPPlayerConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPPlayerConfig.m; sourceTree = "<group>"; };
 		B3F968F21B8747DA004065CE /* KPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewController.h; sourceTree = "<group>"; };
-		B3F968F31B8747DA004065CE /* KPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPViewController.m; sourceTree = "<group>"; };
+		B3F968F31B8747DA004065CE /* KPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KPViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B3F968F61B87480C004065CE /* KPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPController.h; sourceTree = "<group>"; };
 		B3F968F71B87480C004065CE /* KPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPController.m; sourceTree = "<group>"; };
 		B3F968FB1B8748B0004065CE /* KPURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPURLProtocol.h; sourceTree = "<group>"; };
 		B3F968FC1B8748B0004065CE /* KPURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPURLProtocol.m; sourceTree = "<group>"; };
 		B3F969001B8748B0004065CE /* CachedStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CachedStrings.plist; sourceTree = "<group>"; };
 		B3F969061B8748FF004065CE /* NSString+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Utilities.h"; sourceTree = "<group>"; };
-		B3F969071B8748FF004065CE /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Utilities.m"; sourceTree = "<group>"; };
-		B3F969091B874940004065CE /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPViewControllerProtocols.h; sourceTree = "<group>"; };
+		B3F969071B8748FF004065CE /* NSString+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSString+Utilities.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		B3F969091B874940004065CE /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = KPViewControllerProtocols.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		B3F969511B89EB51004065CE /* KCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCacheManager.h; sourceTree = "<group>"; };
 		B3F969521B89EB51004065CE /* KCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCacheManager.m; sourceTree = "<group>"; };
 		B3F969541B89F7C3004065CE /* NSMutableDictionary+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+Cache.h"; sourceTree = "<group>"; };

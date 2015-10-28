@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "KPIMAPlayerViewController.h"
 
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
@@ -39,7 +40,6 @@ static NSString *WVPortalKey = @"kaltura";
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic, readonly) BOOL isKPlayer;
-
 
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (BOOL)setPlayerSource:(NSURL *)playerSource;
@@ -91,4 +91,6 @@ static NSString *WVPortalKey = @"kaltura";
 @property (nonatomic, copy) NSString *locale;
 /// Changes DRM params and returns the current DRM params
 @property (nonatomic, copy) NSDictionary *drmParams;
+@property (nonatomic, strong) KPIMAPlayerViewController *adController;
+@property (nonatomic, strong) id kIMAWebOpenerDelegate;
 @end

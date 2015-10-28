@@ -256,6 +256,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         [_playerFactory addPlayerToController:self];
         _playerFactory.delegate = self;
         _playerFactory.drmParams = self.configuration.drmParams;
+        _playerFactory.kIMAWebOpenerDelegate = _kIMAWebOpenerDelegate;
     }
     
     // Initialize player controller
@@ -718,7 +719,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
 #if !(TARGET_IPHONE_SIMULATOR)
         ///@todo: test & refactor by sending the dictionary via web layer
-        case wvServerKey:
+        case licenseUri:
             [_playerFactory setDRMSource:attributeVal];
             break;
 #endif
@@ -844,8 +845,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-
-
 #pragma mark KPlayerDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     __block KPMediaPlaybackState playbackState = KPMediaPlaybackStateUnknown;
@@ -857,7 +856,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaLoadStatePlayable)}];
                                               
-                                              if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange::)]) {
+                                              if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange:)]) {
                                                   [_delegate kPlayer:self playerLoadStateDidChange:KPMediaLoadStatePlayable];
                                               }
                                           },
