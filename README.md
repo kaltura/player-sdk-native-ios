@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/kaltura/player-sdk-native-ios.svg?branch=master)](https://travis-ci.org/kaltura/player-sdk-native-ios)
 [![Version](https://img.shields.io/cocoapods/v/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
-[![License](https://img.shields.io/badge/license-AGPLv3-grey.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
+[![License](https://img.shields.io/cocoapods/l/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
 [![Platform](https://img.shields.io/cocoapods/p/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
 
 Player SDK Native iOS
@@ -25,6 +25,17 @@ Future support will include:
 * PlayReady DRM
 * Multiple stream playback
 * Offline viewing
+
+## Table of Contents
+
+* [**Architecture Overview**](#architecture-overview)  
+* [**Getting Started**](#getting-started)
+    * [SDK Cocoapods Installation](#sdk-cocoapods-installation)
+    * [SDK Traditional Installation](#sdk-traditional-installation)
+    * [Add static library](add-static-library)
+* [**Using Kaltura player**](#using-kaltura-player)  
+* [**License and Copyright Information**](#license-and-copyright-information)  
+
 
 Architecture Overview
 =====
