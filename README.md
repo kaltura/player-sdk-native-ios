@@ -30,9 +30,10 @@ Future support will include:
 
 * [**Architecture Overview**](#architecture-overview)  
 * [**Getting Started**](#getting-started)
-* [**Using Kaltura player**](#using-kaltura-player)  
+* [**Linking GoogleAds**](#linking-googleAds)
+* [**Linking GoogleCast**](#linking-googleCast)
+* [**Using Kaltura player**](#using-kaltura-player) *  
 * [**License and Copyright Information**](#license-and-copyright-information)  
-
 
 Architecture Overview
 =====
@@ -75,9 +76,26 @@ Make sure to add the _**`KALTURAPlayerSDK.xcodeproj`**_ file only, **not the ent
 ![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/linkToSDK.jpg)
 2. Because we are using Objective-C, we have to add a couple of linker flags to the main project app’s target to ensure that ObjC static libraries like ours are linked correctly. In the main project target’s _**`Build Settings`**_ find the _**`Other Linker Flags`**_ line, and add _**`-ObjC`**_.![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/addingObjC_flag.jpg)
 
+Linking GoogleCast
+======
+###Cocoapods support
+If you are using cocoapods please attach the following to your pod file:
+```
+	pod 'google-cast-sdk'
+```
 ###Linking to “GoogleCast.framework”
 1.	Go to Target -> _**`Build Phases`**_ -> _**`Link Binary with Library`**_, click the **`+`** and _**`Add Other...`**_
 2.	Go to PlayerSDK folder and you will see that it contains _**`GoogleCast.framework`**_ choose it and click -**`Open`**_. ![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/linkToChromecast.jpg)
+
+Linking GoogleAds
+======
+###Cocoapods support
+If you are using cocoapods please attach the following to your pod file:
+```
+   	pod 'Google-Mobile-Ads-SDK'
+    pod 'google-cast-sdk'
+    pod 'GoogleAds-IMA-iOS-SDK-For-AdMob', '~> 3.0.beta.16'
+```
 
 ###Linking to GoogleInteractiveMediaAds SDK
 1. If you use ads you will have to download **`GoogleMobileAds`** from: [Admob](https://developers.google.com/admob/ios/download) and add it to your project
