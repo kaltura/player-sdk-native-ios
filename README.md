@@ -30,9 +30,9 @@ Future support will include:
 
 * [**Architecture Overview**](#architecture-overview)  
 * [**Getting Started**](#getting-started)
-* [**Linking GoogleAds**](#linking-googleAds)
-* [**Linking GoogleCast**](#linking-googleCast)
-* [**Using Kaltura player**](#using-kaltura-player) *  
+* [**Linking GoogleAds**](#linking-googleads)
+* [**Linking GoogleCast**](#linking-googlecast)
+* [**Using Kaltura player**](#using-kaltura-player)  
 * [**License and Copyright Information**](#license-and-copyright-information)  
 
 Architecture Overview
