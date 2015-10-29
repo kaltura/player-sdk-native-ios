@@ -30,9 +30,6 @@ Future support will include:
 
 * [**Architecture Overview**](#architecture-overview)  
 * [**Getting Started**](#getting-started)
-    * [SDK Cocoapods Installation](#sdk-cocoapods-installation)
-    * [SDK Traditional Installation](#sdk-traditional-installation)
-    * [Add static library](add-static-library)
 * [**Using Kaltura player**](#using-kaltura-player)  
 * [**License and Copyright Information**](#license-and-copyright-information)  
 
