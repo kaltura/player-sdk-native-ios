@@ -87,7 +87,7 @@
  */
 - (void)changeMedia:(NSString *)entryID;
 
-@property (nonatomic, retain) id<KPViewControllerDelegate> delegate;
+@property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) KPController *playerController;
 
