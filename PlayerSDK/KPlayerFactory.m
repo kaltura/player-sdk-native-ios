@@ -17,7 +17,9 @@
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
-@property (nonatomic) BOOL contentEnded;
+@property (nonatomic) BOOL isContentEnded;
+@property (nonatomic) BOOL isAllAdsCompleted;
+
 @end
 
 @implementation KPlayerFactory
@@ -111,13 +113,23 @@
                           [weakSelf.player.delegate player:weakSelf.player
                                                  eventName:adEventParams.allKeys.firstObject
                                                       JSON:adEventParams.allValues.firstObject];
-                      } else if (weakSelf.contentEnded){
-                          [weakSelf.delegate allAdsCompleted];
-                      } else if (!adEventParams) {
-                          [weakSelf.adController removeIMAPlayer];
-                          weakSelf.adController = nil;
+                          //all ads completed
+                          if (!adEventParams) {
+                              self.isAllAdsCompleted = YES;
+                              [weakSelf.delegate allAdsCompleted];
+                              [weakSelf.adController removeIMAPlayer];
+                              weakSelf.adController = nil;
+                              
+                              if (weakSelf.isContentEnded) {
+                                  [weakSelf.player.delegate player:weakSelf.player
+                                                         eventName:EndedKey
+                                                             value:nil];
+                              }
+                          }
                       }
                   }];
+        
+        
     }
 }
 
@@ -171,8 +183,15 @@
 }
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
-    self.contentEnded = YES;
+    self.isContentEnded = YES;
+// Notify IMA SDK when content is done for post-rolls.
     [_adController contentCompleted];
+    
+    if (self.isAllAdsCompleted) {
+        [self.player.delegate player:self.player
+                               eventName:EndedKey
+                                   value:nil];
+    }
 }
 
 - (void)dealloc {
