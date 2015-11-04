@@ -64,12 +64,11 @@
 }
 
 - (void)contentCompleted {
+// Notify IMA SDK when content is done for post-rolls.
     [self.adsLoader contentComplete];
 }
 
 - (void)removeIMAPlayer {
-    
-    
     AdEventsListener = nil;
     [_adEventParams removeAllObjects];
     _adEventParams = nil;
@@ -93,7 +92,6 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor clearColor];
     self.view.frame = (CGRect){0, 0, self.view.frame.size.width, _adPlayerHeight};
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -167,7 +165,6 @@
         AdEventsListener(AdLoadedEventKey.nullVal);
     }
 }
-
 
 - (void)adsLoader:(id<AdsLoader>)loader failedWithErrorData:(id<AdLoadingErrorData>)adErrorData {
     // Something went wrong loading ads. Log the error and play the content.
@@ -256,16 +253,16 @@
 
 - (void)adsManagerDidRequestContentPause:(id<AdsManager>)adsManager {
     // The SDK is going to play ads, so pause the content.
-    //    [self.contentPlayer pause];
     if (AdEventsListener) {
+        [self.contentPlayer pause];
         AdEventsListener(ContentPauseRequestedKey.nullVal);
     }
 }
 
 - (void)adsManagerDidRequestContentResume:(id<AdsManager>)adsManager {
     // The SDK is done playing ads (at least for now), so resume the content.
-    //    [self.contentPlayer play];
     if (AdEventsListener) {
+        [self.contentPlayer play];
         AdEventsListener(ContentResumeRequestedKey.nullVal);
     }
 }

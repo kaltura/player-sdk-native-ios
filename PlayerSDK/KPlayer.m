@@ -56,7 +56,7 @@ static NSString *StatusKeyPath = @"status";
                   options:0
                   context:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(videoEnded)
+                                                 selector:@selector(videoEnded:)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
                                                    object:nil];
         __weak KPlayer *weakSelf = self;
@@ -163,11 +163,11 @@ static NSString *StatusKeyPath = @"status";
     }
 }
 
-- (void)videoEnded {
-    [self.delegate player:self
-                eventName:EndedKey
-                    value:nil];
-    [_delegate contentCompleted:self];
+- (void)videoEnded:(NSNotification *)notification {
+// Make sure we don't call contentCompleted as a result of an ad completing.
+    if (notification.object == self.currentItem) {
+        [_delegate contentCompleted:self];
+    }
 }
 
 - (BOOL)setPlayerSource:(NSURL *)playerSource {
