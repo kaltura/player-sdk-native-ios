@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKFilterCriteria.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKFilterCriteria</TokenIdentifier>
+			<Abstract type="html">Filter criteria for applications.</Abstract>
+			<DeclaredIn>GCKFilterCriteria.h</DeclaredIn>
+            
+			
+			<NodeRef refid="13"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKFilterCriteria/criteriaForAvailableApplicationWithID:</TokenIdentifier>
+			<Abstract type="html">Criteria for an application which is available to be launched on a device. The application does
+not need to be currently running.</Abstract>
+			<DeclaredIn>GCKFilterCriteria.h</DeclaredIn>
+			
+			<Declaration>+ (instancetype)criteriaForAvailableApplicationWithID:(NSString *)applicationID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>applicationID</Name>
+					<Abstract type="html">The application ID. Must be non-nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/criteriaForAvailableApplicationWithID:</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKFilterCriteria/criteriaForRunningApplicationWithID:supportedNamespaces:</TokenIdentifier>
+			<Abstract type="html">Criteria for an application which is currently running on the device and supports all of
+the given namespaces, optionally also with a particular application ID. (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; {This method is deprecated. Filtering by running application ID is not supported by
+the SDK. Calling this method will ignore the applicationID parameter and simply delegate to
+@link #criteriaForRunningApplicationWithSupportedNamespaces: @endlink.}&lt;/span&gt;)</Abstract>
+			<DeclaredIn>GCKFilterCriteria.h</DeclaredIn>
+			
+			<Declaration>+ (instancetype)criteriaForRunningApplicationWithID:(NSString *)applicationID supportedNamespaces:(NSArray *)supportedNamespaces</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>applicationID</Name>
+					<Abstract type="html">The application ID. Optional; may be nil, in which case only the namespace
+will be used.</Abstract>
+				</Parameter><Parameter>
+					<Name>supportedNamespaces</Name>
+					<Abstract type="html">An array of namespace strings. Must be non-nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/criteriaForRunningApplicationWithID:supportedNamespaces:</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKFilterCriteria/criteriaForRunningApplicationWithSupportedNamespaces:</TokenIdentifier>
+			<Abstract type="html">Criteria for an application which is currently running on the device and supports all of
+the given namespaces.</Abstract>
+			<DeclaredIn>GCKFilterCriteria.h</DeclaredIn>
+			
+			<Declaration>+ (instancetype)criteriaForRunningApplicationWithSupportedNamespaces:(NSArray *)supportedNamespaces</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>supportedNamespaces</Name>
+					<Abstract type="html">An array of namespace strings. Must be non-nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/criteriaForRunningApplicationWithSupportedNamespaces:</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

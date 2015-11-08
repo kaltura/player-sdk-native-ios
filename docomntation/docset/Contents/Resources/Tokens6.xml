@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKCastChannel.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKCastChannel</TokenIdentifier>
+			<Abstract type="html">A GCKCastChannel is used to send and receive messages that are tagged with a specific
+namespace. In this way, multiple channels may be multiplexed over a single connection
+to a Cast device.
+&lt;p&gt;
+Subclasses should implement the @link GCKCastChannel#didReceiveTextMessage: @endlink method to
+process incoming messages, and will typically provide additional methods for sending messages
+that are specific to a given namespace.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+            
+			
+			<NodeRef refid="6"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/setProtocolNamespace:</TokenIdentifier>
+			<Abstract type="html">The channel&apos;s namespace.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *protocolNamespace</Declaration>
+			
+			
+			<Anchor>//api/name/protocolNamespace</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/protocolNamespace</TokenIdentifier>
+			<Abstract type="html">The channel&apos;s namespace.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *protocolNamespace</Declaration>
+			
+			
+			<Anchor>//api/name/protocolNamespace</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKCastChannel/protocolNamespace</TokenIdentifier>
+			<Abstract type="html">The channel&apos;s namespace.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *protocolNamespace</Declaration>
+			
+			
+			<Anchor>//api/name/protocolNamespace</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/setIsConnected:</TokenIdentifier>
+			<Abstract type="html">A flag indicating whether this channel is currently connected.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isConnected</Declaration>
+			
+			
+			<Anchor>//api/name/isConnected</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/isConnected</TokenIdentifier>
+			<Abstract type="html">A flag indicating whether this channel is currently connected.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isConnected</Declaration>
+			
+			
+			<Anchor>//api/name/isConnected</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKCastChannel/isConnected</TokenIdentifier>
+			<Abstract type="html">A flag indicating whether this channel is currently connected.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isConnected</Declaration>
+			
+			
+			<Anchor>//api/name/isConnected</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/setDeviceManager:</TokenIdentifier>
+			<Abstract type="html">The device manager with which this channel is registered, if any.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) GCKDeviceManager *deviceManager</Declaration>
+			
+			
+			<Anchor>//api/name/deviceManager</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/deviceManager</TokenIdentifier>
+			<Abstract type="html">The device manager with which this channel is registered, if any.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) GCKDeviceManager *deviceManager</Declaration>
+			
+			
+			<Anchor>//api/name/deviceManager</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKCastChannel/deviceManager</TokenIdentifier>
+			<Abstract type="html">The device manager with which this channel is registered, if any.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak, readonly) GCKDeviceManager *deviceManager</Declaration>
+			
+			
+			<Anchor>//api/name/deviceManager</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/initWithNamespace:</TokenIdentifier>
+			<Abstract type="html">Designated initializer. Constructs a new GCKCastChannel with the given namespace.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithNamespace:(NSString *)protocolNamespace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>protocolNamespace</Name>
+					<Abstract type="html">The namespace.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithNamespace:</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/didReceiveTextMessage:</TokenIdentifier>
+			<Abstract type="html">Called when a text message has been received on this channel. The default implementation is a
+no-op.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>- (void)didReceiveTextMessage:(NSString *)message</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>message</Name>
+					<Abstract type="html">The message.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/didReceiveTextMessage:</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/sendTextMessage:</TokenIdentifier>
+			<Abstract type="html">Sends a text message on this channel.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)sendTextMessage:(NSString *)message</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>message</Name>
+					<Abstract type="html">The message.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">&lt;code&gt;YES&lt;/code&gt; on success or &lt;code&gt;NO&lt;/code&gt; if the message could not be sent (because
+the channel is not connected, or because the send buffer is too full at the moment).</Abstract></ReturnValue>
+			<Anchor>//api/name/sendTextMessage:</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/generateRequestID</TokenIdentifier>
+			<Abstract type="html">Generates a request ID for a new message.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)generateRequestID</Declaration>
+			
+			<ReturnValue><Abstract type="html">The generated ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the channel is not currently
+connected.</Abstract></ReturnValue>
+			<Anchor>//api/name/generateRequestID</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/generateRequestNumber</TokenIdentifier>
+			<Abstract type="html">A convenience method which wraps generateRequestID in an NSNumber.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSNumber *)generateRequestNumber</Declaration>
+			
+			<ReturnValue><Abstract type="html">The generated ID, or &lt;code&gt;nil&lt;/code&gt; if the channel is not currently connected.</Abstract></ReturnValue>
+			<Anchor>//api/name/generateRequestNumber</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/didConnect</TokenIdentifier>
+			<Abstract type="html">Called when this channel has been connected, indicating that messages can now be exchanged with
+the Cast device over this channel. The default implementation is a no-op.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>- (void)didConnect</Declaration>
+			
+			
+			<Anchor>//api/name/didConnect</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/didDisconnect</TokenIdentifier>
+			<Abstract type="html">Called when this channel has been disconnected, indicating that messages can no longer be
+exchanged with the Cast device over this channel. The default implementation is a no-op.</Abstract>
+			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			
+			<Declaration>- (void)didDisconnect</Declaration>
+			
+			
+			<Anchor>//api/name/didDisconnect</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

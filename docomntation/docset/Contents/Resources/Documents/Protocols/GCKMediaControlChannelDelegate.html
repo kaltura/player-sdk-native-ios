@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>GCKMediaControlChannelDelegate Protocol Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">KALTURAPlayerSDK </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Kaltura</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/mediaControlChannel:didCancelRequestWithID:">- mediaControlChannel:didCancelRequestWithID:</option>
+		
+		<option value="//api/name/mediaControlChannel:didCompleteLoadWithSessionID:">- mediaControlChannel:didCompleteLoadWithSessionID:</option>
+		
+		<option value="//api/name/mediaControlChannel:didFailToLoadMediaWithError:">- mediaControlChannel:didFailToLoadMediaWithError:</option>
+		
+		<option value="//api/name/mediaControlChannel:didReplaceRequestWithID:">- mediaControlChannel:didReplaceRequestWithID:</option>
+		
+		<option value="//api/name/mediaControlChannel:requestDidCompleteWithID:">- mediaControlChannel:requestDidCompleteWithID:</option>
+		
+		<option value="//api/name/mediaControlChannel:requestDidFailWithID:error:">- mediaControlChannel:requestDidFailWithID:error:</option>
+		
+		<option value="//api/name/mediaControlChannelDidUpdateMetadata:">- mediaControlChannelDidUpdateMetadata:</option>
+		
+		<option value="//api/name/mediaControlChannelDidUpdatePreloadStatus:">- mediaControlChannelDidUpdatePreloadStatus:</option>
+		
+		<option value="//api/name/mediaControlChannelDidUpdateQueue:">- mediaControlChannelDidUpdateQueue:</option>
+		
+		<option value="//api/name/mediaControlChannelDidUpdateStatus:">- mediaControlChannelDidUpdateStatus:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">GCKMediaControlChannelDelegate Protocol Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Conforms to</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>GCKMediaControlChannel.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>The delegate for <a href="../Classes/GCKMediaControlChannel.html">GCKMediaControlChannel</a> notifications.</p>
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/mediaControlChannel:didCompleteLoadWithSessionID:" title="mediaControlChannel:didCompleteLoadWithSessionID:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannel:didCompleteLoadWithSessionID:">&ndash;&nbsp;mediaControlChannel:didCompleteLoadWithSessionID:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when a request to load media has completed.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannel:(GCKMediaControlChannel *)<em>mediaControlChannel</em> didCompleteLoadWithSessionID:(NSInteger)<em>sessionID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>sessionID</code></th>
+						<td><p>The unique media session ID that has been assigned to this media item.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannel:didFailToLoadMediaWithError:" title="mediaControlChannel:didFailToLoadMediaWithError:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannel:didFailToLoadMediaWithError:">&ndash;&nbsp;mediaControlChannel:didFailToLoadMediaWithError:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when a request to load media has failed.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannel:(GCKMediaControlChannel *)<em>mediaControlChannel</em> didFailToLoadMediaWithError:(NSError *)<em>error</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>error</code></th>
+						<td><p>The load error.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannelDidUpdateStatus:" title="mediaControlChannelDidUpdateStatus:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannelDidUpdateStatus:">&ndash;&nbsp;mediaControlChannelDidUpdateStatus:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when updated player status information is received.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannelDidUpdateStatus:(GCKMediaControlChannel *)<em>mediaControlChannel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannelDidUpdateQueue:" title="mediaControlChannelDidUpdateQueue:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannelDidUpdateQueue:">&ndash;&nbsp;mediaControlChannelDidUpdateQueue:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when updated queue status information is received.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannelDidUpdateQueue:(GCKMediaControlChannel *)<em>mediaControlChannel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannelDidUpdatePreloadStatus:" title="mediaControlChannelDidUpdatePreloadStatus:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannelDidUpdatePreloadStatus:">&ndash;&nbsp;mediaControlChannelDidUpdatePreloadStatus:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when updated preload status is received.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannelDidUpdatePreloadStatus:(GCKMediaControlChannel *)<em>mediaControlChannel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannelDidUpdateMetadata:" title="mediaControlChannelDidUpdateMetadata:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannelDidUpdateMetadata:">&ndash;&nbsp;mediaControlChannelDidUpdateMetadata:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when updated media metadata is received.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannelDidUpdateMetadata:(GCKMediaControlChannel *)<em>mediaControlChannel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannel:requestDidCompleteWithID:" title="mediaControlChannel:requestDidCompleteWithID:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannel:requestDidCompleteWithID:">&ndash;&nbsp;mediaControlChannel:requestDidCompleteWithID:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when a request succeeds.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannel:(GCKMediaControlChannel *)<em>mediaControlChannel</em> requestDidCompleteWithID:(NSInteger)<em>requestID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>requestID</code></th>
+						<td><p>The request ID that failed. This is the ID returned when the request was made.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannel:didReplaceRequestWithID:" title="mediaControlChannel:didReplaceRequestWithID:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannel:didReplaceRequestWithID:">&ndash;&nbsp;mediaControlChannel:didReplaceRequestWithID:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when a request is no longer being tracked because another request of the same type has
+been issued by the application.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannel:(GCKMediaControlChannel *)<em>mediaControlChannel</em> didReplaceRequestWithID:(NSInteger)<em>requestID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>requestID</code></th>
+						<td><p>The request ID that has been replaced. This is the ID returned when the request
+was made.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannel:didCancelRequestWithID:" title="mediaControlChannel:didCancelRequestWithID:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannel:didCancelRequestWithID:">&ndash;&nbsp;mediaControlChannel:didCancelRequestWithID:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when a request is no longer being tracked because it has been explicitly cancelled.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannel:(GCKMediaControlChannel *)<em>mediaControlChannel</em> didCancelRequestWithID:(NSInteger)<em>requestID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>requestID</code></th>
+						<td><p>The request ID that has been cancelled. This is the ID returned when the request
+was made.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/mediaControlChannel:requestDidFailWithID:error:" title="mediaControlChannel:requestDidFailWithID:error:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/mediaControlChannel:requestDidFailWithID:error:">&ndash;&nbsp;mediaControlChannel:requestDidFailWithID:error:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when a request fails.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)mediaControlChannel:(GCKMediaControlChannel *)<em>mediaControlChannel</em> requestDidFailWithID:(NSInteger)<em>requestID</em> error:(NSError *)<em>error</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>mediaControlChannel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>requestID</code></th>
+						<td><p>The request ID that failed. This is the ID returned when the request was made.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>error</code></th>
+						<td><p>The error. If any custom data was associated with the error, it will be in the
+error&rsquo;s userInfo dictionary with the key {@code kGCKErrorCustomDataKey}.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKMediaControlChannel.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+                    
+          
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2015 Kaltura. All rights reserved. Updated: 2015-10-07</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

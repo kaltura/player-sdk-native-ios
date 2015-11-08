@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/IMAContentPlayhead.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/IMAContentPlayhead</TokenIdentifier>
+			<Abstract type="html">Defines an interface for a class that tracks video content progress and
+exposes a key value observable property |currentTime|.
+The SDK provides an implementation for tracking AVPlayer-based playback
+in the IMAAVPlayerContentPlayhead.
+Publishers can supply their own implementation by implementing this
+interface and this way support any other video playback implementation
+they might have.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
+            
+			
+			<NodeRef refid="67"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAContentPlayhead/setCurrentTime:</TokenIdentifier>
+			<Abstract type="html">Reflects the current playback time in seconds for the content.
+The property is key value observable.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentTime</Anchor>
+            <NodeRef refid="67"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAContentPlayhead/currentTime</TokenIdentifier>
+			<Abstract type="html">Reflects the current playback time in seconds for the content.
+The property is key value observable.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentTime</Anchor>
+            <NodeRef refid="67"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAContentPlayhead/currentTime</TokenIdentifier>
+			<Abstract type="html">Reflects the current playback time in seconds for the content.
+The property is key value observable.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentTime</Anchor>
+            <NodeRef refid="67"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

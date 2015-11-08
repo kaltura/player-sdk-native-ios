@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKMediaStatus.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaStatus</TokenIdentifier>
+			<Abstract type="html">A class that holds status information about some media.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+            
+			
+			<NodeRef refid="24"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setMediaSessionID:</TokenIdentifier>
+			<Abstract type="html">The media session ID for this item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger mediaSessionID</Declaration>
+			
+			
+			<Anchor>//api/name/mediaSessionID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/mediaSessionID</TokenIdentifier>
+			<Abstract type="html">The media session ID for this item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger mediaSessionID</Declaration>
+			
+			
+			<Anchor>//api/name/mediaSessionID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/mediaSessionID</TokenIdentifier>
+			<Abstract type="html">The media session ID for this item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger mediaSessionID</Declaration>
+			
+			
+			<Anchor>//api/name/mediaSessionID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setPlayerState:</TokenIdentifier>
+			<Abstract type="html">The current player state.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerState playerState</Declaration>
+			
+			
+			<Anchor>//api/name/playerState</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/playerState</TokenIdentifier>
+			<Abstract type="html">The current player state.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerState playerState</Declaration>
+			
+			
+			<Anchor>//api/name/playerState</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/playerState</TokenIdentifier>
+			<Abstract type="html">The current player state.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerState playerState</Declaration>
+			
+			
+			<Anchor>//api/name/playerState</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setIdleReason:</TokenIdentifier>
+			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
+GCKMediaPlayerStateIdle.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerIdleReason idleReason</Declaration>
+			
+			
+			<Anchor>//api/name/idleReason</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/idleReason</TokenIdentifier>
+			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
+GCKMediaPlayerStateIdle.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerIdleReason idleReason</Declaration>
+			
+			
+			<Anchor>//api/name/idleReason</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/idleReason</TokenIdentifier>
+			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
+GCKMediaPlayerStateIdle.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerIdleReason idleReason</Declaration>
+			
+			
+			<Anchor>//api/name/idleReason</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setPlaybackRate:</TokenIdentifier>
+			<Abstract type="html">Gets the current stream playback rate. This will be negative if the stream is seeking
+backwards, 0 if the stream is paused, 1 if the stream is playing normally, and some other
+postive value if the stream is seeking forwards.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) float playbackRate</Declaration>
+			
+			
+			<Anchor>//api/name/playbackRate</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/playbackRate</TokenIdentifier>
+			<Abstract type="html">Gets the current stream playback rate. This will be negative if the stream is seeking
+backwards, 0 if the stream is paused, 1 if the stream is playing normally, and some other
+postive value if the stream is seeking forwards.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) float playbackRate</Declaration>
+			
+			
+			<Anchor>//api/name/playbackRate</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/playbackRate</TokenIdentifier>
+			<Abstract type="html">Gets the current stream playback rate. This will be negative if the stream is seeking
+backwards, 0 if the stream is paused, 1 if the stream is playing normally, and some other
+postive value if the stream is seeking forwards.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) float playbackRate</Declaration>
+			
+			
+			<Anchor>//api/name/playbackRate</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setMediaInformation:</TokenIdentifier>
+			<Abstract type="html">The GCKMediaInformation for this item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) GCKMediaInformation *mediaInformation</Declaration>
+			
+			
+			<Anchor>//api/name/mediaInformation</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/mediaInformation</TokenIdentifier>
+			<Abstract type="html">The GCKMediaInformation for this item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) GCKMediaInformation *mediaInformation</Declaration>
+			
+			
+			<Anchor>//api/name/mediaInformation</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/mediaInformation</TokenIdentifier>
+			<Abstract type="html">The GCKMediaInformation for this item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) GCKMediaInformation *mediaInformation</Declaration>
+			
+			
+			<Anchor>//api/name/mediaInformation</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setStreamPosition:</TokenIdentifier>
+			<Abstract type="html">The current stream position, as an NSTimeInterval from the start of the stream.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamPosition</Declaration>
+			
+			
+			<Anchor>//api/name/streamPosition</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/streamPosition</TokenIdentifier>
+			<Abstract type="html">The current stream position, as an NSTimeInterval from the start of the stream.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamPosition</Declaration>
+			
+			
+			<Anchor>//api/name/streamPosition</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/streamPosition</TokenIdentifier>
+			<Abstract type="html">The current stream position, as an NSTimeInterval from the start of the stream.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamPosition</Declaration>
+			
+			
+			<Anchor>//api/name/streamPosition</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setVolume:</TokenIdentifier>
+			<Abstract type="html">The stream&apos;s volume.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) float volume</Declaration>
+			
+			
+			<Anchor>//api/name/volume</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/volume</TokenIdentifier>
+			<Abstract type="html">The stream&apos;s volume.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) float volume</Declaration>
+			
+			
+			<Anchor>//api/name/volume</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/volume</TokenIdentifier>
+			<Abstract type="html">The stream&apos;s volume.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) float volume</Declaration>
+			
+			
+			<Anchor>//api/name/volume</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setIsMuted:</TokenIdentifier>
+			<Abstract type="html">The stream&apos;s mute state.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isMuted</Declaration>
+			
+			
+			<Anchor>//api/name/isMuted</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/isMuted</TokenIdentifier>
+			<Abstract type="html">The stream&apos;s mute state.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isMuted</Declaration>
+			
+			
+			<Anchor>//api/name/isMuted</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/isMuted</TokenIdentifier>
+			<Abstract type="html">The stream&apos;s mute state.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isMuted</Declaration>
+			
+			
+			<Anchor>//api/name/isMuted</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setQueueRepeatMode:</TokenIdentifier>
+			<Abstract type="html">The current queue repeat mode.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaRepeatMode queueRepeatMode</Declaration>
+			
+			
+			<Anchor>//api/name/queueRepeatMode</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/queueRepeatMode</TokenIdentifier>
+			<Abstract type="html">The current queue repeat mode.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaRepeatMode queueRepeatMode</Declaration>
+			
+			
+			<Anchor>//api/name/queueRepeatMode</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/queueRepeatMode</TokenIdentifier>
+			<Abstract type="html">The current queue repeat mode.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaRepeatMode queueRepeatMode</Declaration>
+			
+			
+			<Anchor>//api/name/queueRepeatMode</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setCurrentItemID:</TokenIdentifier>
+			<Abstract type="html">The ID of the current queue item, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger currentItemID</Declaration>
+			
+			
+			<Anchor>//api/name/currentItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/currentItemID</TokenIdentifier>
+			<Abstract type="html">The ID of the current queue item, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger currentItemID</Declaration>
+			
+			
+			<Anchor>//api/name/currentItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/currentItemID</TokenIdentifier>
+			<Abstract type="html">The ID of the current queue item, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger currentItemID</Declaration>
+			
+			
+			<Anchor>//api/name/currentItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setPreloadedItemID:</TokenIdentifier>
+			<Abstract type="html">The ID of the item that is currently preloaded, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger preloadedItemID</Declaration>
+			
+			
+			<Anchor>//api/name/preloadedItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/preloadedItemID</TokenIdentifier>
+			<Abstract type="html">The ID of the item that is currently preloaded, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger preloadedItemID</Declaration>
+			
+			
+			<Anchor>//api/name/preloadedItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/preloadedItemID</TokenIdentifier>
+			<Abstract type="html">The ID of the item that is currently preloaded, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger preloadedItemID</Declaration>
+			
+			
+			<Anchor>//api/name/preloadedItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setLoadingItemID:</TokenIdentifier>
+			<Abstract type="html">The ID of the item that is currently loading, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger loadingItemID</Declaration>
+			
+			
+			<Anchor>//api/name/loadingItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/loadingItemID</TokenIdentifier>
+			<Abstract type="html">The ID of the item that is currently loading, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger loadingItemID</Declaration>
+			
+			
+			<Anchor>//api/name/loadingItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/loadingItemID</TokenIdentifier>
+			<Abstract type="html">The ID of the item that is currently loading, if any.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSUInteger loadingItemID</Declaration>
+			
+			
+			<Anchor>//api/name/loadingItemID</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setActiveTrackIDs:</TokenIdentifier>
+			<Abstract type="html">The list of active track IDs. Each element of the array is an NSNumber containing an integer
+track ID.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *activeTrackIDs</Declaration>
+			
+			
+			<Anchor>//api/name/activeTrackIDs</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/activeTrackIDs</TokenIdentifier>
+			<Abstract type="html">The list of active track IDs. Each element of the array is an NSNumber containing an integer
+track ID.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *activeTrackIDs</Declaration>
+			
+			
+			<Anchor>//api/name/activeTrackIDs</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/activeTrackIDs</TokenIdentifier>
+			<Abstract type="html">The list of active track IDs. Each element of the array is an NSNumber containing an integer
+track ID.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *activeTrackIDs</Declaration>
+			
+			
+			<Anchor>//api/name/activeTrackIDs</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/setCustomData:</TokenIdentifier>
+			<Abstract type="html">Any custom data that is associated with the media item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			
+			
+			<Anchor>//api/name/customData</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/customData</TokenIdentifier>
+			<Abstract type="html">Any custom data that is associated with the media item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			
+			
+			<Anchor>//api/name/customData</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaStatus/customData</TokenIdentifier>
+			<Abstract type="html">Any custom data that is associated with the media item.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			
+			
+			<Anchor>//api/name/customData</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/initWithSessionID:mediaInformation:</TokenIdentifier>
+			<Abstract type="html">Designated initializer.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithSessionID:(NSInteger)mediaSessionID mediaInformation:(GCKMediaInformation *)mediaInformation</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mediaSessionID</Name>
+					<Abstract type="html">The media session ID.</Abstract>
+				</Parameter><Parameter>
+					<Name>mediaInformation</Name>
+					<Abstract type="html">The media information.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithSessionID:mediaInformation:</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/isMediaCommandSupported:</TokenIdentifier>
+			<Abstract type="html">Checks if the stream supports a given control command.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)isMediaCommandSupported:(NSInteger)command</Declaration>
+			
+			
+			<Anchor>//api/name/isMediaCommandSupported:</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/queueItemCount</TokenIdentifier>
+			<Abstract type="html">Returns the number of items in the playback queue.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>- (NSUInteger)queueItemCount</Declaration>
+			
+			
+			<Anchor>//api/name/queueItemCount</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/queueItemAtIndex:</TokenIdentifier>
+			<Abstract type="html">Returns the item at the specified index in the playback queue.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>- (GCKMediaQueueItem *)queueItemAtIndex:(NSUInteger)index</Declaration>
+			
+			
+			<Anchor>//api/name/queueItemAtIndex:</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaStatus/queueItemWithItemID:</TokenIdentifier>
+			<Abstract type="html">Returns the item with the given item ID in the playback queue.</Abstract>
+			<DeclaredIn>GCKMediaStatus.h</DeclaredIn>
+			
+			<Declaration>- (GCKMediaQueueItem *)queueItemWithItemID:(NSUInteger)itemID</Declaration>
+			
+			
+			<Anchor>//api/name/queueItemWithItemID:</Anchor>
+            <NodeRef refid="24"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

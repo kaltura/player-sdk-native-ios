@@ -1,0 +1,875 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKDeviceManager.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKDeviceManager</TokenIdentifier>
+			<Abstract type="html">Controls a Cast device. This class can send messages to, receive messages from, launch, and
+close applications running on a Cast device. &lt;b&gt;All methods and properties of this class may
+only be accessed from the main thread.&lt;/b&gt;</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+            
+			
+			<NodeRef refid="10"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setConnectionState:</TokenIdentifier>
+			<Abstract type="html">The device manager&apos;s current connection state.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKConnectionState connectionState</Declaration>
+			
+			
+			<Anchor>//api/name/connectionState</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/connectionState</TokenIdentifier>
+			<Abstract type="html">The device manager&apos;s current connection state.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKConnectionState connectionState</Declaration>
+			
+			
+			<Anchor>//api/name/connectionState</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/connectionState</TokenIdentifier>
+			<Abstract type="html">The device manager&apos;s current connection state.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKConnectionState connectionState</Declaration>
+			
+			
+			<Anchor>//api/name/connectionState</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setApplicationConnectionState:</TokenIdentifier>
+			<Abstract type="html">The device manager&apos;s current application connection state.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKConnectionState applicationConnectionState</Declaration>
+			
+			
+			<Anchor>//api/name/applicationConnectionState</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/applicationConnectionState</TokenIdentifier>
+			<Abstract type="html">The device manager&apos;s current application connection state.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKConnectionState applicationConnectionState</Declaration>
+			
+			
+			<Anchor>//api/name/applicationConnectionState</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/applicationConnectionState</TokenIdentifier>
+			<Abstract type="html">The device manager&apos;s current application connection state.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKConnectionState applicationConnectionState</Declaration>
+			
+			
+			<Anchor>//api/name/applicationConnectionState</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setGCK_DEPRECATED:</TokenIdentifier>
+			<Abstract type="html">True if the device manager has established a connection to the device. (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; {Use @link connectionState @endlink.}&lt;/span&gt;)</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isConnected GCK_DEPRECATED</Declaration>
+			
+			
+			<Anchor>//api/name/GCK_DEPRECATED</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/GCK_DEPRECATED</TokenIdentifier>
+			<Abstract type="html">True if the device manager has established a connection to the device. (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; {Use @link connectionState @endlink.}&lt;/span&gt;)</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isConnected GCK_DEPRECATED</Declaration>
+			
+			
+			<Anchor>//api/name/GCK_DEPRECATED</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/GCK_DEPRECATED</TokenIdentifier>
+			<Abstract type="html">True if the device manager has established a connection to the device. (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; {Use @link connectionState @endlink.}&lt;/span&gt;)</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isConnected GCK_DEPRECATED</Declaration>
+			
+			
+			<Anchor>//api/name/GCK_DEPRECATED</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setIsReconnecting:</TokenIdentifier>
+			<Abstract type="html">True if the device manager is disconnected due to a potentially transient event (e.g. the app is
+backgrounded, or there was a network error which might be solved by reconnecting). Note that the
+disconnection/connection callbacks will not be called while the device manager attemps to
+reconnect after a potentially transient event, but the properties will always reflect the
+actual current state and can be observed.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isReconnecting</Declaration>
+			
+			
+			<Anchor>//api/name/isReconnecting</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/isReconnecting</TokenIdentifier>
+			<Abstract type="html">True if the device manager is disconnected due to a potentially transient event (e.g. the app is
+backgrounded, or there was a network error which might be solved by reconnecting). Note that the
+disconnection/connection callbacks will not be called while the device manager attemps to
+reconnect after a potentially transient event, but the properties will always reflect the
+actual current state and can be observed.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isReconnecting</Declaration>
+			
+			
+			<Anchor>//api/name/isReconnecting</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/isReconnecting</TokenIdentifier>
+			<Abstract type="html">True if the device manager is disconnected due to a potentially transient event (e.g. the app is
+backgrounded, or there was a network error which might be solved by reconnecting). Note that the
+disconnection/connection callbacks will not be called while the device manager attemps to
+reconnect after a potentially transient event, but the properties will always reflect the
+actual current state and can be observed.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) BOOL isReconnecting</Declaration>
+			
+			
+			<Anchor>//api/name/isReconnecting</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setReconnectTimeout:</TokenIdentifier>
+			<Abstract type="html">Reconnection will be attempted for this long in the event that the socket disconnects with a
+potentially transient error.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval reconnectTimeout</Declaration>
+			
+			
+			<Anchor>//api/name/reconnectTimeout</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/reconnectTimeout</TokenIdentifier>
+			<Abstract type="html">Reconnection will be attempted for this long in the event that the socket disconnects with a
+potentially transient error.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval reconnectTimeout</Declaration>
+			
+			
+			<Anchor>//api/name/reconnectTimeout</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/reconnectTimeout</TokenIdentifier>
+			<Abstract type="html">Reconnection will be attempted for this long in the event that the socket disconnects with a
+potentially transient error.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval reconnectTimeout</Declaration>
+			
+			
+			<Anchor>//api/name/reconnectTimeout</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setDevice:</TokenIdentifier>
+			<Abstract type="html">The device that is being controlled by this GCKDeviceManager.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKDevice *device</Declaration>
+			
+			
+			<Anchor>//api/name/device</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/device</TokenIdentifier>
+			<Abstract type="html">The device that is being controlled by this GCKDeviceManager.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKDevice *device</Declaration>
+			
+			
+			<Anchor>//api/name/device</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/device</TokenIdentifier>
+			<Abstract type="html">The device that is being controlled by this GCKDeviceManager.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKDevice *device</Declaration>
+			
+			
+			<Anchor>//api/name/device</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications from the GCKDeviceManager.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKDeviceManagerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications from the GCKDeviceManager.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKDeviceManagerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications from the GCKDeviceManager.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKDeviceManagerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setDeviceVolume:</TokenIdentifier>
+			<Abstract type="html">The current volume of the device, if known; otherwise &lt;code&gt;0&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) float deviceVolume</Declaration>
+			
+			
+			<Anchor>//api/name/deviceVolume</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/deviceVolume</TokenIdentifier>
+			<Abstract type="html">The current volume of the device, if known; otherwise &lt;code&gt;0&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) float deviceVolume</Declaration>
+			
+			
+			<Anchor>//api/name/deviceVolume</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/deviceVolume</TokenIdentifier>
+			<Abstract type="html">The current volume of the device, if known; otherwise &lt;code&gt;0&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) float deviceVolume</Declaration>
+			
+			
+			<Anchor>//api/name/deviceVolume</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setDeviceMuted:</TokenIdentifier>
+			<Abstract type="html">The current mute state of the device, if known; otherwise &lt;code&gt;NO&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) BOOL deviceMuted</Declaration>
+			
+			
+			<Anchor>//api/name/deviceMuted</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/deviceMuted</TokenIdentifier>
+			<Abstract type="html">The current mute state of the device, if known; otherwise &lt;code&gt;NO&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) BOOL deviceMuted</Declaration>
+			
+			
+			<Anchor>//api/name/deviceMuted</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/deviceMuted</TokenIdentifier>
+			<Abstract type="html">The current mute state of the device, if known; otherwise &lt;code&gt;NO&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) BOOL deviceMuted</Declaration>
+			
+			
+			<Anchor>//api/name/deviceMuted</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setActiveInputStatus:</TokenIdentifier>
+			<Abstract type="html">The device&apos;s current &quot;active input&quot; status.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) GCKActiveInputStatus activeInputStatus</Declaration>
+			
+			
+			<Anchor>//api/name/activeInputStatus</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/activeInputStatus</TokenIdentifier>
+			<Abstract type="html">The device&apos;s current &quot;active input&quot; status.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) GCKActiveInputStatus activeInputStatus</Declaration>
+			
+			
+			<Anchor>//api/name/activeInputStatus</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/activeInputStatus</TokenIdentifier>
+			<Abstract type="html">The device&apos;s current &quot;active input&quot; status.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) GCKActiveInputStatus activeInputStatus</Declaration>
+			
+			
+			<Anchor>//api/name/activeInputStatus</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setStandbyStatus:</TokenIdentifier>
+			<Abstract type="html">The device&apos;s current &quot;standby&quot; status.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) GCKStandbyStatus standbyStatus</Declaration>
+			
+			
+			<Anchor>//api/name/standbyStatus</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/standbyStatus</TokenIdentifier>
+			<Abstract type="html">The device&apos;s current &quot;standby&quot; status.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) GCKStandbyStatus standbyStatus</Declaration>
+			
+			
+			<Anchor>//api/name/standbyStatus</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/standbyStatus</TokenIdentifier>
+			<Abstract type="html">The device&apos;s current &quot;standby&quot; status.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) GCKStandbyStatus standbyStatus</Declaration>
+			
+			
+			<Anchor>//api/name/standbyStatus</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setApplicationSessionID:</TokenIdentifier>
+			<Abstract type="html">The application session ID for the currently connected receiver application, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationSessionID</Declaration>
+			
+			
+			<Anchor>//api/name/applicationSessionID</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/applicationSessionID</TokenIdentifier>
+			<Abstract type="html">The application session ID for the currently connected receiver application, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationSessionID</Declaration>
+			
+			
+			<Anchor>//api/name/applicationSessionID</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/applicationSessionID</TokenIdentifier>
+			<Abstract type="html">The application session ID for the currently connected receiver application, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationSessionID</Declaration>
+			
+			
+			<Anchor>//api/name/applicationSessionID</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setApplicationMetadata:</TokenIdentifier>
+			<Abstract type="html">The metadata for the receiver application that is currently running on the receiver, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) GCKApplicationMetadata *applicationMetadata</Declaration>
+			
+			
+			<Anchor>//api/name/applicationMetadata</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/applicationMetadata</TokenIdentifier>
+			<Abstract type="html">The metadata for the receiver application that is currently running on the receiver, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) GCKApplicationMetadata *applicationMetadata</Declaration>
+			
+			
+			<Anchor>//api/name/applicationMetadata</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/applicationMetadata</TokenIdentifier>
+			<Abstract type="html">The metadata for the receiver application that is currently running on the receiver, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) GCKApplicationMetadata *applicationMetadata</Declaration>
+			
+			
+			<Anchor>//api/name/applicationMetadata</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setApplicationStatusText:</TokenIdentifier>
+			<Abstract type="html">The most recently reported status text from the currently running receiver application, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationStatusText</Declaration>
+			
+			
+			<Anchor>//api/name/applicationStatusText</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/applicationStatusText</TokenIdentifier>
+			<Abstract type="html">The most recently reported status text from the currently running receiver application, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationStatusText</Declaration>
+			
+			
+			<Anchor>//api/name/applicationStatusText</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKDeviceManager/applicationStatusText</TokenIdentifier>
+			<Abstract type="html">The most recently reported status text from the currently running receiver application, if any;
+otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationStatusText</Declaration>
+			
+			
+			<Anchor>//api/name/applicationStatusText</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/initWithDevice:clientPackageName:</TokenIdentifier>
+			<Abstract type="html">Constructs a new GCKDeviceManager with the given device. The object will listen for app state
+notifications, and will automatically disconnect from the device when the app goes into the
+background and attempt to reconnect to the device when the app returns to the foreground.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithDevice:(GCKDevice *)device clientPackageName:(NSString *)clientPackageName</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device to control.</Abstract>
+				</Parameter><Parameter>
+					<Name>clientPackageName</Name>
+					<Abstract type="html">The client package name.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithDevice:clientPackageName:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/initWithDevice:clientPackageName:ignoreAppStateNotifications:</TokenIdentifier>
+			<Abstract type="html">Designated initializer. Constructs a new GCKDeviceManager for controlling the given device.
+&lt;p&gt;
+If &lt;code&gt;ignoreAppStateNotifications&lt;/code&gt; is &lt;code&gt;NO&lt;/code&gt;, the object will listen for
+changes to the app state and will automatically disconnect from the device when the app goes into
+the background and attempt to reconnect to the device when the app returns to the foreground.
+&lt;p&gt;
+If &lt;code&gt;ignoreAppStateNotifications&lt;/code&gt; is &lt;code&gt;YES&lt;/code&gt;, the object will not listen for
+these notifications, and it will be the app&apos;s responsibility to manage the connection lifecycle.
+Note that in general, a backgrounded iOS app cannot continue running indefinitely, and its
+active network connections will eventually be closed by the operating system.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithDevice:(GCKDevice *)device clientPackageName:(NSString *)clientPackageName ignoreAppStateNotifications:(BOOL)ignoreAppStateNotifications</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device to control.</Abstract>
+				</Parameter><Parameter>
+					<Name>clientPackageName</Name>
+					<Abstract type="html">The client package name.</Abstract>
+				</Parameter><Parameter>
+					<Name>ignoreAppStateNotifications</Name>
+					<Abstract type="html">Whether this object will ignore app state notifications.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithDevice:clientPackageName:ignoreAppStateNotifications:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/connect</TokenIdentifier>
+			<Abstract type="html">Connects to the device.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)connect</Declaration>
+			
+			
+			<Anchor>//api/name/connect</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/disconnect</TokenIdentifier>
+			<Abstract type="html">Disconnects from the device. This is an explicit disconnect.
+&lt;p&gt;
+One of the disconnect methods &lt;b&gt;must&lt;/b&gt; be called at some point after @link #connect @endlink
+was called and before this object is released by its owner.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)disconnect</Declaration>
+			
+			
+			<Anchor>//api/name/disconnect</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/disconnectWithLeave:</TokenIdentifier>
+			<Abstract type="html">Disconnects from the device. This method &lt;b&gt;must&lt;/b&gt; be called at some point after
+@link #connect @endlink was called and before this object is released by its owner.
+&lt;p&gt;
+One of the disconnect methods &lt;b&gt;must&lt;/b&gt; be called at some point after @link #connect @endlink
+was called and before this object is released by its owner.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (void)disconnectWithLeave:(BOOL)leaveApplication</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>leaveApplication</Name>
+					<Abstract type="html">&lt;code&gt;YES&lt;/code&gt; if this is an explicit disconnect that should
+disconnect from (&quot;leave&quot;) the receiver application before closing the connection; &lt;code&gt;NO&lt;/code&gt;
+if this is an implicit disconnect that should just close the connection.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/disconnectWithLeave:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/addChannel:</TokenIdentifier>
+			<Abstract type="html">Adds a channel which can send and receive messages for this device on a particular
+namespace.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)addChannel:(GCKCastChannel *)channel</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>channel</Name>
+					<Abstract type="html">The channel.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">&lt;code&gt;YES&lt;/code&gt; if the channel was added, &lt;code&gt;NO&lt;/code&gt; if it was not added because
+there was already a channel attached for that namespace.</Abstract></ReturnValue>
+			<Anchor>//api/name/addChannel:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/removeChannel:</TokenIdentifier>
+			<Abstract type="html">Removes a previously added channel.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)removeChannel:(GCKCastChannel *)channel</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>channel</Name>
+					<Abstract type="html">The channel.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">&lt;code&gt;YES&lt;/code&gt; if the channel was removed, &lt;code&gt;NO&lt;/code&gt; if it was not removed
+because the given channel was not previously attached.</Abstract></ReturnValue>
+			<Anchor>//api/name/removeChannel:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/launchApplication:</TokenIdentifier>
+			<Abstract type="html">Launches an application.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)launchApplication:(NSString *)applicationID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>applicationID</Name>
+					<Abstract type="html">The application ID.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/launchApplication:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/launchApplication:withLaunchOptions:</TokenIdentifier>
+			<Abstract type="html">Launches an application using the given launch options.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)launchApplication:(NSString *)applicationID withLaunchOptions:(GCKLaunchOptions *)launchOptions</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>applicationID</Name>
+					<Abstract type="html">The application ID.</Abstract>
+				</Parameter><Parameter>
+					<Name>launchOptions</Name>
+					<Abstract type="html">The launch options for this request. If &lt;code&gt;nil&lt;/code&gt;, defaults will be
+used.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/launchApplication:withLaunchOptions:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/launchApplication:relaunchIfRunning:</TokenIdentifier>
+			<Abstract type="html">Launches an application, optionally relaunching it if it is already running. (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; {Use &lt;code&gt;-[launchApplication:withLaunchOptions:]&lt;/code&gt; instead.}&lt;/span&gt;)</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)launchApplication:(NSString *)applicationID relaunchIfRunning:(BOOL)relaunchIfRunning</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>applicationID</Name>
+					<Abstract type="html">The application ID.</Abstract>
+				</Parameter><Parameter>
+					<Name>relaunchIfRunning</Name>
+					<Abstract type="html">If &lt;code&gt;YES&lt;/code&gt;, relaunches the application if it is already
+running instead of joining the running application.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/launchApplication:relaunchIfRunning:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/joinApplication:</TokenIdentifier>
+			<Abstract type="html">Joins an application.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)joinApplication:(NSString *)applicationID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>applicationID</Name>
+					<Abstract type="html">The application ID. If &lt;code&gt;nil&lt;/code&gt;, attempts to join whichever
+application is currently running; otherwise, attempts to join the specified application.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/joinApplication:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/joinApplication:sessionID:</TokenIdentifier>
+			<Abstract type="html">Joins an application with a particular session ID.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)joinApplication:(NSString *)applicationID sessionID:(NSString *)sessionID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>applicationID</Name>
+					<Abstract type="html">The application ID.</Abstract>
+				</Parameter><Parameter>
+					<Name>sessionID</Name>
+					<Abstract type="html">The session ID.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/joinApplication:sessionID:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/leaveApplication</TokenIdentifier>
+			<Abstract type="html">Leaves the current application.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)leaveApplication</Declaration>
+			
+			<ReturnValue><Abstract type="html">&lt;code&gt;NO&lt;/code&gt; if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/leaveApplication</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/stopApplication</TokenIdentifier>
+			<Abstract type="html">Stops any running application(s).</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)stopApplication</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/stopApplication</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/stopApplicationWithSessionID:</TokenIdentifier>
+			<Abstract type="html">Stops the application with the given session ID.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)stopApplicationWithSessionID:(NSString *)sessionID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>sessionID</Name>
+					<Abstract type="html">The session ID, which must be non-negative.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/stopApplicationWithSessionID:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setVolume:</TokenIdentifier>
+			<Abstract type="html">Sets the system volume.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setVolume:(float)volume</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>volume</Name>
+					<Abstract type="html">The new volume, in the range [0.0, 1.0]. Out of range values will be silently
+clipped.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setVolume:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/setMuted:</TokenIdentifier>
+			<Abstract type="html">Turns muting on or off.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setMuted:(BOOL)muted</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>muted</Name>
+					<Abstract type="html">Whether audio should be muted or unmuted.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setMuted:</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKDeviceManager/requestDeviceStatus</TokenIdentifier>
+			<Abstract type="html">Requests the device&apos;s current status. This will result in all of the delegate status update
+callbacks being invoked once the updated status information is received.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)requestDeviceStatus</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the request could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/requestDeviceStatus</Anchor>
+            <NodeRef refid="10"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/IMAAdError.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAdError</TokenIdentifier>
+			<Abstract type="html">Surfaces an error that occured during ad loading or playing.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+            
+			
+			<NodeRef refid="31"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdError/setType:</TokenIdentifier>
+			<Abstract type="html">The |type| provides information about whether the error occured during
+ad loading or ad playing.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAErrorType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdError/type</TokenIdentifier>
+			<Abstract type="html">The |type| provides information about whether the error occured during
+ad loading or ad playing.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAErrorType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdError/type</TokenIdentifier>
+			<Abstract type="html">The |type| provides information about whether the error occured during
+ad loading or ad playing.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAErrorType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdError/setCode:</TokenIdentifier>
+			<Abstract type="html">The |code| provides more specific information about what error ocurred.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAErrorCode code</Declaration>
+			
+			
+			<Anchor>//api/name/code</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdError/code</TokenIdentifier>
+			<Abstract type="html">The |code| provides more specific information about what error ocurred.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAErrorCode code</Declaration>
+			
+			
+			<Anchor>//api/name/code</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdError/code</TokenIdentifier>
+			<Abstract type="html">The |code| provides more specific information about what error ocurred.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAErrorCode code</Declaration>
+			
+			
+			<Anchor>//api/name/code</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdError/setMessage:</TokenIdentifier>
+			<Abstract type="html">The |message| gives a brief description about the error.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *message</Declaration>
+			
+			
+			<Anchor>//api/name/message</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdError/message</TokenIdentifier>
+			<Abstract type="html">The |message| gives a brief description about the error.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *message</Declaration>
+			
+			
+			<Anchor>//api/name/message</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdError/message</TokenIdentifier>
+			<Abstract type="html">The |message| gives a brief description about the error.</Abstract>
+			<DeclaredIn>IMAAdError.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *message</Declaration>
+			
+			
+			<Anchor>//api/name/message</Anchor>
+            <NodeRef refid="31"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

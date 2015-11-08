@@ -1,0 +1,945 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKMediaControlChannel.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaControlChannel</TokenIdentifier>
+			<Abstract type="html">A CastChannel for media control operations.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+            
+			
+			<NodeRef refid="19"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setMediaStatus:</TokenIdentifier>
+			<Abstract type="html">The media status for the currently loaded media, if any; otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) GCKMediaStatus *mediaStatus</Declaration>
+			
+			
+			<Anchor>//api/name/mediaStatus</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/mediaStatus</TokenIdentifier>
+			<Abstract type="html">The media status for the currently loaded media, if any; otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) GCKMediaStatus *mediaStatus</Declaration>
+			
+			
+			<Anchor>//api/name/mediaStatus</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaControlChannel/mediaStatus</TokenIdentifier>
+			<Abstract type="html">The media status for the currently loaded media, if any; otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) GCKMediaStatus *mediaStatus</Declaration>
+			
+			
+			<Anchor>//api/name/mediaStatus</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKMediaControlChannelDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKMediaControlChannelDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaControlChannel/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKMediaControlChannelDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/init</TokenIdentifier>
+			<Abstract type="html">Designated initializer.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)init</Declaration>
+			
+			
+			<Anchor>//api/name/init</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/loadMedia:</TokenIdentifier>
+			<Abstract type="html">Loads and starts playback of a new media item.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)loadMedia:(GCKMediaInformation *)mediaInfo</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mediaInfo</Name>
+					<Abstract type="html">An object describing the media item to load.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadMedia:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/loadMedia:autoplay:</TokenIdentifier>
+			<Abstract type="html">Loads and optionally starts playback of a new media item.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)loadMedia:(GCKMediaInformation *)mediaInfo autoplay:(BOOL)autoplay</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mediaInfo</Name>
+					<Abstract type="html">An object describing the media item to load.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoplay</Name>
+					<Abstract type="html">Whether playback should start immediately.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadMedia:autoplay:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/loadMedia:autoplay:playPosition:</TokenIdentifier>
+			<Abstract type="html">Loads and optionally starts playback of a new media item.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)loadMedia:(GCKMediaInformation *)mediaInfo autoplay:(BOOL)autoplay playPosition:(NSTimeInterval)playPosition</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mediaInfo</Name>
+					<Abstract type="html">An object describing the media item to load.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoplay</Name>
+					<Abstract type="html">Whether playback should start immediately.</Abstract>
+				</Parameter><Parameter>
+					<Name>playPosition</Name>
+					<Abstract type="html">The initial playback position.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadMedia:autoplay:playPosition:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/loadMedia:autoplay:playPosition:customData:</TokenIdentifier>
+			<Abstract type="html">Loads and optionally starts playback of a new media item.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)loadMedia:(GCKMediaInformation *)mediaInfo autoplay:(BOOL)autoplay playPosition:(NSTimeInterval)playPosition customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mediaInfo</Name>
+					<Abstract type="html">An object describing the media item to load.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoplay</Name>
+					<Abstract type="html">Whether playback should start immediately.</Abstract>
+				</Parameter><Parameter>
+					<Name>playPosition</Name>
+					<Abstract type="html">The initial playback position.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadMedia:autoplay:playPosition:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/loadMedia:autoplay:playPosition:activeTrackIDs:</TokenIdentifier>
+			<Abstract type="html">Loads and optionally starts playback of a new media item.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)loadMedia:(GCKMediaInformation *)mediaInfo autoplay:(BOOL)autoplay playPosition:(NSTimeInterval)playPosition activeTrackIDs:(NSArray *)activeTrackIDs</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mediaInfo</Name>
+					<Abstract type="html">An object describing the media item to load.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoplay</Name>
+					<Abstract type="html">Whether playback should start immediately.</Abstract>
+				</Parameter><Parameter>
+					<Name>playPosition</Name>
+					<Abstract type="html">The initial playback position.</Abstract>
+				</Parameter><Parameter>
+					<Name>activeTrackIDs</Name>
+					<Abstract type="html">An array of integers (as NSNumbers) specifying the active tracks.
+May be nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadMedia:autoplay:playPosition:activeTrackIDs:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/loadMedia:autoplay:playPosition:activeTrackIDs:customData:</TokenIdentifier>
+			<Abstract type="html">Loads and optionally starts playback of a new media item.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)loadMedia:(GCKMediaInformation *)mediaInfo autoplay:(BOOL)autoplay playPosition:(NSTimeInterval)playPosition activeTrackIDs:(NSArray *)activeTrackIDs customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>mediaInfo</Name>
+					<Abstract type="html">An object describing the media item to load.</Abstract>
+				</Parameter><Parameter>
+					<Name>autoplay</Name>
+					<Abstract type="html">Whether playback should start immediately.</Abstract>
+				</Parameter><Parameter>
+					<Name>playPosition</Name>
+					<Abstract type="html">The initial playback position.</Abstract>
+				</Parameter><Parameter>
+					<Name>activeTrackIDs</Name>
+					<Abstract type="html">An array of integers (as NSNumbers) specifying the active tracks.
+May be nil.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadMedia:autoplay:playPosition:activeTrackIDs:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setActiveTrackIDs:</TokenIdentifier>
+			<Abstract type="html">Sets the active tracks. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setActiveTrackIDs:(NSArray *)activeTrackIDs</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>activeTrackIDs</Name>
+					<Abstract type="html">An array of integers (as NSNumbers) specifying the active tracks.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setActiveTrackIDs:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setTextTrackStyle:</TokenIdentifier>
+			<Abstract type="html">Sets the text track style. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setTextTrackStyle:(GCKMediaTextTrackStyle *)textTrackStyle</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>textTrackStyle</Name>
+					<Abstract type="html">The text track style. Style will not be changed if nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setTextTrackStyle:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/pause</TokenIdentifier>
+			<Abstract type="html">Pauses playback of the current media item. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)pause</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/pause</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/pauseWithCustomData:</TokenIdentifier>
+			<Abstract type="html">Pauses playback of the current media item. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)pauseWithCustomData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/pauseWithCustomData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/stop</TokenIdentifier>
+			<Abstract type="html">Stops playback of the current media item. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)stop</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/stop</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/stopWithCustomData:</TokenIdentifier>
+			<Abstract type="html">Stops playback of the current media item. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)stopWithCustomData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/stopWithCustomData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/play</TokenIdentifier>
+			<Abstract type="html">Begins (or resumes) playback of the current media item. Playback always begins at the
+beginning of the stream. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)play</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/play</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/playWithCustomData:</TokenIdentifier>
+			<Abstract type="html">Begins (or resumes) playback of the current media item. Playback always begins at the
+beginning of the stream. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)playWithCustomData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/playWithCustomData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/seekToTimeInterval:</TokenIdentifier>
+			<Abstract type="html">Seeks to a new position within the current media item. Request will fail if there is no current
+media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)seekToTimeInterval:(NSTimeInterval)position</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>position</Name>
+					<Abstract type="html">The new position from the beginning of the stream.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/seekToTimeInterval:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/seekToTimeInterval:resumeState:</TokenIdentifier>
+			<Abstract type="html">Seeks to a new position within the current media item. Request will fail if there is no current
+media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)seekToTimeInterval:(NSTimeInterval)position resumeState:(GCKMediaControlChannelResumeState)resumeState</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>position</Name>
+					<Abstract type="html">The new position interval from the beginning of the stream.</Abstract>
+				</Parameter><Parameter>
+					<Name>resumeState</Name>
+					<Abstract type="html">The action to take after the seek operation has finished.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/seekToTimeInterval:resumeState:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/seekToTimeInterval:resumeState:customData:</TokenIdentifier>
+			<Abstract type="html">Seeks to a new position within the current media item. Request will fail if there is no current
+media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)seekToTimeInterval:(NSTimeInterval)position resumeState:(GCKMediaControlChannelResumeState)resumeState customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>position</Name>
+					<Abstract type="html">The new position from the beginning of the stream.</Abstract>
+				</Parameter><Parameter>
+					<Name>resumeState</Name>
+					<Abstract type="html">The action to take after the seek operation has finished.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/seekToTimeInterval:resumeState:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueLoadItems:startIndex:repeatMode:</TokenIdentifier>
+			<Abstract type="html">Loads and optionally starts playback of a new queue of media items.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueLoadItems:(NSArray *)queueItems startIndex:(NSUInteger)startIndex repeatMode:(GCKMediaRepeatMode)repeatMode</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItems</Name>
+					<Abstract type="html">An array of GCKMediaQueueItem%s to load. Must not be nil or empty.</Abstract>
+				</Parameter><Parameter>
+					<Name>startIndex</Name>
+					<Abstract type="html">The index of the item in the items array that should be played first.</Abstract>
+				</Parameter><Parameter>
+					<Name>repeatMode</Name>
+					<Abstract type="html">The repeat mode for playing the queue.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueLoadItems:startIndex:repeatMode:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueLoadItems:startIndex:repeatMode:customData:</TokenIdentifier>
+			<Abstract type="html">Loads and optionally starts playback of a new queue of media items.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueLoadItems:(NSArray *)queueItems startIndex:(NSUInteger)startIndex repeatMode:(GCKMediaRepeatMode)repeatMode customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItems</Name>
+					<Abstract type="html">An array of GCKMediaQueueItem%s to load. Must not be nil or empty.</Abstract>
+				</Parameter><Parameter>
+					<Name>startIndex</Name>
+					<Abstract type="html">The index of the item in the items array that should be played first.</Abstract>
+				</Parameter><Parameter>
+					<Name>repeatMode</Name>
+					<Abstract type="html">The repeat mode for playing the queue.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueLoadItems:startIndex:repeatMode:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueInsertItems:beforeItemWithID:</TokenIdentifier>
+			<Abstract type="html">Inserts a list of new media items into the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueInsertItems:(NSArray *)queueItems beforeItemWithID:(NSUInteger)beforeItemID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItems</Name>
+					<Abstract type="html">An array of GCKMediaQueueItem%s to insert. Must not be nil or empty.</Abstract>
+				</Parameter><Parameter>
+					<Name>beforeItemID</Name>
+					<Abstract type="html">The ID of the item that will be located immediately after the inserted list.
+If the value is kGCKMediaQueueInvalidItemID, the inserted list will be appended to the end of the
+queue.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueInsertItems:beforeItemWithID:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueInsertItems:beforeItemWithID:customData:</TokenIdentifier>
+			<Abstract type="html">Inserts a list of new media items into the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueInsertItems:(NSArray *)queueItems beforeItemWithID:(NSUInteger)beforeItemID customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItems</Name>
+					<Abstract type="html">An array of GCKMediaQueueItem%s to insert. Must not be nil or empty.</Abstract>
+				</Parameter><Parameter>
+					<Name>beforeItemID</Name>
+					<Abstract type="html">ID of the item that will be located immediately after the inserted list. If
+the value is kGCKMediaQueueInvalidItemID, the inserted list will be appended to the end of the
+queue.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueInsertItems:beforeItemWithID:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueInsertItem:beforeItemWithID:</TokenIdentifier>
+			<Abstract type="html">A convenience method that inserts a single item into the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueInsertItem:(GCKMediaQueueItem *)item beforeItemWithID:(NSUInteger)beforeItemID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>item</Name>
+					<Abstract type="html">The item to insert.</Abstract>
+				</Parameter><Parameter>
+					<Name>beforeItemID</Name>
+					<Abstract type="html">The ID of the item that will be located immediately after the inserted item.
+If the value is kGCKMediaQueueInvalidItemID, or does not refer to any item currently in the
+queue, the inserted item will be appended to the end of the queue.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueInsertItem:beforeItemWithID:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueUpdateItems:</TokenIdentifier>
+			<Abstract type="html">Updates the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueUpdateItems:(NSArray *)queueItems</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItems</Name>
+					<Abstract type="html">The list of updated items.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueUpdateItems:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueUpdateItems:customData:</TokenIdentifier>
+			<Abstract type="html">Updates the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueUpdateItems:(NSArray *)queueItems customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItems</Name>
+					<Abstract type="html">The list of updated items.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueUpdateItems:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueRemoveItemsWithIDs:</TokenIdentifier>
+			<Abstract type="html">Removes a list of media items from the queue. If the queue becomes empty as a result, the current
+media session will be terminated.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueRemoveItemsWithIDs:(NSArray *)itemIDs</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>itemIDs</Name>
+					<Abstract type="html">An array of media item IDs identifying the items to remove. Must not be nil or
+empty.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueRemoveItemsWithIDs:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueRemoveItemsWithIDs:customData:</TokenIdentifier>
+			<Abstract type="html">Removes a list of media items from the queue. If the queue becomes empty as a result, the current
+media session will be terminated.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueRemoveItemsWithIDs:(NSArray *)itemIDs customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>itemIDs</Name>
+					<Abstract type="html">An array of media item IDs identifying the items to remove. Must not be nil or
+empty.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueRemoveItemsWithIDs:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueRemoveItemWithID:</TokenIdentifier>
+			<Abstract type="html">A convenience method that removes a single item from the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueRemoveItemWithID:(NSUInteger)itemID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>itemID</Name>
+					<Abstract type="html">The ID of the item to remove.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueRemoveItemWithID:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueReorderItemsWithIDs:insertBeforeItemWithID:</TokenIdentifier>
+			<Abstract type="html">Reorders a list of media items in the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueReorderItemsWithIDs:(NSArray *)queueItemIDs insertBeforeItemWithID:(NSUInteger)beforeItemID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItemIDs</Name>
+					<Abstract type="html">An array of media item IDs identifying the items to reorder. Must not be nil
+or empty.</Abstract>
+				</Parameter><Parameter>
+					<Name>beforeItemID</Name>
+					<Abstract type="html">ID of the item that will be located immediately after the reordered list. If
+the value is kGCKMediaQueueInvalidItemID, or does not refer to any item currently in the queue,
+the reordered list will be appended at the end of the queue.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueReorderItemsWithIDs:insertBeforeItemWithID:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueReorderItemsWithIDs:insertBeforeItemWithID:customData:</TokenIdentifier>
+			<Abstract type="html">Reorder a list of media items in the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueReorderItemsWithIDs:(NSArray *)queueItemIDs insertBeforeItemWithID:(NSUInteger)beforeItemID customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>queueItemIDs</Name>
+					<Abstract type="html">An array of media item IDs identifying the items to reorder. Must not be nil
+or empty.</Abstract>
+				</Parameter><Parameter>
+					<Name>beforeItemID</Name>
+					<Abstract type="html">The ID of the item that will be located immediately after the reordered list.
+If the value is kGCKMediaQueueInvalidItemID, or does not refer to any item currently in the
+queue, the reordered list will be moved to the end of the queue.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueReorderItemsWithIDs:insertBeforeItemWithID:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueMoveItemWithID:beforeItemWithID:</TokenIdentifier>
+			<Abstract type="html">A convenience method that moves a single item in the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueMoveItemWithID:(NSUInteger)itemID beforeItemWithID:(NSUInteger)beforeItemID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>itemID</Name>
+					<Abstract type="html">The ID of the item to move.</Abstract>
+				</Parameter><Parameter>
+					<Name>beforeItemID</Name>
+					<Abstract type="html">The ID of the item that will be located immediately after the reordered list.
+If the value is kGCKMediaQueueInvalidItemID, or does not refer to any item currently in the
+queue, the item will be moved to the end of the queue.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueMoveItemWithID:beforeItemWithID:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueJumpToItemWithID:</TokenIdentifier>
+			<Abstract type="html">Jumps to the item with the specified ID in the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueJumpToItemWithID:(NSUInteger)itemID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>itemID</Name>
+					<Abstract type="html">The ID of the item to jump to.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueJumpToItemWithID:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueJumpToItemWithID:customData:</TokenIdentifier>
+			<Abstract type="html">Jumps to the item with the specified ID in the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueJumpToItemWithID:(NSUInteger)itemID customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>itemID</Name>
+					<Abstract type="html">The ID of the item to jump to.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueJumpToItemWithID:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueNextItem</TokenIdentifier>
+			<Abstract type="html">Moves to the next item in the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueNextItem</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueNextItem</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queuePreviousItem</TokenIdentifier>
+			<Abstract type="html">Moves to the previous item in the queue.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queuePreviousItem</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/queuePreviousItem</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/queueSetRepeatMode:</TokenIdentifier>
+			<Abstract type="html">Sets the queue repeat mode.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)queueSetRepeatMode:(GCKMediaRepeatMode)repeatMode</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>repeatMode</Name>
+					<Abstract type="html">The new repeat mode.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID for this request, or kGCKInvalidRequestID if the message could not be
+sent or if any of the parameters are invalid.</Abstract></ReturnValue>
+			<Anchor>//api/name/queueSetRepeatMode:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setStreamVolume:</TokenIdentifier>
+			<Abstract type="html">Sets the stream volume. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setStreamVolume:(float)volume</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>volume</Name>
+					<Abstract type="html">The new volume, in the range [0.0 - 1.0].</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setStreamVolume:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setStreamVolume:customData:</TokenIdentifier>
+			<Abstract type="html">Sets the stream volume. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setStreamVolume:(float)volume customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>volume</Name>
+					<Abstract type="html">The new volume, in the range [0.0 - 1.0].</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setStreamVolume:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setStreamMuted:</TokenIdentifier>
+			<Abstract type="html">Sets whether the stream is muted. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setStreamMuted:(BOOL)muted</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>muted</Name>
+					<Abstract type="html">Whether the stream should be muted or unmuted.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setStreamMuted:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/setStreamMuted:customData:</TokenIdentifier>
+			<Abstract type="html">Sets whether the stream is muted. Request will fail if there is no current media status.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)setStreamMuted:(BOOL)muted customData:(id)customData</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>muted</Name>
+					<Abstract type="html">Whether the stream should be muted or unmuted.</Abstract>
+				</Parameter><Parameter>
+					<Name>customData</Name>
+					<Abstract type="html">Custom application-specific data to pass along with the request. Must either
+be an object that can be serialized to JSON using NSJSONSerialization, or nil.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/setStreamMuted:customData:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/requestStatus</TokenIdentifier>
+			<Abstract type="html">Requests updated media status information from the receiver.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)requestStatus</Declaration>
+			
+			<ReturnValue><Abstract type="html">The request ID, or kGCKInvalidRequestID if the message could not be sent.</Abstract></ReturnValue>
+			<Anchor>//api/name/requestStatus</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/approximateStreamPosition</TokenIdentifier>
+			<Abstract type="html">Returns the approximate stream position as calculated from the last received stream
+information and the elapsed wall-time since that update. If the channel is not connected, or if
+no media is currently loaded, 0 is returned.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (NSTimeInterval)approximateStreamPosition</Declaration>
+			
+			
+			<Anchor>//api/name/approximateStreamPosition</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaControlChannel/cancelRequestWithID:</TokenIdentifier>
+			<Abstract type="html">Cancels an in-progress request. Cancelling a request does not prevent it from being executed;
+it simply indicates that the calling application is no longer interested in the results of the
+request, so any state associated with the tracking of the request will be cleared.</Abstract>
+			<DeclaredIn>GCKMediaControlChannel.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)cancelRequestWithID:(NSInteger)requestID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>requestID</Name>
+					<Abstract type="html">The ID of the request to cancel.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">YES if the request was cancelled, or NO if there is no request being tracked with the
+given ID.</Abstract></ReturnValue>
+			<Anchor>//api/name/cancelRequestWithID:</Anchor>
+            <NodeRef refid="19"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKMediaTrack.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaTrack</TokenIdentifier>
+			<Abstract type="html">A class representing a media track. Instances of this object are immutable.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+            
+			
+			<NodeRef refid="26"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/initWithIdentifier:contentIdentifier:contentType:type:textSubtype:name:languageCode:customData:</TokenIdentifier>
+			<Abstract type="html">Designated initializer. Constructs a new GCKMediaTrack with the given property values.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithIdentifier:(NSInteger)identifier contentIdentifier:(NSString *)contentIdentifier contentType:(NSString *)contentType type:(GCKMediaTrackType)type textSubtype:(GCKMediaTextTrackSubtype)textSubtype name:(NSString *)name languageCode:(NSString *)languageCode customData:(id)customData</Declaration>
+			
+			
+			<Anchor>//api/name/initWithIdentifier:contentIdentifier:contentType:type:textSubtype:name:languageCode:customData:</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setIdentifier:</TokenIdentifier>
+			<Abstract type="html">The track&apos;s unique numeric identifier.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger identifier</Declaration>
+			
+			
+			<Anchor>//api/name/identifier</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/identifier</TokenIdentifier>
+			<Abstract type="html">The track&apos;s unique numeric identifier.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger identifier</Declaration>
+			
+			
+			<Anchor>//api/name/identifier</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/identifier</TokenIdentifier>
+			<Abstract type="html">The track&apos;s unique numeric identifier.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSInteger identifier</Declaration>
+			
+			
+			<Anchor>//api/name/identifier</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setContentIdentifier:</TokenIdentifier>
+			<Abstract type="html">The track&apos;s content identifier, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *contentIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/contentIdentifier</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/contentIdentifier</TokenIdentifier>
+			<Abstract type="html">The track&apos;s content identifier, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *contentIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/contentIdentifier</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/contentIdentifier</TokenIdentifier>
+			<Abstract type="html">The track&apos;s content identifier, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *contentIdentifier</Declaration>
+			
+			
+			<Anchor>//api/name/contentIdentifier</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setContentType:</TokenIdentifier>
+			<Abstract type="html">The track&apos;s content (MIME) type.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
+			
+			
+			<Anchor>//api/name/contentType</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/contentType</TokenIdentifier>
+			<Abstract type="html">The track&apos;s content (MIME) type.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
+			
+			
+			<Anchor>//api/name/contentType</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/contentType</TokenIdentifier>
+			<Abstract type="html">The track&apos;s content (MIME) type.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
+			
+			
+			<Anchor>//api/name/contentType</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setType:</TokenIdentifier>
+			<Abstract type="html">The track&apos;s type.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaTrackType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/type</TokenIdentifier>
+			<Abstract type="html">The track&apos;s type.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaTrackType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/type</TokenIdentifier>
+			<Abstract type="html">The track&apos;s type.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaTrackType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setTextSubtype:</TokenIdentifier>
+			<Abstract type="html">The text track&apos;s subtype; applies only to text tracks.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaTextTrackSubtype textSubtype</Declaration>
+			
+			
+			<Anchor>//api/name/textSubtype</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/textSubtype</TokenIdentifier>
+			<Abstract type="html">The text track&apos;s subtype; applies only to text tracks.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaTextTrackSubtype textSubtype</Declaration>
+			
+			
+			<Anchor>//api/name/textSubtype</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/textSubtype</TokenIdentifier>
+			<Abstract type="html">The text track&apos;s subtype; applies only to text tracks.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaTextTrackSubtype textSubtype</Declaration>
+			
+			
+			<Anchor>//api/name/textSubtype</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setName:</TokenIdentifier>
+			<Abstract type="html">The track&apos;s name, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/name</TokenIdentifier>
+			<Abstract type="html">The track&apos;s name, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/name</TokenIdentifier>
+			<Abstract type="html">The track&apos;s name, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *name</Declaration>
+			
+			
+			<Anchor>//api/name/name</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setLanguageCode:</TokenIdentifier>
+			<Abstract type="html">The track&apos;s RFC 1766 language code, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *languageCode</Declaration>
+			
+			
+			<Anchor>//api/name/languageCode</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/languageCode</TokenIdentifier>
+			<Abstract type="html">The track&apos;s RFC 1766 language code, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *languageCode</Declaration>
+			
+			
+			<Anchor>//api/name/languageCode</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/languageCode</TokenIdentifier>
+			<Abstract type="html">The track&apos;s RFC 1766 language code, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *languageCode</Declaration>
+			
+			
+			<Anchor>//api/name/languageCode</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setCustomData:</TokenIdentifier>
+			<Abstract type="html">The custom data, if any.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			
+			
+			<Anchor>//api/name/customData</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/customData</TokenIdentifier>
+			<Abstract type="html">The custom data, if any.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			
+			
+			<Anchor>//api/name/customData</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/customData</TokenIdentifier>
+			<Abstract type="html">The custom data, if any.</Abstract>
+			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			
+			
+			<Anchor>//api/name/customData</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

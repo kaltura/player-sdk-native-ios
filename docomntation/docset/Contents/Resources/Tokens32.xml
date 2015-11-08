@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/IMAAdEvent.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAdEvent</TokenIdentifier>
+			<Abstract type="html">Simple data class used to transport ad playback information.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
+            
+			
+			<NodeRef refid="32"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/setType:</TokenIdentifier>
+			<Abstract type="html">Type of the event.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdEventType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="32"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/type</TokenIdentifier>
+			<Abstract type="html">Type of the event.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdEventType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="32"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdEvent/type</TokenIdentifier>
+			<Abstract type="html">Type of the event.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdEventType type</Declaration>
+			
+			
+			<Anchor>//api/name/type</Anchor>
+            <NodeRef refid="32"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/setAd:</TokenIdentifier>
+			<Abstract type="html">Data of the ad relevant to the event. Can be nil.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAd *ad</Declaration>
+			
+			
+			<Anchor>//api/name/ad</Anchor>
+            <NodeRef refid="32"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/ad</TokenIdentifier>
+			<Abstract type="html">Data of the ad relevant to the event. Can be nil.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAd *ad</Declaration>
+			
+			
+			<Anchor>//api/name/ad</Anchor>
+            <NodeRef refid="32"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdEvent/ad</TokenIdentifier>
+			<Abstract type="html">Data of the ad relevant to the event. Can be nil.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAd *ad</Declaration>
+			
+			
+			<Anchor>//api/name/ad</Anchor>
+            <NodeRef refid="32"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/GCKDeviceScannerListener.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/GCKDeviceScannerListener</TokenIdentifier>
+			<Abstract type="html">The listener interface for GCKDeviceScanner notifications.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+            
+			
+			<NodeRef refid="59"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceScannerListener/deviceDidComeOnline:</TokenIdentifier>
+			<Abstract type="html">Called when a device has been discovered or has come online.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceDidComeOnline:(GCKDevice *)device</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceDidComeOnline:</Anchor>
+            <NodeRef refid="59"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceScannerListener/deviceDidGoOffline:</TokenIdentifier>
+			<Abstract type="html">Called when a device has gone offline.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceDidGoOffline:(GCKDevice *)device</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceDidGoOffline:</Anchor>
+            <NodeRef refid="59"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/GCKDeviceScannerListener/deviceDidChange:</TokenIdentifier>
+			<Abstract type="html">Called when there is a change to one or more properties of the device that do not affect
+connectivity to the device. This includes all properties except the device ID, IP address,
+and service port; if any of these properties changes, the device will be reported as &quot;offline&quot;
+and a new device with the updated properties will be reported as &quot;online&quot;.</Abstract>
+			<DeclaredIn>GCKDeviceScanner.h</DeclaredIn>
+			
+			<Declaration>- (void)deviceDidChange:(GCKDevice *)device</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceDidChange:</Anchor>
+            <NodeRef refid="59"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKJSONUtils.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKJSONUtils</TokenIdentifier>
+			<Abstract type="html">Utility methods for working with JSON data.</Abstract>
+			<DeclaredIn>GCKJSONUtils.h</DeclaredIn>
+            
+			
+			<NodeRef refid="16"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKJSONUtils/parseJSON:</TokenIdentifier>
+			<Abstract type="html">Parses a JSON string into an object.</Abstract>
+			<DeclaredIn>GCKJSONUtils.h</DeclaredIn>
+			
+			<Declaration>+ (id)parseJSON:(NSString *)json</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>json</Name>
+					<Abstract type="html">The JSON string to parse.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The root object of the object hierarchy that represents the data (either an NSArray or
+an NSDictionary), or &lt;code&gt;nil&lt;/code&gt; if the parsing failed.</Abstract></ReturnValue>
+			<Anchor>//api/name/parseJSON:</Anchor>
+            <NodeRef refid="16"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKJSONUtils/parseJSON:error:</TokenIdentifier>
+			<Abstract type="html">Parses a JSON string into an object.</Abstract>
+			<DeclaredIn>GCKJSONUtils.h</DeclaredIn>
+			
+			<Declaration>+ (id)parseJSON:(NSString *)json error:(NSError **)error</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>json</Name>
+					<Abstract type="html">The JSON string to parse.</Abstract>
+				</Parameter><Parameter>
+					<Name>error</Name>
+					<Abstract type="html">If not nil, the location at which to store a pointer to an NSError if the parsing
+fails.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The root object of the object hierarchy that represents the data (either an NSArray or
+an NSDictionary), or &lt;code&gt;nil&lt;/code&gt; if the parsing failed.</Abstract></ReturnValue>
+			<Anchor>//api/name/parseJSON:error:</Anchor>
+            <NodeRef refid="16"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKJSONUtils/writeJSON:</TokenIdentifier>
+			<Abstract type="html">Writes an object hierarchy of data to a JSON string.</Abstract>
+			<DeclaredIn>GCKJSONUtils.h</DeclaredIn>
+			
+			<Declaration>+ (NSString *)writeJSON:(id)object</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>object</Name>
+					<Abstract type="html">The root object of the object hierarchy to encode. This must be either an NSArray
+or an NSDictionary.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">An NSString containing the JSON encoding, or &lt;code&gt;nil&lt;/code&gt; if the data could not be
+encoded.</Abstract></ReturnValue>
+			<Anchor>//api/name/writeJSON:</Anchor>
+            <NodeRef refid="16"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKJSONUtils/isJSONString:equivalentTo:</TokenIdentifier>
+			<Abstract type="html">Tests if two JSON strings are equivalent. This does a deep comparison of the JSON data in the
+two strings, but ignores any differences in the ordering of keys within a JSON object. For
+example, &lt;code&gt;{ &quot;width&quot;:64, &quot;height&quot;:32 }&lt;/code&gt; is considered to be equivalent to
+&lt;code&gt;{ &quot;height&quot;:32, &quot;width&quot;:64 }&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKJSONUtils.h</DeclaredIn>
+			
+			<Declaration>+ (BOOL)isJSONString:(NSString *)actual equivalentTo:(NSString *)expected</Declaration>
+			
+			
+			<Anchor>//api/name/isJSONString:equivalentTo:</Anchor>
+            <NodeRef refid="16"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKJSONUtils/isJSONObject:equivalentTo:</TokenIdentifier>
+			<Abstract type="html">Tests if two JSON objects are equivalent. This does a deep comparison of the JSON data in the
+two objects, but ignores any differences in the ordering of keys within a JSON object. For
+example, &lt;code&gt;{ &quot;width&quot;:64, &quot;height&quot;:32 }&lt;/code&gt; is considered to be equivalent to
+&lt;code&gt;{ &quot;height&quot;:32, &quot;width&quot;:64 }&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKJSONUtils.h</DeclaredIn>
+			
+			<Declaration>+ (BOOL)isJSONObject:(id)actual equivalentTo:(id)expected</Declaration>
+			
+			
+			<Anchor>//api/name/isJSONObject:equivalentTo:</Anchor>
+            <NodeRef refid="16"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

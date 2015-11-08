@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKActiveInputStatus.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKActiveInputStatus</TokenIdentifier>
+			<Abstract type="html">@enum GCKActiveInputStatus
+An enum describing the active input status states.</Abstract>
+			<DeclaredIn>GCKCommon.h</DeclaredIn>
+            
+			
+			<NodeRef refid="74"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKActiveInputStatusUnknown</TokenIdentifier>
+            <Abstract type="html">The active input status is unknown.
+   </Abstract>
+            <Declaration>GCKActiveInputStatusUnknown</Declaration>
+            
+            <DeclaredIn>GCKCommon.h</DeclaredIn>
+            
+            <NodeRef refid="74"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKActiveInputStatusInactive</TokenIdentifier>
+            <Abstract type="html">The input is inactive.
+   </Abstract>
+            <Declaration>GCKActiveInputStatusInactive</Declaration>
+            
+            <DeclaredIn>GCKCommon.h</DeclaredIn>
+            
+            <NodeRef refid="74"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKActiveInputStatusActive</TokenIdentifier>
+            <Abstract type="html">The input is active.
+   </Abstract>
+            <Declaration>GCKActiveInputStatusActive</Declaration>
+            
+            <DeclaredIn>GCKCommon.h</DeclaredIn>
+            
+            <NodeRef refid="74"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

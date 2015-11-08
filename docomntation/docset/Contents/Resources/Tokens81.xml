@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKMediaMetadataType.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKMediaMetadataType</TokenIdentifier>
+			<Abstract type="html">@enum GCKMediaMetadataType
+Enum defining the media metadata types.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+			
+			<NodeRef refid="81"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaMetadataTypeGeneric</TokenIdentifier>
+            <Abstract type="html">A media type representing generic media content.</Abstract>
+            <Declaration>GCKMediaMetadataTypeGeneric</Declaration>
+            
+            <DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+            <NodeRef refid="81"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaMetadataTypeMovie</TokenIdentifier>
+            <Abstract type="html">A media type representing a movie.</Abstract>
+            <Declaration>GCKMediaMetadataTypeMovie</Declaration>
+            
+            <DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+            <NodeRef refid="81"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaMetadataTypeTVShow</TokenIdentifier>
+            <Abstract type="html">A media type representing an TV show.</Abstract>
+            <Declaration>GCKMediaMetadataTypeTVShow</Declaration>
+            
+            <DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+            <NodeRef refid="81"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaMetadataTypeMusicTrack</TokenIdentifier>
+            <Abstract type="html">A media type representing a music track.</Abstract>
+            <Declaration>GCKMediaMetadataTypeMusicTrack</Declaration>
+            
+            <DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+            <NodeRef refid="81"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaMetadataTypePhoto</TokenIdentifier>
+            <Abstract type="html">A media type representing a photo.</Abstract>
+            <Declaration>GCKMediaMetadataTypePhoto</Declaration>
+            
+            <DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+            <NodeRef refid="81"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKMediaMetadataTypeUser</TokenIdentifier>
+            <Abstract type="html">The smallest media type value that can be assigned for application-defined media types.</Abstract>
+            <Declaration>GCKMediaMetadataTypeUser</Declaration>
+            
+            <DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+            <NodeRef refid="81"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

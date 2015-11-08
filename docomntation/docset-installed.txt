@@ -1,0 +1,4 @@
+Documentation set was installed to Xcode!
+
+Path: /Users/elizasapir/Library/Developer/Shared/Documentation/DocSets/com.kaltura.KALTURAPlayerSDK.docset
+Time: 2015-10-07 11:19:58 +0000

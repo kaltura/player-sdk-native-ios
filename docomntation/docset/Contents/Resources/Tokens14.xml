@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKGenericChannel.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKGenericChannel</TokenIdentifier>
+			<Abstract type="html">A generic GCKCastChannel implementation that defers processing of incoming events to a delegate,
+suitable for use when creating a namespace-specific subclass of GCKCastChannel is not desired.</Abstract>
+			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+            
+			
+			<NodeRef refid="14"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKGenericChannel/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
+			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKGenericChannelDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKGenericChannel/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
+			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKGenericChannelDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKGenericChannel/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
+			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;GCKGenericChannelDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKGenericChannel/initWithNamespace:</TokenIdentifier>
+			<Abstract type="html">Designated initializer.</Abstract>
+			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithNamespace:(NSString *)protocolNamespace</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>protocolNamespace</Name>
+					<Abstract type="html">The namespace for this channel.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithNamespace:</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
