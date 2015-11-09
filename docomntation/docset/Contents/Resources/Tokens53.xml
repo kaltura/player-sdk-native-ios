@@ -1,346 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Categories/NSDictionary+GCKAdditions.html">
+	<File path="Constants/KPGCMediaPlayerState.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cat/NSDictionary(GCKAdditions)</TokenIdentifier>
-			<Abstract type="html">A category that adds some convenience methods to NSDictionary for setting and safely looking up
-values of various types. These methods are particularly useful for getting and setting fields of
-JSON data objects.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/KPGCMediaPlayerState</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
             
 			
 			<NodeRef refid="53"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_stringForKey:withDefaultValue:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSString value for a key, with a given fallback value.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSString *)gck_stringForKey:(NSString *)key withDefaultValue:(NSString *)defaultValue</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter><Parameter>
-					<Name>defaultValue</Name>
-					<Abstract type="html">The default value to return if the key is not found or if its value is not
-an NSString.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSString; otherwise the default value.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_stringForKey:withDefaultValue:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStateUnknown</TokenIdentifier>
+            <Abstract type="html">Constant indicating unknown player state.</Abstract>
+            <Declaration>KPGCMediaPlayerStateUnknown</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_stringForKey:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSString value for a key, with a fallback value of &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSString *)gck_stringForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if found it was found and was an NSString; otherwise
-&lt;code&gt;nil&lt;/code&gt;.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_stringForKey:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStateIdle</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is idle.</Abstract>
+            <Declaration>KPGCMediaPlayerStateIdle</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_integerForKey:withDefaultValue:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSInteger value for a key, with a given fallback value.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSInteger)gck_integerForKey:(NSString *)key withDefaultValue:(NSInteger)defaultValue</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter><Parameter>
-					<Name>defaultValue</Name>
-					<Abstract type="html">The default value to return if the key is not found or if its value is not
-an NSNumber.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise the default value.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_integerForKey:withDefaultValue:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStatePlaying</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is playing.</Abstract>
+            <Declaration>KPGCMediaPlayerStatePlaying</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_uintegerForKey:withDefaultValue:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSUInteger value for a key, with a given fallback value.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSUInteger)gck_uintegerForKey:(NSString *)key withDefaultValue:(NSUInteger)defaultValue</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter><Parameter>
-					<Name>defaultValue</Name>
-					<Abstract type="html">The default value to return if the key is not found or if its value is not
-an NSNumber.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise the default value.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_uintegerForKey:withDefaultValue:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStatePaused</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is paused.</Abstract>
+            <Declaration>KPGCMediaPlayerStatePaused</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_integerForKey:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSInteger value for a key, with a fallback value of &lt;code&gt;0&lt;/code&gt;.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSInteger)gck_integerForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise &lt;code&gt;0&lt;/code&gt;.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_integerForKey:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStateBuffering</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is buffering.</Abstract>
+            <Declaration>KPGCMediaPlayerStateBuffering</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_uintegerForKey:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSUInteger value for a key, with a fallback value of &lt;code&gt;0&lt;/code&gt;.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSUInteger)gck_uintegerForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise &lt;code&gt;0&lt;/code&gt;.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_uintegerForKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_doubleForKey:withDefaultValue:</TokenIdentifier>
-			<Abstract type="html">Looks up a double value for a key, with a given fallback value.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (double)gck_doubleForKey:(NSString *)key withDefaultValue:(double)defaultValue</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter><Parameter>
-					<Name>defaultValue</Name>
-					<Abstract type="html">The default value to return if the key is not found or if its value is not
-an NSNumber.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise the default value.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_doubleForKey:withDefaultValue:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_doubleForKey:</TokenIdentifier>
-			<Abstract type="html">Looks up a double value for a key, with a fallback value of &lt;code&gt;0.0&lt;/code&gt;.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (double)gck_doubleForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise &lt;code&gt;0.0&lt;/code&gt;.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_doubleForKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_boolForKey:withDefaultValue:</TokenIdentifier>
-			<Abstract type="html">Looks up a BOOL value for a key, with a given fallback value.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)gck_boolForKey:(NSString *)key withDefaultValue:(BOOL)defaultValue</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter><Parameter>
-					<Name>defaultValue</Name>
-					<Abstract type="html">The default value to return if the key is not found or if its value is not
-an NSNumber.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise the default value.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_boolForKey:withDefaultValue:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_boolForKey:</TokenIdentifier>
-			<Abstract type="html">Looks up a BOOL value for a key, with a fallback value of &lt;code&gt;NO&lt;/code&gt;.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)gck_boolForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSNumber; otherwise &lt;code&gt;NO&lt;/code&gt;.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_boolForKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_dictionaryForKey:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSDictionary value for a key, with a fallback value of &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSDictionary *)gck_dictionaryForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSDictionary; otherwise
-&lt;code&gt;nil&lt;/code&gt;.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_dictionaryForKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_arrayForKey:</TokenIdentifier>
-			<Abstract type="html">Looks up an NSArray value for a key, with a fallback value of &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (NSArray *)gck_arrayForKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">The value of the key, if it was found and was an NSArray; otherwise
-&lt;code&gt;nil&lt;/code&gt;.</Abstract></ReturnValue>
-			<Anchor>//api/name/gck_arrayForKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_setStringValue:forKey:</TokenIdentifier>
-			<Abstract type="html">Sets an NSString value for a key.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (void)gck_setStringValue:(NSString *)value forKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>value</Name>
-					<Abstract type="html">The value.</Abstract>
-				</Parameter><Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/gck_setStringValue:forKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_setIntegerValue:forKey:</TokenIdentifier>
-			<Abstract type="html">Sets an NSInteger value for a key.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (void)gck_setIntegerValue:(NSInteger)value forKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>value</Name>
-					<Abstract type="html">The value.</Abstract>
-				</Parameter><Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/gck_setIntegerValue:forKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_setUIntegerValue:forKey:</TokenIdentifier>
-			<Abstract type="html">Sets an NSUInteger value for a key.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (void)gck_setUIntegerValue:(NSUInteger)value forKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>value</Name>
-					<Abstract type="html">The value.</Abstract>
-				</Parameter><Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/gck_setUIntegerValue:forKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_setDoubleValue:forKey:</TokenIdentifier>
-			<Abstract type="html">Sets a double value for a key.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (void)gck_setDoubleValue:(double)value forKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>value</Name>
-					<Abstract type="html">The value.</Abstract>
-				</Parameter><Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/gck_setDoubleValue:forKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/gck_setBoolValue:forKey:</TokenIdentifier>
-			<Abstract type="html">Sets a BOOL value for a key.</Abstract>
-			<DeclaredIn>NSDictionary+GCKAdditions.h</DeclaredIn>
-			
-			<Declaration>- (void)gck_setBoolValue:(BOOL)value forKey:(NSString *)key</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>value</Name>
-					<Abstract type="html">The value.</Abstract>
-				</Parameter><Parameter>
-					<Name>key</Name>
-					<Abstract type="html">The key.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/gck_setBoolValue:forKey:</Anchor>
-            <NodeRef refid="53"/>
-		</Token>
-		
+        </Token>
         
         
 	</File>

@@ -89,7 +89,7 @@
 			<Abstract type="html">The device manager used to manage a connection to a Cast device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKDeviceManager *deviceManager</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceManager&gt; deviceManager</Declaration>
 			
 			
 			<Anchor>//api/name/deviceManager</Anchor>
@@ -101,7 +101,7 @@
 			<Abstract type="html">The device manager used to manage a connection to a Cast device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKDeviceManager *deviceManager</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceManager&gt; deviceManager</Declaration>
 			
 			
 			<Anchor>//api/name/deviceManager</Anchor>
@@ -113,7 +113,7 @@
 			<Abstract type="html">The device manager used to manage a connection to a Cast device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKDeviceManager *deviceManager</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceManager&gt; deviceManager</Declaration>
 			
 			
 			<Anchor>//api/name/deviceManager</Anchor>
@@ -125,7 +125,7 @@
 			<Abstract type="html">The device scanner used to detect devices on the network.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKDeviceScanner *deviceScanner</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceScanner&gt; deviceScanner</Declaration>
 			
 			
 			<Anchor>//api/name/deviceScanner</Anchor>
@@ -137,7 +137,7 @@
 			<Abstract type="html">The device scanner used to detect devices on the network.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKDeviceScanner *deviceScanner</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceScanner&gt; deviceScanner</Declaration>
 			
 			
 			<Anchor>//api/name/deviceScanner</Anchor>
@@ -149,7 +149,7 @@
 			<Abstract type="html">The device scanner used to detect devices on the network.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKDeviceScanner *deviceScanner</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceScanner&gt; deviceScanner</Declaration>
 			
 			
 			<Anchor>//api/name/deviceScanner</Anchor>
@@ -161,7 +161,7 @@
 			<Abstract type="html">The media information of the loaded media on the device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKMediaInformation *mediaInformation</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaInformation&gt; mediaInformation</Declaration>
 			
 			
 			<Anchor>//api/name/mediaInformation</Anchor>
@@ -173,7 +173,7 @@
 			<Abstract type="html">The media information of the loaded media on the device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKMediaInformation *mediaInformation</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaInformation&gt; mediaInformation</Declaration>
 			
 			
 			<Anchor>//api/name/mediaInformation</Anchor>
@@ -185,7 +185,7 @@
 			<Abstract type="html">The media information of the loaded media on the device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong) GCKMediaInformation *mediaInformation</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaInformation&gt; mediaInformation</Declaration>
 			
 			
 			<Anchor>//api/name/mediaInformation</Anchor>
@@ -197,7 +197,7 @@
 			<Abstract type="html">The media control channel for the playing media.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property GCKMediaControlChannel *mediaControlChannel</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaControlChannel&gt; mediaControlChannel</Declaration>
 			
 			
 			<Anchor>//api/name/mediaControlChannel</Anchor>
@@ -209,7 +209,7 @@
 			<Abstract type="html">The media control channel for the playing media.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property GCKMediaControlChannel *mediaControlChannel</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaControlChannel&gt; mediaControlChannel</Declaration>
 			
 			
 			<Anchor>//api/name/mediaControlChannel</Anchor>
@@ -221,7 +221,7 @@
 			<Abstract type="html">The media control channel for the playing media.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property GCKMediaControlChannel *mediaControlChannel</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaControlChannel&gt; mediaControlChannel</Declaration>
 			
 			
 			<Anchor>//api/name/mediaControlChannel</Anchor>
@@ -233,7 +233,7 @@
 			<Abstract type="html">Helper accessor for the media player state of the media on the device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerState playerState</Declaration>
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerState playerState</Declaration>
 			
 			
 			<Anchor>//api/name/playerState</Anchor>
@@ -245,7 +245,7 @@
 			<Abstract type="html">Helper accessor for the media player state of the media on the device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerState playerState</Declaration>
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerState playerState</Declaration>
 			
 			
 			<Anchor>//api/name/playerState</Anchor>
@@ -257,7 +257,7 @@
 			<Abstract type="html">Helper accessor for the media player state of the media on the device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerState playerState</Declaration>
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerState playerState</Declaration>
 			
 			
 			<Anchor>//api/name/playerState</Anchor>
@@ -267,10 +267,10 @@
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setIdleReason:</TokenIdentifier>
 			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
-GCKMediaPlayerStateIdle.</Abstract>
+KPGCMediaPlayerStateIdle.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerIdleReason idleReason</Declaration>
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason</Declaration>
 			
 			
 			<Anchor>//api/name/idleReason</Anchor>
@@ -280,10 +280,10 @@ GCKMediaPlayerStateIdle.</Abstract>
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/idleReason</TokenIdentifier>
 			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
-GCKMediaPlayerStateIdle.</Abstract>
+KPGCMediaPlayerStateIdle.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerIdleReason idleReason</Declaration>
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason</Declaration>
 			
 			
 			<Anchor>//api/name/idleReason</Anchor>
@@ -293,10 +293,10 @@ GCKMediaPlayerStateIdle.</Abstract>
 		<Token>
 			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/idleReason</TokenIdentifier>
 			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
-GCKMediaPlayerStateIdle.</Abstract>
+KPGCMediaPlayerStateIdle.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaPlayerIdleReason idleReason</Declaration>
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason</Declaration>
 			
 			
 			<Anchor>//api/name/idleReason</Anchor>
@@ -409,7 +409,7 @@ GCKMediaPlayerStateIdle.</Abstract>
 			<Abstract type="html">Connect to the given Cast device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>- (void)connectToDevice:(GCKDevice *)device</Declaration>
+			<Declaration>- (void)connectToDevice:(id&lt;KPGCDevice&gt;)device</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>device</Name>
@@ -426,7 +426,7 @@ GCKMediaPlayerStateIdle.</Abstract>
 			<Abstract type="html">Load media onto the currently connected device.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
 			
-			<Declaration>- (BOOL)loadMedia:(GCKMediaInformation *)media startTime:(NSTimeInterval)startTime autoPlay:(BOOL)autoPlay</Declaration>
+			<Declaration>- (BOOL)loadMedia:(id&lt;KPGCMediaInformation&gt;)media startTime:(NSTimeInterval)startTime autoPlay:(BOOL)autoPlay</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>media</Name>
@@ -492,7 +492,7 @@ position noted before disconnect. In many cases it will return 0.</Abstract>
 			<Abstract type="html">Called when a device has been discovered or has come online.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
 			
-			<Declaration>- (void)deviceDidComeOnline:(GCKDevice *)device</Declaration>
+			<Declaration>- (void)deviceDidComeOnline:(id&lt;KPGCDevice&gt;)device</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>device</Name>
@@ -509,7 +509,7 @@ position noted before disconnect. In many cases it will return 0.</Abstract>
 			<Abstract type="html">Called when a device has gone offline.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
 			
-			<Declaration>- (void)deviceDidGoOffline:(GCKDevice *)device</Declaration>
+			<Declaration>- (void)deviceDidGoOffline:(id&lt;KPGCDevice&gt;)device</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>device</Name>
@@ -529,7 +529,7 @@ and service port; if any of these properties changes, the device will be reporte
 and a new device with the updated properties will be reported as &quot;online&quot;.</Abstract>
 			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
 			
-			<Declaration>- (void)deviceDidChange:(GCKDevice *)device</Declaration>
+			<Declaration>- (void)deviceDidChange:(id&lt;KPGCDevice&gt;)device</Declaration>
 			<Parameters>
 				<Parameter>
 					<Name>device</Name>

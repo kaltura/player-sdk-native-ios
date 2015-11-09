@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/KPBrowserViewController.html">
+	<File path="Protocols/KPMediaPlayback.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/KPBrowserViewController</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/KPMediaPlayback</TokenIdentifier>
+			<Abstract type="html">@protocol		KPMediaPlayback</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
             
 			
 			<NodeRef refid="43"/>
@@ -13,86 +13,123 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/KPBrowserViewController/currentBrowser</TokenIdentifier>
-			<Abstract type="html">Creates a browser according to the operating system</Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/setIsPreparedToPlay:</TokenIdentifier>
+			<Abstract type="html">Prepares a Kaltura player for playback. (required)
+
+If a Kaltura player is not already prepared to play when you call the play method, that method automatically calls this method. However, to minimize playback delay, call this method before you call play.</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
 			
-			<Declaration>+ (instancetype)currentBrowser</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL isPreparedToPlay</Declaration>
 			
-			<ReturnValue><Abstract type="html">instancetype UIWebView browser for iOS7 and WKWebView for iOS8+</Abstract></ReturnValue>
-			<Anchor>//api/name/currentBrowser</Anchor>
+			
+			<Anchor>//api/name/isPreparedToPlay</Anchor>
             <NodeRef refid="43"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/setUrl:</TokenIdentifier>
-			<Abstract type="html">The share url for the current network</Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/isPreparedToPlay</TokenIdentifier>
+			<Abstract type="html">Prepares a Kaltura player for playback. (required)
+
+If a Kaltura player is not already prepared to play when you call the play method, that method automatically calls this method. However, to minimize playback delay, call this method before you call play.</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSURL *url</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL isPreparedToPlay</Declaration>
 			
 			
-			<Anchor>//api/name/url</Anchor>
+			<Anchor>//api/name/isPreparedToPlay</Anchor>
             <NodeRef refid="43"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/url</TokenIdentifier>
-			<Abstract type="html">The share url for the current network</Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPMediaPlayback/isPreparedToPlay</TokenIdentifier>
+			<Abstract type="html">Prepares a Kaltura player for playback. (required)
+
+If a Kaltura player is not already prepared to play when you call the play method, that method automatically calls this method. However, to minimize playback delay, call this method before you call play.</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSURL *url</Declaration>
+			<Declaration>@property (nonatomic, readonly) BOOL isPreparedToPlay</Declaration>
 			
 			
-			<Anchor>//api/name/url</Anchor>
+			<Anchor>//api/name/isPreparedToPlay</Anchor>
             <NodeRef refid="43"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/KPBrowserViewController/url</TokenIdentifier>
-			<Abstract type="html">The share url for the current network</Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/play</TokenIdentifier>
+			<Abstract type="html">Initiates playback of the current item. (required)
+
+If playback was previously paused, this method resumes playback where it left off; otherwise, this method plays the first available item, from the beginning.
+If a Kaltura player is not prepared for playback when you call this method, this method first prepares the Kaltura player and then starts playback. To minimize playback delay, call the prepareToPlay method before you call this method.</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSURL *url</Declaration>
+			<Declaration>- (void)play</Declaration>
 			
 			
-			<Anchor>//api/name/url</Anchor>
+			<Anchor>//api/name/play</Anchor>
             <NodeRef refid="43"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/setRedirectURIs:</TokenIdentifier>
-			<Abstract type="html">Array of possible redirect URIs (notifies on finished share call)</Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/pause</TokenIdentifier>
+			<Abstract type="html">Pauses playback of the current item. (required)
+
+If playback is not currently underway, this method has no effect. To resume playback of the current item from the pause point, call the play method.</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSArray *redirectURIs</Declaration>
+			<Declaration>- (void)pause</Declaration>
 			
 			
-			<Anchor>//api/name/redirectURIs</Anchor>
+			<Anchor>//api/name/pause</Anchor>
             <NodeRef refid="43"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/redirectURIs</TokenIdentifier>
-			<Abstract type="html">Array of possible redirect URIs (notifies on finished share call)</Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/stop</TokenIdentifier>
+			<Abstract type="html">Ends playback of the current item. (required)
+
+This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSArray *redirectURIs</Declaration>
+			<Declaration>- (void)stop</Declaration>
 			
 			
-			<Anchor>//api/name/redirectURIs</Anchor>
+			<Anchor>//api/name/stop</Anchor>
             <NodeRef refid="43"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/KPBrowserViewController/redirectURIs</TokenIdentifier>
-			<Abstract type="html">Array of possible redirect URIs (notifies on finished share call)</Abstract>
-			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/beginSeekingForward</TokenIdentifier>
+			<Abstract type="html">Begins seeking forward through the media content. (required)</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSArray *redirectURIs</Declaration>
+			<Declaration>- (void)beginSeekingForward</Declaration>
 			
 			
-			<Anchor>//api/name/redirectURIs</Anchor>
+			<Anchor>//api/name/beginSeekingForward</Anchor>
+            <NodeRef refid="43"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/beginSeekingBackward</TokenIdentifier>
+			<Abstract type="html">Begins seeking backward through the media content. (required)</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
+			
+			<Declaration>- (void)beginSeekingBackward</Declaration>
+			
+			
+			<Anchor>//api/name/beginSeekingBackward</Anchor>
+            <NodeRef refid="43"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPMediaPlayback/endSeeking</TokenIdentifier>
+			<Abstract type="html">Ends forward and backward seeking through the media content. (required)</Abstract>
+			<DeclaredIn>KPMediaPlayback.h</DeclaredIn>
+			
+			<Declaration>- (void)endSeeking</Declaration>
+			
+			
+			<Anchor>//api/name/endSeeking</Anchor>
             <NodeRef refid="43"/>
 		</Token>
 		

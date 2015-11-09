@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKDevice.html">
+	<File path="Classes/IMAAdEvent.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKDevice</TokenIdentifier>
-			<Abstract type="html">An object representing a first-screen device.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAdEvent</TokenIdentifier>
+			<Abstract type="html">Simple data class used to transport ad playback information.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
             
 			
 			<NodeRef refid="9"/>
@@ -13,413 +13,74 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setIpAddress:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s IPv4 address, in dot-notation. Used when making network requests.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/setType:</TokenIdentifier>
+			<Abstract type="html">Type of the event.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *ipAddress</Declaration>
+			<Declaration>@property (nonatomic, readonly) IMAAdEventType type</Declaration>
 			
 			
-			<Anchor>//api/name/ipAddress</Anchor>
+			<Anchor>//api/name/type</Anchor>
             <NodeRef refid="9"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/ipAddress</TokenIdentifier>
-			<Abstract type="html">The device&apos;s IPv4 address, in dot-notation. Used when making network requests.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/type</TokenIdentifier>
+			<Abstract type="html">Type of the event.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *ipAddress</Declaration>
+			<Declaration>@property (nonatomic, readonly) IMAAdEventType type</Declaration>
 			
 			
-			<Anchor>//api/name/ipAddress</Anchor>
+			<Anchor>//api/name/type</Anchor>
             <NodeRef refid="9"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/ipAddress</TokenIdentifier>
-			<Abstract type="html">The device&apos;s IPv4 address, in dot-notation. Used when making network requests.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdEvent/type</TokenIdentifier>
+			<Abstract type="html">Type of the event.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *ipAddress</Declaration>
+			<Declaration>@property (nonatomic, readonly) IMAAdEventType type</Declaration>
 			
 			
-			<Anchor>//api/name/ipAddress</Anchor>
+			<Anchor>//api/name/type</Anchor>
             <NodeRef refid="9"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setServicePort:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s service port.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/setAd:</TokenIdentifier>
+			<Abstract type="html">Data of the ad relevant to the event. Can be nil.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) UInt32 servicePort</Declaration>
+			<Declaration>@property (nonatomic, readonly) IMAAd *ad</Declaration>
 			
 			
-			<Anchor>//api/name/servicePort</Anchor>
+			<Anchor>//api/name/ad</Anchor>
             <NodeRef refid="9"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/servicePort</TokenIdentifier>
-			<Abstract type="html">The device&apos;s service port.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdEvent/ad</TokenIdentifier>
+			<Abstract type="html">Data of the ad relevant to the event. Can be nil.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) UInt32 servicePort</Declaration>
+			<Declaration>@property (nonatomic, readonly) IMAAd *ad</Declaration>
 			
 			
-			<Anchor>//api/name/servicePort</Anchor>
+			<Anchor>//api/name/ad</Anchor>
             <NodeRef refid="9"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/servicePort</TokenIdentifier>
-			<Abstract type="html">The device&apos;s service port.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdEvent/ad</TokenIdentifier>
+			<Abstract type="html">Data of the ad relevant to the event. Can be nil.</Abstract>
+			<DeclaredIn>IMAAdEvent.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) UInt32 servicePort</Declaration>
+			<Declaration>@property (nonatomic, readonly) IMAAd *ad</Declaration>
 			
 			
-			<Anchor>//api/name/servicePort</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setDeviceID:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s unique ID. This is the USN (Unique Service Name) as reported by the SSDP protocol.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *deviceID</Declaration>
-			
-			
-			<Anchor>//api/name/deviceID</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/deviceID</TokenIdentifier>
-			<Abstract type="html">The device&apos;s unique ID. This is the USN (Unique Service Name) as reported by the SSDP protocol.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *deviceID</Declaration>
-			
-			
-			<Anchor>//api/name/deviceID</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/deviceID</TokenIdentifier>
-			<Abstract type="html">The device&apos;s unique ID. This is the USN (Unique Service Name) as reported by the SSDP protocol.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *deviceID</Declaration>
-			
-			
-			<Anchor>//api/name/deviceID</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setFriendlyName:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s friendly name. This is a user-assignable name such as &quot;Living Room&quot;.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *friendlyName</Declaration>
-			
-			
-			<Anchor>//api/name/friendlyName</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/friendlyName</TokenIdentifier>
-			<Abstract type="html">The device&apos;s friendly name. This is a user-assignable name such as &quot;Living Room&quot;.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *friendlyName</Declaration>
-			
-			
-			<Anchor>//api/name/friendlyName</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/friendlyName</TokenIdentifier>
-			<Abstract type="html">The device&apos;s friendly name. This is a user-assignable name such as &quot;Living Room&quot;.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *friendlyName</Declaration>
-			
-			
-			<Anchor>//api/name/friendlyName</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setManufacturer:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s manufacturer name.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *manufacturer</Declaration>
-			
-			
-			<Anchor>//api/name/manufacturer</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/manufacturer</TokenIdentifier>
-			<Abstract type="html">The device&apos;s manufacturer name.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *manufacturer</Declaration>
-			
-			
-			<Anchor>//api/name/manufacturer</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/manufacturer</TokenIdentifier>
-			<Abstract type="html">The device&apos;s manufacturer name.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *manufacturer</Declaration>
-			
-			
-			<Anchor>//api/name/manufacturer</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setModelName:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s model name.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *modelName</Declaration>
-			
-			
-			<Anchor>//api/name/modelName</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/modelName</TokenIdentifier>
-			<Abstract type="html">The device&apos;s model name.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *modelName</Declaration>
-			
-			
-			<Anchor>//api/name/modelName</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/modelName</TokenIdentifier>
-			<Abstract type="html">The device&apos;s model name.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *modelName</Declaration>
-			
-			
-			<Anchor>//api/name/modelName</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setIcons:</TokenIdentifier>
-			<Abstract type="html">An array of GCKImage objects containing icons for the device.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSArray *icons</Declaration>
-			
-			
-			<Anchor>//api/name/icons</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/icons</TokenIdentifier>
-			<Abstract type="html">An array of GCKImage objects containing icons for the device.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSArray *icons</Declaration>
-			
-			
-			<Anchor>//api/name/icons</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/icons</TokenIdentifier>
-			<Abstract type="html">An array of GCKImage objects containing icons for the device.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSArray *icons</Declaration>
-			
-			
-			<Anchor>//api/name/icons</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setStatus:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s status at the time that it was most recently scanned.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) GCKDeviceStatus status</Declaration>
-			
-			
-			<Anchor>//api/name/status</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/status</TokenIdentifier>
-			<Abstract type="html">The device&apos;s status at the time that it was most recently scanned.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) GCKDeviceStatus status</Declaration>
-			
-			
-			<Anchor>//api/name/status</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/status</TokenIdentifier>
-			<Abstract type="html">The device&apos;s status at the time that it was most recently scanned.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) GCKDeviceStatus status</Declaration>
-			
-			
-			<Anchor>//api/name/status</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setStatusText:</TokenIdentifier>
-			<Abstract type="html">The status text reported by the currently running receiver application, if any.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *statusText</Declaration>
-			
-			
-			<Anchor>//api/name/statusText</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/statusText</TokenIdentifier>
-			<Abstract type="html">The status text reported by the currently running receiver application, if any.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *statusText</Declaration>
-			
-			
-			<Anchor>//api/name/statusText</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/statusText</TokenIdentifier>
-			<Abstract type="html">The status text reported by the currently running receiver application, if any.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *statusText</Declaration>
-			
-			
-			<Anchor>//api/name/statusText</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/setDeviceVersion:</TokenIdentifier>
-			<Abstract type="html">The device&apos;s version.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *deviceVersion</Declaration>
-			
-			
-			<Anchor>//api/name/deviceVersion</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/deviceVersion</TokenIdentifier>
-			<Abstract type="html">The device&apos;s version.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *deviceVersion</Declaration>
-			
-			
-			<Anchor>//api/name/deviceVersion</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKDevice/deviceVersion</TokenIdentifier>
-			<Abstract type="html">The device&apos;s version.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *deviceVersion</Declaration>
-			
-			
-			<Anchor>//api/name/deviceVersion</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/initWithIPAddress:servicePort:</TokenIdentifier>
-			<Abstract type="html">Designated initializer. Constructs a new GCKDevice with the given IP address.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)initWithIPAddress:(NSString *)ipAddress servicePort:(UInt32)servicePort</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>ipAddress</Name>
-					<Abstract type="html">The device&apos;s IPv4 address, in dot-notation.</Abstract>
-				</Parameter><Parameter>
-					<Name>servicePort</Name>
-					<Abstract type="html">The device&apos;s service port.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/initWithIPAddress:servicePort:</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/isSameDeviceAs:</TokenIdentifier>
-			<Abstract type="html">Tests if this device refers to the same physical device as another. Returns YES if both
-GCKDevice objects have the same IP address, service port, device ID, and version.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)isSameDeviceAs:(const GCKDevice *)other</Declaration>
-			
-			
-			<Anchor>//api/name/isSameDeviceAs:</Anchor>
-            <NodeRef refid="9"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKDevice/hasCapabilities:</TokenIdentifier>
-			<Abstract type="html">Returns YES if the device supports the given capabilities.</Abstract>
-			<DeclaredIn>GCKDevice.h</DeclaredIn>
-			
-			<Declaration>- (BOOL)hasCapabilities:(NSInteger)deviceCapabilities</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>deviceCapabilities</Name>
-					<Abstract type="html">A bitwise-OR of one or more of the &lt;code&gt;GCKDeviceCapability*&lt;/code&gt;
-constants.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/hasCapabilities:</Anchor>
+			<Anchor>//api/name/ad</Anchor>
             <NodeRef refid="9"/>
 		</Token>
 		

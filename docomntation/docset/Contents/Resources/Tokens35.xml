@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/IMAAdsLoadedData.html">
+	<File path="Protocols/IMAAdPlaybackInfo.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/IMAAdsLoadedData</TokenIdentifier>
-			<Abstract type="html">Ad loaded data that is returned when the ads loader loads the ad.</Abstract>
-			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/IMAAdPlaybackInfo</TokenIdentifier>
+			<Abstract type="html">Groups various properties of the ad player.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
             
 			
 			<NodeRef refid="35"/>
@@ -13,74 +13,146 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/setAdsManager:</TokenIdentifier>
-			<Abstract type="html">The ads manager instance created by the ads loader.</Abstract>
-			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setCurrentMediaTime:</TokenIdentifier>
+			<Abstract type="html">The current media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) IMAAdsManager *adsManager</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentMediaTime</Declaration>
 			
 			
-			<Anchor>//api/name/adsManager</Anchor>
+			<Anchor>//api/name/currentMediaTime</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/adsManager</TokenIdentifier>
-			<Abstract type="html">The ads manager instance created by the ads loader.</Abstract>
-			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/currentMediaTime</TokenIdentifier>
+			<Abstract type="html">The current media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) IMAAdsManager *adsManager</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentMediaTime</Declaration>
 			
 			
-			<Anchor>//api/name/adsManager</Anchor>
+			<Anchor>//api/name/currentMediaTime</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsLoadedData/adsManager</TokenIdentifier>
-			<Abstract type="html">The ads manager instance created by the ads loader.</Abstract>
-			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/currentMediaTime</TokenIdentifier>
+			<Abstract type="html">The current media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) IMAAdsManager *adsManager</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentMediaTime</Declaration>
 			
 			
-			<Anchor>//api/name/adsManager</Anchor>
+			<Anchor>//api/name/currentMediaTime</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/setUserContext:</TokenIdentifier>
-			<Abstract type="html">The user context specified in the ads request.</Abstract>
-			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setTotalMediaTime:</TokenIdentifier>
+			<Abstract type="html">The total media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval totalMediaTime</Declaration>
 			
 			
-			<Anchor>//api/name/userContext</Anchor>
+			<Anchor>//api/name/totalMediaTime</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/userContext</TokenIdentifier>
-			<Abstract type="html">The user context specified in the ads request.</Abstract>
-			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/totalMediaTime</TokenIdentifier>
+			<Abstract type="html">The total media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval totalMediaTime</Declaration>
 			
 			
-			<Anchor>//api/name/userContext</Anchor>
+			<Anchor>//api/name/totalMediaTime</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsLoadedData/userContext</TokenIdentifier>
-			<Abstract type="html">The user context specified in the ads request.</Abstract>
-			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/totalMediaTime</TokenIdentifier>
+			<Abstract type="html">The total media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval totalMediaTime</Declaration>
 			
 			
-			<Anchor>//api/name/userContext</Anchor>
+			<Anchor>//api/name/totalMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setBufferedMediaTime:</TokenIdentifier>
+			<Abstract type="html">The buffered media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval bufferedMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/bufferedMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/bufferedMediaTime</TokenIdentifier>
+			<Abstract type="html">The buffered media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval bufferedMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/bufferedMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/bufferedMediaTime</TokenIdentifier>
+			<Abstract type="html">The buffered media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval bufferedMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/bufferedMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setPlaying:</TokenIdentifier>
+			<Abstract type="html">YES if an ad is currently playing, NO otherwise.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isPlaying) BOOL playing</Declaration>
+			
+			
+			<Anchor>//api/name/playing</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/isPlaying</TokenIdentifier>
+			<Abstract type="html">YES if an ad is currently playing, NO otherwise.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isPlaying) BOOL playing</Declaration>
+			
+			
+			<Anchor>//api/name/playing</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/playing</TokenIdentifier>
+			<Abstract type="html">YES if an ad is currently playing, NO otherwise.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isPlaying) BOOL playing</Declaration>
+			
+			
+			<Anchor>//api/name/playing</Anchor>
             <NodeRef refid="35"/>
 		</Token>
 		

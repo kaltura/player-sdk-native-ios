@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKGenericChannel.html">
+	<File path="Classes/IMAAdsManager.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKGenericChannel</TokenIdentifier>
-			<Abstract type="html">A generic GCKCastChannel implementation that defers processing of incoming events to a delegate,
-suitable for use when creating a namespace-specific subclass of GCKCastChannel is not desired.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAdsManager</TokenIdentifier>
+			<Abstract type="html">The IMAAdsManager class is responsible for playing ads.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
             
 			
 			<NodeRef refid="14"/>
@@ -14,23 +13,11 @@ suitable for use when creating a namespace-specific subclass of GCKCastChannel i
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKGenericChannel/setDelegate:</TokenIdentifier>
-			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate to notify with events during ad playback.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;GCKGenericChannelDelegate&gt; delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
-            <NodeRef refid="14"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKGenericChannel/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;GCKGenericChannelDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, assign) NSObject&lt;IMAAdsManagerDelegate&gt; *delegate</Declaration>
 			
 			
 			<Anchor>//api/name/delegate</Anchor>
@@ -38,11 +25,11 @@ suitable for use when creating a namespace-specific subclass of GCKCastChannel i
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKGenericChannel/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate for receiving notifications about changes in the channel&apos;s state.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate to notify with events during ad playback.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;GCKGenericChannelDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, assign) NSObject&lt;IMAAdsManagerDelegate&gt; *delegate</Declaration>
 			
 			
 			<Anchor>//api/name/delegate</Anchor>
@@ -50,19 +37,159 @@ suitable for use when creating a namespace-specific subclass of GCKCastChannel i
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKGenericChannel/initWithNamespace:</TokenIdentifier>
-			<Abstract type="html">Designated initializer.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsManager/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate to notify with events during ad playback.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithNamespace:(NSString *)protocolNamespace</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>protocolNamespace</Name>
-					<Abstract type="html">The namespace for this channel.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, assign) NSObject&lt;IMAAdsManagerDelegate&gt; *delegate</Declaration>
 			
-			<Anchor>//api/name/initWithNamespace:</Anchor>
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/setAdCuePoints:</TokenIdentifier>
+			<Abstract type="html">List of content time offsets at which ad breaks are scheduled.
+Array of NSNumber double values in seconds.
+Empty NSArray for single ads or if no ad breaks are scheduled.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *adCuePoints</Declaration>
+			
+			
+			<Anchor>//api/name/adCuePoints</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/adCuePoints</TokenIdentifier>
+			<Abstract type="html">List of content time offsets at which ad breaks are scheduled.
+Array of NSNumber double values in seconds.
+Empty NSArray for single ads or if no ad breaks are scheduled.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *adCuePoints</Declaration>
+			
+			
+			<Anchor>//api/name/adCuePoints</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsManager/adCuePoints</TokenIdentifier>
+			<Abstract type="html">List of content time offsets at which ad breaks are scheduled.
+Array of NSNumber double values in seconds.
+Empty NSArray for single ads or if no ad breaks are scheduled.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *adCuePoints</Declaration>
+			
+			
+			<Anchor>//api/name/adCuePoints</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/setAdPlaybackInfo:</TokenIdentifier>
+			<Abstract type="html">Groups various properties about the linear ad playback.
+See |IMAAdPlaybackInfo|.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) id&lt;IMAAdPlaybackInfo&gt; adPlaybackInfo</Declaration>
+			
+			
+			<Anchor>//api/name/adPlaybackInfo</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/adPlaybackInfo</TokenIdentifier>
+			<Abstract type="html">Groups various properties about the linear ad playback.
+See |IMAAdPlaybackInfo|.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) id&lt;IMAAdPlaybackInfo&gt; adPlaybackInfo</Declaration>
+			
+			
+			<Anchor>//api/name/adPlaybackInfo</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsManager/adPlaybackInfo</TokenIdentifier>
+			<Abstract type="html">Groups various properties about the linear ad playback.
+See |IMAAdPlaybackInfo|.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) id&lt;IMAAdPlaybackInfo&gt; adPlaybackInfo</Declaration>
+			
+			
+			<Anchor>//api/name/adPlaybackInfo</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/initializeWithContentPlayhead:adsRenderingSettings:</TokenIdentifier>
+			<Abstract type="html">Initializes and loads the ad. Pass in |contentPlayhead| to
+enable content tracking and automatically scheduled ad breaks. Use nil
+to disable this feature.
+Pass in |adsRenderingSettings| to influence ad rendering. Use nil to
+default to standard rendering.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>- (void)initializeWithContentPlayhead:(NSObject&lt;IMAContentPlayhead&gt; *)contentPlayhead adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings</Declaration>
+			
+			
+			<Anchor>//api/name/initializeWithContentPlayhead:adsRenderingSettings:</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/start</TokenIdentifier>
+			<Abstract type="html">Starts advertisement playback.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>- (void)start</Declaration>
+			
+			
+			<Anchor>//api/name/start</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/pause</TokenIdentifier>
+			<Abstract type="html">Pauses advertisement.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>- (void)pause</Declaration>
+			
+			
+			<Anchor>//api/name/pause</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/resume</TokenIdentifier>
+			<Abstract type="html">Resumes the advertisement.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>- (void)resume</Declaration>
+			
+			
+			<Anchor>//api/name/resume</Anchor>
+            <NodeRef refid="14"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/destroy</TokenIdentifier>
+			<Abstract type="html">Causes the ads manager to stop the ad and clean its internal state.</Abstract>
+			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
+			
+			<Declaration>- (void)destroy</Declaration>
+			
+			
+			<Anchor>//api/name/destroy</Anchor>
             <NodeRef refid="14"/>
 		</Token>
 		

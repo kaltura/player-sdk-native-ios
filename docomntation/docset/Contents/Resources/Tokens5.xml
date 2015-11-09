@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKApplicationMetadata.html">
+	<File path="Classes/IMAAVPlayerContentPlayhead.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKApplicationMetadata</TokenIdentifier>
-			<Abstract type="html">Information about a first-screen application.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAVPlayerContentPlayhead</TokenIdentifier>
+			<Abstract type="html">An implementation of IMAContentPlayhead for AVPlayer. Use this class to
+provide content tracking if your content player of choice is an AVPlayer
+or its subclass.</Abstract>
+			<DeclaredIn>IMAAVPlayerContentPlayhead.h</DeclaredIn>
             
 			
 			<NodeRef refid="5"/>
@@ -13,211 +15,15 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/setApplicationID:</TokenIdentifier>
-			<Abstract type="html">The application&apos;s ID.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAVPlayerContentPlayhead/initWithAVPlayer:</TokenIdentifier>
+			<Abstract type="html">Initializes with the |player| to track. It will attach a periodic time
+observer to the player immediately.</Abstract>
+			<DeclaredIn>IMAAVPlayerContentPlayhead.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationID</Declaration>
-			
-			
-			<Anchor>//api/name/applicationID</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/applicationID</TokenIdentifier>
-			<Abstract type="html">The application&apos;s ID.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationID</Declaration>
+			<Declaration>- (instancetype)initWithAVPlayer:(AVPlayer *)player</Declaration>
 			
 			
-			<Anchor>//api/name/applicationID</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKApplicationMetadata/applicationID</TokenIdentifier>
-			<Abstract type="html">The application&apos;s ID.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationID</Declaration>
-			
-			
-			<Anchor>//api/name/applicationID</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/setApplicationName:</TokenIdentifier>
-			<Abstract type="html">The application&apos;s name.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationName</Declaration>
-			
-			
-			<Anchor>//api/name/applicationName</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/applicationName</TokenIdentifier>
-			<Abstract type="html">The application&apos;s name.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationName</Declaration>
-			
-			
-			<Anchor>//api/name/applicationName</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKApplicationMetadata/applicationName</TokenIdentifier>
-			<Abstract type="html">The application&apos;s name.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *applicationName</Declaration>
-			
-			
-			<Anchor>//api/name/applicationName</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/setImages:</TokenIdentifier>
-			<Abstract type="html">The application GCKImage images.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *images</Declaration>
-			
-			
-			<Anchor>//api/name/images</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/images</TokenIdentifier>
-			<Abstract type="html">The application GCKImage images.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *images</Declaration>
-			
-			
-			<Anchor>//api/name/images</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKApplicationMetadata/images</TokenIdentifier>
-			<Abstract type="html">The application GCKImage images.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *images</Declaration>
-			
-			
-			<Anchor>//api/name/images</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/setNamespaces:</TokenIdentifier>
-			<Abstract type="html">The set of namespaces supported by this application.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *namespaces</Declaration>
-			
-			
-			<Anchor>//api/name/namespaces</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/namespaces</TokenIdentifier>
-			<Abstract type="html">The set of namespaces supported by this application.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *namespaces</Declaration>
-			
-			
-			<Anchor>//api/name/namespaces</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKApplicationMetadata/namespaces</TokenIdentifier>
-			<Abstract type="html">The set of namespaces supported by this application.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *namespaces</Declaration>
-			
-			
-			<Anchor>//api/name/namespaces</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/setSenderApplicationInfo:</TokenIdentifier>
-			<Abstract type="html">Information about the sender application that is the counterpart to the receiver application,
-if any.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) GCKSenderApplicationInfo *senderApplicationInfo</Declaration>
-			
-			
-			<Anchor>//api/name/senderApplicationInfo</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/senderApplicationInfo</TokenIdentifier>
-			<Abstract type="html">Information about the sender application that is the counterpart to the receiver application,
-if any.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) GCKSenderApplicationInfo *senderApplicationInfo</Declaration>
-			
-			
-			<Anchor>//api/name/senderApplicationInfo</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKApplicationMetadata/senderApplicationInfo</TokenIdentifier>
-			<Abstract type="html">Information about the sender application that is the counterpart to the receiver application,
-if any.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) GCKSenderApplicationInfo *senderApplicationInfo</Declaration>
-			
-			
-			<Anchor>//api/name/senderApplicationInfo</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/senderAppIdentifier</TokenIdentifier>
-			<Abstract type="html">The identifier of the sender application that is the counterpart to the receiver
-application, if any.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>- (NSString *)senderAppIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/senderAppIdentifier</Anchor>
-            <NodeRef refid="5"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKApplicationMetadata/senderAppLaunchURL</TokenIdentifier>
-			<Abstract type="html">The launch URL for the sender application that is the counterpart to the receiver
-application, if any.</Abstract>
-			<DeclaredIn>GCKApplicationMetadata.h</DeclaredIn>
-			
-			<Declaration>- (NSURL *)senderAppLaunchURL</Declaration>
-			
-			
-			<Anchor>//api/name/senderAppLaunchURL</Anchor>
+			<Anchor>//api/name/initWithAVPlayer:</Anchor>
             <NodeRef refid="5"/>
 		</Token>
 		

@@ -1,54 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/GCKGenericChannelDelegate.html">
+	<File path="">
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/GCKGenericChannelDelegate</TokenIdentifier>
-			<Abstract type="html">The delegate for GCKGenericChannel notifications.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
-            
-			
-			<NodeRef refid="60"/>
-		</Token>
-		
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/GCKGenericChannelDelegate/castChannel:didReceiveTextMessage:withNamespace:</TokenIdentifier>
-			<Abstract type="html">Called when a text message has been received on the channel.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
-			
-			<Declaration>- (void)castChannel:(GCKGenericChannel *)channel didReceiveTextMessage:(NSString *)message withNamespace:(NSString *)protocolNamespace</Declaration>
-			
-			
-			<Anchor>//api/name/castChannel:didReceiveTextMessage:withNamespace:</Anchor>
-            <NodeRef refid="60"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/GCKGenericChannelDelegate/castChannelDidConnect:</TokenIdentifier>
-			<Abstract type="html">Called when the channel has been connected, indicating that messages can now be exchanged with
-the Cast device over the channel.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
-			
-			<Declaration>- (void)castChannelDidConnect:(GCKGenericChannel *)channel</Declaration>
-			
-			
-			<Anchor>//api/name/castChannelDidConnect:</Anchor>
-            <NodeRef refid="60"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/GCKGenericChannelDelegate/castChannelDidDisconnect:</TokenIdentifier>
-			<Abstract type="html">Called when the channel has been disconnected, indicating that messages can no longer be
-exchanged with the Cast device over the channel.</Abstract>
-			<DeclaredIn>GCKGenericChannel.h</DeclaredIn>
-			
-			<Declaration>- (void)castChannelDidDisconnect:(GCKGenericChannel *)channel</Declaration>
-			
-			
-			<Anchor>//api/name/castChannelDidDisconnect:</Anchor>
-            <NodeRef refid="60"/>
-		</Token>
 		
         
         

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKMediaTrack.html">
+	<File path="Classes/KPViewController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaTrack</TokenIdentifier>
-			<Abstract type="html">A class representing a media track. Instances of this object are immutable.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/KPViewController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
             
 			
 			<NodeRef refid="26"/>
@@ -13,302 +13,566 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/initWithIdentifier:contentIdentifier:contentType:type:textSubtype:name:languageCode:customData:</TokenIdentifier>
-			<Abstract type="html">Designated initializer. Constructs a new GCKMediaTrack with the given property values.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/initWithURL:</TokenIdentifier>
+			<Abstract type="html">@function initWithURL:</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithIdentifier:(NSInteger)identifier contentIdentifier:(NSString *)contentIdentifier contentType:(NSString *)contentType type:(GCKMediaTrackType)type textSubtype:(GCKMediaTextTrackSubtype)textSubtype name:(NSString *)name languageCode:(NSString *)languageCode customData:(id)customData</Declaration>
+			<Declaration>- (instancetype)initWithURL:(NSURL *)url</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSURL</Name>
+					<Abstract type="html">url of player content</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/initWithIdentifier:contentIdentifier:contentType:type:textSubtype:name:languageCode:customData:</Anchor>
+			<Anchor>//api/name/initWithURL:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setIdentifier:</TokenIdentifier>
-			<Abstract type="html">The track&apos;s unique numeric identifier.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/initWithConfiguration:</TokenIdentifier>
+			<Abstract type="html">@function initWithConfiguration:</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSInteger identifier</Declaration>
+			<Declaration>- (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>KPPlayerConfig</Name>
+					<Abstract type="html">configuration parameters of the player content</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/identifier</Anchor>
+			<Anchor>//api/name/initWithConfiguration:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/identifier</TokenIdentifier>
-			<Abstract type="html">The track&apos;s unique numeric identifier.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/loadPlayerIntoViewController:</TokenIdentifier>
+			<Abstract type="html">@function loadPlayerIntoViewController:</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSInteger identifier</Declaration>
+			<Declaration>- (void)loadPlayerIntoViewController:(UIViewController *)parentViewController</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>UIViewController</Name>
+					<Abstract type="html">parentViewController the controller which will call the player</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/identifier</Anchor>
+			<Anchor>//api/name/loadPlayerIntoViewController:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/identifier</TokenIdentifier>
-			<Abstract type="html">The track&apos;s unique numeric identifier.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/removePlayer</TokenIdentifier>
+			<Abstract type="html">@function removePlayer</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSInteger identifier</Declaration>
+			<Declaration>- (void)removePlayer</Declaration>
 			
 			
-			<Anchor>//api/name/identifier</Anchor>
+			<Anchor>//api/name/removePlayer</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setContentIdentifier:</TokenIdentifier>
-			<Abstract type="html">The track&apos;s content identifier, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/changeMedia:</TokenIdentifier>
+			<Abstract type="html">@function changeMedia:</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentIdentifier</Declaration>
+			<Declaration>- (void)changeMedia:(NSString *)entryID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">entryID the entryID of the new video</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/contentIdentifier</Anchor>
+			<Anchor>//api/name/changeMedia:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/contentIdentifier</TokenIdentifier>
-			<Abstract type="html">The track&apos;s content identifier, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setConfiguration:</TokenIdentifier>
+			<Abstract type="html">Enables to change the player configuration</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentIdentifier</Declaration>
+			<Declaration>@property (nonatomic, strong) KPPlayerConfig *configuration</Declaration>
 			
 			
-			<Anchor>//api/name/contentIdentifier</Anchor>
+			<Anchor>//api/name/configuration</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/contentIdentifier</TokenIdentifier>
-			<Abstract type="html">The track&apos;s content identifier, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/configuration</TokenIdentifier>
+			<Abstract type="html">Enables to change the player configuration</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentIdentifier</Declaration>
+			<Declaration>@property (nonatomic, strong) KPPlayerConfig *configuration</Declaration>
 			
 			
-			<Anchor>//api/name/contentIdentifier</Anchor>
+			<Anchor>//api/name/configuration</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setContentType:</TokenIdentifier>
-			<Abstract type="html">The track&apos;s content (MIME) type.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/configuration</TokenIdentifier>
+			<Abstract type="html">Enables to change the player configuration</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
+			<Declaration>@property (nonatomic, strong) KPPlayerConfig *configuration</Declaration>
 			
 			
-			<Anchor>//api/name/contentType</Anchor>
+			<Anchor>//api/name/configuration</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/contentType</TokenIdentifier>
-			<Abstract type="html">The track&apos;s content (MIME) type.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setPlayerSource:</TokenIdentifier>
+			<Abstract type="html">Change the source and returns the current source</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
+			<Declaration>@property (nonatomic, copy) NSURL *playerSource</Declaration>
 			
 			
-			<Anchor>//api/name/contentType</Anchor>
+			<Anchor>//api/name/playerSource</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/contentType</TokenIdentifier>
-			<Abstract type="html">The track&apos;s content (MIME) type.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/playerSource</TokenIdentifier>
+			<Abstract type="html">Change the source and returns the current source</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
+			<Declaration>@property (nonatomic, copy) NSURL *playerSource</Declaration>
 			
 			
-			<Anchor>//api/name/contentType</Anchor>
+			<Anchor>//api/name/playerSource</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setType:</TokenIdentifier>
-			<Abstract type="html">The track&apos;s type.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/playerSource</TokenIdentifier>
+			<Abstract type="html">Change the source and returns the current source</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaTrackType type</Declaration>
+			<Declaration>@property (nonatomic, copy) NSURL *playerSource</Declaration>
 			
 			
-			<Anchor>//api/name/type</Anchor>
+			<Anchor>//api/name/playerSource</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/type</TokenIdentifier>
-			<Abstract type="html">The track&apos;s type.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setKIMAWebOpenerDelegate:</TokenIdentifier>
+			<Abstract type="html">Signals that a internal or external web browser has been opened or closed</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaTrackType type</Declaration>
+			<Declaration>@property (nonatomic, weak) id kIMAWebOpenerDelegate</Declaration>
 			
 			
-			<Anchor>//api/name/type</Anchor>
+			<Anchor>//api/name/kIMAWebOpenerDelegate</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/type</TokenIdentifier>
-			<Abstract type="html">The track&apos;s type.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/kIMAWebOpenerDelegate</TokenIdentifier>
+			<Abstract type="html">Signals that a internal or external web browser has been opened or closed</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaTrackType type</Declaration>
+			<Declaration>@property (nonatomic, weak) id kIMAWebOpenerDelegate</Declaration>
 			
 			
-			<Anchor>//api/name/type</Anchor>
+			<Anchor>//api/name/kIMAWebOpenerDelegate</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setTextSubtype:</TokenIdentifier>
-			<Abstract type="html">The text track&apos;s subtype; applies only to text tracks.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/kIMAWebOpenerDelegate</TokenIdentifier>
+			<Abstract type="html">Signals that a internal or external web browser has been opened or closed</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaTextTrackSubtype textSubtype</Declaration>
+			<Declaration>@property (nonatomic, weak) id kIMAWebOpenerDelegate</Declaration>
 			
 			
-			<Anchor>//api/name/textSubtype</Anchor>
+			<Anchor>//api/name/kIMAWebOpenerDelegate</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/textSubtype</TokenIdentifier>
-			<Abstract type="html">The text track&apos;s subtype; applies only to text tracks.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setShareHandler:</TokenIdentifier>
+			<Abstract type="html">Assigning this handler will disable the default share action and will supply the share params for custom use.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaTextTrackSubtype textSubtype</Declaration>
+			<Declaration>- (void)setShareHandler:(void ( ^ ) ( NSDictionary *shareParams ))shareHandler</Declaration>
 			
 			
-			<Anchor>//api/name/textSubtype</Anchor>
+			<Anchor>//api/name/setShareHandler:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/textSubtype</TokenIdentifier>
-			<Abstract type="html">The text track&apos;s subtype; applies only to text tracks.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/registerReadyEvent:</TokenIdentifier>
+			<Abstract type="html">@function registerReadyEvent</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaTextTrackSubtype textSubtype</Declaration>
+			<Declaration>- (void)registerReadyEvent:(void ( ^ ) ( ))handler</Declaration>
 			
 			
-			<Anchor>//api/name/textSubtype</Anchor>
+			<Anchor>//api/name/registerReadyEvent:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setName:</TokenIdentifier>
-			<Abstract type="html">The track&apos;s name, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/addKPlayerEventListener:eventID:handler:</TokenIdentifier>
+			<Abstract type="html">@function addEventListener:eventID:handler:</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *name</Declaration>
+			<Declaration>- (void)addKPlayerEventListener:(NSString *)event eventID:(NSString *)eventID handler:(void ( ^ ) ( NSString *eventName , NSString *params ))handler</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>handler</Name>
+					<Abstract type="html">Callback for the ready event.</Abstract>
+				</Parameter><Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">event id, will enable to remove the current event by id</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/name</Anchor>
+			<Anchor>//api/name/addKPlayerEventListener:eventID:handler:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/name</TokenIdentifier>
-			<Abstract type="html">The track&apos;s name, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/removeKPlayerEventListener:eventID:</TokenIdentifier>
+			<Abstract type="html">@function removeEventListener:eventID</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *name</Declaration>
+			<Declaration>- (void)removeKPlayerEventListener:(NSString *)event eventID:(NSString *)eventID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">eventID, event id for removal.</Abstract>
+				</Parameter><Parameter>
+					<Name>handler</Name>
+					<Abstract type="html">Callback for the ready event.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/name</Anchor>
+			<Anchor>//api/name/removeKPlayerEventListener:eventID:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/name</TokenIdentifier>
-			<Abstract type="html">The track&apos;s name, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/asyncEvaluate:expressionID:handler:</TokenIdentifier>
+			<Abstract type="html">@function asyncEvaluate:expressionID:handler</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *name</Declaration>
+			<Declaration>- (void)asyncEvaluate:(NSString *)expression expressionID:(NSString *)expressionID handler:(void ( ^ ) ( NSString *value ))handler</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>handler</Name>
+					<Abstract type="html">Callback with the value of the expression.</Abstract>
+				</Parameter><Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">expressionID, expression id use for several expressions.</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/name</Anchor>
+			<Anchor>//api/name/asyncEvaluate:expressionID:handler:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setLanguageCode:</TokenIdentifier>
-			<Abstract type="html">The track&apos;s RFC 1766 language code, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/sendNotification:withParams:</TokenIdentifier>
+			<Abstract type="html">@function sendNotification:expressionID:forName</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *languageCode</Declaration>
+			<Declaration>- (void)sendNotification:(NSString *)notificationName withParams:(NSString *)params</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">params, json string for passing parameters to the controls layer (webview).</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/languageCode</Anchor>
+			<Anchor>//api/name/sendNotification:withParams:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/languageCode</TokenIdentifier>
-			<Abstract type="html">The track&apos;s RFC 1766 language code, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setKDPAttribute:propertyName:value:</TokenIdentifier>
+			<Abstract type="html">@function setKDPAttribute:propertyName:value</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *languageCode</Declaration>
+			<Declaration>- (void)setKDPAttribute:(NSString *)pluginName propertyName:(NSString *)propertyName value:(NSString *)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">value, sets the property</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/languageCode</Anchor>
+			<Anchor>//api/name/setKDPAttribute:propertyName:value:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/languageCode</TokenIdentifier>
-			<Abstract type="html">The track&apos;s RFC 1766 language code, which may be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/triggerEvent:withValue:</TokenIdentifier>
+			<Abstract type="html">@function triggerEvent:withValue</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *languageCode</Declaration>
+			<Declaration>- (void)triggerEvent:(NSString *)event withValue:(NSString *)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">value, params for the method</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/languageCode</Anchor>
+			<Anchor>//api/name/triggerEvent:withValue:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/setCustomData:</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setReadyCallback:</TokenIdentifier>
+			<Abstract type="html">Wraps registerReadyEvent: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( void ( ^ ) ( ) ) readyCallback</Declaration>
 			
 			
-			<Anchor>//api/name/customData</Anchor>
+			<Anchor>//api/name/readyCallback</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTrack/customData</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/readyCallback</TokenIdentifier>
+			<Abstract type="html">Wraps registerReadyEvent: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( void ( ^ ) ( ) ) readyCallback</Declaration>
 			
 			
-			<Anchor>//api/name/customData</Anchor>
+			<Anchor>//api/name/readyCallback</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTrack/customData</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaTrack.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/readyCallback</TokenIdentifier>
+			<Abstract type="html">Wraps registerReadyEvent: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
+			<Declaration>@property (nonatomic, copy) void ( ^ ) ( void ( ^ ) ( ) ) readyCallback</Declaration>
 			
 			
-			<Anchor>//api/name/customData</Anchor>
+			<Anchor>//api/name/readyCallback</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/set:</TokenIdentifier>
+			<Abstract type="html">Wraps addEventListener:eventID:handler: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ( NSString *event , NSString *eventID , void ( ^ ( NSString *eventName , NSString *params )</Declaration>
+			
+			
+			<Anchor>//api/name/)</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/)</TokenIdentifier>
+			<Abstract type="html">Wraps addEventListener:eventID:handler: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ( NSString *event , NSString *eventID , void ( ^ ( NSString *eventName , NSString *params )</Declaration>
+			
+			
+			<Anchor>//api/name/)</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/)</TokenIdentifier>
+			<Abstract type="html">Wraps addEventListener:eventID:handler: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ( NSString *event , NSString *eventID , void ( ^ ( NSString *eventName , NSString *params )</Declaration>
+			
+			
+			<Anchor>//api/name/)</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setRemoveEventListener:</TokenIdentifier>
+			<Abstract type="html">Wraps removeEventListener:eventID: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *event , NSString *eventID ) removeEventListener</Declaration>
+			
+			
+			<Anchor>//api/name/removeEventListener</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/removeEventListener</TokenIdentifier>
+			<Abstract type="html">Wraps removeEventListener:eventID: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *event , NSString *eventID ) removeEventListener</Declaration>
+			
+			
+			<Anchor>//api/name/removeEventListener</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/removeEventListener</TokenIdentifier>
+			<Abstract type="html">Wraps removeEventListener:eventID: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *event , NSString *eventID ) removeEventListener</Declaration>
+			
+			
+			<Anchor>//api/name/removeEventListener</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setSendNotification:</TokenIdentifier>
+			<Abstract type="html">Wraps sendNotification:expressionID:forName: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *notification , NSString *notificationName ) sendNotification</Declaration>
+			
+			
+			<Anchor>//api/name/sendNotification</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/sendNotification</TokenIdentifier>
+			<Abstract type="html">Wraps sendNotification:expressionID:forName: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *notification , NSString *notificationName ) sendNotification</Declaration>
+			
+			
+			<Anchor>//api/name/sendNotification</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/sendNotification</TokenIdentifier>
+			<Abstract type="html">Wraps sendNotification:expressionID:forName: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *notification , NSString *notificationName ) sendNotification</Declaration>
+			
+			
+			<Anchor>//api/name/sendNotification</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setSetKDPAttribute:</TokenIdentifier>
+			<Abstract type="html">Wraps setKDPAttribute:propertyName:value: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *pluginName , NSString *propertyName , NSString *value ) setKDPAttribute</Declaration>
+			
+			
+			<Anchor>//api/name/setKDPAttribute</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setKDPAttribute</TokenIdentifier>
+			<Abstract type="html">Wraps setKDPAttribute:propertyName:value: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *pluginName , NSString *propertyName , NSString *value ) setKDPAttribute</Declaration>
+			
+			
+			<Anchor>//api/name/setKDPAttribute</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/setKDPAttribute</TokenIdentifier>
+			<Abstract type="html">Wraps setKDPAttribute:propertyName:value: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *pluginName , NSString *propertyName , NSString *value ) setKDPAttribute</Declaration>
+			
+			
+			<Anchor>//api/name/setKDPAttribute</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/setTriggerEvent:</TokenIdentifier>
+			<Abstract type="html">Wraps triggerEvent:withValue: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *event , NSString *value ) triggerEvent</Declaration>
+			
+			
+			<Anchor>//api/name/triggerEvent</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/triggerEvent</TokenIdentifier>
+			<Abstract type="html">Wraps triggerEvent:withValue: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *event , NSString *value ) triggerEvent</Declaration>
+			
+			
+			<Anchor>//api/name/triggerEvent</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPViewController/triggerEvent</TokenIdentifier>
+			<Abstract type="html">Wraps triggerEvent:withValue: method by block syntax.</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) void ( ^ ) ( NSString *event , NSString *value ) triggerEvent</Declaration>
+			
+			
+			<Anchor>//api/name/triggerEvent</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/willPresentActionSheet:</TokenIdentifier>
+			<Abstract type="html">@todo replace Title with GoogleCast constant
+         </Abstract>
+			<DeclaredIn>KPViewController.m</DeclaredIn>
+			
+			<Declaration>- (void)willPresentActionSheet:(UIActionSheet *)actionSheet</Declaration>
+			
+			
+			<Anchor>//api/name/willPresentActionSheet:</Anchor>
+            <NodeRef refid="26"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPViewController/visible:</TokenIdentifier>
+			<Abstract type="html">@todo: test &amp;amp; refactor by sending the dictionary via web layer</Abstract>
+			<DeclaredIn>KPViewController.m</DeclaredIn>
+			
+			<Declaration>- (void)visible:(NSString *)boolVal</Declaration>
+			
+			
+			<Anchor>//api/name/visible:</Anchor>
             <NodeRef refid="26"/>
 		</Token>
 		

@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKLogger.html">
+	<File path="Classes/IMASettings.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKLogger</TokenIdentifier>
-			<Abstract type="html">A singleton object used for logging by the framework. By default, log messages are written to
-NSLog() in debug builds and are discarded otherwise. If a delegate is assigned, the formatted
-log messages are passed to the delegate instead.</Abstract>
-			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/IMASettings</TokenIdentifier>
+			<Abstract type="html">Stores SDK wide settings.  Only instantiated in the SDK.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
             
 			
 			<NodeRef refid="18"/>
@@ -15,70 +13,83 @@ log messages are passed to the delegate instead.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLogger/setDelegate:</TokenIdentifier>
-			<Abstract type="html">The delegate to pass log messages to.</Abstract>
-			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMASettings/setPpid:</TokenIdentifier>
+			<Abstract type="html">Publisher Provided Identification (PPID) sent with ads request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;GCKLoggerDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *ppid</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/ppid</Anchor>
             <NodeRef refid="18"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLogger/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate to pass log messages to.</Abstract>
-			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMASettings/ppid</TokenIdentifier>
+			<Abstract type="html">Publisher Provided Identification (PPID) sent with ads request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;GCKLoggerDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *ppid</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/ppid</Anchor>
             <NodeRef refid="18"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKLogger/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate to pass log messages to.</Abstract>
-			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMASettings/ppid</TokenIdentifier>
+			<Abstract type="html">Publisher Provided Identification (PPID) sent with ads request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;GCKLoggerDelegate&gt; delegate</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *ppid</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/ppid</Anchor>
             <NodeRef refid="18"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/GCKLogger/sharedInstance</TokenIdentifier>
-			<Abstract type="html">Returns the GCKLogger singleton instance.</Abstract>
-			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMASettings/setLanguage:</TokenIdentifier>
+			<Abstract type="html">Language specification used for localization. |Language| must be formated as
+a canonicalized IETF BCP 47 language identifier such as would be returned by
+[NSLocale preferredLanguages]. Setting this property after it has been sent
+to the IMAAdsLoader will be ignored and a warning will be logged.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
 			
-			<Declaration>+ (GCKLogger *)sharedInstance</Declaration>
+			<Declaration>@property (nonatomic, copy) NSString *language</Declaration>
 			
 			
-			<Anchor>//api/name/sharedInstance</Anchor>
+			<Anchor>//api/name/language</Anchor>
             <NodeRef refid="18"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLogger/logFromFunction:message:</TokenIdentifier>
-			<Abstract type="html">Logs a message.</Abstract>
-			<DeclaredIn>GCKLogger.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMASettings/language</TokenIdentifier>
+			<Abstract type="html">Language specification used for localization. |Language| must be formated as
+a canonicalized IETF BCP 47 language identifier such as would be returned by
+[NSLocale preferredLanguages]. Setting this property after it has been sent
+to the IMAAdsLoader will be ignored and a warning will be logged.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
 			
-			<Declaration>- (void)logFromFunction:(const char *)function message:(NSString *)format, ...</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>function</Name>
-					<Abstract type="html">The calling function, normally &lt;code&gt;func&lt;/code&gt;.</Abstract>
-				</Parameter><Parameter>
-					<Name>format</Name>
-					<Abstract type="html">The format string.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, copy) NSString *language</Declaration>
 			
-			<Anchor>//api/name/logFromFunction:message:</Anchor>
+			
+			<Anchor>//api/name/language</Anchor>
+            <NodeRef refid="18"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMASettings/language</TokenIdentifier>
+			<Abstract type="html">Language specification used for localization. |Language| must be formated as
+a canonicalized IETF BCP 47 language identifier such as would be returned by
+[NSLocale preferredLanguages]. Setting this property after it has been sent
+to the IMAAdsLoader will be ignored and a warning will be logged.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *language</Declaration>
+			
+			
+			<Anchor>//api/name/language</Anchor>
             <NodeRef refid="18"/>
 		</Token>
 		

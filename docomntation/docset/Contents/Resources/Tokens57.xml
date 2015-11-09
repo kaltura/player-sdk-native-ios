@@ -1,94 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/ChromecastDeviceControllerDelegate.html">
+	<File path="Constants/KPMediaPlaybackState.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/ChromecastDeviceControllerDelegate</TokenIdentifier>
+			<TokenIdentifier>//apple_ref/c/tdef/KPMediaPlaybackState</TokenIdentifier>
 			<Abstract type="html"></Abstract>
-			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			<DeclaredIn>KPController.h</DeclaredIn>
             
 			
 			<NodeRef refid="57"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/ChromecastDeviceControllerDelegate/didConnectToDevice:</TokenIdentifier>
-			<Abstract type="html">Called when connection to the device was established.</Abstract>
-			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
-			
-			<Declaration>- (void)didConnectToDevice:(GCKDevice *)device</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>device</Name>
-					<Abstract type="html">The device to which the connection was established.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/didConnectToDevice:</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateUnknown</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateUnknown</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
             <NodeRef refid="57"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/ChromecastDeviceControllerDelegate/didDisconnect</TokenIdentifier>
-			<Abstract type="html">Called when the device disconnects.</Abstract>
-			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
-			
-			<Declaration>- (void)didDisconnect</Declaration>
-			
-			
-			<Anchor>//api/name/didDisconnect</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateLoaded</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateLoaded</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
             <NodeRef refid="57"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/ChromecastDeviceControllerDelegate/didDiscoverDeviceOnNetwork</TokenIdentifier>
-			<Abstract type="html">Called when Cast devices are discoverd on the network.</Abstract>
-			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
-			
-			<Declaration>- (void)didDiscoverDeviceOnNetwork</Declaration>
-			
-			
-			<Anchor>//api/name/didDiscoverDeviceOnNetwork</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateReady</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateReady</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
             <NodeRef refid="57"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/ChromecastDeviceControllerDelegate/castConnectingToDevice</TokenIdentifier>
-			<Abstract type="html">Called when Cast device is connecting</Abstract>
-			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
-			
-			<Declaration>- (void)castConnectingToDevice</Declaration>
-			
-			
-			<Anchor>//api/name/castConnectingToDevice</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateStopped</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateStopped</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
             <NodeRef refid="57"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/ChromecastDeviceControllerDelegate/didCompleteLoadWithSessionID:</TokenIdentifier>
-			<Abstract type="html">Called when a request to load media has completed.</Abstract>
-			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
-			
-			<Declaration>- (void)didCompleteLoadWithSessionID:(NSInteger)sessionID</Declaration>
-			
-			
-			<Anchor>//api/name/didCompleteLoadWithSessionID:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStatePlaying</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStatePlaying</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
             <NodeRef refid="57"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/intfm/ChromecastDeviceControllerDelegate/didUpdateStatus:</TokenIdentifier>
-			<Abstract type="html">Called when updated player status information is received.</Abstract>
-			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
-			
-			<Declaration>- (void)didUpdateStatus:(GCKMediaControlChannel *)mediaControlChannel</Declaration>
-			
-			
-			<Anchor>//api/name/didUpdateStatus:</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStatePaused</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStatePaused</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
             <NodeRef refid="57"/>
-		</Token>
-		
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateEnded</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateEnded</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="57"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateInterrupted</TokenIdentifier>
+            <Abstract type="html">@todo</Abstract>
+            <Declaration>KPMediaPlaybackStateInterrupted</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="57"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateSeekingForward</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateSeekingForward</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="57"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateSeekingBackward</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateSeekingBackward</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="57"/>
+        </Token>
         
         
 	</File>

@@ -1,89 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Categories/NSDictionary+Strategy.html">
+	<File path="Constants/KPGCMediaStreamType.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cat/NSDictionary(Strategy)</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>NSDictionary+Strategy.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/KPGCMediaStreamType</TokenIdentifier>
+			<Abstract type="html">@enum KPGCMediaStreamType
+Enum defining the media stream type.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
             
 			
 			<NodeRef refid="54"/>
 		</Token>
 		
 		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/videoName</TokenIdentifier>
-			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
-			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
-			
-			<Declaration>- (NSString *)videoName</Declaration>
-			
-			
-			<Anchor>//api/name/videoName</Anchor>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaStreamTypeNone</TokenIdentifier>
+            <Abstract type="html">A stream type of &quot;none&quot;.</Abstract>
+            <Declaration>KPGCMediaStreamTypeNone</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="54"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/shareLink</TokenIdentifier>
-			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
-			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
-			
-			<Declaration>- (NSString *)shareLink</Declaration>
-			
-			
-			<Anchor>//api/name/shareLink</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaStreamTypeBuffered</TokenIdentifier>
+            <Abstract type="html">A buffered stream type.</Abstract>
+            <Declaration>KPGCMediaStreamTypeBuffered</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="54"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/thumbnailLink</TokenIdentifier>
-			<Abstract type="html">The link for the first frame of the video</Abstract>
-			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
-			
-			<Declaration>- (NSString *)thumbnailLink</Declaration>
-			
-			
-			<Anchor>//api/name/thumbnailLink</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaStreamTypeLive</TokenIdentifier>
+            <Abstract type="html">A live stream type.</Abstract>
+            <Declaration>KPGCMediaStreamTypeLive</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="54"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/networkURL</TokenIdentifier>
-			<Abstract type="html">Share API of the selected network</Abstract>
-			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
-			
-			<Declaration>- (NSString *)networkURL</Declaration>
-			
-			
-			<Anchor>//api/name/networkURL</Anchor>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaStreamTypeUnknown</TokenIdentifier>
+            <Abstract type="html">An unknown stream type.</Abstract>
+            <Declaration>KPGCMediaStreamTypeUnknown</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
             <NodeRef refid="54"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/redirectURLs</TokenIdentifier>
-			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
-			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
-			
-			<Declaration>- (NSArray *)redirectURLs</Declaration>
-			
-			
-			<Anchor>//api/name/redirectURLs</Anchor>
-            <NodeRef refid="54"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/networkStrategyClass</TokenIdentifier>
-			<Abstract type="html">Generates the strategy class by the network name</Abstract>
-			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
-			
-			<Declaration>- (Class)networkStrategyClass</Declaration>
-			
-			
-			<Anchor>//api/name/networkStrategyClass</Anchor>
-            <NodeRef refid="54"/>
-		</Token>
-		
+        </Token>
         
         
 	</File>

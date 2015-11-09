@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/KPController.html">
+	<File path="Protocols/KPShareParams.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/KPController</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/KPShareParams</TokenIdentifier>
+			<Abstract type="html">All the parameters for submitting share action</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
             
 			
 			<NodeRef refid="44"/>
@@ -13,191 +13,218 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/setContentURL:</TokenIdentifier>
-			<Abstract type="html">@todo setsource refactor</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setVideoName:</TokenIdentifier>
+			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSURL *contentURL</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *videoName</Declaration>
 			
 			
-			<Anchor>//api/name/contentURL</Anchor>
+			<Anchor>//api/name/videoName</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/contentURL</TokenIdentifier>
-			<Abstract type="html">@todo setsource refactor</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/videoName</TokenIdentifier>
+			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSURL *contentURL</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *videoName</Declaration>
 			
 			
-			<Anchor>//api/name/contentURL</Anchor>
+			<Anchor>//api/name/videoName</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/KPController/contentURL</TokenIdentifier>
-			<Abstract type="html">@todo setsource refactor</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/videoName</TokenIdentifier>
+			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSURL *contentURL</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *videoName</Declaration>
 			
 			
-			<Anchor>//api/name/contentURL</Anchor>
+			<Anchor>//api/name/videoName</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/setDuration:</TokenIdentifier>
-			<Abstract type="html">Duration of the current video</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setShareLink:</TokenIdentifier>
+			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *shareLink</Declaration>
 			
-			<ReturnValue><Abstract type="html">Duration of the current video</Abstract></ReturnValue>
-			<Anchor>//api/name/duration</Anchor>
+			
+			<Anchor>//api/name/shareLink</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/duration</TokenIdentifier>
-			<Abstract type="html">Duration of the current video</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/shareLink</TokenIdentifier>
+			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *shareLink</Declaration>
 			
-			<ReturnValue><Abstract type="html">Duration of the current video</Abstract></ReturnValue>
-			<Anchor>//api/name/duration</Anchor>
+			
+			<Anchor>//api/name/shareLink</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/KPController/duration</TokenIdentifier>
-			<Abstract type="html">Duration of the current video</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/shareLink</TokenIdentifier>
+			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *shareLink</Declaration>
 			
-			<ReturnValue><Abstract type="html">Duration of the current video</Abstract></ReturnValue>
-			<Anchor>//api/name/duration</Anchor>
+			
+			<Anchor>//api/name/shareLink</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/setCurrentPlaybackTime:</TokenIdentifier>
-			<Abstract type="html">Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setThumbnailLink:</TokenIdentifier>
+			<Abstract type="html">The link for the first frame of the video</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) NSTimeInterval currentPlaybackTime</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *thumbnailLink</Declaration>
 			
 			
-			<Anchor>//api/name/currentPlaybackTime</Anchor>
+			<Anchor>//api/name/thumbnailLink</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/currentPlaybackTime</TokenIdentifier>
-			<Abstract type="html">Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/thumbnailLink</TokenIdentifier>
+			<Abstract type="html">The link for the first frame of the video</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) NSTimeInterval currentPlaybackTime</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *thumbnailLink</Declaration>
 			
 			
-			<Anchor>//api/name/currentPlaybackTime</Anchor>
+			<Anchor>//api/name/thumbnailLink</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/KPController/currentPlaybackTime</TokenIdentifier>
-			<Abstract type="html">Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime</Abstract>
-			<DeclaredIn>KPController.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/thumbnailLink</TokenIdentifier>
+			<Abstract type="html">The link for the first frame of the video</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) NSTimeInterval currentPlaybackTime</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *thumbnailLink</Declaration>
 			
 			
-			<Anchor>//api/name/currentPlaybackTime</Anchor>
+			<Anchor>//api/name/thumbnailLink</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/prepareToPlay</TokenIdentifier>
-			<Abstract type="html">@todo prepareToPlay</Abstract>
-			<DeclaredIn>KPController.m</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setNetworkURL:</TokenIdentifier>
+			<Abstract type="html">Share API of the selected network</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>- (void)prepareToPlay</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *networkURL</Declaration>
 			
 			
-			<Anchor>//api/name/prepareToPlay</Anchor>
+			<Anchor>//api/name/networkURL</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/play</TokenIdentifier>
-			<Abstract type="html">Initiates playback of the current item. (required)
-
-If playback was previously paused, this method resumes playback where it left off; otherwise, this method plays the first available item, from the beginning.
-If a Kaltura player is not prepared for playback when you call this method, this method first prepares the Kaltura player and then starts playback. To minimize playback delay, call the prepareToPlay method before you call this method.</Abstract>
-			<DeclaredIn>KPController.m</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/networkURL</TokenIdentifier>
+			<Abstract type="html">Share API of the selected network</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>- (void)play</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *networkURL</Declaration>
 			
 			
-			<Anchor>//api/name/play</Anchor>
+			<Anchor>//api/name/networkURL</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/pause</TokenIdentifier>
-			<Abstract type="html">Pauses playback of the current item. (required)
-
-If playback is not currently underway, this method has no effect. To resume playback of the current item from the pause point, call the play method.</Abstract>
-			<DeclaredIn>KPController.m</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/networkURL</TokenIdentifier>
+			<Abstract type="html">Share API of the selected network</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>- (void)pause</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSString *networkURL</Declaration>
 			
 			
-			<Anchor>//api/name/pause</Anchor>
+			<Anchor>//api/name/networkURL</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/stop</TokenIdentifier>
-			<Abstract type="html">Ends playback of the current item. (required)
-
-This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.</Abstract>
-			<DeclaredIn>KPController.m</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setRedirectURLs:</TokenIdentifier>
+			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>- (void)stop</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSArray *redirectURLs</Declaration>
 			
 			
-			<Anchor>//api/name/stop</Anchor>
+			<Anchor>//api/name/redirectURLs</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/setCurrentPlaybackRate:</TokenIdentifier>
-			<Abstract type="html">@todo setCurrentPlaybackRate</Abstract>
-			<DeclaredIn>KPController.m</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/redirectURLs</TokenIdentifier>
+			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>- (void)setCurrentPlaybackRate:(float)currentPlaybackRate</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSArray *redirectURLs</Declaration>
 			
 			
-			<Anchor>//api/name/setCurrentPlaybackRate:</Anchor>
+			<Anchor>//api/name/redirectURLs</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPController/isPreparedToPlay</TokenIdentifier>
-			<Abstract type="html">Prepares a Kaltura player for playback. (required)
-
-If a Kaltura player is not already prepared to play when you call the play method, that method automatically calls this method. However, to minimize playback delay, call this method before you call play.</Abstract>
-			<DeclaredIn>KPController.m</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/redirectURLs</TokenIdentifier>
+			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>- (BOOL)isPreparedToPlay</Declaration>
+			<Declaration>@property (nonatomic, copy, readonly) NSArray *redirectURLs</Declaration>
 			
 			
-			<Anchor>//api/name/isPreparedToPlay</Anchor>
+			<Anchor>//api/name/redirectURLs</Anchor>
+            <NodeRef refid="44"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setNetworkStrategyClass:</TokenIdentifier>
+			<Abstract type="html">Generates the strategy class by the network name</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) Class networkStrategyClass</Declaration>
+			
+			
+			<Anchor>//api/name/networkStrategyClass</Anchor>
+            <NodeRef refid="44"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/networkStrategyClass</TokenIdentifier>
+			<Abstract type="html">Generates the strategy class by the network name</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) Class networkStrategyClass</Declaration>
+			
+			
+			<Anchor>//api/name/networkStrategyClass</Anchor>
+            <NodeRef refid="44"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/networkStrategyClass</TokenIdentifier>
+			<Abstract type="html">Generates the strategy class by the network name</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) Class networkStrategyClass</Declaration>
+			
+			
+			<Anchor>//api/name/networkStrategyClass</Anchor>
             <NodeRef refid="44"/>
 		</Token>
 		

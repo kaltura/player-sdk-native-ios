@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/IMACompanionAdSlot.html">
+	<File path="Protocols/IMAWebOpenerDelegate.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/IMACompanionAdSlot</TokenIdentifier>
-			<Abstract type="html">Ad slot for companion ads. The SDK will put a subview inside the provided
-UIView container. The companion will be matched to the width and height
-provided here.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/IMAWebOpenerDelegate</TokenIdentifier>
+			<Abstract type="html">Signals that a internal or external web browser has been opened or closed.
+For an external browser (Mobile Safari), the delegate is only notified
+before opening.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
             
 			
 			<NodeRef refid="40"/>
@@ -15,155 +15,122 @@ provided here.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setView:</TokenIdentifier>
-			<Abstract type="html">The view the companion will be rendered in. Display this view in your
-application before video ad starts.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerWillOpenExternalBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when Safari is about to be opened.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
+			<Declaration>- (void)webOpenerWillOpenExternalBrowser:(NSObject *)webOpener</Declaration>
 			
 			
-			<Anchor>//api/name/view</Anchor>
+			<Anchor>//api/name/webOpenerWillOpenExternalBrowser:</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/view</TokenIdentifier>
-			<Abstract type="html">The view the companion will be rendered in. Display this view in your
-application before video ad starts.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerWillOpenInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called before in-app browser opens.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
+			<Declaration>- (void)webOpenerWillOpenInAppBrowser:(NSObject *)webOpener</Declaration>
 			
 			
-			<Anchor>//api/name/view</Anchor>
+			<Anchor>//api/name/webOpenerWillOpenInAppBrowser:</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/view</TokenIdentifier>
-			<Abstract type="html">The view the companion will be rendered in. Display this view in your
-application before video ad starts.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerDidOpenInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when the in app browser is shown on the screen.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
+			<Declaration>- (void)webOpenerDidOpenInAppBrowser:(NSObject *)webOpener</Declaration>
 			
 			
-			<Anchor>//api/name/view</Anchor>
+			<Anchor>//api/name/webOpenerDidOpenInAppBrowser:</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setWidth:</TokenIdentifier>
-			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
-targeting.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerWillCloseInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when in-app browser is about to close.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			<Declaration>- (void)webOpenerWillCloseInAppBrowser:(NSObject *)webOpener</Declaration>
 			
 			
-			<Anchor>//api/name/width</Anchor>
+			<Anchor>//api/name/webOpenerWillCloseInAppBrowser:</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/width</TokenIdentifier>
-			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
-targeting.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerDidCloseInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when in-app browser finishes closing.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			<Declaration>- (void)webOpenerDidCloseInAppBrowser:(NSObject *)webOpener</Declaration>
 			
 			
-			<Anchor>//api/name/width</Anchor>
+			<Anchor>//api/name/webOpenerDidCloseInAppBrowser:</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/width</TokenIdentifier>
-			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
-targeting.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/willOpenExternalBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerWillOpenExternalBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerWillOpenExternalBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			<Declaration>- (void)willOpenExternalBrowser</Declaration>
 			
 			
-			<Anchor>//api/name/width</Anchor>
+			<Anchor>//api/name/willOpenExternalBrowser</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setHeight:</TokenIdentifier>
-			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
-targeting.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/willOpenInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerWillOpenInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerWillOpenInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) int height</Declaration>
+			<Declaration>- (void)willOpenInAppBrowser</Declaration>
 			
 			
-			<Anchor>//api/name/height</Anchor>
+			<Anchor>//api/name/willOpenInAppBrowser</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/height</TokenIdentifier>
-			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
-targeting.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/didOpenInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerDidOpenInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerDidOpenInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) int height</Declaration>
+			<Declaration>- (void)didOpenInAppBrowser</Declaration>
 			
 			
-			<Anchor>//api/name/height</Anchor>
+			<Anchor>//api/name/didOpenInAppBrowser</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/height</TokenIdentifier>
-			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
-targeting.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/willCloseInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerWillCloseInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerWillCloseInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) int height</Declaration>
+			<Declaration>- (void)willCloseInAppBrowser</Declaration>
 			
 			
-			<Anchor>//api/name/height</Anchor>
+			<Anchor>//api/name/willCloseInAppBrowser</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setDelegate:</TokenIdentifier>
-			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/didCloseInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerDidCloseInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerDidCloseInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/delegate</TokenIdentifier>
-			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
+			<Declaration>- (void)didCloseInAppBrowser</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
-            <NodeRef refid="40"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/delegate</TokenIdentifier>
-			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
-			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
-			
-			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/didCloseInAppBrowser</Anchor>
             <NodeRef refid="40"/>
 		</Token>
 		

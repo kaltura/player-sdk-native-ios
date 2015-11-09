@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKCastChannel.html">
+	<File path="Classes/IMAAd.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKCastChannel</TokenIdentifier>
-			<Abstract type="html">A GCKCastChannel is used to send and receive messages that are tagged with a specific
-namespace. In this way, multiple channels may be multiplexed over a single connection
-to a Cast device.
-&lt;p&gt;
-Subclasses should implement the @link GCKCastChannel#didReceiveTextMessage: @endlink method to
-process incoming messages, and will typically provide additional methods for sending messages
-that are specific to a given namespace.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAd</TokenIdentifier>
+			<Abstract type="html">Data object representing a single ad.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
             
 			
 			<NodeRef refid="6"/>
@@ -19,214 +13,413 @@ that are specific to a given namespace.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/setProtocolNamespace:</TokenIdentifier>
-			<Abstract type="html">The channel&apos;s namespace.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setAdId:</TokenIdentifier>
+			<Abstract type="html">The ad ID as specified in the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *protocolNamespace</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adId</Declaration>
 			
 			
-			<Anchor>//api/name/protocolNamespace</Anchor>
+			<Anchor>//api/name/adId</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/protocolNamespace</TokenIdentifier>
-			<Abstract type="html">The channel&apos;s namespace.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/adId</TokenIdentifier>
+			<Abstract type="html">The ad ID as specified in the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *protocolNamespace</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adId</Declaration>
 			
 			
-			<Anchor>//api/name/protocolNamespace</Anchor>
+			<Anchor>//api/name/adId</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKCastChannel/protocolNamespace</TokenIdentifier>
-			<Abstract type="html">The channel&apos;s namespace.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/adId</TokenIdentifier>
+			<Abstract type="html">The ad ID as specified in the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *protocolNamespace</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adId</Declaration>
 			
 			
-			<Anchor>//api/name/protocolNamespace</Anchor>
+			<Anchor>//api/name/adId</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/setIsConnected:</TokenIdentifier>
-			<Abstract type="html">A flag indicating whether this channel is currently connected.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setAdTitle:</TokenIdentifier>
+			<Abstract type="html">The ad title from the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) BOOL isConnected</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adTitle</Declaration>
 			
 			
-			<Anchor>//api/name/isConnected</Anchor>
+			<Anchor>//api/name/adTitle</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/isConnected</TokenIdentifier>
-			<Abstract type="html">A flag indicating whether this channel is currently connected.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/adTitle</TokenIdentifier>
+			<Abstract type="html">The ad title from the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) BOOL isConnected</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adTitle</Declaration>
 			
 			
-			<Anchor>//api/name/isConnected</Anchor>
+			<Anchor>//api/name/adTitle</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKCastChannel/isConnected</TokenIdentifier>
-			<Abstract type="html">A flag indicating whether this channel is currently connected.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/adTitle</TokenIdentifier>
+			<Abstract type="html">The ad title from the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) BOOL isConnected</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adTitle</Declaration>
 			
 			
-			<Anchor>//api/name/isConnected</Anchor>
+			<Anchor>//api/name/adTitle</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/setDeviceManager:</TokenIdentifier>
-			<Abstract type="html">The device manager with which this channel is registered, if any.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setAdDescription:</TokenIdentifier>
+			<Abstract type="html">The ad description.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, readonly) GCKDeviceManager *deviceManager</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adDescription</Declaration>
 			
 			
-			<Anchor>//api/name/deviceManager</Anchor>
+			<Anchor>//api/name/adDescription</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/deviceManager</TokenIdentifier>
-			<Abstract type="html">The device manager with which this channel is registered, if any.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/adDescription</TokenIdentifier>
+			<Abstract type="html">The ad description.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, readonly) GCKDeviceManager *deviceManager</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adDescription</Declaration>
 			
 			
-			<Anchor>//api/name/deviceManager</Anchor>
+			<Anchor>//api/name/adDescription</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKCastChannel/deviceManager</TokenIdentifier>
-			<Abstract type="html">The device manager with which this channel is registered, if any.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/adDescription</TokenIdentifier>
+			<Abstract type="html">The ad description.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, weak, readonly) GCKDeviceManager *deviceManager</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSString *adDescription</Declaration>
 			
 			
-			<Anchor>//api/name/deviceManager</Anchor>
+			<Anchor>//api/name/adDescription</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/initWithNamespace:</TokenIdentifier>
-			<Abstract type="html">Designated initializer. Constructs a new GCKCastChannel with the given namespace.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setContentType:</TokenIdentifier>
+			<Abstract type="html">Content type of the currently selected creative. For linear creatives
+returns the content type of the currently selected media file. Returns
+empty string if no creative or media file is selected on this ad.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithNamespace:(NSString *)protocolNamespace</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>protocolNamespace</Name>
-					<Abstract type="html">The namespace.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, readonly) NSString *contentType</Declaration>
 			
-			<Anchor>//api/name/initWithNamespace:</Anchor>
+			
+			<Anchor>//api/name/contentType</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/didReceiveTextMessage:</TokenIdentifier>
-			<Abstract type="html">Called when a text message has been received on this channel. The default implementation is a
-no-op.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/contentType</TokenIdentifier>
+			<Abstract type="html">Content type of the currently selected creative. For linear creatives
+returns the content type of the currently selected media file. Returns
+empty string if no creative or media file is selected on this ad.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>- (void)didReceiveTextMessage:(NSString *)message</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>message</Name>
-					<Abstract type="html">The message.</Abstract>
-				</Parameter>
-			</Parameters>
+			<Declaration>@property (nonatomic, readonly) NSString *contentType</Declaration>
 			
-			<Anchor>//api/name/didReceiveTextMessage:</Anchor>
+			
+			<Anchor>//api/name/contentType</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/sendTextMessage:</TokenIdentifier>
-			<Abstract type="html">Sends a text message on this channel.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/contentType</TokenIdentifier>
+			<Abstract type="html">Content type of the currently selected creative. For linear creatives
+returns the content type of the currently selected media file. Returns
+empty string if no creative or media file is selected on this ad.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>- (BOOL)sendTextMessage:(NSString *)message</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>message</Name>
-					<Abstract type="html">The message.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">&lt;code&gt;YES&lt;/code&gt; on success or &lt;code&gt;NO&lt;/code&gt; if the message could not be sent (because
-the channel is not connected, or because the send buffer is too full at the moment).</Abstract></ReturnValue>
-			<Anchor>//api/name/sendTextMessage:</Anchor>
+			<Declaration>@property (nonatomic, readonly) NSString *contentType</Declaration>
+			
+			
+			<Anchor>//api/name/contentType</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/generateRequestID</TokenIdentifier>
-			<Abstract type="html">Generates a request ID for a new message.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setDuration:</TokenIdentifier>
+			<Abstract type="html">The duration of the ad from the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>- (NSInteger)generateRequestID</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
 			
-			<ReturnValue><Abstract type="html">The generated ID, or &lt;code&gt;kGCKInvalidRequestID&lt;/code&gt; if the channel is not currently
-connected.</Abstract></ReturnValue>
-			<Anchor>//api/name/generateRequestID</Anchor>
+			
+			<Anchor>//api/name/duration</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/generateRequestNumber</TokenIdentifier>
-			<Abstract type="html">A convenience method which wraps generateRequestID in an NSNumber.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/duration</TokenIdentifier>
+			<Abstract type="html">The duration of the ad from the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>- (NSNumber *)generateRequestNumber</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
 			
-			<ReturnValue><Abstract type="html">The generated ID, or &lt;code&gt;nil&lt;/code&gt; if the channel is not currently connected.</Abstract></ReturnValue>
-			<Anchor>//api/name/generateRequestNumber</Anchor>
+			
+			<Anchor>//api/name/duration</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/didConnect</TokenIdentifier>
-			<Abstract type="html">Called when this channel has been connected, indicating that messages can now be exchanged with
-the Cast device over this channel. The default implementation is a no-op.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/duration</TokenIdentifier>
+			<Abstract type="html">The duration of the ad from the VAST response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>- (void)didConnect</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
 			
 			
-			<Anchor>//api/name/didConnect</Anchor>
+			<Anchor>//api/name/duration</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKCastChannel/didDisconnect</TokenIdentifier>
-			<Abstract type="html">Called when this channel has been disconnected, indicating that messages can no longer be
-exchanged with the Cast device over this channel. The default implementation is a no-op.</Abstract>
-			<DeclaredIn>GCKCastChannel.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setUiElements:</TokenIdentifier>
+			<Abstract type="html">The UI elements that will be displayed during ad playback.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
 			
-			<Declaration>- (void)didDisconnect</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSArray *uiElements</Declaration>
 			
 			
-			<Anchor>//api/name/didDisconnect</Anchor>
+			<Anchor>//api/name/uiElements</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/uiElements</TokenIdentifier>
+			<Abstract type="html">The UI elements that will be displayed during ad playback.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *uiElements</Declaration>
+			
+			
+			<Anchor>//api/name/uiElements</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/uiElements</TokenIdentifier>
+			<Abstract type="html">The UI elements that will be displayed during ad playback.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSArray *uiElements</Declaration>
+			
+			
+			<Anchor>//api/name/uiElements</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setWidth:</TokenIdentifier>
+			<Abstract type="html">The size of the ad asset. For nonlinear ads, this is the actual width and
+height of the ad representation. For linear ads, since
+they scale seamlessly, we currently return 0 for width and height.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/width</TokenIdentifier>
+			<Abstract type="html">The size of the ad asset. For nonlinear ads, this is the actual width and
+height of the ad representation. For linear ads, since
+they scale seamlessly, we currently return 0 for width and height.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/width</TokenIdentifier>
+			<Abstract type="html">The size of the ad asset. For nonlinear ads, this is the actual width and
+height of the ad representation. For linear ads, since
+they scale seamlessly, we currently return 0 for width and height.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setLinear:</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is linear or non-linear.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isLinear) BOOL linear</Declaration>
+			
+			
+			<Anchor>//api/name/linear</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/isLinear</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is linear or non-linear.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isLinear) BOOL linear</Declaration>
+			
+			
+			<Anchor>//api/name/linear</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/linear</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is linear or non-linear.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isLinear) BOOL linear</Declaration>
+			
+			
+			<Anchor>//api/name/linear</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setSkippable:</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is skippable.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isSkippable) BOOL skippable</Declaration>
+			
+			
+			<Anchor>//api/name/skippable</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/isSkippable</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is skippable.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isSkippable) BOOL skippable</Declaration>
+			
+			
+			<Anchor>//api/name/skippable</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/skippable</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is skippable.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isSkippable) BOOL skippable</Declaration>
+			
+			
+			<Anchor>//api/name/skippable</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setAdPodInfo:</TokenIdentifier>
+			<Abstract type="html">Set of ad podding properties.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdPodInfo *adPodInfo</Declaration>
+			
+			
+			<Anchor>//api/name/adPodInfo</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/adPodInfo</TokenIdentifier>
+			<Abstract type="html">Set of ad podding properties.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdPodInfo *adPodInfo</Declaration>
+			
+			
+			<Anchor>//api/name/adPodInfo</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/adPodInfo</TokenIdentifier>
+			<Abstract type="html">Set of ad podding properties.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdPodInfo *adPodInfo</Declaration>
+			
+			
+			<Anchor>//api/name/adPodInfo</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/setTraffickingParameters:</TokenIdentifier>
+			<Abstract type="html">String representing custom trafficking parameters from the VAST
+response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *traffickingParameters</Declaration>
+			
+			
+			<Anchor>//api/name/traffickingParameters</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAd/traffickingParameters</TokenIdentifier>
+			<Abstract type="html">String representing custom trafficking parameters from the VAST
+response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *traffickingParameters</Declaration>
+			
+			
+			<Anchor>//api/name/traffickingParameters</Anchor>
+            <NodeRef refid="6"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAd/traffickingParameters</TokenIdentifier>
+			<Abstract type="html">String representing custom trafficking parameters from the VAST
+response.</Abstract>
+			<DeclaredIn>IMAAd.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSString *traffickingParameters</Declaration>
+			
+			
+			<Anchor>//api/name/traffickingParameters</Anchor>
             <NodeRef refid="6"/>
 		</Token>
 		

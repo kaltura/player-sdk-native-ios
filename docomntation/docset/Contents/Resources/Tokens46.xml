@@ -1,106 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/KPPlayerConfig.html">
+	<File path="Protocols/KPViewControllerDelegate.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/KPPlayerConfig</TokenIdentifier>
-			<Abstract type="html">KPPlayerConfig keys
-Key names of the video request</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/KPViewControllerDelegate</TokenIdentifier>
+			<Abstract type="html">Key names of the video request</Abstract>
+			<DeclaredIn>KPViewController.h</DeclaredIn>
             
 			
 			<NodeRef refid="46"/>
 		</Token>
 		
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/setCacheSize:</TokenIdentifier>
-			<Abstract type="html">By setting the size of the cache the SDK will cache the data in the limit of the cacheSize value.</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) float cacheSize</Declaration>
-			
-			
-			<Anchor>//api/name/cacheSize</Anchor>
-            <NodeRef refid="46"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/cacheSize</TokenIdentifier>
-			<Abstract type="html">By setting the size of the cache the SDK will cache the data in the limit of the cacheSize value.</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) float cacheSize</Declaration>
-			
-			
-			<Anchor>//api/name/cacheSize</Anchor>
-            <NodeRef refid="46"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/KPPlayerConfig/cacheSize</TokenIdentifier>
-			<Abstract type="html">By setting the size of the cache the SDK will cache the data in the limit of the cacheSize value.</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) float cacheSize</Declaration>
-			
-			
-			<Anchor>//api/name/cacheSize</Anchor>
-            <NodeRef refid="46"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/setSupportedInterfaceOrientations:</TokenIdentifier>
-			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
-			
-			
-			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
-            <NodeRef refid="46"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/supportedInterfaceOrientations</TokenIdentifier>
-			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
-			
-			
-			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
-            <NodeRef refid="46"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/KPPlayerConfig/supportedInterfaceOrientations</TokenIdentifier>
-			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
-			
-			
-			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
-            <NodeRef refid="46"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/addConfigKey:withValue:</TokenIdentifier>
-			<Abstract type="html">Adds flags for the video request</Abstract>
-			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
-			
-			<Declaration>- (void)addConfigKey:(NSString *)key withValue:(NSString *)value</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>NSString</Name>
-					<Abstract type="html">The value for the flag</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/addConfigKey:withValue:</Anchor>
-            <NodeRef refid="46"/>
-		</Token>
 		
         
         
