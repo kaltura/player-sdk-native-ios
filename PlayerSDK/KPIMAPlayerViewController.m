@@ -41,18 +41,21 @@
 #pragma mark Public Methods
 
 - (instancetype)init {
+    
     if (!NSClassFromString(@"IMAAdsRequest")) {
         return nil;
     }
+    
     self = [super init];
+    
     if (self) {
         return self;
     }
+    
     return nil;
 }
 
-- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void (^)(NSDictionary *))adListener  {
-    AdEventsListener = [adListener copy];
+- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer {
     
     // Load AVPlayer with path to our content.
     self.contentPlayer = contentPlayer;
@@ -79,6 +82,7 @@
     _contentPlayer = nil;
     _playhead = nil;
     _contentPlayer = nil;
+    _datasource = nil;
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
     [self.adsManager pause];
@@ -201,14 +205,7 @@
             break;
         case kAdEvent_ALL_ADS_COMPLETED:
             eventParams = AllAdsCompletedKey.nullVal;
-            AdEventsListener(nil);
             break;
-            //        case kIMAAdEvent_PAUSE:
-            //            eventParams = ContentPauseRequestedKey.nullVal;
-            //            break;
-            //        case kIMAAdEvent_RESUME:
-            //            eventParams = ContentResumeRequestedKey.nullVal;
-            //            break;
         case kAdEvent_FIRST_QUARTILE:
             eventParams = FirstQuartileKey.nullVal;
             break;
@@ -219,8 +216,6 @@
             eventParams = ThirdQuartileKey.nullVal;
             break;
         case kAdEvent_TAPPED:
-            
-            
             break;
         case kAdEvent_CLICKED:
             self.adEventParams.isLinear = event.ad.isLinear;
@@ -233,10 +228,13 @@
             break;
     }
     self.adEventParams = nil;
-    if (AdEventsListener && eventParams) {
-        AdEventsListener(eventParams);
+    
+    if (eventParams) {
+        [self.delegate player:nil
+                    eventName:eventParams.allKeys.firstObject
+                         JSON:eventParams.allValues.firstObject];
+        eventParams = nil;
     }
-    eventParams = nil;
 }
 
 - (void)adsManager:(id<AdsManager>)adsManager

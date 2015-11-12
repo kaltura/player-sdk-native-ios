@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "NSMutableDictionary+AdSupport.h"
+#import "KPViewControllerProtocols.h"
 
 @protocol IMAWebOpenerDataSource <NSObject>
 - (id)imaWebOpenerDelegate;
@@ -45,7 +46,7 @@
  *  @param  NSString adLink contains the link to the XML file of the vast 
  *  @param  Block adListener which notifies the KPlayerViewController on the events of the ads
  */
-- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void(^)(NSDictionary *adEventParams))adListener;
+- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer;
 
 
 /// Releasing the memory of the IMA player
@@ -56,4 +57,5 @@
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
 @property (nonatomic, weak) id<IMAWebOpenerDataSource> datasource;
+@property (nonatomic, weak) id<KPlayerDelegate> delegate;
 @end

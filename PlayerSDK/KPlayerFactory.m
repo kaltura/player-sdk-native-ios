@@ -97,42 +97,29 @@
 - (void)setAdTagURL:(NSString *)adTagURL {
     if (!_adController) {
         _adController = [KPIMAPlayerViewController new];
+
         if (!_adController) {
+        
             return;
         }
+        
+        _adController.delegate = self;
         _adController.adPlayerHeight = _adPlayerHeight;
         _adController.locale = _locale;
         [_parentViewController addChildViewController:_adController];
         [_parentViewController.view addSubview:_adController.view];
         _adController.datasource = _kIMAWebOpenerDelegate;
-        __weak KPlayerFactory *weakSelf = self;
         [_adController loadIMAAd:adTagURL
-               withContentPlayer:_player
-                  eventsListener:^(NSDictionary *adEventParams) {
-                      if (adEventParams) {
-                          [weakSelf.player.delegate player:weakSelf.player
-                                                 eventName:adEventParams.allKeys.firstObject
-                                                      JSON:adEventParams.allValues.firstObject];
-                          //all ads completed
-                          if (!adEventParams) {
-                              self.isAllAdsCompleted = YES;
-                              [weakSelf.delegate allAdsCompleted];
-                              [weakSelf.adController removeIMAPlayer];
-                              weakSelf.adController = nil;
-                              
-                              if (weakSelf.isContentEnded) {
-                                  [weakSelf.player.delegate player:weakSelf.player
-                                                         eventName:EndedKey
-                                                             value:nil];
-                              }
-                          }
-                      }
-                  }];
-        
-        
+               withContentPlayer:_player];
     }
 }
 
+- (void)removeAdController {
+    self.isAllAdsCompleted = YES;
+    [self.delegate allAdsCompleted];
+    [self.adController removeIMAPlayer];
+    self.adController = nil;
+}
 
 - (void)switchPlayer:(NSString *)playerClassName key:(NSString *)_key {
     _playerClassName = playerClassName;
@@ -180,14 +167,27 @@
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     [_delegate player:currentPlayer eventName:event JSON:jsonString];
+    
+    NSLog(@"ADDDDDDD:: %@", event);
+    if ([event isEqualToString:AllAdsCompletedKey]) {
+        if (self.isContentEnded) {
+            [self.player.delegate player:self.player
+                                   eventName:EndedKey
+                                       value:nil];
+        }
+        
+        [self removeAdController];
+    }
 }
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.isContentEnded = YES;
 // Notify IMA SDK when content is done for post-rolls.
-    [_adController contentCompleted];
+    if (_adController) {
+        [_adController contentCompleted];
+    }
     
-    if (self.isAllAdsCompleted) {
+    if (!self.adController || self.isAllAdsCompleted) {
         [self.player.delegate player:self.player
                                eventName:EndedKey
                                    value:nil];
