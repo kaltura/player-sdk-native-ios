@@ -166,18 +166,18 @@
 }
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
-    [_delegate player:currentPlayer eventName:event JSON:jsonString];
     
-    NSLog(@"ADDDDDDD:: %@", event);
     if ([event isEqualToString:AllAdsCompletedKey]) {
         if (self.isContentEnded) {
             [self.player.delegate player:self.player
-                                   eventName:EndedKey
-                                       value:nil];
+                               eventName:EndedKey
+                                   value:nil];
         }
         
         [self removeAdController];
     }
+    
+    [_delegate player:currentPlayer eventName:event JSON:jsonString];
 }
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
