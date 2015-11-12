@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKConnectionSuspendReason.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKConnectionSuspendReason</TokenIdentifier>
+			<Abstract type="html">@enum GCKConnectionSuspendReason
+Enum defining the reasons for a connection becoming suspended.</Abstract>
+			<DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+            
+			
+			<NodeRef refid="76"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKConnectionSuspendReasonAppBackgrounded</TokenIdentifier>
+            <Abstract type="html">The connection was suspended because the application is going into the background.</Abstract>
+            <Declaration>GCKConnectionSuspendReasonAppBackgrounded</Declaration>
+            
+            <DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+            
+            <NodeRef refid="76"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKConnectionSuspendReasonNetworkError</TokenIdentifier>
+            <Abstract type="html">The connection was suspended because of a network or protocol error.</Abstract>
+            <Declaration>GCKConnectionSuspendReasonNetworkError</Declaration>
+            
+            <DeclaredIn>GCKDeviceManager.h</DeclaredIn>
+            
+            <NodeRef refid="76"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

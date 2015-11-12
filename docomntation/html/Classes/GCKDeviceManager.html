@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>GCKDeviceManager Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">KALTURAPlayerSDK </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Kaltura</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/GCK_DEPRECATED">GCK_DEPRECATED</option>
+		
+		<option value="//api/name/activeInputStatus">activeInputStatus</option>
+		
+		<option value="//api/name/applicationConnectionState">applicationConnectionState</option>
+		
+		<option value="//api/name/applicationMetadata">applicationMetadata</option>
+		
+		<option value="//api/name/applicationSessionID">applicationSessionID</option>
+		
+		<option value="//api/name/applicationStatusText">applicationStatusText</option>
+		
+		<option value="//api/name/connectionState">connectionState</option>
+		
+		<option value="//api/name/delegate">delegate</option>
+		
+		<option value="//api/name/device">device</option>
+		
+		<option value="//api/name/deviceMuted">deviceMuted</option>
+		
+		<option value="//api/name/deviceVolume">deviceVolume</option>
+		
+		<option value="//api/name/isReconnecting">isReconnecting</option>
+		
+		<option value="//api/name/reconnectTimeout">reconnectTimeout</option>
+		
+		<option value="//api/name/standbyStatus">standbyStatus</option>
+		
+	</optgroup>
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/addChannel:">- addChannel:</option>
+		
+		<option value="//api/name/connect">- connect</option>
+		
+		<option value="//api/name/disconnect">- disconnect</option>
+		
+		<option value="//api/name/disconnectWithLeave:">- disconnectWithLeave:</option>
+		
+		<option value="//api/name/initWithDevice:clientPackageName:">- initWithDevice:clientPackageName:</option>
+		
+		<option value="//api/name/initWithDevice:clientPackageName:ignoreAppStateNotifications:">- initWithDevice:clientPackageName:ignoreAppStateNotifications:</option>
+		
+		<option value="//api/name/joinApplication:">- joinApplication:</option>
+		
+		<option value="//api/name/joinApplication:sessionID:">- joinApplication:sessionID:</option>
+		
+		<option value="//api/name/launchApplication:">- launchApplication:</option>
+		
+		<option value="//api/name/launchApplication:relaunchIfRunning:">- launchApplication:relaunchIfRunning:</option>
+		
+		<option value="//api/name/launchApplication:withLaunchOptions:">- launchApplication:withLaunchOptions:</option>
+		
+		<option value="//api/name/leaveApplication">- leaveApplication</option>
+		
+		<option value="//api/name/removeChannel:">- removeChannel:</option>
+		
+		<option value="//api/name/requestDeviceStatus">- requestDeviceStatus</option>
+		
+		<option value="//api/name/setMuted:">- setMuted:</option>
+		
+		<option value="//api/name/setVolume:">- setVolume:</option>
+		
+		<option value="//api/name/stopApplication">- stopApplication</option>
+		
+		<option value="//api/name/stopApplicationWithSessionID:">- stopApplicationWithSessionID:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">GCKDeviceManager Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td>NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>GCKDeviceManager.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>Controls a Cast <a href="#//api/name/device">device</a>. This class can send messages to, receive messages from, launch, and
+close applications running on a Cast <a href="#//api/name/device">device</a>. <b>All methods and properties of this class may
+only be accessed from the main thread.</b></p>
+
+<p>@ingroup DeviceControl</p>
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/connectionState" title="connectionState"></a>
+	<h3 class="method-title"><code><a href="#//api/name/connectionState">&nbsp;&nbsp;connectionState</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The <a href="#//api/name/device">device</a> manager&rsquo;s current connection state.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) GCKConnectionState connectionState</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/applicationConnectionState" title="applicationConnectionState"></a>
+	<h3 class="method-title"><code><a href="#//api/name/applicationConnectionState">&nbsp;&nbsp;applicationConnectionState</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The <a href="#//api/name/device">device</a> manager&rsquo;s current application connection state.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) GCKConnectionState applicationConnectionState</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/GCK_DEPRECATED" title="GCK_DEPRECATED"></a>
+	<h3 class="method-title"><code><a href="#//api/name/GCK_DEPRECATED">&nbsp;&nbsp;GCK_DEPRECATED</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>True if the <a href="#//api/name/device">device</a> manager has established a connection to the <a href="#//api/name/device">device</a>. (<b class="deprecated">Deprecated:</b><span class="deprecated"> {Use @link connectionState @endlink.}</span>)</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) BOOL isConnected GCK_DEPRECATED</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/isReconnecting" title="isReconnecting"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isReconnecting">&nbsp;&nbsp;isReconnecting</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>True if the <a href="#//api/name/device">device</a> manager is disconnected due to a potentially transient event (e.g. the app is
+backgrounded, or there was a network error which might be solved by reconnecting). Note that the
+disconnection/connection callbacks will not be called while the <a href="#//api/name/device">device</a> manager attemps to
+re<a href="#//api/name/connect">connect</a> after a potentially transient event, but the properties will always reflect the
+actual current state and can be observed.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) BOOL isReconnecting</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/reconnectTimeout" title="reconnectTimeout"></a>
+	<h3 class="method-title"><code><a href="#//api/name/reconnectTimeout">&nbsp;&nbsp;reconnectTimeout</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Reconnection will be attempted for this long in the event that the socket disconnects with a
+potentially transient error.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic) NSTimeInterval reconnectTimeout</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<p>The default timeout is 10s.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/device" title="device"></a>
+	<h3 class="method-title"><code><a href="#//api/name/device">&nbsp;&nbsp;device</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The device that is being controlled by this GCKDeviceManager.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) GCKDevice *device</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/delegate" title="delegate"></a>
+	<h3 class="method-title"><code><a href="#//api/name/delegate">&nbsp;&nbsp;delegate</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The delegate for receiving notifications from the GCKDeviceManager.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, weak) id&lt;GCKDeviceManagerDelegate&gt; delegate</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/deviceVolume" title="deviceVolume"></a>
+	<h3 class="method-title"><code><a href="#//api/name/deviceVolume">&nbsp;&nbsp;deviceVolume</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The current volume of the <a href="#//api/name/device">device</a>, if known; otherwise <code>0</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) float deviceVolume</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/deviceMuted" title="deviceMuted"></a>
+	<h3 class="method-title"><code><a href="#//api/name/deviceMuted">&nbsp;&nbsp;deviceMuted</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The current mute state of the <a href="#//api/name/device">device</a>, if known; otherwise <code>NO</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) BOOL deviceMuted</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/activeInputStatus" title="activeInputStatus"></a>
+	<h3 class="method-title"><code><a href="#//api/name/activeInputStatus">&nbsp;&nbsp;activeInputStatus</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The device&rsquo;s current &ldquo;active input&rdquo; status.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) GCKActiveInputStatus activeInputStatus</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/standbyStatus" title="standbyStatus"></a>
+	<h3 class="method-title"><code><a href="#//api/name/standbyStatus">&nbsp;&nbsp;standbyStatus</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The device&rsquo;s current &ldquo;standby&rdquo; status.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) GCKStandbyStatus standbyStatus</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/applicationSessionID" title="applicationSessionID"></a>
+	<h3 class="method-title"><code><a href="#//api/name/applicationSessionID">&nbsp;&nbsp;applicationSessionID</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The application session ID for the currently connected receiver application, if any;
+otherwise <code>nil</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, readonly) NSString *applicationSessionID</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/applicationMetadata" title="applicationMetadata"></a>
+	<h3 class="method-title"><code><a href="#//api/name/applicationMetadata">&nbsp;&nbsp;applicationMetadata</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The metadata for the receiver application that is currently running on the receiver, if any;
+otherwise <code>nil</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, readonly) GCKApplicationMetadata *applicationMetadata</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/applicationStatusText" title="applicationStatusText"></a>
+	<h3 class="method-title"><code><a href="#//api/name/applicationStatusText">&nbsp;&nbsp;applicationStatusText</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>The most recently reported status text from the currently running receiver application, if any;
+otherwise <code>nil</code>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, copy, readonly) NSString *applicationStatusText</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initWithDevice:clientPackageName:" title="initWithDevice:clientPackageName:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithDevice:clientPackageName:">&ndash;&nbsp;initWithDevice:clientPackageName:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Constructs a new GCKDeviceManager with the given <a href="#//api/name/device">device</a>. The object will listen for app state
+notifications, and will automatically <a href="#//api/name/disconnect">disconnect</a> from the <a href="#//api/name/device">device</a> when the app goes into the
+background and attempt to re<a href="#//api/name/connect">connect</a> to the <a href="#//api/name/device">device</a> when the app returns to the foreground.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (instancetype)initWithDevice:(GCKDevice *)<em>device</em> clientPackageName:(NSString *)<em>clientPackageName</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>device</code></th>
+						<td><p>The <a href="#//api/name/device">device</a> to control.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>clientPackageName</code></th>
+						<td><p>The client package name.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initWithDevice:clientPackageName:ignoreAppStateNotifications:" title="initWithDevice:clientPackageName:ignoreAppStateNotifications:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithDevice:clientPackageName:ignoreAppStateNotifications:">&ndash;&nbsp;initWithDevice:clientPackageName:ignoreAppStateNotifications:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Designated initializer. Constructs a new GCKDeviceManager for controlling the given <a href="#//api/name/device">device</a>.</p>
+
+<p><p>
+If <code>ignoreAppStateNotifications</code> is <code>NO</code>, the object will listen for
+changes to the app state and will automatically <a href="#//api/name/disconnect">disconnect</a> from the <a href="#//api/name/device">device</a> when the app goes into
+the background and attempt to re<a href="#//api/name/connect">connect</a> to the <a href="#//api/name/device">device</a> when the app returns to the foreground.
+<p>
+If <code>ignoreAppStateNotifications</code> is <code>YES</code>, the object will not listen for
+these notifications, and it will be the app&rsquo;s responsibility to manage the connection lifecycle.
+Note that in general, a backgrounded iOS app cannot continue running indefinitely, and its
+active network connections will eventually be closed by the operating system.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (instancetype)initWithDevice:(GCKDevice *)<em>device</em> clientPackageName:(NSString *)<em>clientPackageName</em> ignoreAppStateNotifications:(BOOL)<em>ignoreAppStateNotifications</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>device</code></th>
+						<td><p>The <a href="#//api/name/device">device</a> to control.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>clientPackageName</code></th>
+						<td><p>The client package name.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>ignoreAppStateNotifications</code></th>
+						<td><p>Whether this object will ignore app state notifications.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/connect" title="connect"></a>
+	<h3 class="method-title"><code><a href="#//api/name/connect">&ndash;&nbsp;connect</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Connects to the <a href="#//api/name/device">device</a>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)connect</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/disconnect" title="disconnect"></a>
+	<h3 class="method-title"><code><a href="#//api/name/disconnect">&ndash;&nbsp;disconnect</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Disconnects from the <a href="#//api/name/device">device</a>. This is an explicit dis<a href="#//api/name/connect">connect</a>.</p>
+
+<p><p>
+One of the dis<a href="#//api/name/connect">connect</a> methods <b>must</b> be called at some point after @link #<a href="#//api/name/connect">connect</a> @endlink
+was called and before this object is released by its owner.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)disconnect</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/disconnectWithLeave:" title="disconnectWithLeave:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/disconnectWithLeave:">&ndash;&nbsp;disconnectWithLeave:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Disconnects from the <a href="#//api/name/device">device</a>. This method <b>must</b> be called at some point after
+@link #<a href="#//api/name/connect">connect</a> @endlink was called and before this object is released by its owner.</p>
+
+<p><p>
+One of the <a href="#//api/name/disconnect">disconnect</a> methods <b>must</b> be called at some point after @link #<a href="#//api/name/connect">connect</a> @endlink
+was called and before this object is released by its owner.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)disconnectWithLeave:(BOOL)<em>leaveApplication</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>leaveApplication</code></th>
+						<td><p><code>YES</code> if this is an explicit <a href="#//api/name/disconnect">disconnect</a> that should
+<a href="#//api/name/disconnect">disconnect</a> from (&ldquo;leave&rdquo;) the receiver application before closing the connection; <code>NO</code>
+if this is an implicit <a href="#//api/name/disconnect">disconnect</a> that should just close the connection.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addChannel:" title="addChannel:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addChannel:">&ndash;&nbsp;addChannel:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Adds a channel which can send and receive messages for this <a href="#//api/name/device">device</a> on a particular
+namespace.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)addChannel:(GCKCastChannel *)<em>channel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>channel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p><code>YES</code> if the channel was added, <code>NO</code> if it was not added because
+there was already a channel attached for that namespace.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/removeChannel:" title="removeChannel:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/removeChannel:">&ndash;&nbsp;removeChannel:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Removes a previously added channel.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)removeChannel:(GCKCastChannel *)<em>channel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>channel</code></th>
+						<td><p>The channel.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p><code>YES</code> if the channel was removed, <code>NO</code> if it was not removed
+because the given channel was not previously attached.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/launchApplication:" title="launchApplication:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/launchApplication:">&ndash;&nbsp;launchApplication:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Launches an application.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)launchApplication:(NSString *)<em>applicationID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>applicationID</code></th>
+						<td><p>The application ID.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/launchApplication:withLaunchOptions:" title="launchApplication:withLaunchOptions:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/launchApplication:withLaunchOptions:">&ndash;&nbsp;launchApplication:withLaunchOptions:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Launches an application using the given launch options.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)launchApplication:(NSString *)<em>applicationID</em> withLaunchOptions:(GCKLaunchOptions *)<em>launchOptions</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>applicationID</code></th>
+						<td><p>The application ID.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>launchOptions</code></th>
+						<td><p>The launch options for this request. If <code>nil</code>, defaults will be
+used.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/launchApplication:relaunchIfRunning:" title="launchApplication:relaunchIfRunning:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/launchApplication:relaunchIfRunning:">&ndash;&nbsp;launchApplication:relaunchIfRunning:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Launches an application, optionally relaunching it if it is already running. (<b class="deprecated">Deprecated:</b><span class="deprecated"> {Use <code>-[launchApplication:withLaunchOptions:]</code> instead.}</span>)</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)launchApplication:(NSString *)<em>applicationID</em> relaunchIfRunning:(BOOL)<em>relaunchIfRunning</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>applicationID</code></th>
+						<td><p>The application ID.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>relaunchIfRunning</code></th>
+						<td><p>If <code>YES</code>, relaunches the application if it is already
+running instead of joining the running application.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/joinApplication:" title="joinApplication:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/joinApplication:">&ndash;&nbsp;joinApplication:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Joins an application.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)joinApplication:(NSString *)<em>applicationID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>applicationID</code></th>
+						<td><p>The application ID. If <code>nil</code>, attempts to join whichever
+application is currently running; otherwise, attempts to join the specified application.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/joinApplication:sessionID:" title="joinApplication:sessionID:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/joinApplication:sessionID:">&ndash;&nbsp;joinApplication:sessionID:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Joins an application with a particular session ID.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)joinApplication:(NSString *)<em>applicationID</em> sessionID:(NSString *)<em>sessionID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>applicationID</code></th>
+						<td><p>The application ID.</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>sessionID</code></th>
+						<td><p>The session ID.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/leaveApplication" title="leaveApplication"></a>
+	<h3 class="method-title"><code><a href="#//api/name/leaveApplication">&ndash;&nbsp;leaveApplication</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Leaves the current application.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)leaveApplication</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p><code>NO</code> if the message could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/stopApplication" title="stopApplication"></a>
+	<h3 class="method-title"><code><a href="#//api/name/stopApplication">&ndash;&nbsp;stopApplication</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Stops any running application(s).</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)stopApplication</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/stopApplicationWithSessionID:" title="stopApplicationWithSessionID:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/stopApplicationWithSessionID:">&ndash;&nbsp;stopApplicationWithSessionID:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Stops the application with the given session ID.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)stopApplicationWithSessionID:(NSString *)<em>sessionID</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>sessionID</code></th>
+						<td><p>The session ID, which must be non-negative.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setVolume:" title="setVolume:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setVolume:">&ndash;&nbsp;setVolume:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Sets the system volume.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)setVolume:(float)<em>volume</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>volume</code></th>
+						<td><p>The new volume, in the range [0.0, 1.0]. Out of range values will be silently
+clipped.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setMuted:" title="setMuted:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setMuted:">&ndash;&nbsp;setMuted:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Turns muting on or off.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)setMuted:(BOOL)<em>muted</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>muted</code></th>
+						<td><p>Whether audio should be muted or unmuted.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/requestDeviceStatus" title="requestDeviceStatus"></a>
+	<h3 class="method-title"><code><a href="#//api/name/requestDeviceStatus">&ndash;&nbsp;requestDeviceStatus</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Requests the device&rsquo;s current status. This will result in all of the <a href="#//api/name/delegate">delegate</a> status update
+callbacks being invoked once the updated status information is received.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (NSInteger)requestDeviceStatus</code></div>
+
+		    
+			
+
+			
+			<div class="method-subsection return">
+				<h4 class="method-subtitle parameter-title">Return Value</h4>
+				<p>The request ID, or <code>kGCKInvalidRequestID</code> if the request could not be sent.</p>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">GCKDeviceManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+                    
+          
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2015 Kaltura. All rights reserved. Updated: 2015-10-07</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

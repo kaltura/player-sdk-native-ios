@@ -11,9 +11,7 @@
 #import "KPLog.h"
 #import "IMAHandler.h"
 
-@interface KPIMAPlayerViewController () {
-    void(^AdEventsListener)(NSDictionary *adEventParams);
-}
+@interface KPIMAPlayerViewController ()
 
 /// Contains the params for the logic layer
 @property (nonatomic, copy) NSMutableDictionary *adEventParams;
@@ -41,18 +39,21 @@
 #pragma mark Public Methods
 
 - (instancetype)init {
+    
     if (!NSClassFromString(@"IMAAdsRequest")) {
         return nil;
     }
+    
     self = [super init];
+    
     if (self) {
         return self;
     }
+    
     return nil;
 }
 
-- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void (^)(NSDictionary *))adListener  {
-    AdEventsListener = [adListener copy];
+- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer {
     
     // Load AVPlayer with path to our content.
     self.contentPlayer = contentPlayer;
@@ -69,7 +70,6 @@
 }
 
 - (void)removeIMAPlayer {
-    AdEventsListener = nil;
     [_adEventParams removeAllObjects];
     _adEventParams = nil;
     _adsLoader.delegate = nil;
@@ -79,6 +79,7 @@
     _contentPlayer = nil;
     _playhead = nil;
     _contentPlayer = nil;
+    _datasource = nil;
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
     [self.adsManager pause];
@@ -161,9 +162,11 @@
     // Initialize the ads manager.
     [self.adsManager initializeWithContentPlayhead:self.playhead
                               adsRenderingSettings:self.adsRenderingSettings];
-    if (AdEventsListener) {
-        AdEventsListener(AdLoadedEventKey.nullVal);
-    }
+    
+    NSDictionary *eventParams = AdLoadedEventKey.nullVal;
+    [self.delegate player:nil
+                eventName:eventParams.allKeys.firstObject
+                     JSON:eventParams.allValues.firstObject];
 }
 
 - (void)adsLoader:(id<AdsLoader>)loader failedWithErrorData:(id<AdLoadingErrorData>)adErrorData {
@@ -201,14 +204,7 @@
             break;
         case kAdEvent_ALL_ADS_COMPLETED:
             eventParams = AllAdsCompletedKey.nullVal;
-            AdEventsListener(nil);
             break;
-            //        case kIMAAdEvent_PAUSE:
-            //            eventParams = ContentPauseRequestedKey.nullVal;
-            //            break;
-            //        case kIMAAdEvent_RESUME:
-            //            eventParams = ContentResumeRequestedKey.nullVal;
-            //            break;
         case kAdEvent_FIRST_QUARTILE:
             eventParams = FirstQuartileKey.nullVal;
             break;
@@ -219,62 +215,67 @@
             eventParams = ThirdQuartileKey.nullVal;
             break;
         case kAdEvent_TAPPED:
-            
-            
             break;
         case kAdEvent_CLICKED:
             self.adEventParams.isLinear = event.ad.isLinear;
             eventParams = self.adEventParams.toJSON.adClicked;
             break;
         case kAdEvent_SKIPPED:
-            AdEventsListener(nil);
+            // TODO::
             break;
         default:
             break;
     }
     self.adEventParams = nil;
-    if (AdEventsListener && eventParams) {
-        AdEventsListener(eventParams);
+    
+    if (eventParams) {
+        [self.delegate player:nil
+                    eventName:eventParams.allKeys.firstObject
+                         JSON:eventParams.allValues.firstObject];
+        eventParams = nil;
     }
-    eventParams = nil;
 }
 
 - (void)adsManager:(id<AdsManager>)adsManager
  didReceiveAdError:(id<AdError>)error {
     // Something went wrong with the ads manager after ads were loaded. Log the error and play the
     // content.
-    
-    if (AdEventsListener) {
-        AdEventsListener(AdsLoadErrorKey.nullVal);
-    }
+    NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
+    [self.delegate player:nil
+                eventName:eventParams.allKeys.firstObject
+                     JSON:eventParams.allValues.firstObject];
+
     NSLog(@"AdsManager error: %@", error.message);
     [self.contentPlayer play];
 }
 
 - (void)adsManagerDidRequestContentPause:(id<AdsManager>)adsManager {
     // The SDK is going to play ads, so pause the content.
-    if (AdEventsListener) {
-        [self.contentPlayer pause];
-        AdEventsListener(ContentPauseRequestedKey.nullVal);
-    }
+    [self.contentPlayer pause];
+    NSDictionary *eventParams = ContentPauseRequestedKey.nullVal;
+    [self.delegate player:nil
+                eventName:eventParams.allKeys.firstObject
+                     JSON:eventParams.allValues.firstObject];
 }
 
 - (void)adsManagerDidRequestContentResume:(id<AdsManager>)adsManager {
     // The SDK is done playing ads (at least for now), so resume the content.
-    if (AdEventsListener) {
-        [self.contentPlayer play];
-        AdEventsListener(ContentResumeRequestedKey.nullVal);
-    }
+    [self.contentPlayer play];
+    NSDictionary *eventParams = ContentResumeRequestedKey.nullVal;
+    [self.delegate player:nil
+                eventName:eventParams.allKeys.firstObject
+                     JSON:eventParams.allValues.firstObject];
 }
 
 - (void)adDidProgressToTime:(NSTimeInterval)mediaTime totalTime:(NSTimeInterval)totalTime {
-    if (AdEventsListener) {
-        NSMutableDictionary *timeParams = [NSMutableDictionary new];
-        timeParams.time = mediaTime;
-        timeParams.duration = totalTime;
-        timeParams.remain = totalTime - mediaTime;
-        AdEventsListener(timeParams.toJSON.adRemainingTimeChange);
-    }
+    NSMutableDictionary *timeParams = [NSMutableDictionary new];
+    timeParams.time = mediaTime;
+    timeParams.duration = totalTime;
+    timeParams.remain = totalTime - mediaTime;
+    NSDictionary *eventParams = timeParams.toJSON.adRemainingTimeChange;
+    [self.delegate player:nil
+                eventName:eventParams.allKeys.firstObject
+                     JSON:eventParams.allValues.firstObject];
 }
 
 - (void)dealloc {

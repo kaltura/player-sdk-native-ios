@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKMediaMetadata.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaMetadata</TokenIdentifier>
+			<Abstract type="html">Container class for media metadata. Metadata has a media type, an optional
+list of images, and a collection of metadata fields. Keys for common
+metadata fields are predefined as constants, but the application is free to
+define and use additional fields of its own.
+&lt;p&gt;
+The values of the predefined fields have predefined types. For example, a track number is
+an &lt;code&gt;NSInteger&lt;/code&gt; and a creation date is a &lt;code&gt;NSString&lt;/code&gt; containing an ISO-8601
+representation of a date and time. Attempting to store a value of an incorrect type in a field
+will assert.
+&lt;p&gt;
+Note that the Cast protocol limits which metadata fields can be used for a given media type.
+When a MediaMetadata object is serialized to JSON for delivery to a Cast receiver, any
+predefined fields which are not supported for a given media type will not be included in the
+serialized form, but any application-defined fields will always be included.
+The complete list of predefined fields is as follows:
+&lt;p&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;th&gt;Field&lt;/th&gt;
+&lt;th&gt;Value Type&lt;/th&gt;
+&lt;th&gt;Valid Metadata Types&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyCreationDate}&lt;/td&gt;
+&lt;td&gt;NSDate&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyReleaseDate}&lt;/td&gt;
+&lt;td&gt;NSDate&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeGeneric}, {@link GCKMediaMetadataTypeMovie},
+{@link GCKMediaMetadataTypeTVShow}, {@link GCKMediaMetadataTypeMusicTrack}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyBroadcastDate}&lt;/td&gt;
+&lt;td&gt;NSDate&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeTVShow}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyTitle}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeGeneric}, {@link GCKMediaMetadataTypeMovie},
+{@link GCKMediaMetadataTypeTVShow}, {@link GCKMediaMetadataTypeMusicTrack},
+{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeySubtitle}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeGeneric}, {@link GCKMediaMetadataTypeMovie}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyArtist}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeGeneric}, {@link GCKMediaMetadataTypeMusicTrack},
+{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyAlbumArtist}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeMusicTrack}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyAlbumTitle}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeMusicTrack}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyComposer}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeMusicTrack}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyDiscNumber}&lt;/td&gt;
+&lt;td&gt;NSInteger&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeMusicTrack}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyTrackNumber}&lt;/td&gt;
+&lt;td&gt;NSInteger&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeMusicTrack}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeySeasonNumber}&lt;/td&gt;
+&lt;td&gt;NSInteger&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeTVShow}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyEpisodeNumber}&lt;/td&gt;
+&lt;td&gt;NSInteger&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeTVShow}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeySeriesTitle}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeTVShow}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyStudio}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypeMovie}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyWidth}&lt;/td&gt;
+&lt;td&gt;NSInteger&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyHeight}&lt;/td&gt;
+&lt;td&gt;NSInteger&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyLocationName}&lt;/td&gt;
+&lt;td&gt;NSString&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyLocationLatitude}&lt;/td&gt;
+&lt;td&gt;double&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;{@link kGCKMetadataKeyLocationLongitude}&lt;/td&gt;
+&lt;td&gt;double&lt;/td&gt;
+&lt;td&gt;{@link GCKMediaMetadataTypePhoto}&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+            
+			
+			<NodeRef refid="21"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/setMetadataType:</TokenIdentifier>
+			<Abstract type="html">The metadata type.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaMetadataType metadataType</Declaration>
+			
+			
+			<Anchor>//api/name/metadataType</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/metadataType</TokenIdentifier>
+			<Abstract type="html">The metadata type.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaMetadataType metadataType</Declaration>
+			
+			
+			<Anchor>//api/name/metadataType</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaMetadata/metadataType</TokenIdentifier>
+			<Abstract type="html">The metadata type.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) GCKMediaMetadataType metadataType</Declaration>
+			
+			
+			<Anchor>//api/name/metadataType</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/initWithMetadataType:</TokenIdentifier>
+			<Abstract type="html">Initializes a new, empty, MediaMetadata with the given media type.
+Designated initializer.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithMetadataType:(GCKMediaMetadataType)metadataType</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>metadataType</Name>
+					<Abstract type="html">The media type; one of the {@code GCKMediaMetadataType*} constants, or a
+value greater than or equal to {@link GCKMediaMetadataTypeUser} for custom media types.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/initWithMetadataType:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/init</TokenIdentifier>
+			<Abstract type="html">Initialize with the generic metadata type.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)init</Declaration>
+			
+			
+			<Anchor>//api/name/init</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/metadataType</TokenIdentifier>
+			<Abstract type="html">The metadata type.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (GCKMediaMetadataType)metadataType</Declaration>
+			
+			
+			<Anchor>//api/name/metadataType</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/images</TokenIdentifier>
+			<Abstract type="html">Gets the list of images.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (NSArray *)images</Declaration>
+			
+			
+			<Anchor>//api/name/images</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/removeAllMediaImages</TokenIdentifier>
+			<Abstract type="html">Removes all the current images.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (void)removeAllMediaImages</Declaration>
+			
+			
+			<Anchor>//api/name/removeAllMediaImages</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/addImage:</TokenIdentifier>
+			<Abstract type="html">Adds an image to the list of images.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (void)addImage:(GCKImage *)image</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>image</Name>
+					<Abstract type="html">The image to add.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addImage:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/containsKey:</TokenIdentifier>
+			<Abstract type="html">Tests if the object contains a field with the given key.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)containsKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/containsKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/allKeys</TokenIdentifier>
+			<Abstract type="html">Returns a set of keys for all fields that are present in the object.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (NSArray *)allKeys</Declaration>
+			
+			
+			<Anchor>//api/name/allKeys</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/objectForKey:</TokenIdentifier>
+			<Abstract type="html">Reads the value of a field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (id)objectForKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The value of the field, or {@code nil} if the field has not been set.</Abstract></ReturnValue>
+			<Anchor>//api/name/objectForKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/setString:forKey:</TokenIdentifier>
+			<Abstract type="html">Stores a value in a string field. Asserts if the key refers to a predefined field which is not a
+{@code NSString} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (void)setString:(NSString *)value forKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>value</Name>
+					<Abstract type="html">The new value for the field.</Abstract>
+				</Parameter><Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setString:forKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/stringForKey:</TokenIdentifier>
+			<Abstract type="html">Reads the value of a string field. Asserts if the key refers to a predefined field which is not
+a {@code NSString} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (NSString *)stringForKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The value of the field, or {@code nil} if the field has not been set.</Abstract></ReturnValue>
+			<Anchor>//api/name/stringForKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/setInteger:forKey:</TokenIdentifier>
+			<Abstract type="html">Stores a value in an integer field. Asserts if the key refers to a predefined field which is
+not an {@code NSInteger} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (void)setInteger:(NSInteger)value forKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>value</Name>
+					<Abstract type="html">The new value for the field.</Abstract>
+				</Parameter><Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setInteger:forKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/integerForKey:</TokenIdentifier>
+			<Abstract type="html">Reads the value of an integer field. Asserts if the key refers to a predefined field which is
+not an {@code NSInteger} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)integerForKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The value of the field, or 0 if the field has not been set.</Abstract></ReturnValue>
+			<Anchor>//api/name/integerForKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/integerForKey:defaultValue:</TokenIdentifier>
+			<Abstract type="html">Reads the value of an integer field. Asserts if the key refers to a predefined field which is
+not an {@code NSInteger} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (NSInteger)integerForKey:(NSString *)key defaultValue:(NSInteger)defaultValue</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter><Parameter>
+					<Name>defaultValue</Name>
+					<Abstract type="html">The value to return if the field has not been set.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The value of the field, or the given default value if the field has not been set.</Abstract></ReturnValue>
+			<Anchor>//api/name/integerForKey:defaultValue:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/setDouble:forKey:</TokenIdentifier>
+			<Abstract type="html">Stores a value in a {@code double} field. Asserts if the key refers to a predefined field
+which is not a {@code double} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (void)setDouble:(double)value forKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>value</Name>
+					<Abstract type="html">The new value for the field.</Abstract>
+				</Parameter><Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setDouble:forKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/doubleForKey:</TokenIdentifier>
+			<Abstract type="html">Reads the value of a {@code double} field. Asserts if the key refers to a predefined field
+which is not a {@code double} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (double)doubleForKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The value of the field, or 0 if the field has not been set.</Abstract></ReturnValue>
+			<Anchor>//api/name/doubleForKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/doubleForKey:defaultValue:</TokenIdentifier>
+			<Abstract type="html">Reads the value of a {@code double} field. Asserts if the key refers to a predefined field
+which is not a {@code double} field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (double)doubleForKey:(NSString *)key defaultValue:(double)defaultValue</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter><Parameter>
+					<Name>defaultValue</Name>
+					<Abstract type="html">The value to return if the field has not been set.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The value of the field, or the given default value if the field has not been set.</Abstract></ReturnValue>
+			<Anchor>//api/name/doubleForKey:defaultValue:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/setDate:forKey:</TokenIdentifier>
+			<Abstract type="html">Stores a value in a date field as a restricted ISO-8601 representation of the date. Asserts if
+the key refers to a predefined field which is not a date field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (void)setDate:(NSDate *)date forKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>date</Name>
+					<Abstract type="html">The new value for the field.</Abstract>
+				</Parameter><Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The key for the field.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setDate:forKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/dateForKey:</TokenIdentifier>
+			<Abstract type="html">Reads the value of a date field from the restricted ISO-8601 representation of the date.
+Asserts if the key refers to a predefined field which is not a date field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (NSDate *)dateForKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The field name.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The date, or {@code nil} if this field has not been set.</Abstract></ReturnValue>
+			<Anchor>//api/name/dateForKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaMetadata/dateAsStringForKey:</TokenIdentifier>
+			<Abstract type="html">Reads the value of a date field, as a string. Asserts if the key refers to a predefined field
+which is not a date field.</Abstract>
+			<DeclaredIn>GCKMediaMetadata.h</DeclaredIn>
+			
+			<Declaration>- (NSString *)dateAsStringForKey:(NSString *)key</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>key</Name>
+					<Abstract type="html">The field name.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">The date, as a {@code String} containing the restricted ISO-8601 representation of the
+date, or {@code null} if this field has not been set.
+@throw IllegalArgumentException If the specified field&apos;s predefined type is not a date.</Abstract></ReturnValue>
+			<Anchor>//api/name/dateAsStringForKey:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

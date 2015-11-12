@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/IMACompanionAdSlot.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/IMACompanionAdSlot</TokenIdentifier>
+			<Abstract type="html">Ad slot for companion ads. The SDK will put a subview inside the provided
+UIView container. The companion will be matched to the width and height
+provided here.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+            
+			
+			<NodeRef refid="40"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setView:</TokenIdentifier>
+			<Abstract type="html">The view the companion will be rendered in. Display this view in your
+application before video ad starts.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
+			
+			
+			<Anchor>//api/name/view</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/view</TokenIdentifier>
+			<Abstract type="html">The view the companion will be rendered in. Display this view in your
+application before video ad starts.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
+			
+			
+			<Anchor>//api/name/view</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/view</TokenIdentifier>
+			<Abstract type="html">The view the companion will be rendered in. Display this view in your
+application before video ad starts.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
+			
+			
+			<Anchor>//api/name/view</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setWidth:</TokenIdentifier>
+			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/width</TokenIdentifier>
+			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/width</TokenIdentifier>
+			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
+			
+			
+			<Anchor>//api/name/width</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setHeight:</TokenIdentifier>
+			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int height</Declaration>
+			
+			
+			<Anchor>//api/name/height</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/height</TokenIdentifier>
+			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int height</Declaration>
+			
+			
+			<Anchor>//api/name/height</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/height</TokenIdentifier>
+			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) int height</Declaration>
+			
+			
+			<Anchor>//api/name/height</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setDelegate:</TokenIdentifier>
+			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/delegate</TokenIdentifier>
+			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/delegate</TokenIdentifier>
+			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

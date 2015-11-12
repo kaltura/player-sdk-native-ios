@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/NSDictionary+Strategy.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/NSDictionary(Strategy)</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>NSDictionary+Strategy.h</DeclaredIn>
+            
+			
+			<NodeRef refid="54"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/videoName</TokenIdentifier>
+			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
+			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
+			
+			<Declaration>- (NSString *)videoName</Declaration>
+			
+			
+			<Anchor>//api/name/videoName</Anchor>
+            <NodeRef refid="54"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/shareLink</TokenIdentifier>
+			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
+			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
+			
+			<Declaration>- (NSString *)shareLink</Declaration>
+			
+			
+			<Anchor>//api/name/shareLink</Anchor>
+            <NodeRef refid="54"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/thumbnailLink</TokenIdentifier>
+			<Abstract type="html">The link for the first frame of the video</Abstract>
+			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
+			
+			<Declaration>- (NSString *)thumbnailLink</Declaration>
+			
+			
+			<Anchor>//api/name/thumbnailLink</Anchor>
+            <NodeRef refid="54"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/networkURL</TokenIdentifier>
+			<Abstract type="html">Share API of the selected network</Abstract>
+			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
+			
+			<Declaration>- (NSString *)networkURL</Declaration>
+			
+			
+			<Anchor>//api/name/networkURL</Anchor>
+            <NodeRef refid="54"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/redirectURLs</TokenIdentifier>
+			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
+			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
+			
+			<Declaration>- (NSArray *)redirectURLs</Declaration>
+			
+			
+			<Anchor>//api/name/redirectURLs</Anchor>
+            <NodeRef refid="54"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/NSDictionary/networkStrategyClass</TokenIdentifier>
+			<Abstract type="html">Generates the strategy class by the network name</Abstract>
+			<DeclaredIn>NSDictionary+Strategy.m</DeclaredIn>
+			
+			<Declaration>- (Class)networkStrategyClass</Declaration>
+			
+			
+			<Anchor>//api/name/networkStrategyClass</Anchor>
+            <NodeRef refid="54"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

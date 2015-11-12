@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKError.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKError</TokenIdentifier>
+			<Abstract type="html">The class for all GCK framework errors.</Abstract>
+			<DeclaredIn>GCKError.h</DeclaredIn>
+            
+			
+			<NodeRef refid="12"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/GCKError/enumDescriptionForCode:</TokenIdentifier>
+			<Abstract type="html">Returns the name of the enum value for a given error code.</Abstract>
+			<DeclaredIn>GCKError.h</DeclaredIn>
+			
+			<Declaration>+ (NSString *)enumDescriptionForCode:(GCKErrorCode)code</Declaration>
+			
+			
+			<Anchor>//api/name/enumDescriptionForCode:</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

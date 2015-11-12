@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/GCKDeviceStatus.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/GCKDeviceStatus</TokenIdentifier>
+			<Abstract type="html">@enum GCKDeviceStatus
+Enum defining the device status at the time the device was scanned.</Abstract>
+			<DeclaredIn>GCKDevice.h</DeclaredIn>
+            
+			
+			<NodeRef refid="78"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKDeviceStatusUnknown</TokenIdentifier>
+            <Abstract type="html">Unknown status.</Abstract>
+            <Declaration>GCKDeviceStatusUnknown</Declaration>
+            
+            <DeclaredIn>GCKDevice.h</DeclaredIn>
+            
+            <NodeRef refid="78"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKDeviceStatusIdle</TokenIdentifier>
+            <Abstract type="html">Idle device status.</Abstract>
+            <Declaration>GCKDeviceStatusIdle</Declaration>
+            
+            <DeclaredIn>GCKDevice.h</DeclaredIn>
+            
+            <NodeRef refid="78"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/GCKDeviceStatusBusy</TokenIdentifier>
+            <Abstract type="html">Busy/join device status.</Abstract>
+            <Declaration>GCKDeviceStatusBusy</Declaration>
+            
+            <DeclaredIn>GCKDevice.h</DeclaredIn>
+            
+            <NodeRef refid="78"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

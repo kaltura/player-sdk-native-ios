@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/KPShareParams.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/KPShareParams</TokenIdentifier>
+			<Abstract type="html">All the parameters for submitting share action</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+            
+			
+			<NodeRef refid="71"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setVideoName:</TokenIdentifier>
+			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *videoName</Declaration>
+			
+			
+			<Anchor>//api/name/videoName</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/videoName</TokenIdentifier>
+			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *videoName</Declaration>
+			
+			
+			<Anchor>//api/name/videoName</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/videoName</TokenIdentifier>
+			<Abstract type="html">Contains the video name according to the meta data of the page</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *videoName</Declaration>
+			
+			
+			<Anchor>//api/name/videoName</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setShareLink:</TokenIdentifier>
+			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *shareLink</Declaration>
+			
+			
+			<Anchor>//api/name/shareLink</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/shareLink</TokenIdentifier>
+			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *shareLink</Declaration>
+			
+			
+			<Anchor>//api/name/shareLink</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/shareLink</TokenIdentifier>
+			<Abstract type="html">The link to the video, played by Kaltura player</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *shareLink</Declaration>
+			
+			
+			<Anchor>//api/name/shareLink</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setThumbnailLink:</TokenIdentifier>
+			<Abstract type="html">The link for the first frame of the video</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *thumbnailLink</Declaration>
+			
+			
+			<Anchor>//api/name/thumbnailLink</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/thumbnailLink</TokenIdentifier>
+			<Abstract type="html">The link for the first frame of the video</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *thumbnailLink</Declaration>
+			
+			
+			<Anchor>//api/name/thumbnailLink</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/thumbnailLink</TokenIdentifier>
+			<Abstract type="html">The link for the first frame of the video</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *thumbnailLink</Declaration>
+			
+			
+			<Anchor>//api/name/thumbnailLink</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setNetworkURL:</TokenIdentifier>
+			<Abstract type="html">Share API of the selected network</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *networkURL</Declaration>
+			
+			
+			<Anchor>//api/name/networkURL</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/networkURL</TokenIdentifier>
+			<Abstract type="html">Share API of the selected network</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *networkURL</Declaration>
+			
+			
+			<Anchor>//api/name/networkURL</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/networkURL</TokenIdentifier>
+			<Abstract type="html">Share API of the selected network</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSString *networkURL</Declaration>
+			
+			
+			<Anchor>//api/name/networkURL</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setRedirectURLs:</TokenIdentifier>
+			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSArray *redirectURLs</Declaration>
+			
+			
+			<Anchor>//api/name/redirectURLs</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/redirectURLs</TokenIdentifier>
+			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSArray *redirectURLs</Declaration>
+			
+			
+			<Anchor>//api/name/redirectURLs</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/redirectURLs</TokenIdentifier>
+			<Abstract type="html">Redirect URIs: cancel, finished, fail</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy, readonly) NSArray *redirectURLs</Declaration>
+			
+			
+			<Anchor>//api/name/redirectURLs</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/setNetworkStrategyClass:</TokenIdentifier>
+			<Abstract type="html">Generates the strategy class by the network name</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) Class networkStrategyClass</Declaration>
+			
+			
+			<Anchor>//api/name/networkStrategyClass</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/KPShareParams/networkStrategyClass</TokenIdentifier>
+			<Abstract type="html">Generates the strategy class by the network name</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) Class networkStrategyClass</Declaration>
+			
+			
+			<Anchor>//api/name/networkStrategyClass</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/KPShareParams/networkStrategyClass</TokenIdentifier>
+			<Abstract type="html">Generates the strategy class by the network name</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, assign, readonly) Class networkStrategyClass</Declaration>
+			
+			
+			<Anchor>//api/name/networkStrategyClass</Anchor>
+            <NodeRef refid="71"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

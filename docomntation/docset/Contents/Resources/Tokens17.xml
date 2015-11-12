@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/GCKLaunchOptions.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/GCKLaunchOptions</TokenIdentifier>
+			<Abstract type="html">Receiver application launch options.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+            
+			
+			<NodeRef refid="17"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/setLanguageCode:</TokenIdentifier>
+			<Abstract type="html">The sender&apos;s language code as per RFC 5646. The default is the system&apos;s language.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *languageCode</Declaration>
+			
+			
+			<Anchor>//api/name/languageCode</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/languageCode</TokenIdentifier>
+			<Abstract type="html">The sender&apos;s language code as per RFC 5646. The default is the system&apos;s language.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *languageCode</Declaration>
+			
+			
+			<Anchor>//api/name/languageCode</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKLaunchOptions/languageCode</TokenIdentifier>
+			<Abstract type="html">The sender&apos;s language code as per RFC 5646. The default is the system&apos;s language.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *languageCode</Declaration>
+			
+			
+			<Anchor>//api/name/languageCode</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/setRelaunchIfRunning:</TokenIdentifier>
+			<Abstract type="html">A flag indicating whether the receiver application should be relaunched if it is already
+running. The default is &lt;code&gt;NO&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL relaunchIfRunning</Declaration>
+			
+			
+			<Anchor>//api/name/relaunchIfRunning</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/relaunchIfRunning</TokenIdentifier>
+			<Abstract type="html">A flag indicating whether the receiver application should be relaunched if it is already
+running. The default is &lt;code&gt;NO&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL relaunchIfRunning</Declaration>
+			
+			
+			<Anchor>//api/name/relaunchIfRunning</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/GCKLaunchOptions/relaunchIfRunning</TokenIdentifier>
+			<Abstract type="html">A flag indicating whether the receiver application should be relaunched if it is already
+running. The default is &lt;code&gt;NO&lt;/code&gt;.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL relaunchIfRunning</Declaration>
+			
+			
+			<Anchor>//api/name/relaunchIfRunning</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/init</TokenIdentifier>
+			<Abstract type="html">Initializes the object with default values.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)init</Declaration>
+			
+			
+			<Anchor>//api/name/init</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/initWithRelaunchIfRunning:</TokenIdentifier>
+			<Abstract type="html">Initializes the object with the system&apos;s language and the given relaunch behavior.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithRelaunchIfRunning:(BOOL)relaunchIfRunning</Declaration>
+			
+			
+			<Anchor>//api/name/initWithRelaunchIfRunning:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/initWithLanguageCode:relaunchIfRunning:</TokenIdentifier>
+			<Abstract type="html">Designated initializer.</Abstract>
+			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithLanguageCode:(NSString *)languageCode relaunchIfRunning:(BOOL)relaunchIfRunning</Declaration>
+			
+			
+			<Anchor>//api/name/initWithLanguageCode:relaunchIfRunning:</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

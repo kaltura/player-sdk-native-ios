@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/KPShareResults.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/KPShareResults</TokenIdentifier>
+			<Abstract type="html">Share result</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
+            
+			
+			<NodeRef refid="99"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPShareResultsSuccess</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPShareResultsSuccess</Declaration>
+            
+            <DeclaredIn>KPShareManager.h</DeclaredIn>
+            
+            <NodeRef refid="99"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPShareResultsFailed</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPShareResultsFailed</Declaration>
+            
+            <DeclaredIn>KPShareManager.h</DeclaredIn>
+            
+            <NodeRef refid="99"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPShareResultsCancel</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPShareResultsCancel</Declaration>
+            
+            <DeclaredIn>KPShareManager.h</DeclaredIn>
+            
+            <NodeRef refid="99"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>
