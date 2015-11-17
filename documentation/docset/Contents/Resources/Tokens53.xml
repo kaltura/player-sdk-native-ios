@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/KPGCMediaPlayerState.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/KPGCMediaPlayerState</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="53"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStateUnknown</TokenIdentifier>
+            <Abstract type="html">Constant indicating unknown player state.</Abstract>
+            <Declaration>KPGCMediaPlayerStateUnknown</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="53"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStateIdle</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is idle.</Abstract>
+            <Declaration>KPGCMediaPlayerStateIdle</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="53"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStatePlaying</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is playing.</Abstract>
+            <Declaration>KPGCMediaPlayerStatePlaying</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="53"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStatePaused</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is paused.</Abstract>
+            <Declaration>KPGCMediaPlayerStatePaused</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="53"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCMediaPlayerStateBuffering</TokenIdentifier>
+            <Abstract type="html">Constant indicating that the media player is buffering.</Abstract>
+            <Declaration>KPGCMediaPlayerStateBuffering</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="53"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

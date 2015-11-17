@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>IMAAdsManagerDelegate Protocol Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">KALTURAPlayerSDK </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">Kaltura</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/adDidProgressToTime:totalTime:">- adDidProgressToTime:totalTime:</option>
+		
+		<option value="//api/name/adsManager:adDidProgressToTime:totalTime:">- adsManager:adDidProgressToTime:totalTime:</option>
+		
+		<option value="//api/name/adsManager:didReceiveAdError:">- adsManager:didReceiveAdError:</option>
+		
+		<option value="//api/name/adsManager:didReceiveAdEvent:">- adsManager:didReceiveAdEvent:</option>
+		
+		<option value="//api/name/adsManagerDidRequestContentPause:">- adsManagerDidRequestContentPause:</option>
+		
+		<option value="//api/name/adsManagerDidRequestContentResume:">- adsManagerDidRequestContentResume:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">IMAAdsManagerDelegate Protocol Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Declared in</th>
+	<td>IMAAdsManager.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>A callback protocol for <a href="../Classes/IMAAdsManager.html">IMAAdsManager</a>.</p>
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/adsManager:didReceiveAdEvent:" title="adsManager:didReceiveAdEvent:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/adsManager:didReceiveAdEvent:">&ndash;&nbsp;adsManager:didReceiveAdEvent:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when there is an <a href="../Classes/IMAAdEvent.html">IMAAdEvent</a>.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)adsManager:(IMAAdsManager *)<em>adsManager</em> didReceiveAdEvent:(IMAAdEvent *)<em>event</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IMAAdsManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/adsManager:didReceiveAdError:" title="adsManager:didReceiveAdError:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/adsManager:didReceiveAdError:">&ndash;&nbsp;adsManager:didReceiveAdError:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when there was an error playing the ad.
+Only resume playback when didRequestContentResumeFor<a href="../Protocols/AdsManager.html">AdsManager</a>: is called.
+Continue to listen for callbacks until didReceive<a href="../Protocols/AdEvent.html">AdEvent</a>: with
+k<a href="../Classes/IMAAdEvent.html">IMAAdEvent</a>_ALL_ADS_COMPLETED is called.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)adsManager:(IMAAdsManager *)<em>adsManager</em> didReceiveAdError:(IMAAdError *)<em>error</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IMAAdsManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/adsManagerDidRequestContentPause:" title="adsManagerDidRequestContentPause:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/adsManagerDidRequestContentPause:">&ndash;&nbsp;adsManagerDidRequestContentPause:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when an ad is ready to play.
+The implementing code should pause the content playback and prepare the UI
+for ad playback.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)adsManagerDidRequestContentPause:(IMAAdsManager *)<em>adsManager</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IMAAdsManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/adsManagerDidRequestContentResume:" title="adsManagerDidRequestContentResume:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/adsManagerDidRequestContentResume:">&ndash;&nbsp;adsManagerDidRequestContentResume:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called when an ad has finished or an error occurred during the playback.
+The implementing code should resume the content playback.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)adsManagerDidRequestContentResume:(IMAAdsManager *)<em>adsManager</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IMAAdsManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/adDidProgressToTime:totalTime:" title="adDidProgressToTime:totalTime:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/adDidProgressToTime:totalTime:">&ndash;&nbsp;adDidProgressToTime:totalTime:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Replaced by <a href="#//api/name/adsManager:adDidProgressToTime:totalTime:">adsManager:adDidProgressToTime:totalTime:</a> (<b class="deprecated">Deprecated:</b><span class="deprecated"> Replaced by adsManager:adDidProgressToTime:totalTime:</span>)</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)adDidProgressToTime:(NSTimeInterval)<em>mediaTime</em> totalTime:(NSTimeInterval)<em>totalTime</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IMAAdsManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/adsManager:adDidProgressToTime:totalTime:" title="adsManager:adDidProgressToTime:totalTime:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/adsManager:adDidProgressToTime:totalTime:">&ndash;&nbsp;adsManager:adDidProgressToTime:totalTime:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>Called every 200ms to provide time updates for the current ad.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)adsManager:(IMAAdsManager *)<em>adsManager</em> adDidProgressToTime:(NSTimeInterval)<em>mediaTime</em> totalTime:(NSTimeInterval)<em>totalTime</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IMAAdsManager.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+                    
+          
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2015 Kaltura. All rights reserved. Updated: 2015-11-09</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

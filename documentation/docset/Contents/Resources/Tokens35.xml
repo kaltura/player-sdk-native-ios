@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/IMAAdPlaybackInfo.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/IMAAdPlaybackInfo</TokenIdentifier>
+			<Abstract type="html">Groups various properties of the ad player.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+            
+			
+			<NodeRef refid="35"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setCurrentMediaTime:</TokenIdentifier>
+			<Abstract type="html">The current media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/currentMediaTime</TokenIdentifier>
+			<Abstract type="html">The current media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/currentMediaTime</TokenIdentifier>
+			<Abstract type="html">The current media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setTotalMediaTime:</TokenIdentifier>
+			<Abstract type="html">The total media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval totalMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/totalMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/totalMediaTime</TokenIdentifier>
+			<Abstract type="html">The total media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval totalMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/totalMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/totalMediaTime</TokenIdentifier>
+			<Abstract type="html">The total media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval totalMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/totalMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setBufferedMediaTime:</TokenIdentifier>
+			<Abstract type="html">The buffered media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval bufferedMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/bufferedMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/bufferedMediaTime</TokenIdentifier>
+			<Abstract type="html">The buffered media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval bufferedMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/bufferedMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/bufferedMediaTime</TokenIdentifier>
+			<Abstract type="html">The buffered media time of the ad, or 0 if no ad loaded.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval bufferedMediaTime</Declaration>
+			
+			
+			<Anchor>//api/name/bufferedMediaTime</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/setPlaying:</TokenIdentifier>
+			<Abstract type="html">YES if an ad is currently playing, NO otherwise.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isPlaying) BOOL playing</Declaration>
+			
+			
+			<Anchor>//api/name/playing</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdPlaybackInfo/isPlaying</TokenIdentifier>
+			<Abstract type="html">YES if an ad is currently playing, NO otherwise.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isPlaying) BOOL playing</Declaration>
+			
+			
+			<Anchor>//api/name/playing</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAAdPlaybackInfo/playing</TokenIdentifier>
+			<Abstract type="html">YES if an ad is currently playing, NO otherwise.</Abstract>
+			<DeclaredIn>IMAAdPlaybackInfo.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly, getter=isPlaying) BOOL playing</Declaration>
+			
+			
+			<Anchor>//api/name/playing</Anchor>
+            <NodeRef refid="35"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

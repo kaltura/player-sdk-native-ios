@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/KPLogLevel.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/KPLogLevel</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+			
+			<NodeRef refid="55"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPLogLevelAll</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPLogLevelAll</Declaration>
+            
+            <DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPLogLevelTrace</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPLogLevelTrace</Declaration>
+            
+            <DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPLogLevelDebug</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPLogLevelDebug</Declaration>
+            
+            <DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPLogLevelInfo</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPLogLevelInfo</Declaration>
+            
+            <DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPLogLevelWarn</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPLogLevelWarn</Declaration>
+            
+            <DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPLogLevelError</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPLogLevelError</Declaration>
+            
+            <DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPLogLevelOff</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPLogLevelOff</Declaration>
+            
+            <DeclaredIn>KPLogManager.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

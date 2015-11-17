@@ -1,0 +1,691 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/ChromecastDeviceController.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/ChromecastDeviceController</TokenIdentifier>
+			<Abstract type="html">Constant for the storyboard ID for the expanded view Cast controller.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setDelegate:</TokenIdentifier>
+			<Abstract type="html">The delegate for this object.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;ChromecastDeviceControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for this object.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;ChromecastDeviceControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/delegate</TokenIdentifier>
+			<Abstract type="html">The delegate for this object.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;ChromecastDeviceControllerDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setApplicationID:</TokenIdentifier>
+			<Abstract type="html">The Cast application ID to launch.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *applicationID</Declaration>
+			
+			
+			<Anchor>//api/name/applicationID</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/applicationID</TokenIdentifier>
+			<Abstract type="html">The Cast application ID to launch.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *applicationID</Declaration>
+			
+			
+			<Anchor>//api/name/applicationID</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/applicationID</TokenIdentifier>
+			<Abstract type="html">The Cast application ID to launch.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSString *applicationID</Declaration>
+			
+			
+			<Anchor>//api/name/applicationID</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setDeviceManager:</TokenIdentifier>
+			<Abstract type="html">The device manager used to manage a connection to a Cast device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceManager&gt; deviceManager</Declaration>
+			
+			
+			<Anchor>//api/name/deviceManager</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/deviceManager</TokenIdentifier>
+			<Abstract type="html">The device manager used to manage a connection to a Cast device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceManager&gt; deviceManager</Declaration>
+			
+			
+			<Anchor>//api/name/deviceManager</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/deviceManager</TokenIdentifier>
+			<Abstract type="html">The device manager used to manage a connection to a Cast device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceManager&gt; deviceManager</Declaration>
+			
+			
+			<Anchor>//api/name/deviceManager</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setDeviceScanner:</TokenIdentifier>
+			<Abstract type="html">The device scanner used to detect devices on the network.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceScanner&gt; deviceScanner</Declaration>
+			
+			
+			<Anchor>//api/name/deviceScanner</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/deviceScanner</TokenIdentifier>
+			<Abstract type="html">The device scanner used to detect devices on the network.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceScanner&gt; deviceScanner</Declaration>
+			
+			
+			<Anchor>//api/name/deviceScanner</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/deviceScanner</TokenIdentifier>
+			<Abstract type="html">The device scanner used to detect devices on the network.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCDeviceScanner&gt; deviceScanner</Declaration>
+			
+			
+			<Anchor>//api/name/deviceScanner</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setMediaInformation:</TokenIdentifier>
+			<Abstract type="html">The media information of the loaded media on the device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaInformation&gt; mediaInformation</Declaration>
+			
+			
+			<Anchor>//api/name/mediaInformation</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/mediaInformation</TokenIdentifier>
+			<Abstract type="html">The media information of the loaded media on the device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaInformation&gt; mediaInformation</Declaration>
+			
+			
+			<Anchor>//api/name/mediaInformation</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/mediaInformation</TokenIdentifier>
+			<Abstract type="html">The media information of the loaded media on the device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaInformation&gt; mediaInformation</Declaration>
+			
+			
+			<Anchor>//api/name/mediaInformation</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setMediaControlChannel:</TokenIdentifier>
+			<Abstract type="html">The media control channel for the playing media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaControlChannel&gt; mediaControlChannel</Declaration>
+			
+			
+			<Anchor>//api/name/mediaControlChannel</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/mediaControlChannel</TokenIdentifier>
+			<Abstract type="html">The media control channel for the playing media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaControlChannel&gt; mediaControlChannel</Declaration>
+			
+			
+			<Anchor>//api/name/mediaControlChannel</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/mediaControlChannel</TokenIdentifier>
+			<Abstract type="html">The media control channel for the playing media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;KPGCMediaControlChannel&gt; mediaControlChannel</Declaration>
+			
+			
+			<Anchor>//api/name/mediaControlChannel</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setPlayerState:</TokenIdentifier>
+			<Abstract type="html">Helper accessor for the media player state of the media on the device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerState playerState</Declaration>
+			
+			
+			<Anchor>//api/name/playerState</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/playerState</TokenIdentifier>
+			<Abstract type="html">Helper accessor for the media player state of the media on the device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerState playerState</Declaration>
+			
+			
+			<Anchor>//api/name/playerState</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/playerState</TokenIdentifier>
+			<Abstract type="html">Helper accessor for the media player state of the media on the device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerState playerState</Declaration>
+			
+			
+			<Anchor>//api/name/playerState</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setIdleReason:</TokenIdentifier>
+			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
+KPGCMediaPlayerStateIdle.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason</Declaration>
+			
+			
+			<Anchor>//api/name/idleReason</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/idleReason</TokenIdentifier>
+			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
+KPGCMediaPlayerStateIdle.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason</Declaration>
+			
+			
+			<Anchor>//api/name/idleReason</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/idleReason</TokenIdentifier>
+			<Abstract type="html">The current idle reason. This value is only meaningful if the player state is
+KPGCMediaPlayerStateIdle.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason</Declaration>
+			
+			
+			<Anchor>//api/name/idleReason</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setStreamDuration:</TokenIdentifier>
+			<Abstract type="html">Helper accessor for the duration of the currently casting media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamDuration</Declaration>
+			
+			
+			<Anchor>//api/name/streamDuration</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/streamDuration</TokenIdentifier>
+			<Abstract type="html">Helper accessor for the duration of the currently casting media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamDuration</Declaration>
+			
+			
+			<Anchor>//api/name/streamDuration</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/streamDuration</TokenIdentifier>
+			<Abstract type="html">Helper accessor for the duration of the currently casting media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamDuration</Declaration>
+			
+			
+			<Anchor>//api/name/streamDuration</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setStreamPosition:</TokenIdentifier>
+			<Abstract type="html">The current playback position of the currently casting media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamPosition</Declaration>
+			
+			
+			<Anchor>//api/name/streamPosition</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/streamPosition</TokenIdentifier>
+			<Abstract type="html">The current playback position of the currently casting media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamPosition</Declaration>
+			
+			
+			<Anchor>//api/name/streamPosition</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/streamPosition</TokenIdentifier>
+			<Abstract type="html">The current playback position of the currently casting media.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamPosition</Declaration>
+			
+			
+			<Anchor>//api/name/streamPosition</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/ChromecastDeviceController/sharedInstance</TokenIdentifier>
+			<Abstract type="html">Main access point for the class. Use this to retrieve an object you can use.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>+ (instancetype)sharedInstance</Declaration>
+			
+			<ReturnValue><Abstract type="html">ChromecastDeviceController</Abstract></ReturnValue>
+			<Anchor>//api/name/sharedInstance</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setPlaybackPercent:</TokenIdentifier>
+			<Abstract type="html">Sets the position of the playback on the Cast device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>- (void)setPlaybackPercent:(float)newPercent</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>newPercent</Name>
+					<Abstract type="html">0.0-1.0</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/setPlaybackPercent:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/connectToDevice:</TokenIdentifier>
+			<Abstract type="html">Connect to the given Cast device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>- (void)connectToDevice:(id&lt;KPGCDevice&gt;)device</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">A GCKDevice from the deviceScanner list.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/connectToDevice:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/loadMedia:startTime:autoPlay:</TokenIdentifier>
+			<Abstract type="html">Load media onto the currently connected device.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>- (BOOL)loadMedia:(id&lt;KPGCMediaInformation&gt;)media startTime:(NSTimeInterval)startTime autoPlay:(BOOL)autoPlay</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>media</Name>
+					<Abstract type="html">The GCKMediaInformation to play, with the URL as the contentID</Abstract>
+				</Parameter><Parameter>
+					<Name>startTime</Name>
+					<Abstract type="html">Time to start from if starting a fresh cast</Abstract>
+				</Parameter><Parameter>
+					<Name>autoPlay</Name>
+					<Abstract type="html">Whether to start playing as soon as the media is loaded.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">YES if we can load the media.</Abstract></ReturnValue>
+			<Anchor>//api/name/loadMedia:startTime:autoPlay:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/streamPositionForPreviouslyCastMedia:</TokenIdentifier>
+			<Abstract type="html">Return the last known stream position for the given contentID. This will generally only
+be useful for the last Cast media, and allows a local player to resume playback at the
+position noted before disconnect. In many cases it will return 0.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>- (NSTimeInterval)streamPositionForPreviouslyCastMedia:(NSString *)contentID</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>contentID</Name>
+					<Abstract type="html">The string of the identifier of the media to be displayed.</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">the position in the stream of the media, if any.</Abstract></ReturnValue>
+			<Anchor>//api/name/streamPositionForPreviouslyCastMedia:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/clearPreviousSession</TokenIdentifier>
+			<Abstract type="html">Prevent automatically reconnecting to the Cast device if we see it again.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>- (void)clearPreviousSession</Declaration>
+			
+			
+			<Anchor>//api/name/clearPreviousSession</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/enableLogging</TokenIdentifier>
+			<Abstract type="html">Enable basic logging of all GCKLogger messages to the console.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+			
+			<Declaration>- (void)enableLogging</Declaration>
+			
+			
+			<Anchor>//api/name/enableLogging</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/deviceDidComeOnline:</TokenIdentifier>
+			<Abstract type="html">Called when a device has been discovered or has come online.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>- (void)deviceDidComeOnline:(id&lt;KPGCDevice&gt;)device</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceDidComeOnline:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/deviceDidGoOffline:</TokenIdentifier>
+			<Abstract type="html">Called when a device has gone offline.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>- (void)deviceDidGoOffline:(id&lt;KPGCDevice&gt;)device</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceDidGoOffline:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/deviceDidChange:</TokenIdentifier>
+			<Abstract type="html">Called when there is a change to one or more properties of the device that do not affect
+connectivity to the device. This includes all properties except the device ID, IP address,
+and service port; if any of these properties changes, the device will be reported as &quot;offline&quot;
+and a new device with the updated properties will be reported as &quot;online&quot;.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>- (void)deviceDidChange:(id&lt;KPGCDevice&gt;)device</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>device</Name>
+					<Abstract type="html">The device.</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/deviceDidChange:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setManageToolbar:</TokenIdentifier>
+			<Abstract type="html">Whehter we are automatically adding the toolbar.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL manageToolbar</Declaration>
+			
+			
+			<Anchor>//api/name/manageToolbar</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/manageToolbar</TokenIdentifier>
+			<Abstract type="html">Whehter we are automatically adding the toolbar.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL manageToolbar</Declaration>
+			
+			
+			<Anchor>//api/name/manageToolbar</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/manageToolbar</TokenIdentifier>
+			<Abstract type="html">Whehter we are automatically adding the toolbar.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL manageToolbar</Declaration>
+			
+			
+			<Anchor>//api/name/manageToolbar</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setIsReconnecting:</TokenIdentifier>
+			<Abstract type="html">Whether or not we are attempting reconnect.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL isReconnecting</Declaration>
+			
+			
+			<Anchor>//api/name/isReconnecting</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/isReconnecting</TokenIdentifier>
+			<Abstract type="html">Whether or not we are attempting reconnect.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL isReconnecting</Declaration>
+			
+			
+			<Anchor>//api/name/isReconnecting</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/isReconnecting</TokenIdentifier>
+			<Abstract type="html">Whether or not we are attempting reconnect.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) BOOL isReconnecting</Declaration>
+			
+			
+			<Anchor>//api/name/isReconnecting</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setLastContentID:</TokenIdentifier>
+			<Abstract type="html">The last played content identifier.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSString *lastContentID</Declaration>
+			
+			
+			<Anchor>//api/name/lastContentID</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/lastContentID</TokenIdentifier>
+			<Abstract type="html">The last played content identifier.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSString *lastContentID</Declaration>
+			
+			
+			<Anchor>//api/name/lastContentID</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/lastContentID</TokenIdentifier>
+			<Abstract type="html">The last played content identifier.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSString *lastContentID</Declaration>
+			
+			
+			<Anchor>//api/name/lastContentID</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/setLastPosition:</TokenIdentifier>
+			<Abstract type="html">The last known playback position of the last played content.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval lastPosition</Declaration>
+			
+			
+			<Anchor>//api/name/lastPosition</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/ChromecastDeviceController/lastPosition</TokenIdentifier>
+			<Abstract type="html">The last known playback position of the last played content.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval lastPosition</Declaration>
+			
+			
+			<Anchor>//api/name/lastPosition</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/ChromecastDeviceController/lastPosition</TokenIdentifier>
+			<Abstract type="html">The last known playback position of the last played content.</Abstract>
+			<DeclaredIn>ChromecastDeviceController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval lastPosition</Declaration>
+			
+			
+			<Anchor>//api/name/lastPosition</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

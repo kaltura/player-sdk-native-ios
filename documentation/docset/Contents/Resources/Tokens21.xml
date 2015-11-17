@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/KPController.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/KPController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="21"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/setContentURL:</TokenIdentifier>
+			<Abstract type="html">@todo setsource refactor</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSURL *contentURL</Declaration>
+			
+			
+			<Anchor>//api/name/contentURL</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/contentURL</TokenIdentifier>
+			<Abstract type="html">@todo setsource refactor</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSURL *contentURL</Declaration>
+			
+			
+			<Anchor>//api/name/contentURL</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPController/contentURL</TokenIdentifier>
+			<Abstract type="html">@todo setsource refactor</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSURL *contentURL</Declaration>
+			
+			
+			<Anchor>//api/name/contentURL</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/setDuration:</TokenIdentifier>
+			<Abstract type="html">Duration of the current video</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
+			
+			<ReturnValue><Abstract type="html">Duration of the current video</Abstract></ReturnValue>
+			<Anchor>//api/name/duration</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/duration</TokenIdentifier>
+			<Abstract type="html">Duration of the current video</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
+			
+			<ReturnValue><Abstract type="html">Duration of the current video</Abstract></ReturnValue>
+			<Anchor>//api/name/duration</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPController/duration</TokenIdentifier>
+			<Abstract type="html">Duration of the current video</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval duration</Declaration>
+			
+			<ReturnValue><Abstract type="html">Duration of the current video</Abstract></ReturnValue>
+			<Anchor>//api/name/duration</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/setCurrentPlaybackTime:</TokenIdentifier>
+			<Abstract type="html">Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval currentPlaybackTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentPlaybackTime</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/currentPlaybackTime</TokenIdentifier>
+			<Abstract type="html">Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval currentPlaybackTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentPlaybackTime</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPController/currentPlaybackTime</TokenIdentifier>
+			<Abstract type="html">Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) NSTimeInterval currentPlaybackTime</Declaration>
+			
+			
+			<Anchor>//api/name/currentPlaybackTime</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/prepareToPlay</TokenIdentifier>
+			<Abstract type="html">@todo prepareToPlay</Abstract>
+			<DeclaredIn>KPController.m</DeclaredIn>
+			
+			<Declaration>- (void)prepareToPlay</Declaration>
+			
+			
+			<Anchor>//api/name/prepareToPlay</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/play</TokenIdentifier>
+			<Abstract type="html">Initiates playback of the current item. (required)
+
+If playback was previously paused, this method resumes playback where it left off; otherwise, this method plays the first available item, from the beginning.
+If a Kaltura player is not prepared for playback when you call this method, this method first prepares the Kaltura player and then starts playback. To minimize playback delay, call the prepareToPlay method before you call this method.</Abstract>
+			<DeclaredIn>KPController.m</DeclaredIn>
+			
+			<Declaration>- (void)play</Declaration>
+			
+			
+			<Anchor>//api/name/play</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/pause</TokenIdentifier>
+			<Abstract type="html">Pauses playback of the current item. (required)
+
+If playback is not currently underway, this method has no effect. To resume playback of the current item from the pause point, call the play method.</Abstract>
+			<DeclaredIn>KPController.m</DeclaredIn>
+			
+			<Declaration>- (void)pause</Declaration>
+			
+			
+			<Anchor>//api/name/pause</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/stop</TokenIdentifier>
+			<Abstract type="html">Ends playback of the current item. (required)
+
+This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.</Abstract>
+			<DeclaredIn>KPController.m</DeclaredIn>
+			
+			<Declaration>- (void)stop</Declaration>
+			
+			
+			<Anchor>//api/name/stop</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/setCurrentPlaybackRate:</TokenIdentifier>
+			<Abstract type="html">@todo setCurrentPlaybackRate</Abstract>
+			<DeclaredIn>KPController.m</DeclaredIn>
+			
+			<Declaration>- (void)setCurrentPlaybackRate:(float)currentPlaybackRate</Declaration>
+			
+			
+			<Anchor>//api/name/setCurrentPlaybackRate:</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPController/isPreparedToPlay</TokenIdentifier>
+			<Abstract type="html">Prepares a Kaltura player for playback. (required)
+
+If a Kaltura player is not already prepared to play when you call the play method, that method automatically calls this method. However, to minimize playback delay, call this method before you call play.</Abstract>
+			<DeclaredIn>KPController.m</DeclaredIn>
+			
+			<Declaration>- (BOOL)isPreparedToPlay</Declaration>
+			
+			
+			<Anchor>//api/name/isPreparedToPlay</Anchor>
+            <NodeRef refid="21"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

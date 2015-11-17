@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/IMAAVPlayerContentPlayhead.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAVPlayerContentPlayhead</TokenIdentifier>
+			<Abstract type="html">An implementation of IMAContentPlayhead for AVPlayer. Use this class to
+provide content tracking if your content player of choice is an AVPlayer
+or its subclass.</Abstract>
+			<DeclaredIn>IMAAVPlayerContentPlayhead.h</DeclaredIn>
+            
+			
+			<NodeRef refid="5"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAVPlayerContentPlayhead/initWithAVPlayer:</TokenIdentifier>
+			<Abstract type="html">Initializes with the |player| to track. It will attach a periodic time
+observer to the player immediately.</Abstract>
+			<DeclaredIn>IMAAVPlayerContentPlayhead.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithAVPlayer:(AVPlayer *)player</Declaration>
+			
+			
+			<Anchor>//api/name/initWithAVPlayer:</Anchor>
+            <NodeRef refid="5"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

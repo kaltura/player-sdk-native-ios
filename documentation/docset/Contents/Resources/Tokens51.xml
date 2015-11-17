@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/KPGCErrorCode.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/KPGCErrorCode</TokenIdentifier>
+			<Abstract type="html">@enum KPGCErrorCode
+Description of error codes</Abstract>
+			<DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="51"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeNoError</TokenIdentifier>
+            <Abstract type="html">Error Code indicating no error.
+     </Abstract>
+            <Declaration>KPGCErrorCodeNoError</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeNetworkError</TokenIdentifier>
+            <Abstract type="html">Error code indicating a network I/O error.
+     </Abstract>
+            <Declaration>KPGCErrorCodeNetworkError</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeTimeout</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an operation has timed out.
+     </Abstract>
+            <Declaration>KPGCErrorCodeTimeout</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeDeviceAuthenticationFailure</TokenIdentifier>
+            <Abstract type="html">Error code indicating an authentication error.
+     </Abstract>
+            <Declaration>KPGCErrorCodeDeviceAuthenticationFailure</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeInvalidRequest</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an invalid request was made.
+     </Abstract>
+            <Declaration>KPGCErrorCodeInvalidRequest</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeCancelled</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an in-progress request has been cancelled, most likely because
+another action has preempted it.
+     </Abstract>
+            <Declaration>KPGCErrorCodeCancelled</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeReplaced</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a request has been replaced by another request of the same type.
+     </Abstract>
+            <Declaration>KPGCErrorCodeReplaced</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeNotAllowed</TokenIdentifier>
+            <Abstract type="html">Error code indicating that the request was disallowed and could not be completed.
+     </Abstract>
+            <Declaration>KPGCErrorCodeNotAllowed</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeDuplicateRequest</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a request could not be made because the same type of request is
+still in process.
+     </Abstract>
+            <Declaration>KPGCErrorCodeDuplicateRequest</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeInvalidState</TokenIdentifier>
+            <Abstract type="html">Error code indicating that the request is not allowed in the current state.
+     </Abstract>
+            <Declaration>KPGCErrorCodeInvalidState</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeApplicationNotFound</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a requested application could not be found.
+     </Abstract>
+            <Declaration>KPGCErrorCodeApplicationNotFound</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeApplicationNotRunning</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a requested application is not currently running.
+     </Abstract>
+            <Declaration>KPGCErrorCodeApplicationNotRunning</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeInvalidApplicationSessionID</TokenIdentifier>
+            <Abstract type="html">Error code indicating that the application session ID was not valid.
+     </Abstract>
+            <Declaration>KPGCErrorCodeInvalidApplicationSessionID</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeMediaLoadFailed</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a media load failed on the receiver side.
+     </Abstract>
+            <Declaration>KPGCErrorCodeMediaLoadFailed</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeInvalidMediaPlayerState</TokenIdentifier>
+            <Abstract type="html">Error code indicating that a media media command failed because of the media player state.
+     </Abstract>
+            <Declaration>KPGCErrorCodeInvalidMediaPlayerState</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeAppDidEnterBackground</TokenIdentifier>
+            <Abstract type="html">Error code indicating the app entered the background.
+     </Abstract>
+            <Declaration>KPGCErrorCodeAppDidEnterBackground</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeDisconnected</TokenIdentifier>
+            <Abstract type="html">Error code indicating a disconnection occurred during the request.
+     </Abstract>
+            <Declaration>KPGCErrorCodeDisconnected</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPGCErrorCodeUnknown</TokenIdentifier>
+            <Abstract type="html">Error code indicating that an unknown, unexpected error has occurred.
+     </Abstract>
+            <Declaration>KPGCErrorCodeUnknown</Declaration>
+            
+            <DeclaredIn>ChromecastDeviceController.h</DeclaredIn>
+            
+            <NodeRef refid="51"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>

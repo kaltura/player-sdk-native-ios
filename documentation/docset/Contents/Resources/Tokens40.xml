@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Protocols/IMAWebOpenerDelegate.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intf/IMAWebOpenerDelegate</TokenIdentifier>
+			<Abstract type="html">Signals that a internal or external web browser has been opened or closed.
+For an external browser (Mobile Safari), the delegate is only notified
+before opening.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+            
+			
+			<NodeRef refid="40"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerWillOpenExternalBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when Safari is about to be opened.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)webOpenerWillOpenExternalBrowser:(NSObject *)webOpener</Declaration>
+			
+			
+			<Anchor>//api/name/webOpenerWillOpenExternalBrowser:</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerWillOpenInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called before in-app browser opens.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)webOpenerWillOpenInAppBrowser:(NSObject *)webOpener</Declaration>
+			
+			
+			<Anchor>//api/name/webOpenerWillOpenInAppBrowser:</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerDidOpenInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when the in app browser is shown on the screen.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)webOpenerDidOpenInAppBrowser:(NSObject *)webOpener</Declaration>
+			
+			
+			<Anchor>//api/name/webOpenerDidOpenInAppBrowser:</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerWillCloseInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when in-app browser is about to close.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)webOpenerWillCloseInAppBrowser:(NSObject *)webOpener</Declaration>
+			
+			
+			<Anchor>//api/name/webOpenerWillCloseInAppBrowser:</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/webOpenerDidCloseInAppBrowser:</TokenIdentifier>
+			<Abstract type="html">Called when in-app browser finishes closing.</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)webOpenerDidCloseInAppBrowser:(NSObject *)webOpener</Declaration>
+			
+			
+			<Anchor>//api/name/webOpenerDidCloseInAppBrowser:</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/willOpenExternalBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerWillOpenExternalBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerWillOpenExternalBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)willOpenExternalBrowser</Declaration>
+			
+			
+			<Anchor>//api/name/willOpenExternalBrowser</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/willOpenInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerWillOpenInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerWillOpenInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)willOpenInAppBrowser</Declaration>
+			
+			
+			<Anchor>//api/name/willOpenInAppBrowser</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/didOpenInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerDidOpenInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerDidOpenInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)didOpenInAppBrowser</Declaration>
+			
+			
+			<Anchor>//api/name/didOpenInAppBrowser</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/willCloseInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerWillCloseInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerWillCloseInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)willCloseInAppBrowser</Declaration>
+			
+			
+			<Anchor>//api/name/willCloseInAppBrowser</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAWebOpenerDelegate/didCloseInAppBrowser</TokenIdentifier>
+			<Abstract type="html">Replaced by webOpenerDidCloseInAppBrowser: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by webOpenerDidCloseInAppBrowser:&lt;/span&gt;)</Abstract>
+			<DeclaredIn>IMAAdsRenderingSettings.h</DeclaredIn>
+			
+			<Declaration>- (void)didCloseInAppBrowser</Declaration>
+			
+			
+			<Anchor>//api/name/didCloseInAppBrowser</Anchor>
+            <NodeRef refid="40"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
