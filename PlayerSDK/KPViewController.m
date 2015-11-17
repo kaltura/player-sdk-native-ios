@@ -732,11 +732,11 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             _playerFactory.locale = attributeVal;
             break;
         case doubleClickRequestAds: {
-            
+            __weak KPViewController *weakSelf = self;
             [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    _playerFactory.adPlayerHeight = height;
-                    _playerFactory.adTagURL = attributeVal;
+                    weakSelf.playerFactory.adPlayerHeight = height;
+                    weakSelf.playerFactory.adTagURL = attributeVal;
                 });
             }];
         }

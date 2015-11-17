@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "KPIMAPlayerViewController.h"
+#import "KPViewControllerProtocols.h"
 
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
@@ -30,44 +31,8 @@ static NSString *CanPlayKey = @"canplay";
 static NSString *PostrollEndedKey = @"postEnded";
 static NSString *WVPortalKey = @"kaltura";
 
-
-@protocol KPlayerDelegate;
-
-@protocol KPlayer <NSObject>
-
-@property (nonatomic, weak) id<KPlayerDelegate> delegate;
-//@property (nonatomic, copy) NSURL *playerSource;
-@property (nonatomic) NSTimeInterval currentPlaybackTime;
-@property (nonatomic) NSTimeInterval duration;
-@property (nonatomic, readonly) BOOL isKPlayer;
-
-- (instancetype)initWithParentView:(UIView *)parentView;
-- (BOOL)setPlayerSource:(NSURL *)playerSource;
-- (NSURL *)playerSource;
-- (void)play;
-- (void)pause;
-- (void)changeSubtitleLanguage:(NSString *)languageCode;
-- (void)removePlayer;
-+ (BOOL)isPlayableMIMEType:(NSString *)mimeType;
-
-@end
-
-@protocol KPlayerDelegate <NSObject>
-
-- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
-- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString;
-- (void)contentCompleted:(id<KPlayer>)currentPlayer;
-
-@end
-
-@protocol KDRM <NSObject>
-
-@end
-
 @protocol KPlayerFactoryDelegate <KPlayerDelegate>
-
 - (void)allAdsCompleted;
-
 @end
 
 @interface KPlayerFactory : NSObject

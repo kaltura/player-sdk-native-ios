@@ -55,6 +55,9 @@ static NSString *StatusKeyPath = @"status";
                forKeyPath:RateKeyPath
                   options:0
                   context:nil];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:AVPlayerItemDidPlayToEndTimeNotification
+                                                      object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(videoEnded:)
                                                      name:AVPlayerItemDidPlayToEndTimeNotification
