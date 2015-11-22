@@ -241,8 +241,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self.view addGestureRecognizer:pinch];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(handleEnteredBackground:)
+                                             selector: @selector(applicationDidEnterBackground:)
                                                  name: UIApplicationDidEnterBackgroundNotification
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(applicationDidBecomeActive:)
+                                                 name: UIApplicationDidBecomeActiveNotification
                                                object: nil];
     
     [self.view addObserver:self
@@ -471,10 +476,32 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)deviceDidGoOffline:(id<KPGCDevice>)device {
 }
 
-- (void)handleEnteredBackground: (NSNotification *)not {
+- (void)applicationDidEnterBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
-    self.sendNotification(@"doPause", nil);
+    NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+    
+    if ([backgroundModes containsObject:@"audio"]) {
+        [self.playerFactory enableTracksInBackground:NO];
+    } else {
+        [self.playerFactory.player pause];
+    }
+
     KPLogTrace(@"Exit");
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    KPLogTrace(@"Enter");
+    NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+    
+    if ([backgroundModes containsObject:@"audio"]) {
+        [self.playerFactory enableTracksInBackground:YES];
+    }
+    
+    KPLogTrace(@"Exit");
+}
+
+- (void)play2 {
+    [self.playerFactory.player play];
 }
 
 - (void)didPinchInOut:(UIPinchGestureRecognizer *)gestureRecognizer {

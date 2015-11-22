@@ -58,6 +58,8 @@ typedef enum{
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
 + (BOOL)isPlayableMIMEType:(NSString *)mimeType;
+@optional
+- (void)enableTracks:(BOOL)tracksEnabled;
 
 @end
 

@@ -194,6 +194,14 @@
     }
 }
 
+- (void)enableTracksInBackground:(BOOL)tracksEnabled {
+    KPLogInfo(@"disableTracksInBackground");
+    
+    if ([self.player respondsToSelector: @selector(enableTracks:)]) {
+        [self.player enableTracks:tracksEnabled];
+    }
+}
+
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
 }

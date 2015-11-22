@@ -81,14 +81,22 @@ static NSString *StatusKeyPath = @"status";
 }
 
 - (void)createAudioSession {
-    NSError *myErr;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     
-    if (![[AVAudioSession sharedInstance]
-          setCategory:AVAudioSessionCategoryPlayback
-          error:&myErr]) {
-        
-        // Handle the error
-        NSLog(@"Audio Session error %@, %@", myErr, [myErr userInfo]);
+    NSError *setCategoryError = nil;
+    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    
+    if (!success) {
+        /* handle the error condition */
+        NSLog(@"Audio Session error %@, %@", setCategoryError, [setCategoryError userInfo]);
+    }
+    
+    NSError *activationError = nil;
+    success = [audioSession setActive:YES error:&activationError];
+    
+    if (!success) {
+        /* handle the error condition */
+        NSLog(@"Audio Session Activation error %@, %@", activationError, [activationError userInfo]);
     }
 }
 
@@ -323,6 +331,33 @@ static NSString *StatusKeyPath = @"status";
 
 - (void)updateCurrentTime:(NSTimeInterval)currentTime {
     _currentPlaybackTime = currentTime;
+}
+
+- (void)enableTracks:(BOOL)tracksEnabled {
+    KPLogTrace(@"Enter");
+    
+    AVPlayerItem *playerItem = self.currentItem;
+    
+    NSArray *tracks = [playerItem tracks];
+    
+    for (AVPlayerItemTrack *playerItemTrack in tracks) {
+        // find video tracks
+        if ([playerItemTrack.assetTrack hasMediaCharacteristic:AVMediaCharacteristicVisual]) {
+            playerItemTrack.enabled = tracksEnabled; // enable/ disable the track
+        }
+    }
+    
+    if(!tracksEnabled) {
+        MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+
+        commandCenter.playCommand.enabled = YES;
+        [commandCenter.playCommand addTarget:self action:@selector(play)];
+        
+        commandCenter.pauseCommand.enabled = YES;
+        [commandCenter.pauseCommand addTarget:self action:@selector(pause)];
+    }
+    
+    KPLogTrace(@"Exit");
 }
 
 - (void)dealloc {
