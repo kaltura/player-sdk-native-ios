@@ -89,7 +89,6 @@
 		BFDB8A791BEFA46A005DC2A7 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB8A761BEFA46A005DC2A7 /* NSMutableArray+QueueAdditions.m */; };
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
 		BFEE53B81BBBEB2900B14DC5 /* KCCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE53B41BBBEB2900B14DC5 /* KCCPlayer.m */; };
-		BFEE53B91BBBEB2900B14DC5 /* KPChromecast.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEE53B61BBBEB2900B14DC5 /* KPChromecast.m */; };
 		BFEE53BE1BBBF0E900B14DC5 /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFE3429A199BE78900C63F74 /* ChromecastDeviceController.h */; };
 /* End PBXBuildFile section */
 
@@ -226,8 +225,6 @@
 		BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
 		BFEE53B31BBBEB2900B14DC5 /* KCCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCCPlayer.h; sourceTree = "<group>"; };
 		BFEE53B41BBBEB2900B14DC5 /* KCCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCCPlayer.m; sourceTree = "<group>"; };
-		BFEE53B51BBBEB2900B14DC5 /* KPChromecast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPChromecast.h; sourceTree = "<group>"; };
-		BFEE53B61BBBEB2900B14DC5 /* KPChromecast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPChromecast.m; sourceTree = "<group>"; };
 		BFEE53BC1BBBEBAC00B14DC5 /* KPMediaPlayback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPMediaPlayback.h; path = PlayerSDK/KPMediaPlayback.h; sourceTree = "<group>"; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFFFA72E182F9E31005B3B24 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerSDK-Prefix.pch"; sourceTree = "<group>"; };
@@ -385,8 +382,6 @@
 				BFEE53BC1BBBEBAC00B14DC5 /* KPMediaPlayback.h */,
 				BFEE53B31BBBEB2900B14DC5 /* KCCPlayer.h */,
 				BFEE53B41BBBEB2900B14DC5 /* KCCPlayer.m */,
-				BFEE53B51BBBEB2900B14DC5 /* KPChromecast.h */,
-				BFEE53B61BBBEB2900B14DC5 /* KPChromecast.m */,
 				BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */,
 				B372892F1A8787D00076DD33 /* KPlayerResources */,
 				BFFFA728182F9E31005B3B24 /* Products */,
@@ -508,7 +503,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0610;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = Kaltura;
 				TargetAttributes = {
 					B3166DD01AF26C4700E99B77 = {
@@ -613,7 +608,6 @@
 				B3F969531B89EB51004065CE /* KCacheManager.m in Sources */,
 				B3F969081B8748FF004065CE /* NSString+Utilities.m in Sources */,
 				B3F968F41B8747DA004065CE /* KPPlayerConfig.m in Sources */,
-				BFEE53B91BBBEB2900B14DC5 /* KPChromecast.m in Sources */,
 				B34C89391ADA65AA007C6A5D /* KPControlsView.m in Sources */,
 				B34C893F1ADA705F007C6A5D /* KPControlsWKWebview.m in Sources */,
 				B3E58C441A76714700603B10 /* KPIMAPlayerViewController.m in Sources */,
@@ -709,6 +703,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaltura.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = KALTURAPlayerSDKResources;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -746,6 +741,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kaltura.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = KALTURAPlayerSDKResources;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -784,6 +780,7 @@
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;

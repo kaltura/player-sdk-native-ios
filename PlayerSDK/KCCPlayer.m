@@ -179,10 +179,12 @@
     [_delegate player:self eventName:@"chromecastDeviceDisConnected" value:nil];
 }
 
-- (void)setPlayerSource:(NSURL *)playerSource {
+- (BOOL)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"playerSource: %@", playerSource);
     
     contentID = [playerSource absoluteString];
+    
+    return contentID != nil;
 }
 
 - (NSURL *)playerSource {
