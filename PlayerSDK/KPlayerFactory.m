@@ -194,11 +194,11 @@
     }
 }
 
-- (void)enableTracksInBackground:(BOOL)tracksEnabled {
+- (void)enableTracks:(BOOL)isEnablingTracks {
     KPLogInfo(@"disableTracksInBackground");
     
     if ([self.player respondsToSelector: @selector(enableTracks:)]) {
-        [self.player enableTracks:tracksEnabled];
+        [self.player enableTracks:isEnablingTracks];
     }
 }
 

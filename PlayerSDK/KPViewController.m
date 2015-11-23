@@ -481,7 +481,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
     
     if ([backgroundModes containsObject:@"audio"]) {
-        [self.playerFactory enableTracksInBackground:NO];
+        // support playing media while in the background 
+        [self.playerFactory enableTracks:NO];
     } else {
         [self.playerFactory.player pause];
     }
@@ -494,7 +495,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
     
     if ([backgroundModes containsObject:@"audio"]) {
-        [self.playerFactory enableTracksInBackground:YES];
+        [self.playerFactory enableTracks:YES];
     }
     
     KPLogTrace(@"Exit");

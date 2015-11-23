@@ -59,7 +59,7 @@ typedef enum{
 - (void)removePlayer;
 + (BOOL)isPlayableMIMEType:(NSString *)mimeType;
 @optional
-- (void)enableTracks:(BOOL)tracksEnabled;
+- (void)enableTracks:(BOOL)isEnablingTracks;
 
 @end
 

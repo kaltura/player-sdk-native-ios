@@ -333,7 +333,7 @@ static NSString *StatusKeyPath = @"status";
     _currentPlaybackTime = currentTime;
 }
 
-- (void)enableTracks:(BOOL)tracksEnabled {
+- (void)enableTracks:(BOOL)isEnablingTracks {
     KPLogTrace(@"Enter");
     
     AVPlayerItem *playerItem = self.currentItem;
@@ -343,11 +343,12 @@ static NSString *StatusKeyPath = @"status";
     for (AVPlayerItemTrack *playerItemTrack in tracks) {
         // find video tracks
         if ([playerItemTrack.assetTrack hasMediaCharacteristic:AVMediaCharacteristicVisual]) {
-            playerItemTrack.enabled = tracksEnabled; // enable/ disable the track
+            playerItemTrack.enabled = isEnablingTracks; // enable or disable the track
         }
     }
     
-    if(!tracksEnabled) {
+    // Setting remote command center if tracks are not enabled
+    if(!isEnablingTracks) {
         MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
 
         commandCenter.playCommand.enabled = YES;

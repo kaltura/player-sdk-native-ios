@@ -45,7 +45,7 @@ static NSString *WVPortalKey = @"kaltura";
 - (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
 - (void)setDRMSource: (NSString *)drmKey;
-- (void)enableTracksInBackground:(BOOL)tracksEnabled;
+- (void)enableTracks:(BOOL)isEnablingTracks;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
