@@ -349,13 +349,13 @@ static NSString *StatusKeyPath = @"status";
     
     // Setting remote command center if tracks are not enabled
     if(!isEnablingTracks) {
-        MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-
-        commandCenter.playCommand.enabled = YES;
-        [commandCenter.playCommand addTarget:self action:@selector(play)];
+        [MPRemoteCommandCenter sharedCommandCenter].playCommand.enabled = YES;
+        [[MPRemoteCommandCenter sharedCommandCenter].playCommand removeTarget:self];
+        [[MPRemoteCommandCenter sharedCommandCenter].playCommand addTarget:self action:@selector(play)];
         
-        commandCenter.pauseCommand.enabled = YES;
-        [commandCenter.pauseCommand addTarget:self action:@selector(pause)];
+        [MPRemoteCommandCenter sharedCommandCenter].pauseCommand.enabled = YES;
+        [[MPRemoteCommandCenter sharedCommandCenter].pauseCommand removeTarget:self];
+        [[MPRemoteCommandCenter sharedCommandCenter].pauseCommand addTarget:self action:@selector(pause)];
     }
     
     KPLogTrace(@"Exit");
