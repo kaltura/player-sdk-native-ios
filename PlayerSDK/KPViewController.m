@@ -501,10 +501,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     KPLogTrace(@"Exit");
 }
 
-- (void)play2 {
-    [self.playerFactory.player play];
-}
-
 - (void)didPinchInOut:(UIPinchGestureRecognizer *)gestureRecognizer {
     
 }
@@ -512,7 +508,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)reload:(UIButton *)sender {
     [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
 }
-
 
 - (UIWindow *)topWindow {
     if ([UIApplication sharedApplication].keyWindow) {
