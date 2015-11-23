@@ -327,10 +327,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 #pragma mark - GCKDeviceScannerListener
-//- (void)deviceDidComeOnline:(GCKDevice *)device {
-//    NSLog(@"device found!! %@", device.friendlyName);
-//}
-
 - (void)didDiscoverDeviceOnNetwork {
     NSLog(@"");
     __weak KPViewController *weakSelf = self;

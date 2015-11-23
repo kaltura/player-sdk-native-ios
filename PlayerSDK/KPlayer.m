@@ -88,7 +88,7 @@ static NSString *StatusKeyPath = @"status";
     
     if (!success) {
         /* handle the error condition */
-        NSLog(@"Audio Session error %@, %@", setCategoryError, [setCategoryError userInfo]);
+        KPLogError(@"Audio Session error %@, %@", setCategoryError, [setCategoryError userInfo]);
     }
     
     NSError *activationError = nil;
@@ -96,7 +96,7 @@ static NSString *StatusKeyPath = @"status";
     
     if (!success) {
         /* handle the error condition */
-        NSLog(@"Audio Session Activation error %@, %@", activationError, [activationError userInfo]);
+        KPLogError(@"Audio Session Activation error %@, %@", activationError, [activationError userInfo]);
     }
 }
 
