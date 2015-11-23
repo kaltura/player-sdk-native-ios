@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/IMAAdDisplayContainer.html">
+	<File path="Classes/TwitterStrategy.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/IMAAdDisplayContainer</TokenIdentifier>
-			<Abstract type="html">The IMAAdDisplayContainer is responsible for managing the ad container view
-and companion ad slots used for ad playback.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/TwitterStrategy</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>TwitterStrategy.h</DeclaredIn>
             
 			
 			<NodeRef refid="30"/>
@@ -14,87 +13,14 @@ and companion ad slots used for ad playback.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdDisplayContainer/setAdContainer:</TokenIdentifier>
-			<Abstract type="html">View containing the video display and ad related UI.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/TwitterStrategy/composeType</TokenIdentifier>
+			<Abstract type="html">SLServiceType for the Twitter and the Facebook networks</Abstract>
+			<DeclaredIn>TwitterStrategy.m</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) UIView *adContainer</Declaration>
-			
-			
-			<Anchor>//api/name/adContainer</Anchor>
-            <NodeRef refid="30"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdDisplayContainer/adContainer</TokenIdentifier>
-			<Abstract type="html">View containing the video display and ad related UI.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) UIView *adContainer</Declaration>
+			<Declaration>- (NSString *)composeType</Declaration>
 			
 			
-			<Anchor>//api/name/adContainer</Anchor>
-            <NodeRef refid="30"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdDisplayContainer/adContainer</TokenIdentifier>
-			<Abstract type="html">View containing the video display and ad related UI.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) UIView *adContainer</Declaration>
-			
-			
-			<Anchor>//api/name/adContainer</Anchor>
-            <NodeRef refid="30"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdDisplayContainer/setCompanionSlots:</TokenIdentifier>
-			<Abstract type="html">List of companion ad slots. Can be nil or empty.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, copy) NSArray *companionSlots</Declaration>
-			
-			
-			<Anchor>//api/name/companionSlots</Anchor>
-            <NodeRef refid="30"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdDisplayContainer/companionSlots</TokenIdentifier>
-			<Abstract type="html">List of companion ad slots. Can be nil or empty.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, copy) NSArray *companionSlots</Declaration>
-			
-			
-			<Anchor>//api/name/companionSlots</Anchor>
-            <NodeRef refid="30"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdDisplayContainer/companionSlots</TokenIdentifier>
-			<Abstract type="html">List of companion ad slots. Can be nil or empty.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly, copy) NSArray *companionSlots</Declaration>
-			
-			
-			<Anchor>//api/name/companionSlots</Anchor>
-            <NodeRef refid="30"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdDisplayContainer/initWithAdContainer:companionSlots:</TokenIdentifier>
-			<Abstract type="html">Initializes with the |adContainer| and |companionSlots| to use for ad
-playback. |companionSlots| is an array of IMACompanionAdSlots.</Abstract>
-			<DeclaredIn>IMAAdDisplayContainer.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)initWithAdContainer:(UIView *)adContainer companionSlots:(NSArray *)companionSlots</Declaration>
-			
-			
-			<Anchor>//api/name/initWithAdContainer:companionSlots:</Anchor>
+			<Anchor>//api/name/composeType</Anchor>
             <NodeRef refid="30"/>
 		</Token>
 		

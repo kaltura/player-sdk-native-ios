@@ -58,9 +58,7 @@
 		
 		<option value="//api/name/configuration">configuration</option>
 		
-		<option value="//api/name/currentPlaybackTime">currentPlaybackTime</option>
-		
-		<option value="//api/name/duration">duration</option>
+		<option value="//api/name/kIMAWebOpenerDelegate">kIMAWebOpenerDelegate</option>
 		
 		<option value="//api/name/playerSource">playerSource</option>
 		
@@ -94,8 +92,6 @@
 		
 		<option value="//api/name/loadPlayerIntoViewController:">- loadPlayerIntoViewController:</option>
 		
-		<option value="//api/name/player:eventName:JSON:">- player:eventName:JSON:</option>
-		
 		<option value="//api/name/registerReadyEvent:">- registerReadyEvent:</option>
 		
 		<option value="//api/name/removeKPlayerEventListener:eventID:">- removeKPlayerEventListener:eventID:</option>
@@ -109,6 +105,10 @@
 		<option value="//api/name/setShareHandler:">- setShareHandler:</option>
 		
 		<option value="//api/name/triggerEvent:withValue:">- triggerEvent:withValue:</option>
+		
+		<option value="//api/name/visible:">- visible:</option>
+		
+		<option value="//api/name/willPresentActionSheet:">- willPresentActionSheet:</option>
 		
 	</optgroup>
 	
@@ -517,8 +517,8 @@ Change the entryID without the need of sending new request</p>
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/currentPlaybackTime" title="currentPlaybackTime"></a>
-	<h3 class="method-title"><code><a href="#//api/name/currentPlaybackTime">&nbsp;&nbsp;currentPlaybackTime</a></code>
+	<a name="//api/name/kIMAWebOpenerDelegate" title="kIMAWebOpenerDelegate"></a>
+	<h3 class="method-title"><code><a href="#//api/name/kIMAWebOpenerDelegate">&nbsp;&nbsp;kIMAWebOpenerDelegate</a></code>
 </h3>
 
 	<div class="method-info">
@@ -528,62 +528,16 @@ Change the entryID without the need of sending new request</p>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime</p>
+				<p>Signals that a internal or external web browser has been opened or closed</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic) NSTimeInterval currentPlaybackTime</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, weak) id kIMAWebOpenerDelegate</code></div>
 
 		    
 			
 
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">KPViewController.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/duration" title="duration"></a>
-	<h3 class="method-title"><code><a href="#//api/name/duration">&nbsp;&nbsp;duration</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>Duration of the current video</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) NSTimeInterval duration</code></div>
-
-		    
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>Duration of the current video</p>
-			</div>
 			
 
 			
@@ -1324,8 +1278,8 @@ Triggers JavaScript methods on the player</p>
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/player:eventName:JSON:" title="player:eventName:JSON:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/player:eventName:JSON:">&ndash;&nbsp;player:eventName:JSON:</a></code>
+	<a name="//api/name/willPresentActionSheet:" title="willPresentActionSheet:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/willPresentActionSheet:">&ndash;&nbsp;willPresentActionSheet:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1335,12 +1289,53 @@ Triggers JavaScript methods on the player</p>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>@todo refactor</p>
+				<p>@todo replace Title with GoogleCast constant</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)player:(id&lt;KPlayer&gt;)<em>currentPlayer</em> eventName:(NSString *)<em>event</em> JSON:(NSString *)<em>jsonString</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)willPresentActionSheet:(UIActionSheet *)<em>actionSheet</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">KPViewController.m</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/visible:" title="visible:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/visible:">&ndash;&nbsp;visible:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>@todo: test &amp; refactor by sending the dictionary via web layer</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)visible:(NSString *)<em>boolVal</em></code></div>
 
 		    
 			
@@ -1379,7 +1374,7 @@ Triggers JavaScript methods on the player</p>
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2015 Kaltura. All rights reserved. Updated: 2015-10-07</p>
+						<p class="copyright">Copyright &copy; 2015 Kaltura. All rights reserved. Updated: 2015-11-09</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

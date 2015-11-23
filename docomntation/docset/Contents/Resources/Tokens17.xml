@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKLaunchOptions.html">
+	<File path="Classes/IMACompanionAdSlot.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKLaunchOptions</TokenIdentifier>
-			<Abstract type="html">Receiver application launch options.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/IMACompanionAdSlot</TokenIdentifier>
+			<Abstract type="html">Ad slot for companion ads. The SDK will put a subview inside the provided
+UIView container. The companion will be matched to the width and height
+provided here.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
             
 			
 			<NodeRef refid="17"/>
@@ -13,113 +15,155 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/setLanguageCode:</TokenIdentifier>
-			<Abstract type="html">The sender&apos;s language code as per RFC 5646. The default is the system&apos;s language.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setView:</TokenIdentifier>
+			<Abstract type="html">The view the companion will be rendered in. Display this view in your
+application before video ad starts.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *languageCode</Declaration>
+			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
 			
 			
-			<Anchor>//api/name/languageCode</Anchor>
+			<Anchor>//api/name/view</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/languageCode</TokenIdentifier>
-			<Abstract type="html">The sender&apos;s language code as per RFC 5646. The default is the system&apos;s language.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/view</TokenIdentifier>
+			<Abstract type="html">The view the companion will be rendered in. Display this view in your
+application before video ad starts.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *languageCode</Declaration>
+			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
 			
 			
-			<Anchor>//api/name/languageCode</Anchor>
+			<Anchor>//api/name/view</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKLaunchOptions/languageCode</TokenIdentifier>
-			<Abstract type="html">The sender&apos;s language code as per RFC 5646. The default is the system&apos;s language.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/view</TokenIdentifier>
+			<Abstract type="html">The view the companion will be rendered in. Display this view in your
+application before video ad starts.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) NSString *languageCode</Declaration>
+			<Declaration>@property (nonatomic, readonly) UIView *view</Declaration>
 			
 			
-			<Anchor>//api/name/languageCode</Anchor>
+			<Anchor>//api/name/view</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/setRelaunchIfRunning:</TokenIdentifier>
-			<Abstract type="html">A flag indicating whether the receiver application should be relaunched if it is already
-running. The default is &lt;code&gt;NO&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setWidth:</TokenIdentifier>
+			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) BOOL relaunchIfRunning</Declaration>
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
 			
 			
-			<Anchor>//api/name/relaunchIfRunning</Anchor>
+			<Anchor>//api/name/width</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/relaunchIfRunning</TokenIdentifier>
-			<Abstract type="html">A flag indicating whether the receiver application should be relaunched if it is already
-running. The default is &lt;code&gt;NO&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/width</TokenIdentifier>
+			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) BOOL relaunchIfRunning</Declaration>
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
 			
 			
-			<Anchor>//api/name/relaunchIfRunning</Anchor>
+			<Anchor>//api/name/width</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKLaunchOptions/relaunchIfRunning</TokenIdentifier>
-			<Abstract type="html">A flag indicating whether the receiver application should be relaunched if it is already
-running. The default is &lt;code&gt;NO&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/width</TokenIdentifier>
+			<Abstract type="html">Width of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) BOOL relaunchIfRunning</Declaration>
+			<Declaration>@property (nonatomic, readonly) int width</Declaration>
 			
 			
-			<Anchor>//api/name/relaunchIfRunning</Anchor>
+			<Anchor>//api/name/width</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/init</TokenIdentifier>
-			<Abstract type="html">Initializes the object with default values.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setHeight:</TokenIdentifier>
+			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)init</Declaration>
+			<Declaration>@property (nonatomic, readonly) int height</Declaration>
 			
 			
-			<Anchor>//api/name/init</Anchor>
+			<Anchor>//api/name/height</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/initWithRelaunchIfRunning:</TokenIdentifier>
-			<Abstract type="html">Initializes the object with the system&apos;s language and the given relaunch behavior.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/height</TokenIdentifier>
+			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithRelaunchIfRunning:(BOOL)relaunchIfRunning</Declaration>
+			<Declaration>@property (nonatomic, readonly) int height</Declaration>
 			
 			
-			<Anchor>//api/name/initWithRelaunchIfRunning:</Anchor>
+			<Anchor>//api/name/height</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKLaunchOptions/initWithLanguageCode:relaunchIfRunning:</TokenIdentifier>
-			<Abstract type="html">Designated initializer.</Abstract>
-			<DeclaredIn>GCKLaunchOptions.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/height</TokenIdentifier>
+			<Abstract type="html">Height of the slot, in pixels. This value is sent to the DFP ad server for
+targeting.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)initWithLanguageCode:(NSString *)languageCode relaunchIfRunning:(BOOL)relaunchIfRunning</Declaration>
+			<Declaration>@property (nonatomic, readonly) int height</Declaration>
 			
 			
-			<Anchor>//api/name/initWithLanguageCode:relaunchIfRunning:</Anchor>
+			<Anchor>//api/name/height</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/setDelegate:</TokenIdentifier>
+			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMACompanionAdSlot/delegate</TokenIdentifier>
+			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="17"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMACompanionAdSlot/delegate</TokenIdentifier>
+			<Abstract type="html">Receive events from the companion ad slot.</Abstract>
+			<DeclaredIn>IMACompanionAdSlot.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMACompanionDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
             <NodeRef refid="17"/>
 		</Token>
 		

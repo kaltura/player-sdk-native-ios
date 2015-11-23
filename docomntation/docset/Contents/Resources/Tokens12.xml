@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKError.html">
+	<File path="Classes/IMAAdsLoadedData.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKError</TokenIdentifier>
-			<Abstract type="html">The class for all GCK framework errors.</Abstract>
-			<DeclaredIn>GCKError.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAdsLoadedData</TokenIdentifier>
+			<Abstract type="html">Ad loaded data that is returned when the ads loader loads the ad.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
             
 			
 			<NodeRef refid="12"/>
@@ -13,14 +13,74 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/GCKError/enumDescriptionForCode:</TokenIdentifier>
-			<Abstract type="html">Returns the name of the enum value for a given error code.</Abstract>
-			<DeclaredIn>GCKError.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/setAdsManager:</TokenIdentifier>
+			<Abstract type="html">The ads manager instance created by the ads loader.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
 			
-			<Declaration>+ (NSString *)enumDescriptionForCode:(GCKErrorCode)code</Declaration>
+			<Declaration>@property (nonatomic, readonly) IMAAdsManager *adsManager</Declaration>
 			
 			
-			<Anchor>//api/name/enumDescriptionForCode:</Anchor>
+			<Anchor>//api/name/adsManager</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/adsManager</TokenIdentifier>
+			<Abstract type="html">The ads manager instance created by the ads loader.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdsManager *adsManager</Declaration>
+			
+			
+			<Anchor>//api/name/adsManager</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsLoadedData/adsManager</TokenIdentifier>
+			<Abstract type="html">The ads manager instance created by the ads loader.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) IMAAdsManager *adsManager</Declaration>
+			
+			
+			<Anchor>//api/name/adsManager</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/setUserContext:</TokenIdentifier>
+			<Abstract type="html">The user context specified in the ads request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
+			
+			
+			<Anchor>//api/name/userContext</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoadedData/userContext</TokenIdentifier>
+			<Abstract type="html">The user context specified in the ads request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
+			
+			
+			<Anchor>//api/name/userContext</Anchor>
+            <NodeRef refid="12"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsLoadedData/userContext</TokenIdentifier>
+			<Abstract type="html">The user context specified in the ads request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
+			
+			
+			<Anchor>//api/name/userContext</Anchor>
             <NodeRef refid="12"/>
 		</Token>
 		

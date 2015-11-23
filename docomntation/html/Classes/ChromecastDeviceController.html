@@ -140,7 +140,7 @@
 	<td>NSObject</td>
 </tr><tr>
 	<th>Conforms to</th>
-	<td><a href="../Protocols/GCKDeviceScannerListener.html">GCKDeviceScannerListener</a></td>
+	<td><a href="../Protocols/KPGCDeviceScannerListener.html">KPGCDeviceScannerListener</a></td>
 </tr><tr>
 	<th>Declared in</th>
 	<td>ChromecastDeviceController.h<br />ChromecastDeviceController.m</td>
@@ -267,7 +267,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) GCKDeviceManager *deviceManager</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) id&lt;KPGCDeviceManager&gt; deviceManager</code></div>
 
 		    
 			
@@ -308,7 +308,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) GCKDeviceScanner *deviceScanner</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) id&lt;KPGCDeviceScanner&gt; deviceScanner</code></div>
 
 		    
 			
@@ -349,7 +349,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) GCKMediaInformation *mediaInformation</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) id&lt;KPGCMediaInformation&gt; mediaInformation</code></div>
 
 		    
 			
@@ -390,7 +390,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property GCKMediaControlChannel *mediaControlChannel</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong) id&lt;KPGCMediaControlChannel&gt; mediaControlChannel</code></div>
 
 		    
 			
@@ -431,7 +431,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) GCKMediaPlayerState playerState</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) KPGCMediaPlayerState playerState</code></div>
 
 		    
 			
@@ -468,12 +468,12 @@
 			
 			<div class="method-subsection brief-description">
 				<p>The current idle reason. This value is only meaningful if the player state is
-GCKMediaPlayerStateIdle.</p>
+KPGCMediaPlayerStateIdle.</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) GCKMediaPlayerIdleReason idleReason</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason</code></div>
 
 		    
 			
@@ -695,7 +695,7 @@ GCKMediaPlayerStateIdle.</p>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)connectToDevice:(GCKDevice *)<em>device</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)connectToDevice:(id&lt;KPGCDevice&gt;)<em>device</em></code></div>
 
 		    
 			
@@ -705,7 +705,7 @@ GCKMediaPlayerStateIdle.</p>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>device</code></th>
-						<td><p>A <a href="../Classes/GCKDevice.html">GCKDevice</a> from the <a href="#//api/name/deviceScanner">deviceScanner</a> list.</p></td>
+						<td><p>A GCKDevice from the <a href="#//api/name/deviceScanner">deviceScanner</a> list.</p></td>
 					</tr>
 				
 				</table>
@@ -748,7 +748,7 @@ GCKMediaPlayerStateIdle.</p>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)loadMedia:(GCKMediaInformation *)<em>media</em> startTime:(NSTimeInterval)<em>startTime</em> autoPlay:(BOOL)<em>autoPlay</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (BOOL)loadMedia:(id&lt;KPGCMediaInformation&gt;)<em>media</em> startTime:(NSTimeInterval)<em>startTime</em> autoPlay:(BOOL)<em>autoPlay</em></code></div>
 
 		    
 			
@@ -758,7 +758,7 @@ GCKMediaPlayerStateIdle.</p>
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>media</code></th>
-						<td><p>The <a href="../Classes/GCKMediaInformation.html">GCKMediaInformation</a> to play, with the URL as the contentID</p></td>
+						<td><p>The GCKMediaInformation to play, with the URL as the contentID</p></td>
 					</tr>
 				
 					<tr>
@@ -912,7 +912,7 @@ position noted before disconnect. In many cases it will return 0.</p>
 			
 			
 			<div class="method-subsection brief-description">
-				<p>Enable basic logging of all <a href="../Classes/GCKLogger.html">GCKLogger</a> messages to the console.</p>
+				<p>Enable basic logging of all GCKLogger messages to the console.</p>
 			</div>
 			
 		    
@@ -966,7 +966,7 @@ position noted before disconnect. In many cases it will return 0.</p>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)deviceDidComeOnline:(GCKDevice *)<em>device</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)deviceDidComeOnline:(id&lt;KPGCDevice&gt;)<em>device</em></code></div>
 
 		    
 			
@@ -996,7 +996,7 @@ position noted before disconnect. In many cases it will return 0.</p>
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">GCKDeviceScanner.h</code></p>
+				<p><code class="declared-in-ref">ChromecastDeviceController.h</code></p>
 			</div>
 			
 			
@@ -1019,7 +1019,7 @@ position noted before disconnect. In many cases it will return 0.</p>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)deviceDidGoOffline:(GCKDevice *)<em>device</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)deviceDidGoOffline:(id&lt;KPGCDevice&gt;)<em>device</em></code></div>
 
 		    
 			
@@ -1049,7 +1049,7 @@ position noted before disconnect. In many cases it will return 0.</p>
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">GCKDeviceScanner.h</code></p>
+				<p><code class="declared-in-ref">ChromecastDeviceController.h</code></p>
 			</div>
 			
 			
@@ -1075,7 +1075,7 @@ and a new device with the updated properties will be reported as &ldquo;online&r
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)deviceDidChange:(GCKDevice *)<em>device</em></code></div>
+			<div class="method-subsection method-declaration"><code>- (void)deviceDidChange:(id&lt;KPGCDevice&gt;)<em>device</em></code></div>
 
 		    
 			
@@ -1105,7 +1105,7 @@ and a new device with the updated properties will be reported as &ldquo;online&r
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">GCKDeviceScanner.h</code></p>
+				<p><code class="declared-in-ref">ChromecastDeviceController.h</code></p>
 			</div>
 			
 			
@@ -1298,7 +1298,7 @@ and a new device with the updated properties will be reported as &ldquo;online&r
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2015 Kaltura. All rights reserved. Updated: 2015-10-07</p>
+						<p class="copyright">Copyright &copy; 2015 Kaltura. All rights reserved. Updated: 2015-11-09</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

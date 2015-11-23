@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKSenderApplicationInfo.html">
+	<File path="Classes/KPlayerController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKSenderApplicationInfo</TokenIdentifier>
-			<Abstract type="html">Container class for information about a sender application.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/KPlayerController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPlayerController.h</DeclaredIn>
             
 			
 			<NodeRef refid="27"/>
@@ -13,110 +13,14 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKSenderApplicationInfo/setPlatform:</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s platform.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPlayerController/player:eventName:JSON:</TokenIdentifier>
+			<Abstract type="html">@todo add an optimization to show progressbar updated</Abstract>
+			<DeclaredIn>KPlayerController.m</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKSenderApplicationInfoPlatform platform</Declaration>
-			
-			
-			<Anchor>//api/name/platform</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKSenderApplicationInfo/platform</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s platform.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) GCKSenderApplicationInfoPlatform platform</Declaration>
+			<Declaration>- (void)player:(id&lt;KPlayer&gt;)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString</Declaration>
 			
 			
-			<Anchor>//api/name/platform</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKSenderApplicationInfo/platform</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s platform.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) GCKSenderApplicationInfoPlatform platform</Declaration>
-			
-			
-			<Anchor>//api/name/platform</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKSenderApplicationInfo/setAppIdentifier:</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s unique identifier.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *appIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/appIdentifier</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKSenderApplicationInfo/appIdentifier</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s unique identifier.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *appIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/appIdentifier</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKSenderApplicationInfo/appIdentifier</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s unique identifier.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *appIdentifier</Declaration>
-			
-			
-			<Anchor>//api/name/appIdentifier</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKSenderApplicationInfo/setLaunchURL:</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s launch URL.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) NSURL *launchURL</Declaration>
-			
-			
-			<Anchor>//api/name/launchURL</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKSenderApplicationInfo/launchURL</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s launch URL.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) NSURL *launchURL</Declaration>
-			
-			
-			<Anchor>//api/name/launchURL</Anchor>
-            <NodeRef refid="27"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKSenderApplicationInfo/launchURL</TokenIdentifier>
-			<Abstract type="html">The sender app&apos;s launch URL.</Abstract>
-			<DeclaredIn>GCKSenderApplicationInfo.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) NSURL *launchURL</Declaration>
-			
-			
-			<Anchor>//api/name/launchURL</Anchor>
+			<Anchor>//api/name/player:eventName:JSON:</Anchor>
             <NodeRef refid="27"/>
 		</Token>
 		

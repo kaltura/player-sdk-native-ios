@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKMediaTextTrackStyle.html">
+	<File path="Classes/KPShareManager.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaTextTrackStyle</TokenIdentifier>
-			<Abstract type="html">A class representing a style for a text media track.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/KPShareManager</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
             
 			
 			<NodeRef refid="25"/>
@@ -13,459 +13,91 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/init</TokenIdentifier>
-			<Abstract type="html">Designated initializer. All properties are mutable and so can be supplied after construction.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPShareManager/setDatasource:</TokenIdentifier>
+			<Abstract type="html">An object which contains all the parameters for creating a post</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>- (instancetype)init</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPShareParams&gt; datasource</Declaration>
 			
 			
-			<Anchor>//api/name/init</Anchor>
+			<Anchor>//api/name/datasource</Anchor>
             <NodeRef refid="25"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/clm/GCKMediaTextTrackStyle/createDefault</TokenIdentifier>
-			<Abstract type="html">Create an instance with default values based on the system&apos;s closed captioning settings. This
-method will return nil on systems older than iOS 7.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPShareManager/datasource</TokenIdentifier>
+			<Abstract type="html">An object which contains all the parameters for creating a post</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>+ (instancetype)createDefault</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPShareParams&gt; datasource</Declaration>
 			
 			
-			<Anchor>//api/name/createDefault</Anchor>
+			<Anchor>//api/name/datasource</Anchor>
             <NodeRef refid="25"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setFontScale:</TokenIdentifier>
-			<Abstract type="html">The font scaling factor for the text.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPShareManager/datasource</TokenIdentifier>
+			<Abstract type="html">An object which contains all the parameters for creating a post</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) CGFloat fontScale</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPShareParams&gt; datasource</Declaration>
 			
 			
-			<Anchor>//api/name/fontScale</Anchor>
+			<Anchor>//api/name/datasource</Anchor>
             <NodeRef refid="25"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/fontScale</TokenIdentifier>
-			<Abstract type="html">The font scaling factor for the text.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPShareManager/shareWithCompletion:</TokenIdentifier>
+			<Abstract type="html">Perform post action by strategy pattern</Abstract>
+			<DeclaredIn>KPShareManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) CGFloat fontScale</Declaration>
-			
-			
-			<Anchor>//api/name/fontScale</Anchor>
+			<Declaration>- (UIViewController *)shareWithCompletion:(KPShareCompletionBlock)completion</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>KPShareCompletionBlock</Name>
+					<Abstract type="html">callback for post completion</Abstract>
+				</Parameter>
+			</Parameters>
+			<ReturnValue><Abstract type="html">UIViewController controller which reponsible on the post view</Abstract></ReturnValue>
+			<Anchor>//api/name/shareWithCompletion:</Anchor>
             <NodeRef refid="25"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/fontScale</TokenIdentifier>
-			<Abstract type="html">The font scaling factor for the text.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPShareManager/setStrategy:</TokenIdentifier>
+			<Abstract type="html">An object which conforms to the share strategy, represnts a share provider</Abstract>
+			<DeclaredIn>KPShareManager.m</DeclaredIn>
 			
-			<Declaration>@property (nonatomic) CGFloat fontScale</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPShareStratrgy&gt; strategy</Declaration>
 			
 			
-			<Anchor>//api/name/fontScale</Anchor>
+			<Anchor>//api/name/strategy</Anchor>
             <NodeRef refid="25"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setForegroundColor:</TokenIdentifier>
-			<Abstract type="html">The foreground color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPShareManager/strategy</TokenIdentifier>
+			<Abstract type="html">An object which conforms to the share strategy, represnts a share provider</Abstract>
+			<DeclaredIn>KPShareManager.m</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) GCKColor *foregroundColor</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPShareStratrgy&gt; strategy</Declaration>
 			
 			
-			<Anchor>//api/name/foregroundColor</Anchor>
+			<Anchor>//api/name/strategy</Anchor>
             <NodeRef refid="25"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/foregroundColor</TokenIdentifier>
-			<Abstract type="html">The foreground color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPShareManager/strategy</TokenIdentifier>
+			<Abstract type="html">An object which conforms to the share strategy, represnts a share provider</Abstract>
+			<DeclaredIn>KPShareManager.m</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy) GCKColor *foregroundColor</Declaration>
+			<Declaration>@property (nonatomic, strong) id&lt;KPShareStratrgy&gt; strategy</Declaration>
 			
 			
-			<Anchor>//api/name/foregroundColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/foregroundColor</TokenIdentifier>
-			<Abstract type="html">The foreground color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *foregroundColor</Declaration>
-			
-			
-			<Anchor>//api/name/foregroundColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setBackgroundColor:</TokenIdentifier>
-			<Abstract type="html">The background color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *backgroundColor</Declaration>
-			
-			
-			<Anchor>//api/name/backgroundColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/backgroundColor</TokenIdentifier>
-			<Abstract type="html">The background color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *backgroundColor</Declaration>
-			
-			
-			<Anchor>//api/name/backgroundColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/backgroundColor</TokenIdentifier>
-			<Abstract type="html">The background color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *backgroundColor</Declaration>
-			
-			
-			<Anchor>//api/name/backgroundColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setEdgeType:</TokenIdentifier>
-			<Abstract type="html">The edge type.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleEdgeType edgeType</Declaration>
-			
-			
-			<Anchor>//api/name/edgeType</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/edgeType</TokenIdentifier>
-			<Abstract type="html">The edge type.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleEdgeType edgeType</Declaration>
-			
-			
-			<Anchor>//api/name/edgeType</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/edgeType</TokenIdentifier>
-			<Abstract type="html">The edge type.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleEdgeType edgeType</Declaration>
-			
-			
-			<Anchor>//api/name/edgeType</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setEdgeColor:</TokenIdentifier>
-			<Abstract type="html">The edge color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *edgeColor</Declaration>
-			
-			
-			<Anchor>//api/name/edgeColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/edgeColor</TokenIdentifier>
-			<Abstract type="html">The edge color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *edgeColor</Declaration>
-			
-			
-			<Anchor>//api/name/edgeColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/edgeColor</TokenIdentifier>
-			<Abstract type="html">The edge color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *edgeColor</Declaration>
-			
-			
-			<Anchor>//api/name/edgeColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setWindowType:</TokenIdentifier>
-			<Abstract type="html">The window type.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleWindowType windowType</Declaration>
-			
-			
-			<Anchor>//api/name/windowType</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/windowType</TokenIdentifier>
-			<Abstract type="html">The window type.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleWindowType windowType</Declaration>
-			
-			
-			<Anchor>//api/name/windowType</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/windowType</TokenIdentifier>
-			<Abstract type="html">The window type.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleWindowType windowType</Declaration>
-			
-			
-			<Anchor>//api/name/windowType</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setWindowColor:</TokenIdentifier>
-			<Abstract type="html">The window color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *windowColor</Declaration>
-			
-			
-			<Anchor>//api/name/windowColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/windowColor</TokenIdentifier>
-			<Abstract type="html">The window color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *windowColor</Declaration>
-			
-			
-			<Anchor>//api/name/windowColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/windowColor</TokenIdentifier>
-			<Abstract type="html">The window color.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) GCKColor *windowColor</Declaration>
-			
-			
-			<Anchor>//api/name/windowColor</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setWindowRoundedCornerRadius:</TokenIdentifier>
-			<Abstract type="html">Rounded corner radius absolute value in pixels.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) CGFloat windowRoundedCornerRadius</Declaration>
-			
-			
-			<Anchor>//api/name/windowRoundedCornerRadius</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/windowRoundedCornerRadius</TokenIdentifier>
-			<Abstract type="html">Rounded corner radius absolute value in pixels.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) CGFloat windowRoundedCornerRadius</Declaration>
-			
-			
-			<Anchor>//api/name/windowRoundedCornerRadius</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/windowRoundedCornerRadius</TokenIdentifier>
-			<Abstract type="html">Rounded corner radius absolute value in pixels.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) CGFloat windowRoundedCornerRadius</Declaration>
-			
-			
-			<Anchor>//api/name/windowRoundedCornerRadius</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setFontFamily:</TokenIdentifier>
-			<Abstract type="html">The font family; if the font is not available, the generic font family will be used. *</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *fontFamily</Declaration>
-			
-			
-			<Anchor>//api/name/fontFamily</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/fontFamily</TokenIdentifier>
-			<Abstract type="html">The font family; if the font is not available, the generic font family will be used. *</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *fontFamily</Declaration>
-			
-			
-			<Anchor>//api/name/fontFamily</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/fontFamily</TokenIdentifier>
-			<Abstract type="html">The font family; if the font is not available, the generic font family will be used. *</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy) NSString *fontFamily</Declaration>
-			
-			
-			<Anchor>//api/name/fontFamily</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setFontGenericFamily:</TokenIdentifier>
-			<Abstract type="html">The generic font family.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleFontGenericFamily fontGenericFamily</Declaration>
-			
-			
-			<Anchor>//api/name/fontGenericFamily</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/fontGenericFamily</TokenIdentifier>
-			<Abstract type="html">The generic font family.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleFontGenericFamily fontGenericFamily</Declaration>
-			
-			
-			<Anchor>//api/name/fontGenericFamily</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/fontGenericFamily</TokenIdentifier>
-			<Abstract type="html">The generic font family.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleFontGenericFamily fontGenericFamily</Declaration>
-			
-			
-			<Anchor>//api/name/fontGenericFamily</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setFontStyle:</TokenIdentifier>
-			<Abstract type="html">The font style.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleFontStyle fontStyle</Declaration>
-			
-			
-			<Anchor>//api/name/fontStyle</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/fontStyle</TokenIdentifier>
-			<Abstract type="html">The font style.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleFontStyle fontStyle</Declaration>
-			
-			
-			<Anchor>//api/name/fontStyle</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/fontStyle</TokenIdentifier>
-			<Abstract type="html">The font style.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) GCKMediaTextTrackStyleFontStyle fontStyle</Declaration>
-			
-			
-			<Anchor>//api/name/fontStyle</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/setCustomData:</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaTextTrackStyle/customData</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="25"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaTextTrackStyle/customData</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaTextTrackStyle.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
+			<Anchor>//api/name/strategy</Anchor>
             <NodeRef refid="25"/>
 		</Token>
 		

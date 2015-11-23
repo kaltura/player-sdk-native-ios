@@ -1,17 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Protocols/AdPodInfo.html">
+	<File path="Constants/KPMediaLoadState.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/intf/AdPodInfo</TokenIdentifier>
-			<Abstract type="html">Third quartile of a linear ad was reached.</Abstract>
-			<DeclaredIn>IMAHandler.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/c/tdef/KPMediaLoadState</TokenIdentifier>
+			<Abstract type="html">@todo</Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
             
 			
 			<NodeRef refid="56"/>
 		</Token>
 		
 		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaLoadStateUnknown</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaLoadStateUnknown</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="56"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaLoadStatePlayable</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaLoadStatePlayable</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="56"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaLoadStatePlaythroughOK</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaLoadStatePlaythroughOK</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="56"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaLoadStateStalled</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaLoadStateStalled</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="56"/>
+        </Token>
         
         
 	</File>

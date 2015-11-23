@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/IMAAdsRequest.html">
+	<File path="Protocols/IMAContentPlayhead.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/IMAAdsRequest</TokenIdentifier>
-			<Abstract type="html">Data class describing the ad request.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intf/IMAContentPlayhead</TokenIdentifier>
+			<Abstract type="html">Defines an interface for a class that tracks video content progress and
+exposes a key value observable property |currentTime|.
+The SDK provides an implementation for tracking AVPlayer-based playback
+in the IMAAVPlayerContentPlayhead.
+Publishers can supply their own implementation by implementing this
+interface and this way support any other video playback implementation
+they might have.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
             
 			
 			<NodeRef refid="39"/>
@@ -13,129 +19,41 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsRequest/setAdTagUrl:</TokenIdentifier>
-			<Abstract type="html">The ad request URL set.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAContentPlayhead/setCurrentTime:</TokenIdentifier>
+			<Abstract type="html">Reflects the current playback time in seconds for the content.
+The property is key value observable.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, copy) NSString *adTagUrl</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentTime</Declaration>
 			
 			
-			<Anchor>//api/name/adTagUrl</Anchor>
+			<Anchor>//api/name/currentTime</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsRequest/adTagUrl</TokenIdentifier>
-			<Abstract type="html">The ad request URL set.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAContentPlayhead/currentTime</TokenIdentifier>
+			<Abstract type="html">Reflects the current playback time in seconds for the content.
+The property is key value observable.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, copy) NSString *adTagUrl</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentTime</Declaration>
 			
 			
-			<Anchor>//api/name/adTagUrl</Anchor>
+			<Anchor>//api/name/currentTime</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsRequest/adTagUrl</TokenIdentifier>
-			<Abstract type="html">The ad request URL set.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/intfp/IMAContentPlayhead/currentTime</TokenIdentifier>
+			<Abstract type="html">Reflects the current playback time in seconds for the content.
+The property is key value observable.</Abstract>
+			<DeclaredIn>IMAContentPlayhead.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly, copy) NSString *adTagUrl</Declaration>
-			
-			
-			<Anchor>//api/name/adTagUrl</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsRequest/setUserContext:</TokenIdentifier>
-			<Abstract type="html">The user context.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
+			<Declaration>@property (nonatomic, readonly) NSTimeInterval currentTime</Declaration>
 			
 			
-			<Anchor>//api/name/userContext</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsRequest/userContext</TokenIdentifier>
-			<Abstract type="html">The user context.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
-			
-			
-			<Anchor>//api/name/userContext</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsRequest/userContext</TokenIdentifier>
-			<Abstract type="html">The user context.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) id userContext</Declaration>
-			
-			
-			<Anchor>//api/name/userContext</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsRequest/setAdWillAutoPlay:</TokenIdentifier>
-			<Abstract type="html">Specifies whether the player intends to start the content and ad in
-response to a user action or whether they will be automatically played.
-Changing this setting will have no impact on ad playback.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) BOOL adWillAutoPlay</Declaration>
-			
-			
-			<Anchor>//api/name/adWillAutoPlay</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsRequest/adWillAutoPlay</TokenIdentifier>
-			<Abstract type="html">Specifies whether the player intends to start the content and ad in
-response to a user action or whether they will be automatically played.
-Changing this setting will have no impact on ad playback.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) BOOL adWillAutoPlay</Declaration>
-			
-			
-			<Anchor>//api/name/adWillAutoPlay</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsRequest/adWillAutoPlay</TokenIdentifier>
-			<Abstract type="html">Specifies whether the player intends to start the content and ad in
-response to a user action or whether they will be automatically played.
-Changing this setting will have no impact on ad playback.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic) BOOL adWillAutoPlay</Declaration>
-			
-			
-			<Anchor>//api/name/adWillAutoPlay</Anchor>
-            <NodeRef refid="39"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsRequest/initWithAdTagUrl:adDisplayContainer:userContext:</TokenIdentifier>
-			<Abstract type="html">Initializes an ads request instance with the |adTagUrl| and
-|adDisplayContainer| specified.</Abstract>
-			<DeclaredIn>IMAAdsRequest.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)initWithAdTagUrl:(NSString *)adTagUrl adDisplayContainer:(IMAAdDisplayContainer *)adDisplayContainer userContext:(id)userContext</Declaration>
-			
-			
-			<Anchor>//api/name/initWithAdTagUrl:adDisplayContainer:userContext:</Anchor>
+			<Anchor>//api/name/currentTime</Anchor>
             <NodeRef refid="39"/>
 		</Token>
 		

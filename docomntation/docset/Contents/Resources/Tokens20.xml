@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKMediaInformation.html">
+	<File path="Classes/KPBrowserViewController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaInformation</TokenIdentifier>
-			<Abstract type="html">A class that aggregates information about a media item.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/KPBrowserViewController</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
             
 			
 			<NodeRef refid="20"/>
@@ -13,361 +13,86 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setContentID:</TokenIdentifier>
-			<Abstract type="html">The content ID for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/clm/KPBrowserViewController/currentBrowser</TokenIdentifier>
+			<Abstract type="html">Creates a browser according to the operating system</Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentID</Declaration>
+			<Declaration>+ (instancetype)currentBrowser</Declaration>
 			
-			
-			<Anchor>//api/name/contentID</Anchor>
+			<ReturnValue><Abstract type="html">instancetype UIWebView browser for iOS7 and WKWebView for iOS8+</Abstract></ReturnValue>
+			<Anchor>//api/name/currentBrowser</Anchor>
             <NodeRef refid="20"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/contentID</TokenIdentifier>
-			<Abstract type="html">The content ID for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/setUrl:</TokenIdentifier>
+			<Abstract type="html">The share url for the current network</Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentID</Declaration>
+			<Declaration>@property (nonatomic, copy) NSURL *url</Declaration>
 			
 			
-			<Anchor>//api/name/contentID</Anchor>
+			<Anchor>//api/name/url</Anchor>
             <NodeRef refid="20"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/contentID</TokenIdentifier>
-			<Abstract type="html">The content ID for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/url</TokenIdentifier>
+			<Abstract type="html">The share url for the current network</Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentID</Declaration>
+			<Declaration>@property (nonatomic, copy) NSURL *url</Declaration>
 			
 			
-			<Anchor>//api/name/contentID</Anchor>
+			<Anchor>//api/name/url</Anchor>
             <NodeRef refid="20"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setStreamType:</TokenIdentifier>
-			<Abstract type="html">The stream type.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPBrowserViewController/url</TokenIdentifier>
+			<Abstract type="html">The share url for the current network</Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaStreamType streamType</Declaration>
+			<Declaration>@property (nonatomic, copy) NSURL *url</Declaration>
 			
 			
-			<Anchor>//api/name/streamType</Anchor>
+			<Anchor>//api/name/url</Anchor>
             <NodeRef refid="20"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/streamType</TokenIdentifier>
-			<Abstract type="html">The stream type.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/setRedirectURIs:</TokenIdentifier>
+			<Abstract type="html">Array of possible redirect URIs (notifies on finished share call)</Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaStreamType streamType</Declaration>
+			<Declaration>@property (nonatomic, copy) NSArray *redirectURIs</Declaration>
 			
 			
-			<Anchor>//api/name/streamType</Anchor>
+			<Anchor>//api/name/redirectURIs</Anchor>
             <NodeRef refid="20"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/streamType</TokenIdentifier>
-			<Abstract type="html">The stream type.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPBrowserViewController/redirectURIs</TokenIdentifier>
+			<Abstract type="html">Array of possible redirect URIs (notifies on finished share call)</Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) GCKMediaStreamType streamType</Declaration>
+			<Declaration>@property (nonatomic, copy) NSArray *redirectURIs</Declaration>
 			
 			
-			<Anchor>//api/name/streamType</Anchor>
+			<Anchor>//api/name/redirectURIs</Anchor>
             <NodeRef refid="20"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setContentType:</TokenIdentifier>
-			<Abstract type="html">The content (MIME) type.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPBrowserViewController/redirectURIs</TokenIdentifier>
+			<Abstract type="html">Array of possible redirect URIs (notifies on finished share call)</Abstract>
+			<DeclaredIn>KPBrowserViewController.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
-			
-			
-			<Anchor>//api/name/contentType</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/contentType</TokenIdentifier>
-			<Abstract type="html">The content (MIME) type.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
+			<Declaration>@property (nonatomic, copy) NSArray *redirectURIs</Declaration>
 			
 			
-			<Anchor>//api/name/contentType</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/contentType</TokenIdentifier>
-			<Abstract type="html">The content (MIME) type.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSString *contentType</Declaration>
-			
-			
-			<Anchor>//api/name/contentType</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setMetadata:</TokenIdentifier>
-			<Abstract type="html">The media item metadata.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) GCKMediaMetadata *metadata</Declaration>
-			
-			
-			<Anchor>//api/name/metadata</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/metadata</TokenIdentifier>
-			<Abstract type="html">The media item metadata.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) GCKMediaMetadata *metadata</Declaration>
-			
-			
-			<Anchor>//api/name/metadata</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/metadata</TokenIdentifier>
-			<Abstract type="html">The media item metadata.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) GCKMediaMetadata *metadata</Declaration>
-			
-			
-			<Anchor>//api/name/metadata</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setStreamDuration:</TokenIdentifier>
-			<Abstract type="html">The length of the stream, in seconds, or &lt;code&gt;INFINITY&lt;/code&gt; if it is a live stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamDuration</Declaration>
-			
-			
-			<Anchor>//api/name/streamDuration</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/streamDuration</TokenIdentifier>
-			<Abstract type="html">The length of the stream, in seconds, or &lt;code&gt;INFINITY&lt;/code&gt; if it is a live stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamDuration</Declaration>
-			
-			
-			<Anchor>//api/name/streamDuration</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/streamDuration</TokenIdentifier>
-			<Abstract type="html">The length of the stream, in seconds, or &lt;code&gt;INFINITY&lt;/code&gt; if it is a live stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval streamDuration</Declaration>
-			
-			
-			<Anchor>//api/name/streamDuration</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setMediaTracks:</TokenIdentifier>
-			<Abstract type="html">The media tracks for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *mediaTracks</Declaration>
-			
-			
-			<Anchor>//api/name/mediaTracks</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/mediaTracks</TokenIdentifier>
-			<Abstract type="html">The media tracks for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *mediaTracks</Declaration>
-			
-			
-			<Anchor>//api/name/mediaTracks</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/mediaTracks</TokenIdentifier>
-			<Abstract type="html">The media tracks for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) NSArray *mediaTracks</Declaration>
-			
-			
-			<Anchor>//api/name/mediaTracks</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setTextTrackStyle:</TokenIdentifier>
-			<Abstract type="html">The text track style for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) GCKMediaTextTrackStyle *textTrackStyle</Declaration>
-			
-			
-			<Anchor>//api/name/textTrackStyle</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/textTrackStyle</TokenIdentifier>
-			<Abstract type="html">The text track style for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) GCKMediaTextTrackStyle *textTrackStyle</Declaration>
-			
-			
-			<Anchor>//api/name/textTrackStyle</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/textTrackStyle</TokenIdentifier>
-			<Abstract type="html">The text track style for this stream.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readonly) GCKMediaTextTrackStyle *textTrackStyle</Declaration>
-			
-			
-			<Anchor>//api/name/textTrackStyle</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/setCustomData:</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/customData</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaInformation/customData</TokenIdentifier>
-			<Abstract type="html">The custom data, if any.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/initWithContentID:streamType:contentType:metadata:streamDuration:mediaTracks:textTrackStyle:customData:</TokenIdentifier>
-			<Abstract type="html">Designated initializer.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)initWithContentID:(NSString *)contentID streamType:(GCKMediaStreamType)streamType contentType:(NSString *)contentType metadata:(GCKMediaMetadata *)metadata streamDuration:(NSTimeInterval)streamDuration mediaTracks:(NSArray *)mediaTracks textTrackStyle:(GCKMediaTextTrackStyle *)textTrackStyle customData:(id)customData</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>contentID</Name>
-					<Abstract type="html">The content ID.</Abstract>
-				</Parameter><Parameter>
-					<Name>streamType</Name>
-					<Abstract type="html">The stream type.</Abstract>
-				</Parameter><Parameter>
-					<Name>contentType</Name>
-					<Abstract type="html">The content (MIME) type.</Abstract>
-				</Parameter><Parameter>
-					<Name>metadata</Name>
-					<Abstract type="html">The media item metadata.</Abstract>
-				</Parameter><Parameter>
-					<Name>streamDuration</Name>
-					<Abstract type="html">The stream duration.</Abstract>
-				</Parameter><Parameter>
-					<Name>mediaTracks</Name>
-					<Abstract type="html">The media tracks, if any, otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-				</Parameter><Parameter>
-					<Name>textTrackStyle</Name>
-					<Abstract type="html">The text track style, if any, otherwise &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-				</Parameter><Parameter>
-					<Name>customData</Name>
-					<Abstract type="html">The custom application-specific data.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/initWithContentID:streamType:contentType:metadata:streamDuration:mediaTracks:textTrackStyle:customData:</Anchor>
-            <NodeRef refid="20"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaInformation/initWithContentID:streamType:contentType:metadata:streamDuration:customData:</TokenIdentifier>
-			<Abstract type="html">Legacy initializer; does not include media tracks or text track style.</Abstract>
-			<DeclaredIn>GCKMediaInformation.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)initWithContentID:(NSString *)contentID streamType:(GCKMediaStreamType)streamType contentType:(NSString *)contentType metadata:(GCKMediaMetadata *)metadata streamDuration:(NSTimeInterval)streamDuration customData:(id)customData</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>contentID</Name>
-					<Abstract type="html">The content ID.</Abstract>
-				</Parameter><Parameter>
-					<Name>streamType</Name>
-					<Abstract type="html">The stream type.</Abstract>
-				</Parameter><Parameter>
-					<Name>contentType</Name>
-					<Abstract type="html">The content (MIME) type.</Abstract>
-				</Parameter><Parameter>
-					<Name>metadata</Name>
-					<Abstract type="html">The media item metadata.</Abstract>
-				</Parameter><Parameter>
-					<Name>streamDuration</Name>
-					<Abstract type="html">The stream duration.</Abstract>
-				</Parameter><Parameter>
-					<Name>customData</Name>
-					<Abstract type="html">Custom application-specific data. Must either be an object that can be
-serialized to JSON using NSJSONSerialization, or nil.</Abstract>
-				</Parameter>
-			</Parameters>
-			
-			<Anchor>//api/name/initWithContentID:streamType:contentType:metadata:streamDuration:customData:</Anchor>
+			<Anchor>//api/name/redirectURIs</Anchor>
             <NodeRef refid="20"/>
 		</Token>
 		

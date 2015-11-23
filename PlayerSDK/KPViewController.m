@@ -241,8 +241,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     [self.view addGestureRecognizer:pinch];
     
     [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(handleEnteredBackground:)
+                                             selector: @selector(applicationDidEnterBackground:)
                                                  name: UIApplicationDidEnterBackgroundNotification
+                                               object: nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(applicationDidBecomeActive:)
+                                                 name: UIApplicationDidBecomeActiveNotification
                                                object: nil];
     
     [self.view addObserver:self
@@ -322,10 +327,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 #pragma mark - GCKDeviceScannerListener
-//- (void)deviceDidComeOnline:(GCKDevice *)device {
-//    NSLog(@"device found!! %@", device.friendlyName);
-//}
-
 - (void)didDiscoverDeviceOnNetwork {
     NSLog(@"");
     __weak KPViewController *weakSelf = self;
@@ -471,9 +472,28 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)deviceDidGoOffline:(id<KPGCDevice>)device {
 }
 
-- (void)handleEnteredBackground: (NSNotification *)not {
+- (void)applicationDidEnterBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
-    self.sendNotification(@"doPause", nil);
+    NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+    
+    if ([backgroundModes containsObject:@"audio"]) {
+        // support playing media while in the background 
+        [self.playerFactory enableTracks:NO];
+    } else {
+        [self.playerFactory.player pause];
+    }
+
+    KPLogTrace(@"Exit");
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    KPLogTrace(@"Enter");
+    NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
+    
+    if ([backgroundModes containsObject:@"audio"]) {
+        [self.playerFactory enableTracks:YES];
+    }
+    
     KPLogTrace(@"Exit");
 }
 
@@ -484,7 +504,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)reload:(UIButton *)sender {
     [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
 }
-
 
 - (UIWindow *)topWindow {
     if ([UIApplication sharedApplication].keyWindow) {

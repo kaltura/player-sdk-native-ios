@@ -1,19 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKMediaQueueItem.html">
+	<File path="Classes/KPIMAPlayerViewController.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaQueueItem</TokenIdentifier>
-			<Abstract type="html">A class representing a media queue item. Instances of this object are immutable.
-&lt;p&gt;
-This class is used in two-way communication between a sender application and a receiver
-application. The sender constructs them to load or insert a list of media items on the
-receiver application. The @link GCKMediaStatus @endlink from the receiver also contains the list
-of items represented as instances of this class.
-&lt;p&gt;
-Once loaded, the receiver will assign a unique item ID to each GCKMediaQueueItem, even if the
-same media gets loaded multiple times.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/KPIMAPlayerViewController</TokenIdentifier>
+			<Abstract type="html">// Supplies the height of the video holder dynamically</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.h</DeclaredIn>
             
 			
 			<NodeRef refid="22"/>
@@ -21,328 +13,178 @@ same media gets loaded multiple times.</Abstract>
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/setMediaInformation:</TokenIdentifier>
-			<Abstract type="html">The media information associated with this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) GCKMediaInformation *mediaInformation</Declaration>
-			
-			
-			<Anchor>//api/name/mediaInformation</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/mediaInformation</TokenIdentifier>
-			<Abstract type="html">The media information associated with this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) GCKMediaInformation *mediaInformation</Declaration>
-			
-			
-			<Anchor>//api/name/mediaInformation</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItem/mediaInformation</TokenIdentifier>
-			<Abstract type="html">The media information associated with this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) GCKMediaInformation *mediaInformation</Declaration>
-			
-			
-			<Anchor>//api/name/mediaInformation</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/setItemID:</TokenIdentifier>
-			<Abstract type="html">The item ID, or kGCKMediaQueueInvalidItemID if one has not yet been assigned.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSUInteger itemID</Declaration>
-			
-			
-			<Anchor>//api/name/itemID</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/itemID</TokenIdentifier>
-			<Abstract type="html">The item ID, or kGCKMediaQueueInvalidItemID if one has not yet been assigned.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSUInteger itemID</Declaration>
-			
-			
-			<Anchor>//api/name/itemID</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItem/itemID</TokenIdentifier>
-			<Abstract type="html">The item ID, or kGCKMediaQueueInvalidItemID if one has not yet been assigned.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSUInteger itemID</Declaration>
-			
-			
-			<Anchor>//api/name/itemID</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/setAutoplay:</TokenIdentifier>
-			<Abstract type="html">Whether the item should automatically start playback when it becomes the current item in the
-queue. If &lt;code&gt;NO&lt;/code&gt;, the queue will pause when it reaches this item. The default value is
-&lt;code&gt;YES&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) BOOL autoplay</Declaration>
-			
-			
-			<Anchor>//api/name/autoplay</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/autoplay</TokenIdentifier>
-			<Abstract type="html">Whether the item should automatically start playback when it becomes the current item in the
-queue. If &lt;code&gt;NO&lt;/code&gt;, the queue will pause when it reaches this item. The default value is
-&lt;code&gt;YES&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) BOOL autoplay</Declaration>
-			
-			
-			<Anchor>//api/name/autoplay</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItem/autoplay</TokenIdentifier>
-			<Abstract type="html">Whether the item should automatically start playback when it becomes the current item in the
-queue. If &lt;code&gt;NO&lt;/code&gt;, the queue will pause when it reaches this item. The default value is
-&lt;code&gt;YES&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) BOOL autoplay</Declaration>
-			
-			
-			<Anchor>//api/name/autoplay</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/setStartTime:</TokenIdentifier>
-			<Abstract type="html">The start time of the item, in seconds. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval startTime</Declaration>
-			
-			
-			<Anchor>//api/name/startTime</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/startTime</TokenIdentifier>
-			<Abstract type="html">The start time of the item, in seconds. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval startTime</Declaration>
-			
-			
-			<Anchor>//api/name/startTime</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItem/startTime</TokenIdentifier>
-			<Abstract type="html">The start time of the item, in seconds. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval startTime</Declaration>
-			
-			
-			<Anchor>//api/name/startTime</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/setPreloadTime:</TokenIdentifier>
-			<Abstract type="html">How long before the previous item ends, in seconds, before the receiver should start
-preloading this item. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval preloadTime</Declaration>
-			
-			
-			<Anchor>//api/name/preloadTime</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/preloadTime</TokenIdentifier>
-			<Abstract type="html">How long before the previous item ends, in seconds, before the receiver should start
-preloading this item. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval preloadTime</Declaration>
-			
-			
-			<Anchor>//api/name/preloadTime</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItem/preloadTime</TokenIdentifier>
-			<Abstract type="html">How long before the previous item ends, in seconds, before the receiver should start
-preloading this item. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) NSTimeInterval preloadTime</Declaration>
-			
-			
-			<Anchor>//api/name/preloadTime</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/setActiveTrackIDs:</TokenIdentifier>
-			<Abstract type="html">The active track IDs for this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) NSArray *activeTrackIDs</Declaration>
-			
-			
-			<Anchor>//api/name/activeTrackIDs</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/activeTrackIDs</TokenIdentifier>
-			<Abstract type="html">The active track IDs for this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) NSArray *activeTrackIDs</Declaration>
-			
-			
-			<Anchor>//api/name/activeTrackIDs</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItem/activeTrackIDs</TokenIdentifier>
-			<Abstract type="html">The active track IDs for this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) NSArray *activeTrackIDs</Declaration>
-			
-			
-			<Anchor>//api/name/activeTrackIDs</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/setCustomData:</TokenIdentifier>
-			<Abstract type="html">The custom data associated with this item, if any.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/customData</TokenIdentifier>
-			<Abstract type="html">The custom data associated with this item, if any.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItem/customData</TokenIdentifier>
-			<Abstract type="html">The custom data associated with this item, if any.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, strong, readonly) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="22"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/initWithMediaInformation:autoplay:startTime:preloadTime:activeTrackIDs:customData:</TokenIdentifier>
-			<Abstract type="html">Designated initializer. Constructs a new GCKMediaQueueItem with the given attributes. See the
-documentation of the corresponding properties for more information.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)initWithMediaInformation:(GCKMediaInformation *)mediaInformation autoplay:(BOOL)autoplay startTime:(NSTimeInterval)startTime preloadTime:(NSTimeInterval)preloadTime activeTrackIDs:(NSArray *)activeTrackIDs customData:(id)customData</Declaration>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/loadIMAAd:withContentPlayer:eventsListener:</TokenIdentifier>
+			<Abstract type="html">Loads the ads into the IMA SDK</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.h</DeclaredIn>
+			
+			<Declaration>- (void)loadIMAAd:(NSString *)adLink withContentPlayer:(AVPlayer *)contentPlayer eventsListener:(void ( ^ ) ( NSDictionary *adEventParams ))adListener</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>mediaInformation</Name>
-					<Abstract type="html">The media information for the item.</Abstract>
+					<Name>NSString</Name>
+					<Abstract type="html">adLink contains the link to the XML file of the vast</Abstract>
 				</Parameter><Parameter>
-					<Name>autoplay</Name>
-					<Abstract type="html">The autoplay state for this item.</Abstract>
-				</Parameter><Parameter>
-					<Name>startTime</Name>
-					<Abstract type="html">The start time of the item, in seconds.</Abstract>
-				</Parameter><Parameter>
-					<Name>preloadTime</Name>
-					<Abstract type="html">The preload time for the item, in seconds.</Abstract>
-				</Parameter><Parameter>
-					<Name>activeTrackIDs</Name>
-					<Abstract type="html">The active track IDs for the item. May be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
-				</Parameter><Parameter>
-					<Name>customData</Name>
-					<Abstract type="html">Any custom data to associate with the item. May be &lt;code&gt;nil&lt;/code&gt;.</Abstract>
+					<Name>Block</Name>
+					<Abstract type="html">adListener which notifies the KPlayerViewController on the events of the ads</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/initWithMediaInformation:autoplay:startTime:preloadTime:activeTrackIDs:customData:</Anchor>
+			<Anchor>//api/name/loadIMAAd:withContentPlayer:eventsListener:</Anchor>
             <NodeRef refid="22"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/clearItemID</TokenIdentifier>
-			<Abstract type="html">Clears (unassigns) the item ID. Should be called in order to reuse an existing instance, for
-example, to add it back to a queue.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/removeIMAPlayer</TokenIdentifier>
+			<Abstract type="html">Releasing the memory of the IMA player</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.h</DeclaredIn>
 			
-			<Declaration>- (void)clearItemID</Declaration>
+			<Declaration>- (void)removeIMAPlayer</Declaration>
 			
 			
-			<Anchor>//api/name/clearItemID</Anchor>
+			<Anchor>//api/name/removeIMAPlayer</Anchor>
             <NodeRef refid="22"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItem/mediaQueueItemModifiedWithBlock:</TokenIdentifier>
-			<Abstract type="html">Returns a copy of this GCKMediaQueueItem that has been modified by the given block.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/setAdEventParams:</TokenIdentifier>
+			<Abstract type="html">Contains the params for the logic layer</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
 			
-			<Declaration>- (instancetype)mediaQueueItemModifiedWithBlock:(void ( ^ ) ( GCKMediaQueueItemBuilder *builder ))block</Declaration>
-			<Parameters>
-				<Parameter>
-					<Name>block</Name>
-					<Abstract type="html">A block that receives a GCKMediaQueueItemBuilder which can be used to modify
-attributes of the copy. It is not necessary to call the builder&apos;s -[build] method within the
-block, as this method will do that automatically when the block completes.</Abstract>
-				</Parameter>
-			</Parameters>
-			<ReturnValue><Abstract type="html">A modified copy of this item.</Abstract></ReturnValue>
-			<Anchor>//api/name/mediaQueueItemModifiedWithBlock:</Anchor>
+			<Declaration>@property (nonatomic, copy) NSMutableDictionary *adEventParams</Declaration>
+			
+			
+			<Anchor>//api/name/adEventParams</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/adEventParams</TokenIdentifier>
+			<Abstract type="html">Contains the params for the logic layer</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSMutableDictionary *adEventParams</Declaration>
+			
+			
+			<Anchor>//api/name/adEventParams</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPIMAPlayerViewController/adEventParams</TokenIdentifier>
+			<Abstract type="html">Contains the params for the logic layer</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSMutableDictionary *adEventParams</Declaration>
+			
+			
+			<Anchor>//api/name/adEventParams</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/setContentPlayer:</TokenIdentifier>
+			<Abstract type="html">Content video player.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) AVPlayer *contentPlayer</Declaration>
+			
+			
+			<Anchor>//api/name/contentPlayer</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/contentPlayer</TokenIdentifier>
+			<Abstract type="html">Content video player.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) AVPlayer *contentPlayer</Declaration>
+			
+			
+			<Anchor>//api/name/contentPlayer</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPIMAPlayerViewController/contentPlayer</TokenIdentifier>
+			<Abstract type="html">Content video player.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) AVPlayer *contentPlayer</Declaration>
+			
+			
+			<Anchor>//api/name/contentPlayer</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/setAdsLoader:</TokenIdentifier>
+			<Abstract type="html">Entry point for the SDK. Used to make ad requests.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;AdsLoader&gt; adsLoader</Declaration>
+			
+			
+			<Anchor>//api/name/adsLoader</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/adsLoader</TokenIdentifier>
+			<Abstract type="html">Entry point for the SDK. Used to make ad requests.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;AdsLoader&gt; adsLoader</Declaration>
+			
+			
+			<Anchor>//api/name/adsLoader</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPIMAPlayerViewController/adsLoader</TokenIdentifier>
+			<Abstract type="html">Entry point for the SDK. Used to make ad requests.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;AdsLoader&gt; adsLoader</Declaration>
+			
+			
+			<Anchor>//api/name/adsLoader</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/setAdsManager:</TokenIdentifier>
+			<Abstract type="html">Main point of interaction with the SDK. Created by the SDK as the result of an ad request.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;AdsManager&gt; adsManager</Declaration>
+			
+			
+			<Anchor>//api/name/adsManager</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPIMAPlayerViewController/adsManager</TokenIdentifier>
+			<Abstract type="html">Main point of interaction with the SDK. Created by the SDK as the result of an ad request.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;AdsManager&gt; adsManager</Declaration>
+			
+			
+			<Anchor>//api/name/adsManager</Anchor>
+            <NodeRef refid="22"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPIMAPlayerViewController/adsManager</TokenIdentifier>
+			<Abstract type="html">Main point of interaction with the SDK. Created by the SDK as the result of an ad request.</Abstract>
+			<DeclaredIn>KPIMAPlayerViewController.m</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, strong) id&lt;AdsManager&gt; adsManager</Declaration>
+			
+			
+			<Anchor>//api/name/adsManager</Anchor>
             <NodeRef refid="22"/>
 		</Token>
 		

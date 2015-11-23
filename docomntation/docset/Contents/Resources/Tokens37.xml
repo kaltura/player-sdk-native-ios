@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/IMAAdsManager.html">
+	<File path="Protocols/IMAAdsManagerDelegate.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/IMAAdsManager</TokenIdentifier>
-			<Abstract type="html">The IMAAdsManager class is responsible for playing ads.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intf/IMAAdsManagerDelegate</TokenIdentifier>
+			<Abstract type="html">A callback protocol for IMAAdsManager.</Abstract>
 			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
             
 			
@@ -13,183 +13,80 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/setDelegate:</TokenIdentifier>
-			<Abstract type="html">The delegate to notify with events during ad playback.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdsManagerDelegate/adsManager:didReceiveAdEvent:</TokenIdentifier>
+			<Abstract type="html">Called when there is an IMAAdEvent.</Abstract>
 			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) NSObject&lt;IMAAdsManagerDelegate&gt; *delegate</Declaration>
+			<Declaration>- (void)adsManager:(IMAAdsManager *)adsManager didReceiveAdEvent:(IMAAdEvent *)event</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/adsManager:didReceiveAdEvent:</Anchor>
             <NodeRef refid="37"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate to notify with events during ad playback.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdsManagerDelegate/adsManager:didReceiveAdError:</TokenIdentifier>
+			<Abstract type="html">Called when there was an error playing the ad.
+Only resume playback when didRequestContentResumeForAdsManager: is called.
+Continue to listen for callbacks until didReceiveAdEvent: with
+kIMAAdEventALLADS_COMPLETED is called.</Abstract>
 			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) NSObject&lt;IMAAdsManagerDelegate&gt; *delegate</Declaration>
+			<Declaration>- (void)adsManager:(IMAAdsManager *)adsManager didReceiveAdError:(IMAAdError *)error</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/adsManager:didReceiveAdError:</Anchor>
             <NodeRef refid="37"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsManager/delegate</TokenIdentifier>
-			<Abstract type="html">The delegate to notify with events during ad playback.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdsManagerDelegate/adsManagerDidRequestContentPause:</TokenIdentifier>
+			<Abstract type="html">Called when an ad is ready to play.
+The implementing code should pause the content playback and prepare the UI
+for ad playback.</Abstract>
 			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, assign) NSObject&lt;IMAAdsManagerDelegate&gt; *delegate</Declaration>
+			<Declaration>- (void)adsManagerDidRequestContentPause:(IMAAdsManager *)adsManager</Declaration>
 			
 			
-			<Anchor>//api/name/delegate</Anchor>
+			<Anchor>//api/name/adsManagerDidRequestContentPause:</Anchor>
             <NodeRef refid="37"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/setAdCuePoints:</TokenIdentifier>
-			<Abstract type="html">List of content time offsets at which ad breaks are scheduled.
-Array of NSNumber double values in seconds.
-Empty NSArray for single ads or if no ad breaks are scheduled.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdsManagerDelegate/adsManagerDidRequestContentResume:</TokenIdentifier>
+			<Abstract type="html">Called when an ad has finished or an error occurred during the playback.
+The implementing code should resume the content playback.</Abstract>
 			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSArray *adCuePoints</Declaration>
+			<Declaration>- (void)adsManagerDidRequestContentResume:(IMAAdsManager *)adsManager</Declaration>
 			
 			
-			<Anchor>//api/name/adCuePoints</Anchor>
+			<Anchor>//api/name/adsManagerDidRequestContentResume:</Anchor>
             <NodeRef refid="37"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/adCuePoints</TokenIdentifier>
-			<Abstract type="html">List of content time offsets at which ad breaks are scheduled.
-Array of NSNumber double values in seconds.
-Empty NSArray for single ads or if no ad breaks are scheduled.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdsManagerDelegate/adDidProgressToTime:totalTime:</TokenIdentifier>
+			<Abstract type="html">Replaced by adsManager:adDidProgressToTime:totalTime: (&lt;b class=&quot;deprecated&quot;&gt;Deprecated:&lt;/b&gt;&lt;span class=&quot;deprecated&quot;&gt; Replaced by adsManager:adDidProgressToTime:totalTime:&lt;/span&gt;)</Abstract>
 			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSArray *adCuePoints</Declaration>
+			<Declaration>- (void)adDidProgressToTime:(NSTimeInterval)mediaTime totalTime:(NSTimeInterval)totalTime</Declaration>
 			
 			
-			<Anchor>//api/name/adCuePoints</Anchor>
+			<Anchor>//api/name/adDidProgressToTime:totalTime:</Anchor>
             <NodeRef refid="37"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsManager/adCuePoints</TokenIdentifier>
-			<Abstract type="html">List of content time offsets at which ad breaks are scheduled.
-Array of NSNumber double values in seconds.
-Empty NSArray for single ads or if no ad breaks are scheduled.</Abstract>
+			<TokenIdentifier>//apple_ref/occ/intfm/IMAAdsManagerDelegate/adsManager:adDidProgressToTime:totalTime:</TokenIdentifier>
+			<Abstract type="html">Called every 200ms to provide time updates for the current ad.</Abstract>
 			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readonly) NSArray *adCuePoints</Declaration>
+			<Declaration>- (void)adsManager:(IMAAdsManager *)adsManager adDidProgressToTime:(NSTimeInterval)mediaTime totalTime:(NSTimeInterval)totalTime</Declaration>
 			
 			
-			<Anchor>//api/name/adCuePoints</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/setAdPlaybackInfo:</TokenIdentifier>
-			<Abstract type="html">Groups various properties about the linear ad playback.
-See |IMAAdPlaybackInfo|.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) id&lt;IMAAdPlaybackInfo&gt; adPlaybackInfo</Declaration>
-			
-			
-			<Anchor>//api/name/adPlaybackInfo</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/adPlaybackInfo</TokenIdentifier>
-			<Abstract type="html">Groups various properties about the linear ad playback.
-See |IMAAdPlaybackInfo|.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) id&lt;IMAAdPlaybackInfo&gt; adPlaybackInfo</Declaration>
-			
-			
-			<Anchor>//api/name/adPlaybackInfo</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsManager/adPlaybackInfo</TokenIdentifier>
-			<Abstract type="html">Groups various properties about the linear ad playback.
-See |IMAAdPlaybackInfo|.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readonly) id&lt;IMAAdPlaybackInfo&gt; adPlaybackInfo</Declaration>
-			
-			
-			<Anchor>//api/name/adPlaybackInfo</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/initializeWithContentPlayhead:adsRenderingSettings:</TokenIdentifier>
-			<Abstract type="html">Initializes and loads the ad. Pass in |contentPlayhead| to
-enable content tracking and automatically scheduled ad breaks. Use nil
-to disable this feature.
-Pass in |adsRenderingSettings| to influence ad rendering. Use nil to
-default to standard rendering.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>- (void)initializeWithContentPlayhead:(NSObject&lt;IMAContentPlayhead&gt; *)contentPlayhead adsRenderingSettings:(IMAAdsRenderingSettings *)adsRenderingSettings</Declaration>
-			
-			
-			<Anchor>//api/name/initializeWithContentPlayhead:adsRenderingSettings:</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/start</TokenIdentifier>
-			<Abstract type="html">Starts advertisement playback.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>- (void)start</Declaration>
-			
-			
-			<Anchor>//api/name/start</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/pause</TokenIdentifier>
-			<Abstract type="html">Pauses advertisement.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>- (void)pause</Declaration>
-			
-			
-			<Anchor>//api/name/pause</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/resume</TokenIdentifier>
-			<Abstract type="html">Resumes the advertisement.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>- (void)resume</Declaration>
-			
-			
-			<Anchor>//api/name/resume</Anchor>
-            <NodeRef refid="37"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsManager/destroy</TokenIdentifier>
-			<Abstract type="html">Causes the ads manager to stop the ad and clean its internal state.</Abstract>
-			<DeclaredIn>IMAAdsManager.h</DeclaredIn>
-			
-			<Declaration>- (void)destroy</Declaration>
-			
-			
-			<Anchor>//api/name/destroy</Anchor>
+			<Anchor>//api/name/adsManager:adDidProgressToTime:totalTime:</Anchor>
             <NodeRef refid="37"/>
 		</Token>
 		

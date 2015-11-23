@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tokens version="1.0">
-	<File path="Classes/GCKMediaQueueItemBuilder.html">
+	<File path="Classes/KPPlayerConfig.html">
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/cl/GCKMediaQueueItemBuilder</TokenIdentifier>
-			<Abstract type="html"></Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/cl/KPPlayerConfig</TokenIdentifier>
+			<Abstract type="html">KPPlayerConfig keys
+Key names of the video request</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
             
 			
 			<NodeRef refid="23"/>
@@ -13,269 +14,75 @@
 		
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/setMediaInformation:</TokenIdentifier>
-			<Abstract type="html">The media information associated with this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/setSupportedInterfaceOrientations:</TokenIdentifier>
+			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readwrite) GCKMediaInformation *mediaInformation</Declaration>
+			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
 			
 			
-			<Anchor>//api/name/mediaInformation</Anchor>
+			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
             <NodeRef refid="23"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/mediaInformation</TokenIdentifier>
-			<Abstract type="html">The media information associated with this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/supportedInterfaceOrientations</TokenIdentifier>
+			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readwrite) GCKMediaInformation *mediaInformation</Declaration>
+			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
 			
 			
-			<Anchor>//api/name/mediaInformation</Anchor>
+			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
             <NodeRef refid="23"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItemBuilder/mediaInformation</TokenIdentifier>
-			<Abstract type="html">The media information associated with this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instp/KPPlayerConfig/supportedInterfaceOrientations</TokenIdentifier>
+			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, copy, readwrite) GCKMediaInformation *mediaInformation</Declaration>
+			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
 			
 			
-			<Anchor>//api/name/mediaInformation</Anchor>
+			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
             <NodeRef refid="23"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/setAutoplay:</TokenIdentifier>
-			<Abstract type="html">Whether the item should automatically start playback when it becomes the current item in the
-queue. If &lt;code&gt;NO&lt;/code&gt;, the queue will pause when it reaches this item. The default value is
-&lt;code&gt;YES&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/addConfigKey:withValue:</TokenIdentifier>
+			<Abstract type="html">Adds flags for the video request</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
 			
-			<Declaration>@property (nonatomic, readwrite) BOOL autoplay</Declaration>
-			
-			
-			<Anchor>//api/name/autoplay</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/autoplay</TokenIdentifier>
-			<Abstract type="html">Whether the item should automatically start playback when it becomes the current item in the
-queue. If &lt;code&gt;NO&lt;/code&gt;, the queue will pause when it reaches this item. The default value is
-&lt;code&gt;YES&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) BOOL autoplay</Declaration>
-			
-			
-			<Anchor>//api/name/autoplay</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItemBuilder/autoplay</TokenIdentifier>
-			<Abstract type="html">Whether the item should automatically start playback when it becomes the current item in the
-queue. If &lt;code&gt;NO&lt;/code&gt;, the queue will pause when it reaches this item. The default value is
-&lt;code&gt;YES&lt;/code&gt;.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) BOOL autoplay</Declaration>
-			
-			
-			<Anchor>//api/name/autoplay</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/setStartTime:</TokenIdentifier>
-			<Abstract type="html">The start time of the item, in seconds. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) NSTimeInterval startTime</Declaration>
-			
-			
-			<Anchor>//api/name/startTime</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/startTime</TokenIdentifier>
-			<Abstract type="html">The start time of the item, in seconds. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) NSTimeInterval startTime</Declaration>
-			
-			
-			<Anchor>//api/name/startTime</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItemBuilder/startTime</TokenIdentifier>
-			<Abstract type="html">The start time of the item, in seconds. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) NSTimeInterval startTime</Declaration>
-			
-			
-			<Anchor>//api/name/startTime</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/setPreloadTime:</TokenIdentifier>
-			<Abstract type="html">How long before the previous item ends, in seconds, before the receiver should start
-preloading this item. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) NSTimeInterval preloadTime</Declaration>
-			
-			
-			<Anchor>//api/name/preloadTime</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/preloadTime</TokenIdentifier>
-			<Abstract type="html">How long before the previous item ends, in seconds, before the receiver should start
-preloading this item. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) NSTimeInterval preloadTime</Declaration>
-			
-			
-			<Anchor>//api/name/preloadTime</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItemBuilder/preloadTime</TokenIdentifier>
-			<Abstract type="html">How long before the previous item ends, in seconds, before the receiver should start
-preloading this item. The default value is 0.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, readwrite) NSTimeInterval preloadTime</Declaration>
-			
-			
-			<Anchor>//api/name/preloadTime</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/setActiveTrackIDs:</TokenIdentifier>
-			<Abstract type="html">The active track IDs for this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) NSArray *activeTrackIDs</Declaration>
-			
-			
-			<Anchor>//api/name/activeTrackIDs</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/activeTrackIDs</TokenIdentifier>
-			<Abstract type="html">The active track IDs for this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) NSArray *activeTrackIDs</Declaration>
-			
-			
-			<Anchor>//api/name/activeTrackIDs</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItemBuilder/activeTrackIDs</TokenIdentifier>
-			<Abstract type="html">The active track IDs for this item.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) NSArray *activeTrackIDs</Declaration>
-			
-			
-			<Anchor>//api/name/activeTrackIDs</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/setCustomData:</TokenIdentifier>
-			<Abstract type="html">The custom data associated with this item, if any.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/customData</TokenIdentifier>
-			<Abstract type="html">The custom data associated with this item, if any.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instp/GCKMediaQueueItemBuilder/customData</TokenIdentifier>
-			<Abstract type="html">The custom data associated with this item, if any.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>@property (nonatomic, copy, readwrite) id customData</Declaration>
-			
-			
-			<Anchor>//api/name/customData</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/init</TokenIdentifier>
-			<Abstract type="html">Constructs a new GCKMediaQueueItemBuilder with attributes initialized to default values.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)init</Declaration>
-			
-			
-			<Anchor>//api/name/init</Anchor>
-            <NodeRef refid="23"/>
-		</Token>
-		
-		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/initWithMediaQueueItem:</TokenIdentifier>
-			<Abstract type="html">Constructs a new GCKMediaQueueItemBuilder with attributes copied from the given
-GCKMediaQueueItem, including the item ID.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
-			
-			<Declaration>- (instancetype)initWithMediaQueueItem:(GCKMediaQueueItem *)item</Declaration>
+			<Declaration>- (void)addConfigKey:(NSString *)key withValue:(NSString *)value</Declaration>
 			<Parameters>
 				<Parameter>
-					<Name>item</Name>
-					<Abstract type="html">The item to copy.</Abstract>
+					<Name>NSString</Name>
+					<Abstract type="html">The value for the flag</Abstract>
 				</Parameter>
 			</Parameters>
 			
-			<Anchor>//api/name/initWithMediaQueueItem:</Anchor>
+			<Anchor>//api/name/addConfigKey:withValue:</Anchor>
             <NodeRef refid="23"/>
 		</Token>
 		
 		<Token>
-			<TokenIdentifier>//apple_ref/occ/instm/GCKMediaQueueItemBuilder/build</TokenIdentifier>
-			<Abstract type="html">Builds a GCKMediaQueueItem using the builder&apos;s current attributes.</Abstract>
-			<DeclaredIn>GCKMediaQueueItem.h</DeclaredIn>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/addConfigKey:withDictionary:</TokenIdentifier>
+			<Abstract type="html">Converts dictionary to JSON and Adds flags to the video request</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
 			
-			<Declaration>- (GCKMediaQueueItem *)build</Declaration>
+			<Declaration>- (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">The name of the flag</Abstract>
+				</Parameter><Parameter>
+					<Name>NSDictionary</Name>
+					<Abstract type="html">The dictionary for the flag</Abstract>
+				</Parameter>
+			</Parameters>
 			
-			
-			<Anchor>//api/name/build</Anchor>
+			<Anchor>//api/name/addConfigKey:withDictionary:</Anchor>
             <NodeRef refid="23"/>
 		</Token>
 		
