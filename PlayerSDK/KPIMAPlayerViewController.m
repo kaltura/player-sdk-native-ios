@@ -171,11 +171,26 @@
 
 - (void)adsLoader:(id<AdsLoader>)loader failedWithErrorData:(id<AdLoadingErrorData>)adErrorData {
     // Something went wrong loading ads. Log the error and play the content.
-    NSLog(@"Error loading ads: %@", adErrorData.adError.message);
-    [self.contentPlayer play];
+    KPLogError(@"Error loading ads: %@", adErrorData.adError.message);
+    
+     NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
+    [self.delegate player:nil
+                eventName:eventParams.allKeys.firstObject
+                     JSON:eventParams.allValues.firstObject];
 }
 
-
+- (void)adsManager:(id<AdsManager>)adsManager
+ didReceiveAdError:(id<AdError>)error {
+    // Something went wrong with the ads manager after ads were loaded. Log the error and play the
+    // content.
+    NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
+    [self.delegate player:nil
+                eventName:eventParams.allKeys.firstObject
+                     JSON:eventParams.allValues.firstObject];
+    
+    NSLog(@"AdsManager error: %@", error.message);
+    [self.contentPlayer play];
+}
 
 #pragma mark AdsManager Delegates
 - (void)adsManager:(id<AdsManager>)adsManager
@@ -234,19 +249,6 @@
                          JSON:eventParams.allValues.firstObject];
         eventParams = nil;
     }
-}
-
-- (void)adsManager:(id<AdsManager>)adsManager
- didReceiveAdError:(id<AdError>)error {
-    // Something went wrong with the ads manager after ads were loaded. Log the error and play the
-    // content.
-    NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
-    [self.delegate player:nil
-                eventName:eventParams.allKeys.firstObject
-                     JSON:eventParams.allValues.firstObject];
-
-    NSLog(@"AdsManager error: %@", error.message);
-    [self.contentPlayer play];
 }
 
 - (void)adsManagerDidRequestContentPause:(id<AdsManager>)adsManager {

@@ -167,7 +167,7 @@
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     
-    if ([event isEqualToString:AllAdsCompletedKey]) {
+    if ([event isEqualToString:AllAdsCompletedKey] || [event isEqualToString:AdsLoadErrorKey]) {
         if (self.isContentEnded) {
             [self.player.delegate player:self.player
                                eventName:EndedKey
