@@ -90,7 +90,8 @@ extern NSString * const KMediaPlaybackStateKey;
 @property (nonatomic, readonly) KPMediaLoadState loadState;
 
 - (void)seek:(NSTimeInterval)playbackTime;
-- (void)addPeriodicTimeForInterval:(NSTimeInterval)interval usingBlock:(void (^)(NSTimeInterval time))block;
+///todo::
+//- (void)addPeriodicTimeForInterval:(NSTimeInterval)interval usingBlock:(void (^)(NSTimeInterval time))block;
 
 @end
 

@@ -224,7 +224,7 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 - (void)connect;
 - (void)disconnect;
 - (NSInteger)launchApplication:(NSString *)applicationID;
-- (BOOL)addChannel:(id<KPGCCastChannel>)channel;
+- (BOOL)addChannel:(id<KPGCMediaControlChannel>)channel;
 @end
 
 @protocol KPGCDeviceScannerListener;
