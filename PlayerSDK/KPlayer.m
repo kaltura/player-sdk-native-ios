@@ -10,6 +10,7 @@
 #import "KPLog.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "NSMutableDictionary+AdSupport.h"
+#import "NSBundle+Kaltura.h"
 
 
 
@@ -21,6 +22,7 @@ static NSString *StatusKeyPath = @"status";
     MPVolumeView *volumeView;
     NSArray *prevAirPlayBtnPositionArr;
     id observer;
+    AVPictureInPictureController *pip;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, strong) UIView *parentView;
@@ -34,6 +36,7 @@ static NSString *StatusKeyPath = @"status";
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
+    [self setupPIPSuport];
     [self createAudioSession];
  
     if (self) {
@@ -321,6 +324,14 @@ static NSString *StatusKeyPath = @"status";
     KPLogTrace(@"Exit");
 }
 
+- (void)togglePictureInPicture {
+    if (pip.pictureInPictureActive) {
+        [pip stopPictureInPicture];
+    } else {
+        [pip startPictureInPicture];
+    }
+}
+
 -(void)hideNativeAirPlayButton {
     KPLogTrace(@"Enter");
     if ( !volumeView.hidden ) {
@@ -359,6 +370,14 @@ static NSString *StatusKeyPath = @"status";
     }
     
     KPLogTrace(@"Exit");
+}
+
+- (void)setupPIPSuport {
+    if([NSBundle mainBundle].isAudioBackgroundModesEnabled &&
+       [AVPictureInPictureController isPictureInPictureSupported]) {
+         pip =  [[AVPictureInPictureController alloc]
+                 initWithPlayerLayer:_layer];
+    }
 }
 
 - (void)dealloc {

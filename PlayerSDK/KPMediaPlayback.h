@@ -60,6 +60,7 @@
 /* The current playback rate for the player. (required) */
 @property(nonatomic) float currentPlaybackRate;
 
+@optional
 // The seeking rate will increase the longer scanning is active.
 
 /*!

@@ -55,11 +55,13 @@ typedef enum{
 - (NSURL *)playerSource;
 - (void)play;
 - (void)pause;
-- (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)removePlayer;
-+ (BOOL)isPlayableMIMEType:(NSString *)mimeType;
+
 @optional
+
 - (void)enableTracks:(BOOL)isEnablingTracks;
++ (BOOL)isPlayableMIMEType:(NSString *)mimeType;
+- (void)changeSubtitleLanguage:(NSString *)languageCode;
 
 @end
 
@@ -68,54 +70,6 @@ typedef enum{
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString;
 - (void)contentCompleted:(id<KPlayer>)currentPlayer;
-
-@end
-
-
-
-@protocol KalturaPlayer <NSObject>
-
-@required
-
-@property(readonly) UIView * view;
-@property(readonly) int playbackState;
-@property(readonly) int loadState;
-@property(readonly) BOOL isPreparedToPlay;
-
-+ (id)alloc;
-
-- (NSURL *)contentURL;
-- (void)setContentURL:(NSURL *)cs;
-
-- (double)currentPlaybackTime;
-- (void)setCurrentPlaybackTime:(double)cs;
-
-- (void)pause;
-- (void)play;
-- (void)stop;
-- (int)playbackState;
-- (BOOL)isPreparedToPlay;
-- (double)playableDuration;
-- (double)duration;
-- (void)bindPlayerEvents;
-- (void)sendCurrentTime:(NSTimer *)timer;
-- (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
-
-@optional
-- (instancetype)initWithFrame:(CGRect)frame;
-- (int)controlStyle;
-- (void)prepareToPlay;
-- (int)loadState;
-
-- (void)didLoad;
-- (CGFloat) getCurrentTime;
-- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-- (void) copyParamsFromPlayer:(id<KalturaPlayer>) player;
-- (void)initWV: (NSString *)src andKey: (NSString *)key;
-- (void)setWideVideConfigurations;
-- (void)setControlStyle:(int)cs;
-
-- (void)showAdAtURL:(NSString *)adTagUrl updateAdEvents:(void(^)(NSDictionary *eventParams))updateBlock;
 
 @end
 
