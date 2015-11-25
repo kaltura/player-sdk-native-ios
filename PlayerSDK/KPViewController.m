@@ -25,6 +25,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPController_Private.h"
 #import "KPURLProtocol.h"
 #import "KCacheManager.h"
+#import "NSBundle+Kaltura.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -474,9 +475,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)applicationDidEnterBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
-    NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
-    
-    if ([backgroundModes containsObject:@"audio"]) {
+
+    if ([NSBundle mainBundle].isAudioBackgroundModesEnabled){
         // support playing media while in the background 
         [self.playerFactory enableTracks:NO];
     } else {
