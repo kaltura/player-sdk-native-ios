@@ -36,7 +36,6 @@ static NSString *StatusKeyPath = @"status";
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
-    [self setupPIPSuport];
     [self createAudioSession];
  
     if (self) {
@@ -77,6 +76,8 @@ static NSString *StatusKeyPath = @"status";
                                                  }];
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
+        
+        [self setupPIPSuport];
         
         return self;
     }
