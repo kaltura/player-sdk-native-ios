@@ -167,7 +167,7 @@
 
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString {
     
-    if ([event isEqualToString:AllAdsCompletedKey]) {
+    if ([event isEqualToString:AllAdsCompletedKey] || [event isEqualToString:AdsLoadErrorKey]) {
         if (self.isContentEnded) {
             [self.player.delegate player:self.player
                                eventName:EndedKey
@@ -191,6 +191,14 @@
         [self.player.delegate player:self.player
                                eventName:EndedKey
                                    value:nil];
+    }
+}
+
+- (void)enableTracks:(BOOL)isEnablingTracks {
+    KPLogInfo(@"disableTracksInBackground");
+    
+    if ([self.player respondsToSelector: @selector(enableTracks:)]) {
+        [self.player enableTracks:isEnablingTracks];
     }
 }
 

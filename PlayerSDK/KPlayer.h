@@ -7,6 +7,7 @@
 //
 
 #import "KPlayerFactory.h"
+#import <AVKit/AVPictureInPictureController.h>
 
 
 @interface KPlayer : AVPlayer <KPlayer>

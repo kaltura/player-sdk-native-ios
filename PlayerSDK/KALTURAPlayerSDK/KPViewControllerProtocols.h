@@ -32,7 +32,7 @@ typedef enum{
     visible,
 #if !(TARGET_IPHONE_SIMULATOR)
     // DRM WideVine Key
-    wvServerKey,
+    licenseUri,
 #endif
     nativeAction,
     doubleClickRequestAds,
@@ -40,70 +40,36 @@ typedef enum{
     captions
 } Attribute;
 
+@protocol KPlayerDelegate;
 
-@protocol KPViewControllerDelegate <NSObject>
+@protocol KPlayer <NSObject>
 
-@required
+@property (nonatomic, weak) id<KPlayerDelegate> delegate;
+//@property (nonatomic, copy) NSURL *playerSource;
+@property (nonatomic) NSTimeInterval currentPlaybackTime;
+@property (nonatomic) NSTimeInterval duration;
+@property (nonatomic, readonly) BOOL isKPlayer;
 
--(NSURL *)getInitialKIframeUrl;
-- (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
+- (instancetype)initWithParentView:(UIView *)parentView;
+- (BOOL)setPlayerSource:(NSURL *)playerSource;
+- (NSURL *)playerSource;
+- (void)play;
+- (void)pause;
+- (void)removePlayer;
 
 @optional
-- (void) kPlayerDidPlay;
-- (void) kPlayerDidPause;
-- (void) kPlayerDidStop;
+
+- (void)enableTracks:(BOOL)isEnablingTracks;
++ (BOOL)isPlayableMIMEType:(NSString *)mimeType;
+- (void)changeSubtitleLanguage:(NSString *)languageCode;
 
 @end
 
+@protocol KPlayerDelegate <NSObject>
 
-
-
-
-
-@protocol KalturaPlayer <NSObject>
-
-@required
-
-@property(readonly) UIView * view;
-@property(readonly) int playbackState;
-@property(readonly) int loadState;
-@property(readonly) BOOL isPreparedToPlay;
-
-@property (nonatomic, retain) id<KPViewControllerDelegate> delegate;
-+ (id)alloc;
-
-- (NSURL *)contentURL;
-- (void)setContentURL:(NSURL *)cs;
-
-- (double)currentPlaybackTime;
-- (void)setCurrentPlaybackTime:(double)cs;
-
-- (void)pause;
-- (void)play;
-- (void)stop;
-- (int)playbackState;
-- (BOOL)isPreparedToPlay;
-- (double)playableDuration;
-- (double)duration;
-- (void)bindPlayerEvents;
-- (void)sendCurrentTime:(NSTimer *)timer;
-- (void)updatePlaybackProgressFromTimer:(NSTimer *)timer;
-
-@optional
-- (instancetype)initWithFrame:(CGRect)frame;
-- (int)controlStyle;
-- (void)prepareToPlay;
-- (int)loadState;
-
-- (void)didLoad;
-- (CGFloat) getCurrentTime;
-- (instancetype) initWithFrame:(CGRect)frame forView:(UIView *)parentView;
-- (void) copyParamsFromPlayer:(id<KalturaPlayer>) player;
-- (void)initWV: (NSString *)src andKey: (NSString *)key;
-- (void)setWideVideConfigurations;
-- (void)setControlStyle:(int)cs;
-
-- (void)showAdAtURL:(NSString *)adTagUrl updateAdEvents:(void(^)(NSDictionary *eventParams))updateBlock;
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value;
+- (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event JSON:(NSString *)jsonString;
+- (void)contentCompleted:(id<KPlayer>)currentPlayer;
 
 @end
 

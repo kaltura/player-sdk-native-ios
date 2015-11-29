@@ -10,6 +10,7 @@
 #import "KPLog.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "NSMutableDictionary+AdSupport.h"
+#import "NSBundle+Kaltura.h"
 
 
 
@@ -21,6 +22,7 @@ static NSString *StatusKeyPath = @"status";
     MPVolumeView *volumeView;
     NSArray *prevAirPlayBtnPositionArr;
     id observer;
+    AVPictureInPictureController *pip;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, strong) UIView *parentView;
@@ -75,20 +77,30 @@ static NSString *StatusKeyPath = @"status";
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         
+        [self setupPIPSuport];
+        
         return self;
     }
     return nil;
 }
 
 - (void)createAudioSession {
-    NSError *myErr;
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     
-    if (![[AVAudioSession sharedInstance]
-          setCategory:AVAudioSessionCategoryPlayback
-          error:&myErr]) {
-        
-        // Handle the error
-        NSLog(@"Audio Session error %@, %@", myErr, [myErr userInfo]);
+    NSError *setCategoryError = nil;
+    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    
+    if (!success) {
+        /* handle the error condition */
+        KPLogError(@"Audio Session error %@, %@", setCategoryError, [setCategoryError userInfo]);
+    }
+    
+    NSError *activationError = nil;
+    success = [audioSession setActive:YES error:&activationError];
+    
+    if (!success) {
+        /* handle the error condition */
+        KPLogError(@"Audio Session Activation error %@, %@", activationError, [activationError userInfo]);
     }
 }
 
@@ -313,6 +325,14 @@ static NSString *StatusKeyPath = @"status";
     KPLogTrace(@"Exit");
 }
 
+- (void)togglePictureInPicture {
+    if (pip.pictureInPictureActive) {
+        [pip stopPictureInPicture];
+    } else {
+        [pip startPictureInPicture];
+    }
+}
+
 -(void)hideNativeAirPlayButton {
     KPLogTrace(@"Enter");
     if ( !volumeView.hidden ) {
@@ -323,6 +343,42 @@ static NSString *StatusKeyPath = @"status";
 
 - (void)updateCurrentTime:(NSTimeInterval)currentTime {
     _currentPlaybackTime = currentTime;
+}
+
+- (void)enableTracks:(BOOL)isEnablingTracks {
+    KPLogTrace(@"Enter");
+    
+    AVPlayerItem *playerItem = self.currentItem;
+    
+    NSArray *tracks = [playerItem tracks];
+    
+    for (AVPlayerItemTrack *playerItemTrack in tracks) {
+        // find video tracks
+        if ([playerItemTrack.assetTrack hasMediaCharacteristic:AVMediaCharacteristicVisual]) {
+            playerItemTrack.enabled = isEnablingTracks; // enable or disable the track
+        }
+    }
+    
+    // Setting remote command center if tracks are not enabled
+    if(!isEnablingTracks) {
+        [MPRemoteCommandCenter sharedCommandCenter].playCommand.enabled = YES;
+        [[MPRemoteCommandCenter sharedCommandCenter].playCommand removeTarget:self];
+        [[MPRemoteCommandCenter sharedCommandCenter].playCommand addTarget:self action:@selector(play)];
+        
+        [MPRemoteCommandCenter sharedCommandCenter].pauseCommand.enabled = YES;
+        [[MPRemoteCommandCenter sharedCommandCenter].pauseCommand removeTarget:self];
+        [[MPRemoteCommandCenter sharedCommandCenter].pauseCommand addTarget:self action:@selector(pause)];
+    }
+    
+    KPLogTrace(@"Exit");
+}
+
+- (void)setupPIPSuport {
+    if([NSBundle mainBundle].isAudioBackgroundModesEnabled &&
+       [AVPictureInPictureController isPictureInPictureSupported]) {
+         pip =  [[AVPictureInPictureController alloc]
+                 initWithPlayerLayer:_layer];
+    }
 }
 
 - (void)dealloc {

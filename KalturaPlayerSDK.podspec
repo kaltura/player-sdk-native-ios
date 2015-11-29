@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 
 # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.name         = "KalturaPlayerSDK"
-s.version      = "2.0.10"
+s.version      = "2.0.11"
 s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
 
 #s.description  = <<-DESC
@@ -41,7 +41,7 @@ s.requires_arc = true
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source_files  = "PlayerSDK/**/*.{h,m}", "PlayerSDK/PlayerSDK/**/*.{h,m}"
+s.source_files  = "PlayerSDK/**/*.{h,m}", "PlayerSDK/KALTURAPlayerSDK/**/*.{h,m}"
 s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
 s.resource_bundle = { 'KALTURAPlayerSDKResources' => 'KALTURAPlayerSDKResources/*.*' }
 #s.exclude_files = "Classes/Exclude"
