@@ -14,6 +14,7 @@
 
 @implementation KPControlsWKWebview
 @synthesize entryId= _entryId, controlsDelegate, controlsFrame = _controlsFrame;
+@synthesize shouldUpdateLayout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     // Javascript that disables pinch-to-zoom by inserting the HTML viewport meta tag into <head>
@@ -50,11 +51,11 @@
 
 
 
-- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler
-{
-    NSLog(@"JavaScript message: %@",  message);
-    completionHandler();
-}
+//- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler
+//{
+//    NSLog(@"JavaScript message: %@",  message);
+//    completionHandler();
+//}
 
 - (void)loadRequest:(NSURLRequest *)request {
     [super loadRequest:request];

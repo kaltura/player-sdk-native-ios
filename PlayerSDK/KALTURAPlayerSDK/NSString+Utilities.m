@@ -8,7 +8,7 @@
 
 static NSString *SRC = @"src";
 static NSString *CurrentTimeKey = @"currentTime";
-static NSString *WVServerKey = @"wvServerKey";
+static NSString *licenseUriKey = @"licenseUri";
 static NSString *NativeActionKey = @"nativeAction";
 
 #import "NSString+Utilities.h"
@@ -55,7 +55,7 @@ static NSString *NativeActionKey = @"nativeAction";
                             @"currentTime",
                             @"visible",
 #if !(TARGET_IPHONE_SIMULATOR)
-                            @"wvServerKey",
+                            @"licenseUri",
 #endif
                             @"nativeAction",
                             @"doubleClickRequestAds",

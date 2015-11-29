@@ -14,7 +14,7 @@
 @end
 
 @implementation KPControlsUIWebview
-@synthesize entryId = _entryId, controlsDelegate, controlsFrame = _controlsFrame;
+@synthesize entryId = _entryId, controlsDelegate, controlsFrame = _controlsFrame, shouldUpdateLayout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -28,6 +28,7 @@
         self.scrollView.bounces = NO;
         self.scrollView.bouncesZoom = NO;
         self.backgroundColor = [UIColor clearColor];
+//        self.translatesAutoresizingMaskIntoConstraints = YES;
         return self;
     }
     return nil;
@@ -46,8 +47,13 @@
     fetcher([[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue]);
 }
 
-- (void)setControlsFrame:(CGRect)controlsFrame {
-    self.frame = controlsFrame;
+
+- (void)setFrame:(CGRect)frame {
+    [super setFrame:frame];
+    if (self.shouldUpdateLayout) {
+        [self updateLayout];
+//        self.shouldUpdateLayout = NO;
+    }
 }
 
 - (CGRect)controlsFrame {
