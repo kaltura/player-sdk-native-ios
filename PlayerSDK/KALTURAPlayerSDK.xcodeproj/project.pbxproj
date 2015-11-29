@@ -48,7 +48,6 @@
 		B3F969351B8757FD004065CE /* KPMediaPlayback.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968EF1B874794004065CE /* KPMediaPlayback.h */; };
 		B3F969361B87580F004065CE /* KMediaPlayerDefines.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968EE1B874794004065CE /* KMediaPlayerDefines.h */; };
 		BFBE8E101C05DD8E00649BDF /* NSBundle+Kaltura.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E0F1C05DD8E00649BDF /* NSBundle+Kaltura.m */; };
-		BFBE8E4F1C0B135E00649BDF /* KPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E4E1C0B135E00649BDF /* KPURLProtocol.m */; };
 		BFBE8E851C0B139400649BDF /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E501C0B139400649BDF /* CachedStrings.plist */; };
 		BFBE8E861C0B139400649BDF /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E521C0B139400649BDF /* DeviceParamsHandler.m */; };
 		BFBE8E871C0B139400649BDF /* EmailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E541C0B139400649BDF /* EmailStrategy.m */; };
@@ -75,6 +74,41 @@
 		BFBE8E9C1C0B139400649BDF /* NSString+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E7E1C0B139400649BDF /* NSString+Utilities.m */; };
 		BFBE8E9D1C0B139400649BDF /* SmsStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E811C0B139400649BDF /* SmsStrategy.m */; };
 		BFBE8E9E1C0B139400649BDF /* TwitterStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E831C0B139400649BDF /* TwitterStrategy.m */; };
+		BFBE8E9F1C0B174400649BDF /* NSBundle+Kaltura.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E0E1C05DD8E00649BDF /* NSBundle+Kaltura.h */; };
+		BFBE8EA01C0B174400649BDF /* KDRMManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFDB8A711BEFA46A005DC2A7 /* KDRMManager.h */; };
+		BFBE8EA11C0B174400649BDF /* NSMutableArray+QueueAdditions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFDB8A751BEFA46A005DC2A7 /* NSMutableArray+QueueAdditions.h */; };
+		BFBE8EA21C0B174400649BDF /* KPMediaPlayback.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E4C1C0B135100649BDF /* KPMediaPlayback.h */; };
+		BFBE8EA31C0B174400649BDF /* KCCPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFEE53B31BBBEB2900B14DC5 /* KCCPlayer.h */; };
+		BFBE8EA41C0B174400649BDF /* DeviceParamsHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E511C0B139400649BDF /* DeviceParamsHandler.h */; };
+		BFBE8EA51C0B174400649BDF /* KPLog.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E641C0B139400649BDF /* KPLog.h */; };
+		BFBE8EA61C0B174400649BDF /* KPLogManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E661C0B139400649BDF /* KPLogManager.h */; };
+		BFBE8EA71C0B174400649BDF /* KPMediaPlayback.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E681C0B139400649BDF /* KPMediaPlayback.h */; };
+		BFBE8EA81C0B174400649BDF /* KPURLProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E6B1C0B139400649BDF /* KPURLProtocol.h */; };
+		BFBE8EA91C0B174400649BDF /* KPViewControllerProtocols.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E6F1C0B139400649BDF /* KPViewControllerProtocols.h */; };
+		BFBE8EAA1C0B174400649BDF /* Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E841C0B139400649BDF /* Utilities.h */; };
+		BFBE8EAB1C0B174400649BDF /* KCacheManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E591C0B139400649BDF /* KCacheManager.h */; };
+		BFBE8EAC1C0B174400649BDF /* NSDictionary+Cache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E751C0B139400649BDF /* NSDictionary+Cache.h */; };
+		BFBE8EAD1C0B174400649BDF /* NSMutableDictionary+Cache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E7B1C0B139400649BDF /* NSMutableDictionary+Cache.h */; };
+		BFBE8EAF1C0B174400649BDF /* NSString+Utilities.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E7D1C0B139400649BDF /* NSString+Utilities.h */; };
+		BFBE8EB01C0B174400649BDF /* NSMutableDictionary+AdSupport.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E791C0B139400649BDF /* NSMutableDictionary+AdSupport.h */; };
+		BFBE8EB11C0B174400649BDF /* KPBrowserViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5B1C0B139400649BDF /* KPBrowserViewController.h */; };
+		BFBE8EB21C0B174400649BDF /* KPWebKitBrowserViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E701C0B139400649BDF /* KPWebKitBrowserViewController.h */; };
+		BFBE8EB31C0B174400649BDF /* NSDictionary+Strategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E771C0B139400649BDF /* NSDictionary+Strategy.h */; };
+		BFBE8EB41C0B174400649BDF /* EmailStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E531C0B139400649BDF /* EmailStrategy.h */; };
+		BFBE8EB51C0B174400649BDF /* FacebookStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E551C0B139400649BDF /* FacebookStrategy.h */; };
+		BFBE8EB61C0B174400649BDF /* GoogleplusStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E571C0B139400649BDF /* GoogleplusStrategy.h */; };
+		BFBE8EB71C0B174400649BDF /* linkedinStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E731C0B139400649BDF /* linkedinStrategy.h */; };
+		BFBE8EB81C0B174400649BDF /* SmsStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E801C0B139400649BDF /* SmsStrategy.h */; };
+		BFBE8EB91C0B174400649BDF /* TwitterStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E821C0B139400649BDF /* TwitterStrategy.h */; };
+		BFBE8EBA1C0B174400649BDF /* KPShareManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E691C0B139400649BDF /* KPShareManager.h */; };
+		BFBE8EBB1C0B174400649BDF /* KPController_Private.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968ED1B874794004065CE /* KPController_Private.h */; };
+		BFBE8EBC1C0B174400649BDF /* KPlayerFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B3F968EA1B874785004065CE /* KPlayerFactory.h */; };
+		BFBE8EBD1C0B174400649BDF /* IMAHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B38DBB6D1B85ECBF003B7753 /* IMAHandler.h */; };
+		BFBE8EBE1C0B174400649BDF /* KPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = B329CD081AB19AC6004AB647 /* KPlayer.h */; };
+		BFBE8EBF1C0B174400649BDF /* WViPhoneAPI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF927EBF18BCD75A006667CA /* WViPhoneAPI.h */; };
+		BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E601C0B139400649BDF /* KPControlsView.h */; };
+		BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */; };
+		BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */; };
 		BFDB8A771BEFA46A005DC2A7 /* KDRMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB8A721BEFA46A005DC2A7 /* KDRMManager.m */; };
 		BFDB8A791BEFA46A005DC2A7 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDB8A761BEFA46A005DC2A7 /* NSMutableArray+QueueAdditions.m */; };
 		BFE3437C19A4A98200BBD1FD /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE3429B199BE78900C63F74 /* ChromecastDeviceController.m */; };
@@ -113,6 +147,41 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BFBE8E9F1C0B174400649BDF /* NSBundle+Kaltura.h in CopyFiles */,
+				BFBE8EA01C0B174400649BDF /* KDRMManager.h in CopyFiles */,
+				BFBE8EA11C0B174400649BDF /* NSMutableArray+QueueAdditions.h in CopyFiles */,
+				BFBE8EA21C0B174400649BDF /* KPMediaPlayback.h in CopyFiles */,
+				BFBE8EA31C0B174400649BDF /* KCCPlayer.h in CopyFiles */,
+				BFBE8EA41C0B174400649BDF /* DeviceParamsHandler.h in CopyFiles */,
+				BFBE8EA51C0B174400649BDF /* KPLog.h in CopyFiles */,
+				BFBE8EA61C0B174400649BDF /* KPLogManager.h in CopyFiles */,
+				BFBE8EA71C0B174400649BDF /* KPMediaPlayback.h in CopyFiles */,
+				BFBE8EA81C0B174400649BDF /* KPURLProtocol.h in CopyFiles */,
+				BFBE8EA91C0B174400649BDF /* KPViewControllerProtocols.h in CopyFiles */,
+				BFBE8EAA1C0B174400649BDF /* Utilities.h in CopyFiles */,
+				BFBE8EAB1C0B174400649BDF /* KCacheManager.h in CopyFiles */,
+				BFBE8EAC1C0B174400649BDF /* NSDictionary+Cache.h in CopyFiles */,
+				BFBE8EAD1C0B174400649BDF /* NSMutableDictionary+Cache.h in CopyFiles */,
+				BFBE8EAF1C0B174400649BDF /* NSString+Utilities.h in CopyFiles */,
+				BFBE8EB01C0B174400649BDF /* NSMutableDictionary+AdSupport.h in CopyFiles */,
+				BFBE8EB11C0B174400649BDF /* KPBrowserViewController.h in CopyFiles */,
+				BFBE8EB21C0B174400649BDF /* KPWebKitBrowserViewController.h in CopyFiles */,
+				BFBE8EB31C0B174400649BDF /* NSDictionary+Strategy.h in CopyFiles */,
+				BFBE8EB41C0B174400649BDF /* EmailStrategy.h in CopyFiles */,
+				BFBE8EB51C0B174400649BDF /* FacebookStrategy.h in CopyFiles */,
+				BFBE8EB61C0B174400649BDF /* GoogleplusStrategy.h in CopyFiles */,
+				BFBE8EB71C0B174400649BDF /* linkedinStrategy.h in CopyFiles */,
+				BFBE8EB81C0B174400649BDF /* SmsStrategy.h in CopyFiles */,
+				BFBE8EB91C0B174400649BDF /* TwitterStrategy.h in CopyFiles */,
+				BFBE8EBA1C0B174400649BDF /* KPShareManager.h in CopyFiles */,
+				BFBE8EBB1C0B174400649BDF /* KPController_Private.h in CopyFiles */,
+				BFBE8EBC1C0B174400649BDF /* KPlayerFactory.h in CopyFiles */,
+				BFBE8EBD1C0B174400649BDF /* IMAHandler.h in CopyFiles */,
+				BFBE8EBE1C0B174400649BDF /* KPlayer.h in CopyFiles */,
+				BFBE8EBF1C0B174400649BDF /* WViPhoneAPI.h in CopyFiles */,
+				BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */,
+				BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */,
+				BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */,
 				BFEE53BE1BBBF0E900B14DC5 /* ChromecastDeviceController.h in CopyFiles */,
 				B3F969361B87580F004065CE /* KMediaPlayerDefines.h in CopyFiles */,
 				B3F969351B8757FD004065CE /* KPMediaPlayback.h in CopyFiles */,
@@ -148,8 +217,6 @@
 		BFBE8E0E1C05DD8E00649BDF /* NSBundle+Kaltura.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+Kaltura.h"; sourceTree = "<group>"; };
 		BFBE8E0F1C05DD8E00649BDF /* NSBundle+Kaltura.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+Kaltura.m"; sourceTree = "<group>"; };
 		BFBE8E4C1C0B135100649BDF /* KPMediaPlayback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KPMediaPlayback.h; path = KALTURAPlayerSDK/KPMediaPlayback.h; sourceTree = "<group>"; };
-		BFBE8E4D1C0B135E00649BDF /* KPURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPURLProtocol.h; path = KALTURAPlayerSDK/KPURLProtocol.h; sourceTree = SOURCE_ROOT; };
-		BFBE8E4E1C0B135E00649BDF /* KPURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPURLProtocol.m; path = KALTURAPlayerSDK/KPURLProtocol.m; sourceTree = SOURCE_ROOT; };
 		BFBE8E501C0B139400649BDF /* CachedStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CachedStrings.plist; path = KALTURAPlayerSDK/CachedStrings.plist; sourceTree = SOURCE_ROOT; };
 		BFBE8E511C0B139400649BDF /* DeviceParamsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceParamsHandler.h; path = KALTURAPlayerSDK/DeviceParamsHandler.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E521C0B139400649BDF /* DeviceParamsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceParamsHandler.m; path = KALTURAPlayerSDK/DeviceParamsHandler.m; sourceTree = SOURCE_ROOT; };
@@ -401,8 +468,6 @@
 				BFBE8E7F1C0B139400649BDF /* PlayerSDK-Prefix.pch */,
 				BFBE8E841C0B139400649BDF /* Utilities.h */,
 				B3F9694D1B89EB0C004065CE /* Cache */,
-				BFBE8E4D1C0B135E00649BDF /* KPURLProtocol.h */,
-				BFBE8E4E1C0B135E00649BDF /* KPURLProtocol.m */,
 				BFBE8E501C0B139400649BDF /* CachedStrings.plist */,
 				B3410D4A1A6D45B200275F00 /* Categories */,
 				B3932ACE1A0A0D7A00AC0442 /* ShareManager */,
@@ -608,7 +673,6 @@
 				BFBE8E931C0B139400649BDF /* KPURLProtocol.m in Sources */,
 				B3F968F51B8747DA004065CE /* KPViewController.m in Sources */,
 				BFBE8E8E1C0B139400649BDF /* KPControlsView.m in Sources */,
-				BFBE8E4F1C0B135E00649BDF /* KPURLProtocol.m in Sources */,
 				BFBE8E8F1C0B139400649BDF /* KPControlsWKWebView.m in Sources */,
 				BFBE8E9D1C0B139400649BDF /* SmsStrategy.m in Sources */,
 				BFBE8E8B1C0B139400649BDF /* KPBrowserViewController.m in Sources */,
