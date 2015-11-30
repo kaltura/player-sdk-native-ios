@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/SmsStrategy.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/SmsStrategy</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>SmsStrategy.h</DeclaredIn>
+            
+			
+			<NodeRef refid="28"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/SmsStrategy/share:completion:</TokenIdentifier>
+			<Abstract type="html">Performs post action according to the shareParams object</Abstract>
+			<DeclaredIn>SmsStrategy.m</DeclaredIn>
+			
+			<Declaration>- (UIViewController *)share:(id&lt;KPShareParams&gt;)shareParams completion:(KPShareCompletionBlock)completion</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>id&lt;KPShareParams&gt;</Name>
+					<Abstract type="html">contains all the paramters of the post</Abstract>
+				</Parameter><Parameter>
+					<Name>KPShareCompletionBlock</Name>
+					<Abstract type="html">completion block callback when the post is done</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/share:completion:</Anchor>
+            <NodeRef refid="28"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

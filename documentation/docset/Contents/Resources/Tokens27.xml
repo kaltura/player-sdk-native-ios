@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/KPlayerFactory.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/KPlayerFactory</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPlayerFactory.h</DeclaredIn>
+            
+			
+			<NodeRef refid="27"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPlayerFactory/setDrmParams:</TokenIdentifier>
+			<Abstract type="html">Changes DRM params and returns the current DRM params</Abstract>
+			<DeclaredIn>KPlayerFactory.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSDictionary *drmParams</Declaration>
+			
+			
+			<Anchor>//api/name/drmParams</Anchor>
+            <NodeRef refid="27"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPlayerFactory/drmParams</TokenIdentifier>
+			<Abstract type="html">Changes DRM params and returns the current DRM params</Abstract>
+			<DeclaredIn>KPlayerFactory.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSDictionary *drmParams</Declaration>
+			
+			
+			<Anchor>//api/name/drmParams</Anchor>
+            <NodeRef refid="27"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPlayerFactory/drmParams</TokenIdentifier>
+			<Abstract type="html">Changes DRM params and returns the current DRM params</Abstract>
+			<DeclaredIn>KPlayerFactory.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, copy) NSDictionary *drmParams</Declaration>
+			
+			
+			<Anchor>//api/name/drmParams</Anchor>
+            <NodeRef refid="27"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
