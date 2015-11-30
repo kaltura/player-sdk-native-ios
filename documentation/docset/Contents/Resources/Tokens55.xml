@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Constants/KPMediaPlaybackState.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/c/tdef/KPMediaPlaybackState</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>KPController.h</DeclaredIn>
+            
+			
+			<NodeRef refid="55"/>
+		</Token>
+		
+		
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateUnknown</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateUnknown</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateLoaded</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateLoaded</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateReady</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateReady</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateStopped</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateStopped</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStatePlaying</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStatePlaying</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStatePaused</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStatePaused</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateEnded</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateEnded</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateInterrupted</TokenIdentifier>
+            <Abstract type="html">@todo</Abstract>
+            <Declaration>KPMediaPlaybackStateInterrupted</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateSeekingForward</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateSeekingForward</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        <Token>
+            <TokenIdentifier>//apple_ref/c/econst/KPMediaPlaybackStateSeekingBackward</TokenIdentifier>
+            <Abstract type="html"></Abstract>
+            <Declaration>KPMediaPlaybackStateSeekingBackward</Declaration>
+            
+            <DeclaredIn>KPController.h</DeclaredIn>
+            
+            <NodeRef refid="55"/>
+        </Token>
+        
+        
+	</File>
+</Tokens>
