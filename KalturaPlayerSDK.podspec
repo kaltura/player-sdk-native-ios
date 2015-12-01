@@ -41,8 +41,8 @@ s.requires_arc = true
 
 
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source_files  = "PlayerSDK/**/*.{h,m}", "PlayerSDK/KALTURAPlayerSDK/**/*.{h,m}"
-s.vendored_library = 'PlayerSDK/libWViPhoneAPI.a'
+s.source_files  = "**/*.{h,m}", "PlayerSDK/KALTURAPlayerSDK/**/*.{h,m}"
+s.vendored_library = 'libWViPhoneAPI.a'
 s.resource_bundle = { 'KALTURAPlayerSDKResources' => 'KALTURAPlayerSDKResources/*.*' }
 #s.exclude_files = "Classes/Exclude"
 
