@@ -45,6 +45,20 @@
 		BF1C077B1C0DA93700A67462 /* KPPlayerConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C077A1C0DA93700A67462 /* KPPlayerConfig.m */; };
 		BF1C077E1C0DA95600A67462 /* KPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C077D1C0DA95600A67462 /* KPViewController.m */; };
 		BF1C07811C0DA96700A67462 /* ChromecastDeviceController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C07801C0DA96700A67462 /* ChromecastDeviceController.m */; };
+		BF21F6751C0DB0F9007890F6 /* KDRMManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07511C0DA7F800A67462 /* KDRMManager.h */; };
+		BF21F6761C0DB0F9007890F6 /* NSBundle+Kaltura.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07531C0DA7F800A67462 /* NSBundle+Kaltura.h */; };
+		BF21F6771C0DB0F9007890F6 /* NSMutableArray+QueueAdditions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07551C0DA7F800A67462 /* NSMutableArray+QueueAdditions.h */; };
+		BF21F6781C0DB0F9007890F6 /* KPlayer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07671C0DA8A600A67462 /* KPlayer.h */; };
+		BF21F6791C0DB0F9007890F6 /* KPlayerFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07691C0DA8A600A67462 /* KPlayerFactory.h */; };
+		BF21F67A1C0DB0F9007890F6 /* IMAHandler.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C076D1C0DA8E900A67462 /* IMAHandler.h */; };
+		BF21F67B1C0DB0F9007890F6 /* KMediaPlayerDefines.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C076E1C0DA8E900A67462 /* KMediaPlayerDefines.h */; };
+		BF21F67C1C0DB0F9007890F6 /* KPController_Private.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C076F1C0DA8E900A67462 /* KPController_Private.h */; };
+		BF21F67D1C0DB0F9007890F6 /* KPController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07701C0DA8E900A67462 /* KPController.h */; };
+		BF21F67E1C0DB0F9007890F6 /* KPIMAPlayerViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07721C0DA8E900A67462 /* KPIMAPlayerViewController.h */; };
+		BF21F67F1C0DB0F9007890F6 /* KPPlayerConfig.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07791C0DA93700A67462 /* KPPlayerConfig.h */; };
+		BF21F6801C0DB0F9007890F6 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C077C1C0DA95600A67462 /* KPViewController.h */; };
+		BF21F6811C0DB0F9007890F6 /* ChromecastDeviceController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C077F1C0DA96700A67462 /* ChromecastDeviceController.h */; };
+		BF21F6821C0DB0F9007890F6 /* WViPhoneAPI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07501C0DA7E800A67462 /* WViPhoneAPI.h */; };
 		BFBE8E851C0B139400649BDF /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E501C0B139400649BDF /* CachedStrings.plist */; };
 		BFBE8E861C0B139400649BDF /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E521C0B139400649BDF /* DeviceParamsHandler.m */; };
 		BFBE8E871C0B139400649BDF /* EmailStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E541C0B139400649BDF /* EmailStrategy.m */; };
@@ -129,6 +143,20 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BF21F6751C0DB0F9007890F6 /* KDRMManager.h in CopyFiles */,
+				BF21F6761C0DB0F9007890F6 /* NSBundle+Kaltura.h in CopyFiles */,
+				BF21F6771C0DB0F9007890F6 /* NSMutableArray+QueueAdditions.h in CopyFiles */,
+				BF21F6781C0DB0F9007890F6 /* KPlayer.h in CopyFiles */,
+				BF21F6791C0DB0F9007890F6 /* KPlayerFactory.h in CopyFiles */,
+				BF21F67A1C0DB0F9007890F6 /* IMAHandler.h in CopyFiles */,
+				BF21F67B1C0DB0F9007890F6 /* KMediaPlayerDefines.h in CopyFiles */,
+				BF21F67C1C0DB0F9007890F6 /* KPController_Private.h in CopyFiles */,
+				BF21F67D1C0DB0F9007890F6 /* KPController.h in CopyFiles */,
+				BF21F67E1C0DB0F9007890F6 /* KPIMAPlayerViewController.h in CopyFiles */,
+				BF21F67F1C0DB0F9007890F6 /* KPPlayerConfig.h in CopyFiles */,
+				BF21F6801C0DB0F9007890F6 /* KPViewController.h in CopyFiles */,
+				BF21F6811C0DB0F9007890F6 /* ChromecastDeviceController.h in CopyFiles */,
+				BF21F6821C0DB0F9007890F6 /* WViPhoneAPI.h in CopyFiles */,
 				BFBE8EA41C0B174400649BDF /* DeviceParamsHandler.h in CopyFiles */,
 				BFBE8EA51C0B174400649BDF /* KPLog.h in CopyFiles */,
 				BFBE8EA61C0B174400649BDF /* KPLogManager.h in CopyFiles */,

@@ -109,10 +109,11 @@ static NSString *EntryIdKey = @"entry_id";
             link = [link stringByAppendingString:@"?"];
         }
         link = [link stringByAppendingFormat:@"wid=_%@&", _partnerId];
+        
         for (NSString *key in self.paramsDict.allKeys) {
-            link = [link stringByAppendingFormat:@"%@=%@&", key, self.paramsDict[key]];
+            link = [link stringByAppendingFormat:@"%@=%@&", [key stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]], [self.paramsDict[key] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]]];
         }
-        link = [[link substringToIndex:link.length - 1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
         _url = [NSURL URLWithString:link];
     }
     return _url;
