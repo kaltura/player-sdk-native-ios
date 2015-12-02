@@ -788,11 +788,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             self.view.frame = self.superView.bounds;
             [self.superView addSubview:self.view];
         }
-        
-        
-        if ([_delegate respondsToSelector:@selector(kPlayer:playerFullScreenToggled:)]) {
-            [_delegate kPlayer:self playerFullScreenToggled:_isFullScreenToggled];
-        }
     } else {
         _fullScreenToggeled(_isFullScreenToggled);
     }
