@@ -112,6 +112,7 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     }
 }
 
+
 - (void)removePlayer {
     [self.controlsView removeControls];
     self.controlsView = nil;
@@ -778,20 +779,19 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 - (void)toggleFullscreen {
     KPLogTrace(@"Enter");
     _isFullScreenToggled = !_isFullScreenToggled;
-    
-    if (_isFullScreenToggled) {
-        self.view.frame = screenBounds();
-        [self.topWindow addSubview:self.view];
+    if (!_fullScreenToggeled) {
+        
+        if (_isFullScreenToggled) {
+            self.view.frame = screenBounds();
+            [self.topWindow addSubview:self.view];
+        } else {
+            self.view.frame = self.superView.bounds;
+            [self.superView addSubview:self.view];
+        }
     } else {
-        self.view.frame = self.superView.bounds;
-        [self.superView addSubview:self.view];
+        _fullScreenToggeled(_isFullScreenToggled);
     }
-    
     [self.controlsView updateLayout];
-    
-    if ([_delegate respondsToSelector:@selector(kPlayer:playerFullScreenToggled:)]) {
-        [_delegate kPlayer:self playerFullScreenToggled:_isFullScreenToggled];
-    }
     
     KPLogTrace(@"Exit");
 }
