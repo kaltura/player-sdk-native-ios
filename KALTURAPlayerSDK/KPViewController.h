@@ -27,7 +27,6 @@
 - (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 - (void)kPlayer:(KPViewController *)player playerLoadStateDidChange:(KPMediaLoadState)state;
 - (void)kPlayer:(KPViewController *)player playerPlaybackStateDidChange:(KPMediaPlaybackState)state;
-- (void)kPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
 @end
 
 #import "ChromecastDeviceController.h"
@@ -90,6 +89,11 @@
 @property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) KPController *playerController;
+
+/**
+ *  Block which notifies that the full screen has been toggeled, when assigning to this block the default full screen behaviour will be canceled and the full screen handling will be your reponsibility. 
+ */
+@property (nonatomic, copy) void(^fullScreenToggeled)(BOOL isFullScreen);
 
 
 /// Enables to change the player configuration
