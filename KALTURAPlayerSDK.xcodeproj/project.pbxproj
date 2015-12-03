@@ -35,6 +35,8 @@
 
 /* Begin PBXBuildFile section */
 		B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
+		BF0EA73E1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BF0EA73B1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodeld */; };
+		BF0EA7411C1051F100BD3CD1 /* KCCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0EA7401C1051F100BD3CD1 /* KCCPlayer.m */; };
 		BF1C07571C0DA7F800A67462 /* KDRMManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C07521C0DA7F800A67462 /* KDRMManager.m */; };
 		BF1C07581C0DA7F800A67462 /* NSBundle+Kaltura.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C07541C0DA7F800A67462 /* NSBundle+Kaltura.m */; };
 		BF1C07591C0DA7F800A67462 /* NSMutableArray+QueueAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C07561C0DA7F800A67462 /* NSMutableArray+QueueAdditions.m */; };
@@ -190,6 +192,9 @@
 /* Begin PBXFileReference section */
 		B372892E1A8787D00076DD33 /* KALTURAPlayerSDKResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KALTURAPlayerSDKResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37289311A8787D00076DD33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF0EA73C1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = KPURLProtocolCaching.xcdatamodel; sourceTree = "<group>"; };
+		BF0EA73F1C1051F100BD3CD1 /* KCCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCCPlayer.h; path = KALTURAPlayerSDK/KCCPlayer.h; sourceTree = SOURCE_ROOT; };
+		BF0EA7401C1051F100BD3CD1 /* KCCPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCCPlayer.m; path = KALTURAPlayerSDK/KCCPlayer.m; sourceTree = SOURCE_ROOT; };
 		BF1C07501C0DA7E800A67462 /* WViPhoneAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WViPhoneAPI.h; path = KALTURAPlayerSDK/WViPhoneAPI.h; sourceTree = SOURCE_ROOT; };
 		BF1C07511C0DA7F800A67462 /* KDRMManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KDRMManager.h; path = KALTURAPlayerSDK/KDRMManager.h; sourceTree = SOURCE_ROOT; };
 		BF1C07521C0DA7F800A67462 /* KDRMManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KDRMManager.m; path = KALTURAPlayerSDK/KDRMManager.m; sourceTree = SOURCE_ROOT; };
@@ -443,6 +448,9 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				BF0EA73F1C1051F100BD3CD1 /* KCCPlayer.h */,
+				BF0EA7401C1051F100BD3CD1 /* KCCPlayer.m */,
+				BF0EA73B1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodeld */,
 				BF1C07511C0DA7F800A67462 /* KDRMManager.h */,
 				BF1C07521C0DA7F800A67462 /* KDRMManager.m */,
 				BF1C07531C0DA7F800A67462 /* NSBundle+Kaltura.h */,
@@ -664,6 +672,8 @@
 				BFBE8E981C0B139400649BDF /* NSDictionary+Cache.m in Sources */,
 				BFBE8E871C0B139400649BDF /* EmailStrategy.m in Sources */,
 				BF1C07751C0DA8E900A67462 /* KPIMAPlayerViewController.m in Sources */,
+				BF0EA7411C1051F100BD3CD1 /* KCCPlayer.m in Sources */,
+				BF0EA73E1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodeld in Sources */,
 				BFBE8E911C0B139400649BDF /* KPLogManager.m in Sources */,
 				BFBE8E971C0B139400649BDF /* linkedinStrategy.m in Sources */,
 				BF1C07591C0DA7F800A67462 /* NSMutableArray+QueueAdditions.m in Sources */,
@@ -1029,6 +1039,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		BF0EA73B1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				BF0EA73C1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodel */,
+			);
+			currentVersion = BF0EA73C1C1051C700BD3CD1 /* KPURLProtocolCaching.xcdatamodel */;
+			name = KPURLProtocolCaching.xcdatamodeld;
+			path = ../KALTURAPlayerSDK/KPURLProtocolCaching.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		BFBE8E6D1C0B139400649BDF /* KPURLProtocolCaching.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
