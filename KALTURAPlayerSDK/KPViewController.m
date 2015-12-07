@@ -281,8 +281,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _kdpAPIState = KDPAPIStateUnknown;
     }
     
-    
-    
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
@@ -791,7 +789,12 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     } else {
         _fullScreenToggeled(_isFullScreenToggled);
     }
+    
     [self.controlsView updateLayout];
+    
+    if ([_delegate respondsToSelector:@selector(kPlayer:playerFullScreenToggled:)]) {
+        [_delegate kPlayer:self playerFullScreenToggled:_isFullScreenToggled];
+    }
     
     KPLogTrace(@"Exit");
 }
