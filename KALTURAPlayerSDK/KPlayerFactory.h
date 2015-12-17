@@ -29,13 +29,12 @@ static NSString *EndedKey = @"ended";
 static NSString *SeekedKey = @"seeked";
 static NSString *CanPlayKey = @"canplay";
 static NSString *PostrollEndedKey = @"postEnded";
-static NSString *WVPortalKey = @"kaltura";
 
 @protocol KPlayerFactoryDelegate <KPlayerDelegate>
 - (void)allAdsCompleted;
 @end
 
-@interface KPlayerFactory : NSObject
+@interface KPlayerFactory : NSObject 
 
 - (instancetype)initWithPlayerClassName:(NSString *)className;
 - (void)addPlayerToController:(UIViewController *)parentViewController;
@@ -44,7 +43,6 @@ static NSString *WVPortalKey = @"kaltura";
 - (void)changePlayer:(id<KPlayer>)player;
 - (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
-- (void)setDRMSource: (NSString *)drmKey;
 - (void)enableTracks:(BOOL)isEnablingTracks;
 
 @property (nonatomic, strong) id<KPlayer> player;
@@ -55,8 +53,7 @@ static NSString *WVPortalKey = @"kaltura";
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
-/// Changes DRM params and returns the current DRM params
-@property (nonatomic, copy) NSDictionary *drmParams;
+@property (nonatomic, copy) NSString *licenseUri;
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
 @property (nonatomic, strong) id kIMAWebOpenerDelegate;
 @end
