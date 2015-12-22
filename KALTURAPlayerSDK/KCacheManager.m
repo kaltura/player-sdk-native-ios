@@ -222,6 +222,8 @@ NSString *const KalturaFolder = @"/KalturaFolder";
         [[NSFileManager defaultManager] createFileAtPath:pathForData
                                                 contents:self.data
                                               attributes:attributes.copy];
+    } else {
+        KPLogError(@"Failed to create Directory", error);
     }
 }
 
