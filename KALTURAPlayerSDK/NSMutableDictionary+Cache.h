@@ -16,4 +16,6 @@
 @property (nonatomic, retain) NSDate * timestamp;
 @property (nonatomic, retain) NSString * url;
 @property (nonatomic, retain) NSDate * lastUsed;
+@property (nonatomic, retain) NSDictionary *allHeaderFields;
+@property (nonatomic) NSInteger statusCode;
 @end
