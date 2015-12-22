@@ -208,21 +208,21 @@ NSString *const KalturaFolder = @"/KalturaFolder";
                                                         error:&error];
     }
     
-    
-    // Store the page
-    NSMutableDictionary *attributes = [NSMutableDictionary new];
-    attributes.allHeaderFields = self.response.allHeaderFields;
-    attributes.statusCode = self.response.statusCode;
-    NSString *pathForHeaders = [pageFolderPath stringByAppendingPathComponent:@"headers"];
-    NSString *pathForData = [pageFolderPath stringByAppendingPathComponent:@"data"];
-    
-    [[NSFileManager defaultManager] createFileAtPath:pathForHeaders
-                                            contents:[NSKeyedArchiver archivedDataWithRootObject:attributes.copy]
-                                          attributes:attributes.copy];
-    [[NSFileManager defaultManager] createFileAtPath:pathForData
-                                            contents:self.data
-                                          attributes:attributes.copy];
-    
+    if (!error) {
+        // Store the page
+        NSMutableDictionary *attributes = [NSMutableDictionary new];
+        attributes.allHeaderFields = self.response.allHeaderFields;
+        attributes.statusCode = self.response.statusCode;
+        NSString *pathForHeaders = [pageFolderPath stringByAppendingPathComponent:@"headers"];
+        NSString *pathForData = [pageFolderPath stringByAppendingPathComponent:@"data"];
+        
+        [[NSFileManager defaultManager] createFileAtPath:pathForHeaders
+                                                contents:[NSKeyedArchiver archivedDataWithRootObject:attributes.copy]
+                                              attributes:attributes.copy];
+        [[NSFileManager defaultManager] createFileAtPath:pathForData
+                                                contents:self.data
+                                              attributes:attributes.copy];
+    }
 }
 
 - (NSMutableData *)data {
