@@ -82,8 +82,7 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 - (NSString *)cachePath {
     if (!_cachePath) {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *documentsDirectory = paths.firstObject; // Get documents folder
-        _cachePath = [documentsDirectory stringByAppendingPathComponent:KalturaFolder];
+        _cachePath = paths.firstObject; // Get documents folder
     }
     return _cachePath;
 }
@@ -123,16 +122,31 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 }
 
 
-// Fetches stored content from the cache directory by url converted to md5
-- (NSDictionary *)cachedResponse {
-    NSString *path = self.md5.pathForFile;
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path]) {
-        return nil;
+// Unarchive the stored headers
+- (NSDictionary *)cachedResponseHeaders {
+    NSString *path = self.md5.appendPath;
+    NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers"];
+    NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
+    if (data) {
+        [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:pathForHeaders error:nil];
+        NSDictionary *cached = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        return cached;
     }
-    NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
-    [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:path error:nil];
-    NSDictionary *cached = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    return cached;
+    return nil;
+}
+
+// Fetches the page content from the file system
+- (NSData *)cachedPage {
+    NSString *path = self.md5.appendPath;
+    NSString *pathForHeaders = [path stringByAppendingPathComponent:@"data"];
+    NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
+    [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:pathForHeaders error:nil];
+    return data;
+}
+
+
+- (NSString *)appendPath {
+    return [CacheManager.cachePath stringByAppendingPathComponent:self];
 }
 
 
@@ -183,22 +197,30 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     }
     
     // Create Kaltura's folder if not already exists
-    BOOL isDir = NO;
-    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:CacheManager.cachePath isDirectory:&isDir];
+    NSString *pageFolderPath = self.url.absoluteString.md5.appendPath;
+    BOOL isDir = YES;
+    BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:pageFolderPath isDirectory:&isDir];
+    NSError *error = nil;
     if (!exists) {
-        [[NSFileManager defaultManager] createDirectoryAtPath:CacheManager.cachePath
+        [[NSFileManager defaultManager] createDirectoryAtPath:pageFolderPath
                                   withIntermediateDirectories:NO
                                                    attributes:nil
-                                                        error:nil];
+                                                        error:&error];
     }
+    
     
     // Store the page
     NSMutableDictionary *attributes = [NSMutableDictionary new];
-    attributes.encoding = self.response.textEncodingName;
-    attributes.mimeType = self.response.MIMEType;
-    attributes.data = self.data;
-    [[NSFileManager defaultManager] createFileAtPath:self.url.absoluteString.md5.pathForFile
+    attributes.allHeaderFields = self.response.allHeaderFields;
+    attributes.statusCode = self.response.statusCode;
+    NSString *pathForHeaders = [pageFolderPath stringByAppendingPathComponent:@"headers"];
+    NSString *pathForData = [pageFolderPath stringByAppendingPathComponent:@"data"];
+    
+    [[NSFileManager defaultManager] createFileAtPath:pathForHeaders
                                             contents:[NSKeyedArchiver archivedDataWithRootObject:attributes.copy]
+                                          attributes:attributes.copy];
+    [[NSFileManager defaultManager] createFileAtPath:pathForData
+                                            contents:self.data
                                           attributes:attributes.copy];
     
 }

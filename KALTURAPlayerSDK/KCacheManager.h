@@ -22,14 +22,15 @@
 
 
 @interface NSString(CoreData)
-@property (nonatomic, readonly) NSDictionary *cachedResponse;
+@property (nonatomic, readonly) NSDictionary *cachedResponseHeaders;
+@property (nonatomic, readonly) NSData *cachedPage;
 @end
 
 @interface CachedURLParams: NSObject
 @property (nonatomic, strong) NSMutableData *data;
 @property (nonatomic, copy) NSURL *url;
 @property (nonatomic, copy) NSDate *date;
-@property (nonatomic, copy) NSURLResponse *response;
+@property (nonatomic, copy) NSHTTPURLResponse *response;
 
 - (void)storeCacheResponse;
 @end
