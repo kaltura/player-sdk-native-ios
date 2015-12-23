@@ -19,6 +19,8 @@
 		<integer>1</integer>
 		<key>mwEmbedLoader.php</key>
 		<integer>7</integer>
+		<key>embedIframeJs</key>
+		<integer>8</integer>
 	</dict>
 </dict>
 </plist>

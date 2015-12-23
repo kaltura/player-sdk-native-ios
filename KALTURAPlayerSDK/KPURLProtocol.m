@@ -12,7 +12,7 @@
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 
-@interface KPURLProtocol()
+@interface KPURLProtocol()<NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection *connection;
 //@property (nonatomic, strong) NSMutableData *mutableData;
@@ -49,20 +49,17 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 
 - (void) startLoading {
     
-    NSDictionary *cachedResponse = self.request.URL.absoluteString.cachedResponse;
-    if (cachedResponse) {
-        
-        NSData *data = cachedResponse.data;
-        NSString *mimeType = cachedResponse.mimeType;
-        NSString *encoding = cachedResponse.encoding;
-        
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:self.request.URL
-                                                            MIMEType:mimeType
-                                               expectedContentLength:data.length
-                                                    textEncodingName:encoding];
-        
-        [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-        [self.client URLProtocol:self didLoadData:data];
+    NSDictionary *cachedHeaders = self.request.URL.absoluteString.cachedResponseHeaders;
+    NSData *cachedPage = self.request.URL.absoluteString.cachedPage;
+    if (cachedHeaders && cachedPage) {
+        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                                  statusCode:[cachedHeaders[@"statusCode"] integerValue]
+                                                                 HTTPVersion:nil
+                                                                headerFields:cachedHeaders[@"allHeaderFields"]];
+        [self.client URLProtocol:self
+              didReceiveResponse:response
+              cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [self.client URLProtocol:self didLoadData:cachedPage];
         [self.client URLProtocolDidFinishLoading:self];
         
     } else {
@@ -89,7 +86,18 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
     
-    _cacheParams.response = response;
+    _cacheParams.response = (NSHTTPURLResponse *)response;
+}
+
+- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
+    if (response) {
+        NSHTTPURLResponse *_response = (NSHTTPURLResponse *)response;
+        _cacheParams.response = _response;
+        NSString *location = _response.allHeaderFields[@"Location"];
+        NSURL *url = [NSURL URLWithString:location];
+        return [NSURLRequest requestWithURL:url];
+    }
+    return request;
 }
 
 - (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {

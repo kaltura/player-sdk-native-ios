@@ -30,6 +30,12 @@
 - (void)kPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
 @end
 
+@protocol KPViewControllerDatasource <NSObject>
+
+- (NSString *)localURLForEntryId:(NSString *)entryId;
+
+@end
+
 #import "ChromecastDeviceController.h"
 
 
@@ -87,7 +93,11 @@
  */
 - (void)changeMedia:(NSString *)entryID;
 
+- (void)changeMedia:(NSString *)entryID withCompletion:(void(^)())completion;
+
 @property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
+
+@property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
 
 @property (nonatomic, strong) KPController *playerController;
 

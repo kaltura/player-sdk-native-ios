@@ -8,6 +8,7 @@
 
 #import "NSMutableDictionary+AdSupport.h"
 #import "KPLog.h"
+#import "NSDictionary+Utilities.h"
 
 static NSString *IsLinearKey = @"isLinear";
 static NSString *AdIDKey = @"adID";
@@ -91,13 +92,6 @@ static NSString *RemainTimeKey = @"remain";
 }
 
 - (NSString *)toJSON {
-    NSError *error = nil;
-    NSData *toJson = [NSJSONSerialization dataWithJSONObject:self options:0 error:&error];
-    if (error) {
-        KPLogError(@"%@", error);
-        return nil;
-    }
-    NSString *jsonStr = [[NSString alloc] initWithData:toJson encoding:NSUTF8StringEncoding];
-    return [jsonStr stringByReplacingOccurrencesOfString:@"\"null\"" withString:@"null"];
+    return [self.copy toJson];
 }
 @end
