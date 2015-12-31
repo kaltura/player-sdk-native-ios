@@ -215,13 +215,21 @@ NSString *const KalturaFolder = @"/KalturaFolder";
         attributes.statusCode = self.response.statusCode;
         NSString *pathForHeaders = [pageFolderPath stringByAppendingPathComponent:@"headers"];
         NSString *pathForData = [pageFolderPath stringByAppendingPathComponent:@"data"];
+        if ([[NSFileManager defaultManager] createFileAtPath:pathForHeaders
+                                                    contents:[NSKeyedArchiver archivedDataWithRootObject:attributes.copy]
+                                                  attributes:attributes.copy]) {
+            KPLogDebug(@"Failed to create cached header %@", self.url);
+        } else {
+            KPLogInfo(@"File stored %@", self.url);
+        }
         
-        [[NSFileManager defaultManager] createFileAtPath:pathForHeaders
-                                                contents:[NSKeyedArchiver archivedDataWithRootObject:attributes.copy]
-                                              attributes:attributes.copy];
-        [[NSFileManager defaultManager] createFileAtPath:pathForData
+        if ([[NSFileManager defaultManager] createFileAtPath:pathForData
                                                 contents:self.data
-                                              attributes:attributes.copy];
+                                                  attributes:attributes.copy]) {
+            KPLogDebug(@"Failed to create cached data %@", self.url);
+        } else {
+            KPLogInfo(@"Data stored %@", self.url);
+        }
     } else {
         KPLogError(@"Failed to create Directory", error);
     }
