@@ -194,20 +194,16 @@ static NSString *StatusKeyPath = @"status";
     }
     
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
+    NSArray *keys = [NSArray arrayWithObject:@"playable"];
     
-    if (!asset.isPlayable) {
-        return NO;
-        KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
-    }
-    
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
-    [item addObserver:self
-           forKeyPath:StatusKeyPath
-              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-              context:nil];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
+        AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
+        [item addObserver:self
+               forKeyPath:StatusKeyPath
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                  context:nil];
         [self replaceCurrentItemWithPlayerItem:item];
-    });
+    }];
     
     return YES;
 }
