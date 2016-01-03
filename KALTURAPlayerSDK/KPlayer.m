@@ -194,6 +194,13 @@ static NSString *StatusKeyPath = @"status";
     }
     
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
+    
+    if (!asset.isPlayable) {
+        KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
+        
+        return NO;
+    }
+    
     NSArray *keys = [NSArray arrayWithObject:@"playable"];
     
     [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
