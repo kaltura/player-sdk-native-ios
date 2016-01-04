@@ -93,4 +93,14 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
     return nil;
 }
 
+- (float)volume {
+    return _delegate.volume;
+}
+
+- (void)setVolume:(float)value {
+    if ([_delegate respondsToSelector:@selector(setVolume:)]) {
+        [_delegate setVolume:value];
+    }
+}
+
 @end

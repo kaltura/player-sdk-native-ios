@@ -33,6 +33,7 @@ static NSString *StatusKeyPath = @"status";
 @synthesize delegate = _delegate;
 @synthesize currentPlaybackTime = _currentPlaybackTime;
 @synthesize duration = _duration;
+@synthesize volume = _volume;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -74,6 +75,7 @@ static NSString *StatusKeyPath = @"status";
                                                      //                                          [weakSelf.delegate eventName:ProgressKey
                                                      //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
                                                  }];
+        
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         
@@ -235,6 +237,14 @@ static NSString *StatusKeyPath = @"status";
 - (NSTimeInterval)duration {
     AVPlayerItem *item = self.currentItem;
     return CMTimeGetSeconds(item.asset.duration);
+}
+
+- (float)volume {
+    return [super volume];
+}
+
+- (void)setVolume:(float)value {
+    [super setVolume:value];
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {

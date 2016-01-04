@@ -161,6 +161,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     return _playerFactory.player.duration;
 }
 
+- (float)volume {
+    return _playerFactory.player.volume;
+}
+
+- (void)setVolume:(float)value {
+    _playerFactory.player.volume = value;
+}
+
 - (NSURL *)playerSource {
     return _playerFactory.player.playerSource;
 }
