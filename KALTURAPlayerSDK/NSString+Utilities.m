@@ -54,9 +54,7 @@ static NSString *NativeActionKey = @"nativeAction";
     NSArray *attributes = @[@"src",
                             @"currentTime",
                             @"visible",
-#if !(TARGET_IPHONE_SIMULATOR)
                             @"licenseUri",
-#endif
                             @"nativeAction",
                             @"doubleClickRequestAds",
                             @"language",

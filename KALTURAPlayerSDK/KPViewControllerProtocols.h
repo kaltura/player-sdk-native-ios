@@ -30,10 +30,9 @@ typedef enum{
     currentTime,
     // Player Visibility
     visible,
-#if !(TARGET_IPHONE_SIMULATOR)
-    // DRM WideVine Key
+    // DRM license uri
     licenseUri,
-#endif
+
     nativeAction,
     doubleClickRequestAds,
     language,

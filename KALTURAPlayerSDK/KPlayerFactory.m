@@ -7,7 +7,7 @@
 //
 
 #import "KPlayerFactory.h"
-#import "KDRMManager.h"
+#import "WidevineClassicCDM.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 
@@ -61,33 +61,29 @@
 }
 
 - (void)setSrc:(NSString *)src {
-    // origin src should be saved
     _src = src;
     
-    if (![self.player setPlayerSource:[NSURL URLWithString:src]]) {
-        [self setDRMSource:nil];
+    NSURL* url = [NSURL URLWithString:_src];
+    if (![self.player setPlayerSource:url]) {
+        // May fail if content is DRM protected. We'll try again if/when we get a licenseUri.
+        KPLogDebug(@"Media Source (%@) is not playable!", url);
     }
 }
 
-- (void)setDRMSource: (NSString *)drmKey {
-    if (drmKey) {
-        self.drmParams = @{
-                                     @"WVDRMServerKey": drmKey,
-                                     @"WVPortalKey": WVPortalKey
-                                     };
-    }
-    if (self.drmParams != nil) {
-#if !(TARGET_IPHONE_SIMULATOR)
-        [KDRMManager DRMSource:self.src
-                           key:self.drmParams
-                    completion:^(NSString *drmUrl) {
-                        if (drmUrl &&
-                            ![self.player setPlayerSource:[NSURL URLWithString:drmUrl]]) {
-                            KPLogError(@"Media Source is not playable!");
-                        }
-                    }];
-#endif
-    }
+-(void)setLicenseUri:(NSString*)licenseUri {
+    
+    _licenseUri = licenseUri;
+    
+    [WidevineClassicCDM playAsset:_src withLicenseUri:_licenseUri readyToPlay:^(NSString *playbackURL) {
+        if (!playbackURL) {
+            KPLogError(@"Got nil playback URL, can't play");
+        } else {
+            NSURL* url = [NSURL URLWithString:playbackURL];
+            if (![self.player setPlayerSource:url]) {
+                KPLogError(@"Media Source (%@) is not playable!", url);
+            }
+        }
+    }];
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
