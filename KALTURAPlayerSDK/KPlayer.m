@@ -34,6 +34,7 @@ static NSString *StatusKeyPath = @"status";
 @synthesize currentPlaybackTime = _currentPlaybackTime;
 @synthesize duration = _duration;
 @synthesize volume = _volume;
+@synthesize mute = _mute;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -245,6 +246,14 @@ static NSString *StatusKeyPath = @"status";
 
 - (void)setVolume:(float)value {
     [super setVolume:value];
+}
+
+- (BOOL)isMuted {
+    return super.isMuted;
+}
+
+- (void)setMute:(BOOL)isMute {
+    self.muted = isMute;
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {

@@ -103,4 +103,14 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
     }
 }
 
+- (BOOL)isMuted {
+    return _delegate.mute;
+}
+
+- (void)setMute:(BOOL)isMute {
+    if ([_delegate respondsToSelector:@selector(setVolume:)]) {
+        [_delegate setMute:isMute];
+    }
+}
+
 @end
