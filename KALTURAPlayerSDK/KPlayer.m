@@ -33,6 +33,8 @@ static NSString *StatusKeyPath = @"status";
 @synthesize delegate = _delegate;
 @synthesize currentPlaybackTime = _currentPlaybackTime;
 @synthesize duration = _duration;
+@synthesize volume = _volume;
+@synthesize mute = _mute;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -74,6 +76,7 @@ static NSString *StatusKeyPath = @"status";
                                                      //                                          [weakSelf.delegate eventName:ProgressKey
                                                      //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
                                                  }];
+        
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         
@@ -196,18 +199,21 @@ static NSString *StatusKeyPath = @"status";
     AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
     
     if (!asset.isPlayable) {
-        return NO;
         KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
+        
+        return NO;
     }
     
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:playerSource];
-    [item addObserver:self
-           forKeyPath:StatusKeyPath
-              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-              context:nil];
-    dispatch_async(dispatch_get_main_queue(), ^{
+    NSArray *keys = [NSArray arrayWithObject:@"playable"];
+    
+    [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
+        AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
+        [item addObserver:self
+               forKeyPath:StatusKeyPath
+                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                  context:nil];
         [self replaceCurrentItemWithPlayerItem:item];
-    });
+    }];
     
     return YES;
 }
@@ -232,6 +238,22 @@ static NSString *StatusKeyPath = @"status";
 - (NSTimeInterval)duration {
     AVPlayerItem *item = self.currentItem;
     return CMTimeGetSeconds(item.asset.duration);
+}
+
+- (float)volume {
+    return [super volume];
+}
+
+- (void)setVolume:(float)value {
+    [super setVolume:value];
+}
+
+- (BOOL)isMuted {
+    return super.isMuted;
+}
+
+- (void)setMute:(BOOL)isMute {
+    self.muted = isMute;
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {

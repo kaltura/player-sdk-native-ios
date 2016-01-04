@@ -48,6 +48,8 @@ typedef enum{
 //@property (nonatomic, copy) NSURL *playerSource;
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
 @property (nonatomic) NSTimeInterval duration;
+@property (nonatomic) float volume NS_AVAILABLE(10_7, 7_0);
+@property (nonatomic, getter=isMuted) BOOL mute NS_AVAILABLE(10_7, 7_0);
 @property (nonatomic, readonly) BOOL isKPlayer;
 
 - (instancetype)initWithParentView:(UIView *)parentView;
