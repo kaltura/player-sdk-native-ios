@@ -67,6 +67,8 @@ extern NSString * const KMediaPlaybackStateKey;
 - (void)sendKPNotification:(NSString *)kpNotificationName withParams:(NSString *)kpParams;
 - (NSTimeInterval)duration;
 - (NSTimeInterval)currentPlaybackTime;
+- (float)volume;
+- (void)setVolume:(float)value;
 
 @end
 
@@ -79,6 +81,8 @@ extern NSString * const KMediaPlaybackStateKey;
 
 /// @return Duration of the current video
 @property (nonatomic, readonly) NSTimeInterval duration;
+/* The volume of the player. */
+@property (nonatomic) float volume NS_AVAILABLE(10_7, 7_0);
 
 /// Perfoms seek to the currentPlaybackTime and returns the currentPlaybackTime
 @property (nonatomic) NSTimeInterval currentPlaybackTime;
