@@ -64,9 +64,19 @@
     // origin src should be saved
     _src = src;
     
-    if (![self.player setPlayerSource:[NSURL URLWithString:src]]) {
+    if ([self isWVM:src]) {
         [self setDRMSource:nil];
+    } else {
+        [self.player setPlayerSource:[NSURL URLWithString:src]];
     }
+}
+
+- (BOOL)isWVM:(NSString *)src {
+    if ([src rangeOfString:@"wvm"].location != NSNotFound) {
+        return YES;
+    }
+
+    return NO;
 }
 
 - (void)setDRMSource: (NSString *)drmKey {
