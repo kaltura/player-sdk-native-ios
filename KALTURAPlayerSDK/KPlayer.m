@@ -12,9 +12,6 @@
 #import "NSMutableDictionary+AdSupport.h"
 #import "NSBundle+Kaltura.h"
 
-
-
-
 static NSString *RateKeyPath = @"rate";
 static NSString *StatusKeyPath = @"status";
 
@@ -188,7 +185,7 @@ static NSString *StatusKeyPath = @"status";
     }
 }
 
-- (BOOL)setPlayerSource:(NSURL *)playerSource {
+- (void)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
     
     if (self.currentItem) {
@@ -196,26 +193,24 @@ static NSString *StatusKeyPath = @"status";
         [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
     
-    AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
-    
-    if (!asset.isPlayable) {
-        KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
         
-        return NO;
-    }
-    
-    NSArray *keys = [NSArray arrayWithObject:@"playable"];
-    
-    [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
-        AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
-        [item addObserver:self
-               forKeyPath:StatusKeyPath
-                  options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                  context:nil];
-        [self replaceCurrentItemWithPlayerItem:item];
-    }];
-    
-    return YES;
+        if (!asset.isPlayable) {
+            KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
+        }
+        
+        NSArray *keys = [NSArray arrayWithObject:@"playable"];
+        
+        [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
+            AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
+            [item addObserver:self
+                   forKeyPath:StatusKeyPath
+                      options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+                      context:nil];
+            [self replaceCurrentItemWithPlayerItem:item];
+        }];
+    });
 }
 
 - (NSURL *)playerSource {

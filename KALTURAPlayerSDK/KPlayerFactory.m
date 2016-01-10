@@ -64,17 +64,19 @@
     // origin src should be saved
     _src = src;
     
-    if (![self.player setPlayerSource:[NSURL URLWithString:src]]) {
+    if (src.isWVM) {
         [self setDRMSource:nil];
+    } else {
+        [self.player setPlayerSource:[NSURL URLWithString:src]];
     }
 }
 
 - (void)setDRMSource: (NSString *)drmKey {
     if (drmKey) {
         self.drmParams = @{
-                                     @"WVDRMServerKey": drmKey,
-                                     @"WVPortalKey": WVPortalKey
-                                     };
+                             @"WVDRMServerKey": drmKey,
+                             @"WVPortalKey": WVPortalKey
+                             };
     }
     if (self.drmParams != nil) {
 #if !(TARGET_IPHONE_SIMULATOR)
