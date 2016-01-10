@@ -114,6 +114,10 @@ static NSString *NativeActionKey = @"nativeAction";
     return [self isEqualToString:@"frame"];
 }
 
+- (BOOL)isWVM {
+    return ([self rangeOfString:@"wvm"].location != NSNotFound);
+}
+
 - (FunctionComponents)extractFunction {
     struct FunctionComponents function;
     function.name = nil;

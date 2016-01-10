@@ -53,7 +53,7 @@ typedef enum{
 @property (nonatomic, readonly) BOOL isKPlayer;
 
 - (instancetype)initWithParentView:(UIView *)parentView;
-- (BOOL)setPlayerSource:(NSURL *)playerSource;
+- (void)setPlayerSource:(NSURL *)playerSource;
 - (NSURL *)playerSource;
 - (void)play;
 - (void)pause;
