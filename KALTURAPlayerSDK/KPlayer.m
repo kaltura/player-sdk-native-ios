@@ -12,9 +12,6 @@
 #import "NSMutableDictionary+AdSupport.h"
 #import "NSBundle+Kaltura.h"
 
-
-
-
 static NSString *RateKeyPath = @"rate";
 static NSString *StatusKeyPath = @"status";
 
