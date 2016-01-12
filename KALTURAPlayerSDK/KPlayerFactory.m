@@ -83,8 +83,7 @@
         [KDRMManager DRMSource:self.src
                            key:self.drmParams
                     completion:^(NSString *drmUrl) {
-                        if (drmUrl &&
-                            ![self.player setPlayerSource:[NSURL URLWithString:drmUrl]]) {
+                        if (drmUrl && !drmUrl.isWVM) {
                             KPLogError(@"Media Source is not playable!");
                         }
                     }];
