@@ -37,6 +37,14 @@
     [self addValue:encoding forKey:@"encoding"];
 }
 
+- (void)setAllHeaderFields:(NSDictionary *)allHeaderFields {
+    [self addValue:allHeaderFields forKey:@"allHeaderFields"];
+}
+
+- (void)setStatusCode:(NSInteger)statusCode {
+    [self addValue:@(statusCode) forKey:@"statusCode"];
+}
+
 - (NSString *)encoding {
     return self[@"encoding"];
 }
@@ -71,6 +79,14 @@
 
 - (NSDate *)lastUsed {
     return self[@"lastUsed"];
+}
+
+- (NSDictionary *)allHeaderFields {
+    return self[@"allHeaderFields"];
+}
+
+- (NSInteger)statusCode {
+    return [self[@"statusCode"] integerValue];
 }
 
 - (void)addValue:(id)value forKey:(NSString *)key {

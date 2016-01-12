@@ -64,9 +64,11 @@
     _src = src;
     
     NSURL* url = [NSURL URLWithString:_src];
-    if (![self.player setPlayerSource:url]) {
+    if ([url.pathExtension hasSuffix:@"wvm"]) {
         // May fail if content is DRM protected. We'll try again if/when we get a licenseUri.
-        KPLogDebug(@"Media Source (%@) is not playable!", url);
+        KPLogDebug(@"Content (%@) is WVM, waiting for license uri", url);
+    } else {
+        [self.player setPlayerSource:url];
     }
 }
 
@@ -79,9 +81,7 @@
             KPLogError(@"Got nil playback URL, can't play");
         } else {
             NSURL* url = [NSURL URLWithString:playbackURL];
-            if (![self.player setPlayerSource:url]) {
-                KPLogError(@"Media Source (%@) is not playable!", url);
-            }
+            [self.player setPlayerSource:url];
         }
     }];
 }

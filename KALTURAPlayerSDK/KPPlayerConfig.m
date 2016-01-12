@@ -101,22 +101,21 @@ static NSString *EntryIdKey = @"entry_id";
 }
 
 - (NSURL *)videoURL {
-    if (!_url) {
-        NSString *link = [_domain stringByAppendingFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@", _partnerId, _partnerId, _uiConfId];
-        if (_entryId) {
-            link = [link stringByAppendingFormat:@"/entry_id/%@?", _entryId];
-        } else {
-            link = [link stringByAppendingString:@"?"];
-        }
-        link = [link stringByAppendingFormat:@"wid=_%@&", _partnerId];
-        
-        for (NSString *key in self.paramsDict.allKeys) {
-            link = [link stringByAppendingFormat:@"%@=%@&", [key stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]], [self.paramsDict[key] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]]];
-        }
-
-        _url = [NSURL URLWithString:link];
+    NSString *link = [_domain stringByAppendingFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@", _partnerId, _partnerId, _uiConfId];
+    if (_entryId) {
+        link = [link stringByAppendingFormat:@"/entry_id/%@?", _entryId];
+    } else {
+        link = [link stringByAppendingString:@"?"];
     }
-    return _url;
+    link = [link stringByAppendingFormat:@"wid=_%@&", _partnerId];
+        
+    for (NSString *key in self.paramsDict.allKeys) {
+        link = [link stringByAppendingFormat:@"%@=%@&", [key stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]], [self.paramsDict[key] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]]];
+    }
+
+    _url = [NSURL URLWithString:link];
+        
+    return [NSURL URLWithString:link];
 }
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL {

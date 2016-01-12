@@ -34,6 +34,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5F60F1FC1C2721DD0079D752 /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E501C0B139400649BDF /* CachedStrings.plist */; };
+		5F6879D51C271304003E5DF7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6879D41C271304003E5DF7 /* CoreFoundation.framework */; };
+		5F6879F01C27165A003E5DF7 /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */; };
+		5F6879F11C27165A003E5DF7 /* KPWebKitBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E721C0B139400649BDF /* KPWebKitBrowserViewController.xib */; };
+		5F9A801A1C1CCC0800DD930E /* NSDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A80191C1CCC0800DD930E /* NSDictionary+Utilities.m */; };
 		B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BF0EA7411C1051F100BD3CD1 /* KCCPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0EA7401C1051F100BD3CD1 /* KCCPlayer.m */; };
 		BF1C07581C0DA7F800A67462 /* NSBundle+Kaltura.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C07541C0DA7F800A67462 /* NSBundle+Kaltura.m */; };
@@ -108,7 +113,7 @@
 		BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E601C0B139400649BDF /* KPControlsView.h */; };
 		BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */; };
 		BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */; };
-		FB2A0A4A1C184146007FC265 /* WidevineClassicCDM.m in Sources */ = {isa = PBXBuildFile; fileRef = FB2A0A441C183968007FC265 /* WidevineClassicCDM.m */; };
+		FBDE7F691C4535A4000B416F /* WidevineClassicCDM.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDE7F681C4535A4000B416F /* WidevineClassicCDM.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +191,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5F6879D41C271304003E5DF7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		5F9A80181C1CCC0800DD930E /* NSDictionary+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utilities.h"; sourceTree = "<group>"; };
+		5F9A80191C1CCC0800DD930E /* NSDictionary+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utilities.m"; sourceTree = "<group>"; };
 		B372892E1A8787D00076DD33 /* KALTURAPlayerSDKResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KALTURAPlayerSDKResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37289311A8787D00076DD33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF0EA73F1C1051F100BD3CD1 /* KCCPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KCCPlayer.h; path = KALTURAPlayerSDK/KCCPlayer.h; sourceTree = SOURCE_ROOT; };
@@ -266,8 +274,8 @@
 		BFBE8E841C0B139400649BDF /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = KALTURAPlayerSDK/Utilities.h; sourceTree = SOURCE_ROOT; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB2A0A431C183968007FC265 /* WidevineClassicCDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidevineClassicCDM.h; path = KALTURAPlayerSDK/WidevineClassicCDM.h; sourceTree = SOURCE_ROOT; };
-		FB2A0A441C183968007FC265 /* WidevineClassicCDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WidevineClassicCDM.m; path = KALTURAPlayerSDK/WidevineClassicCDM.m; sourceTree = SOURCE_ROOT; };
+		FBDE7F671C4535A4000B416F /* WidevineClassicCDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidevineClassicCDM.h; path = KALTURAPlayerSDK/WidevineClassicCDM.h; sourceTree = SOURCE_ROOT; };
+		FBDE7F681C4535A4000B416F /* WidevineClassicCDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WidevineClassicCDM.m; path = KALTURAPlayerSDK/WidevineClassicCDM.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +283,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F6879D51C271304003E5DF7 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,6 +326,8 @@
 				BFBE8E7E1C0B139400649BDF /* NSString+Utilities.m */,
 				BFBE8E791C0B139400649BDF /* NSMutableDictionary+AdSupport.h */,
 				BFBE8E7A1C0B139400649BDF /* NSMutableDictionary+AdSupport.m */,
+				5F9A80181C1CCC0800DD930E /* NSDictionary+Utilities.h */,
+				5F9A80191C1CCC0800DD930E /* NSDictionary+Utilities.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -377,6 +388,8 @@
 		BF1C07661C0DA87D00A67462 /* KPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				FBDE7F671C4535A4000B416F /* WidevineClassicCDM.h */,
+				FBDE7F681C4535A4000B416F /* WidevineClassicCDM.m */,
 				BF1C07671C0DA8A600A67462 /* KPlayer.h */,
 				BF1C07681C0DA8A600A67462 /* KPlayer.m */,
 				BF1C07691C0DA8A600A67462 /* KPlayerFactory.h */,
@@ -424,6 +437,7 @@
 		BFFFA71E182F9E31005B3B24 = {
 			isa = PBXGroup;
 			children = (
+				5F6879D41C271304003E5DF7 /* CoreFoundation.framework */,
 				BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */,
 				B372892F1A8787D00076DD33 /* KPlayerResources */,
 				BFFFA728182F9E31005B3B24 /* Products */,
@@ -444,8 +458,6 @@
 			children = (
 				BF0EA73F1C1051F100BD3CD1 /* KCCPlayer.h */,
 				BF0EA7401C1051F100BD3CD1 /* KCCPlayer.m */,
-				FB2A0A431C183968007FC265 /* WidevineClassicCDM.h */,
-				FB2A0A441C183968007FC265 /* WidevineClassicCDM.m */,
 				BF1C07531C0DA7F800A67462 /* NSBundle+Kaltura.h */,
 				BF1C07541C0DA7F800A67462 /* NSBundle+Kaltura.m */,
 				BF1C07551C0DA7F800A67462 /* NSMutableArray+QueueAdditions.h */,
@@ -583,6 +595,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F60F1FC1C2721DD0079D752 /* CachedStrings.plist in Resources */,
+				5F6879F01C27165A003E5DF7 /* KPBrowserViewController.xib in Resources */,
+				5F6879F11C27165A003E5DF7 /* KPWebKitBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,7 +659,6 @@
 				BFBE8E901C0B139400649BDF /* KPLog.m in Sources */,
 				BFBE8E9C1C0B139400649BDF /* NSString+Utilities.m in Sources */,
 				BFBE8E921C0B139400649BDF /* KPShareManager.m in Sources */,
-				FB2A0A4A1C184146007FC265 /* WidevineClassicCDM.m in Sources */,
 				BF1C07581C0DA7F800A67462 /* NSBundle+Kaltura.m in Sources */,
 				BF1C076C1C0DA8A600A67462 /* KPlayerFactory.m in Sources */,
 				BFBE8E891C0B139400649BDF /* GoogleplusStrategy.m in Sources */,
@@ -654,6 +668,7 @@
 				BFBE8E8F1C0B139400649BDF /* KPControlsWKWebView.m in Sources */,
 				BFBE8E9D1C0B139400649BDF /* SmsStrategy.m in Sources */,
 				BFBE8E8B1C0B139400649BDF /* KPBrowserViewController.m in Sources */,
+				5F9A801A1C1CCC0800DD930E /* NSDictionary+Utilities.m in Sources */,
 				BF1C076B1C0DA8A600A67462 /* KPlayer.m in Sources */,
 				BF1C077B1C0DA93700A67462 /* KPPlayerConfig.m in Sources */,
 				BFBE8E881C0B139400649BDF /* FacebookStrategy.m in Sources */,
@@ -666,6 +681,7 @@
 				BF0EA7411C1051F100BD3CD1 /* KCCPlayer.m in Sources */,
 				BFBE8E911C0B139400649BDF /* KPLogManager.m in Sources */,
 				BFBE8E971C0B139400649BDF /* linkedinStrategy.m in Sources */,
+				FBDE7F691C4535A4000B416F /* WidevineClassicCDM.m in Sources */,
 				BF1C07591C0DA7F800A67462 /* NSMutableArray+QueueAdditions.m in Sources */,
 				BF1C07811C0DA96700A67462 /* ChromecastDeviceController.m in Sources */,
 				BFBE8E861C0B139400649BDF /* DeviceParamsHandler.m in Sources */,

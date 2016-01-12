@@ -26,6 +26,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPURLProtocol.h"
 #import "KCacheManager.h"
 #import "NSBundle+Kaltura.h"
+#import "NSDictionary+Utilities.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -50,7 +51,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSMutableArray *callBackReadyRegistrations;
     NSURL *videoURL;
     void(^_shareHandler)(NSDictionary *);
+                                    
     BOOL isActionSheetPresented;
+    void(^changeMediaCompletion)();
+                                
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
@@ -155,6 +159,22 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (NSTimeInterval)duration {
     return _playerFactory.player.duration;
+}
+
+- (float)volume {
+    return _playerFactory.player.volume;
+}
+
+- (void)setVolume:(float)value {
+    _playerFactory.player.volume = value;
+}
+
+- (BOOL)mute {
+    return _playerFactory.player.isMuted;
+}
+
+- (void)setMute:(BOOL)isMute {
+    _playerFactory.player.mute = isMute;
 }
 
 - (NSURL *)playerSource {
@@ -511,8 +531,15 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 }
 
 - (void)changeMedia:(NSString *)mediaID {
-    NSString *entry = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", mediaID];
-    [self sendNotification:@"changeMedia" withParams:entry];
+    if (mediaID) {
+        NSDictionary *mediaDict = @{@"entryId": mediaID};
+        [self sendNotification:@"changeMedia" withParams:mediaDict.toJson];
+    }
+}
+
+- (void)changeMedia:(NSString *)entryID withCompletion:(void (^)())completion {
+    changeMediaCompletion = [completion copy];
+    [self changeMedia:entryID];
 }
 
 #pragma mark - Player Methods
@@ -725,8 +752,13 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     NSString *attributeVal = args[1];
     
     switch ( attributeName.attributeEnumFromString ) {
-        case src:
+        case src: {
+            NSString *localPath = [_datasource localURLForEntryId:_configuration.entryId];
+            if (_datasource && localPath) {
+                attributeVal = localPath;
+            }
             _playerFactory.src = attributeVal;
+        }
             break;
         case currentTime:
             _playerFactory.currentPlayBackTime = [attributeVal doubleValue];
@@ -876,6 +908,10 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                                               
                                               if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange:)]) {
                                                   [_delegate kPlayer:self playerLoadStateDidChange:KPMediaLoadStatePlayable];
+                                              }
+                                              if (changeMediaCompletion) {
+                                                  changeMediaCompletion();
+                                                  changeMediaCompletion = nil;
                                               }
                                           },
                                       PlayKey:
