@@ -753,9 +753,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src: {
-            NSString *localPath = [_datasource localURLForEntryId:_configuration.entryId];
-            if (_datasource && localPath) {
-                attributeVal = localPath;
+            NSString *overrideURL = [_customSourceURLProvider urlForEntryId:_configuration.entryId currentURL:attributeVal];
+            if (overrideURL) {
+                attributeVal = overrideURL;
             }
             _playerFactory.src = attributeVal;
         }
