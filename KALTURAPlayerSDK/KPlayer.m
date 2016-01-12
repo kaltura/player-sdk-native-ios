@@ -136,6 +136,7 @@ static NSString *StatusKeyPath = @"status";
     } else if ([keyPath isEqualToString:StatusKeyPath]) {
         switch (self.status) {
             case AVPlayerStatusFailed:
+                KPLogError(@"AVPlayerStatusFailed");
                 break;
             case AVPlayerItemStatusReadyToPlay: {
                 if (oldValue.intValue != newValue.intValue) {
@@ -145,7 +146,6 @@ static NSString *StatusKeyPath = @"status";
                     [self.delegate player:self
                                 eventName:LoadedMetaDataKey
                                     value:@""];
-                    
                     [self.delegate player:self
                                 eventName:CanPlayKey
                                     value:nil];
@@ -172,6 +172,7 @@ static NSString *StatusKeyPath = @"status";
                 }
                 break;
             case AVPlayerStatusUnknown:
+                KPLogError(@"AVPlayerStatusUnknown");
                 break;
             }
         }
@@ -188,11 +189,6 @@ static NSString *StatusKeyPath = @"status";
 - (void)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
     
-    if (self.currentItem) {
-        [self pause];
-        [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
-    }
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
         
@@ -204,6 +200,15 @@ static NSString *StatusKeyPath = @"status";
         
         [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
             AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
+
+            @try {
+                [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
+                KPLogError(@"remove");
+            }
+            @catch (NSException *exception) {
+                KPLogError(@"%@", exception);
+            }
+            
             [item addObserver:self
                    forKeyPath:StatusKeyPath
                       options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
