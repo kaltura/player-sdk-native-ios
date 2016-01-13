@@ -28,10 +28,18 @@
         self.scrollView.bounces = NO;
         self.scrollView.bouncesZoom = NO;
         self.backgroundColor = [UIColor clearColor];
-//        self.translatesAutoresizingMaskIntoConstraints = YES;
+        
         return self;
     }
     return nil;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    if (!UIEdgeInsetsEqualToEdgeInsets([super scrollView].contentInset, UIEdgeInsetsZero)) {
+        [[super scrollView] setContentInset:UIEdgeInsetsZero];
+    }
 }
 
 
@@ -50,10 +58,6 @@
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
-    if (self.shouldUpdateLayout) {
-        [self updateLayout];
-//        self.shouldUpdateLayout = NO;
-    }
 }
 
 - (CGRect)controlsFrame {
@@ -98,10 +102,6 @@
 - (void)showChromecastComponent:(BOOL)show {
     [self stringByEvaluatingJavaScriptFromString:showChromecastComponent(show)];
 }
-
-//- (CGFloat)videoHolderHeight {
-//    return [[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue];
-//}
 
 - (void)updateLayout {
     [self sendNotification:@"doUpdateLayout" withParams:nil];
