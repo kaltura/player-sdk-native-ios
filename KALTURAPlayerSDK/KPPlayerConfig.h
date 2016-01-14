@@ -27,6 +27,8 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 @property (nonatomic, readonly) NSString *partnerId;
 
 @property (nonatomic, readonly) NSString *uiConfId;
+
+@property (nonatomic, copy) NSString *ks;
 @property (nonatomic, copy) NSString *entryId;
 @property (nonatomic, copy) NSString *advertiserID;
 @property (nonatomic, copy) NSDictionary *drmParams;
