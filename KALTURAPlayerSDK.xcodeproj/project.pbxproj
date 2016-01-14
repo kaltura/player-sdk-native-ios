@@ -113,6 +113,8 @@
 		BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E601C0B139400649BDF /* KPControlsView.h */; };
 		BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */; };
 		BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */; };
+		FB7D10701C46E81500FBB906 /* KPLocalAssetsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7D106F1C46E81500FBB906 /* KPLocalAssetsManager.m */; };
+		FB7D10711C46EA1B00FBB906 /* KPLocalAssetsManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB7D106E1C46E81500FBB906 /* KPLocalAssetsManager.h */; };
 		FBDE7F691C4535A4000B416F /* WidevineClassicCDM.m in Sources */ = {isa = PBXBuildFile; fileRef = FBDE7F681C4535A4000B416F /* WidevineClassicCDM.m */; };
 /* End PBXBuildFile section */
 
@@ -147,6 +149,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				FB7D10711C46EA1B00FBB906 /* KPLocalAssetsManager.h in CopyFiles */,
 				BF21F6761C0DB0F9007890F6 /* NSBundle+Kaltura.h in CopyFiles */,
 				BF21F6771C0DB0F9007890F6 /* NSMutableArray+QueueAdditions.h in CopyFiles */,
 				BF21F6781C0DB0F9007890F6 /* KPlayer.h in CopyFiles */,
@@ -274,6 +277,8 @@
 		BFBE8E841C0B139400649BDF /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = KALTURAPlayerSDK/Utilities.h; sourceTree = SOURCE_ROOT; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB7D106E1C46E81500FBB906 /* KPLocalAssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPLocalAssetsManager.h; path = KALTURAPlayerSDK/KPLocalAssetsManager.h; sourceTree = SOURCE_ROOT; };
+		FB7D106F1C46E81500FBB906 /* KPLocalAssetsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPLocalAssetsManager.m; path = KALTURAPlayerSDK/KPLocalAssetsManager.m; sourceTree = SOURCE_ROOT; };
 		FBDE7F671C4535A4000B416F /* WidevineClassicCDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidevineClassicCDM.h; path = KALTURAPlayerSDK/WidevineClassicCDM.h; sourceTree = SOURCE_ROOT; };
 		FBDE7F681C4535A4000B416F /* WidevineClassicCDM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = WidevineClassicCDM.m; path = KALTURAPlayerSDK/WidevineClassicCDM.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -388,6 +393,8 @@
 		BF1C07661C0DA87D00A67462 /* KPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				FB7D106E1C46E81500FBB906 /* KPLocalAssetsManager.h */,
+				FB7D106F1C46E81500FBB906 /* KPLocalAssetsManager.m */,
 				FBDE7F671C4535A4000B416F /* WidevineClassicCDM.h */,
 				FBDE7F681C4535A4000B416F /* WidevineClassicCDM.m */,
 				BF1C07671C0DA8A600A67462 /* KPlayer.h */,
@@ -661,6 +668,7 @@
 				BFBE8E921C0B139400649BDF /* KPShareManager.m in Sources */,
 				BF1C07581C0DA7F800A67462 /* NSBundle+Kaltura.m in Sources */,
 				BF1C076C1C0DA8A600A67462 /* KPlayerFactory.m in Sources */,
+				FB7D10701C46E81500FBB906 /* KPLocalAssetsManager.m in Sources */,
 				BFBE8E891C0B139400649BDF /* GoogleplusStrategy.m in Sources */,
 				BF1C077E1C0DA95600A67462 /* KPViewController.m in Sources */,
 				BFBE8E931C0B139400649BDF /* KPURLProtocol.m in Sources */,
