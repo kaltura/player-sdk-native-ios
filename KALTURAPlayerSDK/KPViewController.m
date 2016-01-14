@@ -314,7 +314,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
                 weakSelf.controlsView.shouldUpdateLayout = YES;
                 if (weakSelf.isFullScreenToggled) {
                     weakSelf.view.frame = screenBounds();
-                    [weakSelf.topWindow addSubview:weakSelf.view];
+                    [weakSelf.topWindow makeKeyAndVisible];
+                    [weakSelf.topWindow.rootViewController.view addSubview:weakSelf.view];
                 } else {
                     weakSelf.view.frame = weakSelf.superView.bounds;
                     [weakSelf.superView addSubview:weakSelf.view];
@@ -814,6 +815,8 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         if (_isFullScreenToggled) {
             self.view.frame = screenBounds();
             [self.topWindow addSubview:self.view];
+            [self.topWindow makeKeyAndVisible];
+            [self.topWindow.rootViewController.view addSubview:self.view];
         } else {
             self.view.frame = self.superView.bounds;
             [self.superView addSubview:self.view];
