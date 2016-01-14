@@ -290,11 +290,12 @@ static NSString *StatusKeyPath = @"status";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     @try {
         [self removeObserver:self forKeyPath:RateKeyPath context:nil];
+        [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
     @catch (NSException *exception) {
-        KPLogError(@"Not registered to Rate key");
+        KPLogError(@"%@", exception);
     }
-    [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
+
     [_layer removeFromSuperlayer];
     _layer = nil;
     self.delegate = nil;
