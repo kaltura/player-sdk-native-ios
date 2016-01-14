@@ -38,18 +38,24 @@ static NSNumber* wvInitialized;
     NSString* assetPath;
     
     if ([assetUri hasPrefix:@"file://"]) {
-        // downloaded file. 
-        // TODO: Ensure it's in the documents directory.
+        // File URL -- convert to file path
+        assetUri = [NSURL URLWithString:assetUri].path;
+    }
+    
+    if ([assetUri hasPrefix:@"/"]) {
+        // Downloaded file
+        // Ensure it's in the documents directory.
         // This is actually the simplest way to get the path of a file URL.
-        NSString* fullPath = [NSURL URLWithString:assetUri].path;
         NSString* docDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
         
-        if ([fullPath hasPrefix:docDir]) {
-            assetPath = [fullPath substringFromIndex:docDir.length];
+        if ([assetUri hasPrefix:docDir]) {
+            assetPath = [assetUri substringFromIndex:docDir.length];
+        } else {
+            KPLogError(@"Error: downloaded file is not in the Documents directory.");
+            // will return nil
         }
-        
-        
     } else {
+        // Online file
         assetPath = assetUri;
     }
     
@@ -88,7 +94,9 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             break;
             
         case WViOsApiEvent_Registered: break;
-        case WViOsApiEvent_EMMReceived: break;
+        case WViOsApiEvent_EMMReceived: 
+            cdmEvent = KCDMEvent_LicenseAcquired;
+            break;
             
         case WViOsApiEvent_Playing:
             cdmEvent = KCDMEvent_AssetCanPlay;

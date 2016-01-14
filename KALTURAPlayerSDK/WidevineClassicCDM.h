@@ -13,6 +13,7 @@ typedef enum : NSUInteger {
     KCDMEvent_Null,
     KCDMEvent_AssetCanPlay,
     KCDMEvent_AssetStatus,
+    KCDMEvent_LicenseAcquired,
 } KCDMEventType;
 
 typedef void(^KCDMAssetEventBlock)(KCDMEventType event, NSDictionary* data);
