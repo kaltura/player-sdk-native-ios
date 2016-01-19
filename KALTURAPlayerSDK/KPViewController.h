@@ -30,9 +30,9 @@
 - (void)kPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
 @end
 
-@protocol KPViewControllerDatasource <NSObject>
+@protocol KPSourceURLProvider <NSObject>
 
-- (NSString *)localURLForEntryId:(NSString *)entryId;
+- (NSString *)urlForEntryId:(NSString *)entryId currentURL:(NSString*)current;
 
 @end
 
@@ -97,7 +97,7 @@
 
 @property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
 
-@property (nonatomic, weak) id<KPViewControllerDatasource> datasource;
+@property (nonatomic, weak) id<KPSourceURLProvider> customSourceURLProvider;
 
 @property (nonatomic, strong) KPController *playerController;
 
