@@ -86,6 +86,7 @@
                 eventName:LoadedMetaDataKey
                     value:@""];
     [self.delegate player:self eventName:CanPlayKey value:nil];
+    [self play];
 }
 
 - (void)castConnectingToDevice {
