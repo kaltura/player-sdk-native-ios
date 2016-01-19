@@ -186,6 +186,18 @@ static NSString *StatusKeyPath = @"status";
     }
 }
 
+- (void)removeStatusObserver {
+    @try {
+        if (self.currentItem != nil) {
+            [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
+            KPLogError(@"remove");
+        }
+    }
+    @catch (NSException *exception) {
+        KPLogError(@"%@", exception);
+    }
+}
+
 - (void)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
     
@@ -201,13 +213,8 @@ static NSString *StatusKeyPath = @"status";
         [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
             AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
 
-            @try {
-                [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
-                KPLogError(@"remove");
-            }
-            @catch (NSException *exception) {
-                KPLogError(@"%@", exception);
-            }
+            [self removeStatusObserver];
+
             
             [item addObserver:self
                    forKeyPath:StatusKeyPath
@@ -406,6 +413,11 @@ static NSString *StatusKeyPath = @"status";
 
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
+    [self removeStatusObserver];
+    observer = nil;
+    volumeView = nil;
+    prevAirPlayBtnPositionArr = nil;
+    pip = nil;
 }
 
 @end
