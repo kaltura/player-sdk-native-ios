@@ -14,6 +14,12 @@
 
 #define WV_PORTAL_ID @"kaltura"
 
+
+@interface NSString (Widevine)
+-(NSString*)wvAssetPath;
+@end
+
+
 @implementation WidevineClassicCDM
 
 #if TARGET_OS_SIMULATOR
@@ -34,33 +40,6 @@ static NSMutableDictionary* assetBlocks;
 
 static NSNumber* wvInitialized;
 
-+(NSString*)getAssetPath:(NSString*)assetUri {
-    NSString* assetPath;
-    
-    if ([assetUri hasPrefix:@"file://"]) {
-        // File URL -- convert to file path
-        assetUri = [NSURL URLWithString:assetUri].path;
-    }
-    
-    if ([assetUri hasPrefix:@"/"]) {
-        // Downloaded file
-        // Ensure it's in the documents directory.
-        // This is actually the simplest way to get the path of a file URL.
-        NSString* docDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-        
-        if ([assetUri hasPrefix:docDir]) {
-            assetPath = [assetUri substringFromIndex:docDir.length];
-        } else {
-            KPLogError(@"Error: downloaded file is not in the Documents directory.");
-            // will return nil
-        }
-    } else {
-        // Online file
-        assetPath = assetUri;
-    }
-    
-    return assetPath;
-}
 
 +(void)dispatchAfterInit:(dispatch_block_t)block {
     
@@ -90,7 +69,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     switch (event) {
         // Normal flow
         case WViOsApiEvent_Initialized:
-            wvInitialized = [NSNumber numberWithBool:YES];
+            wvInitialized = @YES;
             break;
             
         case WViOsApiEvent_Registered: break;
@@ -108,21 +87,26 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             cdmEvent = KCDMEvent_AssetStatus;
             break;
             
-        case WViOsApiEvent_EMMRemoved: break;
-        case WViOsApiEvent_Unregistered: break;
-        case WViOsApiEvent_Terminated: break;
+        // Normal flow, but no handling required.
+        case WViOsApiEvent_EMMRemoved:
+        case WViOsApiEvent_Unregistered:
+        case WViOsApiEvent_Terminated: 
+            // Do nothing.
+            break;
             
         // Errors
         case WViOsApiEvent_InitializeFailed:
-            wvInitialized = [NSNumber numberWithBool:NO];
+            wvInitialized = @NO;
             break;
             
-        case WViOsApiEvent_EMMFailed: break;
-        case WViOsApiEvent_PlayFailed: break;
-        case WViOsApiEvent_StoppingOnError: break;
+        case WViOsApiEvent_EMMFailed:
+        case WViOsApiEvent_PlayFailed:
+        case WViOsApiEvent_StoppingOnError: 
+            // Do nothing, consider reporting to client.
+            break;
             
         default:
-            // Other events are just informative
+            // Other events are just informative, don't even report them.
             ignoreEvent = YES;
             break;
     }
@@ -132,7 +116,8 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     }
     
     NSString* assetPath = attributes[WVAssetPathKey];
-    NSLog(@"widevineCallback: event=%@ asset='%@' attr=%@", NSStringFromWViOsApiEvent(event), assetPath, attributes);
+    NSString* wvEventString = NSStringFromWViOsApiEvent(event);
+    KPLogInfo(@"widevineCallback: event=%@ asset='%@' attr=%@", wvEventString, assetPath, attributes);
     
     if (!assetPath) {
         // Not an asset event
@@ -142,7 +127,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     // TODO: also include relevant parsed data from attributes.
     NSDictionary* data = @{
                            @"ProviderSpecificData": attributes,
-                           @"ProviderSpecificEvent": NSStringFromWViOsApiEvent(event)
+                           @"ProviderSpecificEvent": wvEventString != nil ? wvEventString : @"<null>"
                            };
     
     [self callAssetBlockFor:assetPath event:cdmEvent data:data];
@@ -163,7 +148,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             return;
         }
         
-        wvInitialized = [NSNumber numberWithBool:NO];
+        wvInitialized = @NO;
         assetBlocks = [NSMutableDictionary new];
         
         NSDictionary* settings = @{WVPortalKey: WV_PORTAL_ID};
@@ -174,15 +159,26 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
 }
 
 +(void)setEventBlock:(KCDMAssetEventBlock)block forAsset:(NSString*)assetUri {
+
+    // Nils not allowed.
+    if (!block) {
+        KPLogWarn(@"block is nil");
+        return;
+    }
+    if (!assetUri) {
+        KPLogWarn(@"assetUri is nil");
+        return;
+    }
     
     // only use the url part before the query string.
     NSArray* split = [assetUri componentsSeparatedByString:@"?"];
     assetUri = [split firstObject];
     
     // register using widevine's assetPath
-    assetUri = [self getAssetPath:assetUri];
-    
-    assetBlocks[assetUri] = [block copy];
+    assetUri = assetUri.wvAssetPath;
+    if (assetUri) {
+        assetBlocks[assetUri] = [block copy];
+    }
 }
 
 +(void)callAssetBlockFor:(NSString*)assetPath event:(KCDMEventType)event data:(NSDictionary*)data {
@@ -205,7 +201,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     [self dispatchAfterInit:^{
         WV_SetCredentials(@{WVDRMServerKey: licenseUri});
         
-        NSString* assetPath = [self getAssetPath:assetUri];
+        NSString* assetPath = assetUri.wvAssetPath;
         
         WViOsApiStatus wvStatus = WViOsApiStatus_OK;
         
@@ -221,7 +217,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     
     [self dispatchAfterInit:^{
         NSMutableString* playbackURL = [NSMutableString new];
-        NSString* assetPath = [self getAssetPath:assetUri];
+        NSString* assetPath = assetUri.wvAssetPath;
         
         if (licenseUri) {
             WV_SetCredentials(@{WVDRMServerKey: licenseUri});
@@ -244,3 +240,40 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
 }
 
 @end
+
+
+
+@implementation NSString (Widevine)
+
+-(NSString*)wvAssetPath {
+    NSString* assetUri = self;
+    NSString* assetPath;
+    
+    if ([assetUri hasPrefix:@"file://"]) {
+        // File URL -- convert to file path
+        assetUri = [NSURL URLWithString:assetUri].path;
+    }
+    
+    if ([assetUri hasPrefix:@"/"]) {
+        // Downloaded file
+        // Ensure it's in the documents directory.
+        // This is actually the simplest way to get the path of a file URL.
+        NSString* docDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+        
+        if ([assetUri hasPrefix:docDir]) {
+            assetPath = [assetUri substringFromIndex:docDir.length];
+        } else {
+            KPLogError(@"Error: downloaded file is not in the Documents directory.");
+            // will return nil
+        }
+    } else {
+        // Online file
+        assetPath = assetUri;
+    }
+    
+    return assetPath;
+}
+
+@end
+
+
