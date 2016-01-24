@@ -86,6 +86,10 @@
     }];
 }
 
+- (NSTimeInterval)currentPlayBackTime {
+    return _player.currentPlaybackTime;
+}
+
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
     _player.currentPlaybackTime = currentPlayBackTime;
 }
