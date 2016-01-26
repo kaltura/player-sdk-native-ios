@@ -44,8 +44,8 @@
 
 
 - (void)setEntryId:(NSString *)entryId {
-    if (![self.entryId isEqualToString:entryId]) {
-        self.entryId = entryId;
+    if (![_entryId isEqualToString:entryId]) {
+        _entryId = entryId;
         NSString *entry = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
         [self sendNotification:@"changeMedia" withParams:entry];
     }
