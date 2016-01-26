@@ -44,8 +44,8 @@
 
 
 - (void)setEntryId:(NSString *)entryId {
-    if (![_entryId isEqualToString:entryId]) {
-        _entryId = entryId;
+    if (![self.entryId isEqualToString:entryId]) {
+        self.entryId = entryId;
         NSString *entry = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
         [self sendNotification:@"changeMedia" withParams:entry];
     }
@@ -55,16 +55,12 @@
     fetcher([[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue]);
 }
 
-
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-}
-
 - (CGRect)controlsFrame {
     return self.frame;
 }
 
 - (void)removeControls {
+    [self stopLoading];
     self.delegate = nil;
     self.controlsDelegate = nil;
     self.entryId = nil;

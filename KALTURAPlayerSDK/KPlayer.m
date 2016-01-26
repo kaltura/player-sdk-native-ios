@@ -22,7 +22,7 @@ static NSString *StatusKeyPath = @"status";
     AVPictureInPictureController *pip;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
-@property (nonatomic, strong) UIView *parentView;
+@property (nonatomic, weak) UIView *parentView;
 @property (nonatomic, strong) AVMediaSelectionGroup *audioSelectionGroup;
 @end
 
@@ -66,14 +66,14 @@ static NSString *StatusKeyPath = @"status";
         __weak KPlayer *weakSelf = self;
         observer = [self addPeriodicTimeObserverForInterval:CMTimeMake(20, 100)
                                                       queue:dispatch_get_main_queue()
+                    
                                                  usingBlock:^(CMTime time) {
                                                      [weakSelf updateCurrentTime:CMTimeGetSeconds(time)];
                                                      [weakSelf.delegate player:weakSelf eventName:TimeUpdateKey
                                                                          value:@(CMTimeGetSeconds(time)).stringValue];
                                                      //                                          [weakSelf.delegate eventName:ProgressKey
                                                      //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
-                                                 }];
-        
+                                                 }];        
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         
@@ -304,8 +304,7 @@ static NSString *StatusKeyPath = @"status";
     }
 
     [_layer removeFromSuperlayer];
-    _layer = nil;
-    self.delegate = nil;
+    [self removeStatusObserver];
 }
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
@@ -413,11 +412,15 @@ static NSString *StatusKeyPath = @"status";
 
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
-    [self removeStatusObserver];
+    self.layer = nil;
+    self.delegate = nil;
+    self.parentView = nil;
+    self.audioSelectionGroup = nil;
     observer = nil;
     volumeView = nil;
     prevAirPlayBtnPositionArr = nil;
     pip = nil;
+
 }
 
 @end

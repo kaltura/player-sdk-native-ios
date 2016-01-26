@@ -119,30 +119,36 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)removePlayer {
     [self.controlsView removeControls];
-    self.controlsView = nil;
     [self.playerFactory removePlayer];
-    self.playerFactory = nil;
     [callBackReadyRegistrations removeAllObjects];
+    [self.kPlayerEvaluatedDict removeAllObjects];
+    [self.kPlayerEventsDict removeAllObjects];
+    self.controlsView = nil;
+    self.playerFactory = nil;
     callBackReadyRegistrations = nil;
     appConfigDict = nil;
     nativeActionParams = nil;
     videoURL = nil;
-    [self.kPlayerEvaluatedDict removeAllObjects];
     self.kPlayerEvaluatedDict = nil;
-    [self.kPlayerEventsDict removeAllObjects];
     self.kPlayerEventsDict = nil;
+    [self removeFromParentViewController];
+    
     @try {
-    [self.view removeObserver:self forKeyPath:@"frame" context:nil];
+        [self.view removeObserver:self forKeyPath:@"frame" context:nil];
     }
     @catch (NSException *exception) {
         NSLog(@"frame not observed");
     }
     
+    _delegate = nil;
+    _playerController = nil;
+    _configuration = nil;
+    _kdpAPIState = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
-    self.superView = nil;
+    _superView = nil;
 }
 
 - (NSTimeInterval)currentPlaybackTime {

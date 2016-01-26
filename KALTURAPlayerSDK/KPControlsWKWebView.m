@@ -8,13 +8,14 @@
 
 #import "KPControlsWKWebview.h"
 
-@interface KPControlsWKWebview() <WKNavigationDelegate, WKUIDelegate>
+@interface KPControlsWKWebview() <WKNavigationDelegate, WKUIDelegate> {
+    WKWebViewConfiguration *configuration;
+}
 
 @end
 
 @implementation KPControlsWKWebview
-@synthesize entryId= _entryId, controlsDelegate, controlsFrame = _controlsFrame;
-@synthesize shouldUpdateLayout;
+@synthesize entryId= _entryId, controlsDelegate, controlsFrame = _controlsFrame, shouldUpdateLayout;
 
 - (instancetype)initWithFrame:(CGRect)frame {
     // Javascript that disables pinch-to-zoom by inserting the HTML viewport meta tag into <head>
@@ -30,9 +31,8 @@
     [userContentController addUserScript:script];
     
     // Create the configuration with the user content controller
-    WKWebViewConfiguration *configuration = [WKWebViewConfiguration new];
+    configuration = [WKWebViewConfiguration new];
     configuration.userContentController = userContentController;
-    
     
     self = [super initWithFrame:frame configuration:configuration];
     if (self) {
@@ -49,30 +49,14 @@
     return nil;
 }
 
-
-
-//- (void)webView:(WKWebView *)webView runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)())completionHandler
-//{
-//    NSLog(@"JavaScript message: %@",  message);
-//    completionHandler();
-//}
-
 - (void)loadRequest:(NSURLRequest *)request {
     [super loadRequest:request];
-//    [[KArchiver shared] contentOfURL:request.URL.absoluteString
-//                          completion:^(NSData *content, NSError *error) {
-//                              dispatch_async(dispatch_get_main_queue(), ^{
-//                                  NSString *html = [[NSString alloc] initWithData:content encoding:NSUTF8StringEncoding];
-//                                  [self loadHTMLString:html
-//                                               baseURL:request.URL];
-//                              });
-//                          }];
 }
 
 
 - (void)setEntryId:(NSString *)entryId {
     if (![self.entryId isEqualToString:entryId]) {
-        _entryId = entryId;
+        self.entryId = entryId;
         NSString *entry = [NSString stringWithFormat:@"'{\"entryId\":\"%@\"}'", entryId];
         [self sendNotification:@"changeMedia" withParams:entry];
     }
@@ -83,13 +67,17 @@
             if (error) {
                 KPLogError(@"JS Error %@", error.description);
             } else if (result) {
-//                _videoHolderHeight = [result floatValue];
                 fetcher([result floatValue]);
             }
         }];
 }
 
+- (CGRect)controlsFrame {
+    return self.frame;
+}
+
 - (void)removeControls {
+    [self stopLoading];
     self.navigationDelegate = nil;
     self.controlsDelegate = nil;
     self.entryId = nil;
@@ -98,10 +86,6 @@
 
 - (void)setControlsFrame:(CGRect)controlsFrame {
     self.frame = controlsFrame;
-}
-
-- (CGRect)controlsFrame {
-    return self.frame;
 }
 
 - (void)addEventListener:(NSString *)event {
@@ -134,8 +118,7 @@
 
 
 - (void)updateLayout {
-    NSString *updateLayoutJS = @"document.getElementById( this.id ).doUpdateLayout();";
-    [self evaluateJavaScript:updateLayoutJS completionHandler:nil];
+    [self sendNotification:@"doUpdateLayout" withParams:nil];
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler {
@@ -166,6 +149,11 @@
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     
+}
+
+- (void)dealloc {
+    [configuration.userContentController removeAllUserScripts];
+    configuration = nil;
 }
 
 @end

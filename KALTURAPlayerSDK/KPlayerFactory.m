@@ -153,10 +153,14 @@
     if (_adController) {
         [_adController removeIMAPlayer];
     }
+
     [_player removePlayer];
-    _player = nil;
-    
     _adController = nil;
+    _player = nil;
+    _delegate = nil;
+    _parentViewController = nil;
+    _src = nil;
+    _playerClassName = nil;
 }
 
 
