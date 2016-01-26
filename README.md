@@ -6,9 +6,9 @@
 Player SDK Native iOS
 =================
 
-**Note**: The Kaltura native player component is in beta. If your a Kaltura customer please contact your Kaltura customer success manager to help facilitate use of this component. 
+**Note**: The Kaltura native player component is in beta. If you are a Kaltura customer, please contact your Kaltura Customer Success Manager to help facilitate use of this component. 
 
-The Kaltura player-sdk-native component enables embedding the [kaltura player](http://player.kaltura.com) into native environments. This enables full HTML5 player platform, without limitations of HTML5 video tag API in iOS platforms. Currently for iOS this enables: 
+The Kaltura player-sdk-native component enables embedding the [kaltura player](http://player.kaltura.com) into native environments. This enables the full HTML5 player platform, without limitations of HTML5 video tag API in iOS platforms. Currently, for iOS this enables: 
 * Inline playback with HTML controls ( disable controls during ads etc. ) 
 * Widevine DRM support
 * AutoPlay 
@@ -16,9 +16,9 @@ The Kaltura player-sdk-native component enables embedding the [kaltura player](h
 * Full [player.kaltura.com](http://player.kaltura.com) feature set for themes and plugins
 * DFP IMA SDK
 
-For a full list of native embed advantages see native controls table within the [player toolkit basic usage guide](http://knowledge.kaltura.com/kaltura-player-v2-toolkit-theme-skin-guide). 
+For a full list of native embed advantages, see the native controls table within the [player toolkit basic usage guide](http://knowledge.kaltura.com/kaltura-player-v2-toolkit-theme-skin-guide). 
 
-The Kaltura player-sdk-native component can be embedded into both native apps, and hybrid native apps ( via standard dynamic embed syntax ) 
+The Kaltura player-sdk-native component can be embedded into both native apps, and hybrid native apps (via standard dynamic embed syntax) 
 
 
 Future support will include: 
