@@ -111,6 +111,15 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 +(void)registerWidevineAsset:(KPPlayerConfig*)assetConfig localPath:(NSString*)localPath flavorId:(NSString*)flavorId callback:(kLocalAssetRegistrationBlock)callback {
     
     NSString* licenseUri = [self prepareLicenseURLForAsset:assetConfig flavorId:flavorId drmScheme:kDRMWidevineClassic];
+    if (!licenseUri) {
+        KPLogError(@"Failed to retreive licenseUri for asset %@", localPath);
+        NSError* error = [NSError errorWithDomain:@"KPLocalAssetsManager" code:'LURF' 
+                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to retreive licenseUri for asset", nil),
+                                                    @"LocalAssetPath": localPath}];
+
+        callback(error);
+        return;
+    }
     
     [WidevineClassicCDM setEventBlock:^(KCDMEventType event, NSDictionary *data) {
         

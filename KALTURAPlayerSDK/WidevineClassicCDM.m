@@ -198,6 +198,11 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
 
 +(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
     
+    // It's an error to call this function without the licenseUri.
+    if (!licenseUri) {
+        KPLogError(@"Error: no licenseUri; can't register asset.");
+        return;
+    }
     [self dispatchAfterInit:^{
         WV_SetCredentials(@{WVDRMServerKey: licenseUri});
         
@@ -219,6 +224,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         NSMutableString* playbackURL = [NSMutableString new];
         NSString* assetPath = assetUri.wvAssetPath;
         
+        // We can try playing even if we don't have the licenseUri -- if the license is already stored.
         if (licenseUri) {
             WV_SetCredentials(@{WVDRMServerKey: licenseUri});
         }
