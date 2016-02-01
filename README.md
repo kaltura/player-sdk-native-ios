@@ -6,6 +6,8 @@
 Player SDK Native iOS
 =================
 
+[![Join the chat at https://gitter.im/kaltura/player-sdk-native-ios](https://badges.gitter.im/kaltura/player-sdk-native-ios.svg)](https://gitter.im/kaltura/player-sdk-native-ios?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 **Note**: The Kaltura native player component is in beta. If you are a Kaltura customer, please contact your Kaltura Customer Success Manager to help facilitate use of this component. 
 
 The Kaltura player-sdk-native component enables embedding the [kaltura player](http://player.kaltura.com) into native environments. This enables the full HTML5 player platform, without limitations of HTML5 video tag API in iOS platforms. Currently, for iOS this enables: 
