@@ -46,7 +46,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     return YES;
 }
 
-+(NSString*)prepareLicenseURLForAsset:(KPPlayerConfig*)assetConfig flavorId:(NSString*)flavorId drmScheme:(kDRMScheme)drmScheme {
++(NSString*)prepareLicenseURLForAsset:(KPPlayerConfig*)assetConfig flavorId:(NSString*)flavorId drmScheme:(kDRMScheme)drmScheme error:(NSError**)error {
     
     // load license data
     NSURL* getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig flavorId:flavorId drmScheme:drmScheme];
@@ -54,9 +54,16 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     NSDictionary* licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:nil];
     
     // parse license data
-    if (licenseDataDict[@"error"]) {
-        // TODO: report the error 
-        return nil; // licenseDataDict[@"error"][@"message"];
+    NSDictionary* licenseDataError = licenseDataDict[@"error"];
+    if (licenseDataError) {
+        NSString* message = [licenseDataError isKindOfClass:[NSDictionary class]] ? licenseDataError[@"message"] : @"null";
+        if (error) {
+            *error = [NSError errorWithDomain:@"KPLocalAssetsManager" code:'lder'
+                            userInfo:@{NSLocalizedDescriptionKey: @"License data error",
+                                       @"EntryId": assetConfig.entryId, 
+                                       @"ServiceError": message}];
+        }
+        return nil;
     }
     
     NSDictionary* licenseUris = licenseDataDict[@"licenseUri"];
@@ -110,13 +117,10 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 +(void)registerWidevineAsset:(KPPlayerConfig*)assetConfig localPath:(NSString*)localPath flavorId:(NSString*)flavorId callback:(kLocalAssetRegistrationBlock)callback {
     
-    NSString* licenseUri = [self prepareLicenseURLForAsset:assetConfig flavorId:flavorId drmScheme:kDRMWidevineClassic];
+    NSError* error = nil;
+    NSString* licenseUri = [self prepareLicenseURLForAsset:assetConfig flavorId:flavorId drmScheme:kDRMWidevineClassic error:&error];
     if (!licenseUri) {
-        KPLogError(@"Failed to retreive licenseUri for asset %@", localPath);
-        NSError* error = [NSError errorWithDomain:@"KPLocalAssetsManager" code:'LURF' 
-                                         userInfo:@{NSLocalizedDescriptionKey: NSLocalizedString(@"Failed to retreive licenseUri for asset", nil),
-                                                    @"LocalAssetPath": localPath}];
-
+        KPLogError(@"Error getting license data: %@", error);
         callback(error);
         return;
     }
