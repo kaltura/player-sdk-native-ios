@@ -31,12 +31,17 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
     KPActionTypeOpenHomePage,
     KPActionTypeSkip
 };
+
+typedef NS_ENUM(NSInteger, KPError) {
+    KPErrorMsg = 500
+};
+
+NSString *const KPErrorDomain = @"com.kaltura.player";
 
 @interface KPViewController() <KPlayerFactoryDelegate,
                                 KPControlsViewDelegate,
@@ -772,6 +777,14 @@ typedef NS_ENUM(NSInteger, KPActionType) {
             break;
         case visible:
             [self visible: attributeVal];
+            break;
+        case playerError:
+            if ([_delegate respondsToSelector:@selector(kPlayer:didFailWithError:)]) {
+                NSDictionary *dict = @{NSLocalizedDescriptionKey:attributeVal,
+                                       NSLocalizedFailureReasonErrorKey:attributeVal};
+                NSError *err = [NSError errorWithDomain:KPErrorDomain code:KPErrorMsg userInfo:dict];
+                [_delegate kPlayer:self didFailWithError:err];
+            }
             break;
         case licenseUri:
             _playerFactory.licenseUri = attributeVal;

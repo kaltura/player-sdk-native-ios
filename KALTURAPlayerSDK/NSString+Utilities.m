@@ -54,6 +54,7 @@ static NSString *NativeActionKey = @"nativeAction";
     NSArray *attributes = @[@"src",
                             @"currentTime",
                             @"visible",
+                            @"playerError",
                             @"licenseUri",
                             @"nativeAction",
                             @"doubleClickRequestAds",
