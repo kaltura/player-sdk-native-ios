@@ -28,6 +28,7 @@ static NSString *ProgressKey = @"progress";
 static NSString *EndedKey = @"ended";
 static NSString *SeekedKey = @"seeked";
 static NSString *CanPlayKey = @"canplay";
+static NSString *ErrorKey = @"error";
 static NSString *PostrollEndedKey = @"postEnded";
 
 @protocol KPlayerFactoryDelegate <KPlayerDelegate>

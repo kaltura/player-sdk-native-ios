@@ -93,6 +93,9 @@ static NSString *StatusKeyPath = @"status";
     if (!success) {
         /* handle the error condition */
         KPLogError(@"Audio Session error %@, %@", setCategoryError, [setCategoryError userInfo]);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[setCategoryError localizedDescription]];
     }
     
     NSError *activationError = nil;
@@ -101,6 +104,9 @@ static NSString *StatusKeyPath = @"status";
     if (!success) {
         /* handle the error condition */
         KPLogError(@"Audio Session Activation error %@, %@", activationError, [activationError userInfo]);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[activationError localizedDescription]];
     }
 }
 
@@ -137,6 +143,9 @@ static NSString *StatusKeyPath = @"status";
         switch (self.status) {
             case AVPlayerStatusFailed:
                 KPLogError(@"AVPlayerStatusFailed");
+                [self.delegate player:self
+                            eventName:ErrorKey
+                                value:[self.error localizedDescription]];
                 break;
             case AVPlayerItemStatusReadyToPlay: {
                 if (oldValue.intValue != newValue.intValue) {
@@ -173,6 +182,9 @@ static NSString *StatusKeyPath = @"status";
                 break;
             case AVPlayerStatusUnknown:
                 KPLogError(@"AVPlayerStatusUnknown");
+                [self.delegate player:self
+                            eventName:ErrorKey
+                                value:@"AVPlayerStatusUnknown"];
                 break;
             }
         }
@@ -190,11 +202,15 @@ static NSString *StatusKeyPath = @"status";
     @try {
         if (self.currentItem != nil) {
             [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
-            KPLogError(@"remove");
+            KPLogDebug(@"remove");
         }
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[NSString stringWithFormat:@"%@ ,%@",
+                               exception.name, exception.reason]];
     }
 }
 
@@ -205,7 +221,12 @@ static NSString *StatusKeyPath = @"status";
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
         
         if (!asset.isPlayable) {
-            KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
+            NSString * errorMsg = [NSString stringWithFormat:@"The follwoing source: %@ is not playable", playerSource];
+            KPLogError(errorMsg);
+            [self.delegate player:self
+                        eventName:ErrorKey
+                            value:errorMsg];
+            return;
         }
         
         NSArray *keys = [NSArray arrayWithObject:@"playable"];
@@ -301,6 +322,10 @@ static NSString *StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[NSString stringWithFormat:@"%@ ,%@",
+                               exception.name, exception.reason]];
     }
 
     [_layer removeFromSuperlayer];

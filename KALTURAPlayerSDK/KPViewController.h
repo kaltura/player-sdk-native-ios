@@ -23,11 +23,13 @@
 
 @class KPViewController;
 @protocol KPViewControllerDelegate <NSObject>
+
 @optional
 - (void)updateCurrentPlaybackTime:(double)currentPlaybackTime;
 - (void)kPlayer:(KPViewController *)player playerLoadStateDidChange:(KPMediaLoadState)state;
 - (void)kPlayer:(KPViewController *)player playerPlaybackStateDidChange:(KPMediaPlaybackState)state;
 - (void)kPlayer:(KPViewController *)player playerFullScreenToggled:(BOOL)isFullScreen;
+- (void)kPlayer:(KPViewController *)player didFailWithError:(NSError *)error;
 @end
 
 @protocol KPSourceURLProvider <NSObject>
