@@ -72,12 +72,18 @@
 }
 
 - (void)setDRMSource: (NSString *)drmKey {
+    if (!_src.isWVM) {
+        // Don't even get in for non-widevine assets.
+        return;
+    }
+    
     if (drmKey) {
         self.drmParams = @{
                              @"WVDRMServerKey": drmKey,
                              @"WVPortalKey": WVPortalKey
                              };
     }
+    
     if (self.drmParams != nil) {
 #if !(TARGET_IPHONE_SIMULATOR)
         [KDRMManager DRMSource:self.src
