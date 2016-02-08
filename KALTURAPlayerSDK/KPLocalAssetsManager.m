@@ -56,12 +56,12 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // parse license data
     NSDictionary* licenseDataError = licenseDataDict[@"error"];
     if (licenseDataError) {
-        NSString* message = [licenseDataError isKindOfClass:[NSDictionary class]] ? licenseDataError[@"message"] : @"null";
+        NSString* message = [licenseDataError isKindOfClass:[NSDictionary class]] ? licenseDataError[@"message"] : @"<none>";
         if (error) {
             *error = [NSError errorWithDomain:@"KPLocalAssetsManager" code:'lder'
                             userInfo:@{NSLocalizedDescriptionKey: @"License data error",
-                                       @"EntryId": assetConfig.entryId, 
-                                       @"ServiceError": message}];
+                                       @"EntryId": assetConfig.entryId ? assetConfig.entryId : @"<none>", 
+                                       @"ServiceError": message ? message : @"<none>"}];
         }
         return nil;
     }
