@@ -74,6 +74,10 @@
 
 -(void)setLicenseUri:(NSString*)licenseUri {
     
+    if (![[NSURL URLWithString:_src].pathExtension hasSuffix:@"wvm"]) {
+        return;
+    }
+    
     _licenseUri = licenseUri;
     
     [WidevineClassicCDM playAsset:_src withLicenseUri:_licenseUri readyToPlay:^(NSString *playbackURL) {
@@ -84,6 +88,12 @@
             [self.player setPlayerSource:url];
         }
     }];
+}
+
+- (BOOL)isWVM {
+    if (_src != nil) {
+        return [[NSURL URLWithString:_src].pathExtension hasSuffix:@"wvm"];
+    }
 }
 
 - (NSTimeInterval)currentPlayBackTime {
