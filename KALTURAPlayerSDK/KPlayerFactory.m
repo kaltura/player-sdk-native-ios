@@ -64,7 +64,7 @@
     _src = src;
     
     NSURL* url = [NSURL URLWithString:_src];
-    if ([url.pathExtension hasSuffix:@"wvm"]) {
+    if ([self isWVM]) {
         // May fail if content is DRM protected. We'll try again if/when we get a licenseUri.
         KPLogDebug(@"Content (%@) is WVM, waiting for license uri", url);
     } else {
@@ -74,7 +74,7 @@
 
 -(void)setLicenseUri:(NSString*)licenseUri {
     
-    if (![[NSURL URLWithString:_src].pathExtension hasSuffix:@"wvm"]) {
+    if (![self isWVM]) {
         return;
     }
     
@@ -94,6 +94,8 @@
     if (_src != nil) {
         return [[NSURL URLWithString:_src].pathExtension hasSuffix:@"wvm"];
     }
+    
+    return NO;
 }
 
 - (NSTimeInterval)currentPlayBackTime {
