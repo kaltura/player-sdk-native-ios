@@ -117,6 +117,9 @@
         case KPGCMediaPlayerStateIdle:
             [self didReceiveIdleReason];
             KPLogError(@"didReceiveMediaStateChange: GCKMediaPlayerStateIdle");
+            [self.delegate player:self
+                        eventName:ErrorKey
+                            value:@"didReceiveMediaStateChange: GCKMediaPlayerStateIdle"];
             break;
             
         default:

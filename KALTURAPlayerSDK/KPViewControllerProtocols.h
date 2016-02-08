@@ -30,6 +30,8 @@ typedef enum{
     currentTime,
     // Player Visibility
     visible,
+    // Player Error
+    playerError,
     // DRM license uri
     licenseUri,
 
