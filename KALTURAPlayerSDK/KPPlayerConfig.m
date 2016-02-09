@@ -11,13 +11,9 @@
 #import "NSString+Utilities.h"
 #import "KPLog.h"
 
-/// Key names of the video request
-static NSString *EntryIdKey = @"entry_id";
-
-@interface KPPlayerConfig()
-
-@property (nonatomic, copy) NSMutableDictionary *paramsDict;
-@property (nonatomic, copy) NSURL *url;
+@interface KPPlayerConfig() {
+    NSMutableDictionary *_extraConfig;
+}
 @end
 
 @implementation KPPlayerConfig
@@ -39,43 +35,23 @@ static NSString *EntryIdKey = @"entry_id";
         _domain = domain;
         _uiConfId = uiConfId;
         _partnerId = partnerId;
+        _extraConfig = [NSMutableDictionary dictionary];
         return self;
     }
     return nil;
 }
 
-- (NSMutableDictionary *)paramsDict {
-    if (!_paramsDict) {
-        _paramsDict = [NSMutableDictionary new];
-    }
-    return _paramsDict;
-}
-
-- (NSString *)createFlashvarKeyFormat:(NSString *)flashvarKey {
-    if (flashvarKey && flashvarKey.length) {
-        return [NSString stringWithFormat:@"flashvars[%@]", flashvarKey];
-    }
-    
-    return nil;
-}
-
-- (void)addParam:(NSString *)param forKey:(NSString *)key {
-    if(param && param.length && key && key.length) {
-        self.paramsDict[key] = param;
-    }
-}
-
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value; {
-    if (key && key.length && value && value.length) {
-        [self addParam:value forKey:[self createFlashvarKeyFormat:key]];
+    if (key.length && value.length) {
+        _extraConfig[key] = value;
     }
 }
 
 - (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary {
-    if (key && key.length && dictionary && dictionary.count) {
+    if (key.length && dictionary.count) {
         NSError *error;
         NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dictionary
-                                                           options:NSJSONWritingPrettyPrinted
+                                                           options:0
                                                              error:&error];
         
         if (!jsonData) {
@@ -83,39 +59,50 @@ static NSString *EntryIdKey = @"entry_id";
         } else {
             NSString *jsonString = [[NSString alloc] initWithData:jsonData
                                                          encoding:NSUTF8StringEncoding];
-            [self addParam:jsonString forKey:[self createFlashvarKeyFormat:key]];
+            [self addConfigKey:key withValue:jsonString];
         }
     }
 }
 
-- (NSDictionary *)flashvarsDict {
-    return self.paramsDict.copy;
+-(void)addParam:(NSString*)key value:(NSString*)value toArray:(NSMutableArray<NSURLQueryItem*>*)array {
+    if (key.length && value.length) {
+        [array addObject:[NSURLQueryItem queryItemWithName:key value:value]];
+    }
 }
 
-
-- (void)setEntryId:(NSString *)entryId {
-    if (entryId) {
-        _entryId = entryId;
-        [self addParam:entryId forKey:EntryIdKey];
-    }
+-(NSMutableArray<NSURLQueryItem*>*)queryItems {
+    NSMutableArray<NSURLQueryItem*>* queryItems = [NSMutableArray array];
+    
+    // basic fields
+    [self addParam:@"wid" value:[@"_" stringByAppendingString:_partnerId] toArray:queryItems];
+    [self addParam:@"uiconf_id" value:_uiConfId toArray:queryItems];
+    [self addParam:@"entry_id" value:_entryId toArray:queryItems];
+    [self addParam:@"ks" value:_ks toArray:queryItems];
+    
+    // extras
+    [_extraConfig enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+        NSString* keyName = [NSString stringWithFormat:@"flashvars[%@]", key];
+        [self addParam:keyName value:obj toArray:queryItems];
+    }];
+    
+    return queryItems;
 }
 
 - (NSURL *)videoURL {
-    NSString *link = [_domain stringByAppendingFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@", _partnerId, _partnerId, _uiConfId];
+    NSURLComponents* url = [NSURLComponents componentsWithString:_domain];
+    NSMutableString* path = [NSMutableString stringWithFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@", _partnerId, _partnerId, _uiConfId];
+    
     if (_entryId) {
-        link = [link stringByAppendingFormat:@"/entry_id/%@?", _entryId];
-    } else {
-        link = [link stringByAppendingString:@"?"];
-    }
-    link = [link stringByAppendingFormat:@"wid=_%@&", _partnerId];
-        
-    for (NSString *key in self.paramsDict.allKeys) {
-        link = [link stringByAppendingFormat:@"%@=%@&", [key stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]], [self.paramsDict[key] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet alphanumericCharacterSet]]];
-    }
+        [path appendFormat:@"/entry_id/%@", _entryId];
+    } 
 
-    _url = [NSURL URLWithString:link];
-        
-    return [NSURL URLWithString:link];
+    NSMutableArray<NSURLQueryItem*>* queryItems = [self queryItems];
+    [self addParam:@"iframeembed" value:@"true" toArray:queryItems];
+
+    url.path = path;
+    url.queryItems = queryItems;
+
+    return url.URL;
 }
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL {
@@ -129,4 +116,16 @@ static NSString *EntryIdKey = @"entry_id";
     url = url.appendIFrameEmbed;
     return [NSURL URLWithString:url];
 }
+
+-(void)setEnableHover:(BOOL)enableHover {
+    _enableHover = enableHover;
+    [self addConfigKey:@"controlBarContainer.hover" withValue:@"true"];
+}
+
+-(void)setAdvertiserID:(NSString *)advertiserID {
+    _advertiserID = advertiserID;
+    [self addConfigKey:@"nativeAdId" withValue:advertiserID];
+
+}
+
 @end

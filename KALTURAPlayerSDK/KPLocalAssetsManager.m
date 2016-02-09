@@ -32,9 +32,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // Preflight: check that all parameters are valid.
     CHECK_NOT_NULL(assetConfig);
     CHECK_NOT_EMPTY(assetConfig.domain);
-    CHECK_NOT_EMPTY(assetConfig.ks);
     CHECK_NOT_EMPTY(assetConfig.entryId);
-    CHECK_NOT_EMPTY(assetConfig.partnerId);
+    CHECK_NOT_NULL(assetConfig.partnerId);
     CHECK_NOT_EMPTY(assetConfig.uiConfId);
     CHECK_NOT_EMPTY(flavorId);
     CHECK_NOT_EMPTY(localPath);
@@ -66,9 +65,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         return nil;
     }
     
-    NSDictionary* licenseUris = licenseDataDict[@"licenseUri"];
+    NSString* licenseUri = licenseDataDict[@"licenseUri"];
     
-    return licenseUris[flavorId];
+    return licenseUri;
 }
 
 +(NSURL*)prepareGetLicenseDataURLForAsset:(KPPlayerConfig*)assetConfig flavorId:(NSString*)flavorId drmScheme:(kDRMScheme)drmScheme {
@@ -98,17 +97,14 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // Build service URL
     NSURL* serviceURL = [serverURL URLByAppendingPathComponent:@"services.php"];
     NSURLComponents* url = [NSURLComponents componentsWithURL:serviceURL resolvingAgainstBaseURL:NO];
-    [NSURLQueryItem queryItemWithName:@"service" value:@"getLicenseData"];
     
-    [url setQueryItems:@[
-                         [self queryItem:@"service"   :@"getLicenseData"],
-                         [self queryItem:@"ks"        :assetConfig.ks],
-                         [self queryItem:@"wid"       :assetConfig.partnerId],
-                         [self queryItem:@"entry_id"  :assetConfig.entryId],
-                         [self queryItem:@"uiconf_id" :assetConfig.uiConfId],
-                         [self queryItem:@"drm"       :drmName],
-                         ]];
+    NSMutableArray<NSURLQueryItem*>* queryItems = assetConfig.queryItems;
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:@"service" value:@"getLicenseData"]];
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:@"drm" value:drmName]];
+    [queryItems addObject:[NSURLQueryItem queryItemWithName:@"flavor_id" value:flavorId]];
 
+    url.queryItems = queryItems;
+    
     serviceURL = [url URL];
     
     return serviceURL;
