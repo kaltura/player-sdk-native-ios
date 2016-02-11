@@ -43,7 +43,7 @@ s.requires_arc = true
 # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.source_files  = "**/*.{h,m}", "PlayerSDK/KALTURAPlayerSDK/**/*.{h,m}"
 s.vendored_library = 'libWViPhoneAPI.a'
-s.resource_bundle = { 'KALTURAPlayerSDKResources' => 'KALTURAPlayerSDKResources/*.*' }
+s.resource_bundle = { 'KALTURAPlayerSDKResources' => 'KALTURAPlayerSDK/*.{xib,plist}' }
 #s.exclude_files = "Classes/Exclude"
 
 # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
