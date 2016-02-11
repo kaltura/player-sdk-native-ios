@@ -52,6 +52,11 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     NSData* licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
     NSDictionary* licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:nil];
     
+    if (!licenseDataDict) {
+        KPLogError(@"Got an empty licenseData dictionary");
+        return nil;
+    }
+    
     // parse license data
     NSDictionary* licenseDataError = licenseDataDict[@"error"];
     if (licenseDataError) {
