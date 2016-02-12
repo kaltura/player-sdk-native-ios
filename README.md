@@ -43,9 +43,9 @@ Architecture Overview
 Getting Started
 ======
 
-**KalturaPlayerSDK** can be added to any project (big or small) in a matter of minutes (maybe even seconds if you're super speedy). Cocoapods is fully supported.
+**KalturaPlayerSDK** can be added to any project (big or small) in a matter of minutes (maybe even seconds if you're super speedy). CocoaPods is fully supported.
 
-##SDK Cocoapods Installation :
+##SDK CocoaPods Installation :
 
 The easiest way to install KalturaPlayerSDK is to use <a href="http://cocoapods.org/" target="_blank">CocoaPods</a>. To do so, simply add the following line to your `Podfile`:
 	<pre><code>pod 'KalturaPlayerSDK'</code></pre>
@@ -78,7 +78,7 @@ Make sure to add the _**`KALTURAPlayerSDK.xcodeproj`**_ file only, **not the ent
 
 Linking GoogleCast
 ======
-###Cocoapods support
+###CocoaPods support
 If you are using cocoapods please attach the following to your pod file:
 ```
 	pod 'google-cast-sdk'
@@ -89,7 +89,7 @@ If you are using cocoapods please attach the following to your pod file:
 
 Linking GoogleAds
 ======
-###Cocoapods support
+###CocoaPods support
 If you are using cocoapods please attach the following to your pod file:
 ```
    	pod 'Google-Mobile-Ads-SDK'
