@@ -32,7 +32,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
     // Preflight: check that all parameters are valid.
     CHECK_NOT_NULL(assetConfig);
-    CHECK_NOT_EMPTY(assetConfig.domain);
+    CHECK_NOT_EMPTY(assetConfig.server);
     CHECK_NOT_EMPTY(assetConfig.entryId);
     CHECK_NOT_NULL(assetConfig.partnerId);
     CHECK_NOT_EMPTY(assetConfig.uiConfId);
@@ -79,7 +79,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 +(NSURL*)prepareGetLicenseDataURLForAsset:(KPPlayerConfig*)assetConfig flavorId:(NSString*)flavorId drmScheme:(kDRMScheme)drmScheme {
     
-    NSURL* serverURL = [NSURL URLWithString:assetConfig.domain];
+    NSURL* serverURL = [NSURL URLWithString:assetConfig.server];
     
     // URL may either point to the root of the server or to mwEmbedFrame.php. Resolve this.
     if ([serverURL.path hasSuffix:@"/mwEmbedFrame.php"]) {
