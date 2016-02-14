@@ -9,6 +9,7 @@
 #import "KPLocalAssetsManager.h"
 #import "KPPlayerConfig.h"
 #import "WidevineClassicCDM.h"
+#import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
 
 
@@ -32,9 +33,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // Preflight: check that all parameters are valid.
     CHECK_NOT_NULL(assetConfig);
     CHECK_NOT_EMPTY(assetConfig.domain);
-    CHECK_NOT_EMPTY(assetConfig.ks);
     CHECK_NOT_EMPTY(assetConfig.entryId);
-    CHECK_NOT_EMPTY(assetConfig.partnerId);
+    CHECK_NOT_NULL(assetConfig.partnerId);
     CHECK_NOT_EMPTY(assetConfig.uiConfId);
     CHECK_NOT_EMPTY(flavorId);
     CHECK_NOT_EMPTY(localPath);
@@ -51,7 +51,13 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // load license data
     NSURL* getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig flavorId:flavorId drmScheme:drmScheme];
     NSData* licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
-    NSDictionary* licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:nil];
+    NSError* jsonError = nil;
+    NSDictionary* licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:&jsonError];
+    
+    if (!licenseDataDict) {
+        KPLogError(@"Error parsing licenseData json: %@", jsonError);
+        return nil;
+    }
     
     // parse license data
     NSDictionary* licenseDataError = licenseDataDict[@"error"];
@@ -66,9 +72,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         return nil;
     }
     
-    NSDictionary* licenseUris = licenseDataDict[@"licenseUri"];
+    NSString* licenseUri = licenseDataDict[@"licenseUri"];
     
-    return licenseUris[flavorId];
+    return licenseUri;
 }
 
 +(NSURL*)prepareGetLicenseDataURLForAsset:(KPPlayerConfig*)assetConfig flavorId:(NSString*)flavorId drmScheme:(kDRMScheme)drmScheme {
@@ -98,17 +104,14 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // Build service URL
     NSURL* serviceURL = [serverURL URLByAppendingPathComponent:@"services.php"];
     NSURLComponents* url = [NSURLComponents componentsWithURL:serviceURL resolvingAgainstBaseURL:NO];
-    [NSURLQueryItem queryItemWithName:@"service" value:@"getLicenseData"];
     
-    [url setQueryItems:@[
-                         [self queryItem:@"service"   :@"getLicenseData"],
-                         [self queryItem:@"ks"        :assetConfig.ks],
-                         [self queryItem:@"wid"       :assetConfig.partnerId],
-                         [self queryItem:@"entry_id"  :assetConfig.entryId],
-                         [self queryItem:@"uiconf_id" :assetConfig.uiConfId],
-                         [self queryItem:@"drm"       :drmName],
-                         ]];
+    NSMutableArray<NSURLQueryItem*>* queryItems = assetConfig.queryItems;
+    [queryItems addQueryParam:@"service" value:@"getLicenseData"];
+    [queryItems addQueryParam:@"drm" value:drmName];
+    [queryItems addQueryParam:@"flavor_id" value:flavorId];
 
+    url.queryItems = queryItems;
+    
     serviceURL = [url URL];
     
     return serviceURL;
@@ -148,15 +151,27 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // This is done by loading UIConf data, and looking at "html5Url" property.
     
     NSData* jsonData = [self loadUIConf:uiConfId partnerId:partnerId ks:ks serverURL:serverURL];
-    NSDictionary* uiConf = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
-
-    if (uiConf[@"message"]) {
-        return nil; // TODO: report error
+    NSError* jsonError = nil;
+    NSDictionary* uiConf = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&jsonError];
+    
+    if (!uiConf) {
+        KPLogError(@"Error parsing uiConf json: %@", jsonError);
+        return nil;
+    }
+    NSString* serviceError = uiConf[@"message"];
+    if (serviceError) {
+        KPLogError(@"uiConf service reported error: %@", serviceError);
+        return nil;
     }
     
     NSString* embedLoaderUrl = uiConf[@"html5Url"];
     
     // embedLoaderUrl is typically something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
+    
+    if (!embedLoaderUrl) {
+        KPLogError(@"No html5Url in uiConf");
+        return nil;
+    }
     
     if ([embedLoaderUrl hasPrefix:@"/"]) {
         serverURL = [serverURL URLByAppendingPathComponent:embedLoaderUrl];

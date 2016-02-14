@@ -31,7 +31,6 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 @property (nonatomic, copy) NSString *ks;
 @property (nonatomic, copy) NSString *entryId;
 @property (nonatomic, copy) NSString *advertiserID;
-@property (nonatomic, copy) NSDictionary *drmParams;
 @property (nonatomic) BOOL enableHover;
 
 
@@ -57,4 +56,7 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 - (NSURL *)videoURL;
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL;
+
+-(NSMutableArray<NSURLQueryItem*>*)queryItems;
+
 @end
