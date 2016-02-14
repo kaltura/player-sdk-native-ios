@@ -9,6 +9,7 @@
 #import "KPLocalAssetsManager.h"
 #import "KPPlayerConfig.h"
 #import "WidevineClassicCDM.h"
+#import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
 
 
@@ -105,9 +106,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     NSURLComponents* url = [NSURLComponents componentsWithURL:serviceURL resolvingAgainstBaseURL:NO];
     
     NSMutableArray<NSURLQueryItem*>* queryItems = assetConfig.queryItems;
-    [queryItems addObject:[NSURLQueryItem queryItemWithName:@"service" value:@"getLicenseData"]];
-    [queryItems addObject:[NSURLQueryItem queryItemWithName:@"drm" value:drmName]];
-    [queryItems addObject:[NSURLQueryItem queryItemWithName:@"flavor_id" value:flavorId]];
+    [queryItems addQueryParam:@"service" value:@"getLicenseData"];
+    [queryItems addQueryParam:@"drm" value:drmName];
+    [queryItems addQueryParam:@"flavor_id" value:flavorId];
 
     url.queryItems = queryItems;
     

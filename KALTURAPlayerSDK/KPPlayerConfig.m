@@ -9,6 +9,7 @@
 #import "KPPlayerConfig.h"
 #import "DeviceParamsHandler.h"
 #import "NSString+Utilities.h"
+#import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
 
 @interface KPPlayerConfig() {
@@ -64,25 +65,19 @@
     }
 }
 
--(void)addParam:(NSString*)key value:(NSString*)value toArray:(NSMutableArray<NSURLQueryItem*>*)array {
-    if (key.length && value.length) {
-        [array addObject:[NSURLQueryItem queryItemWithName:key value:value]];
-    }
-}
-
 -(NSMutableArray<NSURLQueryItem*>*)queryItems {
     NSMutableArray<NSURLQueryItem*>* queryItems = [NSMutableArray array];
     
     // basic fields
-    [self addParam:@"wid" value:[@"_" stringByAppendingString:_partnerId] toArray:queryItems];
-    [self addParam:@"uiconf_id" value:_uiConfId toArray:queryItems];
-    [self addParam:@"entry_id" value:_entryId toArray:queryItems];
-    [self addParam:@"ks" value:_ks toArray:queryItems];
+    [queryItems addQueryParam:@"wid" value:[@"_" stringByAppendingString:_partnerId]];
+    [queryItems addQueryParam:@"uiconf_id" value:_uiConfId];
+    [queryItems addQueryParam:@"entry_id" value:_entryId];
+    [queryItems addQueryParam:@"ks" value:_ks];
     
     // extras
     [_extraConfig enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         NSString* keyName = [NSString stringWithFormat:@"flashvars[%@]", key];
-        [self addParam:keyName value:obj toArray:queryItems];
+        [queryItems addQueryParam:keyName value:obj];
     }];
     
     return queryItems;
@@ -97,7 +92,7 @@
     } 
 
     NSMutableArray<NSURLQueryItem*>* queryItems = [self queryItems];
-    [self addParam:@"iframeembed" value:@"true" toArray:queryItems];
+    [queryItems addQueryParam:@"iframeembed" value:@"true"];
 
     url.path = path;
     url.queryItems = queryItems;
