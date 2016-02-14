@@ -50,10 +50,11 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // load license data
     NSURL* getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig flavorId:flavorId drmScheme:drmScheme];
     NSData* licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
-    NSDictionary* licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:nil];
+    NSError* jsonError = nil;
+    NSDictionary* licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:&jsonError];
     
     if (!licenseDataDict) {
-        KPLogError(@"Got an empty licenseData dictionary");
+        KPLogError(@"Error parsing licenseData json: %@", jsonError);
         return nil;
     }
     
@@ -149,15 +150,27 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // This is done by loading UIConf data, and looking at "html5Url" property.
     
     NSData* jsonData = [self loadUIConf:uiConfId partnerId:partnerId ks:ks serverURL:serverURL];
-    NSDictionary* uiConf = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
-
-    if (uiConf[@"message"]) {
-        return nil; // TODO: report error
+    NSError* jsonError = nil;
+    NSDictionary* uiConf = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&jsonError];
+    
+    if (!uiConf) {
+        KPLogError(@"Error parsing uiConf json: %@", jsonError);
+        return nil;
+    }
+    NSString* serviceError = uiConf[@"message"];
+    if (serviceError) {
+        KPLogError(@"uiConf service reported error: %@", serviceError);
+        return nil;
     }
     
     NSString* embedLoaderUrl = uiConf[@"html5Url"];
     
     // embedLoaderUrl is typically something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
+    
+    if (!embedLoaderUrl) {
+        KPLogError(@"No html5Url in uiConf");
+        return nil;
+    }
     
     if ([embedLoaderUrl hasPrefix:@"/"]) {
         serverURL = [serverURL URLByAppendingPathComponent:embedLoaderUrl];
