@@ -198,7 +198,7 @@
     // When the SDK notified us that ads have been loaded, play them.
     NSDictionary *eventParams = nil;
     switch (event.type) {
-        case kAdEvent_LOADED:
+        case kIMAAdEvent_LOADED:
             [adsManager start];
             self.adEventParams.isLinear = event.ad.isLinear;
             self.adEventParams.adID = event.ad.adId;
@@ -207,35 +207,35 @@
             eventParams = self.adEventParams.toJSON.adLoaded;
             
             break;
-        case kAdEvent_STARTED:
+        case kIMAAdEvent_STARTED:
             self.view.hidden = NO;
             self.adEventParams.duration = event.ad.duration;
             eventParams = self.adEventParams.toJSON.adStart;
             break;
-        case kAdEvent_COMPLETE:
+        case kIMAAdEvent_COMPLETE:
             self.adEventParams.adID = event.ad.adId;
             eventParams = self.adEventParams.toJSON.adCompleted;
             self.view.hidden = YES;
             break;
-        case kAdEvent_ALL_ADS_COMPLETED:
+        case kIMAAdEvent_ALL_ADS_COMPLETED:
             eventParams = AllAdsCompletedKey.nullVal;
             break;
-        case kAdEvent_FIRST_QUARTILE:
+        case kIMAAdEvent_FIRST_QUARTILE:
             eventParams = FirstQuartileKey.nullVal;
             break;
-        case kAdEvent_MIDPOINT:
+        case kIMAAdEvent_MIDPOINT:
             eventParams = MidPointKey.nullVal;
             break;
-        case kAdEvent_THIRD_QUARTILE:
+        case kIMAAdEvent_THIRD_QUARTILE:
             eventParams = ThirdQuartileKey.nullVal;
             break;
-        case kAdEvent_TAPPED:
+        case kIMAAdEvent_TAPPED:
             break;
-        case kAdEvent_CLICKED:
+        case kIMAAdEvent_CLICKED:
             self.adEventParams.isLinear = event.ad.isLinear;
             eventParams = self.adEventParams.toJSON.adClicked;
             break;
-        case kAdEvent_SKIPPED:
+        case kIMAAdEvent_SKIPPED:
             // TODO::
             break;
         default:

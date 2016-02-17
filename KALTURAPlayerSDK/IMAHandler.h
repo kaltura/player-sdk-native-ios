@@ -88,35 +88,72 @@
 
 @end
 
-/// Different event types sent by the IMAAdsManager to its delegate.
-typedef enum {
-    /// Ad break ready.
-    kAdEvent_AD_BREAK_READY,
-    /// All ads managed by the ads manager have completed.
-    kAdEvent_ALL_ADS_COMPLETED,
-    /// Ad clicked.
-    kAdEvent_CLICKED,
-    /// Single ad has finished.
-    kAdEvent_COMPLETE,
-    /// First quartile of a linear ad was reached.
-    kAdEvent_FIRST_QUARTILE,
-    /// An ad was loaded.
-    kAdEvent_LOADED,
-    /// Midpoint of a linear ad was reached.
-    kAdEvent_MIDPOINT,
-    /// Ad paused.
-    kAdEvent_PAUSE,
-    /// Ad resumed.
-    kAdEvent_RESUME,
-    /// Ad has skipped.
-    kAdEvent_SKIPPED,
-    /// Ad has started.
-    kAdEvent_STARTED,
-    /// Ad tapped.
-    kAdEvent_TAPPED,
-    /// Third quartile of a linear ad was reached.
-    kAdEvent_THIRD_QUARTILE
-} AdEventType;
+/**
+ *  Different event types sent by the IMAAdsManager to its delegate.
+ */
+typedef NS_ENUM(NSInteger, IMAAdEventType){
+    /**
+     *  Ad break ready.
+     */
+    kIMAAdEvent_AD_BREAK_READY,
+    /**
+     *  Ad break ended (only used for server side ad insertion).
+     */
+    kIMAAdEvent_AD_BREAK_ENDED,
+    /**
+     *  Ad break started (only used for server side ad insertion).
+     */
+    kIMAAdEvent_AD_BREAK_STARTED,
+    /**
+     *  All ads managed by the ads manager have completed.
+     */
+    kIMAAdEvent_ALL_ADS_COMPLETED,
+    /**
+     *  Ad clicked.
+     */
+    kIMAAdEvent_CLICKED,
+    /**
+     *  Single ad has finished.
+     */
+    kIMAAdEvent_COMPLETE,
+    /**
+     *  First quartile of a linear ad was reached.
+     */
+    kIMAAdEvent_FIRST_QUARTILE,
+    /**
+     *  An ad was loaded.
+     */
+    kIMAAdEvent_LOADED,
+    /**
+     *  Midpoint of a linear ad was reached.
+     */
+    kIMAAdEvent_MIDPOINT,
+    /**
+     *  Ad paused.
+     */
+    kIMAAdEvent_PAUSE,
+    /**
+     *  Ad resumed.
+     */
+    kIMAAdEvent_RESUME,
+    /**
+     *  Ad has skipped.
+     */
+    kIMAAdEvent_SKIPPED,
+    /**
+     *  Ad has started.
+     */
+    kIMAAdEvent_STARTED,
+    /**
+     *  Ad tapped.
+     */
+    kIMAAdEvent_TAPPED,
+    /**
+     *  Third quartile of a linear ad was reached.
+     */
+    kIMAAdEvent_THIRD_QUARTILE
+};
+
 
 @protocol AdPodInfo <NSObject>
 
@@ -135,7 +172,7 @@ typedef enum {
 
 @protocol AdEvent <NSObject>
 
-@property (nonatomic) AdEventType type;
+@property (nonatomic) IMAAdEventType type;
 @property (nonatomic, strong) id<Ad> ad;
 
 @end
