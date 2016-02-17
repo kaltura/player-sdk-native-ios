@@ -29,6 +29,7 @@ static NSString *EndedKey = @"ended";
 static NSString *SeekedKey = @"seeked";
 static NSString *CanPlayKey = @"canplay";
 static NSString *ErrorKey = @"error";
+static NSString *BufferingChangeKey = @"bufferchange";
 static NSString *PostrollEndedKey = @"postEnded";
 
 @protocol KPlayerFactoryDelegate <KPlayerDelegate>
