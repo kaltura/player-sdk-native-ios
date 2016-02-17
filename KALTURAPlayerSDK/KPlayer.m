@@ -166,6 +166,8 @@ static NSString *StatusKeyPath = @"status";
                                 value:[self.error localizedDescription]];
                 break;
             case AVPlayerItemStatusReadyToPlay: {
+                [self registerForPlaybackNotification];
+                buffering = NO;
                 if (oldValue.intValue != newValue.intValue) {
                     [self.delegate player:self
                                 eventName:DurationChangedKey
@@ -260,8 +262,6 @@ static NSString *StatusKeyPath = @"status";
                       options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                       context:nil];
             [self replaceCurrentItemWithPlayerItem:item];
-            [self registerForPlaybackNotification];
-            buffering = NO;
         }];
     });
 }
