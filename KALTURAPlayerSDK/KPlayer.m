@@ -20,6 +20,10 @@ static NSString *StatusKeyPath = @"status";
     NSArray *prevAirPlayBtnPositionArr;
     id observer;
     AVPictureInPictureController *pip;
+    NSString * playbackBufferEmptyKeyPath;
+    NSString * playbackLikelyToKeepUpKeyPath;
+    NSString * playbackBufferFullKeyPath;
+    BOOL buffering;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, weak) UIView *parentView;
@@ -76,7 +80,6 @@ static NSString *StatusKeyPath = @"status";
                                                  }];        
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
-        
         [self setupPIPSuport];
         
         return self;
@@ -129,7 +132,22 @@ static NSString *StatusKeyPath = @"status";
     NSNumber *oldValue = [change valueForKey:NSKeyValueChangeOldKey];
     NSNumber *newValue = [change valueForKey:NSKeyValueChangeNewKey];
     
-    if ([keyPath isEqual:RateKeyPath]) {
+    if (object == self.currentItem &&
+        ([keyPath isEqualToString:playbackBufferEmptyKeyPath] ||
+         [keyPath isEqualToString:playbackLikelyToKeepUpKeyPath] ||
+         [keyPath isEqualToString:playbackBufferFullKeyPath])) {
+            
+        if (self.currentItem.isPlaybackBufferEmpty) {
+            if (self.rate > 0) {
+                [self startBuffering];
+            }
+        } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
+            [self stopBuffering];
+        }
+        else if (self.currentItem.isPlaybackBufferFull) {
+            [self stopBuffering];
+        }
+    } else if ([keyPath isEqual:RateKeyPath]) {
         if (self.rate) {
             [self.delegate player:self
                         eventName:PlayKey
@@ -242,6 +260,8 @@ static NSString *StatusKeyPath = @"status";
                       options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
                       context:nil];
             [self replaceCurrentItemWithPlayerItem:item];
+            [self registerForPlaybackNotification];
+            buffering = NO;
         }];
     });
 }
@@ -427,6 +447,55 @@ static NSString *StatusKeyPath = @"status";
     KPLogTrace(@"Exit");
 }
 
+- (void)registerForPlaybackNotification {
+    if (self.currentItem == nil) {
+        return;
+    }
+    
+    playbackBufferEmptyKeyPath = NSStringFromSelector(@selector(playbackBufferEmpty));
+    playbackLikelyToKeepUpKeyPath = NSStringFromSelector(@selector(playbackLikelyToKeepUp));
+    playbackBufferFullKeyPath = NSStringFromSelector(@selector(playbackBufferFull));
+    
+    [self.currentItem addObserver:self forKeyPath:playbackBufferEmptyKeyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self.currentItem addObserver:self forKeyPath:playbackLikelyToKeepUpKeyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self.currentItem addObserver:self forKeyPath:playbackBufferFullKeyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+}
+
+- (void)unregisterForPlaybackNotification {
+    @try {
+        [self.currentItem removeObserver:self forKeyPath:playbackBufferEmptyKeyPath];
+        [self.currentItem removeObserver:self forKeyPath:playbackLikelyToKeepUpKeyPath];
+        [self.currentItem removeObserver:self forKeyPath:playbackBufferFullKeyPath];
+    }
+    @catch (NSException *exception) {
+        KPLogError(@"%@", exception);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[NSString stringWithFormat:@"%@ ,%@",
+                               exception.name, exception.reason]];
+    }
+}
+    
+- (void)startBuffering {
+    KPLogTrace(@"startBuffering");
+    if (self.delegate != nil && !buffering) {
+        [self.delegate player:self
+                    eventName:BufferingChangeKey
+                        value:@"true"];
+        buffering = YES;
+    }
+}
+
+- (void)stopBuffering {
+    KPLogTrace(@"stopBuffering");
+    if (self.delegate != nil && buffering) {
+        [self.delegate player:self
+                    eventName:BufferingChangeKey
+                        value:@"false"];
+        buffering = NO;
+    }
+}
+
 - (void)setupPIPSuport {
     if([NSBundle mainBundle].isAudioBackgroundModesEnabled &&
        [AVPictureInPictureController isPictureInPictureSupported]) {
@@ -437,6 +506,7 @@ static NSString *StatusKeyPath = @"status";
 
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
+    [self unregisterForPlaybackNotification];
     self.layer = nil;
     self.delegate = nil;
     self.parentView = nil;
@@ -445,7 +515,6 @@ static NSString *StatusKeyPath = @"status";
     volumeView = nil;
     prevAirPlayBtnPositionArr = nil;
     pip = nil;
-
 }
 
 @end
