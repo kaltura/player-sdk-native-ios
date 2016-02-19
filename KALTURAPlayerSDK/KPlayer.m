@@ -244,10 +244,11 @@ NSString * const StatusKeyPath = @"status";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
-        NSArray *requestedKeys = [NSArray arrayWithObjects:TracksKey, PlayableKey, nil];
+        NSArray *requestedKeys = @[TracksKey, PlayableKey];
         
+         __weak KPlayer *weakSelf = self;
         [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
-            [self prepareToPlayAsset:asset withKeys:requestedKeys];
+            [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
         }];
     });
 }
@@ -270,7 +271,7 @@ NSString * const StatusKeyPath = @"status";
     }
     
     if (!asset.playable) {
-        NSString * errorMsg = [NSString stringWithFormat:@"The follwoing source: %@ is not playable", asset.URL];
+        NSString * errorMsg = [NSString stringWithFormat:@"The follwoing source: %@ is not playable", asset.URL.absoluteString];
         KPLogError(errorMsg);
         [self.delegate player:self
                     eventName:ErrorKey
