@@ -12,8 +12,13 @@
 #import "NSMutableDictionary+AdSupport.h"
 #import "NSBundle+Kaltura.h"
 
-static NSString *RateKeyPath = @"rate";
-static NSString *StatusKeyPath = @"status";
+/* Asset keys */
+NSString * const TracksKey = @"tracks";
+NSString * const PlayableKey = @"playable";
+/* Player keys */
+NSString * const RateKeyPath = @"rate";
+/* PlayerItem keys */
+NSString * const StatusKeyPath = @"status";
 
 @interface KPlayer() {
     MPVolumeView *volumeView;
@@ -239,31 +244,54 @@ static NSString *StatusKeyPath = @"status";
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
+        NSArray *requestedKeys = @[TracksKey, PlayableKey];
         
-        if (!asset.isPlayable) {
-            NSString * errorMsg = [NSString stringWithFormat:@"The follwoing source: %@ is not playable", playerSource];
-            KPLogError(errorMsg);
-            [self.delegate player:self
-                        eventName:ErrorKey
-                            value:errorMsg];
-            return;
-        }
-        
-        NSArray *keys = [NSArray arrayWithObject:@"playable"];
-        
-        [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
-            AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
-
-            [self removeStatusObserver];
-
-            
-            [item addObserver:self
-                   forKeyPath:StatusKeyPath
-                      options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                      context:nil];
-            [self replaceCurrentItemWithPlayerItem:item];
+         __weak KPlayer *weakSelf = self;
+        [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
+            [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
         }];
     });
+}
+
+- (void)prepareToPlayAsset:(AVURLAsset *)asset withKeys:(NSArray *)requestedKeys {
+    for (NSString *thisKey in requestedKeys) {
+        NSError *error = nil;
+        AVKeyValueStatus keyStatus = [asset statusOfValueForKey:thisKey error:&error];
+        
+        if (keyStatus == AVKeyValueStatusFailed) {
+            if (error != nil) {
+                KPLogError(error.localizedDescription);
+                [self.delegate player:self
+                            eventName:ErrorKey
+                                value:error.localizedDescription];
+            }
+            
+            return;
+        }
+    }
+    
+    if (!asset.playable) {
+        NSString * errorMsg = [NSString stringWithFormat:@"The follwoing source: %@ is not playable", asset.URL.absoluteString];
+        KPLogError(errorMsg);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:errorMsg];
+        return;
+    }
+    
+    AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+    
+    [self removeStatusObserver];
+    
+    
+    [item addObserver:self
+           forKeyPath:StatusKeyPath
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+              context:nil];
+    
+    if (self.currentItem != item) {
+        [self replaceCurrentItemWithPlayerItem:item];
+    }
 }
 
 - (NSURL *)playerSource {
