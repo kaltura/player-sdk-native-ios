@@ -242,15 +242,16 @@ NSString * const StatusKeyPath = @"status";
 - (void)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
-        NSArray *requestedKeys = @[TracksKey, PlayableKey];
-        
-         __weak KPlayer *weakSelf = self;
-        [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
-            [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
-        }];
-    });
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:playerSource options:nil];
+    NSArray *requestedKeys = @[TracksKey, PlayableKey];
+    
+    __weak KPlayer *weakSelf = self;
+    [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
+        dispatch_async( dispatch_get_main_queue(),
+           ^{
+               [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
+           });
+    }];
 }
 
 - (void)prepareToPlayAsset:(AVURLAsset *)asset withKeys:(NSArray *)requestedKeys {
