@@ -37,6 +37,6 @@ NSString *showChromecastComponent(BOOL show) {
 
 @implementation KPControlsView
 + (id<KPControlsView>)defaultControlsViewWithFrame:(CGRect)frame {
-    return (id<KPControlsView>)[[NSClassFromString(KP_CONTROLS_WEBVIEW) alloc] initWithFrame:frame];
+    return (id<KPControlsView>)[[NSClassFromString(@"KPControlsUIWebview") alloc] initWithFrame:frame];
 }
 @end
