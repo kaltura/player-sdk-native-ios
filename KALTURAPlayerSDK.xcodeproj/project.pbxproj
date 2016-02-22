@@ -497,8 +497,7 @@
 				FBDB1AA71C70A0F0002BD742 /* NSMutableArray+QueryItems.h */,
 				FBDB1AA81C70A0F0002BD742 /* NSMutableArray+QueryItems.m */,
 			);
-			name = KALTURAPlayerSDK;
-			path = PlayerSDK;
+			path = KALTURAPlayerSDK;
 			sourceTree = "<group>";
 		};
 		BFFFA72D182F9E31005B3B24 /* Supporting Files */ = {
