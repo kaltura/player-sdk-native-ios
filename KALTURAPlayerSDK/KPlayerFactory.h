@@ -46,6 +46,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
 - (void)enableTracks:(BOOL)isEnablingTracks;
+- (void)setLicenseUri:(NSString*)licenseUri;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
@@ -55,7 +56,6 @@ static NSString *PostrollEndedKey = @"postEnded";
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
-@property (nonatomic, copy) NSString *licenseUri;
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
 @property (nonatomic, strong) id kIMAWebOpenerDelegate;
 @end

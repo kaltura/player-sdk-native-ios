@@ -11,11 +11,7 @@
 #import "WidevineClassicCDM.h"
 #import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
-
-
-typedef NS_ENUM(NSUInteger, kDRMScheme) {
-    kDRMWidevineClassic, kDRMWidevineCENC
-};
+#import "KPAssetBuilder.h"
 
 
 @implementation KPLocalAssetsManager
@@ -98,6 +94,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
             break;
         case kDRMWidevineClassic:
             drmName = @"wvclassic";
+            break;
+        case kDRMFairPlay:
+            drmName = @"fairplay";
             break;
     }
     
