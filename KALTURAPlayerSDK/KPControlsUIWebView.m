@@ -55,16 +55,12 @@
     fetcher([[self stringByEvaluatingJavaScriptFromString:@"NativeBridge.videoPlayer.getVideoHolderHeight()"] floatValue]);
 }
 
-
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-}
-
 - (CGRect)controlsFrame {
     return self.frame;
 }
 
 - (void)removeControls {
+    [self stopLoading];
     self.delegate = nil;
     self.controlsDelegate = nil;
     self.entryId = nil;

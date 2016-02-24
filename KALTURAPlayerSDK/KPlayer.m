@@ -12,17 +12,26 @@
 #import "NSMutableDictionary+AdSupport.h"
 #import "NSBundle+Kaltura.h"
 
-static NSString *RateKeyPath = @"rate";
-static NSString *StatusKeyPath = @"status";
+/* Asset keys */
+NSString * const TracksKey = @"tracks";
+NSString * const PlayableKey = @"playable";
+/* Player keys */
+NSString * const RateKeyPath = @"rate";
+/* PlayerItem keys */
+NSString * const StatusKeyPath = @"status";
 
 @interface KPlayer() {
     MPVolumeView *volumeView;
     NSArray *prevAirPlayBtnPositionArr;
     id observer;
     AVPictureInPictureController *pip;
+    NSString * playbackBufferEmptyKeyPath;
+    NSString * playbackLikelyToKeepUpKeyPath;
+    NSString * playbackBufferFullKeyPath;
+    BOOL buffering;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
-@property (nonatomic, strong) UIView *parentView;
+@property (nonatomic, weak) UIView *parentView;
 @property (nonatomic, strong) AVMediaSelectionGroup *audioSelectionGroup;
 @end
 
@@ -66,17 +75,16 @@ static NSString *StatusKeyPath = @"status";
         __weak KPlayer *weakSelf = self;
         observer = [self addPeriodicTimeObserverForInterval:CMTimeMake(20, 100)
                                                       queue:dispatch_get_main_queue()
+                    
                                                  usingBlock:^(CMTime time) {
                                                      [weakSelf updateCurrentTime:CMTimeGetSeconds(time)];
                                                      [weakSelf.delegate player:weakSelf eventName:TimeUpdateKey
                                                                          value:@(CMTimeGetSeconds(time)).stringValue];
                                                      //                                          [weakSelf.delegate eventName:ProgressKey
                                                      //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
-                                                 }];
-        
+                                                 }];        
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
-        
         [self setupPIPSuport];
         
         return self;
@@ -93,6 +101,9 @@ static NSString *StatusKeyPath = @"status";
     if (!success) {
         /* handle the error condition */
         KPLogError(@"Audio Session error %@, %@", setCategoryError, [setCategoryError userInfo]);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[setCategoryError localizedDescription]];
     }
     
     NSError *activationError = nil;
@@ -101,6 +112,9 @@ static NSString *StatusKeyPath = @"status";
     if (!success) {
         /* handle the error condition */
         KPLogError(@"Audio Session Activation error %@, %@", activationError, [activationError userInfo]);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[activationError localizedDescription]];
     }
 }
 
@@ -123,7 +137,22 @@ static NSString *StatusKeyPath = @"status";
     NSNumber *oldValue = [change valueForKey:NSKeyValueChangeOldKey];
     NSNumber *newValue = [change valueForKey:NSKeyValueChangeNewKey];
     
-    if ([keyPath isEqual:RateKeyPath]) {
+    if (object == self.currentItem &&
+        ([keyPath isEqualToString:playbackBufferEmptyKeyPath] ||
+         [keyPath isEqualToString:playbackLikelyToKeepUpKeyPath] ||
+         [keyPath isEqualToString:playbackBufferFullKeyPath])) {
+            
+        if (self.currentItem.isPlaybackBufferEmpty) {
+            if (self.rate > 0) {
+                [self startBuffering];
+            }
+        } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
+            [self stopBuffering];
+        }
+        else if (self.currentItem.isPlaybackBufferFull) {
+            [self stopBuffering];
+        }
+    } else if ([keyPath isEqual:RateKeyPath]) {
         if (self.rate) {
             [self.delegate player:self
                         eventName:PlayKey
@@ -137,8 +166,13 @@ static NSString *StatusKeyPath = @"status";
         switch (self.status) {
             case AVPlayerStatusFailed:
                 KPLogError(@"AVPlayerStatusFailed");
+                [self.delegate player:self
+                            eventName:ErrorKey
+                                value:[self.error localizedDescription]];
                 break;
             case AVPlayerItemStatusReadyToPlay: {
+                [self registerForPlaybackNotification];
+                buffering = NO;
                 if (oldValue.intValue != newValue.intValue) {
                     [self.delegate player:self
                                 eventName:DurationChangedKey
@@ -173,6 +207,9 @@ static NSString *StatusKeyPath = @"status";
                 break;
             case AVPlayerStatusUnknown:
                 KPLogError(@"AVPlayerStatusUnknown");
+                [self.delegate player:self
+                            eventName:ErrorKey
+                                value:@"AVPlayerStatusUnknown"];
                 break;
             }
         }
@@ -190,39 +227,72 @@ static NSString *StatusKeyPath = @"status";
     @try {
         if (self.currentItem != nil) {
             [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
-            KPLogError(@"remove");
+            KPLogDebug(@"remove");
         }
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[NSString stringWithFormat:@"%@ ,%@",
+                               exception.name, exception.reason]];
     }
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
     KPLogInfo(@"%@", playerSource);
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:playerSource options:nil];
-        
-        if (!asset.isPlayable) {
-            KPLogDebug(@"The follwoing source: %@ is not playable", playerSource);
-        }
-        
-        NSArray *keys = [NSArray arrayWithObject:@"playable"];
-        
-        [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^() {
-            AVPlayerItem *item = [[AVPlayerItem alloc] initWithAsset:asset];
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:playerSource options:nil];
+    NSArray *requestedKeys = @[TracksKey, PlayableKey];
+    
+    __weak KPlayer *weakSelf = self;
+    [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
+        dispatch_async( dispatch_get_main_queue(),
+           ^{
+               [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
+           });
+    }];
+}
 
-            [self removeStatusObserver];
-
+- (void)prepareToPlayAsset:(AVURLAsset *)asset withKeys:(NSArray *)requestedKeys {
+    for (NSString *thisKey in requestedKeys) {
+        NSError *error = nil;
+        AVKeyValueStatus keyStatus = [asset statusOfValueForKey:thisKey error:&error];
+        
+        if (keyStatus == AVKeyValueStatusFailed) {
+            if (error != nil) {
+                KPLogError(error.localizedDescription);
+                [self.delegate player:self
+                            eventName:ErrorKey
+                                value:error.localizedDescription];
+            }
             
-            [item addObserver:self
-                   forKeyPath:StatusKeyPath
-                      options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-                      context:nil];
-            [self replaceCurrentItemWithPlayerItem:item];
-        }];
-    });
+            return;
+        }
+    }
+    
+    if (!asset.playable) {
+        NSString * errorMsg = [NSString stringWithFormat:@"The follwoing source: %@ is not playable", asset.URL.absoluteString];
+        KPLogError(errorMsg);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:errorMsg];
+        return;
+    }
+    
+    AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
+    
+    [self removeStatusObserver];
+    
+    
+    [item addObserver:self
+           forKeyPath:StatusKeyPath
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+              context:nil];
+    
+    if (self.currentItem != item) {
+        [self replaceCurrentItemWithPlayerItem:item];
+    }
 }
 
 - (NSURL *)playerSource {
@@ -301,11 +371,14 @@ static NSString *StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[NSString stringWithFormat:@"%@ ,%@",
+                               exception.name, exception.reason]];
     }
 
     [_layer removeFromSuperlayer];
-    _layer = nil;
-    self.delegate = nil;
+    [self removeStatusObserver];
 }
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
@@ -403,6 +476,55 @@ static NSString *StatusKeyPath = @"status";
     KPLogTrace(@"Exit");
 }
 
+- (void)registerForPlaybackNotification {
+    if (self.currentItem == nil) {
+        return;
+    }
+    
+    playbackBufferEmptyKeyPath = NSStringFromSelector(@selector(playbackBufferEmpty));
+    playbackLikelyToKeepUpKeyPath = NSStringFromSelector(@selector(playbackLikelyToKeepUp));
+    playbackBufferFullKeyPath = NSStringFromSelector(@selector(playbackBufferFull));
+    
+    [self.currentItem addObserver:self forKeyPath:playbackBufferEmptyKeyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self.currentItem addObserver:self forKeyPath:playbackLikelyToKeepUpKeyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self.currentItem addObserver:self forKeyPath:playbackBufferFullKeyPath options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+}
+
+- (void)unregisterForPlaybackNotification {
+    @try {
+        [self.currentItem removeObserver:self forKeyPath:playbackBufferEmptyKeyPath];
+        [self.currentItem removeObserver:self forKeyPath:playbackLikelyToKeepUpKeyPath];
+        [self.currentItem removeObserver:self forKeyPath:playbackBufferFullKeyPath];
+    }
+    @catch (NSException *exception) {
+        KPLogError(@"%@", exception);
+        [self.delegate player:self
+                    eventName:ErrorKey
+                        value:[NSString stringWithFormat:@"%@ ,%@",
+                               exception.name, exception.reason]];
+    }
+}
+    
+- (void)startBuffering {
+    KPLogTrace(@"startBuffering");
+    if (self.delegate != nil && !buffering) {
+        [self.delegate player:self
+                    eventName:BufferingChangeKey
+                        value:@"true"];
+        buffering = YES;
+    }
+}
+
+- (void)stopBuffering {
+    KPLogTrace(@"stopBuffering");
+    if (self.delegate != nil && buffering) {
+        [self.delegate player:self
+                    eventName:BufferingChangeKey
+                        value:@"false"];
+        buffering = NO;
+    }
+}
+
 - (void)setupPIPSuport {
     if([NSBundle mainBundle].isAudioBackgroundModesEnabled &&
        [AVPictureInPictureController isPictureInPictureSupported]) {
@@ -413,7 +535,11 @@ static NSString *StatusKeyPath = @"status";
 
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
-    [self removeStatusObserver];
+    [self unregisterForPlaybackNotification];
+    self.layer = nil;
+    self.delegate = nil;
+    self.parentView = nil;
+    self.audioSelectionGroup = nil;
     observer = nil;
     volumeView = nil;
     prevAirPlayBtnPositionArr = nil;

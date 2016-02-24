@@ -54,9 +54,8 @@ static NSString *NativeActionKey = @"nativeAction";
     NSArray *attributes = @[@"src",
                             @"currentTime",
                             @"visible",
-#if !(TARGET_IPHONE_SIMULATOR)
+                            @"playerError",
                             @"licenseUri",
-#endif
                             @"nativeAction",
                             @"doubleClickRequestAds",
                             @"language",
@@ -112,10 +111,6 @@ static NSString *NativeActionKey = @"nativeAction";
 
 - (BOOL)isFrameKeypath {
     return [self isEqualToString:@"frame"];
-}
-
-- (BOOL)isWVM {
-    return ([self rangeOfString:@"wvm"].location != NSNotFound);
 }
 
 - (FunctionComponents)extractFunction {

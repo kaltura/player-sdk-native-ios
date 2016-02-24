@@ -7,7 +7,7 @@
 //
 
 #import "KPlayerFactory.h"
-#import "KDRMManager.h"
+#import "WidevineClassicCDM.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 
@@ -61,34 +61,45 @@
 }
 
 - (void)setSrc:(NSString *)src {
-    // origin src should be saved
     _src = src;
     
-    if (src.isWVM) {
-        [self setDRMSource:nil];
+    NSURL* url = [NSURL URLWithString:_src];
+    if ([self isWVM]) {
+        // May fail if content is DRM protected. We'll try again if/when we get a licenseUri.
+        KPLogDebug(@"Content (%@) is WVM, waiting for license uri", url);
     } else {
-        [self.player setPlayerSource:[NSURL URLWithString:src]];
+        [self.player setPlayerSource:url];
     }
 }
 
-- (void)setDRMSource: (NSString *)drmKey {
-    if (drmKey) {
-        self.drmParams = @{
-                             @"WVDRMServerKey": drmKey,
-                             @"WVPortalKey": WVPortalKey
-                             };
+-(void)setLicenseUri:(NSString*)licenseUri {
+    
+    if (![self isWVM]) {
+        return;
     }
-    if (self.drmParams != nil) {
-#if !(TARGET_IPHONE_SIMULATOR)
-        [KDRMManager DRMSource:self.src
-                           key:self.drmParams
-                    completion:^(NSString *drmUrl) {
-                        if (drmUrl && !drmUrl.isWVM) {
-                            KPLogError(@"Media Source is not playable!");
-                        }
-                    }];
-#endif
+    
+    _licenseUri = licenseUri;
+    
+    [WidevineClassicCDM playAsset:_src withLicenseUri:_licenseUri readyToPlay:^(NSString *playbackURL) {
+        if (!playbackURL) {
+            KPLogError(@"Got nil playback URL, can't play");
+        } else {
+            NSURL* url = [NSURL URLWithString:playbackURL];
+            [self.player setPlayerSource:url];
+        }
+    }];
+}
+
+- (BOOL)isWVM {
+    if (_src != nil) {
+        return [[NSURL URLWithString:_src].pathExtension hasSuffix:@"wvm"];
     }
+    
+    return NO;
+}
+
+- (NSTimeInterval)currentPlayBackTime {
+    return _player.currentPlaybackTime;
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
@@ -154,10 +165,14 @@
     if (_adController) {
         [_adController removeIMAPlayer];
     }
+
     [_player removePlayer];
-    _player = nil;
-    
     _adController = nil;
+    _player = nil;
+    _delegate = nil;
+    _parentViewController = nil;
+    _src = nil;
+    _playerClassName = nil;
 }
 
 

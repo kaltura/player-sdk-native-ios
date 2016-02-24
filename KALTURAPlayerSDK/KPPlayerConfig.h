@@ -19,17 +19,22 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 
 @interface KPPlayerConfig : NSObject
 
-- (instancetype)initWithDomain:(NSString *)domain
-                      uiConfID:(NSString *)uiConfId
-                      partnerId:(NSString *)partnerId;
+- (instancetype)initWithServer:(NSString *)serverURL uiConfID:(NSString *)uiConfId partnerId:(NSString *)partnerId;
 
-@property (nonatomic, readonly) NSString *domain;
+- (instancetype)initWithDomain:(NSString *)domain uiConfID:(NSString *)uiConfId partnerId:(NSString *)partnerId
+DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
+
+
++(instancetype)configWithDictionary:(NSDictionary*)configDict;
+
+@property (nonatomic, readonly) NSString *server;
 @property (nonatomic, readonly) NSString *partnerId;
 
 @property (nonatomic, readonly) NSString *uiConfId;
+
+@property (nonatomic, copy) NSString *ks;
 @property (nonatomic, copy) NSString *entryId;
 @property (nonatomic, copy) NSString *advertiserID;
-@property (nonatomic, copy) NSDictionary *drmParams;
 @property (nonatomic) BOOL enableHover;
 
 
@@ -55,4 +60,7 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 - (NSURL *)videoURL;
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL;
+
+-(NSMutableArray<NSURLQueryItem*>*)queryItems;
+
 @end

@@ -42,10 +42,11 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 
 // The SDK's bundle
 - (NSBundle *)bundle {
-    if (!_bundle) {
-        _bundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
+    if (!_bundle) {        
+        _bundle = [NSBundle bundleWithURL:[[NSBundle bundleForClass:self.classForCoder]
                                            URLForResource:@"KALTURAPlayerSDKResources"
                                            withExtension:@"bundle"]];
+
     }
     return _bundle;
 }

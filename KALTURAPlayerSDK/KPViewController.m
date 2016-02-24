@@ -31,12 +31,17 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #include <sys/types.h>
 #include <sys/sysctl.h>
 
-
 typedef NS_ENUM(NSInteger, KPActionType) {
     KPActionTypeShare,
     KPActionTypeOpenHomePage,
     KPActionTypeSkip
 };
+
+typedef NS_ENUM(NSInteger, KPError) {
+    KPErrorMsg = 500
+};
+
+NSString *const KPErrorDomain = @"com.kaltura.player";
 
 @interface KPViewController() <KPlayerFactoryDelegate,
                                 KPControlsViewDelegate,
@@ -119,30 +124,36 @@ typedef NS_ENUM(NSInteger, KPActionType) {
 
 - (void)removePlayer {
     [self.controlsView removeControls];
-    self.controlsView = nil;
     [self.playerFactory removePlayer];
-    self.playerFactory = nil;
     [callBackReadyRegistrations removeAllObjects];
+    [self.kPlayerEvaluatedDict removeAllObjects];
+    [self.kPlayerEventsDict removeAllObjects];
+    self.controlsView = nil;
+    self.playerFactory = nil;
     callBackReadyRegistrations = nil;
     appConfigDict = nil;
     nativeActionParams = nil;
     videoURL = nil;
-    [self.kPlayerEvaluatedDict removeAllObjects];
     self.kPlayerEvaluatedDict = nil;
-    [self.kPlayerEventsDict removeAllObjects];
     self.kPlayerEventsDict = nil;
+    [self removeFromParentViewController];
+    
     @try {
-    [self.view removeObserver:self forKeyPath:@"frame" context:nil];
+        [self.view removeObserver:self forKeyPath:@"frame" context:nil];
     }
     @catch (NSException *exception) {
         NSLog(@"frame not observed");
     }
     
+    _delegate = nil;
+    _playerController = nil;
+    _configuration = nil;
+    _kdpAPIState = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.view removeFromSuperview];
     [self removeFromParentViewController];
-    self.superView = nil;
+    _superView = nil;
 }
 
 - (NSTimeInterval)currentPlaybackTime {
@@ -282,7 +293,6 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         _playerFactory = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
         [_playerFactory addPlayerToController:self];
         _playerFactory.delegate = self;
-        _playerFactory.drmParams = self.configuration.drmParams;
         _playerFactory.kIMAWebOpenerDelegate = _kIMAWebOpenerDelegate;
     }
     
@@ -755,9 +765,9 @@ typedef NS_ENUM(NSInteger, KPActionType) {
     
     switch ( attributeName.attributeEnumFromString ) {
         case src: {
-            NSString *localPath = [_datasource localURLForEntryId:_configuration.entryId];
-            if (_datasource && localPath) {
-                attributeVal = localPath;
+            NSString *overrideURL = [_customSourceURLProvider urlForEntryId:_configuration.entryId currentURL:attributeVal];
+            if (overrideURL) {
+                attributeVal = overrideURL;
             }
             _playerFactory.src = attributeVal;
         }
@@ -768,12 +778,17 @@ typedef NS_ENUM(NSInteger, KPActionType) {
         case visible:
             [self visible: attributeVal];
             break;
-#if !(TARGET_IPHONE_SIMULATOR)
-        ///@todo: test & refactor by sending the dictionary via web layer
-        case licenseUri:
-            [_playerFactory setDRMSource:attributeVal];
+        case playerError:
+            if ([_delegate respondsToSelector:@selector(kPlayer:didFailWithError:)]) {
+                NSDictionary *dict = @{NSLocalizedDescriptionKey:attributeVal,
+                                       NSLocalizedFailureReasonErrorKey:attributeVal};
+                NSError *err = [NSError errorWithDomain:KPErrorDomain code:KPErrorMsg userInfo:dict];
+                [_delegate kPlayer:self didFailWithError:err];
+            }
             break;
-#endif
+        case licenseUri:
+            _playerFactory.licenseUri = attributeVal;
+            break;
         case nativeAction:
             nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding]
                                                                  options:0

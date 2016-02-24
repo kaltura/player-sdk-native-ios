@@ -26,7 +26,7 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     NSBundle *playerBundle = [NSBundle bundleWithURL:[[NSBundle mainBundle]
-                                                      URLForResource:@"KALTURAPlayerSDK"
+                                                      URLForResource:@"KALTURAPlayerSDKResources"
                                                       withExtension:@"bundle"]];
     self = [super initWithNibName:nibNameOrNil bundle:playerBundle];
     if (self) {
