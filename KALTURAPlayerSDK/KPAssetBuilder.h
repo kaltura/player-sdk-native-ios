@@ -22,4 +22,8 @@ typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 -(void)setContentUrl:(NSString*)url;
 -(void)setLicenseUri:(NSString*)licenseUri;
 
++(void)setCertificate:(NSData*)certificate;
++(NSData*)getCertificate;
+
+
 @end

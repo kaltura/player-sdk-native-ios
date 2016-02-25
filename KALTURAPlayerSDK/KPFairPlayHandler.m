@@ -7,15 +7,11 @@
 //
 
 #import "KPFairPlayHandler.h"
+#import "KPAssetBuilder.h"
 
 NSString* const URL_SCHEME_NAME = @"skd";
 
-#define CERTIFICATE_URL     @"https://208.185.60.221/viacom.cer"
-#define LICENSE_URL         @"http://192.168.162.49:8002/udrm/fps/license?signature=pY64NTYI182vv31jz8uWdGqFW1s%3D&custom_data=eyJjYV9zeXN0ZW0iOiJPVlAiLCJ1c2VyX3Rva2VuIjoiWkRJeVpEWmxZelJqTURFM1pqWXpPRGRtT0RjNE1tVXlNREE1T1RNeE1URmpNamxqTTJKbE9Id3hNREU3TVRBeE96RXdNVFExTVRrNU1UUTNNanN5T3pFME5URTVPVEUwTnpNdU5qUXdNVHRoWkcxcGJqdGthWE5oWW14bFpXNTBhWFJzWlcxbGJuUTdPdz09IiwiYWNjb3VudF9pZCI6IjEwMSIsImNvbnRlbnRfaWQiOiIwX3R1Zmx6MG4zIiwiZmlsZXMiOiIwX3dmYjZ2MHkxIn0%3D"
-
-
 @interface KPFairPlayHandler () {
-    kLicenseUriProvider _licenseUriProvider;
     NSString* _licenseUri;
 }
 @end
@@ -42,26 +38,10 @@ static dispatch_queue_t	globalNotificationQueue( void )
     _licenseUri = licenseUri;
 }
 
-- (NSData *)loadCertificate {
-    static NSData *certificate = nil;
-    
-    NSError* error;
-    if (!certificate) {
-        certificate = [NSData dataWithContentsOfURL:[NSURL URLWithString:CERTIFICATE_URL] options:0 error:&error];
-        // TODO: errors
-    }
-    
-    return certificate;
-}
-
 - (NSData *)getContentKeyAndLeaseExpiryfromKeyServerModuleWithRequest:(NSData *)requestBytes contentIdentifierHost:(NSString *)assetStr leaseExpiryDuration:(NSTimeInterval *)expiryDuration error:(NSError **)errorOut {
     NSData *decodedData = nil;
     
-    if (!_licenseUriProvider) {
-        // TODO: error
-        return nil;
-    }
-    NSString* licenseUri = _licenseUriProvider(assetStr);
+    NSString* licenseUri = _licenseUri;
     
     NSURL* reqUrl = [NSURL URLWithString:licenseUri];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:reqUrl];
@@ -96,29 +76,23 @@ static dispatch_queue_t	globalNotificationQueue( void )
     
     NSLog( @"shouldWaitForLoadingOfURLRequest got %@", loadingRequest);
     
-    NSString *assetStr;
-    NSData *assetId;
-    NSData *requestBytes;
+    // TODO: assetid?
+    NSString *assetId = @"123";
     
-    assetStr = @"123";
-    assetId = [NSData dataWithBytes: [assetStr cStringUsingEncoding:NSUTF8StringEncoding] length:[assetStr lengthOfBytesUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSData *certificate = [self loadCertificate];
+    NSData *certificate = [KPAssetBuilder getCertificate];
     
     
     // Get SPC
-    requestBytes = [loadingRequest streamingContentKeyRequestDataForApp:certificate
-                                                      contentIdentifier:assetId
+    NSData *requestBytes = [loadingRequest streamingContentKeyRequestDataForApp:certificate
+                                                      contentIdentifier:[assetId dataUsingEncoding:NSUTF8StringEncoding]
                                                                 options:nil
                                                                   error:&error];
     
-    
-    NSData *responseData = nil;
     NSTimeInterval expiryDuration = 0.0;
     
     // Send the SPC message to the Key Server.
-    responseData = [self getContentKeyAndLeaseExpiryfromKeyServerModuleWithRequest:requestBytes
-                                                             contentIdentifierHost:assetStr
+    NSData *responseData = [self getContentKeyAndLeaseExpiryfromKeyServerModuleWithRequest:requestBytes
+                                                             contentIdentifierHost:assetId
                                                                leaseExpiryDuration:&expiryDuration
                                                                              error:&error];
     
