@@ -283,6 +283,7 @@ NSString * const StatusKeyPath = @"status";
     AVPlayerItem *item = [AVPlayerItem playerItemWithAsset:asset];
     
     [self removeStatusObserver];
+    [self unregisterForPlaybackNotification];
     
     
     [item addObserver:self
@@ -367,7 +368,6 @@ NSString * const StatusKeyPath = @"status";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     @try {
         [self removeObserver:self forKeyPath:RateKeyPath context:nil];
-        [self.currentItem removeObserver:self forKeyPath:StatusKeyPath context:nil];
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
@@ -378,7 +378,6 @@ NSString * const StatusKeyPath = @"status";
     }
 
     [_layer removeFromSuperlayer];
-    [self removeStatusObserver];
 }
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
@@ -536,6 +535,7 @@ NSString * const StatusKeyPath = @"status";
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
     [self unregisterForPlaybackNotification];
+    [self removeStatusObserver];
     self.layer = nil;
     self.delegate = nil;
     self.parentView = nil;
