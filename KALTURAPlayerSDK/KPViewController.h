@@ -95,8 +95,6 @@
  */
 - (void)changeMedia:(NSString *)entryID;
 
-- (void)changeMedia:(NSString *)entryID withCompletion:(void(^)())completion;
-
 @property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
 
 @property (nonatomic, weak) id<KPSourceURLProvider> customSourceURLProvider;
