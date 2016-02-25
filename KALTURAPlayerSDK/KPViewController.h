@@ -84,7 +84,6 @@
  */
 - (void)removePlayer;
 
-
 /*!
  *  @function changeMedia:
  *
@@ -94,6 +93,16 @@
  *  @param NSString entryID the entryID of the new video
  */
 - (void)changeMedia:(NSString *)entryID;
+
+/*!
+ *  @function changeConfiguration:
+ *
+ *  @abstract
+ *  Change the config with no need to recreate player instance
+ *
+ *  @param KPPlayerConfig config is new configuration object
+ */
+- (void)changeConfiguration:(KPPlayerConfig *)config;
 
 @property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
 
