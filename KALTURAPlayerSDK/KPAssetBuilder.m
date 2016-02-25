@@ -7,23 +7,18 @@
 //
 
 #import "KPAssetBuilder.h"
+
 #import "KPFairPlayHandler.h"
-#import "KPViewControllerProtocols.h"
+#import "KPWidevineClassicHandler.h"
+
 #import "KPLog.h"
-#import "KPlayerFactory.h"
-#import "WidevineClassicCDM.h"
 
 @interface KPAssetBuilder () {
-    kDRMScheme _drm;
-    NSURL* _contentUrl;
-    NSString* _licenseUri;
     KPAssetReadyCallback _assetReadyCallback;
-    
-    // DRM specific
-    NSURL* _wvPlaybackUrl;
-    KPFairPlayHandler* _fairplayHandler;
+    id<KPAssetHandler> _assetHandler;
 }
 @end
+
 
 @implementation KPAssetBuilder
 
@@ -46,74 +41,27 @@ static NSData* s_certificate;
 }
 
 -(void)setContentUrl:(NSString*)url {
-    _contentUrl = [NSURL URLWithString:url];
+    NSURL* contentUrl = [NSURL URLWithString:url];
     
-    if (!_contentUrl) {
+    if (!contentUrl) {
+        KPLogError(@"Failed parsing content url, can't continue");
         return;            
     }
     
-    if ([_contentUrl.pathExtension.lowercaseString isEqualToString:@"wvm"]) {
-        _drm = kDRMWidevineClassic;
+    Class handlerClass;    
+    if ([contentUrl.pathExtension.lowercaseString isEqualToString:@"wvm"]) {
+        handlerClass = [KPWidevineClassicHandler class];
     } else {
-        _drm = kDRMFairPlay;
-        _fairplayHandler = [KPFairPlayHandler new];
-        [self callAssetReadyCallback]; // always ready
+        handlerClass = [KPFairPlayHandler class];
     }
-}
-
--(AVURLAsset*)toAVAsset {
-    AVURLAsset *asset;
-    switch (_drm) {
-        case kDRMFairPlay:
-            asset = [AVURLAsset URLAssetWithURL:_contentUrl options:nil];
-            [_fairplayHandler attachToAsset:asset];
-            break;
-            
-        case kDRMWidevineClassic:
-            asset = [AVURLAsset URLAssetWithURL:_wvPlaybackUrl options:nil];
-            break;
-            
-        case kDRMWidevineCENC:
-            KPLogError(@"Widevine CENC is not supported");
-            break;
-    }
+    _assetHandler = [[handlerClass alloc] initWithAssetReadyCallback:_assetReadyCallback];
     
-    return asset;
-}
-
--(void)callAssetReadyCallback {
-    if (_assetReadyCallback) {
-        AVURLAsset* avAsset = self.toAVAsset;
-        dispatch_async(dispatch_get_main_queue(), ^(void) {
-            _assetReadyCallback(avAsset);
-        });
-    }
-}
-
--(void)playWidevineClassicAsset {
-    // Widevine: license acq and get playback url
-    [WidevineClassicCDM playAsset:_contentUrl.absoluteString withLicenseUri:_licenseUri readyToPlay:^(NSString *playbackURL) {
-        _wvPlaybackUrl = [NSURL URLWithString:playbackURL];
-        [self callAssetReadyCallback];
-    }];
+    [_assetHandler setContentUrl:url];
 }
 
 -(void)setLicenseUri:(NSString *)licenseUri {
-    _licenseUri = licenseUri;
-
-    switch (_drm) {
-        case kDRMFairPlay:
-            [_fairplayHandler setLicenseUri:_licenseUri];
-            break;
-            
-        case kDRMWidevineClassic:
-            [self playWidevineClassicAsset];
-            break;
-            
-        case kDRMWidevineCENC:
-            KPLogError(@"Widevine CENC is not supported");
-            break;
-    }
+    [_assetHandler setLicenseUri:licenseUri];
 }
 
 @end
+

@@ -13,6 +13,7 @@ NSString* const URL_SCHEME_NAME = @"skd";
 
 @interface KPFairPlayHandler () {
     NSString* _licenseUri;
+    KPAssetReadyCallback _assetReadyCallback;
 }
 @end
 
@@ -30,8 +31,22 @@ static dispatch_queue_t	globalNotificationQueue( void )
 
 @implementation KPFairPlayHandler
 
--(void)attachToAsset:(AVURLAsset *)asset {
+-(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
+    self = [super init];
+    if (self) {
+        _assetReadyCallback = callback;
+    }
+    return self;
+}
+
+-(void)setContentUrl:(NSString*)url {
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil];
+    
     [asset.resourceLoader setDelegate:self queue:globalNotificationQueue()];
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        _assetReadyCallback(asset);
+    });
 }
 
 -(void)setLicenseUri:(NSString*)licenseUri {

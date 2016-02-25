@@ -113,6 +113,7 @@
 		BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E601C0B139400649BDF /* KPControlsView.h */; };
 		BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */; };
 		BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */; };
+		FB0B5AAE1C7FB3BE0067872E /* KPWidevineClassicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */; };
 		FB48BCB41C7B53E300B2E1B7 /* KPFairPlayHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FB48BCB31C7B53E300B2E1B7 /* KPFairPlayHandler.m */; };
 		FB48BCB71C7C8A4800B2E1B7 /* KPAssetBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = FB48BCB61C7C8A4800B2E1B7 /* KPAssetBuilder.m */; };
 		FB7D10701C46E81500FBB906 /* KPLocalAssetsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FB7D106F1C46E81500FBB906 /* KPLocalAssetsManager.m */; };
@@ -280,6 +281,8 @@
 		BFBE8E841C0B139400649BDF /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = KALTURAPlayerSDK/Utilities.h; sourceTree = SOURCE_ROOT; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB0B5AAC1C7FB3BE0067872E /* KPWidevineClassicHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPWidevineClassicHandler.h; sourceTree = "<group>"; };
+		FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPWidevineClassicHandler.m; sourceTree = "<group>"; };
 		FB48BCB21C7B53E300B2E1B7 /* KPFairPlayHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPFairPlayHandler.h; sourceTree = "<group>"; };
 		FB48BCB31C7B53E300B2E1B7 /* KPFairPlayHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPFairPlayHandler.m; sourceTree = "<group>"; };
 		FB48BCB51C7C8A4800B2E1B7 /* KPAssetBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPAssetBuilder.h; sourceTree = "<group>"; };
@@ -417,10 +420,12 @@
 				BF1C07711C0DA8E900A67462 /* KPController.m */,
 				BF1C07721C0DA8E900A67462 /* KPIMAPlayerViewController.h */,
 				BF1C07731C0DA8E900A67462 /* KPIMAPlayerViewController.m */,
-				FB48BCB21C7B53E300B2E1B7 /* KPFairPlayHandler.h */,
-				FB48BCB31C7B53E300B2E1B7 /* KPFairPlayHandler.m */,
 				FB48BCB51C7C8A4800B2E1B7 /* KPAssetBuilder.h */,
 				FB48BCB61C7C8A4800B2E1B7 /* KPAssetBuilder.m */,
+				FB48BCB21C7B53E300B2E1B7 /* KPFairPlayHandler.h */,
+				FB48BCB31C7B53E300B2E1B7 /* KPFairPlayHandler.m */,
+				FB0B5AAC1C7FB3BE0067872E /* KPWidevineClassicHandler.h */,
+				FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */,
 			);
 			name = KPlayer;
 			sourceTree = "<group>";
@@ -692,6 +697,7 @@
 				BFBE8E8B1C0B139400649BDF /* KPBrowserViewController.m in Sources */,
 				5F9A801A1C1CCC0800DD930E /* NSDictionary+Utilities.m in Sources */,
 				BF1C076B1C0DA8A600A67462 /* KPlayer.m in Sources */,
+				FB0B5AAE1C7FB3BE0067872E /* KPWidevineClassicHandler.m in Sources */,
 				BF1C077B1C0DA93700A67462 /* KPPlayerConfig.m in Sources */,
 				BFBE8E881C0B139400649BDF /* FacebookStrategy.m in Sources */,
 				BFBE8E8A1C0B139400649BDF /* KCacheManager.m in Sources */,

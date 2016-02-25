@@ -8,9 +8,7 @@
 
 @import Foundation;
 @import AVFoundation;
-typedef NSString*(^kLicenseUriProvider)(NSString* assetId);
+#import "KPAssetBuilder.h"
 
-@interface KPFairPlayHandler : NSObject <AVAssetResourceLoaderDelegate>
--(void)setLicenseUri:(NSString*)licenseUri;
--(void)attachToAsset:(AVURLAsset*)asset;
+@interface KPFairPlayHandler : NSObject <AVAssetResourceLoaderDelegate, KPAssetHandler>
 @end

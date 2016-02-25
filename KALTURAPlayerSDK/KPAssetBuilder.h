@@ -10,10 +10,10 @@
 #import <AVFoundation/AVFoundation.h>
 
 
+typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 
 @interface KPAssetBuilder : NSObject
 
-typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 
 -(instancetype)initWithReadyCallback:(KPAssetReadyCallback)callback;
 -(void)setContentUrl:(NSString*)url;
@@ -22,5 +22,14 @@ typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 +(void)setCertificate:(NSData*)certificate;
 +(NSData*)getCertificate;
 
+
+@end
+
+
+@protocol KPAssetHandler <NSObject>
+
+-(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback;
+-(void)setContentUrl:(NSString*)url;
+-(void)setLicenseUri:(NSString *)licenseUri;
 
 @end
