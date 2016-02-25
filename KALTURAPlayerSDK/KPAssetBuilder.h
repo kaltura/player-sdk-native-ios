@@ -14,7 +14,6 @@ typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 
 @interface KPAssetBuilder : NSObject
 
-
 -(instancetype)initWithReadyCallback:(KPAssetReadyCallback)callback;
 -(void)setContentUrl:(NSString*)url;
 -(void)setLicenseUri:(NSString*)licenseUri;
@@ -22,9 +21,10 @@ typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 +(void)setCertificate:(NSData*)certificate;
 +(NSData*)getCertificate;
 
-
 @end
 
+
+// Protocol used by KPAssetBuilder to handle DRM operations for an asset.
 
 @protocol KPAssetHandler <NSObject>
 
