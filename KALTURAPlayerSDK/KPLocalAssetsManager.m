@@ -14,10 +14,13 @@
 #import "KPAssetBuilder.h"
 
 
+typedef NS_ENUM(NSUInteger, kDRMScheme) {
+    kDRMWidevineClassic, kDRMWidevineCENC, kDRMFairPlay
+};
+
+
 @implementation KPLocalAssetsManager
 
-
-#define JSON_BYTE_LIMIT = 1024 * 1024;
 
 #define CHECK_NOT_NULL(v)   if (!(v)) return NO
 #define CHECK_NOT_EMPTY(v)  if ((v).length == 0) return NO

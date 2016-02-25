@@ -9,9 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
-typedef NS_ENUM(NSUInteger, kDRMScheme) {
-    kDRMWidevineClassic, kDRMWidevineCENC, kDRMFairPlay
-};
 
 
 @interface KPAssetBuilder : NSObject
