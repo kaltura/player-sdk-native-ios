@@ -103,6 +103,10 @@
     [self sendNotification:@"doUpdateLayout" withParams:nil];
 }
 
+- (void)loadRequest:(NSURLRequest *)request {
+    [super loadRequest:request];
+}
+
 #pragma mark UIWebviewDelegate
 // This selector is called when something is loaded in our webview
 // By something I don't mean anything but just "some" :

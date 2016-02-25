@@ -58,8 +58,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     void(^_shareHandler)(NSDictionary *);
                                     
     BOOL isActionSheetPresented;
-    void(^changeMediaCompletion)();
-                                
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
@@ -549,9 +547,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
 }
 
-- (void)changeMedia:(NSString *)entryID withCompletion:(void (^)())completion {
-    changeMediaCompletion = [completion copy];
-    [self changeMedia:entryID];
+- (void)changeConfiguration:(KPPlayerConfig *)config {
+    if (config) {
+        [self.controlsView loadRequest:[NSURLRequest requestWithURL:config.videoURL]];
+    }
 }
 
 #pragma mark - Player Methods
@@ -930,10 +929,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                               
                                               if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange:)]) {
                                                   [_delegate kPlayer:self playerLoadStateDidChange:KPMediaLoadStatePlayable];
-                                              }
-                                              if (changeMediaCompletion) {
-                                                  changeMediaCompletion();
-                                                  changeMediaCompletion = nil;
                                               }
                                           },
                                       PlayKey:
