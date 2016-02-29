@@ -46,6 +46,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)changeSubtitleLanguage:(NSString *)isoCode;
 - (void)removePlayer;
 - (void)enableTracks:(BOOL)isEnablingTracks;
+- (void)prepareForChangeConfiguration;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;

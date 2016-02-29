@@ -549,6 +549,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)changeConfiguration:(KPPlayerConfig *)config {
     if (config) {
+        [self.playerFactory prepareForChangeConfiguration];
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:config.videoURL]];
     }
 }
