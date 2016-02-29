@@ -540,7 +540,7 @@ NSString * const StatusKeyPath = @"status";
     }
 }
 
-- (void)hide {
+- (void)hidePlayer {
     if (self) {
         [self.layer removeFromSuperlayer];
     }
