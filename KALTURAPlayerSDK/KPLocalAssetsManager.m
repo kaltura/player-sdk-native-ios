@@ -12,11 +12,84 @@
 #import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
 
+@interface KPLocalAssetsManager ()
++ (NSURLQueryItem *)queryItem:(NSString *)name
+                             :(NSString *)value;
+@end
 
 typedef NS_ENUM(NSUInteger, kDRMScheme) {
     kDRMWidevineClassic, kDRMWidevineCENC
 };
 
+@interface KPPlayerConfig (Asset)
+@property (nonatomic, copy, readonly) NSData *load;
+@property (nonatomic, copy, readonly) NSURL *resolvePlayerRootURL;
+@end
+
+@implementation KPPlayerConfig (Asset)
+
+- (NSData *)load {
+    NSURL *serverURL = [NSURL URLWithString:self.server];
+    serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
+    NSURLComponents *urlComps = [NSURLComponents componentsWithURL:serverURL resolvingAgainstBaseURL:NO];
+    
+    NSMutableArray *items = [NSMutableArray arrayWithArray:@[
+                                                             [KPLocalAssetsManager queryItem:@"service" :@"uiconf"],
+                                                             [KPLocalAssetsManager queryItem:@"action" :@"get"],
+                                                             [KPLocalAssetsManager queryItem:@"format" :@"1"],
+                                                             [KPLocalAssetsManager queryItem:@"p" :self.partnerId],
+                                                             [KPLocalAssetsManager queryItem:@"id" :self.uiConfId],
+                                                             ]];
+    
+    if (self.ks) {
+        [items addObject:[KPLocalAssetsManager queryItem:@"ks" :self.ks]];
+    }
+    
+    NSURL* apiCall = urlComps.URL;
+    
+    return [NSData dataWithContentsOfURL:apiCall];
+}
+
+- (NSURL *)resolvePlayerRootURL {
+    // serverURL is something like "http://cdnapi.kaltura.com";
+    // we need to get to "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
+    // This is done by loading UIConf data, and looking at "html5Url" property.
+    
+    NSData *jsonData = self.load;
+    NSError *jsonError = nil;
+    NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                           options:0
+                                                             error:&jsonError];
+    
+    if (!uiConf) {
+        KPLogError(@"Error parsing uiConf json: %@", jsonError);
+        return nil;
+    }
+    NSString *serviceError = uiConf[@"message"];
+    if (serviceError) {
+        KPLogError(@"uiConf service reported error: %@", serviceError);
+        return nil;
+    }
+    
+    NSString *embedLoaderUrl = uiConf[@"html5Url"];
+    
+    // embedLoaderUrl is typically something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
+    
+    if (!embedLoaderUrl) {
+        KPLogError(@"No html5Url in uiConf");
+        return nil;
+    }
+    NSURL *serverURL = [NSURL URLWithString:self.server];
+    if ([embedLoaderUrl hasPrefix:@"/"]) {
+        serverURL = [serverURL URLByAppendingPathComponent:embedLoaderUrl];
+    } else {
+        serverURL = [NSURL URLWithString:embedLoaderUrl];
+    }
+    
+    return [serverURL URLByDeletingLastPathComponent];
+}
+
+@end
 
 @implementation KPLocalAssetsManager
 
@@ -26,7 +99,10 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 #define CHECK_NOT_NULL(v)   if (!(v)) return NO
 #define CHECK_NOT_EMPTY(v)  if ((v).length == 0) return NO
 
-+(BOOL)registerAsset:(KPPlayerConfig*)assetConfig flavor:(NSString*)flavorId path:(NSString*)localPath callback:(kLocalAssetRegistrationBlock)completed {
++ (BOOL)registerAsset:(KPPlayerConfig *)assetConfig
+               flavor:(NSString *)flavorId
+                 path:(NSString *)localPath
+             callback:(kLocalAssetRegistrationBlock)completed {
     
     // NOTE: this method currently only supports (and assumes) Widevine Classic.
 
@@ -40,19 +116,29 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     CHECK_NOT_EMPTY(localPath);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self registerWidevineAsset:assetConfig localPath:localPath flavorId:flavorId callback:completed];
+        [self registerWidevineAsset:assetConfig
+                          localPath:localPath
+                           flavorId:flavorId
+                           callback:completed];
     });
     
     return YES;
 }
 
-+(NSString*)prepareLicenseURLForAsset:(KPPlayerConfig*)assetConfig flavorId:(NSString*)flavorId drmScheme:(kDRMScheme)drmScheme error:(NSError**)error {
++ (NSString *)prepareLicenseURLForAsset:(KPPlayerConfig *)assetConfig
+                               flavorId:(NSString *)flavorId
+                              drmScheme:(kDRMScheme)drmScheme
+                                  error:(NSError **)error {
     
     // load license data
-    NSURL* getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig flavorId:flavorId drmScheme:drmScheme];
-    NSData* licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
-    NSError* jsonError = nil;
-    NSDictionary* licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData options:0 error:&jsonError];
+    NSURL *getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig
+                                                             flavorId:flavorId
+                                                            drmScheme:drmScheme];
+    NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
+    NSError *jsonError = nil;
+    NSDictionary *licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData
+                                                                    options:0
+                                                                      error:&jsonError];
     
     if (!licenseDataDict) {
         KPLogError(@"Error parsing licenseData json: %@", jsonError);
@@ -60,14 +146,15 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     }
     
     // parse license data
-    NSDictionary* licenseDataError = licenseDataDict[@"error"];
+    NSDictionary *licenseDataError = licenseDataDict[@"error"];
     if (licenseDataError) {
-        NSString* message = [licenseDataError isKindOfClass:[NSDictionary class]] ? licenseDataError[@"message"] : @"<none>";
+        NSString *message = [licenseDataError isKindOfClass:[NSDictionary class]] ? licenseDataError[@"message"] : @"<none>";
         if (error) {
-            *error = [NSError errorWithDomain:@"KPLocalAssetsManager" code:'lder'
-                            userInfo:@{NSLocalizedDescriptionKey: @"License data error",
-                                       @"EntryId": assetConfig.entryId ? assetConfig.entryId : @"<none>", 
-                                       @"ServiceError": message ? message : @"<none>"}];
+            *error = [NSError errorWithDomain:@"KPLocalAssetsManager"
+                                         code:'lder'
+                                     userInfo:@{NSLocalizedDescriptionKey: @"License data error",
+                                                @"EntryId": assetConfig.entryId ? assetConfig.entryId : @"<none>",
+                                                @"ServiceError": message ? message : @"<none>"}];
         }
         return nil;
     }
@@ -77,15 +164,17 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     return licenseUri;
 }
 
-+(NSURL*)prepareGetLicenseDataURLForAsset:(KPPlayerConfig*)assetConfig flavorId:(NSString*)flavorId drmScheme:(kDRMScheme)drmScheme {
++ (NSURL *)prepareGetLicenseDataURLForAsset:(KPPlayerConfig *)assetConfig
+                                   flavorId:(NSString *)flavorId
+                                  drmScheme:(kDRMScheme)drmScheme {
     
-    NSURL* serverURL = [NSURL URLWithString:assetConfig.server];
+    NSURL *serverURL = [NSURL URLWithString:assetConfig.server];
     
     // URL may either point to the root of the server or to mwEmbedFrame.php. Resolve this.
     if ([serverURL.path hasSuffix:@"/mwEmbedFrame.php"]) {
         serverURL = [serverURL URLByDeletingLastPathComponent];
     } else {
-        serverURL = [self resolvePlayerRootURL:serverURL partnerId:assetConfig.partnerId uiConfId:assetConfig.uiConfId ks:assetConfig.ks];
+        serverURL = assetConfig.resolvePlayerRootURL;
     }
     
     
@@ -118,10 +207,16 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 }
 
-+(void)registerWidevineAsset:(KPPlayerConfig*)assetConfig localPath:(NSString*)localPath flavorId:(NSString*)flavorId callback:(kLocalAssetRegistrationBlock)callback {
++ (void)registerWidevineAsset:(KPPlayerConfig *)assetConfig
+                    localPath:(NSString *)localPath
+                     flavorId:(NSString *)flavorId
+                     callback:(kLocalAssetRegistrationBlock)callback {
     
-    NSError* error = nil;
-    NSString* licenseUri = [self prepareLicenseURLForAsset:assetConfig flavorId:flavorId drmScheme:kDRMWidevineClassic error:&error];
+    NSError *error = nil;
+    NSString *licenseUri = [self prepareLicenseURLForAsset:assetConfig
+                                                  flavorId:flavorId
+                                                 drmScheme:kDRMWidevineClassic
+                                                     error:&error];
     if (!licenseUri) {
         KPLogError(@"Error getting license data: %@", error);
         callback(error);
@@ -144,76 +239,18 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     
 }
 
-+(NSURL*)resolvePlayerRootURL:(NSURL*)serverURL partnerId:(NSString*)partnerId uiConfId:(NSString*)uiConfId ks:(NSString*)ks {
-    
-    // serverURL is something like "http://cdnapi.kaltura.com"; 
-    // we need to get to "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
-    // This is done by loading UIConf data, and looking at "html5Url" property.
-    
-    NSData* jsonData = [self loadUIConf:uiConfId partnerId:partnerId ks:ks serverURL:serverURL];
-    NSError* jsonError = nil;
-    NSDictionary* uiConf = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&jsonError];
-    
-    if (!uiConf) {
-        KPLogError(@"Error parsing uiConf json: %@", jsonError);
-        return nil;
-    }
-    NSString* serviceError = uiConf[@"message"];
-    if (serviceError) {
-        KPLogError(@"uiConf service reported error: %@", serviceError);
-        return nil;
-    }
-    
-    NSString* embedLoaderUrl = uiConf[@"html5Url"];
-    
-    // embedLoaderUrl is typically something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
-    
-    if (!embedLoaderUrl) {
-        KPLogError(@"No html5Url in uiConf");
-        return nil;
-    }
-    
-    if ([embedLoaderUrl hasPrefix:@"/"]) {
-        serverURL = [serverURL URLByAppendingPathComponent:embedLoaderUrl];
-    } else {
-        serverURL = [NSURL URLWithString:embedLoaderUrl];
-    }
-    
-    return [serverURL URLByDeletingLastPathComponent];
-}
-
-+(void)addQueryParameters:(NSDictionary*)queryParams toURLComponents:(NSURLComponents*)components {
-    NSMutableArray* array = [NSMutableArray arrayWithCapacity:queryParams.count];
++ (void)addQueryParameters:(NSDictionary *)queryParams
+           toURLComponents:(NSURLComponents *)components {
+    NSMutableArray *array = [NSMutableArray arrayWithCapacity:queryParams.count];
     [queryParams enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
         [array addObject:[NSURLQueryItem queryItemWithName:key value:obj]];
     }];
     components.queryItems = array;
 }
 
-+(NSURLQueryItem*)queryItem:(NSString*)name :(NSString*)value {
++ (NSURLQueryItem *)queryItem:(NSString *)name
+                             :(NSString *)value {
     return [NSURLQueryItem queryItemWithName:name value:value];
-}
-
-+(NSData*)loadUIConf:(NSString*)uiConfId partnerId:(NSString*)partnerId ks:(NSString*)ks serverURL:(NSURL*)serverURL {
-    
-    serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
-    NSURLComponents* urlComps = [NSURLComponents componentsWithURL:serverURL resolvingAgainstBaseURL:NO];
-    
-    NSMutableArray* items = [NSMutableArray arrayWithArray:@[
-                                                             [self queryItem:@"service" :@"uiconf"],
-                                                             [self queryItem:@"action" :@"get"],
-                                                             [self queryItem:@"format" :@"1"],
-                                                             [self queryItem:@"p" :partnerId],
-                                                             [self queryItem:@"id" :uiConfId],
-                                                             ]];
-    
-    if (ks) {
-        [items addObject:[self queryItem:@"ks" :ks]];
-    }
-    
-    NSURL* apiCall = urlComps.URL;
-    
-    return [NSData dataWithContentsOfURL:apiCall];
 }
 
 @end
