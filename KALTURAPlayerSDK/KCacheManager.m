@@ -159,7 +159,8 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     NSString *path = self.pathForFile;
     if ([[NSFileManager defaultManager] isDeletableFileAtPath:path]) {
         NSError *error = nil;
-        [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+        [[NSFileManager defaultManager] removeItemAtPath:path
+                                                   error:&error];
         if (!error) {
             return YES;
         } else {
@@ -168,6 +169,7 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     }
     return NO;
 }
+
 @end
 
 
@@ -199,6 +201,9 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     
     // Create Kaltura's folder if not already exists
     NSString *pageFolderPath = self.url.absoluteString.md5.appendPath;
+    if (self.url.absoluteString.extractLocalContentId) {
+        pageFolderPath = self.url.absoluteString.extractLocalContentId.appendPath;
+    }
     BOOL isDir = YES;
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:pageFolderPath isDirectory:&isDir];
     NSError *error = nil;
