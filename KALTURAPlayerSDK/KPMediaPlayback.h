@@ -54,6 +54,14 @@
  */
 - (void)stop;
 
+/*!
+ @method        replay:
+ @abstract      replay playback of the current item. (required)
+ 
+ This method initiates playback from the beginning of the current item.
+ */
+- (void)replay;
+
 /* The current position of the playhead. (required) */
 @property(nonatomic) NSTimeInterval currentPlaybackTime;
 
