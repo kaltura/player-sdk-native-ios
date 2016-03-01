@@ -134,7 +134,7 @@
 
     url.path = path;
     url.queryItems = queryItems;
-    NSString *addedLocalContentId = [url.URL.absoluteString stringByAppendingString:@"#localContentId="];
+    NSString *addedLocalContentId = [url.URL.absoluteString stringByAppendingFormat:@"#%@=", LocalContentId];
     if (_localContentId) {
         addedLocalContentId = [addedLocalContentId stringByAppendingString:_localContentId];
     }
