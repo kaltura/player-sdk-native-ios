@@ -134,8 +134,11 @@
 
     url.path = path;
     url.queryItems = queryItems;
-
-    return url.URL;
+    NSString *addedLocalContentId = [url.URL.absoluteString stringByAppendingString:@"#localContentId="];
+    if (_localContentId) {
+        addedLocalContentId = [addedLocalContentId stringByAppendingString:_localContentId];
+    }
+    return [NSURL URLWithString:addedLocalContentId];
 }
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL {
