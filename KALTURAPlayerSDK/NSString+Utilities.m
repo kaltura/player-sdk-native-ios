@@ -11,6 +11,8 @@ static NSString *CurrentTimeKey = @"currentTime";
 static NSString *licenseUriKey = @"licenseUri";
 static NSString *NativeActionKey = @"nativeAction";
 
+NSString *const LocalContentId = @"localContentId";
+
 #import "NSString+Utilities.h"
 #import "KPLog.h"
 #import "NSMutableDictionary+AdSupport.h"
@@ -47,6 +49,19 @@ static NSString *NativeActionKey = @"nativeAction";
 
 - (NSString *)sqlite {
     return [self stringByAppendingString:@".sqlite-wal"];
+}
+
+- (NSString *)extractLocalContentId {
+    NSArray *components = [self componentsSeparatedByString:@"#"];
+    if (components.count == 2) {
+        for (NSString *component in components) {
+            NSArray *param = [component componentsSeparatedByString:@"="];
+            if (param.count == 2 && [param.firstObject isEqualToString:LocalContentId]) {
+                return param.lastObject;
+            }
+        }
+    }
+    return nil;
 }
 
 - (Attribute)attributeEnumFromString {

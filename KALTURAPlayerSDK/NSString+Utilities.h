@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "KPViewControllerProtocols.h"
 
-
+extern NSString *const LocalContentId;
 
 typedef struct FunctionComponents {
     __unsafe_unretained NSString *name;
@@ -27,6 +27,8 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSString *appendHover;
 @property (nonatomic, copy, readonly) NSString *appendIFrameEmbed;
 @property (nonatomic, copy, readonly) NSString *sqlite;
+
+@property (nonatomic, copy, readonly) NSString *extractLocalContentId;
 
 - (NSString *)appendIDFA:(NSString *)IDFA;
 
