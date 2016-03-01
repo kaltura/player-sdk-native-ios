@@ -176,9 +176,9 @@ NSString * const StatusKeyPath = @"status";
                                 value:[self.error localizedDescription]];
                 break;
             case AVPlayerItemStatusReadyToPlay: {
-                [self registerForPlaybackNotification];
-                buffering = NO;
                 if (oldValue.intValue != newValue.intValue) {
+                    [self registerForPlaybackNotification];
+                    buffering = NO;
                     [self.delegate player:self
                                 eventName:DurationChangedKey
                                     value:@(self.duration).stringValue];
