@@ -29,4 +29,5 @@ void notifyListener(NSString *message, NSInteger messageLevel);
 #define KPLogInfo(...) KPLogManager.KPLogLevel <= KPLogLevelInfo ? _KPLog(KPLogLevelInfo,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogWarn(...) KPLogManager.KPLogLevel <= KPLogLevelWarn ? _KPLog(KPLogLevelWarn,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogError(...) KPLogManager.KPLogLevel <= KPLogLevelError ? _KPLog(KPLogLevelError,__MethodName__,__LineNumber__,__VA_ARGS__):nil
+#define KPLogChromeCast(...) KPLogManager.KPLogLevel <= KPLogLevelChromeCast ? _KPLog(KPLogLevelChromeCast,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 
