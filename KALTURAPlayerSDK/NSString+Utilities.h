@@ -52,7 +52,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSString *documentPath;
 @property (nonatomic, copy, readonly) NSURL *sorted;
 
-
+@property (nonatomic, readonly) BOOL isWV;
 #pragma mark
 #pragma mark JavaScriptEvents Double Click helpers
 @property (nonatomic, copy, readonly) NSDictionary *nullVal;

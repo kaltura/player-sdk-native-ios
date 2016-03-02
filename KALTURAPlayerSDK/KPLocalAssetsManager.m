@@ -11,6 +11,10 @@
 #import "WidevineClassicCDM.h"
 #import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
+#import "KPURLProtocol.h"
+#import "KCacheManager.h"
+#import "NSString+Utilities.h"
+
 
 @interface KPLocalAssetsManager ()
 + (NSURLQueryItem *)queryItem:(NSString *)name
@@ -22,13 +26,13 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 };
 
 @interface KPPlayerConfig (Asset)
-@property (nonatomic, copy, readonly) NSData *load;
+@property (nonatomic, copy, readonly) NSData *loadUIConf;
 @property (nonatomic, copy, readonly) NSURL *resolvePlayerRootURL;
 @end
 
 @implementation KPPlayerConfig (Asset)
 
-- (NSData *)load {
+- (NSData *)loadUIConf {
     NSURL *serverURL = [NSURL URLWithString:self.server];
     serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
     NSURLComponents *urlComps = [NSURLComponents componentsWithURL:serverURL resolvingAgainstBaseURL:NO];
@@ -55,7 +59,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // we need to get to "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
     // This is done by loading UIConf data, and looking at "html5Url" property.
     
-    NSData *jsonData = self.load;
+    NSData *jsonData = self.loadUIConf;
     NSError *jsonError = nil;
     NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:jsonData
                                                            options:0
@@ -91,8 +95,21 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 @end
 
+static NSInteger _threadCounter;
+
 @implementation KPLocalAssetsManager
 
++ (void)setThreadCounter:(NSInteger)threadCounter {
+    @synchronized(self) {
+        _threadCounter = threadCounter;
+    }
+}
+
++ (NSInteger)threadCounter {
+    @synchronized(self) {
+        return _threadCounter;
+    }
+}
 
 #define JSON_BYTE_LIMIT = 1024 * 1024;
 
@@ -105,7 +122,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
              callback:(kLocalAssetRegistrationBlock)completed {
     
     // NOTE: this method currently only supports (and assumes) Widevine Classic.
-
+    
     // Preflight: check that all parameters are valid.
     CHECK_NOT_NULL(assetConfig);
     CHECK_NOT_EMPTY(assetConfig.server);
@@ -115,13 +132,17 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     CHECK_NOT_EMPTY(flavorId);
     CHECK_NOT_EMPTY(localPath);
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-        [self registerWidevineAsset:assetConfig
-                          localPath:localPath
-                           flavorId:flavorId
-                           callback:completed];
-    });
-    
+    self.threadCounter = 1;
+    [self storeLocalContentPage:assetConfig callback:completed];
+    if (localPath.isWV) {
+        self.threadCounter = 2;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
+            [self registerWidevineAsset:assetConfig
+                              localPath:localPath
+                               flavorId:flavorId
+                               callback:completed];
+        });
+    }
     return YES;
 }
 
@@ -227,7 +248,10 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         
         switch (event) {
             case KCDMEvent_LicenseAcquired:
-                callback(nil);
+                self.threadCounter--;
+                if (!self.threadCounter) {
+                    callback(nil);
+                }
                 break;
                 
             default:
@@ -237,6 +261,26 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     } forAsset:localPath];
     [WidevineClassicCDM registerLocalAsset:localPath withLicenseUri:licenseUri];
     
+}
+
++ (void)storeLocalContentPage:(KPPlayerConfig *)assetConfig
+                     callback:(kLocalAssetRegistrationBlock)callback {
+    [NSURLProtocol registerClass:[KPURLProtocol class]];
+    CacheManager.host = assetConfig.videoURL.host;
+    CacheManager.cacheSize = assetConfig.cacheSize;
+    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:assetConfig.videoURL]
+                                       queue:[NSOperationQueue new]
+                           completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+                               if (connectionError) {
+                                   callback(connectionError);
+                               } else if (data) {
+                                   self.threadCounter--;
+                                   if (!self.threadCounter) {
+                                       callback(nil);
+                                   }
+                               }
+                               [NSURLProtocol unregisterClass:[KPURLProtocol class]];
+                           }];
 }
 
 + (void)addQueryParameters:(NSDictionary *)queryParams

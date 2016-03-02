@@ -160,6 +160,13 @@ NSString *const LocalContentId = @"localContentId";
     return  output;
 }
 
+- (BOOL)isWV {
+    NSURLComponents *comp = [NSURLComponents componentsWithURL:[NSURL URLWithString:self]
+                                       resolvingAgainstBaseURL:NO];
+    NSArray *videoNameComp = [comp.path.lastPathComponent componentsSeparatedByString:@"."];
+    return [videoNameComp.lastObject isEqualToString:@"wvm"];
+}
+
 - (NSString *)documentPath {
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     return ([paths count] > 0) ? [paths.firstObject stringByAppendingPathComponent:self] : nil;
