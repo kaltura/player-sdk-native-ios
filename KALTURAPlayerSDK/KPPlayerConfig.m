@@ -149,7 +149,6 @@
     if (_enableHover) {
         url = url.appendHover;
     }
-    url = url.appendIFrameEmbed;
     return [NSURL URLWithString:url];
 }
 

@@ -125,7 +125,12 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 
 // Unarchive the stored headers
 - (NSDictionary *)cachedResponseHeaders {
+    NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
+    if (contentId.length) {
+        path = [contentId appendPath];
+    }
+    
     NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
     if (data) {
