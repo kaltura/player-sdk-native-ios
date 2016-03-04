@@ -22,12 +22,20 @@ void notifyListener(NSString *message, NSInteger messageLevel);
 #define __LineNumber__ __LINE__
 #define __MethodName__ [[NSString stringWithUTF8String:__func__] lastPathComponent]
 
-
-
 #define KPLogTrace(...) KPLogManager.KPLogLevel <= KPLogLevelTrace ? _KPLog(KPLogLevelTrace,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogDebug(...) KPLogManager.KPLogLevel <= KPLogLevelDebug ? _KPLog(KPLogLevelDebug,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogInfo(...) KPLogManager.KPLogLevel <= KPLogLevelInfo ? _KPLog(KPLogLevelInfo,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogWarn(...) KPLogManager.KPLogLevel <= KPLogLevelWarn ? _KPLog(KPLogLevelWarn,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogError(...) KPLogManager.KPLogLevel <= KPLogLevelError ? _KPLog(KPLogLevelError,__MethodName__,__LineNumber__,__VA_ARGS__):nil
+#if !defined(DEBUGCC)
+#define KPLogChromeCast(...)
+#else
 #define KPLogChromeCast(...) KPLogManager.KPLogLevel <= KPLogLevelChromeCast ? _KPLog(KPLogLevelChromeCast,__MethodName__,__LineNumber__,__VA_ARGS__):nil
+#endif
 
+#ifdef DEBUG
+#    define DLog(...) NSLog(__VA_ARGS__)
+#else
+#    define DLog(...) /* */
+#endif
+#define ALog(...) NSLog(__VA_ARGS__)
