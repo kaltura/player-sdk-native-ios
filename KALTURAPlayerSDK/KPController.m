@@ -14,7 +14,6 @@
 
 NSString *const DoPlayKey = @"doPlay";
 NSString *const DoPauseKey = @"doPause";
-NSString *const DoStopKey = @"doStop";
 NSString *const DoSeekKey = @"doSeek";
 NSString *const DoReplayKey = @"doReplay";
 NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
@@ -44,12 +43,6 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
 - (void)pause {
     if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
         [_delegate sendKPNotification:DoPauseKey withParams:nil];
-    }
-}
-
-- (void)stop {
-    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:DoStopKey withParams:nil];
     }
 }
 

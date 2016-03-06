@@ -946,13 +946,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
-                                      StopKey:
-                                          ^{
-                                              playbackState = KPMediaPlaybackStateStopped;
-                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
-                                                                                                userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
-                                          },
                                       EndedKey:
                                           ^{
                                               playbackState = KPMediaPlaybackStateEnded;
