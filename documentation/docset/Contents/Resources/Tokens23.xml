@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/KPPlayerConfig.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/KPPlayerConfig</TokenIdentifier>
+			<Abstract type="html">KPPlayerConfig keys
+Key names of the video request</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
+            
+			
+			<NodeRef refid="23"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/setSupportedInterfaceOrientations:</TokenIdentifier>
+			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
+			
+			
+			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
+            <NodeRef refid="23"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/supportedInterfaceOrientations</TokenIdentifier>
+			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
+			
+			
+			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
+            <NodeRef refid="23"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/KPPlayerConfig/supportedInterfaceOrientations</TokenIdentifier>
+			<Abstract type="html">Enables the SDK user to define interface orientation of the player</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations</Declaration>
+			
+			
+			<Anchor>//api/name/supportedInterfaceOrientations</Anchor>
+            <NodeRef refid="23"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/addConfigKey:withValue:</TokenIdentifier>
+			<Abstract type="html">Adds flags for the video request</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
+			
+			<Declaration>- (void)addConfigKey:(NSString *)key withValue:(NSString *)value</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">The value for the flag</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addConfigKey:withValue:</Anchor>
+            <NodeRef refid="23"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/KPPlayerConfig/addConfigKey:withDictionary:</TokenIdentifier>
+			<Abstract type="html">Converts dictionary to JSON and Adds flags to the video request</Abstract>
+			<DeclaredIn>KPPlayerConfig.h</DeclaredIn>
+			
+			<Declaration>- (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary</Declaration>
+			<Parameters>
+				<Parameter>
+					<Name>NSString</Name>
+					<Abstract type="html">The name of the flag</Abstract>
+				</Parameter><Parameter>
+					<Name>NSDictionary</Name>
+					<Abstract type="html">The dictionary for the flag</Abstract>
+				</Parameter>
+			</Parameters>
+			
+			<Anchor>//api/name/addConfigKey:withDictionary:</Anchor>
+            <NodeRef refid="23"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

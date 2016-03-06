@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/IMAAdsLoader.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAdsLoader</TokenIdentifier>
+			<Abstract type="html">The IMAAdsLoader class allows the requesting of ads from the ad server.
+Use the delegate to receive the loaded ads or loading error
+in case of failure.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+            
+			
+			<NodeRef refid="13"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/clm/IMAAdsLoader/sdkVersion</TokenIdentifier>
+			<Abstract type="html">Returns the SDK version.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>+ (NSString *)sdkVersion</Declaration>
+			
+			
+			<Anchor>//api/name/sdkVersion</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoader/initWithSettings:</TokenIdentifier>
+			<Abstract type="html">Initializes the adsLoader with SDK wide |settings|.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>- (instancetype)initWithSettings:(IMASettings *)settings</Declaration>
+			
+			
+			<Anchor>//api/name/initWithSettings:</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoader/requestAdsWithRequest:</TokenIdentifier>
+			<Abstract type="html">Request ads from the ad server.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>- (void)requestAdsWithRequest:(IMAAdsRequest *)request</Declaration>
+			
+			
+			<Anchor>//api/name/requestAdsWithRequest:</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoader/contentComplete</TokenIdentifier>
+			<Abstract type="html">Signal to the SDK that the content has completed. The SDK will play
+post-rolls at this time, if any are scheduled.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>- (void)contentComplete</Declaration>
+			
+			
+			<Anchor>//api/name/contentComplete</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoader/setDelegate:</TokenIdentifier>
+			<Abstract type="html">Delegate that receives the result of the ad request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMAAdsLoaderDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoader/delegate</TokenIdentifier>
+			<Abstract type="html">Delegate that receives the result of the ad request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMAAdsLoaderDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsLoader/delegate</TokenIdentifier>
+			<Abstract type="html">Delegate that receives the result of the ad request.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, weak) id&lt;IMAAdsLoaderDelegate&gt; delegate</Declaration>
+			
+			
+			<Anchor>//api/name/delegate</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoader/setSettings:</TokenIdentifier>
+			<Abstract type="html">SDK-wide settings.  Note that certain settings will only be evaluated
+during initialization of the adsLoader.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, retain) IMASettings *settings</Declaration>
+			
+			
+			<Anchor>//api/name/settings</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdsLoader/settings</TokenIdentifier>
+			<Abstract type="html">SDK-wide settings.  Note that certain settings will only be evaluated
+during initialization of the adsLoader.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, retain) IMASettings *settings</Declaration>
+			
+			
+			<Anchor>//api/name/settings</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdsLoader/settings</TokenIdentifier>
+			<Abstract type="html">SDK-wide settings.  Note that certain settings will only be evaluated
+during initialization of the adsLoader.</Abstract>
+			<DeclaredIn>IMAAdsLoader.h</DeclaredIn>
+			
+			<Declaration>@property (nonatomic, retain) IMASettings *settings</Declaration>
+			
+			
+			<Anchor>//api/name/settings</Anchor>
+            <NodeRef refid="13"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>

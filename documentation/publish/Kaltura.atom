@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:docset="http://developer.apple.com/rss/docset_extensions" xml:lang="en">
+    <id>http://www.kaltura.com/Kaltura/Kaltura.atom/20151130233951</id>
+    <title type="text">KALTURAPlayerSDK Documentation</title>
+    <rights>Copyright © 2015 Kaltura. All rights reserved.</rights>
+    <link rel="self" href="http://www.kaltura.com/Kaltura/Kaltura.atom"></link>
+    <docset:publisherName>Kaltura</docset:publisherName>
+    <docset:publisherID>com.kaltura.documentation</docset:publisherID>
+    <updated>2015-11-30T23:39:51+02:00</updated>
+    <entry>
+        <id>tag:www.kaltura.com,2015-11-30:com.kaltura.KALTURAPlayerSDK/1.0.0</id>
+        <title type="text">KALTURAPlayerSDK Documentation</title>
+        <updated>2015-11-30T23:39:51+02:00</updated>
+        <content type="text">KALTURAPlayerSDK Documentation (v1.0.0)</content>
+        <link rel="enclosure" type="application/octet-stream" href="http:/www.kaltura.com/Kaltura/com.kaltura.KALTURAPlayerSDK-1.0.xar" length="466532"></link>
+        <docset:identifier>com.kaltura.KALTURAPlayerSDK</docset:identifier>
+        <docset:version>1.0.0</docset:version>
+        <docset:minimumXcodeVersion>3.0.0</docset:minimumXcodeVersion>
+    </entry>
+</feed>

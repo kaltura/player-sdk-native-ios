@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Classes/IMAAdPodInfo.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cl/IMAAdPodInfo</TokenIdentifier>
+			<Abstract type="html">Simple data object containing podding metadata.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+            
+			
+			<NodeRef refid="11"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/setTotalAds:</TokenIdentifier>
+			<Abstract type="html">Total number of ads in the pod this ad belongs to.
+Will be 1 for standalone ads.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int totalAds</Declaration>
+			
+			
+			<Anchor>//api/name/totalAds</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/totalAds</TokenIdentifier>
+			<Abstract type="html">Total number of ads in the pod this ad belongs to.
+Will be 1 for standalone ads.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int totalAds</Declaration>
+			
+			
+			<Anchor>//api/name/totalAds</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdPodInfo/totalAds</TokenIdentifier>
+			<Abstract type="html">Total number of ads in the pod this ad belongs to.
+Will be 1 for standalone ads.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int totalAds</Declaration>
+			
+			
+			<Anchor>//api/name/totalAds</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/setAdPosition:</TokenIdentifier>
+			<Abstract type="html">The position of this ad within an ad pod.
+Will be 1 for standalone ads.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int adPosition</Declaration>
+			
+			
+			<Anchor>//api/name/adPosition</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/adPosition</TokenIdentifier>
+			<Abstract type="html">The position of this ad within an ad pod.
+Will be 1 for standalone ads.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int adPosition</Declaration>
+			
+			
+			<Anchor>//api/name/adPosition</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdPodInfo/adPosition</TokenIdentifier>
+			<Abstract type="html">The position of this ad within an ad pod.
+Will be 1 for standalone ads.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int adPosition</Declaration>
+			
+			
+			<Anchor>//api/name/adPosition</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/setIsBumper:</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is a bumper. Bumpers are short videos used to open
+and close ad breaks.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) BOOL isBumper</Declaration>
+			
+			
+			<Anchor>//api/name/isBumper</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/isBumper</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is a bumper. Bumpers are short videos used to open
+and close ad breaks.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) BOOL isBumper</Declaration>
+			
+			
+			<Anchor>//api/name/isBumper</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdPodInfo/isBumper</TokenIdentifier>
+			<Abstract type="html">Specifies whether the ad is a bumper. Bumpers are short videos used to open
+and close ad breaks.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) BOOL isBumper</Declaration>
+			
+			
+			<Anchor>//api/name/isBumper</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/setPodIndex:</TokenIdentifier>
+			<Abstract type="html">The index of the pod, where pre-roll pod is 0, mid-roll pods are 1 .. N
+and the post-roll is -1.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int podIndex</Declaration>
+			
+			
+			<Anchor>//api/name/podIndex</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/podIndex</TokenIdentifier>
+			<Abstract type="html">The index of the pod, where pre-roll pod is 0, mid-roll pods are 1 .. N
+and the post-roll is -1.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int podIndex</Declaration>
+			
+			
+			<Anchor>//api/name/podIndex</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdPodInfo/podIndex</TokenIdentifier>
+			<Abstract type="html">The index of the pod, where pre-roll pod is 0, mid-roll pods are 1 .. N
+and the post-roll is -1.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) int podIndex</Declaration>
+			
+			
+			<Anchor>//api/name/podIndex</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/setTimeOffset:</TokenIdentifier>
+			<Abstract type="html">The position of the pod in the content in seconds. Pre-roll returns 0,
+post-roll returns -1 and mid-rolls return the scheduled time of the pod.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) NSTimeInterval timeOffset</Declaration>
+			
+			
+			<Anchor>//api/name/timeOffset</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/timeOffset</TokenIdentifier>
+			<Abstract type="html">The position of the pod in the content in seconds. Pre-roll returns 0,
+post-roll returns -1 and mid-rolls return the scheduled time of the pod.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) NSTimeInterval timeOffset</Declaration>
+			
+			
+			<Anchor>//api/name/timeOffset</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdPodInfo/timeOffset</TokenIdentifier>
+			<Abstract type="html">The position of the pod in the content in seconds. Pre-roll returns 0,
+post-roll returns -1 and mid-rolls return the scheduled time of the pod.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) NSTimeInterval timeOffset</Declaration>
+			
+			
+			<Anchor>//api/name/timeOffset</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/setMaxDuration:</TokenIdentifier>
+			<Abstract type="html">The maximum duration of the pod in seconds. For unknown duration, -1 is returned.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) NSTimeInterval maxDuration</Declaration>
+			
+			
+			<Anchor>//api/name/maxDuration</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instm/IMAAdPodInfo/maxDuration</TokenIdentifier>
+			<Abstract type="html">The maximum duration of the pod in seconds. For unknown duration, -1 is returned.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) NSTimeInterval maxDuration</Declaration>
+			
+			
+			<Anchor>//api/name/maxDuration</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/instp/IMAAdPodInfo/maxDuration</TokenIdentifier>
+			<Abstract type="html">The maximum duration of the pod in seconds. For unknown duration, -1 is returned.</Abstract>
+			<DeclaredIn>IMAAdPodInfo.h</DeclaredIn>
+			
+			<Declaration>@property (readonly) NSTimeInterval maxDuration</Declaration>
+			
+			
+			<Anchor>//api/name/maxDuration</Anchor>
+            <NodeRef refid="11"/>
+		</Token>
+		
+        
+        
+	</File>
+</Tokens>
