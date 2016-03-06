@@ -51,15 +51,8 @@ NSString * const StatusKeyPath = @"status";
         _layer.frame = (CGRect){CGPointZero, parentView.frame.size};
         _layer.backgroundColor = [UIColor blackColor].CGColor;
         _parentView = parentView;
-        if (parentView.subviews.count) {
-            UIWebView *wv = parentView.subviews.lastObject;
-            [parentView.subviews.lastObject removeFromSuperview];
-            [parentView.layer.sublayers.firstObject removeFromSuperlayer];
-            [parentView.layer addSublayer:_layer];
-            [parentView addSubview:wv];
-        } else {
-            [parentView.layer addSublayer:_layer];
-        }
+
+        [self addPlayerToView];
         
         [self addObserver:self
                forKeyPath:RateKeyPath
@@ -90,6 +83,18 @@ NSString * const StatusKeyPath = @"status";
         return self;
     }
     return nil;
+}
+
+- (void)addPlayerToView {
+    if (_parentView.subviews.count) {
+        UIWebView *wv = _parentView.subviews.lastObject;
+        [_parentView.subviews.lastObject removeFromSuperview];
+        [_parentView.layer.sublayers.firstObject removeFromSuperlayer];
+        [_parentView.layer addSublayer:_layer];
+        [_parentView addSubview:wv];
+    } else {
+        [_parentView.layer addSublayer:_layer];
+    }
 }
 
 - (void)createAudioSession {
@@ -171,9 +176,9 @@ NSString * const StatusKeyPath = @"status";
                                 value:[self.error localizedDescription]];
                 break;
             case AVPlayerItemStatusReadyToPlay: {
-                [self registerForPlaybackNotification];
-                buffering = NO;
                 if (oldValue.intValue != newValue.intValue) {
+                    [self registerForPlaybackNotification];
+                    buffering = NO;
                     [self.delegate player:self
                                 eventName:DurationChangedKey
                                     value:@(self.duration).stringValue];
@@ -296,6 +301,9 @@ NSString * const StatusKeyPath = @"status";
     
     if (self.currentItem != item) {
         [self replaceCurrentItemWithPlayerItem:item];
+        if (!self.layer.superlayer) {
+            [self addPlayerToView];
+        }
     }
 }
 
@@ -532,6 +540,12 @@ NSString * const StatusKeyPath = @"status";
        [AVPictureInPictureController isPictureInPictureSupported]) {
          pip =  [[AVPictureInPictureController alloc]
                  initWithPlayerLayer:_layer];
+    }
+}
+
+- (void)hidePlayer {
+    if (self) {
+        [self.layer removeFromSuperlayer];
     }
 }
 

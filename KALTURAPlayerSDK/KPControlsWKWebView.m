@@ -50,6 +50,9 @@
 }
 
 - (void)loadRequest:(NSURLRequest *)request {
+    if (self.isLoading) {
+        [self stopLoading];
+    }
     [super loadRequest:request];
 }
 
