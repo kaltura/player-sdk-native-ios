@@ -551,6 +551,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if (config) {
         [self.playerFactory prepareForChangeConfiguration];
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:config.videoURL]];
+        isJsCallbackReady = NO;
+        [self registerReadyEvent:^{
+            for (NSString *event in self.kPlayerEventsDict.allKeys) {
+                [self.controlsView addEventListener:event];
+            }
+        }];
     }
 }
 
