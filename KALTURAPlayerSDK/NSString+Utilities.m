@@ -54,8 +54,9 @@ NSString *const LocalContentId = @"localContentId";
 - (NSString *)extractLocalContentId {
     NSArray *components = [self componentsSeparatedByString:@"#"];
     if (components.count == 2) {
-        for (NSString *component in components) {
-            NSArray *param = [component componentsSeparatedByString:@"="];
+        NSArray *hashTagParams = [components.lastObject componentsSeparatedByString:@"&"];
+        for (NSString *hashTagParam in hashTagParams) {
+            NSArray *param = [hashTagParam componentsSeparatedByString:@"="];
             if (param.count == 2 && [param.firstObject isEqualToString:LocalContentId]) {
                 return param.lastObject;
             }
