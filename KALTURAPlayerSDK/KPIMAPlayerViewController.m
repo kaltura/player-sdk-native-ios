@@ -236,7 +236,8 @@
             eventParams = self.adEventParams.toJSON.adClicked;
             break;
         case kIMAAdEvent_SKIPPED:
-            // TODO::
+            self.adEventParams.isLinear = event.ad.isLinear;
+            eventParams = self.adEventParams.toJSON.adSkipped;
             break;
         default:
             break;

@@ -58,8 +58,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     void(^_shareHandler)(NSDictionary *);
                                     
     BOOL isActionSheetPresented;
-    void(^changeMediaCompletion)();
-                                
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
@@ -359,7 +357,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 #pragma mark - GCKDeviceScannerListener
 - (void)didDiscoverDeviceOnNetwork {
-    NSLog(@"");
+    KPLogChromeCast(@"");
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
         [weakSelf setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
@@ -497,7 +495,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 #pragma mark - GCKDeviceScannerListener
 - (void)deviceDidComeOnline:(id<KPGCDevice>)device {
-    NSLog(@"device found!! %@", device.friendlyName);
+    KPLogChromeCast(@"device found!! %@", device.friendlyName);
 }
 
 - (void)deviceDidGoOffline:(id<KPGCDevice>)device {
@@ -549,9 +547,11 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
 }
 
-- (void)changeMedia:(NSString *)entryID withCompletion:(void (^)())completion {
-    changeMediaCompletion = [completion copy];
-    [self changeMedia:entryID];
+- (void)changeConfiguration:(KPPlayerConfig *)config {
+    if (config) {
+        [self.playerFactory prepareForChangeConfiguration];
+        [self.controlsView loadRequest:[NSURLRequest requestWithURL:config.videoURL]];
+    }
 }
 
 #pragma mark - Player Methods
@@ -931,10 +931,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                               if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange:)]) {
                                                   [_delegate kPlayer:self playerLoadStateDidChange:KPMediaLoadStatePlayable];
                                               }
-                                              if (changeMediaCompletion) {
-                                                  changeMediaCompletion();
-                                                  changeMediaCompletion = nil;
-                                              }
                                           },
                                       PlayKey:
                                           ^{
@@ -946,13 +942,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                       PauseKey:
                                           ^{
                                               playbackState = KPMediaPlaybackStatePaused;
-                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
-                                                                                                userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
-                                          },
-                                      StopKey:
-                                          ^{
-                                              playbackState = KPMediaPlaybackStateStopped;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];

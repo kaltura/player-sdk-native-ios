@@ -11,13 +11,14 @@
 #define KP_DEBUG_MODE				1
 
 typedef NS_ENUM(NSInteger, KPLogLevel) {
-    KPLogLevelAll		= 0,
-	KPLogLevelTrace		= 10,
-	KPLogLevelDebug		= 20,
-	KPLogLevelInfo		= 30,
-	KPLogLevelWarn		= 40,
-	KPLogLevelError		= 50,
-	KPLogLevelOff		= 60
+    KPLogLevelAll           = 0,
+	KPLogLevelTrace         = 10,
+	KPLogLevelDebug         = 20,
+	KPLogLevelInfo          = 30,
+	KPLogLevelWarn          = 40,
+	KPLogLevelError         = 50,
+	KPLogLevelOff           = 60,
+    KPLogLevelChromeCast	= 70
 };
 
 // use the `QLogManager` methods to set the desired level of log filter

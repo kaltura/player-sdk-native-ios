@@ -12,7 +12,7 @@
  @protocol		KPMediaPlayback
  
  @abstract
-	The KPMediaPlayback protocol defines the interface adopted by the KPController class for controlling media playback. This protocol supports basic transport operations including start, stop, and pause, and also lets you seek forward and back through a movie or to a specific point in its timeline.
+	The KPMediaPlayback protocol defines the interface adopted by the KPController class for controlling media playback. This protocol supports basic transport operations including start and pause, and also lets you seek forward and back through a movie or to a specific point in its timeline.
  */
 
 @protocol KPMediaPlayback
@@ -47,12 +47,12 @@
 - (void)pause;
 
 /*!
- @method        stop:
- @abstract      Ends playback of the current item. (required)
+ @method        replay:
+ @abstract      replay playback of the current item. (required)
  
- This method stops playback of the current item and resets the playhead to the start of the item. Calling the play method again initiates playback from the beginning of the item.
+ This method initiates playback from the beginning of the current item.
  */
-- (void)stop;
+- (void)replay;
 
 /* The current position of the playhead. (required) */
 @property(nonatomic) NSTimeInterval currentPlaybackTime;

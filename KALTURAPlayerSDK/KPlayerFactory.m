@@ -218,6 +218,15 @@
     }
 }
 
+- (void)prepareForChangeConfiguration {
+    if (self.adController) {
+        [self.adController removeIMAPlayer];
+        self.adController = nil;
+    }
+    
+    [self.player hidePlayer];
+}
+
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
 }

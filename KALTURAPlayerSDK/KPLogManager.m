@@ -26,7 +26,7 @@ static KPLogLevel KPLOG_LEVEL = KPLogLevelWarn;
 
 + (NSArray *)levelNames {
     @synchronized(self) {
-        return @[@"All", @"Trace", @"Debug", @"Info", @"Warn", @"Error"];
+        return @[@"All", @"Trace", @"Debug", @"Info", @"Warn", @"Error", @"Off", @"ChromeCast"];
     }
 }
 @end
