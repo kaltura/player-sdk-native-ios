@@ -186,6 +186,10 @@ static NSString *NativeActionKey = @"nativeAction";
     return @{AdClickedKey: self};
 }
 
+- (NSDictionary *)adSkipped {
+    return @{AdSkippeddKey: self};
+}
+
 - (NSDictionary *)adStart {
     return @{AdStartKey: self};
 }
