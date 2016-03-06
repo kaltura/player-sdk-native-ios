@@ -8,6 +8,7 @@
 
 #import "KPFairPlayHandler.h"
 #import "KPAssetBuilder.h"
+#import "KPLog.h"
 
 NSString* const URL_SCHEME_NAME = @"skd";
 
@@ -62,15 +63,24 @@ static dispatch_queue_t	globalNotificationQueue( void )
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:reqUrl];
     request.HTTPMethod=@"POST";
     //    request.HTTPBody=[requestBytes base64EncodedDataWithOptions:0];
-    request.HTTPBody=requestBytes;
-    [request setValue:@"application/javascript" forHTTPHeaderField:@"Content-Type"];
+    request.HTTPBody=[requestBytes base64EncodedDataWithOptions:0];
+    [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
     
     NSHTTPURLResponse* response = nil;
     NSData* responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:errorOut];
+    if (!responseData) {
+        KPLogError(@"No license response, error=%@", *errorOut);
+        return nil;
+    }
     
-    decodedData = [[NSData alloc] initWithBase64EncodedData:responseData options:0];
-    
-    *expiryDuration = 1000;
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:errorOut];
+    if (!dict) {
+        KPLogError(@"Invalid license response, error=%@", *errorOut);
+        return nil;
+    }
+
+    decodedData = [[NSData alloc] initWithBase64EncodedString:dict[@"ckc"] options:0];
+    *expiryDuration = [dict[@"expiry"] floatValue];
     
     //	*errorOut = [NSError errorWithDomain:NSPOSIXErrorDomain code:1 userInfo:nil];
     return decodedData;
