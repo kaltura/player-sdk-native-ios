@@ -357,7 +357,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 #pragma mark - GCKDeviceScannerListener
 - (void)didDiscoverDeviceOnNetwork {
-    NSLog(@"");
+    KPLogChromeCast(@"");
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
         [weakSelf setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
@@ -495,7 +495,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 #pragma mark - GCKDeviceScannerListener
 - (void)deviceDidComeOnline:(id<KPGCDevice>)device {
-    NSLog(@"device found!! %@", device.friendlyName);
+    KPLogChromeCast(@"device found!! %@", device.friendlyName);
 }
 
 - (void)deviceDidGoOffline:(id<KPGCDevice>)device {
