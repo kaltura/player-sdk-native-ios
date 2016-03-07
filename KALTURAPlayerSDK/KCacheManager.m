@@ -143,7 +143,11 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 
 // Fetches the page content from the file system
 - (NSData *)cachedPage {
+    NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
+    if (contentId) {
+        path = contentId.appendPath;
+    }
     NSString *pathForHeaders = [path stringByAppendingPathComponent:@"data"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
     [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:pathForHeaders error:nil];
