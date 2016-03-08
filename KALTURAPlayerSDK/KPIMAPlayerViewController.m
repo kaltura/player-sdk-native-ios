@@ -290,13 +290,13 @@
 }
 
 - (void)pause {
-    if (self && self.adsManager) {
+    if (_adsManager) {
         [_adsManager pause];
     }
 }
 
 - (void)resume {
-    if (self && self.adsManager) {
+    if (_adsManager) {
         [_adsManager resume];
     }
 }

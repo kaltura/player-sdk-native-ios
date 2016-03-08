@@ -229,7 +229,7 @@
 }
 
 - (void)pause {
-    if (self.adController) {
+    if (_adController) {
         [self.adController pause];
     }
     
@@ -239,7 +239,7 @@
 }
 
 - (void)prepareForChangeConfiguration {
-    if (self.adController) {
+    if (_adController) {
         [self.adController removeIMAPlayer];
         self.adController = nil;
     }
