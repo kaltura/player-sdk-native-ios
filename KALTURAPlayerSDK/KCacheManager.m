@@ -51,6 +51,10 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     return _bundle;
 }
 
+- (void)setBaseURL:(NSString *)host {
+    _baseURL = [host stringByReplacingOccurrencesOfString:[host lastPathComponent] withString:@""];
+}
+
 
 // Fetches the White list urls
 - (NSDictionary *)cacheConditions {

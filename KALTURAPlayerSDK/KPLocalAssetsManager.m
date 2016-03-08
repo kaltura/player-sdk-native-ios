@@ -266,7 +266,7 @@ static NSInteger _threadCounter;
 + (void)storeLocalContentPage:(KPPlayerConfig *)assetConfig
                      callback:(kLocalAssetRegistrationBlock)callback {
     [NSURLProtocol registerClass:[KPURLProtocol class]];
-    CacheManager.host = assetConfig.videoURL.host;
+    CacheManager.baseURL = assetConfig.server;
     CacheManager.cacheSize = assetConfig.cacheSize;
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:assetConfig.videoURL]
                                        queue:[NSOperationQueue new]

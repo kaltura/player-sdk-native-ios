@@ -27,7 +27,7 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
     if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
         return NO;
     }
-    if ([request.URL.host isEqualToString:CacheManager.host]) {
+    if ([request.URL.absoluteString containsString:CacheManager.baseURL]) {
         for (NSString *key in CacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
                 return YES;
