@@ -218,10 +218,30 @@
     }
 }
 
+- (void)play {
+    if (_adController) {
+        [self.adController resume];
+    }
+    
+    if ([self.player respondsToSelector:@selector(play)]) {
+        [self.player play];
+    }
+}
+
+- (void)pause {
+    if (_adController) {
+        [self.adController pause];
+    }
+    
+    if ([self.player respondsToSelector:@selector(pause)]) {
+        [self.player pause];
+    }
+}
+
 - (void)prepareForChangeConfiguration {
-    if (self.adController) {
+    if (_adController) {
         [self.adController removeIMAPlayer];
-        self.adController = nil;
+        _adController = nil;
     }
     
     [self.player hidePlayer];

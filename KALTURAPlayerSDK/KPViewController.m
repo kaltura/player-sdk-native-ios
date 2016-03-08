@@ -755,7 +755,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if ([self respondsToSelector:selector]) {
         KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:selector withObject:args];
-    } else if ([_playerFactory.player respondsToSelector:selector]) {
+    } else if ([_playerFactory respondsToSelector:selector]) {
+        [_playerFactory performSelector:selector withObject:args];
+    }else if ([_playerFactory.player respondsToSelector:selector]) {
         [_playerFactory.player performSelector:selector withObject:args];
     }
     
