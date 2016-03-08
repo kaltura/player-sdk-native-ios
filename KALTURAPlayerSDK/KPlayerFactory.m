@@ -218,6 +218,26 @@
     }
 }
 
+- (void)play {
+    if (self.adController) {
+        [self.adController resume];
+    }
+    
+    if ([self.player respondsToSelector:@selector(play)]) {
+        [self.player play];
+    }
+}
+
+- (void)pause {
+    if (self.adController) {
+        [self.adController pause];
+    }
+    
+    if ([self.player respondsToSelector:@selector(pause)]) {
+        [self.player pause];
+    }
+}
+
 - (void)prepareForChangeConfiguration {
     if (self.adController) {
         [self.adController removeIMAPlayer];

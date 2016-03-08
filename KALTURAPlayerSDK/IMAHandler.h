@@ -64,6 +64,7 @@
                  adsRenderingSettings:(id<AdsRenderingSettings>)adsRenderingSettings;
 - (void)start;
 - (void)pause;
+- (void)resume;
 - (void)destroy;
 
 @end

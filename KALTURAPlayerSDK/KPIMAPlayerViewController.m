@@ -288,5 +288,18 @@
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
+
+- (void)pause {
+    if (self && self.adsManager) {
+        [_adsManager pause];
+    }
+}
+
+- (void)resume {
+    if (self && self.adsManager) {
+        [_adsManager resume];
+    }
+}
+
 @end
 
