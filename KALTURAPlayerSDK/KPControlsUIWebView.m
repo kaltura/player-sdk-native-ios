@@ -8,9 +8,6 @@
 
 #import "KPControlsUIWebview.h"
 
-NSString *const ErrorKey = @"error";
-
-
 @interface KPControlsUIWebview() <UIWebViewDelegate>
 
 @end
@@ -148,7 +145,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     KPLogError(@"Error: %@", [error localizedDescription]);
     if ([self.controlsDelegate respondsToSelector:@selector(handleKPControlsError:)]) {
-            [self.controlsDelegate handleKPControlsError:error];
+        [self.controlsDelegate handleKPControlsError:error];
     }
 }
 
