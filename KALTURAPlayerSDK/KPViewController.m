@@ -740,7 +740,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     };
 }
 
-
+#pragma mark Errors triggerd by WebView Delegate
+- (void)handleKPControlsError:(NSError *)error {
+    if (_delegate && [_delegate respondsToSelector:@selector(kPlayer:didFailWithError:)]) {
+        [_delegate kPlayer:self didFailWithError:error];
+    }
+}
 
 #pragma mark HTML lib events triggerd by WebView Delegate
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
