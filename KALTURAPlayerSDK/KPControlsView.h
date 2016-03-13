@@ -22,6 +22,7 @@ NSString *showChromecastComponent(BOOL show);
 @protocol KPControlsViewDelegate <NSObject>
 @required
 - (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
+- (void)handleKPControlsError:(NSError *)error;
 @end
 
 @protocol KPControlsView <NSObject>

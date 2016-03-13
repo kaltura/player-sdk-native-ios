@@ -8,7 +8,6 @@
 
 #import "KPControlsUIWebview.h"
 
-
 @interface KPControlsUIWebview() <UIWebViewDelegate>
 
 @end
@@ -127,6 +126,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         FunctionComponents functionComponents = requestString.extractFunction;
         if (functionComponents.error) {
             KPLogError(@"JSON parsing error: %@", functionComponents.error);
+            [self.controlsDelegate handleKPControlsError:functionComponents.error];
         } else {
             [self.controlsDelegate handleHtml5LibCall:functionComponents.name
                                            callbackId:functionComponents.callBackID
@@ -143,7 +143,10 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    
+    KPLogError(@"Error: %@", [error localizedDescription]);
+    if ([self.controlsDelegate respondsToSelector:@selector(handleKPControlsError:)]) {
+        [self.controlsDelegate handleKPControlsError:error];
+    }
 }
 
 @end
