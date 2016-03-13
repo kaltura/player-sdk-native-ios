@@ -48,10 +48,10 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 }
 
 - (void) startLoading {
-    
     NSDictionary *cachedHeaders = self.request.URL.absoluteString.cachedResponseHeaders;
     NSData *cachedPage = self.request.URL.absoluteString.cachedPage;
-    if (cachedHeaders && cachedPage) {
+    
+    if (cachedHeaders && cachedPage && cachedPage.length) {
         NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                                   statusCode:[cachedHeaders[@"statusCode"] integerValue]
                                                                  HTTPVersion:nil
@@ -71,7 +71,6 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
         self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
         
     }
-    
 }
 
 - (void) stopLoading {

@@ -138,7 +138,7 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
     if (data) {
-        [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:pathForHeaders error:nil];
+        [self setDateAttributeAtPath:pathForHeaders];
         NSDictionary *cached = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         return cached;
     }
@@ -149,15 +149,26 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 - (NSData *)cachedPage {
     NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
+    
     if (contentId) {
         path = contentId.appendPath;
     }
-    NSString *pathForHeaders = [path stringByAppendingPathComponent:@"data"];
-    NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
-    [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:pathForHeaders error:nil];
+    
+    NSString *pathForData = [path stringByAppendingPathComponent:@"data"];
+    NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForData];
+    [self setDateAttributeAtPath:pathForData];
+    
     return data;
 }
 
+- (void)setDateAttributeAtPath: (NSString *)path {
+    NSError *err = nil;
+    [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:path error:&err];
+    
+    if (err) {
+        KPLogError(err.localizedDescription);
+    }
+}
 
 - (NSString *)appendPath {
     return [CacheManager.cachePath stringByAppendingPathComponent:self];
