@@ -28,6 +28,7 @@ WViOsApiStatus WV_Initialize(const WViOsApiStatusCallback callback, NSDictionary
 WViOsApiStatus WV_Terminate() { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_SetCredentials( NSDictionary *settings ) { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_RegisterAsset (NSString *asset) { return WViOsApiStatus_OK; }
+WViOsApiStatus WV_UnregisterAsset (NSString *asset) { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_QueryAssetStatus (NSString *asset ) { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_NowOnline () { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_RenewAsset (NSString *asset) { return WViOsApiStatus_OK; }
@@ -87,9 +88,11 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             cdmEvent = KCDMEvent_AssetStatus;
             break;
             
-        // Normal flow, but no handling required.
+        // Normal flow
         case WViOsApiEvent_EMMRemoved:
         case WViOsApiEvent_Unregistered:
+            cdmEvent = KCDMEvent_Unregistered;
+            break;
         case WViOsApiEvent_Terminated: 
             // Do nothing.
             break;
@@ -211,12 +214,43 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         WViOsApiStatus wvStatus = WViOsApiStatus_OK;
         
         wvStatus = WV_RegisterAsset(assetPath);
-        // refresh licenses if required.
-        WV_RenewAsset(assetPath);
         WV_NowOnline(); 
         WV_QueryAssetStatus(assetPath);
     }];
 }
+
++(void)renewAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
+    // It's an error to call this function without the licenseUri.
+    if (!licenseUri) {
+        KPLogError(@"Error: no licenseUri; can't register asset.");
+        return;
+    }
+
+    [self dispatchAfterInit:^{
+        WV_SetCredentials(@{WVDRMServerKey: licenseUri});
+        
+        NSString* assetPath = assetUri.wvAssetPath;
+        
+        WViOsApiStatus wvStatus = WViOsApiStatus_OK;
+        
+        wvStatus = WV_RenewAsset(assetPath);
+        WV_NowOnline(); 
+        WV_QueryAssetStatus(assetPath);
+    }];
+}
+
++(void)unregisterAsset:(NSString*)assetUri {
+    NSString* assetPath = assetUri.wvAssetPath;
+    WV_UnregisterAsset(assetPath);
+}
+
+
++(void)checkAssetStatus:(NSString*)assetUri {
+    NSString* assetPath = assetUri.wvAssetPath;
+
+    WV_QueryAssetStatus(assetPath);
+}
+
 
 +(void)playAsset:(NSString *)assetUri withLicenseUri:(NSString*)licenseUri readyToPlay:(KCDMReadyToPlayBlock)block {
     
@@ -283,3 +317,17 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
 @end
 
 
+
+
+
+@implementation NSDictionary (Widevine)
+
+-(NSTimeInterval)wvLicenseTimeRemaning {
+    return ((NSNumber*)self[WVEMMTimeRemainingKey]).doubleValue;
+}
+
+-(NSTimeInterval)wvPurchaseTimeRemaning {
+    return ((NSNumber*)self[WVPurchaseTimeRemainingKey]).doubleValue;
+}
+
+@end

@@ -30,71 +30,6 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 @property (nonatomic, copy, readonly) NSURL *resolvePlayerRootURL;
 @end
 
-@implementation KPPlayerConfig (Asset)
-
-- (NSData *)loadUIConf {
-    NSURL *serverURL = [NSURL URLWithString:self.server];
-    serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
-    NSURLComponents *urlComps = [NSURLComponents componentsWithURL:serverURL resolvingAgainstBaseURL:NO];
-    
-    NSMutableArray *items = [NSMutableArray arrayWithArray:@[
-                                                             [KPLocalAssetsManager queryItem:@"service" :@"uiconf"],
-                                                             [KPLocalAssetsManager queryItem:@"action" :@"get"],
-                                                             [KPLocalAssetsManager queryItem:@"format" :@"1"],
-                                                             [KPLocalAssetsManager queryItem:@"p" :self.partnerId],
-                                                             [KPLocalAssetsManager queryItem:@"id" :self.uiConfId],
-                                                             ]];
-    
-    if (self.ks) {
-        [items addObject:[KPLocalAssetsManager queryItem:@"ks" :self.ks]];
-    }
-    
-    NSURL* apiCall = urlComps.URL;
-    
-    return [NSData dataWithContentsOfURL:apiCall];
-}
-
-- (NSURL *)resolvePlayerRootURL {
-    // serverURL is something like "http://cdnapi.kaltura.com";
-    // we need to get to "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
-    // This is done by loading UIConf data, and looking at "html5Url" property.
-    
-    NSData *jsonData = self.loadUIConf;
-    NSError *jsonError = nil;
-    NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                           options:0
-                                                             error:&jsonError];
-    
-    if (!uiConf) {
-        KPLogError(@"Error parsing uiConf json: %@", jsonError);
-        return nil;
-    }
-    NSString *serviceError = uiConf[@"message"];
-    if (serviceError) {
-        KPLogError(@"uiConf service reported error: %@", serviceError);
-        return nil;
-    }
-    
-    NSString *embedLoaderUrl = uiConf[@"html5Url"];
-    
-    // embedLoaderUrl is typically something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
-    
-    if (!embedLoaderUrl) {
-        KPLogError(@"No html5Url in uiConf");
-        return nil;
-    }
-    NSURL *serverURL = [NSURL URLWithString:self.server];
-    if ([embedLoaderUrl hasPrefix:@"/"]) {
-        serverURL = [serverURL URLByAppendingPathComponent:embedLoaderUrl];
-    } else {
-        serverURL = [NSURL URLWithString:embedLoaderUrl];
-    }
-    
-    return [serverURL URLByDeletingLastPathComponent];
-}
-
-@end
-
 static NSInteger _threadCounter;
 
 @implementation KPLocalAssetsManager
@@ -111,16 +46,15 @@ static NSInteger _threadCounter;
     }
 }
 
-#define JSON_BYTE_LIMIT = 1024 * 1024;
-
 #define CHECK_NOT_NULL(v)   if (!(v)) return NO
 #define CHECK_NOT_EMPTY(v)  if ((v).length == 0) return NO
 
 + (BOOL)registerAsset:(KPPlayerConfig *)assetConfig
                flavor:(NSString *)flavorId
                  path:(NSString *)localPath
-             callback:(kLocalAssetRegistrationBlock)completed {
-    
+             callback:(kLocalAssetRegistrationBlock)completed refresh:(BOOL)refresh {
+
+
     // NOTE: this method currently only supports (and assumes) Widevine Classic.
     
     // Preflight: check that all parameters are valid.
@@ -140,11 +74,71 @@ static NSInteger _threadCounter;
             [self registerWidevineAsset:assetConfig
                               localPath:localPath
                                flavorId:flavorId
-                               callback:completed];
+                               callback:completed refresh:refresh];
         });
     }
+    return YES;    
+}
+
++ (BOOL)registerAsset:(KPPlayerConfig *)assetConfig
+               flavor:(NSString *)flavorId
+                 path:(NSString *)localPath
+             callback:(kLocalAssetRegistrationBlock)completed {
+    
+    return [self registerAsset:assetConfig flavor:flavorId path:localPath callback:completed refresh:NO];
+}
+
++ (BOOL)refreshAsset:(KPPlayerConfig *)assetConfig
+              flavor:(NSString *)flavorId
+                path:(NSString *)localPath
+            callback:(kLocalAssetRegistrationBlock)completed {
+    
+    return [self registerAsset:assetConfig flavor:flavorId path:localPath callback:completed refresh:YES];
+}
+
++ (BOOL)unregisterAsset:(KPPlayerConfig *)assetConfig
+                   path:(NSString *)localPath
+               callback:(kLocalAssetRegistrationBlock)completed {
+    
+    // Remove cache
+    // TODO
+    
+    // Remove rights
+    [WidevineClassicCDM setEventBlock:^(KCDMEventType event, NSDictionary *data) {
+        if (event == KCDMEvent_Unregistered) {
+            completed(nil);
+        }
+    } forAsset:localPath];
+    [WidevineClassicCDM unregisterAsset:localPath];
+    
     return YES;
 }
+
++ (BOOL)checkStatus:(NSString *)localPath
+           callback:(kLocalAssetStatusBlock)completed {
+    
+    if (!localPath) {
+        return NO;
+    }
+    
+    if (!localPath.isWV) {
+        completed(nil, -1, -1);
+        return YES;
+    }
+    
+    [WidevineClassicCDM setEventBlock:^(KCDMEventType event, NSDictionary *data) {
+        if (event == KCDMEvent_AssetStatus) {
+            completed(nil, [data wvLicenseTimeRemaning], [data wvPurchaseTimeRemaning]);
+        }
+    } forAsset:localPath];
+    
+    [WidevineClassicCDM checkAssetStatus:localPath];
+    
+    
+    return YES;
+}
+
+
 
 + (NSString *)prepareLicenseURLForAsset:(KPPlayerConfig *)assetConfig
                                flavorId:(NSString *)flavorId
@@ -231,7 +225,7 @@ static NSInteger _threadCounter;
 + (void)registerWidevineAsset:(KPPlayerConfig *)assetConfig
                     localPath:(NSString *)localPath
                      flavorId:(NSString *)flavorId
-                     callback:(kLocalAssetRegistrationBlock)callback {
+                     callback:(kLocalAssetRegistrationBlock)callback refresh:(BOOL)refresh {
     
     NSError *error = nil;
     NSString *licenseUri = [self prepareLicenseURLForAsset:assetConfig
@@ -259,7 +253,12 @@ static NSInteger _threadCounter;
         }
         KPLogDebug(@"Got asset event: event=%d, data=%@", event, data);
     } forAsset:localPath];
-    [WidevineClassicCDM registerLocalAsset:localPath withLicenseUri:licenseUri];
+    
+    if (refresh) {
+        [WidevineClassicCDM renewAsset:localPath withLicenseUri:licenseUri];
+    } else {
+        [WidevineClassicCDM registerLocalAsset:localPath withLicenseUri:licenseUri];
+    }
     
 }
 
@@ -298,3 +297,73 @@ static NSInteger _threadCounter;
 }
 
 @end
+
+
+
+
+
+@implementation KPPlayerConfig (Asset)
+
+- (NSData *)loadUIConf {
+    NSURL *serverURL = [NSURL URLWithString:self.server];
+    serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
+    NSURLComponents *urlComps = [NSURLComponents componentsWithURL:serverURL resolvingAgainstBaseURL:NO];
+    
+    NSMutableArray *items = [NSMutableArray arrayWithArray:@[
+                                                             [KPLocalAssetsManager queryItem:@"service" :@"uiconf"],
+                                                             [KPLocalAssetsManager queryItem:@"action" :@"get"],
+                                                             [KPLocalAssetsManager queryItem:@"format" :@"1"],
+                                                             [KPLocalAssetsManager queryItem:@"p" :self.partnerId],
+                                                             [KPLocalAssetsManager queryItem:@"id" :self.uiConfId],
+                                                             ]];
+    
+    if (self.ks) {
+        [items addObject:[KPLocalAssetsManager queryItem:@"ks" :self.ks]];
+    }
+    
+    NSURL* apiCall = urlComps.URL;
+    
+    return [NSData dataWithContentsOfURL:apiCall];
+}
+
+- (NSURL *)resolvePlayerRootURL {
+    // serverURL is something like "http://cdnapi.kaltura.com";
+    // we need to get to "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
+    // This is done by loading UIConf data, and looking at "html5Url" property.
+    
+    NSData *jsonData = self.loadUIConf;
+    NSError *jsonError = nil;
+    NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:jsonData
+                                                           options:0
+                                                             error:&jsonError];
+    
+    if (!uiConf) {
+        KPLogError(@"Error parsing uiConf json: %@", jsonError);
+        return nil;
+    }
+    NSString *serviceError = uiConf[@"message"];
+    if (serviceError) {
+        KPLogError(@"uiConf service reported error: %@", serviceError);
+        return nil;
+    }
+    
+    NSString *embedLoaderUrl = uiConf[@"html5Url"];
+    
+    // embedLoaderUrl is typically something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
+    
+    if (!embedLoaderUrl) {
+        KPLogError(@"No html5Url in uiConf");
+        return nil;
+    }
+    NSURL *serverURL = [NSURL URLWithString:self.server];
+    if ([embedLoaderUrl hasPrefix:@"/"]) {
+        serverURL = [serverURL URLByAppendingPathComponent:embedLoaderUrl];
+    } else {
+        serverURL = [NSURL URLWithString:embedLoaderUrl];
+    }
+    
+    return [serverURL URLByDeletingLastPathComponent];
+}
+
+@end
+
