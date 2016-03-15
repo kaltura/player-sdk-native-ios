@@ -103,6 +103,12 @@ static NSInteger _threadCounter;
     // Remove cache
     // TODO
     
+    // TEMP, until remove cache is implemented
+    if (!localPath.isWV) {
+        completed(nil);
+        return YES;
+    }
+    
     // Remove rights
     [WidevineClassicCDM setEventBlock:^(KCDMEventType event, NSDictionary *data) {
         if (event == KCDMEvent_Unregistered) {
@@ -114,8 +120,9 @@ static NSInteger _threadCounter;
     return YES;
 }
 
-+ (BOOL)checkStatus:(NSString *)localPath
-           callback:(kLocalAssetStatusBlock)completed {
++ (BOOL)checkStatusForAsset:(KPPlayerConfig *)assetConfig
+                       path:(NSString *)localPath
+                   callback:(kLocalAssetStatusBlock)completed {
     
     if (!localPath) {
         return NO;

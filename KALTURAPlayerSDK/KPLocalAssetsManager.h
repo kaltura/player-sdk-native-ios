@@ -18,13 +18,18 @@ typedef void(^kLocalAssetStatusBlock)(NSError* error, NSTimeInterval expiryTime,
                flavor:(NSString *)flavorId
                  path:(NSString *)localPath
              callback:(kLocalAssetRegistrationBlock)completed;
+
 + (BOOL)refreshAsset:(KPPlayerConfig *)assetConfig
                flavor:(NSString *)flavorId
                  path:(NSString *)localPath
              callback:(kLocalAssetRegistrationBlock)completed;
+
 + (BOOL)unregisterAsset:(KPPlayerConfig *)assetConfig
                 path:(NSString *)localPath
             callback:(kLocalAssetRegistrationBlock)completed;
-+ (BOOL)checkStatus:(NSString *)localPath
-               callback:(kLocalAssetStatusBlock)completed;
+
++ (BOOL)checkStatusForAsset:(KPPlayerConfig *)assetConfig
+                       path:(NSString *)localPath
+                   callback:(kLocalAssetStatusBlock)completed;
+
 @end
