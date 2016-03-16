@@ -158,7 +158,10 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         wvInitialized = @NO;
         assetBlocks = [NSMutableDictionary new];
         
-        NSDictionary* settings = @{WVPortalKey: WV_PORTAL_ID};
+        NSDictionary* settings = @{
+                                   WVPortalKey: WV_PORTAL_ID,
+                                   WVAssetRootKey: NSHomeDirectory(),
+                                   };
         
         WViOsApiStatus wvStatus = WV_Initialize(widevineCallback, settings);
         KPLogDebug(@"WV_Initialize status: %d", wvStatus);
@@ -300,14 +303,13 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     
     if ([assetUri hasPrefix:@"/"]) {
         // Downloaded file
-        // Ensure it's in the documents directory.
+        // Ensure it's in the home directory.
         // This is actually the simplest way to get the path of a file URL.
-        NSString* docDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-        
-        if ([assetUri hasPrefix:docDir]) {
-            assetPath = [assetUri substringFromIndex:docDir.length];
+        NSString* homeDir = NSHomeDirectory();
+        if ([assetUri hasPrefix:homeDir]) {
+            assetPath = [assetUri substringFromIndex:homeDir.length];
         } else {
-            KPLogError(@"Error: downloaded file is not in the Documents directory.");
+            KPLogError(@"Error: downloaded file is not in the home directory.");
             // will return nil
         }
     } else {
