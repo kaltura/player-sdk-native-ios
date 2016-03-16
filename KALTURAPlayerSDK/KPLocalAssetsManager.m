@@ -15,6 +15,8 @@
 #import "KCacheManager.h"
 #import "NSString+Utilities.h"
 
+#import <libkern/OSAtomic.h>
+
 
 @interface KPLocalAssetsManager ()
 + (NSURLQueryItem *)queryItem:(NSString *)name
@@ -30,21 +32,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 @property (nonatomic, copy, readonly) NSURL *resolvePlayerRootURL;
 @end
 
-static NSInteger _threadCounter;
 
 @implementation KPLocalAssetsManager
-
-+ (void)setThreadCounter:(NSInteger)threadCounter {
-    @synchronized(self) {
-        _threadCounter = threadCounter;
-    }
-}
-
-+ (NSInteger)threadCounter {
-    @synchronized(self) {
-        return _threadCounter;
-    }
-}
 
 #define CHECK_NOT_NULL(v)   if (!(v)) return NO
 #define CHECK_NOT_EMPTY(v)  if ((v).length == 0) return NO
@@ -54,8 +43,7 @@ static NSInteger _threadCounter;
                  path:(NSString *)localPath
              callback:(kLocalAssetRegistrationBlock)completed refresh:(BOOL)refresh {
 
-
-    // NOTE: this method currently only supports (and assumes) Widevine Classic.
+    // NOTE: this method currently only supports Widevine Classic DRM.
     
     // Preflight: check that all parameters are valid.
     CHECK_NOT_NULL(assetConfig);
@@ -66,15 +54,23 @@ static NSInteger _threadCounter;
     CHECK_NOT_EMPTY(flavorId);
     CHECK_NOT_EMPTY(localPath);
     
-    self.threadCounter = 1;
-    [self storeLocalContentPage:assetConfig callback:completed];
+    __block int32_t count = localPath.isWV ? 2 : 1;
+    kLocalAssetRegistrationBlock done  = ^(NSError* error) {
+        NSLog(@"count=%d", count);
+        if (OSAtomicDecrement32(&count) == 0) {
+            assert(count==0);
+            completed(error);
+        }
+        NSLog(@"count=%d", count);
+    };
+    
+    [self storeLocalContentPage:assetConfig callback:done];
     if (localPath.isWV) {
-        self.threadCounter = 2;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
             [self registerWidevineAsset:assetConfig
                               localPath:localPath
                                flavorId:flavorId
-                               callback:completed refresh:refresh];
+                               callback:done refresh:refresh];
         });
     }
     return YES;    
@@ -249,10 +245,7 @@ static NSInteger _threadCounter;
         
         switch (event) {
             case KCDMEvent_LicenseAcquired:
-                self.threadCounter--;
-                if (!self.threadCounter) {
                     callback(nil);
-                }
                 break;
                 
             default:
@@ -277,15 +270,9 @@ static NSInteger _threadCounter;
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:assetConfig.videoURL]
                                        queue:[NSOperationQueue new]
                            completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-                               if (connectionError) {
-                                   callback(connectionError);
-                               } else if (data) {
-                                   self.threadCounter--;
-                                   if (!self.threadCounter) {
-                                       callback(nil);
-                                   }
-                               }
                                [NSURLProtocol unregisterClass:[KPURLProtocol class]];
+
+                               callback(connectionError);
                            }];
 }
 
