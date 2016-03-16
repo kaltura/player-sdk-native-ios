@@ -236,7 +236,8 @@
             eventParams = self.adEventParams.toJSON.adClicked;
             break;
         case kIMAAdEvent_SKIPPED:
-            // TODO::
+            self.adEventParams.isLinear = event.ad.isLinear;
+            eventParams = self.adEventParams.toJSON.adSkipped;
             break;
         default:
             break;
@@ -287,5 +288,18 @@
 - (BOOL)prefersStatusBarHidden {
     return YES;
 }
+
+- (void)pause {
+    if (_adsManager) {
+        [_adsManager pause];
+    }
+}
+
+- (void)resume {
+    if (_adsManager) {
+        [_adsManager resume];
+    }
+}
+
 @end
 

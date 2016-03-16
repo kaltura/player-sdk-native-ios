@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "KPViewControllerProtocols.h"
 
-
+extern NSString *const LocalContentId;
 
 typedef struct FunctionComponents {
     __unsafe_unretained NSString *name;
@@ -27,6 +27,8 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSString *appendHover;
 @property (nonatomic, copy, readonly) NSString *appendIFrameEmbed;
 @property (nonatomic, copy, readonly) NSString *sqlite;
+
+@property (nonatomic, copy, readonly) NSString *extractLocalContentId;
 
 - (NSString *)appendIDFA:(NSString *)IDFA;
 
@@ -50,7 +52,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSString *documentPath;
 @property (nonatomic, copy, readonly) NSURL *sorted;
 
-
+@property (nonatomic, readonly) BOOL isWV;
 #pragma mark
 #pragma mark JavaScriptEvents Double Click helpers
 @property (nonatomic, copy, readonly) NSDictionary *nullVal;
@@ -59,6 +61,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSDictionary *adCompleted;
 @property (nonatomic, copy, readonly) NSDictionary *adRemainingTimeChange;
 @property (nonatomic, copy, readonly) NSDictionary *adClicked;
+@property (nonatomic, copy, readonly) NSDictionary *adSkipped;
 
 #pragma mark
 #pragma mark JavaScriptEvents

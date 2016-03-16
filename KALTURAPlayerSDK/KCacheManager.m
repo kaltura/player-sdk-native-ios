@@ -51,6 +51,10 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     return _bundle;
 }
 
+- (void)setBaseURL:(NSString *)host {
+    _baseURL = [host stringByReplacingOccurrencesOfString:[host lastPathComponent] withString:@""];
+}
+
 
 // Fetches the White list urls
 - (NSDictionary *)cacheConditions {
@@ -125,11 +129,16 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 
 // Unarchive the stored headers
 - (NSDictionary *)cachedResponseHeaders {
+    NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
+    if (contentId.length) {
+        path = [contentId appendPath];
+    }
+    
     NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
     if (data) {
-        [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:pathForHeaders error:nil];
+        [self setDateAttributeAtPath:pathForHeaders];
         NSDictionary *cached = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         return cached;
     }
@@ -138,13 +147,28 @@ NSString *const KalturaFolder = @"/KalturaFolder";
 
 // Fetches the page content from the file system
 - (NSData *)cachedPage {
+    NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
-    NSString *pathForHeaders = [path stringByAppendingPathComponent:@"data"];
-    NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
-    [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:pathForHeaders error:nil];
+    
+    if (contentId) {
+        path = contentId.appendPath;
+    }
+    
+    NSString *pathForData = [path stringByAppendingPathComponent:@"data"];
+    NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForData];
+    [self setDateAttributeAtPath:pathForData];
+    
     return data;
 }
 
+- (void)setDateAttributeAtPath: (NSString *)path {
+    NSError *err = nil;
+    [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:path error:&err];
+    
+    if (err) {
+        KPLogError(err.localizedDescription);
+    }
+}
 
 - (NSString *)appendPath {
     return [CacheManager.cachePath stringByAppendingPathComponent:self];
@@ -159,7 +183,8 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     NSString *path = self.pathForFile;
     if ([[NSFileManager defaultManager] isDeletableFileAtPath:path]) {
         NSError *error = nil;
-        [[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+        [[NSFileManager defaultManager] removeItemAtPath:path
+                                                   error:&error];
         if (!error) {
             return YES;
         } else {
@@ -168,6 +193,7 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     }
     return NO;
 }
+
 @end
 
 
@@ -199,6 +225,9 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     
     // Create Kaltura's folder if not already exists
     NSString *pageFolderPath = self.url.absoluteString.md5.appendPath;
+    if (self.url.absoluteString.extractLocalContentId) {
+        pageFolderPath = self.url.absoluteString.extractLocalContentId.appendPath;
+    }
     BOOL isDir = YES;
     BOOL exists = [[NSFileManager defaultManager] fileExistsAtPath:pageFolderPath isDirectory:&isDir];
     NSError *error = nil;

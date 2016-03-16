@@ -104,7 +104,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         // If the developer set the cache size, the cache system is triggered.
         if (_configuration.cacheSize > 0) {
             [NSURLProtocol registerClass:[KPURLProtocol class]];
-            CacheManager.host = configuration.videoURL.host;
+            CacheManager.baseURL = configuration.server;
             CacheManager.cacheSize = _configuration.cacheSize;
         }
         return self;
@@ -358,7 +358,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 #pragma mark - GCKDeviceScannerListener
 - (void)didDiscoverDeviceOnNetwork {
-    NSLog(@"");
+    KPLogChromeCast(@"");
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
         [weakSelf setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
@@ -496,7 +496,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 #pragma mark - GCKDeviceScannerListener
 - (void)deviceDidComeOnline:(id<KPGCDevice>)device {
-    NSLog(@"device found!! %@", device.friendlyName);
+    KPLogChromeCast(@"device found!! %@", device.friendlyName);
 }
 
 - (void)deviceDidGoOffline:(id<KPGCDevice>)device {
@@ -552,6 +552,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if (config) {
         [self.playerFactory prepareForChangeConfiguration];
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:config.videoURL]];
+        isJsCallbackReady = NO;
+        [self registerReadyEvent:^{
+            for (NSString *event in self.kPlayerEventsDict.allKeys) {
+                [self.controlsView addEventListener:event];
+            }
+        }];
     }
 }
 
@@ -735,7 +741,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     };
 }
 
-
+#pragma mark Errors triggerd by WebView Delegate
+- (void)handleKPControlsError:(NSError *)error {
+    if (_delegate && [_delegate respondsToSelector:@selector(kPlayer:didFailWithError:)]) {
+        [_delegate kPlayer:self didFailWithError:error];
+    }
+}
 
 #pragma mark HTML lib events triggerd by WebView Delegate
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
@@ -750,7 +761,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if ([self respondsToSelector:selector]) {
         KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:selector withObject:args];
-    } else if ([_playerFactory.player respondsToSelector:selector]) {
+    } else if ([_playerFactory respondsToSelector:selector]) {
+        [_playerFactory performSelector:selector withObject:args];
+    }else if ([_playerFactory.player respondsToSelector:selector]) {
         [_playerFactory.player performSelector:selector withObject:args];
     }
     
@@ -947,13 +960,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                       PauseKey:
                                           ^{
                                               playbackState = KPMediaPlaybackStatePaused;
-                                              [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
-                                                                                                userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
-                                          },
-                                      StopKey:
-                                          ^{
-                                              playbackState = KPMediaPlaybackStateStopped;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
                                                                                                   object:self
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];

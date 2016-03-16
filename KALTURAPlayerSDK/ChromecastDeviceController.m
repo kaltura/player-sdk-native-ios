@@ -14,6 +14,7 @@
 
 
 #import "ChromecastDeviceController.h"
+#import "KPLog.h"
 
 
 
@@ -141,7 +142,7 @@ NSString * const kCastViewController = @"castViewController";
     self.deviceScanner = [NSClassFromString(@"GCKDeviceScanner") new];
 
     // Always start a scan as soon as we have an application ID.
-    NSLog(@"Starting Scan");
+    KPLogChromeCast(@"Starting Scan");
     [self.deviceScanner addListener:self];
     [self.deviceScanner startScan];
 }
@@ -253,7 +254,7 @@ NSString * const kCastViewController = @"castViewController";
 }
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager didDisconnectWithError:(id<KPGCError>)error {
-  NSLog(@"Received notification that device disconnected");
+  KPLogChromeCast(@"Received notification that device disconnected");
 
   if (!error || (
       error.code == KPGCErrorCodeDeviceAuthenticationFailure ||
@@ -272,10 +273,10 @@ NSString * const kCastViewController = @"castViewController";
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
     didDisconnectFromApplicationWithError:(NSError *)error {
-  NSLog(@"Received notification that app disconnected");
+  KPLogChromeCast(@"Received notification that app disconnected");
 
   if (error) {
-    NSLog(@"Application disconnected with error: %@", error);
+    KPLogChromeCast(@"Application disconnected with error: %@", error);
   }
 
   // If we've lost the app connection, tear down the device connection.
@@ -300,7 +301,7 @@ NSString * const kCastViewController = @"castViewController";
 #pragma mark - GCKDeviceScannerListener
 
 - (void)deviceDidComeOnline:(id<KPGCDevice>)device {
-  NSLog(@"device found - %@", device.friendlyName);
+  KPLogChromeCast(@"device found - %@", device.friendlyName);
 
   NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   NSString* lastDeviceID = [defaults objectForKey:@"lastDeviceID"];
@@ -318,7 +319,7 @@ NSString * const kCastViewController = @"castViewController";
 }
 
 - (void)deviceDidGoOffline:(id<KPGCDevice>)device {
-  NSLog(@"device went offline - %@", device.friendlyName);
+  KPLogChromeCast(@"device went offline - %@", device.friendlyName);
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castScanStatusUpdated" object:self];
   [self updateCastIconButtonStates];
 }
@@ -330,7 +331,7 @@ NSString * const kCastViewController = @"castViewController";
 #pragma mark - GCKMediaControlChannelDelegate methods
 
 - (void)mediaControlChannelDidUpdateStatus:(id<KPGCMediaControlChannel>)mediaControlChannel {
-  NSLog(@"Media control channel status changed");
+  KPLogChromeCast(@"Media control channel status changed");
   _mediaInformation = mediaControlChannel.mediaStatus.mediaInformation;
   self.lastContentID = _mediaInformation.contentID;
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castMediaStatusChange" object:self];
@@ -343,13 +344,13 @@ NSString * const kCastViewController = @"castViewController";
 }
 
 - (void)mediaControlChannelDidUpdateMetadata:(id<KPGCMediaControlChannel>)mediaControlChannel {
-  NSLog(@"Media control channel metadata changed");
+  KPLogChromeCast(@"Media control channel metadata changed");
   [[NSNotificationCenter defaultCenter] postNotificationName:@"castMediaStatusChange" object:self];
   }
 
 - (void)mediaControlChannel:(id<KPGCMediaControlChannel>)mediaControlChannel didCompleteLoadWithSessionID:(NSInteger)sessionID {
     /// @todo maybe better use delegate
-    NSLog(@"Media control channel metadata changed");
+    KPLogChromeCast(@"Media control channel metadata changed");
     [[NSNotificationCenter defaultCenter] postNotificationName:@"castApplicationCompleteLoadWithSessionID"
                                                         object:@{@"sessionID":@(sessionID)}];
 
@@ -361,7 +362,7 @@ NSString * const kCastViewController = @"castViewController";
 # pragma mark - Device & Media Management
 
 - (void)connectToDevice:(id<KPGCDevice>)device {
-  NSLog(@"Connecting to device address: %@:%d", device.ipAddress, (unsigned int)device.servicePort);
+  KPLogChromeCast(@"Connecting to device address: %@:%d", device.ipAddress, (unsigned int)device.servicePort);
 
   NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
   NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
@@ -414,7 +415,7 @@ NSString * const kCastViewController = @"castViewController";
 
 - (void)logFromFunction:(const char *)function message:(NSString *)message {
   // Send SDK’s log messages directly to the console, as an example.
-  NSLog(@"%s  %@", function, message);
+  KPLogChromeCast(@"%s  %@", function, message);
   }
 
 @end

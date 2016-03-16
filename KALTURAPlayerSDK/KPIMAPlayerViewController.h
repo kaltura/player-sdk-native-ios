@@ -53,6 +53,10 @@
 - (void)removeIMAPlayer;
 
 - (void)contentCompleted;
+/// Pauses the advertisement
+- (void)pause;
+/// Resumes the advertisement
+- (void)resume;
 
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
