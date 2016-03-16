@@ -264,15 +264,17 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 + (void)storeLocalContentPage:(KPPlayerConfig *)assetConfig
                      callback:(kLocalAssetRegistrationBlock)callback {
-    [NSURLProtocol registerClass:[KPURLProtocol class]];
+
+    [KPURLProtocol enable];
+    
     CacheManager.baseURL = assetConfig.server;
     CacheManager.cacheSize = assetConfig.cacheSize;
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:assetConfig.videoURL]
                                        queue:[NSOperationQueue new]
                            completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
-                               [NSURLProtocol unregisterClass:[KPURLProtocol class]];
 
                                callback(connectionError);
+                               [KPURLProtocol disable];
                            }];
 }
 

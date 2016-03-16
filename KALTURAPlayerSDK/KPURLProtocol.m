@@ -9,8 +9,10 @@
 #import "KPURLProtocol.h"
 #import "KCacheManager.h"
 #import "NSDictionary+Cache.h"
+#import <libkern/OSAtomic.h>
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
+static int32_t enableCount;
 
 @interface KPURLProtocol()<NSURLConnectionDataDelegate>
 
@@ -22,6 +24,20 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 @end
 
 @implementation KPURLProtocol
+
++(void)enable {
+    if (OSAtomicIncrement32(&enableCount) == 1) {
+        [NSURLProtocol registerClass:self];
+    }
+}
+
++(void)disable {
+    if (OSAtomicDecrement32(&enableCount) == 0) {
+        [NSURLProtocol unregisterClass:self];
+    }
+}
+
+
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
     if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {

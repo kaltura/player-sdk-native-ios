@@ -102,7 +102,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         _configuration = configuration;
         // If the developer set the cache size, the cache system is triggered.
         if (_configuration.cacheSize > 0) {
-            [NSURLProtocol registerClass:[KPURLProtocol class]];
+            [KPURLProtocol enable];
             CacheManager.baseURL = configuration.server;
             CacheManager.cacheSize = _configuration.cacheSize;
         }
