@@ -106,6 +106,9 @@ static dispatch_queue_t	globalNotificationQueue( void )
     
     NSData *certificate = [KPAssetBuilder getCertificate];
     
+    if (!certificate) {
+        return NO;
+    }
     
     // Get SPC
     NSData *requestBytes = [loadingRequest streamingContentKeyRequestDataForApp:certificate

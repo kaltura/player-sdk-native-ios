@@ -56,6 +56,7 @@ static NSString *NativeActionKey = @"nativeAction";
                             @"visible",
                             @"playerError",
                             @"licenseUri",
+                            @"fpsCertificate",
                             @"nativeAction",
                             @"doubleClickRequestAds",
                             @"language",

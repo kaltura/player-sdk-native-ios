@@ -27,6 +27,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KCacheManager.h"
 #import "NSBundle+Kaltura.h"
 #import "NSDictionary+Utilities.h"
+#import "KPAssetBuilder.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -789,6 +790,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         case licenseUri:
             _playerFactory.licenseUri = attributeVal;
             break;
+        case fpsCertificate:
+            [KPAssetBuilder setCertificate:[[NSData alloc] initWithBase64EncodedString:attributeVal options:0]];
+             break;
         case nativeAction:
             nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding]
                                                                  options:0
@@ -811,6 +815,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 //            _playerController changeSubtitleLanguage
             break;
         default:
+            KPLogDebug(@"Unhandled attribute: %@=%@", attributeName, attributeVal);
             break;
     }
     KPLogTrace(@"Exit");

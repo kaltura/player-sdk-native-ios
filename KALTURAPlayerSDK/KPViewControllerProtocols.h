@@ -35,6 +35,7 @@ typedef enum{
     playerError,
     // DRM license uri
     licenseUri,
+    fpsCertificate,
 
     nativeAction,
     doubleClickRequestAds,
