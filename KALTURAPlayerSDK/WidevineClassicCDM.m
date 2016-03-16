@@ -131,13 +131,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         return WViOsApiStatus_OK;
     }
     
-    // TODO: also include relevant parsed data from attributes.
-    NSDictionary* data = @{
-                           @"ProviderSpecificData": attributes,
-                           @"ProviderSpecificEvent": wvEventString != nil ? wvEventString : @"<null>"
-                           };
-    
-    [self callAssetBlockFor:assetPath event:cdmEvent data:data];
+    [self callAssetBlockFor:assetPath event:cdmEvent data:attributes];
     
     return WViOsApiStatus_OK;
 
@@ -246,16 +240,34 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     }];
 }
 
++(void)widevineErrorWithEvent:(WViOsApiEvent)event status:(WViOsApiStatus)status asset:(NSString*)assetPath {
+    [self widevineCallbackWithEvent:event attr:@{
+                                                 WViOsApiStatusKey: @(status),
+                                                 WVAssetPathKey: assetPath,
+                                                 }];
+}
+
 +(void)unregisterAsset:(NSString*)assetUri {
     NSString* assetPath = assetUri.wvAssetPath;
-    WV_UnregisterAsset(assetPath);
+    WViOsApiStatus wvStatus = WV_UnregisterAsset(assetPath);
+    if ((int)wvStatus == 4017) {    // undocumented value that seems to mean the same.
+        wvStatus = WViOsApiStatus_NotRegistered;
+    }
+    if (wvStatus == WViOsApiStatus_NotRegistered) {
+        [self widevineErrorWithEvent:WViOsApiEvent_Unregistered status:wvStatus asset:assetPath];
+    } else if (wvStatus != WViOsApiStatus_OK) {
+        [self widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
+    }
 }
 
 
 +(void)checkAssetStatus:(NSString*)assetUri {
     NSString* assetPath = assetUri.wvAssetPath;
 
-    WV_QueryAssetStatus(assetPath);
+    WViOsApiStatus wvStatus = WV_QueryAssetStatus(assetPath);
+    if (wvStatus != WViOsApiStatus_OK) {
+        [self widevineErrorWithEvent:WViOsApiEvent_QueryStatus status:wvStatus asset:assetPath];
+    }
 }
 
 
