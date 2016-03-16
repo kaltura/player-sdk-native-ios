@@ -24,7 +24,11 @@
 
 #if TARGET_OS_SIMULATOR
 // The widevine library does not support the simulator, so the following are stubs that do nothing.
-WViOsApiStatus WV_Initialize(const WViOsApiStatusCallback callback, NSDictionary *settings ) { callback(WViOsApiEvent_Initialized, @{}); return WViOsApiStatus_OK; }
+WViOsApiStatus WV_Initialize(const WViOsApiStatusCallback callback, NSDictionary *settings ) {
+    assert(!"FATAL error: Widevine Classic is not avaialble for Simulator");
+    callback(WViOsApiEvent_InitializeFailed, @{}); 
+    return WViOsApiStatus_NotInitialized; 
+}
 WViOsApiStatus WV_Terminate() { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_SetCredentials( NSDictionary *settings ) { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_RegisterAsset (NSString *asset) { return WViOsApiStatus_OK; }
