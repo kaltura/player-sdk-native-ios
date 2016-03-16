@@ -303,11 +303,14 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     
     if ([assetUri hasPrefix:@"/"]) {
         // Downloaded file
+        
         // Ensure it's in the home directory.
         // This is actually the simplest way to get the path of a file URL.
         NSString* homeDir = NSHomeDirectory();
         if ([assetUri hasPrefix:homeDir]) {
-            assetPath = [assetUri substringFromIndex:homeDir.length];
+            // strip the homedir, including the slash. 
+            assetPath = [assetUri substringFromIndex:homeDir.length+1];
+            // assetPath is now homeDir + "/" + assetUri
         } else {
             KPLogError(@"Error: downloaded file is not in the home directory.");
             // will return nil
