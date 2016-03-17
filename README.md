@@ -30,9 +30,10 @@ Future support will include:
 
 * [**Architecture Overview**](#architecture-overview)  
 * [**Getting Started**](#getting-started)
+* [**Using Kaltura player**](#using-kaltura-player)  
 * [**Linking GoogleAds**](#linking-googleads)
 * [**Linking GoogleCast**](#linking-googlecast)
-* [**Using Kaltura player**](#using-kaltura-player)  
+* [**Troubleshooting**](#troubleshooting)   
 * [**License and Copyright Information**](#license-and-copyright-information)  
 
 Architecture Overview
@@ -45,19 +46,23 @@ Getting Started
 
 **KalturaPlayerSDK** can be added to any project (big or small) in a matter of minutes (maybe even seconds if you're super speedy). CocoaPods is fully supported.
 
+
 ##SDK CocoaPods Installation :
 
 The easiest way to install KalturaPlayerSDK is to use <a href="http://cocoapods.org/" target="_blank">CocoaPods</a>. To do so, simply add the following line to your `Podfile`:
 	<pre><code>pod 'KalturaPlayerSDK'</code></pre>
+
 
 ##SDK Traditional Installation :
 
 ```
 git clone https://github.com/kaltura/player-sdk-native-ios.git
 ```
+
+
 ###Add the static library's .xcodeproj to the app's project
 
-1. Find the _**`KALTURAPlayerSDK.xcodeproj`**_ from the subproject folder in _**`Finder`**_, and drag it into Xcode’s Navigator tree. Alternatively, add it with Xcode’s _**`Add Files`**_ File menu item.
+1. Find the _**`KALTURAPlayerSDK.xcodeproj`**_ from the subproject folder in _**`Finder`**_, and drag it into Xcode’s Navigator tree. Alternatively, add it with Xcode’s _**`Add Files`**_ File menu item.
 
 ![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/add_files.png)
 
@@ -66,48 +71,30 @@ Make sure to add the _**`KALTURAPlayerSDK.xcodeproj`**_ file only, **not the ent
 ![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/xcodetree.png)
 
 ###Configure the app target to build the static library target.
-3. You will need to get the main project to build and link to the KALTURAPlayerSDK library.
-4. In the main project app’s target settings, find the _**`Build Phases`**_ section. This is where you’ll configure the _**`KALTURAPlayerSDK`**_ target to automatically build and link to the _**`KALTURAPlayerSDK`**_ library. 
-5. After you’ve found the _**`Build Phases`**_ section, open the _**`Target Dependencies`**_ block and click the **`+`** button. In the hierarchy presented to you, the _**`KALTURAPlayerSDK`**_ target from the _**`KALTURAPlayerSDK`**_ project should be listed. Select it and click _**`Add`**_.![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/addDependencie.jpg)
+
+
+3. You will need to get the main project to build and link to the KALTURAPlayerSDK library.
+4. In the main project app’s target settings, find the _**`Build Phases`**_ section. This is where you’ll configure the _**`KALTURAPlayerSDK`**_ target to automatically build and link to the _**`KALTURAPlayerSDK`**_ library. 
+5. After you’ve found the _**`Build Phases`**_ section, open the _**`Target Dependencies`**_ block and click the **`+`** button. In the hierarchy presented to you, the _**`KALTURAPlayerSDK`**_ target from the _**`KALTURAPlayerSDK`**_ project should be listed. Select it and click _**`Add`**_.![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/addDependencie.jpg)
+
 
 ###Configure the app target to link to the static library target.
 
-1. You will need to set the app to link to the library when it’s built - just like you would a system framework you would want to use. Open the _**`Link Binary With Libraries`**_ section located a bit below the _**`Target Dependencies`**_ section, and click **`+`** in there too. At the top of the list there should be the _**`libKALTURAPlayerSDK.a`**_ static library that the main project target produces. Choose it and click _**`Add`**_.
+1. You will need to set the app to link to the library when it’s built - just like you would a system framework you would want to use. Open the _**`Link Binary With Libraries`**_ section located a bit below the _**`Target Dependencies`**_ section, and click **`+`** in there too. At the top of the list there should be the _**`libKALTURAPlayerSDK.a`**_ static library that the main project target produces. Choose it and click _**`Add`**_.
 ![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/linkToSDK.jpg)
-2. Because we are using Objective-C, we have to add a couple of linker flags to the main project app’s target to ensure that ObjC static libraries like ours are linked correctly. In the main project target’s _**`Build Settings`**_ find the _**`Other Linker Flags`**_ line, and add _**`-ObjC`**_.![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/addingObjC_flag.jpg)
+2. Because we are using Objective-C, we have to add a couple of linker flags to the main project app’s target to ensure that ObjC static libraries like ours are linked correctly. In the main project target’s _**`Build Settings`**_ find the _**`Other Linker Flags`**_ line, and add _**`-ObjC`**_.![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/addingObjC_flag.jpg)
 
-Linking GoogleCast
-======
-###CocoaPods support
-If you are using cocoapods please attach the following to your pod file:
-```
-	pod 'google-cast-sdk'
-```
-###Linking to “GoogleCast.framework”
-1.	Go to Target -> _**`Build Phases`**_ -> _**`Link Binary with Library`**_, click the **`+`** and _**`Add Other...`**_
-2.	Go to PlayerSDK folder and you will see that it contains _**`GoogleCast.framework`**_ choose it and click -**`Open`**_. ![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/linkToChromecast.jpg)
 
-Linking GoogleAds
-======
-###CocoaPods support
-If you are using cocoapods please attach the following to your pod file:
-```
-   	pod 'Google-Mobile-Ads-SDK'
-    pod 'google-cast-sdk'
-    pod 'GoogleAds-IMA-iOS-SDK-For-AdMob', '~> 3.0.beta.16'
-```
+###Adding Resources Bundle
 
-###Linking to GoogleInteractiveMediaAds SDK
-1. If you use ads you will have to download **`GoogleMobileAds`** from: [Admob](https://developers.google.com/admob/ios/download) and add it to your project
-2. In addition to the **`GoogleMobileAds`** you should download **`GoogleInteractiveMediaAds`** from: [IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/ios/download), if you are going to use **Admob** in addition to the **`IMA SDK`** you should add **GoogleInteractiveMediaAds-GoogleIMA3ForAdMob** to your project and if you are going to use only **`IMA SDK`** you should add **GoogleInteractiveMediaAds-GoogleIMA3** to your project.
-3. Required frameworks for **`GoogleMobileAds`**:
-	1. StoreKit.framework
-	2. EventKit.framework
-	3. EventKitUI.framework
-	4. CoreTelephony.framework
-	5. MessageUI.framework
+1. Choose the app target from the Targets  section.  
+2. Go to the _**`Products`**_ folder and drag the _**`KALTURAPlayerSDK.bundle`**_ to _**`Copy Bundle Resources`**_ section.![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/Bundle.png)
 
-###Required Frameworks 
+** If you click build now, you will see that the PlayerSDK library is built before the main project app, and they are linked together.**
+
+
+###Required Frameworks 
+
 	•	SystemConfiguration
 	•	QuartzCore
 	•	CoreMedia
@@ -125,13 +112,8 @@ If you are using cocoapods please attach the following to your pod file:
 	•	libxml2.dylib
 	•	libxml2.2.dylib
 	•	libc++.dylib
-
-###Adding Resources Bundle
-
-1. Choose the app target from the Targets  section.  
-2. Go to the _**`Products`**_ folder and drag the _**`KALTURAPlayerSDK.bundle`**_ to _**`Copy Bundle Resources`**_ section.![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/Bundle.png)
-
-** If you click build now, you will see that the PlayerSDK library is built before the main project app, and they are linked together.**
+	
+**If you are using Xcode 7 notice that the extension "dylib" was changed to "tbd"*
 
 
 Using Kaltura player
@@ -200,10 +182,53 @@ Using Kaltura player
     [self.player loadPlayerIntoViewController:self];
     [self.view addSubview:_player.view];
 }
-
-
 ```
 
+
+Linking GoogleCast
+======
+###CocoaPods support
+If you are using cocoapods please attach the following to your pod file:
+```
+	pod 'google-cast-sdk'
+```
+###Linking to “GoogleCast.framework”
+1.	Go to Target -> _**`Build Phases`**_ -> _**`Link Binary with Library`**_, click the **`+`** and _**`Add Other...`**_
+2.	Go to PlayerSDK folder and you will see that it contains _**`GoogleCast.framework`**_ choose it and click -**`Open`**_.
+![alt text](http://knowledge.kaltura.com/sites/default/files/styles/large/public/linkToChromecast.jpg)
+
+Linking GoogleAds
+======
+###CocoaPods support
+If you are using cocoapods please attach the following to your pod file:
+```
+   	pod 'Google-Mobile-Ads-SDK'
+    pod 'google-cast-sdk'
+    pod 'GoogleAds-IMA-iOS-SDK-For-AdMob', '~> 3.0.beta.16'
+```
+
+###Linking to GoogleInteractiveMediaAds SDK
+ 1. If you use ads you will have to download **`GoogleMobileAds`** from: [Admob](https://developers.google.com/admob/ios/download) and add it to your project
+ 2. In addition to the **`GoogleMobileAds`** you should download **`GoogleInteractiveMediaAds`** from: [IMA SDK](https://developers.google.com/interactive-media-ads/docs/sdks/ios/download), if you are going to use **Admob** in addition to the **`IMA SDK`** you should add **GoogleInteractiveMediaAds-GoogleIMA3ForAdMob** to your project and if you are going to use only **`IMA SDK`** you should add **GoogleInteractiveMediaAds-GoogleIMA3** to your project.
+ 3. Required frameworks for **`GoogleMobileAds`**:
+	- StoreKit.framework
+	- EventKit.framework
+	- EventKitUI.framework
+	- CoreTelephony.framework
+	- MessageUI.framework
+
+Troubleshooting
+===
+
+ - if you are using Xcode 7 you have to change the Enable Bitcode option. (see this [link](https://github.com/kaltura/player-sdk-native-ios/issues/133#issuecomment-196695556))
+ 
+ - If you receive this output: 
+>  WebKit discarded an uncaught exception in the
+> webView:decidePolicyForNavigationAction:request:frame:decisionListener:
+> delegate:
+
+	You have to configure a Cocoa key called NSAppTransportSecurity (see this [link](https://github.com/kaltura/player-sdk-native-ios/issues/51#issuecomment-196665327))
+    
 License and Copyright Information
 ===
 
