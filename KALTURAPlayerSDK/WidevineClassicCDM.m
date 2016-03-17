@@ -200,13 +200,14 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     }
 }
 
-+(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
++(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri renew:(BOOL)renew {
     
     // It's an error to call this function without the licenseUri.
     if (!licenseUri) {
         KPLogError(@"Error: no licenseUri; can't register asset.");
         return;
     }
+    
     [self dispatchAfterInit:^{
         WV_SetCredentials(@{WVDRMServerKey: licenseUri});
         
@@ -215,29 +216,27 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         WViOsApiStatus wvStatus = WViOsApiStatus_OK;
         
         wvStatus = WV_RegisterAsset(assetPath);
+        if ((int)wvStatus == 1013) {
+            wvStatus = WViOsApiStatus_FileNotPresent;
+        }
+
+        if (wvStatus == WViOsApiStatus_FileNotPresent) {
+            [self widevineErrorWithEvent:WViOsApiStatus_NotRegistered status:wvStatus asset:assetPath];
+            return;
+        } else if (wvStatus != WViOsApiStatus_OK) {
+            [self widevineErrorWithEvent:WViOsApiStatus_NotRegistered status:wvStatus asset:assetPath];
+        }
         WV_NowOnline(); 
         WV_QueryAssetStatus(assetPath);
     }];
 }
 
-+(void)renewAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
-    // It's an error to call this function without the licenseUri.
-    if (!licenseUri) {
-        KPLogError(@"Error: no licenseUri; can't register asset.");
-        return;
-    }
++(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
+    [self registerLocalAsset:assetUri withLicenseUri:licenseUri renew:NO];
+}
 
-    [self dispatchAfterInit:^{
-        WV_SetCredentials(@{WVDRMServerKey: licenseUri});
-        
-        NSString* assetPath = assetUri.wvAssetPath;
-        
-        WViOsApiStatus wvStatus = WViOsApiStatus_OK;
-        
-        wvStatus = WV_RenewAsset(assetPath);
-        WV_NowOnline(); 
-        WV_QueryAssetStatus(assetPath);
-    }];
++(void)renewAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
+    [self registerLocalAsset:assetUri withLicenseUri:licenseUri renew:YES];
 }
 
 +(void)widevineErrorWithEvent:(WViOsApiEvent)event status:(WViOsApiStatus)status asset:(NSString*)assetPath {
@@ -250,6 +249,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
 +(void)unregisterAsset:(NSString*)assetUri {
     NSString* assetPath = assetUri.wvAssetPath;
     WViOsApiStatus wvStatus = WV_UnregisterAsset(assetPath);
+
     if ((int)wvStatus == 4017) {    // undocumented value that seems to mean the same.
         wvStatus = WViOsApiStatus_NotRegistered;
     }
