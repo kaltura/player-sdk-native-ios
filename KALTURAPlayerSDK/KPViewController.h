@@ -85,6 +85,15 @@
 - (void)removePlayer;
 
 /*!
+ *  @function resetPlayer
+ *
+ *  @abstract
+ *  Reset the player
+ *
+ */
+- (void)resetPlayer;
+
+/*!
  *  @function changeMedia:
  *
  *  @abstract

@@ -154,6 +154,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     _superView = nil;
 }
 
+- (void)resetPlayer {
+    [self.controlsView reset];
+    [self.playerController pause];
+    [self.playerFactory prepareForChangeConfiguration];
+}
+
 - (NSTimeInterval)currentPlaybackTime {
     return _playerFactory.player.currentPlaybackTime;
 }
