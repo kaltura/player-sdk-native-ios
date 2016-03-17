@@ -134,11 +134,19 @@
 
     url.path = path;
     url.queryItems = queryItems;
-    NSString *addedLocalContentId = [url.URL.absoluteString stringByAppendingFormat:@"#%@=", LocalContentId];
+    
+    NSMutableString* fragment = [NSMutableString stringWithFormat:@"%@=", LocalContentId];
     if (_localContentId) {
-        addedLocalContentId = [addedLocalContentId stringByAppendingString:_localContentId];
+        [fragment appendString:[_localContentId stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     }
-    return [NSURL URLWithString:addedLocalContentId];
+    if (_supportedMediaFormats) {
+        [fragment appendFormat:@"&nativeSdkDrmFormats=%@", [_supportedMediaFormats[@"drm"] componentsJoinedByString:@","]];
+        [fragment appendFormat:@"&nativeSdkAllFormats=%@", [_supportedMediaFormats[@"all"] componentsJoinedByString:@","]];
+    }
+    
+    url.fragment = fragment;
+
+    return url.URL;
 }
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL {

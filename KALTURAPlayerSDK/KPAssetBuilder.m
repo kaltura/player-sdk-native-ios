@@ -32,6 +32,14 @@ static NSData* s_certificate;
     return s_certificate;
 }
 
++(NSDictionary*)supportedMediaFormats {
+    // Nothing dynamic, we support FairPlay and Widevine Classic, as well as clear MP4 and HLS.
+    return @{
+             @"all": @[@"hls",@"wvm",@"mp4"],
+             @"drm": @[@"hls",@"wvm"],
+             };
+}
+
 -(instancetype)initWithReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];
     if (self) {

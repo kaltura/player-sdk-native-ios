@@ -90,7 +90,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
-        videoURL = [NSURL URLWithString:url.absoluteString];
+        videoURL = url;
         
         return self;
     }
@@ -98,9 +98,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration {
-    self = [self initWithURL:configuration.videoURL];
+    self = [super init];
     if (self) {
         _configuration = configuration;
+        _configuration.supportedMediaFormats = [KPAssetBuilder supportedMediaFormats];
+        
+        videoURL = _configuration.videoURL;
+        
         // If the developer set the cache size, the cache system is triggered.
         if (_configuration.cacheSize > 0) {
             [NSURLProtocol registerClass:[KPURLProtocol class]];

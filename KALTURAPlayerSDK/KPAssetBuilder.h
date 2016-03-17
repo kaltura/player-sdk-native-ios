@@ -20,6 +20,7 @@ typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 
 +(void)setCertificate:(NSData*)certificate;
 +(NSData*)getCertificate;
++(NSDictionary*)supportedMediaFormats;
 
 @end
 
