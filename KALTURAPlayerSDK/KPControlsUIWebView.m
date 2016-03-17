@@ -109,6 +109,15 @@
     [super loadRequest:request];
 }
 
+- (void)reset {
+    if (self.isLoading) {
+        [self stopLoading];
+    }
+
+    [self loadRequest:[NSURLRequest requestWithURL:
+                       [NSURL URLWithString:@"about:blank"]]];
+}
+
 #pragma mark UIWebviewDelegate
 // This selector is called when something is loaded in our webview
 // By something I don't mean anything but just "some" :
