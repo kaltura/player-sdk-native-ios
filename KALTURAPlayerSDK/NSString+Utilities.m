@@ -11,6 +11,8 @@ static NSString *CurrentTimeKey = @"currentTime";
 static NSString *licenseUriKey = @"licenseUri";
 static NSString *NativeActionKey = @"nativeAction";
 
+NSString *const LocalContentId = @"localContentId";
+
 #import "NSString+Utilities.h"
 #import "KPLog.h"
 #import "NSMutableDictionary+AdSupport.h"
@@ -47,6 +49,20 @@ static NSString *NativeActionKey = @"nativeAction";
 
 - (NSString *)sqlite {
     return [self stringByAppendingString:@".sqlite-wal"];
+}
+
+- (NSString *)extractLocalContentId {
+    NSArray *components = [self componentsSeparatedByString:@"#"];
+    if (components.count == 2) {
+        NSArray *hashTagParams = [components.lastObject componentsSeparatedByString:@"&"];
+        for (NSString *hashTagParam in hashTagParams) {
+            NSArray *param = [hashTagParam componentsSeparatedByString:@"="];
+            if (param.count == 2 && [param.firstObject isEqualToString:LocalContentId]) {
+                return param.lastObject;
+            }
+        }
+    }
+    return nil;
 }
 
 - (Attribute)attributeEnumFromString {
@@ -143,6 +159,13 @@ static NSString *NativeActionKey = @"nativeAction";
         [output appendFormat:@"%02x", digest[i]];
     
     return  output;
+}
+
+- (BOOL)isWV {
+    NSURLComponents *comp = [NSURLComponents componentsWithURL:[NSURL URLWithString:self]
+                                       resolvingAgainstBaseURL:NO];
+    NSArray *videoNameComp = [comp.path.lastPathComponent componentsSeparatedByString:@"."];
+    return [videoNameComp.lastObject isEqualToString:@"wvm"];
 }
 
 - (NSString *)documentPath {

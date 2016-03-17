@@ -13,5 +13,8 @@
 typedef void(^kLocalAssetRegistrationBlock)(NSError* error);
 
 @interface KPLocalAssetsManager : NSObject
-+(BOOL)registerAsset:(KPPlayerConfig*)assetConfig flavor:(NSString*)flavorId path:(NSString*)localPath callback:(kLocalAssetRegistrationBlock)completed;
++ (BOOL)registerAsset:(KPPlayerConfig *)assetConfig
+               flavor:(NSString *)flavorId
+                 path:(NSString *)localPath
+             callback:(kLocalAssetRegistrationBlock)completed;
 @end

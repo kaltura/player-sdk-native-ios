@@ -14,7 +14,7 @@
 + (KCacheManager *)shared;
 
 @property (nonatomic) float cacheSize;
-@property (nonatomic, copy) NSString *host;
+@property (nonatomic, copy) NSString *baseURL;
 
 @property (strong, nonatomic, readonly) NSDictionary *withDomain;
 @property (strong, nonatomic, readonly) NSDictionary *subStrings;

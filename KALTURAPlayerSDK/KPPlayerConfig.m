@@ -134,8 +134,11 @@
 
     url.path = path;
     url.queryItems = queryItems;
-
-    return url.URL;
+    NSString *addedLocalContentId = [url.URL.absoluteString stringByAppendingFormat:@"#%@=", LocalContentId];
+    if (_localContentId) {
+        addedLocalContentId = [addedLocalContentId stringByAppendingString:_localContentId];
+    }
+    return [NSURL URLWithString:addedLocalContentId];
 }
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL {
@@ -146,7 +149,6 @@
     if (_enableHover) {
         url = url.appendHover;
     }
-    url = url.appendIFrameEmbed;
     return [NSURL URLWithString:url];
 }
 

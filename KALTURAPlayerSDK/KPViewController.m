@@ -103,7 +103,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         // If the developer set the cache size, the cache system is triggered.
         if (_configuration.cacheSize > 0) {
             [NSURLProtocol registerClass:[KPURLProtocol class]];
-            CacheManager.host = configuration.videoURL.host;
+            CacheManager.baseURL = configuration.server;
             CacheManager.cacheSize = _configuration.cacheSize;
         }
         return self;
@@ -740,7 +740,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     };
 }
 
-
+#pragma mark Errors triggerd by WebView Delegate
+- (void)handleKPControlsError:(NSError *)error {
+    if (_delegate && [_delegate respondsToSelector:@selector(kPlayer:didFailWithError:)]) {
+        [_delegate kPlayer:self didFailWithError:error];
+    }
+}
 
 #pragma mark HTML lib events triggerd by WebView Delegate
 // "pragma clang" is attached to prevent warning from “PerformSelect may cause a leak because its selector is unknown”
@@ -755,7 +760,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if ([self respondsToSelector:selector]) {
         KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:selector withObject:args];
-    } else if ([_playerFactory.player respondsToSelector:selector]) {
+    } else if ([_playerFactory respondsToSelector:selector]) {
+        [_playerFactory performSelector:selector withObject:args];
+    }else if ([_playerFactory.player respondsToSelector:selector]) {
         [_playerFactory.player performSelector:selector withObject:args];
     }
     

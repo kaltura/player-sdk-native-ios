@@ -32,6 +32,8 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 
 @property (nonatomic, readonly) NSString *uiConfId;
 
+@property (nonatomic, copy) NSString *localContentId;
+
 @property (nonatomic, copy) NSString *ks;
 @property (nonatomic, copy) NSString *entryId;
 @property (nonatomic, copy) NSString *advertiserID;
