@@ -57,6 +57,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
 @property (nonatomic, copy) NSString *licenseUri;
+@property (nonatomic, assign) BOOL isReleasePlayerPositionEnabled;
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
 @property (nonatomic, strong) id kIMAWebOpenerDelegate;
 @end
