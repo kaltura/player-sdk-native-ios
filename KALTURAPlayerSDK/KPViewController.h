@@ -257,6 +257,8 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 - (void)triggerEvent:(NSString *)event
            withValue:(NSString *)value;
 
+- (void)releaseAndSavePosition;
+- (void)resumePlayer;
 
 
 /// Wraps registerReadyEvent: method by block syntax.
