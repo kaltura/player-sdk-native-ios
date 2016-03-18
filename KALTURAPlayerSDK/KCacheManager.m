@@ -156,10 +156,15 @@ NSString *const KalturaFolder = @"/KalturaFolder";
     
     NSString *pathForData = [path stringByAppendingPathComponent:@"data"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForData];
-    [self setDateAttributeAtPath:pathForData];
+    
+    if (data) {
+        [self setDateAttributeAtPath:pathForData];
+    }
     
     return data;
 }
+
+
 
 - (void)setDateAttributeAtPath: (NSString *)path {
     NSError *err = nil;
