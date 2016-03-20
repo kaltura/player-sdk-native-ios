@@ -43,7 +43,7 @@ static NSString *localContentID = nil;
     if ([request.URL.absoluteString containsString:LocalContentIDKey]) {
         NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
         if (![localContentID isEqualToString:newContentID]) {
-            [self setLocalContentID:newContentID];
+            self.localContentID = newContentID;
         }
     }
     
