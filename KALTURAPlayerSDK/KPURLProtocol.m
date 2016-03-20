@@ -74,8 +74,9 @@ static NSString *localContentID = nil;
 - (void) startLoading {
     NSString *requestStr = self.request.URL.absoluteString;
     
-    if ([requestStr containsString:@"mwEmbedFrame.php"] && ![requestStr containsString:LocalContentIDKey] && localContentID) {
-        requestStr = [NSString stringWithFormat:@"%@#localContentId=%@",self.request.URL.absoluteString, localContentID];
+    // TODO:: optimize 
+    if (self.class.localContentID && [requestStr containsString:@"mwEmbedFrame.php"] && ![requestStr containsString:LocalContentIDKey]) {
+        requestStr = [NSString stringWithFormat:@"%@#localContentId=%@",self.request.URL.absoluteString, self.class.localContentID];
     }
     
     NSDictionary *cachedHeaders = requestStr.cachedResponseHeaders;
