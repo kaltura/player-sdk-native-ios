@@ -542,6 +542,8 @@ NSString * const StatusKeyPath = @"status";
 
 - (void)reset {
     [self seekToTime:kCMTimeZero];
+    [self removeStatusObserver];
+    [self unregisterForPlaybackNotification];
     
     if (self.currentItem) {
         [self replaceCurrentItemWithPlayerItem:nil];
