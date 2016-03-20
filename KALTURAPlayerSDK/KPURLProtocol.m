@@ -9,8 +9,10 @@
 #import "KPURLProtocol.h"
 #import "KCacheManager.h"
 #import "NSDictionary+Cache.h"
+#import "NSString+Utilities.h"
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
+static NSString * const LocalContentIDKey = @"localContentId";
 
 @interface KPURLProtocol()<NSURLConnectionDataDelegate>
 
@@ -23,10 +25,28 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 
 @implementation KPURLProtocol
 
+static NSString *localContentID = nil;
+
++ (NSString *)localContentID {
+    return localContentID;
+}
+
++ (void)setLocalContentID:(NSString *)contentId {
+    localContentID = contentId;
+}
+
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    if ([request.URL.absoluteString containsString:LocalContentIDKey]) {
+        NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
+        if (![localContentID isEqualToString:newContentID]) {
+            [self setLocalContentID:newContentID];
+        }
+    }
+    
     if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
         return NO;
     }
+    
     if ([request.URL.absoluteString containsString:CacheManager.baseURL]) {
         for (NSString *key in CacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
@@ -48,8 +68,14 @@ static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 }
 
 - (void) startLoading {
-    NSDictionary *cachedHeaders = self.request.URL.absoluteString.cachedResponseHeaders;
-    NSData *cachedPage = self.request.URL.absoluteString.cachedPage;
+    NSString *requestStr = self.request.URL.absoluteString;
+    
+    if ([requestStr containsString:@"mwEmbedFrame.php"] && ![requestStr containsString:LocalContentIDKey] && localContentID) {
+        requestStr = [NSString stringWithFormat:@"%@#localContentId=%@",self.request.URL.absoluteString, localContentID];
+    }
+    
+    NSDictionary *cachedHeaders = requestStr.cachedResponseHeaders;
+    NSData *cachedPage = requestStr.cachedPage;
     
     if (cachedHeaders && cachedPage && cachedPage.length) {
         NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
