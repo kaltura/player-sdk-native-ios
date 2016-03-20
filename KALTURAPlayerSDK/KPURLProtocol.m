@@ -28,11 +28,15 @@ static NSString * const LocalContentIDKey = @"localContentId";
 static NSString *localContentID = nil;
 
 + (NSString *)localContentID {
-    return localContentID;
+    @synchronized(self) {
+        return localContentID;
+    }
 }
 
 + (void)setLocalContentID:(NSString *)contentId {
-    localContentID = contentId;
+    @synchronized(self) {
+        localContentID = contentId;
+    }
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
