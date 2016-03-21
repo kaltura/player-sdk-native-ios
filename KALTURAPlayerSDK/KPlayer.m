@@ -177,6 +177,10 @@ NSString * const StatusKeyPath = @"status";
                 break;
             case AVPlayerItemStatusReadyToPlay: {
                 if (oldValue.intValue != newValue.intValue) {
+                    if (self.currentItem.currentTime.value < _currentPlaybackTime) {
+                        [self setCurrentPlaybackTime:_currentPlaybackTime];
+                    }
+                    
                     [self registerForPlaybackNotification];
                     buffering = NO;
                     [self.delegate player:self
@@ -343,7 +347,10 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if (isnan(self.duration) || currentPlaybackTime < self.duration) {
+    if (self.status != AVPlayerStatusReadyToPlay ||
+        self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+        _currentPlaybackTime = currentPlaybackTime;
+    } else if (currentPlaybackTime < self.duration) {
         _currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
