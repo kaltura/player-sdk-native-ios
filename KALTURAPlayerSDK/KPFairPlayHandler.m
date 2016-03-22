@@ -100,10 +100,8 @@ static dispatch_queue_t	globalNotificationQueue( void )
         return NO;
     }
     
-    NSLog( @"shouldWaitForLoadingOfURLRequest got %@", loadingRequest);
-    
-    // TODO: assetid?
-    NSString *assetId = @"123";
+    // Use the SKD URL as assetId.
+    NSString *assetId = url.absoluteString;
     
     NSData *certificate = [KPAssetBuilder getCertificate];
     
