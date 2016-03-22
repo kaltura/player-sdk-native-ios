@@ -159,6 +159,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     _superView = nil;
 }
 
+- (void)resetPlayer {
+    [self.controlsView reset];
+    [self.playerController pause];
+    [self.playerFactory prepareForChangeConfiguration];
+}
+
 - (NSTimeInterval)currentPlaybackTime {
     return _playerFactory.player.currentPlaybackTime;
 }
@@ -245,6 +251,19 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     free(machine);
     
     return platform;
+}
+
+- (void)releaseAndSavePosition {
+    self.playerFactory.isReleasePlayerPositionEnabled = YES; 
+    [self.playerController pause];
+}
+
+- (void)resumePlayer {
+    self.playerFactory.isReleasePlayerPositionEnabled = NO;
+    
+    if (self.playerFactory.adController) {
+        [self.playerFactory.adController resume];
+    }
 }
 
 - (KPPlayerConfig *)configuration {

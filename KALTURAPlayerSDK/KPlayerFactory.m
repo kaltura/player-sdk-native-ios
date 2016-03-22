@@ -197,6 +197,10 @@
 }
 
 - (void)play {
+    if (self.isReleasePlayerPositionEnabled) {
+        return;
+    }
+    
     if (_adController) {
         [self.adController resume];
     }

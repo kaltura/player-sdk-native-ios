@@ -543,8 +543,18 @@ NSString * const StatusKeyPath = @"status";
     }
 }
 
+- (void)reset {
+    if (self.currentItem) {
+        [self seekToTime:kCMTimeZero];
+        [self removeStatusObserver];
+        [self unregisterForPlaybackNotification];
+        [self replaceCurrentItemWithPlayerItem:nil];
+    }
+}
+
 - (void)hidePlayer {
     if (self) {
+        [self reset];
         [self.layer removeFromSuperlayer];
     }
 }

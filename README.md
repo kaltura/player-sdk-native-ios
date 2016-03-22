@@ -6,9 +6,9 @@
 Player SDK Native iOS
 =================
 
-**Note**: The Kaltura native player component is in beta. If your a Kaltura customer please contact your Kaltura customer success manager to help facilitate use of this component. 
+**Note**: The Kaltura native player component is in beta. If you are a Kaltura customer, please contact your Kaltura Customer Success Manager to help facilitate use of this component. 
 
-The Kaltura player-sdk-native component enables embedding the [kaltura player](http://player.kaltura.com) into native environments. This enables full HTML5 player platform, without limitations of HTML5 video tag API in iOS platforms. Currently for iOS this enables: 
+The Kaltura player-sdk-native component enables embedding the [kaltura player](http://player.kaltura.com) into native environments. This enables the full HTML5 player platform, without limitations of HTML5 video tag API in iOS platforms. Currently, for iOS this enables: 
 * Inline playback with HTML controls ( disable controls during ads etc. ) 
 * Widevine DRM support
 * AutoPlay 
@@ -16,9 +16,9 @@ The Kaltura player-sdk-native component enables embedding the [kaltura player](h
 * Full [player.kaltura.com](http://player.kaltura.com) feature set for themes and plugins
 * DFP IMA SDK
 
-For a full list of native embed advantages see native controls table within the [player toolkit basic usage guide](http://knowledge.kaltura.com/kaltura-player-v2-toolkit-theme-skin-guide). 
+For a full list of native embed advantages, see the native controls table within the [player toolkit basic usage guide](http://knowledge.kaltura.com/kaltura-player-v2-toolkit-theme-skin-guide). 
 
-The Kaltura player-sdk-native component can be embedded into both native apps, and hybrid native apps ( via standard dynamic embed syntax ) 
+The Kaltura player-sdk-native component can be embedded into both native apps, and hybrid native apps (via standard dynamic embed syntax) 
 
 
 Future support will include: 
@@ -43,9 +43,9 @@ Architecture Overview
 Getting Started
 ======
 
-**KalturaPlayerSDK** can be added to any project (big or small) in a matter of minutes (maybe even seconds if you're super speedy). Cocoapods is fully supported.
+**KalturaPlayerSDK** can be added to any project (big or small) in a matter of minutes (maybe even seconds if you're super speedy). CocoaPods is fully supported.
 
-##SDK Cocoapods Installation :
+##SDK CocoaPods Installation :
 
 The easiest way to install KalturaPlayerSDK is to use <a href="http://cocoapods.org/" target="_blank">CocoaPods</a>. To do so, simply add the following line to your `Podfile`:
 	<pre><code>pod 'KalturaPlayerSDK'</code></pre>
@@ -78,7 +78,7 @@ Make sure to add the _**`KALTURAPlayerSDK.xcodeproj`**_ file only, **not the ent
 
 Linking GoogleCast
 ======
-###Cocoapods support
+###CocoaPods support
 If you are using cocoapods please attach the following to your pod file:
 ```
 	pod 'google-cast-sdk'
@@ -89,7 +89,7 @@ If you are using cocoapods please attach the following to your pod file:
 
 Linking GoogleAds
 ======
-###Cocoapods support
+###CocoaPods support
 If you are using cocoapods please attach the following to your pod file:
 ```
    	pod 'Google-Mobile-Ads-SDK'
