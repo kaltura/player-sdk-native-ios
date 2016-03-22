@@ -15,6 +15,9 @@
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
 }
+
+@property (nonatomic) NSTimeInterval startFrom;
+
 @end
 
 @implementation KPPlayerConfig
@@ -80,6 +83,12 @@
 }
 
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value; {
+    if ([key isEqualToString:@"mediaProxy.mediaPlayFrom"] && value.doubleValue > 0.0) {
+        self.startFrom = value.doubleValue;
+        
+        return;
+    }
+    
     if (key.length && value.length) {
         _extraConfig[key] = value;
     }
