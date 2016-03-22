@@ -289,6 +289,7 @@
 		FB48BCB61C7C8A4800B2E1B7 /* KPAssetBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPAssetBuilder.m; sourceTree = "<group>"; };
 		FB7D106E1C46E81500FBB906 /* KPLocalAssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPLocalAssetsManager.h; path = KALTURAPlayerSDK/KPLocalAssetsManager.h; sourceTree = SOURCE_ROOT; };
 		FB7D106F1C46E81500FBB906 /* KPLocalAssetsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPLocalAssetsManager.m; path = KALTURAPlayerSDK/KPLocalAssetsManager.m; sourceTree = SOURCE_ROOT; };
+		FBB344001CA1E07300F22D43 /* KPPlayerConfig_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPPlayerConfig_Private.h; sourceTree = "<group>"; };
 		FBDB1AA71C70A0F0002BD742 /* NSMutableArray+QueryItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueryItems.h"; path = "KALTURAPlayerSDK/NSMutableArray+QueryItems.h"; sourceTree = SOURCE_ROOT; };
 		FBDB1AA81C70A0F0002BD742 /* NSMutableArray+QueryItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueryItems.m"; path = "KALTURAPlayerSDK/NSMutableArray+QueryItems.m"; sourceTree = SOURCE_ROOT; };
 		FBDE7F671C4535A4000B416F /* WidevineClassicCDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidevineClassicCDM.h; path = KALTURAPlayerSDK/WidevineClassicCDM.h; sourceTree = SOURCE_ROOT; };
@@ -435,6 +436,7 @@
 			children = (
 				BF1C07791C0DA93700A67462 /* KPPlayerConfig.h */,
 				BF1C077A1C0DA93700A67462 /* KPPlayerConfig.m */,
+				FBB344001CA1E07300F22D43 /* KPPlayerConfig_Private.h */,
 				BF1C077C1C0DA95600A67462 /* KPViewController.h */,
 				BF1C077D1C0DA95600A67462 /* KPViewController.m */,
 			);

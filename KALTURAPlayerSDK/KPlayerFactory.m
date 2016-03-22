@@ -16,6 +16,7 @@
     NSString *key;
     BOOL isSeeked;
     KPAssetBuilder* _assetBuilder;
+    BOOL isReady;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
@@ -24,6 +25,7 @@
 @end
 
 @implementation KPlayerFactory
+@synthesize currentPlayBackTime = _currentPlayBackTime;
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -62,6 +64,7 @@
 }
 
 - (void)setSrc:(NSString *)src {
+    isReady = NO;
     _src = src;
     
     id<KPlayer> player = _player;
@@ -81,7 +84,11 @@
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
-    _player.currentPlaybackTime = currentPlayBackTime;
+    if (isReady) {
+        _player.currentPlaybackTime = currentPlayBackTime;
+    } else {
+        _currentPlayBackTime = currentPlayBackTime;
+    }
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
@@ -166,6 +173,13 @@
             [self.player.delegate player:self.player
                                eventName:EndedKey
                                    value:nil];
+        } else if ([event isEqualToString:CanPlayKey]) {
+            isReady = YES;
+            
+            if (self.currentPlayBackTime > 0.0) {
+                [self.player setCurrentPlaybackTime:self.currentPlayBackTime];
+                self.currentPlayBackTime = 0.0;
+            }
         }
         
         [self removeAdController];
