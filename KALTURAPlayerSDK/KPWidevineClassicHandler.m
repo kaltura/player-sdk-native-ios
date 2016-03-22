@@ -21,7 +21,7 @@
 -(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];
     if (self) {
-        _assetReadyCallback = callback;
+        _assetReadyCallback = [callback copy];
     }
     return self;
 }

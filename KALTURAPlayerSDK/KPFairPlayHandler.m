@@ -10,7 +10,7 @@
 #import "KPAssetBuilder.h"
 #import "KPLog.h"
 
-NSString* const URL_SCHEME_NAME = @"skd";
+NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
 @interface KPFairPlayHandler () {
     NSString* _licenseUri;
@@ -23,7 +23,7 @@ static dispatch_queue_t	globalNotificationQueue( void )
     static dispatch_queue_t globalQueue = 0;
     static dispatch_once_t getQueueOnce = 0;
     dispatch_once(&getQueueOnce, ^{
-        globalQueue = dispatch_queue_create("tester notify queue", NULL);
+        globalQueue = dispatch_queue_create("fairplay notify queue", NULL);
     });
     return globalQueue;
 }
@@ -35,7 +35,7 @@ static dispatch_queue_t	globalNotificationQueue( void )
 -(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];
     if (self) {
-        _assetReadyCallback = callback;
+        _assetReadyCallback = [callback copy];
     }
     return self;
 }
@@ -96,8 +96,9 @@ static dispatch_queue_t	globalNotificationQueue( void )
     
     // Must be a non-standard URI scheme for AVFoundation to invoke your AVAssetResourceLoader delegate
     // for help in loading it.
-    if (![[url scheme] isEqual:URL_SCHEME_NAME])
+    if (![[url scheme] isEqual:SKD_URL_SCHEME_NAME]) {
         return NO;
+    }
     
     NSLog( @"shouldWaitForLoadingOfURLRequest got %@", loadingRequest);
     

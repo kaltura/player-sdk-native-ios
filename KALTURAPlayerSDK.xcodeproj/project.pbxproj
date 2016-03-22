@@ -290,6 +290,7 @@
 		FB7D106E1C46E81500FBB906 /* KPLocalAssetsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPLocalAssetsManager.h; path = KALTURAPlayerSDK/KPLocalAssetsManager.h; sourceTree = SOURCE_ROOT; };
 		FB7D106F1C46E81500FBB906 /* KPLocalAssetsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPLocalAssetsManager.m; path = KALTURAPlayerSDK/KPLocalAssetsManager.m; sourceTree = SOURCE_ROOT; };
 		FBB344001CA1E07300F22D43 /* KPPlayerConfig_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPPlayerConfig_Private.h; sourceTree = "<group>"; };
+		FBB344011CA1E9DD00F22D43 /* KPAssetHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KPAssetHandler.h; sourceTree = "<group>"; };
 		FBDB1AA71C70A0F0002BD742 /* NSMutableArray+QueryItems.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSMutableArray+QueryItems.h"; path = "KALTURAPlayerSDK/NSMutableArray+QueryItems.h"; sourceTree = SOURCE_ROOT; };
 		FBDB1AA81C70A0F0002BD742 /* NSMutableArray+QueryItems.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMutableArray+QueryItems.m"; path = "KALTURAPlayerSDK/NSMutableArray+QueryItems.m"; sourceTree = SOURCE_ROOT; };
 		FBDE7F671C4535A4000B416F /* WidevineClassicCDM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WidevineClassicCDM.h; path = KALTURAPlayerSDK/WidevineClassicCDM.h; sourceTree = SOURCE_ROOT; };
@@ -424,6 +425,7 @@
 				FB48BCB51C7C8A4800B2E1B7 /* KPAssetBuilder.h */,
 				FB48BCB61C7C8A4800B2E1B7 /* KPAssetBuilder.m */,
 				FB48BCB21C7B53E300B2E1B7 /* KPFairPlayHandler.h */,
+				FBB344011CA1E9DD00F22D43 /* KPAssetHandler.h */,
 				FB48BCB31C7B53E300B2E1B7 /* KPFairPlayHandler.m */,
 				FB0B5AAC1C7FB3BE0067872E /* KPWidevineClassicHandler.h */,
 				FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */,

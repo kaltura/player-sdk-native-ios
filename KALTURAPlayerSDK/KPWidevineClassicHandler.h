@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "KPAssetBuilder.h"
+#import "KPAssetHandler.h"
 
 @interface KPWidevineClassicHandler : NSObject <KPAssetHandler>
 @end

@@ -8,6 +8,7 @@
 
 #import "KPAssetBuilder.h"
 
+#import "KPAssetHandler.h"
 #import "KPFairPlayHandler.h"
 #import "KPWidevineClassicHandler.h"
 
@@ -33,7 +34,7 @@ static NSData* s_certificate;
 }
 
 +(NSDictionary*)supportedMediaFormats {
-    // Nothing dynamic, we support FairPlay and Widevine Classic, as well as clear MP4 and HLS.
+    // Nothing dynamic: we support FairPlay and Widevine Classic, as well as clear MP4 and HLS.
     return @{
              @"all": @[@"hls",@"wvm",@"mp4"],
              @"drm": @[@"hls",@"wvm"],
