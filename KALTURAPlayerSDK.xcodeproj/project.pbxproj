@@ -225,6 +225,7 @@
 		BF1C077F1C0DA96700A67462 /* ChromecastDeviceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChromecastDeviceController.h; path = KALTURAPlayerSDK/ChromecastDeviceController.h; sourceTree = SOURCE_ROOT; };
 		BF1C07801C0DA96700A67462 /* ChromecastDeviceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChromecastDeviceController.m; path = KALTURAPlayerSDK/ChromecastDeviceController.m; sourceTree = SOURCE_ROOT; };
 		BF1C07821C0DA97F00A67462 /* PlayerSDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "PlayerSDK-Prefix.pch"; path = "KALTURAPlayerSDK/PlayerSDK-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		BF8A87361CA188D70023F71F /* KPPlayerConfig_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPPlayerConfig_Private.h; sourceTree = "<group>"; };
 		BFBE8E501C0B139400649BDF /* CachedStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = CachedStrings.plist; path = KALTURAPlayerSDK/CachedStrings.plist; sourceTree = SOURCE_ROOT; };
 		BFBE8E511C0B139400649BDF /* DeviceParamsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DeviceParamsHandler.h; path = KALTURAPlayerSDK/DeviceParamsHandler.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E521C0B139400649BDF /* DeviceParamsHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DeviceParamsHandler.m; path = KALTURAPlayerSDK/DeviceParamsHandler.m; sourceTree = SOURCE_ROOT; };
@@ -422,6 +423,7 @@
 				BF1C077A1C0DA93700A67462 /* KPPlayerConfig.m */,
 				BF1C077C1C0DA95600A67462 /* KPViewController.h */,
 				BF1C077D1C0DA95600A67462 /* KPViewController.m */,
+				BF8A87361CA188D70023F71F /* KPPlayerConfig_Private.h */,
 			);
 			name = KPViewController;
 			sourceTree = "<group>";

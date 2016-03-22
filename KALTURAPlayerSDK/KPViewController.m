@@ -27,6 +27,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KCacheManager.h"
 #import "NSBundle+Kaltura.h"
 #import "NSDictionary+Utilities.h"
+#import "KPPlayerConfig_Private.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>

@@ -44,7 +44,6 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 @property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations;
 
 @property (nonatomic) float cacheSize;
-@property (nonatomic) NSTimeInterval startFrom;
 
 /** Adds flags for the video request
  *
