@@ -185,6 +185,15 @@
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    if ([event isEqualToString:CanPlayKey]) {
+        isReady = YES;
+        
+        if (_currentPlayBackTime > 0.0) {
+            [self.player setCurrentPlaybackTime:_currentPlayBackTime];
+            _currentPlayBackTime = 0.0;
+        }
+    }
+    
     [_delegate player:currentPlayer eventName:event value:value];
 }
 
@@ -195,13 +204,6 @@
             [self.player.delegate player:self.player
                                eventName:EndedKey
                                    value:nil];
-        } else if ([event isEqualToString:CanPlayKey]) {
-            isReady = YES;
-            
-            if (self.currentPlayBackTime > 0.0) {
-                [self.player setCurrentPlaybackTime:self.currentPlayBackTime];
-                self.currentPlayBackTime = 0.0;
-            }
         }
         
         [self removeAdController];
