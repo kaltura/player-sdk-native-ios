@@ -189,6 +189,11 @@ NSString * const StatusKeyPath = @"status";
                                 eventName:CanPlayKey
                                     value:nil];
                     NSMutableArray *captions = nil;
+                    
+                    if (self.currentItem.currentTime.value < _currentPlaybackTime) {
+                        [self setCurrentPlaybackTime:_currentPlaybackTime];
+                    }
+                    
                     if (self.audioSelectionGroup.options.count) {
                         captions = [NSMutableArray new];
                         for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
@@ -343,7 +348,10 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if (isnan(self.duration) || currentPlaybackTime < self.duration) {
+    if (self.status != AVPlayerStatusReadyToPlay ||
+        self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+        _currentPlaybackTime = currentPlaybackTime;
+    } else if (currentPlaybackTime < self.duration) {
         _currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
@@ -540,8 +548,18 @@ NSString * const StatusKeyPath = @"status";
     }
 }
 
+- (void)reset {
+    if (self.currentItem) {
+        [self seekToTime:kCMTimeZero];
+        [self removeStatusObserver];
+        [self unregisterForPlaybackNotification];
+        [self replaceCurrentItemWithPlayerItem:nil];
+    }
+}
+
 - (void)hidePlayer {
     if (self) {
+        [self reset];
         [self.layer removeFromSuperlayer];
     }
 }

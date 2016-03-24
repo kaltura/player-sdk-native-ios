@@ -14,6 +14,7 @@
 @interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
+    BOOL isReady;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
@@ -23,6 +24,7 @@
 @end
 
 @implementation KPlayerFactory
+@synthesize currentPlayBackTime = _currentPlayBackTime;
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -61,6 +63,7 @@
 }
 
 - (void)setSrc:(NSString *)src {
+    isReady = NO;
     _src = src;
     
     NSURL* url = [NSURL URLWithString:_src];
@@ -103,7 +106,11 @@
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
-    _player.currentPlaybackTime = currentPlayBackTime;
+    if (isReady) {
+        _player.currentPlaybackTime = currentPlayBackTime;
+    } else {
+        _currentPlayBackTime = currentPlayBackTime;
+    }
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
@@ -178,6 +185,15 @@
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    if ([event isEqualToString:CanPlayKey]) {
+        isReady = YES;
+        
+        if (_currentPlayBackTime > 0.0) {
+            [self.player setCurrentPlaybackTime:_currentPlayBackTime];
+            _currentPlayBackTime = 0.0;
+        }
+    }
+    
     [_delegate player:currentPlayer eventName:event value:value];
 }
 
@@ -219,6 +235,10 @@
 }
 
 - (void)play {
+    if (self.isReleasePlayerPositionEnabled) {
+        return;
+    }
+    
     if (_adController) {
         [self.adController resume];
     }

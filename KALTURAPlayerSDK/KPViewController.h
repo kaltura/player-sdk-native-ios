@@ -85,6 +85,15 @@
 - (void)removePlayer;
 
 /*!
+ *  @function resetPlayer
+ *
+ *  @abstract
+ *  Reset the player
+ *
+ */
+- (void)resetPlayer;
+
+/*!
  *  @function changeMedia:
  *
  *  @abstract
@@ -117,7 +126,7 @@
 
 
 /// Enables to change the player configuration
-@property (nonatomic, strong) KPPlayerConfig *configuration;
+@property (nonatomic, strong) KPPlayerConfig *currentConfiguration;
 
 
 // Kaltura Player External API
@@ -248,6 +257,8 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 - (void)triggerEvent:(NSString *)event
            withValue:(NSString *)value;
 
+- (void)releaseAndSavePosition;
+- (void)resumePlayer;
 
 
 /// Wraps registerReadyEvent: method by block syntax.

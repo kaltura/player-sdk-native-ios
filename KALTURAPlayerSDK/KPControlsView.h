@@ -62,6 +62,8 @@ NSString *showChromecastComponent(BOOL show);
 
 - (void)fetchvideoHolderHeight:(void(^)(CGFloat height))fetcher;
 
+- (void)reset;
+
 @optional
 - (void)showChromecastComponent:(BOOL)show;
 
