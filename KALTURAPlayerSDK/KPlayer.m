@@ -177,10 +177,6 @@ NSString * const StatusKeyPath = @"status";
                 break;
             case AVPlayerItemStatusReadyToPlay: {
                 if (oldValue.intValue != newValue.intValue) {
-                    if (self.currentItem.currentTime.value < _currentPlaybackTime) {
-                        [self setCurrentPlaybackTime:_currentPlaybackTime];
-                    }
-                    
                     [self registerForPlaybackNotification];
                     buffering = NO;
                     [self.delegate player:self
@@ -193,6 +189,11 @@ NSString * const StatusKeyPath = @"status";
                                 eventName:CanPlayKey
                                     value:nil];
                     NSMutableArray *captions = nil;
+                    
+                    if (self.currentItem.currentTime.value < _currentPlaybackTime) {
+                        [self setCurrentPlaybackTime:_currentPlaybackTime];
+                    }
+                    
                     if (self.audioSelectionGroup.options.count) {
                         captions = [NSMutableArray new];
                         for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
