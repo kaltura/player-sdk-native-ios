@@ -9,5 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @interface KPURLProtocol : NSURLProtocol
-
++(void)enable;
++(void)disable;
 @end

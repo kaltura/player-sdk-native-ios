@@ -24,10 +24,15 @@
 
 #if TARGET_OS_SIMULATOR
 // The widevine library does not support the simulator, so the following are stubs that do nothing.
-WViOsApiStatus WV_Initialize(const WViOsApiStatusCallback callback, NSDictionary *settings ) { callback(WViOsApiEvent_Initialized, @{}); return WViOsApiStatus_OK; }
+WViOsApiStatus WV_Initialize(const WViOsApiStatusCallback callback, NSDictionary *settings ) {
+    assert(!"FATAL error: Widevine Classic is not avaialble for Simulator");
+    callback(WViOsApiEvent_InitializeFailed, @{}); 
+    return WViOsApiStatus_NotInitialized; 
+}
 WViOsApiStatus WV_Terminate() { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_SetCredentials( NSDictionary *settings ) { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_RegisterAsset (NSString *asset) { return WViOsApiStatus_OK; }
+WViOsApiStatus WV_UnregisterAsset (NSString *asset) { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_QueryAssetStatus (NSString *asset ) { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_NowOnline () { return WViOsApiStatus_OK; }
 WViOsApiStatus WV_RenewAsset (NSString *asset) { return WViOsApiStatus_OK; }
@@ -87,9 +92,11 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             cdmEvent = KCDMEvent_AssetStatus;
             break;
             
-        // Normal flow, but no handling required.
+        // Normal flow
         case WViOsApiEvent_EMMRemoved:
         case WViOsApiEvent_Unregistered:
+            cdmEvent = KCDMEvent_Unregistered;
+            break;
         case WViOsApiEvent_Terminated: 
             // Do nothing.
             break;
@@ -124,13 +131,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         return WViOsApiStatus_OK;
     }
     
-    // TODO: also include relevant parsed data from attributes.
-    NSDictionary* data = @{
-                           @"ProviderSpecificData": attributes,
-                           @"ProviderSpecificEvent": wvEventString != nil ? wvEventString : @"<null>"
-                           };
-    
-    [self callAssetBlockFor:assetPath event:cdmEvent data:data];
+    [self callAssetBlockFor:assetPath event:cdmEvent data:attributes];
     
     return WViOsApiStatus_OK;
 
@@ -151,7 +152,10 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         wvInitialized = @NO;
         assetBlocks = [NSMutableDictionary new];
         
-        NSDictionary* settings = @{WVPortalKey: WV_PORTAL_ID};
+        NSDictionary* settings = @{
+                                   WVPortalKey: WV_PORTAL_ID,
+                                   WVAssetRootKey: NSHomeDirectory(),
+                                   };
         
         WViOsApiStatus wvStatus = WV_Initialize(widevineCallback, settings);
         KPLogDebug(@"WV_Initialize status: %d", wvStatus);
@@ -196,13 +200,14 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     }
 }
 
-+(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
++(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri renew:(BOOL)renew {
     
     // It's an error to call this function without the licenseUri.
     if (!licenseUri) {
         KPLogError(@"Error: no licenseUri; can't register asset.");
         return;
     }
+    
     [self dispatchAfterInit:^{
         WV_SetCredentials(@{WVDRMServerKey: licenseUri});
         
@@ -211,12 +216,60 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         WViOsApiStatus wvStatus = WViOsApiStatus_OK;
         
         wvStatus = WV_RegisterAsset(assetPath);
-        // refresh licenses if required.
-        WV_RenewAsset(assetPath);
+        if ((int)wvStatus == 1013) {
+            wvStatus = WViOsApiStatus_FileNotPresent;
+        }
+
+        if (wvStatus == WViOsApiStatus_FileNotPresent) {
+            [self widevineErrorWithEvent:WViOsApiStatus_NotRegistered status:wvStatus asset:assetPath];
+            return;
+        } else if (wvStatus != WViOsApiStatus_OK) {
+            [self widevineErrorWithEvent:WViOsApiStatus_NotRegistered status:wvStatus asset:assetPath];
+        }
         WV_NowOnline(); 
         WV_QueryAssetStatus(assetPath);
     }];
 }
+
++(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
+    [self registerLocalAsset:assetUri withLicenseUri:licenseUri renew:NO];
+}
+
++(void)renewAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri {
+    [self registerLocalAsset:assetUri withLicenseUri:licenseUri renew:YES];
+}
+
++(void)widevineErrorWithEvent:(WViOsApiEvent)event status:(WViOsApiStatus)status asset:(NSString*)assetPath {
+    [self widevineCallbackWithEvent:event attr:@{
+                                                 WViOsApiStatusKey: @(status),
+                                                 WVAssetPathKey: assetPath,
+                                                 }];
+}
+
++(void)unregisterAsset:(NSString*)assetUri {
+    NSString* assetPath = assetUri.wvAssetPath;
+    WViOsApiStatus wvStatus = WV_UnregisterAsset(assetPath);
+
+    if ((int)wvStatus == 4017) {    // undocumented value that seems to mean the same.
+        wvStatus = WViOsApiStatus_NotRegistered;
+    }
+    if (wvStatus == WViOsApiStatus_NotRegistered) {
+        [self widevineErrorWithEvent:WViOsApiEvent_Unregistered status:wvStatus asset:assetPath];
+    } else if (wvStatus != WViOsApiStatus_OK) {
+        [self widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
+    }
+}
+
+
++(void)checkAssetStatus:(NSString*)assetUri {
+    NSString* assetPath = assetUri.wvAssetPath;
+
+    WViOsApiStatus wvStatus = WV_QueryAssetStatus(assetPath);
+    if (wvStatus != WViOsApiStatus_OK) {
+        [self widevineErrorWithEvent:WViOsApiEvent_QueryStatus status:wvStatus asset:assetPath];
+    }
+}
+
 
 +(void)playAsset:(NSString *)assetUri withLicenseUri:(NSString*)licenseUri readyToPlay:(KCDMReadyToPlayBlock)block {
     
@@ -262,14 +315,16 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     
     if ([assetUri hasPrefix:@"/"]) {
         // Downloaded file
-        // Ensure it's in the documents directory.
-        // This is actually the simplest way to get the path of a file URL.
-        NSString* docDir = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
         
-        if ([assetUri hasPrefix:docDir]) {
-            assetPath = [assetUri substringFromIndex:docDir.length];
+        // Ensure it's in the home directory.
+        // This is actually the simplest way to get the path of a file URL.
+        NSString* homeDir = NSHomeDirectory();
+        if ([assetUri hasPrefix:homeDir]) {
+            // strip the homedir, including the slash. 
+            assetPath = [assetUri substringFromIndex:homeDir.length+1];
+            // assetPath is now homeDir + "/" + assetUri
         } else {
-            KPLogError(@"Error: downloaded file is not in the Documents directory.");
+            KPLogError(@"Error: downloaded file is not in the home directory.");
             // will return nil
         }
     } else {
@@ -283,3 +338,17 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
 @end
 
 
+
+
+
+@implementation NSDictionary (Widevine)
+
+-(NSTimeInterval)wvLicenseTimeRemaning {
+    return ((NSNumber*)self[WVEMMTimeRemainingKey]).doubleValue;
+}
+
+-(NSTimeInterval)wvPurchaseTimeRemaning {
+    return ((NSNumber*)self[WVPurchaseTimeRemainingKey]).doubleValue;
+}
+
+@end

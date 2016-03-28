@@ -10,9 +10,11 @@
 #import "KCacheManager.h"
 #import "NSDictionary+Cache.h"
 #import "NSString+Utilities.h"
+#import <libkern/OSAtomic.h>
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 static NSString * const LocalContentIDKey = @"localContentId";
+static int32_t enableCount;
 
 @interface KPURLProtocol()<NSURLConnectionDataDelegate>
 
@@ -24,6 +26,18 @@ static NSString * const LocalContentIDKey = @"localContentId";
 @end
 
 @implementation KPURLProtocol
+
++(void)enable {
+    if (OSAtomicIncrement32(&enableCount) == 1) {
+        [NSURLProtocol registerClass:self];
+    }
+}
+
++(void)disable {
+    if (OSAtomicDecrement32(&enableCount) == 0) {
+        [NSURLProtocol unregisterClass:self];
+    }
+}
 
 static NSString *localContentID = nil;
 
