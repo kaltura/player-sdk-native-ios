@@ -21,3 +21,7 @@ CG_EXTERN NSString *idfa();
 
 #define isIOS8 __isIOS8
 #define idfa __idfa
+
+@interface Utilities : NSObject
++ (BOOL)hasConnectivity;
+@end
