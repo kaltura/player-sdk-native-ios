@@ -11,6 +11,8 @@
 #import "NSDictionary+Cache.h"
 #import "NSString+Utilities.h"
 #import <libkern/OSAtomic.h>
+#import "Utilities.h"
+#import "KPLog.h"
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 static NSString * const LocalContentIDKey = @"localContentId";
@@ -54,6 +56,8 @@ static NSString *localContentID = nil;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    KPLogDebug(@"Enter::request:%@", request.URL.absoluteString);
+    
     if ([request.URL.absoluteString containsString:LocalContentIDKey]) {
         NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
         if (![localContentID isEqualToString:newContentID]) {
@@ -62,35 +66,58 @@ static NSString *localContentID = nil;
     }
     
     if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
+        KPLogDebug(@"Exit::NO (KPURLProtocolHandledKey)");
         return NO;
     }
     
     if ([request.URL.absoluteString containsString:CacheManager.baseURL]) {
         for (NSString *key in CacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
+                KPLogDebug(@"Exit::YES, key(baseURL):%@",key);
                 return YES;
             }
         }
     } else {
         for (NSString *key in CacheManager.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
+                KPLogDebug(@"Exit::YES, key(subStrings):%@",key);
                 return YES;
             }
         }
     }
+    
+    KPLogDebug(@"Exit::NO");
     return NO;
 }
 
-+ (NSURLRequest *) canonicalRequestForRequest:(NSURLRequest *)request {
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
+    KPLogDebug(@"Enter");
+    KPLogDebug(@"Exit::request:%@", request.URL.absoluteString);
     return request;
 }
 
-- (void) startLoading {
+- (void)startLoading {
+    KPLogDebug(@"Enter");
     NSString *requestStr = self.request.URL.absoluteString;
     
     // TODO:: optimize 
     if (self.class.localContentID && [requestStr containsString:@"mwEmbedFrame.php"] && ![requestStr containsString:LocalContentIDKey]) {
         requestStr = [NSString stringWithFormat:@"%@#localContentId=%@",self.request.URL.absoluteString, self.class.localContentID];
+    }
+    
+    if ([requestStr containsString:@"playManifest"] && ![Utilities hasConnectivity]) {
+        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                                  statusCode:200
+                                                                 HTTPVersion:nil
+                                                                headerFields:nil];
+        [self.client URLProtocol:self
+              didReceiveResponse:response
+              cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+        [self.client URLProtocol:self didLoadData:[NSData new]];
+        [self.client URLProtocolDidFinishLoading:self];
+        KPLogDebug(@"Exit::playManifest");
+        
+        return;
     }
     
     NSDictionary *cachedHeaders = requestStr.cachedResponseHeaders;
@@ -106,57 +133,68 @@ static NSString *localContentID = nil;
               cacheStoragePolicy:NSURLCacheStorageNotAllowed];
         [self.client URLProtocol:self didLoadData:cachedPage];
         [self.client URLProtocolDidFinishLoading:self];
+        KPLogDebug(@"Exit::request:%@", self.request.URL.absoluteString);
         
     } else {
         _cacheParams = [CachedURLParams new];
         _cacheParams.url = self.request.URL;
         NSMutableURLRequest *newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES forKey:KPURLProtocolHandledKey inRequest:newRequest];
-    
         self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
-        
+        KPLogDebug(@"Exit::newRequest:%@", newRequest);
     }
 }
 
 - (void) stopLoading {
-    
     [self.connection cancel];
     _cacheParams.data = nil;
-    
 }
 
 #pragma mark - NSURLConnectionDelegate
 
-- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    KPLogDebug(@"Enter");
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-    
     _cacheParams.response = (NSHTTPURLResponse *)response;
+    KPLogDebug(@"Exit::response:%@", response.URL.absoluteString);
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
+    KPLogDebug(@"Enter");
+    
     if (response) {
         NSHTTPURLResponse *_response = (NSHTTPURLResponse *)response;
         _cacheParams.response = _response;
         NSString *location = _response.allHeaderFields[@"Location"];
         NSURL *url = [NSURL URLWithString:location];
+        KPLogDebug(@"Exit::redirectResponse:%@", response.URL.absoluteString);
+        
         return [NSURLRequest requestWithURL:url];
     }
+    
+    KPLogDebug(@"Exit::redirectResponse:%@", request.URL.absoluteString);
+    
     return request;
 }
 
-- (void) connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    KPLogDebug(@"Enter");
     [self.client URLProtocol:self didLoadData:data];
-    
     [_cacheParams.data appendData:data];
+    KPLogDebug(@"Exit");
 }
 
-- (void) connectionDidFinishLoading:(NSURLConnection *)connection {
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    KPLogDebug(@"Enter");
     [self.client URLProtocolDidFinishLoading:self];
     [_cacheParams storeCacheResponse];
+    KPLogDebug(@"Exit");
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    KPLogDebug(@"Enter");
     [self.client URLProtocol:self didFailWithError:error];
+    KPLogDebug(@"Exit::error:%@", error.localizedDescription);
 }
 
 
