@@ -394,6 +394,7 @@ NSString * const StatusKeyPath = @"status";
     }
 
     [_layer removeFromSuperlayer];
+    _layer = nil;
 }
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
@@ -568,10 +569,9 @@ NSString * const StatusKeyPath = @"status";
     KPLogInfo(@"Dealloc");
     [self unregisterForPlaybackNotification];
     [self removeStatusObserver];
-    self.layer = nil;
-    self.delegate = nil;
-    self.parentView = nil;
-    self.audioSelectionGroup = nil;
+    _delegate = nil;
+    _parentView = nil;
+    _audioSelectionGroup = nil;
     observer = nil;
     volumeView = nil;
     prevAirPlayBtnPositionArr = nil;
