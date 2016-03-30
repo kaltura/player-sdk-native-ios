@@ -12,7 +12,7 @@
 
 NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
-@interface KPFairPlayHandler ()
+@interface KPFairPlayHandler () <AVAssetResourceLoaderDelegate>
 @property (nonatomic, copy) NSString* licenseUri;
 @property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
 @end

@@ -8,7 +8,8 @@
 
 @import Foundation;
 @import AVFoundation;
+
 #import "KPAssetHandler.h"
 
-@interface KPFairPlayHandler : NSObject <AVAssetResourceLoaderDelegate, KPAssetHandler>
+@interface KPFairPlayHandler : NSObject <KPAssetHandler>
 @end
