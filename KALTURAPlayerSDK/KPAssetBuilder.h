@@ -17,9 +17,8 @@ typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 -(instancetype)initWithReadyCallback:(KPAssetReadyCallback)callback;
 -(void)setContentUrl:(NSString*)url;
 -(void)setLicenseUri:(NSString*)licenseUri;
+-(void)setAssetParam:(NSString*)key toValue:(id)value;
 
-+(void)setCertificate:(NSData*)certificate;
-+(NSData*)getCertificate;
 +(NSDictionary*)supportedMediaFormats;
 
 @end

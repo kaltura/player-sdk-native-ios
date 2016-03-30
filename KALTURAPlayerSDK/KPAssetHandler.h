@@ -16,5 +16,6 @@
 
 -(void)setContentUrl:(NSString*)contentUrl;
 -(void)setLicenseUri:(NSString*)licenseUri;
+-(void)setAssetParam:(NSString*)key toValue:(id)value;
 
 @end

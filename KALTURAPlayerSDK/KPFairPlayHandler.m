@@ -9,12 +9,14 @@
 #import "KPFairPlayHandler.h"
 #import "KPAssetBuilder.h"
 #import "KPLog.h"
+#import "NSString+Utilities.h"
 
 NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
 @interface KPFairPlayHandler () <AVAssetResourceLoaderDelegate>
 @property (nonatomic, copy) NSString* licenseUri;
 @property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
+@property (nonatomic, copy) NSData* certificate;
 @end
 
 static dispatch_queue_t	globalNotificationQueue( void )
@@ -30,6 +32,19 @@ static dispatch_queue_t	globalNotificationQueue( void )
 
 
 @implementation KPFairPlayHandler
+
+-(void)setAssetParam:(NSString*)key toValue:(id)value {
+    switch (key.attributeEnumFromString) {
+        case fpsCertificate:
+            // value is a base64-encoded string
+            _certificate = [[NSData alloc] initWithBase64Encoding:value];
+            break;
+            
+        default:
+            KPLogWarn(@"Ignoring unknown asset param %@", key);
+            break;
+    }
+}
 
 -(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];
@@ -98,9 +113,9 @@ static dispatch_queue_t	globalNotificationQueue( void )
     // Use the SKD URL as assetId.
     NSString *assetId = url.absoluteString;
     
-    NSData *certificate = [KPAssetBuilder getCertificate];
-    
+    NSData *certificate = _certificate;
     if (!certificate) {
+        KPLogError(@"Certificate is invalid or not set, can't continue");
         return NO;
     }
     

@@ -15,13 +15,13 @@
 @interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
-    KPAssetBuilder* _assetBuilder;
     BOOL isReady;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
+@property (nonatomic, retain) KPAssetBuilder* assetBuilder;
 @end
 
 @implementation KPlayerFactory
@@ -77,6 +77,10 @@
 
 -(void)setLicenseUri:(NSString*)licenseUri {
     [_assetBuilder setLicenseUri:licenseUri];
+}
+
+- (void)setAssetParam:(NSString*)_key toValue:(id)value {
+    [_assetBuilder setAssetParam:_key toValue:value];
 }
 
 - (NSTimeInterval)currentPlayBackTime {

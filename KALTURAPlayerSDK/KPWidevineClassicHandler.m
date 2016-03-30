@@ -8,6 +8,7 @@
 
 #import "KPWidevineClassicHandler.h"
 #import "WidevineClassicCDM.h"
+#import "KPLog.h"
 
 @interface KPWidevineClassicHandler ()
 @property (nonatomic, copy) NSString* contentUrl;
@@ -16,6 +17,11 @@
 
 
 @implementation KPWidevineClassicHandler
+
+-(void)setAssetParam:(NSString*)key toValue:(id)value {
+    // Nothing to set
+    KPLogWarn(@"Ignoring unknown asset param %@", key);
+}
 
 -(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];

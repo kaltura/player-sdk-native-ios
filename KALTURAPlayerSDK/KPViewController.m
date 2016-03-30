@@ -832,7 +832,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             _playerFactory.licenseUri = attributeVal;
             break;
         case fpsCertificate:
-            [KPAssetBuilder setCertificate:[[NSData alloc] initWithBase64EncodedString:attributeVal options:0]];
+            [_playerFactory setAssetParam:attributeName toValue:attributeVal];
              break;
         case nativeAction:
             nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding]

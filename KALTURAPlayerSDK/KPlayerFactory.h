@@ -48,6 +48,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)enableTracks:(BOOL)isEnablingTracks;
 - (void)setLicenseUri:(NSString*)licenseUri;
 - (void)prepareForChangeConfiguration;
+- (void)setAssetParam:(NSString*)key toValue:(id)value;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;

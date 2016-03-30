@@ -17,19 +17,14 @@
 @interface KPAssetBuilder ()
 @property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
 @property (nonatomic, retain) id<KPAssetHandler> assetHandler;
+
 @end
 
 
 @implementation KPAssetBuilder
 
-static NSData* s_certificate;
-
-+(void)setCertificate:(NSData*)certificate {
-    s_certificate = certificate;
-}
-
-+(NSData*)getCertificate {
-    return s_certificate;
+-(void)setAssetParam:(NSString*)key toValue:(id)value {
+    [_assetHandler setAssetParam:key toValue:value];
 }
 
 +(NSDictionary*)supportedMediaFormats {

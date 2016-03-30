@@ -12,4 +12,5 @@
 #import "KPAssetHandler.h"
 
 @interface KPFairPlayHandler : NSObject <KPAssetHandler>
+
 @end
