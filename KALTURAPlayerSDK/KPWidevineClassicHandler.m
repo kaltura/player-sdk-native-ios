@@ -9,10 +9,9 @@
 #import "KPWidevineClassicHandler.h"
 #import "WidevineClassicCDM.h"
 
-@interface KPWidevineClassicHandler () {
-    NSString* _contentUrl;
-    KPAssetReadyCallback _assetReadyCallback;
-}
+@interface KPWidevineClassicHandler ()
+@property (nonatomic, copy) NSString* contentUrl;
+@property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
 @end
 
 
@@ -21,20 +20,18 @@
 -(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];
     if (self) {
-        _assetReadyCallback = [callback copy];
+        self.assetReadyCallback = callback;
     }
     return self;
-}
-
--(void)setContentUrl:(NSString*)url {
-    _contentUrl = url;
 }
 
 -(void)setLicenseUri:(NSString *)licenseUri {
     [WidevineClassicCDM playAsset:_contentUrl withLicenseUri:licenseUri readyToPlay:^(NSString *playbackURL) {
         AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:playbackURL] options:nil];
         dispatch_async(dispatch_get_main_queue(), ^{
-            _assetReadyCallback(asset);
+            if (_assetReadyCallback) {
+                _assetReadyCallback(asset);                
+            }
         });
     }];
 }

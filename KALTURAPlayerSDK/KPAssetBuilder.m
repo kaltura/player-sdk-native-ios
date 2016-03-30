@@ -14,10 +14,9 @@
 
 #import "KPLog.h"
 
-@interface KPAssetBuilder () {
-    KPAssetReadyCallback _assetReadyCallback;
-    id<KPAssetHandler> _assetHandler;
-}
+@interface KPAssetBuilder ()
+@property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
+@property (nonatomic, retain) id<KPAssetHandler> assetHandler;
 @end
 
 
@@ -44,7 +43,7 @@ static NSData* s_certificate;
 -(instancetype)initWithReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];
     if (self) {
-        _assetReadyCallback = [callback copy];
+        self.assetReadyCallback = callback;
     }
     return self;
 }

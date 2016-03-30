@@ -12,10 +12,9 @@
 
 NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
-@interface KPFairPlayHandler () {
-    NSString* _licenseUri;
-    KPAssetReadyCallback _assetReadyCallback;
-}
+@interface KPFairPlayHandler ()
+@property (nonatomic, copy) NSString* licenseUri;
+@property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
 @end
 
 static dispatch_queue_t	globalNotificationQueue( void )
@@ -35,7 +34,7 @@ static dispatch_queue_t	globalNotificationQueue( void )
 -(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
     self = [super init];
     if (self) {
-        _assetReadyCallback = [callback copy];
+        self.assetReadyCallback = callback;
     }
     return self;
 }
@@ -48,10 +47,6 @@ static dispatch_queue_t	globalNotificationQueue( void )
     dispatch_async(dispatch_get_main_queue(), ^{
         _assetReadyCallback(asset);
     });
-}
-
--(void)setLicenseUri:(NSString*)licenseUri {
-    _licenseUri = licenseUri;
 }
 
 - (NSData *)getContentKeyAndLeaseExpiryfromKeyServerModuleWithRequest:(NSData *)requestBytes contentIdentifierHost:(NSString *)assetStr leaseExpiryDuration:(NSTimeInterval *)expiryDuration error:(NSError **)errorOut {
