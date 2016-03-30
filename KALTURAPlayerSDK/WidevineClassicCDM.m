@@ -215,7 +215,16 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         
         WViOsApiStatus wvStatus = WViOsApiStatus_OK;
         
-        wvStatus = WV_RegisterAsset(assetPath);
+        if (renew) {
+            wvStatus = WV_RenewAsset(assetPath);
+        } else {
+            wvStatus = WV_RegisterAsset(assetPath);
+        }
+        
+        if (wvStatus != WViOsApiStatus_OK) {
+            KPLogError(@"Error %d when trying to register/renew %@ (%d)", wvStatus, assetPath, renew);
+        }
+        
         if ((int)wvStatus == 1013) {
             wvStatus = WViOsApiStatus_FileNotPresent;
         }
