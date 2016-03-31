@@ -268,7 +268,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     [KPURLProtocol enable];
     
     CacheManager.baseURL = assetConfig.server;
-    CacheManager.cacheSize = assetConfig.cacheSize;
+    CacheManager.maxCacheSize = assetConfig.cacheSize;
     [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:assetConfig.videoURL]
                                        queue:[NSOperationQueue new]
                            completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
