@@ -39,6 +39,8 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 @property (nonatomic, copy) NSString *advertiserID;
 @property (nonatomic) BOOL enableHover;
 
+@property (nonatomic, copy) NSDictionary* supportedMediaFormats;
+
 
 /// Enables the SDK user to define interface orientation of the player
 @property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations;

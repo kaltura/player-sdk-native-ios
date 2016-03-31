@@ -27,6 +27,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KCacheManager.h"
 #import "NSBundle+Kaltura.h"
 #import "NSDictionary+Utilities.h"
+#import "KPAssetBuilder.h"
 #import "KPPlayerConfig_Private.h"
 
 #include <sys/types.h>
@@ -90,7 +91,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
-        videoURL = [NSURL URLWithString:url.absoluteString];
+        videoURL = url;
         
         return self;
     }
@@ -98,9 +99,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration {
-    self = [self initWithURL:configuration.videoURL];
-    if (self) {
+    self = [super init];
+    if (self) {        
         _currentConfiguration = configuration;
+        _currentConfiguration.supportedMediaFormats = [KPAssetBuilder supportedMediaFormats];
+        videoURL = _currentConfiguration.videoURL;
+
         // If the developer set the cache size, the cache system is triggered.
         if (_currentConfiguration.cacheSize > 0) {
             [KPURLProtocol enable];
@@ -827,6 +831,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         case licenseUri:
             _playerFactory.licenseUri = attributeVal;
             break;
+        case fpsCertificate:
+            [_playerFactory setAssetParam:attributeName toValue:attributeVal];
+             break;
         case nativeAction:
             nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding]
                                                                  options:0
@@ -849,6 +856,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 //            _playerController changeSubtitleLanguage
             break;
         default:
+            KPLogDebug(@"Unhandled attribute: %@=%@", attributeName, attributeVal);
             break;
     }
     KPLogTrace(@"Exit");

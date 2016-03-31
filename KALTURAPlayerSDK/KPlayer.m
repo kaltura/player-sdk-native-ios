@@ -250,9 +250,12 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
-    KPLogInfo(@"%@", playerSource);
-    
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:playerSource options:nil];
+    [self setSourceWithAsset:[AVURLAsset assetWithURL:playerSource]];
+}
+
+-(void)setSourceWithAsset:(AVURLAsset*)asset {
+    KPLogInfo(@"asset=%@", asset);
+
     NSArray *requestedKeys = @[TracksKey, PlayableKey];
     
     __weak KPlayer *weakSelf = self;

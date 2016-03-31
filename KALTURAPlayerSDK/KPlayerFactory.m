@@ -10,6 +10,7 @@
 #import "WidevineClassicCDM.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
+#import "KPAssetBuilder.h"
 
 @interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
@@ -20,7 +21,7 @@
 @property (nonatomic, strong) UIViewController *parentViewController;
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
-
+@property (nonatomic, retain) KPAssetBuilder* assetBuilder;
 @end
 
 @implementation KPlayerFactory
@@ -66,39 +67,20 @@
     isReady = NO;
     _src = src;
     
-    NSURL* url = [NSURL URLWithString:_src];
-    if ([self isWVM]) {
-        // May fail if content is DRM protected. We'll try again if/when we get a licenseUri.
-        KPLogDebug(@"Content (%@) is WVM, waiting for license uri", url);
-    } else {
-        [self.player setPlayerSource:url];
-    }
+    id<KPlayer> player = _player;
+    
+    _assetBuilder = [[KPAssetBuilder alloc] initWithReadyCallback:^(AVURLAsset *avAsset) {
+        [player setSourceWithAsset:avAsset];
+    }];
+    [_assetBuilder setContentUrl:src];
 }
 
 -(void)setLicenseUri:(NSString*)licenseUri {
-    
-    if (![self isWVM]) {
-        return;
-    }
-    
-    _licenseUri = licenseUri;
-    
-    [WidevineClassicCDM playAsset:_src withLicenseUri:_licenseUri readyToPlay:^(NSString *playbackURL) {
-        if (!playbackURL) {
-            KPLogError(@"Got nil playback URL, can't play");
-        } else {
-            NSURL* url = [NSURL URLWithString:playbackURL];
-            [self.player setPlayerSource:url];
-        }
-    }];
+    [_assetBuilder setLicenseUri:licenseUri];
 }
 
-- (BOOL)isWVM {
-    if (_src != nil) {
-        return [[NSURL URLWithString:_src].pathExtension hasSuffix:@"wvm"];
-    }
-    
-    return NO;
+- (void)setAssetParam:(NSString*)_key toValue:(id)value {
+    [_assetBuilder setAssetParam:_key toValue:value];
 }
 
 - (NSTimeInterval)currentPlayBackTime {
