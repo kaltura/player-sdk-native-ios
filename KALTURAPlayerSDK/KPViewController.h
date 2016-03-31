@@ -126,7 +126,7 @@
 
 
 /// Enables to change the player configuration
-@property (nonatomic, strong) KPPlayerConfig *configuration;
+@property (nonatomic, strong) KPPlayerConfig *currentConfiguration;
 
 
 // Kaltura Player External API

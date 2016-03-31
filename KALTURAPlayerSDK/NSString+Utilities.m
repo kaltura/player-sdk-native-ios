@@ -72,6 +72,7 @@ NSString *const LocalContentId = @"localContentId";
                             @"visible",
                             @"playerError",
                             @"licenseUri",
+                            @"fpsCertificate",
                             @"nativeAction",
                             @"doubleClickRequestAds",
                             @"language",

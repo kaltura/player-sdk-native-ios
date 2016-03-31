@@ -14,6 +14,7 @@ typedef enum : NSUInteger {
     KCDMEvent_AssetCanPlay,
     KCDMEvent_AssetStatus,
     KCDMEvent_LicenseAcquired,
+    KCDMEvent_Unregistered,
 } KCDMEventType;
 
 typedef void(^KCDMAssetEventBlock)(KCDMEventType event, NSDictionary* data);
@@ -25,9 +26,18 @@ typedef void(^KCDMReadyToPlayBlock)(NSString* playbackURL);
 +(void)setEventBlock:(KCDMAssetEventBlock)block forAsset:(NSString*)assetUri;
 
 +(void)registerLocalAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri;
++(void)renewAsset:(NSString*)assetUri withLicenseUri:(NSString*)licenseUri;
++(void)unregisterAsset:(NSString*)assetUri;
++(void)checkAssetStatus:(NSString*)assetUri;
 
 +(void)playAsset:(NSString *)assetUri withLicenseUri:(NSString*)licenseUri readyToPlay:(KCDMReadyToPlayBlock)block;
 +(void)playLocalAsset:(NSString*)assetUri readyToPlay:(KCDMReadyToPlayBlock)block;
 
+@end
 
+
+
+@interface NSDictionary (Widevine)
+-(NSTimeInterval)wvLicenseTimeRemaning;
+-(NSTimeInterval)wvPurchaseTimeRemaning;
 @end

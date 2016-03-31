@@ -27,6 +27,8 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KCacheManager.h"
 #import "NSBundle+Kaltura.h"
 #import "NSDictionary+Utilities.h"
+#import "KPAssetBuilder.h"
+#import "KPPlayerConfig_Private.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -89,7 +91,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (instancetype)initWithURL:(NSURL *)url {
     self = [super init];
     if (self) {
-        videoURL = [NSURL URLWithString:url.absoluteString];
+        videoURL = url;
         
         return self;
     }
@@ -97,14 +99,17 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (instancetype)initWithConfiguration:(KPPlayerConfig *)configuration {
-    self = [self initWithURL:configuration.videoURL];
-    if (self) {
-        _configuration = configuration;
+    self = [super init];
+    if (self) {        
+        _currentConfiguration = configuration;
+        _currentConfiguration.supportedMediaFormats = [KPAssetBuilder supportedMediaFormats];
+        videoURL = _currentConfiguration.videoURL;
+
         // If the developer set the cache size, the cache system is triggered.
-        if (_configuration.cacheSize > 0) {
-            [NSURLProtocol registerClass:[KPURLProtocol class]];
+        if (_currentConfiguration.cacheSize > 0) {
+            [KPURLProtocol enable];
             CacheManager.baseURL = configuration.server;
-            CacheManager.cacheSize = _configuration.cacheSize;
+            CacheManager.maxCacheSize = _currentConfiguration.cacheSize;
         }
         return self;
     }
@@ -145,7 +150,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     _delegate = nil;
     _playerController = nil;
-    _configuration = nil;
+    _currentConfiguration = nil;
     _kdpAPIState = nil;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -261,13 +266,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
 }
 
-- (KPPlayerConfig *)configuration {
+- (KPPlayerConfig *)currentConfiguration {
     
-    if (!_configuration) {
-        _configuration = [KPPlayerConfig new];
+    if (!_currentConfiguration) {
+        _currentConfiguration = [KPPlayerConfig new];
     }
     
-    return _configuration;
+    return _currentConfiguration;
 }
 
 -(void)viewWillAppear:(BOOL)animated {
@@ -323,7 +328,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if (!self.controlsView) {
         self.controlsView = [KPControlsView defaultControlsViewWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
         self.controlsView.controlsDelegate = self;
-        [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
+        [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.currentConfiguration appendConfiguration:videoURL]]];
         [self.view addSubview:(UIView *)self.controlsView];
         _kdpAPIState = KDPAPIStateUnknown;
     }
@@ -489,7 +494,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if (!_superView) {
         _superView = self.view.superview;
     }
-    if (isIOS(7) && _configuration.supportedInterfaceOrientations != UIInterfaceOrientationMaskAll) {
+    if (isIOS(7) && _currentConfiguration.supportedInterfaceOrientations != UIInterfaceOrientationMaskAll) {
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         ((UIView *)self.controlsView).frame = screenBounds();
     }
@@ -549,7 +554,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (void)reload:(UIButton *)sender {
-    [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.configuration appendConfiguration:videoURL]]];
+    [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.currentConfiguration appendConfiguration:videoURL]]];
 }
 
 - (UIWindow *)topWindow {
@@ -568,6 +573,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)changeConfiguration:(KPPlayerConfig *)config {
     if (config) {
+        _currentConfiguration = config;
         [self.playerFactory prepareForChangeConfiguration];
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:config.videoURL]];
         isJsCallbackReady = NO;
@@ -797,9 +803,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     switch ( attributeName.attributeEnumFromString ) {
         case src: {
-            NSString *overrideURL = [_customSourceURLProvider urlForEntryId:_configuration.entryId currentURL:attributeVal];
+            NSString *overrideURL = [_customSourceURLProvider urlForEntryId:_currentConfiguration.entryId currentURL:attributeVal];
             if (overrideURL) {
                 attributeVal = overrideURL;
+            }
+            
+            if (self.currentConfiguration.startFrom > 0.0) {
+                [_playerFactory setCurrentPlayBackTime:self.currentConfiguration.startFrom];
             }
             _playerFactory.src = attributeVal;
         }
@@ -821,6 +831,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         case licenseUri:
             _playerFactory.licenseUri = attributeVal;
             break;
+        case fpsCertificate:
+            [_playerFactory setAssetParam:attributeName toValue:attributeVal];
+             break;
         case nativeAction:
             nativeActionParams = [NSJSONSerialization JSONObjectWithData:[attributeVal dataUsingEncoding:NSUTF8StringEncoding]
                                                                  options:0
@@ -843,6 +856,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 //            _playerController changeSubtitleLanguage
             break;
         default:
+            KPLogDebug(@"Unhandled attribute: %@=%@", attributeName, attributeVal);
             break;
     }
     KPLogTrace(@"Exit");
@@ -1042,7 +1056,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 -(UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return self.configuration.supportedInterfaceOrientations;
+    return self.currentConfiguration.supportedInterfaceOrientations;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

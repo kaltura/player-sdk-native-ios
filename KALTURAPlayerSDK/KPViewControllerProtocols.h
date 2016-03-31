@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 /// Player events constants
 static NSString *KPlayerEventCanplay = @"canplay";
@@ -34,6 +35,7 @@ typedef enum{
     playerError,
     // DRM license uri
     licenseUri,
+    fpsCertificate,
 
     nativeAction,
     doubleClickRequestAds,
@@ -53,6 +55,7 @@ typedef enum{
 @property (nonatomic, getter=isMuted) BOOL mute NS_AVAILABLE(10_7, 7_0);
 @property (nonatomic, readonly) BOOL isKPlayer;
 
+
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (void)setPlayerSource:(NSURL *)playerSource;
 - (NSURL *)playerSource;
@@ -65,6 +68,7 @@ typedef enum{
 - (void)enableTracks:(BOOL)isEnablingTracks;
 + (BOOL)isPlayableMIMEType:(NSString *)mimeType;
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
+- (void)setSourceWithAsset:(AVURLAsset*)asset;
 - (void)hidePlayer;
 
 @end

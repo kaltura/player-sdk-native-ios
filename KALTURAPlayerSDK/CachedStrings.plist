@@ -6,6 +6,8 @@
 	<dict>
 		<key>data:image</key>
 		<string>14</string>
+		<key>playManifest</key>
+		<string>15</string>
 	</dict>
 	<key>withDomain</key>
 	<dict>

@@ -10,19 +10,22 @@
 #import "WidevineClassicCDM.h"
 #import "KPLog.h"
 #import "NSString+Utilities.h"
+#import "KPAssetBuilder.h"
 
 @interface KPlayerFactory() <KPlayerDelegate>{
     NSString *key;
     BOOL isSeeked;
+    BOOL isReady;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
-
+@property (nonatomic, retain) KPAssetBuilder* assetBuilder;
 @end
 
 @implementation KPlayerFactory
+@synthesize currentPlayBackTime = _currentPlayBackTime;
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -61,41 +64,23 @@
 }
 
 - (void)setSrc:(NSString *)src {
+    isReady = NO;
     _src = src;
     
-    NSURL* url = [NSURL URLWithString:_src];
-    if ([self isWVM]) {
-        // May fail if content is DRM protected. We'll try again if/when we get a licenseUri.
-        KPLogDebug(@"Content (%@) is WVM, waiting for license uri", url);
-    } else {
-        [self.player setPlayerSource:url];
-    }
+    id<KPlayer> player = _player;
+    
+    _assetBuilder = [[KPAssetBuilder alloc] initWithReadyCallback:^(AVURLAsset *avAsset) {
+        [player setSourceWithAsset:avAsset];
+    }];
+    [_assetBuilder setContentUrl:src];
 }
 
 -(void)setLicenseUri:(NSString*)licenseUri {
-    
-    if (![self isWVM]) {
-        return;
-    }
-    
-    _licenseUri = licenseUri;
-    
-    [WidevineClassicCDM playAsset:_src withLicenseUri:_licenseUri readyToPlay:^(NSString *playbackURL) {
-        if (!playbackURL) {
-            KPLogError(@"Got nil playback URL, can't play");
-        } else {
-            NSURL* url = [NSURL URLWithString:playbackURL];
-            [self.player setPlayerSource:url];
-        }
-    }];
+    [_assetBuilder setLicenseUri:licenseUri];
 }
 
-- (BOOL)isWVM {
-    if (_src != nil) {
-        return [[NSURL URLWithString:_src].pathExtension hasSuffix:@"wvm"];
-    }
-    
-    return NO;
+- (void)setAssetParam:(NSString*)_key toValue:(id)value {
+    [_assetBuilder setAssetParam:_key toValue:value];
 }
 
 - (NSTimeInterval)currentPlayBackTime {
@@ -103,7 +88,11 @@
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
-    _player.currentPlaybackTime = currentPlayBackTime;
+    if (isReady) {
+        _player.currentPlaybackTime = currentPlayBackTime;
+    } else {
+        _currentPlayBackTime = currentPlayBackTime;
+    }
 }
 
 - (void)setAdTagURL:(NSString *)adTagURL {
@@ -178,6 +167,15 @@
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
+    if ([event isEqualToString:CanPlayKey]) {
+        isReady = YES;
+        
+        if (_currentPlayBackTime > 0.0) {
+            [self.player setCurrentPlaybackTime:_currentPlayBackTime];
+            _currentPlayBackTime = 0.0;
+        }
+    }
+    
     [_delegate player:currentPlayer eventName:event value:value];
 }
 

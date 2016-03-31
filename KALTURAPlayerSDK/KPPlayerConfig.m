@@ -15,6 +15,9 @@
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
 }
+
+@property (nonatomic) NSTimeInterval startFrom;
+
 @end
 
 @implementation KPPlayerConfig
@@ -80,6 +83,12 @@
 }
 
 - (void)addConfigKey:(NSString *)key withValue:(NSString *)value; {
+    if ([key isEqualToString:@"mediaProxy.mediaPlayFrom"] && value.doubleValue > 0.0) {
+        self.startFrom = value.doubleValue;
+        
+        return;
+    }
+    
     if (key.length && value.length) {
         _extraConfig[key] = value;
     }
@@ -134,11 +143,19 @@
 
     url.path = path;
     url.queryItems = queryItems;
-    NSString *addedLocalContentId = [url.URL.absoluteString stringByAppendingFormat:@"#%@=", LocalContentId];
+    
+    NSMutableString* fragment = [NSMutableString stringWithFormat:@"%@=", LocalContentId];
     if (_localContentId) {
-        addedLocalContentId = [addedLocalContentId stringByAppendingString:_localContentId];
+        [fragment appendString:[_localContentId stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]];
     }
-    return [NSURL URLWithString:addedLocalContentId];
+    if (_supportedMediaFormats) {
+        [fragment appendFormat:@"&nativeSdkDrmFormats=%@", [_supportedMediaFormats[@"drm"] componentsJoinedByString:@","]];
+        [fragment appendFormat:@"&nativeSdkAllFormats=%@", [_supportedMediaFormats[@"all"] componentsJoinedByString:@","]];
+    }
+    
+    url.fragment = fragment;
+
+    return url.URL;
 }
 
 - (NSURL *)appendConfiguration:(NSURL *)videoURL {

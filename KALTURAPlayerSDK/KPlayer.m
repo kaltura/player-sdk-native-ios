@@ -189,6 +189,11 @@ NSString * const StatusKeyPath = @"status";
                                 eventName:CanPlayKey
                                     value:nil];
                     NSMutableArray *captions = nil;
+                    
+                    if (self.currentItem.currentTime.value < _currentPlaybackTime) {
+                        [self setCurrentPlaybackTime:_currentPlaybackTime];
+                    }
+                    
                     if (self.audioSelectionGroup.options.count) {
                         captions = [NSMutableArray new];
                         for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
@@ -245,9 +250,12 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)setPlayerSource:(NSURL *)playerSource {
-    KPLogInfo(@"%@", playerSource);
-    
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:playerSource options:nil];
+    [self setSourceWithAsset:[AVURLAsset assetWithURL:playerSource]];
+}
+
+-(void)setSourceWithAsset:(AVURLAsset*)asset {
+    KPLogInfo(@"asset=%@", asset);
+
     NSArray *requestedKeys = @[TracksKey, PlayableKey];
     
     __weak KPlayer *weakSelf = self;
@@ -343,7 +351,10 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if (isnan(self.duration) || currentPlaybackTime < self.duration) {
+    if (self.status != AVPlayerStatusReadyToPlay ||
+        self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+        _currentPlaybackTime = currentPlaybackTime;
+    } else if (currentPlaybackTime < self.duration) {
         _currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
@@ -386,6 +397,7 @@ NSString * const StatusKeyPath = @"status";
     }
 
     [_layer removeFromSuperlayer];
+    _layer = nil;
 }
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
@@ -560,10 +572,9 @@ NSString * const StatusKeyPath = @"status";
     KPLogInfo(@"Dealloc");
     [self unregisterForPlaybackNotification];
     [self removeStatusObserver];
-    self.layer = nil;
-    self.delegate = nil;
-    self.parentView = nil;
-    self.audioSelectionGroup = nil;
+    _delegate = nil;
+    _parentView = nil;
+    _audioSelectionGroup = nil;
     observer = nil;
     volumeView = nil;
     prevAirPlayBtnPositionArr = nil;

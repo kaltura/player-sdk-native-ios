@@ -13,7 +13,7 @@
 @interface KCacheManager : NSObject
 + (KCacheManager *)shared;
 
-@property (nonatomic) float cacheSize;
+@property (nonatomic) float maxCacheSize;
 @property (nonatomic, copy) NSString *baseURL;
 
 @property (strong, nonatomic, readonly) NSDictionary *withDomain;
