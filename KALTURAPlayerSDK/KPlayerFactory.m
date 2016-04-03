@@ -246,6 +246,7 @@
         _adController = nil;
     }
     
+    isReady = NO;
     [self.player hidePlayer];
 }
 
