@@ -77,6 +77,13 @@ static NSString *localContentID = nil;
                 return YES;
             }
         }
+    } else if (![Utilities hasConnectivity]) {
+        for (NSString *key in CacheManager.offlineSubStr.allKeys) {
+            if ([request.URL.absoluteString containsString:key]) {
+                KPLogDebug(@"Exit::YES, key(subStrings):%@",key);
+                return YES;
+            }
+        }
     } else {
         for (NSString *key in CacheManager.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
