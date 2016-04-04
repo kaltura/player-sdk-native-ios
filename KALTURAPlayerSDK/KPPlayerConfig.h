@@ -24,6 +24,8 @@ static NSString *KPPlayerConfigNativeAdIdKey = @"nativeAdId";
 - (instancetype)initWithDomain:(NSString *)domain uiConfID:(NSString *)uiConfId partnerId:(NSString *)partnerId
 DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 
++ (instancetype)configWithEmbedFrameURL:(NSString*)url;
+
 
 +(instancetype)configWithDictionary:(NSDictionary*)configDict;
 

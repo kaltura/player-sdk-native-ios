@@ -20,7 +20,14 @@
 
 @end
 
+@interface KPPlayerConfigWithURL : KPPlayerConfig
+-(instancetype)initWithEmbedFrameURL:(NSString *)url;
+@property (nonatomic, readonly) NSString *embedFrameURL;
+@end
+
+
 @implementation KPPlayerConfig
+
 
 - (instancetype)init {
     self = [super init];
@@ -45,6 +52,10 @@
 // Deprecated
 - (instancetype)initWithDomain:(NSString *)domain uiConfID:(NSString *)uiConfId partnerId:(NSString *)partnerId {
     return [self initWithServer:domain uiConfID:uiConfId partnerId:partnerId];
+}
+
++ (instancetype)configWithEmbedFrameURL:(NSString*)url {
+    return [[KPPlayerConfigWithURL alloc ] initWithEmbedFrameURL:url];
 }
 
 +(instancetype)configWithDictionary:(NSDictionary*)configDict {
@@ -179,5 +190,57 @@
     [self addConfigKey:@"nativeAdId" withValue:advertiserID];
 
 }
+
+@end
+
+
+@implementation KPPlayerConfigWithURL
+
+-(instancetype)initWithEmbedFrameURL:(NSString *)url
+{
+    self = [super init];
+    if (self) {
+        _embedFrameURL = url.copy;
+    }
+    return self;
+}
+
+- (NSURL *)videoURL {
+    NSURLComponents* url = [NSURLComponents componentsWithString:_embedFrameURL];
+
+    NSString* queryString = url.query;
+    
+    if (self.advertiserID) {
+        queryString = [queryString appendIDFA:self.advertiserID];
+    }
+    if (self.enableHover) {
+        queryString = queryString.appendHover;
+    }
+    
+    url.query = queryString;
+    
+    if (self.supportedMediaFormats) {
+        NSString* fragment = [NSString stringWithFormat:@"&nativeSdkDrmFormats=%@&nativeSdkAllFormats=%@", 
+                              [self.supportedMediaFormats[@"drm"] componentsJoinedByString:@","],
+                              [self.supportedMediaFormats[@"all"] componentsJoinedByString:@","]];
+        if (url.fragment) {
+            fragment = [url.fragment stringByAppendingString:fragment];
+        }
+        url.fragment = fragment;
+    }    
+    
+    return url.URL;
+}
+
+
+-(void)fail:(NSString*)name {
+    NSAssert(NO, @"Can't set %@ on KPPlayerConfigWithURL", name);
+}
+-(void)setKs:(NSString *)ks {[self fail:@"ks"];}
+-(void)setEntryId:(NSString *)entryId {[self fail:@"entryId"];}
+-(void)setStartFrom:(NSTimeInterval)startFrom {[self fail:@"startFrom"];}
+-(void)setLocalContentId:(NSString *)localContentId {[self fail:@"localContentId"];}
+-(void)addConfigKey:(NSString *)key withValue:(NSString *)value {[self fail:@"configKey"];}
+-(void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary {[self fail:@"configKey"];}
 
 @end

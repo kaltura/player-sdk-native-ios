@@ -14,6 +14,8 @@
 
 #import "KPLog.h"
 
+
+
 @interface KPAssetBuilder ()
 @property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
 @property (nonatomic, retain) id<KPAssetHandler> assetHandler;
@@ -28,10 +30,16 @@
 }
 
 +(NSDictionary*)supportedMediaFormats {
-    // Nothing dynamic: we support FairPlay and Widevine Classic, as well as clear MP4 and HLS.
+    // We support FairPlay and Widevine Classic, as well as clear MP4 and HLS.
     return @{
+#if TARGET_OS_SIMULATOR             
+             // No DRM support in the simulator.
+             @"all": @[@"hls",@"mp4"],
+             @"drm": @[],
+#else
              @"all": @[@"hls",@"wvm",@"mp4"],
              @"drm": @[@"hls",@"wvm"],
+#endif
              };
 }
 
