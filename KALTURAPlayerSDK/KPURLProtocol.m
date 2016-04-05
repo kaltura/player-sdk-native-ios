@@ -77,6 +77,13 @@ static NSString *localContentID = nil;
                 return YES;
             }
         }
+    } else if (![Utilities hasConnectivity]) {
+        for (NSString *key in CacheManager.offlineSubStr.allKeys) {
+            if ([request.URL.absoluteString containsString:key]) {
+                KPLogDebug(@"Exit::YES, key(subStrings):%@",key);
+                return YES;
+            }
+        }
     } else {
         for (NSString *key in CacheManager.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
@@ -105,19 +112,23 @@ static NSString *localContentID = nil;
         requestStr = [NSString stringWithFormat:@"%@#localContentId=%@",self.request.URL.absoluteString, self.class.localContentID];
     }
     
-    if ([requestStr containsString:@"playManifest"] && ![Utilities hasConnectivity]) {
-        NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
-                                                                  statusCode:200
-                                                                 HTTPVersion:nil
-                                                                headerFields:nil];
-        [self.client URLProtocol:self
-              didReceiveResponse:response
-              cacheStoragePolicy:NSURLCacheStorageNotAllowed];
-        [self.client URLProtocol:self didLoadData:[NSData new]];
-        [self.client URLProtocolDidFinishLoading:self];
-        KPLogDebug(@"Exit::playManifest");
-        
-        return;
+    if (![Utilities hasConnectivity]) {
+        for (NSString *key in CacheManager.offlineSubStr.allKeys) {
+            if ([requestStr containsString:key]) {
+                NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
+                                                                          statusCode:200
+                                                                         HTTPVersion:nil
+                                                                        headerFields:nil];
+                [self.client URLProtocol:self
+                      didReceiveResponse:response
+                      cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+                [self.client URLProtocol:self didLoadData:[NSData new]];
+                [self.client URLProtocolDidFinishLoading:self];
+                KPLogDebug(@"oflline mode - return status 200 & empty for key:%@", key);
+                
+                return;
+            }
+        }
     }
     
     NSDictionary *cachedHeaders = requestStr.cachedResponseHeaders;
