@@ -113,7 +113,7 @@
     if (self.isLoading) {
         [self stopLoading];
     }
-
+    
     [self loadRequest:[NSURLRequest requestWithURL:
                        [NSURL URLWithString:@"about:blank"]]];
 }
@@ -130,6 +130,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     
     NSString *requestString = request.URL.absoluteString;
+    BOOL isEmptyRequest = [requestString rangeOfString: @"about:blank"].location != NSNotFound;
     KPLogDebug(@"requestString %@", requestString);
     if (requestString.isJSFrame) {
         FunctionComponents functionComponents = requestString.extractFunction;
@@ -142,7 +143,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                                                  args:functionComponents.args];
         }
         return NO;
-    } else if( !requestString.isFrameURL ) {
+    } else if(!requestString.isFrameURL  && !isEmptyRequest) {
+        KPLogDebug(@"isFrameURL or Empty::%@", requestString);
         [[UIApplication sharedApplication] openURL: request.URL];
         return NO;
     } else {
