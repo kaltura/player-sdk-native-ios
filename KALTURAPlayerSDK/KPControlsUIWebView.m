@@ -144,7 +144,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         }
         
         return NO;
-    } else if(!requestString.isFrameURL && ![requestString containsString:@"about:blank"]) {
+    } else if(!requestString.isFrameURL && ![requestString isEqualToString:@"about:blank"]) {
         KPLogDebug(@"isFrameURL or Empty::%@", requestString);
         [[UIApplication sharedApplication] openURL: request.URL];
     
