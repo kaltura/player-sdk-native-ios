@@ -130,8 +130,8 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType {
     
     NSString *requestString = request.URL.absoluteString;
-    BOOL isEmptyRequest = [requestString rangeOfString: @"about:blank"].location != NSNotFound;
     KPLogDebug(@"requestString %@", requestString);
+    
     if (requestString.isJSFrame) {
         FunctionComponents functionComponents = requestString.extractFunction;
         if (functionComponents.error) {
@@ -142,14 +142,17 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                                            callbackId:functionComponents.callBackID
                                                  args:functionComponents.args];
         }
+        
         return NO;
-    } else if(!requestString.isFrameURL && !isEmptyRequest) {
+    } else if(!requestString.isFrameURL && ![requestString containsString:@"about:blank"]) {
         KPLogDebug(@"isFrameURL or Empty::%@", requestString);
         [[UIApplication sharedApplication] openURL: request.URL];
+    
         return NO;
     } else {
         NSLog(@"HTTP:: %@", requestString);
     }
+    
     return YES;
 }
 
