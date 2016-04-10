@@ -7,6 +7,8 @@
 //
 
 #import "KPController.h"
+#import "KPController_Private.h"
+#import "DeviceParamsHandler.h"
 
 @implementation KPController
 @synthesize currentPlaybackRate;
@@ -20,6 +22,32 @@ NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
 NSString *const KMediaSource = @"KMediaSource";
 
 NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackStateDidChangeNotification";
+
+#define KP_CONTROLS_WEBVIEW  SYSTEM_VERSION_EQUAL_TO(@"7") ? @"KPControlsUIWebview" : @"KPControlsWKWebview"
+
+NSString *sendNotification(NSString *notification, NSString *params) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notification, params];
+}
+
+NSString *setKDPAttribute(NSString *pluginName, NSString *propertyName, NSString *value) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
+}
+
+NSString *triggerEvent(NSString *event, NSString *value) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", event, value];
+}
+
+NSString *triggerEventWithJSON(NSString *event, NSString *jsonString) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', %@)", event, jsonString];
+}
+
+NSString *asyncEvaluate(NSString *expression, NSString *evaluateID) {
+    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, evaluateID];
+}
+
+NSString *showChromecastComponent(BOOL show) {
+    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.showChromecastComponent(\"%@\");", @(show).stringValue];
+}
 
 - (void)setPlaybackState:(KPMediaPlaybackState)newState {
     _playbackState = newState;
@@ -112,6 +140,10 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
     if ([_delegate respondsToSelector:@selector(setVolume:)]) {
         [_delegate setMute:isMute];
     }
+}
+
++ (id<KPController>)defaultControlsViewWithFrame:(CGRect)frame {
+    return (id<KPController>)[[NSClassFromString(@"KPControlsUIWebview") alloc] initWithFrame:frame];
 }
 
 @end

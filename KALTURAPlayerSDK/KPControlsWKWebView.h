@@ -7,8 +7,8 @@
 //
 
 #import <WebKit/WebKit.h>
-#import "KPControlsView.h"
+#import "KPController_Private.h"
 
-@interface KPControlsWKWebview : WKWebView <KPControlsView, WKUIDelegate>
+@interface KPControlsWKWebview : WKWebView <KPController, WKUIDelegate>
 
 @end

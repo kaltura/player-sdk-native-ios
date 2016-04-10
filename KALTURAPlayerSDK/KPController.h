@@ -70,6 +70,9 @@ extern NSString * const KMediaPlaybackStateKey;
 - (BOOL)mute;
 - (void)setMute:(BOOL)isMute;
 
+- (void)handleHtml5LibCall:(NSString*)functionName callbackId:(int)callbackId args:(NSArray*)args;
+- (void)handleKPControlsError:(NSError *)error;
+
 @end
 
 @interface KPController : NSObject <KPMediaPlayback>

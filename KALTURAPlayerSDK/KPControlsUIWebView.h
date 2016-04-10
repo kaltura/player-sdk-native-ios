@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 Kaltura. All rights reserved.
 //
 
-#import "KPControlsView.h"
+#import "KPController_Private.h"
 
-@interface KPControlsUIWebview : UIWebView <KPControlsView>
+@interface KPControlsUIWebview : UIWebView <KPController>
 
 @end

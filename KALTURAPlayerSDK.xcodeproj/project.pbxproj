@@ -73,7 +73,6 @@
 		BFBE8E8B1C0B139400649BDF /* KPBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E5C1C0B139400649BDF /* KPBrowserViewController.m */; };
 		BFBE8E8C1C0B139400649BDF /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */; };
 		BFBE8E8D1C0B139400649BDF /* KPControlsUIWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E5F1C0B139400649BDF /* KPControlsUIWebView.m */; };
-		BFBE8E8E1C0B139400649BDF /* KPControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E611C0B139400649BDF /* KPControlsView.m */; };
 		BFBE8E8F1C0B139400649BDF /* KPControlsWKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E631C0B139400649BDF /* KPControlsWKWebView.m */; };
 		BFBE8E901C0B139400649BDF /* KPLog.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E651C0B139400649BDF /* KPLog.m */; };
 		BFBE8E911C0B139400649BDF /* KPLogManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E671C0B139400649BDF /* KPLogManager.m */; };
@@ -111,7 +110,6 @@
 		BFBE8EB81C0B174400649BDF /* SmsStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E801C0B139400649BDF /* SmsStrategy.h */; };
 		BFBE8EB91C0B174400649BDF /* TwitterStrategy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E821C0B139400649BDF /* TwitterStrategy.h */; };
 		BFBE8EBA1C0B174400649BDF /* KPShareManager.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E691C0B139400649BDF /* KPShareManager.h */; };
-		BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E601C0B139400649BDF /* KPControlsView.h */; };
 		BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */; };
 		BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */; };
 		FB0B5AAE1C7FB3BE0067872E /* KPWidevineClassicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */; };
@@ -190,7 +188,6 @@
 				BFBE8EB81C0B174400649BDF /* SmsStrategy.h in CopyFiles */,
 				BFBE8EB91C0B174400649BDF /* TwitterStrategy.h in CopyFiles */,
 				BFBE8EBA1C0B174400649BDF /* KPShareManager.h in CopyFiles */,
-				BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */,
 				BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */,
 				BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */,
 			);
@@ -246,8 +243,6 @@
 		BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KPBrowserViewController.xib; path = KALTURAPlayerSDK/KPBrowserViewController.xib; sourceTree = SOURCE_ROOT; };
 		BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPControlsUIWebView.h; path = KALTURAPlayerSDK/KPControlsUIWebView.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E5F1C0B139400649BDF /* KPControlsUIWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPControlsUIWebView.m; path = KALTURAPlayerSDK/KPControlsUIWebView.m; sourceTree = SOURCE_ROOT; };
-		BFBE8E601C0B139400649BDF /* KPControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPControlsView.h; path = KALTURAPlayerSDK/KPControlsView.h; sourceTree = SOURCE_ROOT; };
-		BFBE8E611C0B139400649BDF /* KPControlsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPControlsView.m; path = KALTURAPlayerSDK/KPControlsView.m; sourceTree = SOURCE_ROOT; };
 		BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPControlsWKWebView.h; path = KALTURAPlayerSDK/KPControlsWKWebView.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E631C0B139400649BDF /* KPControlsWKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPControlsWKWebView.m; path = KALTURAPlayerSDK/KPControlsWKWebView.m; sourceTree = SOURCE_ROOT; };
 		BFBE8E641C0B139400649BDF /* KPLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPLog.h; path = KALTURAPlayerSDK/KPLog.h; sourceTree = SOURCE_ROOT; };
@@ -533,8 +528,6 @@
 		BFFFA774182F9F10005B3B24 /* KPControlsWebView */ = {
 			isa = PBXGroup;
 			children = (
-				BFBE8E601C0B139400649BDF /* KPControlsView.h */,
-				BFBE8E611C0B139400649BDF /* KPControlsView.m */,
 				BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */,
 				BFBE8E5F1C0B139400649BDF /* KPControlsUIWebView.m */,
 				BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */,
@@ -698,7 +691,6 @@
 				BFBE8E891C0B139400649BDF /* GoogleplusStrategy.m in Sources */,
 				BF1C077E1C0DA95600A67462 /* KPViewController.m in Sources */,
 				BFBE8E931C0B139400649BDF /* KPURLProtocol.m in Sources */,
-				BFBE8E8E1C0B139400649BDF /* KPControlsView.m in Sources */,
 				BFBE8E8F1C0B139400649BDF /* KPControlsWKWebView.m in Sources */,
 				BFBE8E9D1C0B139400649BDF /* SmsStrategy.m in Sources */,
 				BFBE8E8B1C0B139400649BDF /* KPBrowserViewController.m in Sources */,
