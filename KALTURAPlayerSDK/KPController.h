@@ -57,8 +57,6 @@ extern NSString * const KMediaPlaybackStateKey;
 
 @interface KPController : NSObject <KPMediaPlayback>
 
-@property (nonatomic, weak) id<KPControllerDelegate> delegate;
-
 /* The URL that points to the movie file. */
 @property (nonatomic, copy) NSURL *contentURL;
 

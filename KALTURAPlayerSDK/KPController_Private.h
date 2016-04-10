@@ -26,7 +26,6 @@ NSString *showChromecastComponent(BOOL show);
  @abstract      Call a KDP notification (perform actions using this API, for example: play, pause, changeMedia, etc.) (required)
  */
 
-- (void)sendKPNotification:(NSString *)kpNotificationName withParams:(NSString *)kpParams;
 - (NSTimeInterval)duration;
 - (NSTimeInterval)currentPlaybackTime;
 - (float)volume;
@@ -85,5 +84,6 @@ NSString *showChromecastComponent(BOOL show);
 
 @interface KPController ()
 @property (nonatomic, readwrite) KPMediaPlaybackState playbackState;
+@property (nonatomic, weak) id<KPControllerDelegate> delegate;
 + (id<KPController>)defaultControlsViewWithFrame:(CGRect)frame;
 @end
