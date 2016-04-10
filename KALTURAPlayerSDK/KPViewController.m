@@ -20,7 +20,6 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
 #import "KPlayerFactory.h"
-#import "KPControlsView.h"
 #import "KCCPlayer.h"
 #import "KPController_Private.h"
 #import "KPURLProtocol.h"
@@ -46,7 +45,6 @@ typedef NS_ENUM(NSInteger, KPError) {
 NSString *const KPErrorDomain = @"com.kaltura.player";
 
 @interface KPViewController() <KPlayerFactoryDelegate,
-                                KPControlsViewDelegate,
                                 UIActionSheetDelegate,
                                 ChromecastDeviceControllerDelegate, KPControllerDelegate> {
     // Player Params
@@ -62,7 +60,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     BOOL isActionSheetPresented;
 }
 
-@property (nonatomic, strong) id<KPControlsView> controlsView;
+@property (nonatomic, strong) id<KPController> controlsView;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
@@ -326,7 +324,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     // Initialize HTML layer (controls)
     if (!self.controlsView) {
-        self.controlsView = [KPControlsView defaultControlsViewWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
+        self.controlsView = [KPController defaultControlsViewWithFrame:(CGRect){CGPointZero, self.view.frame.size}];
         self.controlsView.controlsDelegate = self;
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:[self.currentConfiguration appendConfiguration:videoURL]]];
         [self.view addSubview:(UIView *)self.controlsView];

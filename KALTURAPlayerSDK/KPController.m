@@ -7,6 +7,10 @@
 //
 
 #import "KPController.h"
+#import "KPController_Private.h"
+#import "DeviceParamsHandler.h"
+
+static id<KPController> playerController;
 
 @implementation KPController
 @synthesize currentPlaybackRate;
@@ -20,6 +24,44 @@ NSString *const KMediaPlaybackStateKey = @"mediaPlaybackState";
 NSString *const KMediaSource = @"KMediaSource";
 
 NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackStateDidChangeNotification";
+
+#define KP_CONTROLS_WEBVIEW  SYSTEM_VERSION_EQUAL_TO(@"7") ? @"KPControlsUIWebview" : @"KPControlsWKWebview"
+
+NSString *sendNotification(NSString *notification, NSString *params) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notification, params];
+}
+
+NSString *setKDPAttribute(NSString *pluginName, NSString *propertyName, NSString *value) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.setKDPAttribute('%@','%@', %@);", pluginName, propertyName, value];
+}
+
+NSString *triggerEvent(NSString *event, NSString *value) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', '%@')", event, value];
+}
+
+NSString *triggerEventWithJSON(NSString *event, NSString *jsonString) {
+    return [NSString stringWithFormat:@"NativeBridge.videoPlayer.trigger('%@', %@)", event, jsonString];
+}
+
+NSString *asyncEvaluate(NSString *expression, NSString *evaluateID) {
+    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.asyncEvaluate(\"%@\", \"%@\");", expression, evaluateID];
+}
+
+NSString *showChromecastComponent(BOOL show) {
+    return [NSString stringWithFormat: @"NativeBridge.videoPlayer.showChromecastComponent(\"%@\");", @(show).stringValue];
+}
+
++ (id<KPController>)playerController {
+    @synchronized (self) {
+        return playerController;
+    }
+}
+
++ (void)setPlayerController:(id<KPController>)controller {
+    @synchronized (self) {
+        playerController = controller;
+    }
+}
 
 - (void)setPlaybackState:(KPMediaPlaybackState)newState {
     _playbackState = newState;
@@ -35,28 +77,19 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
 }
 
 - (void)play {
-    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:DoPlayKey withParams:nil];
-    }
+    [self.class.playerController sendNotification:DoPlayKey withParams:nil];
 }
 
 - (void)pause {
-    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:DoPauseKey withParams:nil];
-    }
+    [self.class.playerController sendNotification:DoPauseKey withParams:nil];
 }
 
 - (void)seek:(NSTimeInterval)playbackTime {
-    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:DoSeekKey withParams:[@(playbackTime) stringValue]];
-    }
+    [self.class.playerController sendNotification:DoSeekKey withParams:[@(playbackTime) stringValue]];
 }
 
-
 - (void)replay {
-    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:DoReplayKey withParams:nil];
-    }
+    [self.class.playerController sendNotification:DoReplayKey withParams:nil];
 }
 
 ///@todo setCurrentPlaybackRate
@@ -70,16 +103,13 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
         currPlaybackTime = 0.01;
     }
     
-    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:DoSeekKey withParams:[@(currPlaybackTime) stringValue]];
-    }
+    [self seek:currPlaybackTime];
 }
 
 ///@todo setsource refactor
 - (void)setContentURL:(NSURL *)contentURL {
-    if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
-        [_delegate sendKPNotification:@"changeMedia" withParams:[NSString stringWithFormat:@"{\"mediaProxy\": {\"sources\":[{\"src\":\"%@\", \"type\":\"%@\"}]}}", [contentURL absoluteString],@"application/vnd.apple.mpegurl"]];
-    }
+    [self.class.playerController sendNotification:@"changeMedia" withParams:
+     [NSString stringWithFormat:@"{\"mediaProxy\": {\"sources\":[{\"src\":\"%@\", \"type\":\"%@\"}]}}", [contentURL absoluteString],@"application/vnd.apple.mpegurl"]];
 }
 
 - (NSTimeInterval)duration {
@@ -112,6 +142,12 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
     if ([_delegate respondsToSelector:@selector(setVolume:)]) {
         [_delegate setMute:isMute];
     }
+}
+
++ (id<KPController>)defaultControlsViewWithFrame:(CGRect)frame {
+    self.playerController = (id<KPController>)[[NSClassFromString(@"KPControlsUIWebview") alloc] initWithFrame:frame];
+    
+    return self.playerController;
 }
 
 @end
