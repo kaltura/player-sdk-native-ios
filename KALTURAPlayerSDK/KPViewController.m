@@ -58,6 +58,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     NSMutableArray *callBackReadyRegistrations;
     NSURL *videoURL;
     void(^_shareHandler)(NSDictionary *);
+    void (^_seekedEventHandler)();
                                     
     BOOL isActionSheetPresented;
 }
@@ -967,6 +968,14 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     __block KPMediaPlaybackState playbackState = KPMediaPlaybackStateUnknown;
     
+    if ([event isEqualToString:@"seeked"]) {
+        if (_seekedEventHandler) {
+            KPLogDebug(@"call seekedEventHandler");
+            _seekedEventHandler();
+            _seekedEventHandler = nil;
+        }
+    }
+    
     void(^kPlayerStateBlock)() = @{
                                       CanPlayKey:
                                           ^{
@@ -1076,8 +1085,23 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 #pragma mark KPControllerDelegate
 
--(void)sendKPNotification:(NSString *)kpNotificationName withParams:(NSString *)kpParams {
+- (void)sendKPNotification:(NSString *)kpNotificationName withParams:(NSString *)kpParams {
     KPLogTrace(@"Enter");
+    
+    if (kpNotificationName) {
+        [self sendNotification:kpNotificationName withParams:kpParams];
+    }
+    
+    KPLogTrace(@"Exit");
+}
+
+- (void)sendKPNotification:(NSString *)kpNotificationName
+                    params:(NSString *)kpParams completionHandler:(void(^)())handler {
+    KPLogTrace(@"Enter");
+    
+    if ([kpNotificationName isEqualToString:@"doSeek"]) {
+        _seekedEventHandler = [handler copy];
+    }
     
     if (kpNotificationName) {
         [self sendNotification:kpNotificationName withParams:kpParams];
