@@ -52,6 +52,13 @@ NSString * const KPMediaPlaybackStateDidChangeNotification = @"KPMediaPlaybackSt
     }
 }
 
+- (void)seek:(NSTimeInterval)playbackTime completionHandler:(void(^)())handler {
+    if ([_delegate respondsToSelector:@selector(sendKPNotification:params:completionHandler:)]) {
+        [_delegate sendKPNotification:DoSeekKey
+                               params:[@(playbackTime) stringValue] completionHandler:handler];
+    }
+}
+
 
 - (void)replay {
     if ([_delegate respondsToSelector:@selector(sendKPNotification:withParams:)]) {
