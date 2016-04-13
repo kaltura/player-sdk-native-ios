@@ -195,23 +195,23 @@ NSString * const StatusKeyPath = @"status";
                     }
                     
                     if (self.audioSelectionGroup.options.count) {
-                        captions = [NSMutableArray new];
-                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
-                            if ([option.mediaType isEqualToString:@"sbtl"]) {
-                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
-                                [captions addObject:@{@"kind": @"subtitle",
-                                                      @"language": langCode,
-                                                      @"scrlang": langCode,
-                                                      @"label": langCode,
-                                                      @"index": @(captions.count),
-                                                      @"title": option.displayName}];
-                            }
-                        }
-                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
-                        [self.delegate player:self
-                                    eventName:@"textTracksReceived"
-                                         JSON:languages.toJSON];
-                        self.closedCaptionDisplayEnabled = YES;
+//                        captions = [NSMutableArray new];
+//                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
+//                            if ([option.mediaType isEqualToString:@"sbtl"]) {
+//                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
+//                                [captions addObject:@{@"kind": @"subtitle",
+//                                                      @"language": langCode,
+//                                                      @"scrlang": langCode,
+//                                                      @"label": langCode,
+//                                                      @"index": @(captions.count),
+//                                                      @"title": option.displayName}];
+//                            }
+//                        }
+//                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
+//                        [self.delegate player:self
+//                                    eventName:@"textTracksReceived"
+//                                         JSON:languages.toJSON];
+                        self.closedCaptionDisplayEnabled = NO;
                     }
                 }
                 break;
