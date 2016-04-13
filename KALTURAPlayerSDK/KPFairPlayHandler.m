@@ -13,6 +13,9 @@
 
 NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
+NSString* const TAG = @"com.kaltura.playersdk.drm.fps";
+
+
 @interface KPFairPlayHandler () <AVAssetResourceLoaderDelegate>
 @property (nonatomic, copy) NSString* licenseUri;
 @property (nonatomic, copy) KPAssetReadyCallback assetReadyCallback;
@@ -72,7 +75,6 @@ static dispatch_queue_t	globalNotificationQueue( void )
     NSURL* reqUrl = [NSURL URLWithString:licenseUri];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:reqUrl];
     request.HTTPMethod=@"POST";
-    //    request.HTTPBody=[requestBytes base64EncodedDataWithOptions:0];
     request.HTTPBody=[requestBytes base64EncodedDataWithOptions:0];
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
     
@@ -82,18 +84,39 @@ static dispatch_queue_t	globalNotificationQueue( void )
         KPLogError(@"No license response, error=%@", *errorOut);
         return nil;
     }
-    
+        
     NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:errorOut];
     if (!dict) {
         KPLogError(@"Invalid license response, error=%@", *errorOut);
         return nil;
     }
-
-    decodedData = [[NSData alloc] initWithBase64EncodedString:dict[@"ckc"] options:0];
-    *expiryDuration = [dict[@"expiry"] floatValue];
     
-    //	*errorOut = [NSError errorWithDomain:NSPOSIXErrorDomain code:1 userInfo:nil];
-    return decodedData;
+    NSString* errMessage = dict[@"message"];
+    if (errMessage) {
+        *errorOut = [NSError errorWithDomain:TAG code:'CKCE' userInfo:@{@"ServerMessage": errMessage}];
+        KPLogError(@"Error message from license server: %@", errMessage);
+        return nil;
+    }
+    NSString* ckc = dict[@"ckc"];
+    NSString* expiry = dict[@"expiry"];
+    
+    if (!ckc) {
+        *errorOut = [NSError errorWithDomain:TAG code:'NCKC' userInfo:nil];
+        KPLogError(@"No CKC in license response");
+        return nil;
+    }
+
+    NSData* ckcData = [[NSData alloc] initWithBase64EncodedString:ckc options:0];
+    
+    if (!ckcData) {
+        *errorOut = [NSError errorWithDomain:TAG code:'ICKC' userInfo:nil];
+        KPLogError(@"Invalid CKC in license response");
+        return nil;
+    }
+    
+    *expiryDuration = [expiry floatValue];
+    
+    return ckcData;
 }
 
 
