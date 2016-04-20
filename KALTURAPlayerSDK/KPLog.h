@@ -18,6 +18,7 @@ extern NSString *const KPLogMessageLevelKey;
 void _KPLog(KPLogLevel logLevel, NSString *methodName, int lineNumber, NSString *format, ...);
 void notifyListener(NSString *message, NSInteger messageLevel);
 
+#ifdef DEBUG
 #define __FileName__ [[NSString stringWithUTF8String:__FILE__] lastPathComponent]
 #define __LineNumber__ __LINE__
 #define __MethodName__ [[NSString stringWithUTF8String:__func__] lastPathComponent]
@@ -27,6 +28,14 @@ void notifyListener(NSString *message, NSInteger messageLevel);
 #define KPLogInfo(...) KPLogManager.KPLogLevel <= KPLogLevelInfo ? _KPLog(KPLogLevelInfo,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogWarn(...) KPLogManager.KPLogLevel <= KPLogLevelWarn ? _KPLog(KPLogLevelWarn,__MethodName__,__LineNumber__,__VA_ARGS__):nil
 #define KPLogError(...) KPLogManager.KPLogLevel <= KPLogLevelError ? _KPLog(KPLogLevelError,__MethodName__,__LineNumber__,__VA_ARGS__):nil
+#else
+#define KPLogTrace(...) /* */
+#define KPLogDebug(...) /* */
+#define KPLogInfo(...) /* */
+#define KPLogWarn(...) /* */
+#define KPLogError(...) /* */
+#endif
+
 #if !defined(DEBUGCC)
 #define KPLogChromeCast(...)
 #else
