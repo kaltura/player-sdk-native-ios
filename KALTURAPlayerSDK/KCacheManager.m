@@ -30,7 +30,7 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
 
 @implementation KCacheManager
 @synthesize cachePath = _cachePath;
-@synthesize bundle = _bundle, cacheConditions = _cacheConditions, withDomain = _withDomain, subStrings = _subStrings;
+@synthesize bundle = _bundle, cacheConditions = _cacheConditions, withDomain = _withDomain, subStrings = _subStrings, offlineSubStr = _offlineSubStr;
 
 + (KCacheManager *)shared {
     KPLogDebug(@"Enter");
@@ -98,6 +98,18 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
     
     KPLogDebug(@"Exit");
     return _subStrings;
+}
+
+// The url list which should contain substring fron the White list in
+// When there is no network
+- (NSDictionary *)offlineSubStr {
+    KPLogDebug(@"Enter");
+    if (!_offlineSubStr) {
+        _offlineSubStr = self.cacheConditions[@"offlineSubStr"];
+    }
+    
+    KPLogDebug(@"Exit");
+    return _offlineSubStr;
 }
 
 

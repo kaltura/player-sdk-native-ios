@@ -168,8 +168,8 @@ NSString * const StatusKeyPath = @"status";
                             value:nil];
         }
     } else if ([keyPath isEqualToString:StatusKeyPath]) {
-        switch (self.status) {
-            case AVPlayerStatusFailed:
+        switch (self.currentItem.status) {
+            case AVPlayerItemStatusFailed:
                 KPLogError(@"AVPlayerStatusFailed");
                 [self.delegate player:self
                             eventName:ErrorKey
@@ -195,27 +195,27 @@ NSString * const StatusKeyPath = @"status";
                     }
                     
                     if (self.audioSelectionGroup.options.count) {
-                        captions = [NSMutableArray new];
-                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
-                            if ([option.mediaType isEqualToString:@"sbtl"]) {
-                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
-                                [captions addObject:@{@"kind": @"subtitle",
-                                                      @"language": langCode,
-                                                      @"scrlang": langCode,
-                                                      @"label": langCode,
-                                                      @"index": @(captions.count),
-                                                      @"title": option.displayName}];
-                            }
-                        }
-                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
-                        [self.delegate player:self
-                                    eventName:@"textTracksReceived"
-                                         JSON:languages.toJSON];
-                        self.closedCaptionDisplayEnabled = YES;
+//                        captions = [NSMutableArray new];
+//                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
+//                            if ([option.mediaType isEqualToString:@"sbtl"]) {
+//                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
+//                                [captions addObject:@{@"kind": @"subtitle",
+//                                                      @"language": langCode,
+//                                                      @"scrlang": langCode,
+//                                                      @"label": langCode,
+//                                                      @"index": @(captions.count),
+//                                                      @"title": option.displayName}];
+//                            }
+//                        }
+//                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
+//                        [self.delegate player:self
+//                                    eventName:@"textTracksReceived"
+//                                         JSON:languages.toJSON];
+                        self.closedCaptionDisplayEnabled = NO;
                     }
                 }
                 break;
-            case AVPlayerStatusUnknown:
+            case AVPlayerItemStatusUnknown:
                 KPLogError(@"AVPlayerStatusUnknown");
                 [self.delegate player:self
                             eventName:ErrorKey
@@ -351,8 +351,7 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
-    if (self.status != AVPlayerStatusReadyToPlay ||
-        self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+    if (self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
         _currentPlaybackTime = currentPlaybackTime;
     } else if (currentPlaybackTime < self.duration) {
         _currentPlaybackTime = currentPlaybackTime;

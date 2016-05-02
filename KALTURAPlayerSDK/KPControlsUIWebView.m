@@ -113,7 +113,7 @@
     if (self.isLoading) {
         [self stopLoading];
     }
-
+    
     [self loadRequest:[NSURLRequest requestWithURL:
                        [NSURL URLWithString:@"about:blank"]]];
 }
@@ -131,6 +131,7 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
     
     NSString *requestString = request.URL.absoluteString;
     KPLogDebug(@"requestString %@", requestString);
+    
     if (requestString.isJSFrame) {
         FunctionComponents functionComponents = requestString.extractFunction;
         if (functionComponents.error) {
@@ -141,13 +142,17 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
                                            callbackId:functionComponents.callBackID
                                                  args:functionComponents.args];
         }
+        
         return NO;
-    } else if( !requestString.isFrameURL ) {
+    } else if(!requestString.isFrameURL && ![requestString isEqualToString:@"about:blank"]) {
+        KPLogDebug(@"isFrameURL or Empty::%@", requestString);
         [[UIApplication sharedApplication] openURL: request.URL];
+    
         return NO;
     } else {
         NSLog(@"HTTP:: %@", requestString);
     }
+    
     return YES;
 }
 

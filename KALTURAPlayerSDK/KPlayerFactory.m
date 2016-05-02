@@ -247,6 +247,9 @@
     }
     
     isReady = NO;
+    isSeeked = NO;
+    self.isContentEnded = NO;
+    self.isAllAdsCompleted = NO;
     [self.player hidePlayer];
 }
 
