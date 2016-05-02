@@ -158,6 +158,12 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 @property (nonatomic, readonly) KDPAPIState kdpAPIState;
 
 /*!
+	@property	kPlayer
+	@abstract	The player from which to source the media content for the view controller.
+ */
+@property (nonatomic, readonly) id<KPlayer> kPlayer;
+
+/*!
  * @function registerReadyEvent
  *
  * @abstract
