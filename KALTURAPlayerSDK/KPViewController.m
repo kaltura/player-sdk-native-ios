@@ -1110,10 +1110,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     KPLogTrace(@"Exit");
 }
 
-- (id<KPlayer>)player {
+- (id<KPlayer>)kPlayer {
     KPLogTrace(@"Enter");
     
-    if (_playerFactory.player && [_playerFactory.player isMemberOfClass:[AVPlayer class]]) {
+    if (_playerFactory.player && [_playerFactory.player isKindOfClass:[AVPlayer class]]) {
         KPLogTrace(@"Exit");
         return _playerFactory.player;
     }
