@@ -16,6 +16,7 @@
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
+    BOOL _backToForeground;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
@@ -26,6 +27,10 @@
 
 @implementation KPlayerFactory
 @synthesize currentPlayBackTime = _currentPlayBackTime;
+
+- (void)backToForeground {
+    _backToForeground = YES;
+}
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
     self = [super init];
@@ -223,6 +228,12 @@
     
     if (_adController) {
         [self.adController resume];
+    }
+    
+    
+    if (_backToForeground) {
+        [_assetBuilder backToForeground];
+        _backToForeground = NO;
     }
     
     if ([self.player respondsToSelector:@selector(play)]) {

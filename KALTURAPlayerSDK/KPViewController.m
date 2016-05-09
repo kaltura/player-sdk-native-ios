@@ -547,6 +547,8 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.playerFactory enableTracks:YES];
     }
     
+    [self.playerFactory backToForeground];
+    
     KPLogTrace(@"Exit");
 }
 

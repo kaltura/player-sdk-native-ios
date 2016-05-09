@@ -25,6 +25,12 @@
 
 @implementation KPAssetBuilder
 
+-(void)backToForeground {
+    if ([self.assetHandler respondsToSelector:@selector(backToForeground)]) {
+        [self.assetHandler backToForeground];
+    }
+}
+
 -(void)setAssetParam:(NSString*)key toValue:(id)value {
     [_assetHandler setAssetParam:key toValue:value];
 }

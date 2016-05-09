@@ -19,6 +19,8 @@ typedef void(^KPAssetReadyCallback)(AVURLAsset* avAsset);
 -(void)setLicenseUri:(NSString*)licenseUri;
 -(void)setAssetParam:(NSString*)key toValue:(id)value;
 
+-(void)backToForeground;
+
 +(NSDictionary*)supportedMediaFormats;
 
 @end

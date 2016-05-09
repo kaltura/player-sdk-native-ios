@@ -18,6 +18,15 @@
 
 @implementation KPWidevineClassicHandler
 
+
+-(void)backToForeground {
+    if (_contentUrl) {
+        // WidevineClassicHandler.setLicenseUri here will cause the stream to be closed and reopened (WV_Stop, WV_Play).
+        // However, it will also call the assetReadyCallback -- not sure we want it.
+        [self setLicenseUri:nil];
+    }
+}
+
 -(void)setAssetParam:(NSString*)key toValue:(id)value {
     // Nothing to set
     KPLogWarn(@"Ignoring unknown asset param %@", key);
