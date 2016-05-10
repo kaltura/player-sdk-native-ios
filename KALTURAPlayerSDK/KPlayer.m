@@ -193,7 +193,7 @@ NSString * const StatusKeyPath = @"status";
                     if (self.currentItem.currentTime.value < _currentPlaybackTime) {
                         [self setCurrentPlaybackTime:_currentPlaybackTime];
                     }
-                    
+                    [self handleAudioTracks];
                     if (self.audioSelectionGroup.options.count) {
 //                        captions = [NSMutableArray new];
 //                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
@@ -224,6 +224,30 @@ NSString * const StatusKeyPath = @"status";
             }
         }
     }
+}
+
+-(void)handleAudioTracks{
+    NSMutableArray* audioTracks;
+    //check for multi audio
+    AVMediaSelectionGroup *audioSelectionGroup = [[[self currentItem] asset] mediaSelectionGroupForMediaCharacteristic: AVMediaCharacteristicAudible];
+    
+    if (audioSelectionGroup.options.count > 1){
+        audioTracks = [NSMutableArray new];
+        //we have more than one audio assest - lets send events and be ready for a switch
+        for (AVMediaSelectionOption *option in audioSelectionGroup.options){
+            NSString* language = [option.locale objectForKey:NSLocaleLanguageCode];
+            [audioTracks addObject:@{@"language":language,
+                                     @"label":language,
+                                     @"title":option.displayName,
+                                     @"index": @(audioTracks.count)
+                                     }];
+        }
+        NSMutableDictionary *audioLanguages = @{@"languages": audioTracks}.mutableCopy;
+        [self.delegate player:self
+                    eventName:@"audioTracksReceived"
+                         JSON:audioLanguages.toJSON];
+    }
+  
 }
 
 - (void)videoEnded:(NSNotification *)notification {
@@ -401,6 +425,22 @@ NSString * const StatusKeyPath = @"status";
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
     //    self.currentItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
+}
+
+-(void) selectAudioTrack:(int)audioTrack{
+    AVMediaSelectionGroup *audioSelectionGroup = [[[self currentItem] asset] mediaSelectionGroupForMediaCharacteristic: AVMediaCharacteristicAudible];
+    int index = 0;
+    if (audioSelectionGroup.options.count > 1){
+        //we have more than one audio assest - lets send events and be ready for a switch
+        for (AVMediaSelectionOption *option in audioSelectionGroup.options){
+            if (index == audioTrack){
+                [[self currentItem] selectMediaOption:option inMediaSelectionGroup:audioSelectionGroup ];
+                break;
+            }
+            index++;
+        }
+    }
+    
 }
 
 - (void)removeAirPlayIcon {

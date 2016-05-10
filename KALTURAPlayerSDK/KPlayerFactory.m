@@ -87,6 +87,11 @@
     [_assetBuilder setContentUrl:src];
 }
 
+-(void)selectAudioTrack:(int)trackId{
+    KPLogDebug(@"Change track Id:%@",trackId);
+    [_player selectAudioTrack:trackId];
+}
+
 -(void)setLicenseUri:(NSString*)licenseUri {
     [_assetBuilder setLicenseUri:licenseUri];
 }

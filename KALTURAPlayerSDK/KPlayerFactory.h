@@ -50,6 +50,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)prepareForChangeConfiguration;
 - (void)setAssetParam:(NSString*)key toValue:(id)value;
 - (void)backToForeground;
+- (void)selectAudioTrack:(int)trackId;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
