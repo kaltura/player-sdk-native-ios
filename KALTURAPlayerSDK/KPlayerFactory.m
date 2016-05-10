@@ -12,11 +12,12 @@
 #import "NSString+Utilities.h"
 #import "KPAssetBuilder.h"
 
-@interface KPlayerFactory() <KPlayerDelegate>{
+@interface KPlayerFactory() <KPlayerDelegate> {
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
-    BOOL _backToForeground;
+    BOOL _wvBackToForeground;
+    NSTimeInterval _lastPosition;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
@@ -29,7 +30,9 @@
 @synthesize currentPlayBackTime = _currentPlayBackTime;
 
 - (void)backToForeground {
-    _backToForeground = YES;
+    _lastPosition = [self.player currentPlaybackTime];
+    _wvBackToForeground = YES;
+    [_assetBuilder backToForeground];
 }
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
@@ -175,6 +178,18 @@
     if ([event isEqualToString:CanPlayKey]) {
         isReady = YES;
         
+        NSLog(@"_currentPlayBackTime::%f",_currentPlayBackTime);
+        if (_wvBackToForeground) {
+            _wvBackToForeground = NO;
+            [self setCurrentPlayBackTime:_lastPosition];
+            
+            if (_isReleasePlayerPositionEnabled) {
+                _isReleasePlayerPositionEnabled = NO;
+                [self play];
+            }
+            
+            return;
+        }
         if (_currentPlayBackTime > 0.0) {
             [self.player setCurrentPlaybackTime:_currentPlayBackTime];
             _currentPlayBackTime = 0.0;
@@ -222,18 +237,16 @@
 }
 
 - (void)play {
+    if (_wvBackToForeground) {
+        _isReleasePlayerPositionEnabled = YES;
+    }
+    
     if (self.isReleasePlayerPositionEnabled) {
         return;
     }
     
     if (_adController) {
         [self.adController resume];
-    }
-    
-    
-    if (_backToForeground) {
-        [_assetBuilder backToForeground];
-        _backToForeground = NO;
     }
     
     if ([self.player respondsToSelector:@selector(play)]) {

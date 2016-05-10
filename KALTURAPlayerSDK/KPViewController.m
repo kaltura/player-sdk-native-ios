@@ -547,7 +547,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.playerFactory enableTracks:YES];
     }
     
-    [self.playerFactory backToForeground];
+    if (_playerFactory.src.isWV) {
+        [self.playerFactory backToForeground];
+    }
     
     KPLogTrace(@"Exit");
 }
