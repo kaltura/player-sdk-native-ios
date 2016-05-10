@@ -546,10 +546,8 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if ([backgroundModes containsObject:@"audio"]) {
         [self.playerFactory enableTracks:YES];
     }
-    
-    if (_playerFactory.src.isWV) {
-        [self.playerFactory backToForeground];
-    }
+
+    [self.playerFactory backToForeground];
     
     KPLogTrace(@"Exit");
 }

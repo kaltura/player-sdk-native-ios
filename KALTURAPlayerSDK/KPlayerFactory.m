@@ -16,7 +16,7 @@
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
-    BOOL _wvBackToForeground;
+    BOOL _backToForeground;
     NSTimeInterval _lastPosition;
 }
 
@@ -30,9 +30,13 @@
 @synthesize currentPlayBackTime = _currentPlayBackTime;
 
 - (void)backToForeground {
-    _lastPosition = [self.player currentPlaybackTime];
-    _wvBackToForeground = YES;
-    [_assetBuilder backToForeground];
+    KPLogTrace(@"Enter backToForeground");
+    if ([_assetBuilder requiresBackToForegroundHandling]) {
+        _lastPosition = [self.player currentPlaybackTime];
+        _backToForeground = YES;
+        [_assetBuilder backToForeground];
+    }
+    KPLogTrace(@"Exit backToForeground");
 }
 
 - (instancetype)initWithPlayerClassName:(NSString *)className {
@@ -179,8 +183,8 @@
         isReady = YES;
         
         NSLog(@"_currentPlayBackTime::%f",_currentPlayBackTime);
-        if (_wvBackToForeground) {
-            _wvBackToForeground = NO;
+        if (_backToForeground) {
+            _backToForeground = NO;
             [self setCurrentPlayBackTime:_lastPosition];
             
             if (_isReleasePlayerPositionEnabled) {
@@ -237,7 +241,7 @@
 }
 
 - (void)play {
-    if (_wvBackToForeground) {
+    if (_backToForeground) {
         _isReleasePlayerPositionEnabled = YES;
     }
     
