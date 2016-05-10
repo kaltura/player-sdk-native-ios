@@ -18,4 +18,7 @@
 -(void)setLicenseUri:(NSString*)licenseUri;
 -(void)setAssetParam:(NSString*)key toValue:(id)value;
 
+@optional
+-(void)backToForeground;
+
 @end

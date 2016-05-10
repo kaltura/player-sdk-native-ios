@@ -25,6 +25,21 @@
 
 @implementation KPAssetBuilder
 
+-(BOOL)requiresBackToForegroundHandling {
+    if ([self.assetHandler respondsToSelector:@selector(backToForeground)]) {
+        KPLogTrace(@"requiresBackToForegroundHandling");
+        return YES;
+    }
+    
+    return NO;
+}
+
+-(void)backToForeground {
+    if ([self.assetHandler respondsToSelector:@selector(backToForeground)]) {
+        [self.assetHandler backToForeground];
+    }
+}
+
 -(void)setAssetParam:(NSString*)key toValue:(id)value {
     [_assetHandler setAssetParam:key toValue:value];
 }
