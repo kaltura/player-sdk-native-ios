@@ -826,6 +826,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         case audioTrackSelected:
             [_playerFactory selectAudioTrack:[attributeVal integerValue]];
             break;
+        case textTrackSelected:
+            [_playerFactory selectTextTrack:attributeVal];
+            break;
         case playerError:
             if ([_delegate respondsToSelector:@selector(kPlayer:didFailWithError:)]) {
                 NSDictionary *dict = @{NSLocalizedDescriptionKey:attributeVal,

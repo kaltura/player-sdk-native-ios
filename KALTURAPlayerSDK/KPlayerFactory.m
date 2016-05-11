@@ -43,6 +43,7 @@
     self = [super init];
     if (self) {
         self.playerClassName = className;
+        self.preferSubtitles = YES;
         return self;
     }
     return nil;
@@ -61,6 +62,8 @@
         Class class = NSClassFromString(_playerClassName);
         _player = [(id<KPlayer>)[class alloc] initWithParentView:_parentViewController.view];
         _player.delegate = self;
+        _player.preferSubtitles = self.preferSubtitles;
+        
     }
     return _player;
 }
@@ -77,6 +80,7 @@
 
 - (void)setSrc:(NSString *)src {
     isReady = NO;
+    src = @"https://devimages.apple.com.edgekey.net/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8";
     _src = src;
     
     id<KPlayer> player = _player;
@@ -88,9 +92,15 @@
 }
 
 -(void)selectAudioTrack:(int)trackId{
-    KPLogDebug(@"Change track Id:%@",trackId);
+    KPLogDebug(@"Change audio track Id:%@",trackId);
     [_player selectAudioTrack:trackId];
 }
+
+-(void)selectTextTrack:(NSString*)locale{
+    KPLogDebug(@"Change text track Id:%@",locale);
+    [_player selectTextTrack:locale];
+}
+
 
 -(void)setLicenseUri:(NSString*)licenseUri {
     [_assetBuilder setLicenseUri:licenseUri];

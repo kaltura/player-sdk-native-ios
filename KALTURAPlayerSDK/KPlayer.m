@@ -41,6 +41,7 @@ NSString * const StatusKeyPath = @"status";
 @synthesize duration = _duration;
 @synthesize volume = _volume;
 @synthesize mute = _mute;
+@synthesize preferSubtitles = _preferSubtitles;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -194,25 +195,7 @@ NSString * const StatusKeyPath = @"status";
                         [self setCurrentPlaybackTime:_currentPlaybackTime];
                     }
                     [self handleAudioTracks];
-                    if (self.audioSelectionGroup.options.count) {
-//                        captions = [NSMutableArray new];
-//                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
-//                            if ([option.mediaType isEqualToString:@"sbtl"]) {
-//                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
-//                                [captions addObject:@{@"kind": @"subtitle",
-//                                                      @"language": langCode,
-//                                                      @"scrlang": langCode,
-//                                                      @"label": langCode,
-//                                                      @"index": @(captions.count),
-//                                                      @"title": option.displayName}];
-//                            }
-//                        }
-//                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
-//                        [self.delegate player:self
-//                                    eventName:@"textTracksReceived"
-//                                         JSON:languages.toJSON];
-                        self.closedCaptionDisplayEnabled = NO;
-                    }
+                    [self handleTextTracks];
                 }
                 break;
             case AVPlayerItemStatusUnknown:
@@ -225,6 +208,71 @@ NSString * const StatusKeyPath = @"status";
         }
     }
 }
+-(void)handleTextTracks{
+    NSString* mc = AVMediaCharacteristicLegible;
+    AVMediaSelectionGroup *group  = [self.currentItem.asset mediaSelectionGroupForMediaCharacteristic:mc];
+    if (group){
+        NSMutableArray *captions = [NSMutableArray array];
+        NSMutableArray *subtitles = [NSMutableArray array];
+
+        for (AVMediaSelectionOption *option in group.options){
+            NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
+            if ([option hasMediaCharacteristic:AVMediaCharacteristicContainsOnlyForcedSubtitles]){
+                 [subtitles addObject:@{@"kind": @"subtitle",
+                                 @"language": langCode,
+                                 @"scrlang": langCode,
+                                 @"label": langCode,
+                                 @"index": @(captions.count),
+                                 @"title": option.displayName}];
+            }else{
+                [captions addObject:@{@"kind": @"subtitle",
+                                      @"language": langCode,
+                                      @"scrlang": langCode,
+                                      @"label": langCode,
+                                      @"index": @(captions.count),
+                                      @"title": option.displayName}];
+            }
+        }
+        NSMutableDictionary *languages = @{@"languages": subtitles}.mutableCopy;
+        NSMutableDictionary *closedCaptionLanguages = @{@"languages": captions}.mutableCopy;
+
+            
+        [self.delegate player:self eventName:@"textTracksReceived" JSON:languages.toJSON];
+        [self.delegate player:self eventName:@"closedCaptionsRecived" JSON:closedCaptionLanguages.toJSON];
+
+    }
+}
+
+-(void) selectTextTrack:(NSString *)locale {
+    NSString* mc = AVMediaCharacteristicLegible;
+    int index = 0;
+    AVMediaSelectionGroup *group  = [self.currentItem.asset mediaSelectionGroupForMediaCharacteristic:mc];
+    if (group) {
+        BOOL selected = NO;
+        for (AVMediaSelectionOption *option in group.options){
+            if ([[option.locale objectForKey:NSLocaleLanguageCode] isEqual:locale]){
+                if (_preferSubtitles){
+                    if ([option hasMediaCharacteristic:AVMediaCharacteristicContainsOnlyForcedSubtitles]){
+                      [[self currentItem] selectMediaOption:option inMediaSelectionGroup:group ];
+                       selected = YES;
+                    }
+                } else {
+                    if (![option hasMediaCharacteristic:AVMediaCharacteristicContainsOnlyForcedSubtitles]){
+                        [[self currentItem] selectMediaOption:option inMediaSelectionGroup:group ];
+                        selected = YES;
+                    }
+                }
+            }
+            index++;
+        }
+
+        if (!selected){
+            [self.currentItem selectMediaOption:nil inMediaSelectionGroup:group];
+
+        }
+    }
+}
+
 
 -(void)handleAudioTracks{
     NSMutableArray* audioTracks;
@@ -427,13 +475,13 @@ NSString * const StatusKeyPath = @"status";
     //    self.currentItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
 }
 
--(void) selectAudioTrack:(int)audioTrack{
+-(void) selectAudioTrack:(int)trackId{
     AVMediaSelectionGroup *audioSelectionGroup = [[[self currentItem] asset] mediaSelectionGroupForMediaCharacteristic: AVMediaCharacteristicAudible];
     int index = 0;
     if (audioSelectionGroup.options.count > 1){
         //we have more than one audio assest - lets send events and be ready for a switch
         for (AVMediaSelectionOption *option in audioSelectionGroup.options){
-            if (index == audioTrack){
+            if (index == trackId){
                 [[self currentItem] selectMediaOption:option inMediaSelectionGroup:audioSelectionGroup ];
                 break;
             }
