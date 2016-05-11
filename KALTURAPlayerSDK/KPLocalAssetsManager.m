@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 @interface KPPlayerConfig (Asset)
 @property (nonatomic, copy, readonly) NSData *loadUIConf;
 @property (nonatomic, copy, readonly) NSURL *resolvePlayerRootURL;
+@property (nonatomic, copy, readonly) NSString* overrideLicenseUri;
 @end
 
 
@@ -147,6 +148,13 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
                                flavorId:(NSString *)flavorId
                               drmScheme:(kDRMScheme)drmScheme
                                   error:(NSError **)error {
+    
+    // If license uri is overriden, don't use our server.
+    NSString* overrideUri = assetConfig.overrideLicenseUri;
+    if (overrideUri) {
+        return overrideUri;
+    }
+    
     
     // load license data
     NSURL *getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig
@@ -299,6 +307,12 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 
 @implementation KPPlayerConfig (Asset)
+
+
+-(NSString*)overrideLicenseUri {
+    NSString* override = [self configValueForKey:@"Kaltura.overrideDrmServerURL"];
+    return [override isKindOfClass:[NSString class]] ? override : nil;
+}
 
 - (NSData *)loadUIConf {
     NSURL *serverURL = [NSURL URLWithString:self.server];

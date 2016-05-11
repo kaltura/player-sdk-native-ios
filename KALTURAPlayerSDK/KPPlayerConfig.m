@@ -191,6 +191,10 @@
 
 }
 
+-(id)configValueForKey:(NSString*)key {
+    return _extraConfig[key];
+}
+
 @end
 
 
