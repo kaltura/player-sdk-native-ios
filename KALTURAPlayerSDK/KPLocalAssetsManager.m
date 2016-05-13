@@ -317,6 +317,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         [items addObject:[KPLocalAssetsManager queryItem:@"ks" :self.ks]];
     }
     
+    urlComps.queryItems = items;
+    
     NSURL* apiCall = urlComps.URL;
     
     return [NSData dataWithContentsOfURL:apiCall];
