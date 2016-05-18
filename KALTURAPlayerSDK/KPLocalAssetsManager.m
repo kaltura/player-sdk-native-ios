@@ -160,6 +160,11 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     NSURL *getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig
                                                              flavorId:flavorId
                                                             drmScheme:drmScheme];
+    
+    if (!getLicenseDataURL) {
+        return nil;
+    }
+    
     NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
     NSError *jsonError = nil;
     NSDictionary *licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData
@@ -203,6 +208,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         serverURL = assetConfig.resolvePlayerRootURL;
     }
     
+    if (!serverURL) {
+        return nil;
+    }
     
     // Now serviceURL is something like "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
     NSString* drmName = nil; 
@@ -331,6 +339,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         [items addObject:[KPLocalAssetsManager queryItem:@"ks" :self.ks]];
     }
     
+    urlComps.queryItems = items;
+    
     NSURL* apiCall = urlComps.URL;
     
     return [NSData dataWithContentsOfURL:apiCall];
@@ -342,6 +352,11 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // This is done by loading UIConf data, and looking at "html5Url" property.
     
     NSData *jsonData = self.loadUIConf;
+    
+    if (!jsonData) {
+        return nil;
+    }
+    
     NSError *jsonError = nil;
     NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:jsonData
                                                            options:0
