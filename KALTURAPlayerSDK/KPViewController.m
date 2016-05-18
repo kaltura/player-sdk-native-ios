@@ -51,6 +51,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                 ChromecastDeviceControllerDelegate, KPControllerDelegate> {
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
+    BOOL _activatedFromBackground;
     NSDictionary *appConfigDict;
     BOOL isCloseFullScreenByTap;
     BOOL isJsCallbackReady;
@@ -528,6 +529,8 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)applicationDidEnterBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
+    
+    _activatedFromBackground = YES;
 
     if ([NSBundle mainBundle].isAudioBackgroundModesEnabled){
         // support playing media while in the background 
@@ -547,7 +550,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.playerFactory enableTracks:YES];
     }
 
-    [self.playerFactory backToForeground];
+    if (_activatedFromBackground) {
+        [self.playerFactory backToForeground];
+        _activatedFromBackground = NO;
+    }
     
     KPLogTrace(@"Exit");
 }
