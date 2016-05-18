@@ -165,7 +165,15 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         return nil;
     }
     
-    NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
+    NSError* readError = nil;
+    NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL options:0 error:&readError];
+    if (!licenseData) {
+        KPLogError(@"Error getting licenseData: %@", readError);
+        if (error) {
+            *error = readError;
+        }
+        return nil;
+    }
     NSError *jsonError = nil;
     NSDictionary *licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData
                                                                     options:0
@@ -173,6 +181,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     
     if (!licenseDataDict) {
         KPLogError(@"Error parsing licenseData json: %@", jsonError);
+        if (error) {
+            *error = jsonError;
+        }
         return nil;
     }
     
