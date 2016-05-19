@@ -217,12 +217,15 @@ NSString * const StatusKeyPath = @"status";
 
         for (AVMediaSelectionOption *option in group.options){
             NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
+            if (langCode == nil){
+                langCode = @"en";
+            }
             if ([option hasMediaCharacteristic:AVMediaCharacteristicContainsOnlyForcedSubtitles]){
                  [subtitles addObject:@{@"kind": @"subtitle",
                                  @"language": langCode,
                                  @"scrlang": langCode,
                                  @"label": langCode,
-                                 @"index": @(captions.count),
+                                 @"index": @(subtitles.count),
                                  @"title": option.displayName}];
             }else{
                 [captions addObject:@{@"kind": @"subtitle",
@@ -233,12 +236,17 @@ NSString * const StatusKeyPath = @"status";
                                       @"title": option.displayName}];
             }
         }
-        NSMutableDictionary *languages = @{@"languages": subtitles}.mutableCopy;
-        NSMutableDictionary *closedCaptionLanguages = @{@"languages": captions}.mutableCopy;
+        if ([subtitles count] > 0){
+            NSMutableDictionary *languages = @{@"languages": subtitles}.mutableCopy;
+            [self.delegate player:self eventName:@"textTracksReceived" JSON:languages.toJSON];
 
-            
-        [self.delegate player:self eventName:@"textTracksReceived" JSON:languages.toJSON];
-        [self.delegate player:self eventName:@"closedCaptionsRecived" JSON:closedCaptionLanguages.toJSON];
+
+        }
+        if ([captions count] > 0){
+           NSMutableDictionary *closedCaptionLanguages = @{@"languages": captions}.mutableCopy;
+           [self.delegate player:self eventName:@"closedCaptionsRecived" JSON:closedCaptionLanguages.toJSON];
+        }
+       
 
     }
 }
@@ -290,10 +298,12 @@ NSString * const StatusKeyPath = @"status";
                                      @"index": @(audioTracks.count)
                                      }];
         }
-        NSMutableDictionary *audioLanguages = @{@"languages": audioTracks}.mutableCopy;
-        [self.delegate player:self
+        if ([audioTracks count] > 0){
+          NSMutableDictionary *audioLanguages = @{@"languages": audioTracks}.mutableCopy;
+          [self.delegate player:self
                     eventName:@"audioTracksReceived"
                          JSON:audioLanguages.toJSON];
+        }
     }
   
 }
