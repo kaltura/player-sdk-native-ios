@@ -107,6 +107,9 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             break;
             
         case WViOsApiEvent_EMMFailed:
+            cdmEvent = KCDMEvent_LicenseFailed;
+            break;
+            
         case WViOsApiEvent_PlayFailed:
         case WViOsApiEvent_StoppingOnError: 
             // Do nothing, consider reporting to client.
@@ -218,6 +221,11 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         wvStatus = WV_RegisterAsset(assetPath);
         if ((int)wvStatus == 1013) {
             wvStatus = WViOsApiStatus_FileNotPresent;
+        }
+        
+        if (wvStatus == 4100) {
+            // Already registered -- not an error.
+            wvStatus = WV_RenewAsset(assetPath);
         }
 
         if (wvStatus == WViOsApiStatus_FileNotPresent) {
