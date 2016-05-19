@@ -33,20 +33,20 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
 @synthesize bundle = _bundle, cacheConditions = _cacheConditions, withDomain = _withDomain, subStrings = _subStrings, offlineSubStr = _offlineSubStr;
 
 + (KCacheManager *)shared {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     static KCacheManager *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[self alloc] init];
     });
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return instance;
 }
 
 // The SDK's bundle
 - (NSBundle *)bundle {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     if (!_bundle) {
         _bundle = [NSBundle bundleWithURL:[[NSBundle bundleForClass:self.classForCoder]
                                            URLForResource:@"KALTURAPlayerSDKResources"
@@ -54,95 +54,95 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return _bundle;
 }
 
 - (void)setBaseURL:(NSString *)host {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     _baseURL = [host stringByReplacingOccurrencesOfString:[host lastPathComponent] withString:@""];
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
 }
 
 
 // Fetches the White list urls
 - (NSDictionary *)cacheConditions {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     if (!_cacheConditions) {
         NSString *path = [self.bundle pathForResource:@"CachedStrings" ofType:@"plist"];
         _cacheConditions = [NSDictionary dictionaryWithContentsOfFile:path];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return _cacheConditions;
 }
 
 // The url list which have to be checked by the domain first
 - (NSDictionary *)withDomain {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     if (!_withDomain) {
         _withDomain = self.cacheConditions[@"withDomain"];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return _withDomain;
 }
 
 
 // The url list which should contain substring fron the White list
 - (NSDictionary *)subStrings {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     if (!_subStrings) {
         _subStrings = self.cacheConditions[@"substrings"];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return _subStrings;
 }
 
 // The url list which should contain substring fron the White list in
 // When there is no network
 - (NSDictionary *)offlineSubStr {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     if (!_offlineSubStr) {
         _offlineSubStr = self.cacheConditions[@"offlineSubStr"];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return _offlineSubStr;
 }
 
 
 // Lazy initialization of the cache folder path
 - (NSString *)cachePath {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     if (!_cachePath) {
         NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES); // Get documents folder
         _cachePath = [paths.firstObject stringByAppendingPathComponent:CacheDirectory];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return _cachePath;
 }
 
 
 // Calculates the size of the cached files
 - (float)cachedSize {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     long long fileSize = 0;
     NSArray *files = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:CacheManager.cachePath error:nil];
     for (NSString *file in files) {
         fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file.pathForFile error:nil][NSFileSize] integerValue];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return (float)fileSize / MB;
 }
 
 
 // Returns sorted array of the content of the cache folder
 - (NSArray *)files {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     NSMutableArray *files = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:self.cachePath error:nil].mutableCopy;
     [files sortUsingComparator:^NSComparisonResult(NSString *obj1, NSString *obj2) {
         NSDate* d1 = [[NSFileManager defaultManager] attributesOfItemAtPath:obj1.pathForFile error:nil][NSFileModificationDate];
@@ -150,7 +150,7 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         return [d1 compare:d2];
     }];
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return files;
 }
 
@@ -160,14 +160,14 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
 
 // returns the full path for a file name
 - (NSString *)pathForFile {
-    KPLogDebug(@"Enter");
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Enter");
+    KPLogTrace(@"Exit");
     return [CacheManager.cachePath stringByAppendingPathComponent:self];
 }
 
 // Unarchive the stored headers
 - (NSDictionary *)cachedResponseHeaders {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
     if (contentId.length) {
@@ -180,17 +180,17 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         [self setDateAttributeAtPath:pathForHeaders];
         NSDictionary *cached = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         
-        KPLogDebug(@"Exit");
+        KPLogTrace(@"Exit");
         return cached;
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return nil;
 }
 
 // Fetches the page content from the file system
 - (NSData *)cachedPage {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
     
@@ -205,14 +205,14 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         [self setDateAttributeAtPath:pathForData];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return data;
 }
 
 
 
 - (void)setDateAttributeAtPath: (NSString *)path {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     NSError *err = nil;
     [[NSFileManager defaultManager] setAttributes:@{NSFileModificationDate: [NSDate date]} ofItemAtPath:path error:&err];
     
@@ -220,12 +220,12 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         KPLogError(err.localizedDescription);
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (NSString *)appendPath {
-    KPLogDebug(@"Enter");
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Enter");
+    KPLogTrace(@"Exit");
     return [CacheManager.cachePath stringByAppendingPathComponent:self];
 }
 
@@ -235,21 +235,21 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
  @return BOOL YES if the file deleted succesfully
  */
 - (BOOL)deleteFile {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     NSString *path = self.pathForFile;
     if ([[NSFileManager defaultManager] isDeletableFileAtPath:path]) {
         NSError *error = nil;
         [[NSFileManager defaultManager] removeItemAtPath:path
                                                    error:&error];
         if (!error) {
-            KPLogDebug(@"Exit");
+            KPLogTrace(@"Exit");
             return YES;
         } else {
             KPLogError(@"%@", error);
         }
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return NO;
 }
 
@@ -258,13 +258,13 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
 @implementation CachedURLParams
 
 - (long long)freeDiskSpace {
-    KPLogDebug(@"Enter");
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Enter");
+    KPLogTrace(@"Exit");
     return [[[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize] longLongValue];
 }
 
 - (void)storeCacheResponse {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     float cachedSize = CacheManager.cachedSize;
     
     // if the cache size is too big, erases the least used files
@@ -316,16 +316,16 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         KPLogError(@"Failed to create Directory", error);
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (NSMutableData *)data {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     if (!_data) {
         _data = [[NSMutableData alloc] init];
     }
     
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
     return _data;
 }
 

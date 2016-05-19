@@ -16,7 +16,7 @@
 @implementation Utilities
 
 + (BOOL)hasConnectivity {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     struct sockaddr_in zeroAddress;
     bzero(&zeroAddress, sizeof(zeroAddress));
     zeroAddress.sin_len = sizeof(zeroAddress);
@@ -28,14 +28,14 @@
         if (SCNetworkReachabilityGetFlags(reachability, &flags)) {
             if ((flags & kSCNetworkReachabilityFlagsReachable) == 0) {
                 // If target host is not reachable
-                KPLogDebug(@"Exit::NO");
+                KPLogTrace(@"Exit::NO");
                 return NO;
             }
             
             if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0) {
                 // If target host is reachable and no connection is required
                 //  then we'll assume (for now) that your on Wi-Fi
-                KPLogDebug(@"Exit::YES");
+                KPLogTrace(@"Exit::YES");
                 return YES;
             }
             
@@ -48,7 +48,7 @@
                 if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0)
                 {
                     // no [user] intervention is needed
-                    KPLogDebug(@"Exit::YES");
+                    KPLogTrace(@"Exit::YES");
                     return YES;
                 }
             }
@@ -57,7 +57,7 @@
             {
                 // WWAN connections are OK if the calling application
                 // is using the CFNetwork (CFSocketStream?) APIs.
-                KPLogDebug(@"Exit::YES");
+                KPLogTrace(@"Exit::YES");
                 return YES;
             }
         }

@@ -56,7 +56,7 @@ static NSString *localContentID = nil;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
-    KPLogDebug(@"Enter::request:%@", request.URL.absoluteString);
+    KPLogTrace(@"Enter::request:%@", request.URL.absoluteString);
     
     if ([request.URL.absoluteString containsString:LocalContentIDKey]) {
         NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
@@ -66,45 +66,45 @@ static NSString *localContentID = nil;
     }
     
     if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
-        KPLogDebug(@"Exit::NO (KPURLProtocolHandledKey)");
+        KPLogTrace(@"Exit::NO (KPURLProtocolHandledKey)");
         return NO;
     }
     
     if ([request.URL.absoluteString containsString:CacheManager.baseURL]) {
         for (NSString *key in CacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                KPLogDebug(@"Exit::YES, key(baseURL):%@",key);
+                KPLogTrace(@"Exit::YES, key(baseURL):%@",key);
                 return YES;
             }
         }
     } else if (![Utilities hasConnectivity]) {
         for (NSString *key in CacheManager.offlineSubStr.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                KPLogDebug(@"Exit::YES, key(subStrings):%@",key);
+                KPLogTrace(@"Exit::YES, key(subStrings):%@",key);
                 return YES;
             }
         }
     } else {
         for (NSString *key in CacheManager.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                KPLogDebug(@"Exit::YES, key(subStrings):%@",key);
+                KPLogTrace(@"Exit::YES, key(subStrings):%@",key);
                 return YES;
             }
         }
     }
     
-    KPLogDebug(@"Exit::NO");
+    KPLogTrace(@"Exit::NO");
     return NO;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
-    KPLogDebug(@"Enter");
-    KPLogDebug(@"Exit::request:%@", request.URL.absoluteString);
+    KPLogTrace(@"Enter");
+    KPLogTrace(@"Exit::request:%@", request.URL.absoluteString);
     return request;
 }
 
 - (void)startLoading {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     NSString *requestStr = self.request.URL.absoluteString;
     
     // TODO:: optimize 
@@ -124,7 +124,7 @@ static NSString *localContentID = nil;
                       cacheStoragePolicy:NSURLCacheStorageNotAllowed];
                 [self.client URLProtocol:self didLoadData:[NSData new]];
                 [self.client URLProtocolDidFinishLoading:self];
-                KPLogDebug(@"oflline mode - return status 200 & empty for key:%@", key);
+                KPLogTrace(@"oflline mode - return status 200 & empty for key:%@", key);
                 
                 return;
             }
@@ -144,7 +144,7 @@ static NSString *localContentID = nil;
               cacheStoragePolicy:NSURLCacheStorageNotAllowed];
         [self.client URLProtocol:self didLoadData:cachedPage];
         [self.client URLProtocolDidFinishLoading:self];
-        KPLogDebug(@"Exit::request:%@", self.request.URL.absoluteString);
+        KPLogTrace(@"Exit::request:%@", self.request.URL.absoluteString);
         
     } else {
         _cacheParams = [CachedURLParams new];
@@ -152,7 +152,7 @@ static NSString *localContentID = nil;
         NSMutableURLRequest *newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES forKey:KPURLProtocolHandledKey inRequest:newRequest];
         self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
-        KPLogDebug(@"Exit::newRequest:%@", newRequest);
+        KPLogTrace(@"Exit::newRequest:%@", newRequest);
     }
 }
 
@@ -164,48 +164,48 @@ static NSString *localContentID = nil;
 #pragma mark - NSURLConnectionDelegate
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
     _cacheParams.response = (NSHTTPURLResponse *)response;
-    KPLogDebug(@"Exit::response:%@", response.URL.absoluteString);
+    KPLogTrace(@"Exit::response:%@", response.URL.absoluteString);
 }
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     
     if (response) {
         NSHTTPURLResponse *_response = (NSHTTPURLResponse *)response;
         _cacheParams.response = _response;
         NSString *location = _response.allHeaderFields[@"Location"];
         NSURL *url = [NSURL URLWithString:location];
-        KPLogDebug(@"Exit::redirectResponse:%@", response.URL.absoluteString);
+        KPLogTrace(@"Exit::redirectResponse:%@", response.URL.absoluteString);
         
         return [NSURLRequest requestWithURL:url];
     }
     
-    KPLogDebug(@"Exit::redirectResponse:%@", request.URL.absoluteString);
+    KPLogTrace(@"Exit::redirectResponse:%@", request.URL.absoluteString);
     
     return request;
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     [self.client URLProtocol:self didLoadData:data];
     [_cacheParams.data appendData:data];
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     [self.client URLProtocolDidFinishLoading:self];
     [_cacheParams storeCacheResponse];
-    KPLogDebug(@"Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    KPLogDebug(@"Enter");
+    KPLogTrace(@"Enter");
     [self.client URLProtocol:self didFailWithError:error];
-    KPLogDebug(@"Exit::error:%@", error.localizedDescription);
+    KPLogTrace(@"Exit::error:%@", error.localizedDescription);
 }
 
 

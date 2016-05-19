@@ -53,7 +53,7 @@
 }
 
 - (void)changeSubtitleLanguage:(NSString *)languageCode {
-    KPLogDebug(@"Enter changeSubtitleLanguage");
+    KPLogTrace(@"Enter changeSubtitleLanguage");
 }
 
 ///@todo remove the timer when view disappears
