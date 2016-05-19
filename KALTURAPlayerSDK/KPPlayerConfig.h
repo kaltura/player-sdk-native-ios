@@ -44,6 +44,8 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 @property (nonatomic, copy) NSDictionary* supportedMediaFormats;
 
 
+
+
 /// Enables the SDK user to define interface orientation of the player
 @property (nonatomic) UIInterfaceOrientationMask supportedInterfaceOrientations;
 
@@ -62,6 +64,9 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
  *  @param NSDictionary The dictionary for the flag
  */
 - (void)addConfigKey:(NSString *)key withDictionary:(NSDictionary *)dictionary;
+
+
+-(id)configValueForKey:(NSString*)key;
 
 - (NSURL *)videoURL;
 

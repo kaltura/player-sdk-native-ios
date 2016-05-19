@@ -14,6 +14,7 @@ typedef enum : NSUInteger {
     KCDMEvent_AssetCanPlay,
     KCDMEvent_AssetStatus,
     KCDMEvent_LicenseAcquired,
+    KCDMEvent_LicenseFailed,
     KCDMEvent_Unregistered,
 } KCDMEventType;
 

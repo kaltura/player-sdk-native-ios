@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 @interface KPPlayerConfig (Asset)
 @property (nonatomic, copy, readonly) NSData *loadUIConf;
 @property (nonatomic, copy, readonly) NSURL *resolvePlayerRootURL;
+@property (nonatomic, copy, readonly) NSString* overrideLicenseUri;
 @end
 
 
@@ -148,11 +149,31 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
                               drmScheme:(kDRMScheme)drmScheme
                                   error:(NSError **)error {
     
+    // If license uri is overriden, don't use our server.
+    NSString* overrideUri = assetConfig.overrideLicenseUri;
+    if (overrideUri) {
+        return overrideUri;
+    }
+    
+    
     // load license data
     NSURL *getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig
                                                              flavorId:flavorId
                                                             drmScheme:drmScheme];
-    NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL];
+    
+    if (!getLicenseDataURL) {
+        return nil;
+    }
+    
+    NSError* readError = nil;
+    NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL options:0 error:&readError];
+    if (!licenseData) {
+        KPLogError(@"Error getting licenseData: %@", readError);
+        if (error) {
+            *error = readError;
+        }
+        return nil;
+    }
     NSError *jsonError = nil;
     NSDictionary *licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData
                                                                     options:0
@@ -160,6 +181,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     
     if (!licenseDataDict) {
         KPLogError(@"Error parsing licenseData json: %@", jsonError);
+        if (error) {
+            *error = jsonError;
+        }
         return nil;
     }
     
@@ -195,6 +219,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         serverURL = assetConfig.resolvePlayerRootURL;
     }
     
+    if (!serverURL) {
+        return nil;
+    }
     
     // Now serviceURL is something like "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
     NSString* drmName = nil; 
@@ -300,6 +327,12 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 @implementation KPPlayerConfig (Asset)
 
+
+-(NSString*)overrideLicenseUri {
+    NSString* override = [self configValueForKey:@"Kaltura.overrideDrmServerURL"];
+    return [override isKindOfClass:[NSString class]] ? override : nil;
+}
+
 - (NSData *)loadUIConf {
     NSURL *serverURL = [NSURL URLWithString:self.server];
     serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
@@ -317,6 +350,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         [items addObject:[KPLocalAssetsManager queryItem:@"ks" :self.ks]];
     }
     
+    urlComps.queryItems = items;
+    
     NSURL* apiCall = urlComps.URL;
     
     return [NSData dataWithContentsOfURL:apiCall];
@@ -328,6 +363,11 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // This is done by loading UIConf data, and looking at "html5Url" property.
     
     NSData *jsonData = self.loadUIConf;
+    
+    if (!jsonData) {
+        return nil;
+    }
+    
     NSError *jsonError = nil;
     NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:jsonData
                                                            options:0
