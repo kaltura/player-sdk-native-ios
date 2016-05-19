@@ -263,6 +263,10 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
     return [[[[NSFileManager defaultManager] attributesOfFileSystemForPath:NSHomeDirectory() error:nil] objectForKey:NSFileSystemFreeSize] longLongValue];
 }
 
+-(void)raise:(NSString*)error {
+    [NSException raise:@"Error" format:error];
+}
+
 - (void)storeCacheResponse {
     KPLogTrace(@"Enter");
     float cachedSize = CacheManager.cachedSize;
@@ -285,20 +289,23 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         }
     }
     
-    // Create Kaltura's folder if not already exists
-    NSString *pageFolderPath = self.url.absoluteString.md5.appendPath;
-    if (self.url.absoluteString.extractLocalContentId) {
-        pageFolderPath = self.url.absoluteString.extractLocalContentId.appendPath;
-    }
 
     NSError *error = nil;
-    [[NSFileManager defaultManager] createDirectoryAtPath:pageFolderPath
-                              withIntermediateDirectories:YES
-                                               attributes:nil
-                                                    error:&error];
-    KPLogError(@"%@",[error localizedDescription]);
-    
-    if (!error) {
+    @try {
+        // Create Kaltura's folder if not already exists
+        NSString *pageFolderPath = self.url.absoluteString.md5.appendPath;
+        if (self.url.absoluteString.extractLocalContentId) {
+            pageFolderPath = self.url.absoluteString.extractLocalContentId.appendPath;
+        }
+
+        [[NSFileManager defaultManager] createDirectoryAtPath:pageFolderPath
+                                  withIntermediateDirectories:YES
+                                                   attributes:nil
+                                                        error:&error];
+        if (error) {
+            [self raise:@"Failed to create Directory"];
+        }
+        
         // Store the page
         NSMutableDictionary *attributes = [NSMutableDictionary new];
         attributes.allHeaderFields = self.response.allHeaderFields;
@@ -306,14 +313,17 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         NSString *pathForHeaders = [pageFolderPath stringByAppendingPathComponent:@"headers"];
         NSString *pathForData = [pageFolderPath stringByAppendingPathComponent:@"data"];
         
-        [[NSFileManager defaultManager] createFileAtPath:pathForHeaders
-                                                contents:[NSKeyedArchiver archivedDataWithRootObject:attributes.copy]
-                                              attributes:attributes.copy];
-        [[NSFileManager defaultManager] createFileAtPath:pathForData
-                                                contents:self.data
-                                              attributes:attributes.copy];
-    } else {
-        KPLogError(@"Failed to create Directory", error);
+        NSData* headersArchive = [NSKeyedArchiver archivedDataWithRootObject:attributes];
+        
+        if (![headersArchive writeToFile:pathForHeaders options:NSDataWritingAtomic error:&error]) {
+            [self raise:@"Failed to store response headers"];
+        }
+            
+        if (![self.data writeToFile:pathForData options:NSDataWritingAtomic error:&error]) {
+            [self raise:@"Failed to store response data"];
+        }
+    } @catch (NSException *exception) {
+        KPLogError([exception reason]);
     }
     
     KPLogTrace(@"Exit");
