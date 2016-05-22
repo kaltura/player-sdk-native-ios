@@ -264,7 +264,7 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
 }
 
 -(void)raise:(NSString*)error {
-    [NSException raise:@"Error" format:error];
+    [NSException raise:@"Error" format:@"%@", error];
 }
 
 - (void)storeCacheResponse {
