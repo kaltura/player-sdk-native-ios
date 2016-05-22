@@ -40,7 +40,8 @@ typedef enum{
     nativeAction,
     doubleClickRequestAds,
     language,
-    captions
+    captions,
+    audioTrackSelected
 } Attribute;
 
 @protocol KPlayerDelegate;
@@ -70,6 +71,7 @@ typedef enum{
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)setSourceWithAsset:(AVURLAsset*)asset;
 - (void)hidePlayer;
+- (void)selectAudioTrack:(int)audioTrack;
 
 @end
 
