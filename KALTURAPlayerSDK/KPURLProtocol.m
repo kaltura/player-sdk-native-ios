@@ -70,6 +70,14 @@ static NSString *localContentID = nil;
         return NO;
     }
     
+    if (!([request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"])) {
+        return NO;  // only http(s)
+    }
+    
+    if (![[request HTTPMethod] isEqualToString:@"GET"]) {
+        return NO;  // only GET
+    }
+    
     if ([request.URL.absoluteString containsString:CacheManager.baseURL]) {
         for (NSString *key in CacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
