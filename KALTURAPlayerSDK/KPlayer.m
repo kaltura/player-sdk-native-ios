@@ -19,6 +19,8 @@ NSString * const PlayableKey = @"playable";
 NSString * const RateKeyPath = @"rate";
 /* PlayerItem keys */
 NSString * const StatusKeyPath = @"status";
+/* Player Max Try Count */
+#define PLAYER_TRY_COUNT 20
 
 @interface KPlayer() {
     MPVolumeView *volumeView;
@@ -29,6 +31,7 @@ NSString * const StatusKeyPath = @"status";
     NSString * playbackLikelyToKeepUpKeyPath;
     NSString * playbackBufferFullKeyPath;
     BOOL buffering;
+    int _playerTryCounter;
 }
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, weak) UIView *parentView;
@@ -45,6 +48,7 @@ NSString * const StatusKeyPath = @"status";
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
     [self createAudioSession];
+    _playerTryCounter = -1;
  
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
@@ -132,6 +136,86 @@ NSString * const StatusKeyPath = @"status";
         _audioSelectionGroup = [self.currentItem.asset mediaSelectionGroupForMediaCharacteristic:AVMediaCharacteristicLegible];
     }
     return _audioSelectionGroup;
+}
+
+/*!
+ * @function playerContinue:
+ *
+ * @abstract
+ * Does the actual waiting and restarting
+ */
+- (void)playerContinue {
+    if (CMTIME_COMPARE_INLINE(self.currentTime, ==, self.currentItem.duration)) { // we've reached the end
+        [self reset];
+    } else if (_playerTryCounter  > PLAYER_TRY_COUNT) { // stop trying
+        [self reset];
+        [self networkErrorNotifier];
+    } else if (_playerTryCounter == 0) {
+    
+        return; // protects against a race condition
+    
+    } else if (self.currentItem.playbackLikelyToKeepUp == YES) {
+        [self stopBuffering];
+        _playerTryCounter = 0;
+        [self play]; // continue from where we left off
+    } else { // still hanging, not at end
+        _playerTryCounter += 1;
+        double delayInSeconds = 0.5;
+        [self performSelector:@selector(tryToPlay) withObject:self afterDelay:delayInSeconds];
+    }
+}
+
+- (void)tryToPlay {
+    if (_playerTryCounter > 0) {
+        if (_playerTryCounter <= PLAYER_TRY_COUNT) {
+            [self playerContinue];
+        } else {
+            [self reset];
+            [self networkErrorNotifier];
+        }
+    }
+}
+
+/*!
+ * @function playerHanging:
+ *
+ * @abstract
+ * Simply decides whether to wait 0.5 seconds or not
+ * if so, it pauses the player and sends a playerContinue notification
+ * if not, send error message
+ */
+- (void)playerHanging {
+    KPLogTrace(@"Enter");
+    
+    if (_playerTryCounter <= PLAYER_TRY_COUNT) {
+        _playerTryCounter += 1;
+        [self pause];
+        [self startBuffering];
+        [self playerContinue];
+    } else {
+        [self reset];
+        [self networkErrorNotifier];
+    }
+    
+    KPLogTrace(@"Exit");
+}
+
+/*!
+ * @function networkErrorNotifier:
+ *
+ * @abstract
+ * Creates error message and sends it to delegate method
+ */
+- (void)networkErrorNotifier {
+    KPLogTrace(@"Enter");
+    
+    NSString * errorMsg = [NSString stringWithFormat:@"Player can't continue playing since there is network issue"];
+    KPLogError(errorMsg);
+    [self.delegate player:self
+                eventName:ErrorKey
+                    value:errorMsg];
+    
+    KPLogTrace(@"Exit");
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -499,6 +583,15 @@ NSString * const StatusKeyPath = @"status";
         return;
     }
     
+    [[NSNotificationCenter defaultCenter]
+     addObserverForName:AVPlayerItemPlaybackStalledNotification
+     object:self.currentItem
+     queue:[NSOperationQueue mainQueue]
+     usingBlock:^(NSNotification *note) {
+         KPLogTrace(@"%@", @"AVPlayerItemPlaybackStalledNotification");
+         [self playerHanging];
+     }];
+    
     playbackBufferEmptyKeyPath = NSStringFromSelector(@selector(playbackBufferEmpty));
     playbackLikelyToKeepUpKeyPath = NSStringFromSelector(@selector(playbackLikelyToKeepUp));
     playbackBufferFullKeyPath = NSStringFromSelector(@selector(playbackBufferFull));
@@ -510,9 +603,13 @@ NSString * const StatusKeyPath = @"status";
 
 - (void)unregisterForPlaybackNotification {
     @try {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:AVPlayerItemPlaybackStalledNotification
+                                                      object:nil];
         [self.currentItem removeObserver:self forKeyPath:playbackBufferEmptyKeyPath];
         [self.currentItem removeObserver:self forKeyPath:playbackLikelyToKeepUpKeyPath];
         [self.currentItem removeObserver:self forKeyPath:playbackBufferFullKeyPath];
+        [NSObject cancelPreviousPerformRequestsWithTarget: self selector:@selector(tryToPlay) object: self];
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
