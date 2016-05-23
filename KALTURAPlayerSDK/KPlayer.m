@@ -49,13 +49,13 @@ NSString * const StatusKeyPath = @"status";
     self = [super init];
     [self createAudioSession];
     _playerTryCounter = -1;
- 
+    
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
         _layer.frame = (CGRect){CGPointZero, parentView.frame.size};
         _layer.backgroundColor = [UIColor blackColor].CGColor;
         _parentView = parentView;
-
+        
         [self addPlayerToView];
         
         [self addObserver:self
@@ -79,7 +79,7 @@ NSString * const StatusKeyPath = @"status";
                                                                          value:@(CMTimeGetSeconds(time)).stringValue];
                                                      //                                          [weakSelf.delegate eventName:ProgressKey
                                                      //                                                                 value:@(CMTimeGetSeconds(time) / weakSelf.duration).stringValue];
-                                                 }];        
+                                                 }];
         self.allowsExternalPlayback = YES;
         self.usesExternalPlaybackWhileExternalScreenIsActive = YES;
         [self setupPIPSuport];
@@ -145,27 +145,34 @@ NSString * const StatusKeyPath = @"status";
  * Does the actual waiting and restarting
  */
 - (void)playerContinue {
+    NSLog(@"Enter");
+    
     if (CMTIME_COMPARE_INLINE(self.currentTime, ==, self.currentItem.duration)) { // we've reached the end
         [self reset];
     } else if (_playerTryCounter  > PLAYER_TRY_COUNT) { // stop trying
         [self reset];
         [self networkErrorNotifier];
     } else if (_playerTryCounter == 0) {
-    
         return; // protects against a race condition
-    
-    } else if (self.currentItem.playbackLikelyToKeepUp == YES) {
+        
+    } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
         [self stopBuffering];
         _playerTryCounter = 0;
         [self play]; // continue from where we left off
     } else { // still hanging, not at end
+        [self startBuffering];
         _playerTryCounter += 1;
+        NSLog(@"playerTryCounter::%d", _playerTryCounter);
         double delayInSeconds = 0.5;
-        [self performSelector:@selector(tryToPlay) withObject:self afterDelay:delayInSeconds];
+        [self performSelector:@selector(tryToPlay) withObject:nil afterDelay:delayInSeconds];
     }
+    
+    NSLog(@"Exit");
 }
 
 - (void)tryToPlay {
+    NSLog(@"Enter");
+    
     if (_playerTryCounter > 0) {
         if (_playerTryCounter <= PLAYER_TRY_COUNT) {
             [self playerContinue];
@@ -174,6 +181,8 @@ NSString * const StatusKeyPath = @"status";
             [self networkErrorNotifier];
         }
     }
+    
+    NSLog(@"Exit");
 }
 
 /*!
@@ -189,6 +198,7 @@ NSString * const StatusKeyPath = @"status";
     
     if (_playerTryCounter <= PLAYER_TRY_COUNT) {
         _playerTryCounter += 1;
+        NSLog(@"playerTryCounter::%d", _playerTryCounter);
         [self pause];
         [self startBuffering];
         [self playerContinue];
@@ -231,87 +241,88 @@ NSString * const StatusKeyPath = @"status";
          [keyPath isEqualToString:playbackLikelyToKeepUpKeyPath] ||
          [keyPath isEqualToString:playbackBufferFullKeyPath])) {
             
-        if (self.currentItem.isPlaybackBufferEmpty) {
-            if (self.rate > 0) {
-                [self startBuffering];
-            }
-        } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
-            [self stopBuffering];
-        }
-        else if (self.currentItem.isPlaybackBufferFull) {
-            [self stopBuffering];
-        }
-    } else if ([keyPath isEqual:RateKeyPath]) {
-        if (self.rate) {
-            [self.delegate player:self
-                        eventName:PlayKey
-                            value:nil];
-        } else {
-            [self.delegate player:self
-                        eventName:PauseKey
-                            value:nil];
-        }
-    } else if ([keyPath isEqualToString:StatusKeyPath]) {
-        switch (self.currentItem.status) {
-            case AVPlayerItemStatusFailed:
-                KPLogError(@"AVPlayerStatusFailed");
-                [self.delegate player:self
-                            eventName:ErrorKey
-                                value:[self.error localizedDescription]];
-                break;
-            case AVPlayerItemStatusReadyToPlay: {
-                if (oldValue.intValue != newValue.intValue) {
-                    [self registerForPlaybackNotification];
-                    buffering = NO;
-                    [self.delegate player:self
-                                eventName:DurationChangedKey
-                                    value:@(self.duration).stringValue];
-                    [self.delegate player:self
-                                eventName:LoadedMetaDataKey
-                                    value:@""];
-                    [self.delegate player:self
-                                eventName:CanPlayKey
-                                    value:nil];
-                    NSMutableArray *captions = nil;
-                    
-                    if (self.currentItem.currentTime.value < _currentPlaybackTime) {
-                        [self setCurrentPlaybackTime:_currentPlaybackTime];
-                    }
-                    
-                    if (self.audioSelectionGroup.options.count) {
-//                        captions = [NSMutableArray new];
-//                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
-//                            if ([option.mediaType isEqualToString:@"sbtl"]) {
-//                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
-//                                [captions addObject:@{@"kind": @"subtitle",
-//                                                      @"language": langCode,
-//                                                      @"scrlang": langCode,
-//                                                      @"label": langCode,
-//                                                      @"index": @(captions.count),
-//                                                      @"title": option.displayName}];
-//                            }
-//                        }
-//                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
-//                        [self.delegate player:self
-//                                    eventName:@"textTracksReceived"
-//                                         JSON:languages.toJSON];
-                        self.closedCaptionDisplayEnabled = NO;
-                    }
+            if (self.currentItem.isPlaybackBufferEmpty) {
+                if (self.rate > 0) {
+                    [self startBuffering];
                 }
-                break;
-            case AVPlayerItemStatusUnknown:
-                KPLogError(@"AVPlayerStatusUnknown");
+            } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
+                NSLog(@"PlaybackLikelyToKeepUp");
+                [self playerHanging];
+            }
+            else if (self.currentItem.isPlaybackBufferFull) {
+                [self stopBuffering];
+            }
+        } else if ([keyPath isEqual:RateKeyPath]) {
+            if (self.rate) {
                 [self.delegate player:self
-                            eventName:ErrorKey
-                                value:@"AVPlayerStatusUnknown"];
-                break;
+                            eventName:PlayKey
+                                value:nil];
+            } else {
+                [self.delegate player:self
+                            eventName:PauseKey
+                                value:nil];
+            }
+        } else if ([keyPath isEqualToString:StatusKeyPath]) {
+            switch (self.currentItem.status) {
+                case AVPlayerItemStatusFailed:
+                    KPLogError(@"AVPlayerStatusFailed");
+                    [self.delegate player:self
+                                eventName:ErrorKey
+                                    value:[self.error localizedDescription]];
+                    break;
+                case AVPlayerItemStatusReadyToPlay: {
+                    if (oldValue.intValue != newValue.intValue) {
+                        [self registerForPlaybackNotification];
+                        buffering = NO;
+                        [self.delegate player:self
+                                    eventName:DurationChangedKey
+                                        value:@(self.duration).stringValue];
+                        [self.delegate player:self
+                                    eventName:LoadedMetaDataKey
+                                        value:@""];
+                        [self.delegate player:self
+                                    eventName:CanPlayKey
+                                        value:nil];
+                        NSMutableArray *captions = nil;
+                        
+                        if (self.currentItem.currentTime.value < _currentPlaybackTime) {
+                            [self setCurrentPlaybackTime:_currentPlaybackTime];
+                        }
+                        
+                        if (self.audioSelectionGroup.options.count) {
+                            //                        captions = [NSMutableArray new];
+                            //                        for (AVMediaSelectionOption *option in self.audioSelectionGroup.options) {
+                            //                            if ([option.mediaType isEqualToString:@"sbtl"]) {
+                            //                                NSString *langCode = [option.locale objectForKey:NSLocaleLanguageCode];
+                            //                                [captions addObject:@{@"kind": @"subtitle",
+                            //                                                      @"language": langCode,
+                            //                                                      @"scrlang": langCode,
+                            //                                                      @"label": langCode,
+                            //                                                      @"index": @(captions.count),
+                            //                                                      @"title": option.displayName}];
+                            //                            }
+                            //                        }
+                            //                        NSMutableDictionary *languages = @{@"languages": captions}.mutableCopy;
+                            //                        [self.delegate player:self
+                            //                                    eventName:@"textTracksReceived"
+                            //                                         JSON:languages.toJSON];
+                            self.closedCaptionDisplayEnabled = NO;
+                        }
+                    }
+                    break;
+                case AVPlayerItemStatusUnknown:
+                    KPLogError(@"AVPlayerStatusUnknown");
+                    [self.delegate player:self
+                                eventName:ErrorKey
+                                    value:@"AVPlayerStatusUnknown"];
+                    break;
+                }
             }
         }
-    }
 }
 
 - (void)videoEnded:(NSNotification *)notification {
-// Make sure we don't call contentCompleted as a result of an ad completing.
+    // Make sure we don't call contentCompleted as a result of an ad completing.
     if (notification.object == self.currentItem) {
         [_delegate contentCompleted:self];
     }
@@ -339,15 +350,15 @@ NSString * const StatusKeyPath = @"status";
 
 -(void)setSourceWithAsset:(AVURLAsset*)asset {
     KPLogInfo(@"asset=%@", asset);
-
+    
     NSArray *requestedKeys = @[TracksKey, PlayableKey];
     
     __weak KPlayer *weakSelf = self;
     [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
         dispatch_async( dispatch_get_main_queue(),
-           ^{
-               [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
-           });
+                       ^{
+                           [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
+                       });
     }];
 }
 
@@ -478,7 +489,7 @@ NSString * const StatusKeyPath = @"status";
                         value:[NSString stringWithFormat:@"%@ ,%@",
                                exception.name, exception.reason]];
     }
-
+    
     [_layer removeFromSuperlayer];
     _layer = nil;
 }
@@ -583,13 +594,14 @@ NSString * const StatusKeyPath = @"status";
         return;
     }
     
+    __weak KPlayer *weakSelf = self;
     [[NSNotificationCenter defaultCenter]
      addObserverForName:AVPlayerItemPlaybackStalledNotification
      object:self.currentItem
      queue:[NSOperationQueue mainQueue]
      usingBlock:^(NSNotification *note) {
          KPLogTrace(@"%@", @"AVPlayerItemPlaybackStalledNotification");
-         [self playerHanging];
+         [weakSelf playerHanging];
      }];
     
     playbackBufferEmptyKeyPath = NSStringFromSelector(@selector(playbackBufferEmpty));
@@ -619,7 +631,7 @@ NSString * const StatusKeyPath = @"status";
                                exception.name, exception.reason]];
     }
 }
-    
+
 - (void)startBuffering {
     KPLogTrace(@"startBuffering");
     if (self.delegate != nil && !buffering) {
@@ -643,8 +655,8 @@ NSString * const StatusKeyPath = @"status";
 - (void)setupPIPSuport {
     if([NSBundle mainBundle].isAudioBackgroundModesEnabled &&
        [AVPictureInPictureController isPictureInPictureSupported]) {
-         pip =  [[AVPictureInPictureController alloc]
-                 initWithPlayerLayer:_layer];
+        pip =  [[AVPictureInPictureController alloc]
+                initWithPlayerLayer:_layer];
     }
 }
 
