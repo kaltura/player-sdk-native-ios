@@ -597,8 +597,8 @@ NSString * const StatusKeyPath = @"status";
     __weak KPlayer *weakSelf = self;
     [[NSNotificationCenter defaultCenter]
      addObserverForName:AVPlayerItemPlaybackStalledNotification
-     object:self.currentItem
-     queue:[NSOperationQueue mainQueue]
+                 object:self.currentItem
+                  queue:[NSOperationQueue mainQueue]
      usingBlock:^(NSNotification *note) {
          KPLogTrace(@"%@", @"AVPlayerItemPlaybackStalledNotification");
          [weakSelf playerHanging];
@@ -621,7 +621,7 @@ NSString * const StatusKeyPath = @"status";
         [self.currentItem removeObserver:self forKeyPath:playbackBufferEmptyKeyPath];
         [self.currentItem removeObserver:self forKeyPath:playbackLikelyToKeepUpKeyPath];
         [self.currentItem removeObserver:self forKeyPath:playbackBufferFullKeyPath];
-        [NSObject cancelPreviousPerformRequestsWithTarget: self selector:@selector(tryToPlay) object: self];
+        [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(tryToPlay) object:nil];
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
@@ -655,8 +655,7 @@ NSString * const StatusKeyPath = @"status";
 - (void)setupPIPSuport {
     if([NSBundle mainBundle].isAudioBackgroundModesEnabled &&
        [AVPictureInPictureController isPictureInPictureSupported]) {
-        pip =  [[AVPictureInPictureController alloc]
-                initWithPlayerLayer:_layer];
+        pip = [[AVPictureInPictureController alloc] initWithPlayerLayer:_layer];
     }
 }
 
