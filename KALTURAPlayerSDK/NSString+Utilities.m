@@ -76,7 +76,9 @@ NSString *const LocalContentId = @"localContentId";
                             @"nativeAction",
                             @"doubleClickRequestAds",
                             @"language",
-                            @"textTrackSelected"];
+                            @"captions",
+                            @"audioTrackSelected",
+                              @"textTrackSelected"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }
