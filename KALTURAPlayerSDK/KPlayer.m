@@ -145,7 +145,7 @@ NSString * const StatusKeyPath = @"status";
  * Does the actual waiting and restarting
  */
 - (void)playerContinue {
-    NSLog(@"Enter");
+    KPLogTrace(@"Enter");
     
     if (CMTIME_COMPARE_INLINE(self.currentTime, ==, self.currentItem.duration)) { // we've reached the end
         [self reset];
@@ -162,16 +162,16 @@ NSString * const StatusKeyPath = @"status";
     } else { // still hanging, not at end
         [self startBuffering];
         _playerTryCounter += 1;
-        NSLog(@"playerTryCounter::%d", _playerTryCounter);
+        KPLogTrace(@"playerTryCounter::%d", _playerTryCounter);
         double delayInSeconds = 0.5;
         [self performSelector:@selector(tryToPlay) withObject:nil afterDelay:delayInSeconds];
     }
     
-    NSLog(@"Exit");
+    KPLogTrace(@"Exit");
 }
 
 - (void)tryToPlay {
-    NSLog(@"Enter");
+    KPLogTrace(@"Enter");
     
     if (_playerTryCounter > 0) {
         if (_playerTryCounter <= PLAYER_TRY_COUNT) {
@@ -182,7 +182,7 @@ NSString * const StatusKeyPath = @"status";
         }
     }
     
-    NSLog(@"Exit");
+    KPLogTrace(@"Exit");
 }
 
 /*!
@@ -198,7 +198,7 @@ NSString * const StatusKeyPath = @"status";
     
     if (_playerTryCounter <= PLAYER_TRY_COUNT) {
         _playerTryCounter += 1;
-        NSLog(@"playerTryCounter::%d", _playerTryCounter);
+        KPLogTrace(@"playerTryCounter::%d", _playerTryCounter);
         [self pause];
         [self startBuffering];
         [self playerContinue];
@@ -246,7 +246,7 @@ NSString * const StatusKeyPath = @"status";
                     [self startBuffering];
                 }
             } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
-                NSLog(@"PlaybackLikelyToKeepUp");
+                KPLogTrace(@"PlaybackLikelyToKeepUp");
                 [self playerHanging];
             }
             else if (self.currentItem.isPlaybackBufferFull) {
