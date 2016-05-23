@@ -595,14 +595,13 @@ NSString * const StatusKeyPath = @"status";
     }
     
     __weak KPlayer *weakSelf = self;
-    [[NSNotificationCenter defaultCenter]
-     addObserverForName:AVPlayerItemPlaybackStalledNotification
-                 object:self.currentItem
-                  queue:[NSOperationQueue mainQueue]
-     usingBlock:^(NSNotification *note) {
-         KPLogTrace(@"%@", @"AVPlayerItemPlaybackStalledNotification");
-         [weakSelf playerHanging];
-     }];
+    [[NSNotificationCenter defaultCenter] addObserverForName:AVPlayerItemPlaybackStalledNotification
+                                                      object:self.currentItem
+                                                       queue:[NSOperationQueue mainQueue]
+                                                  usingBlock:^(NSNotification *note) {
+                                                      KPLogTrace(@"%@", @"AVPlayerItemPlaybackStalledNotification");
+                                                      [weakSelf playerHanging];
+                                                  }];
     
     playbackBufferEmptyKeyPath = NSStringFromSelector(@selector(playbackBufferEmpty));
     playbackLikelyToKeepUpKeyPath = NSStringFromSelector(@selector(playbackLikelyToKeepUp));
