@@ -28,6 +28,35 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
 @property (nonatomic, readonly) NSString *pathForFile;
 @end
 
+//#define LOG_CACHE_EVENTS
+#ifdef LOG_CACHE_EVENTS
+static void cacheHit(NSString* url) {
+    NSLog(@"CACHE HIT: %@", url);
+}
+
+static void cacheMiss(NSString* url) {
+    NSLog(@"CACHE MISS: %@", url);
+}
+
+static void cacheSave(NSString* url) {
+    NSLog(@"CACHE SAVE: %@", url);
+}
+
+static void cacheWillSave(NSString* url) {
+    NSLog(@"CACHE willSAVE: %@", url);
+}
+
+static void cacheRemove(NSString* url) {
+    NSLog(@"CACHE REM: %@", url);
+}
+#else
+#define cacheHit(x)
+#define cacheMiss(x)
+#define cacheSave(x)
+#define cacheWillSave(x)
+#define cacheRemove(x)
+#endif
+
 @implementation KCacheManager
 @synthesize cachePath = _cachePath;
 @synthesize bundle = _bundle, cacheConditions = _cacheConditions, withDomain = _withDomain, subStrings = _subStrings, offlineSubStr = _offlineSubStr;
@@ -48,10 +77,13 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
 - (NSBundle *)bundle {
     KPLogTrace(@"Enter");
     if (!_bundle) {
-        _bundle = [NSBundle bundleWithURL:[[NSBundle bundleForClass:self.classForCoder]
-                                           URLForResource:@"KALTURAPlayerSDKResources"
-                                           withExtension:@"bundle"]];
+        NSURL* bundleURL = [[NSBundle bundleForClass:self.classForCoder]
+                            URLForResource:@"KALTURAPlayerSDKResources"
+                            withExtension:@"bundle"];
+                
+        NSAssert(bundleURL, @"KALTURAPlayerSDKResources.bundle is not found, can't continue");
         
+        _bundle = [NSBundle bundleWithURL:bundleURL];
     }
     
     KPLogTrace(@"Exit");
@@ -176,16 +208,19 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
     
     NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
+    
     if (data) {
+        cacheHit(self);
         [self setDateAttributeAtPath:pathForHeaders];
         NSDictionary *cached = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         
         KPLogTrace(@"Exit");
         return cached;
-    }
-    
-    KPLogTrace(@"Exit");
-    return nil;
+    } else {
+        cacheMiss(self);
+        KPLogTrace(@"Exit");
+        return nil;
+    }    
 }
 
 // Fetches the page content from the file system
@@ -236,6 +271,7 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
  */
 - (BOOL)deleteFile {
     KPLogTrace(@"Enter");
+    cacheRemove(self);
     NSString *path = self.pathForFile;
     if ([[NSFileManager defaultManager] isDeletableFileAtPath:path]) {
         NSError *error = nil;
@@ -307,6 +343,7 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         }
         
         // Store the page
+        cacheWillSave(self.url.absoluteString);
         NSMutableDictionary *attributes = [NSMutableDictionary new];
         attributes.allHeaderFields = self.response.allHeaderFields;
         attributes.statusCode = self.response.statusCode;
@@ -322,6 +359,8 @@ NSString *const CacheDirectory = @"KalturaPlayerCache";
         if (![self.data writeToFile:pathForData options:NSDataWritingAtomic error:&error]) {
             [self raise:@"Failed to store response data"];
         }
+        cacheSave(self.url.absoluteString);
+
     } @catch (NSException *exception) {
         KPLogError([exception reason]);
     }
