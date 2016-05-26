@@ -12,6 +12,9 @@
 #import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
 
+
+#define DEFAULT_CACHE_SIZE_MB   100
+
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
 }
@@ -44,6 +47,7 @@
         _server = serverURL;
         _uiConfId = uiConfId;
         _partnerId = partnerId;
+        _cacheSize = DEFAULT_CACHE_SIZE_MB;   // Default 100 MB
         return self;
     }
     return nil;
