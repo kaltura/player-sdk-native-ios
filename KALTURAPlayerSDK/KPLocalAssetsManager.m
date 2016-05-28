@@ -291,13 +291,12 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     
     CacheManager.baseURL = assetConfig.server;
     CacheManager.maxCacheSize = assetConfig.cacheSize;
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:assetConfig.videoURL]
-                                       queue:[NSOperationQueue new]
-                           completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
 
-                               callback(connectionError);
-                               [KPURLProtocol disable];
-                           }];
+    NSURL* url = assetConfig.videoURL;
+    [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        callback(error);
+        [KPURLProtocol disable];
+    }] resume];
 }
 
 + (void)addQueryParameters:(NSDictionary *)queryParams
