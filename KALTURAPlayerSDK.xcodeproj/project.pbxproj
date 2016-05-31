@@ -34,6 +34,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		5F49F0E91CFD8D7E00C6B209 /* KCastDevice.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F49F0E81CFD8D7E00C6B209 /* KCastDevice.m */; };
+		5F49F0EC1CFD8DD700C6B209 /* KCastProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F49F0EB1CFD8DD700C6B209 /* KCastProvider.m */; };
 		5F60F1FC1C2721DD0079D752 /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E501C0B139400649BDF /* CachedStrings.plist */; };
 		5F6879D51C271304003E5DF7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6879D41C271304003E5DF7 /* CoreFoundation.framework */; };
 		5F6879F01C27165A003E5DF7 /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */; };
@@ -199,6 +201,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5F49F0E71CFD8D7E00C6B209 /* KCastDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCastDevice.h; sourceTree = "<group>"; };
+		5F49F0E81CFD8D7E00C6B209 /* KCastDevice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCastDevice.m; sourceTree = "<group>"; };
+		5F49F0EA1CFD8DD700C6B209 /* KCastProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCastProvider.h; sourceTree = "<group>"; };
+		5F49F0EB1CFD8DD700C6B209 /* KCastProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCastProvider.m; sourceTree = "<group>"; };
+		5F49F0ED1CFD917C00C6B209 /* KChromeCastWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KChromeCastWrapper.h; sourceTree = "<group>"; };
 		5F6879D41C271304003E5DF7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		5F9A80181C1CCC0800DD930E /* NSDictionary+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utilities.h"; sourceTree = "<group>"; };
 		5F9A80191C1CCC0800DD930E /* NSDictionary+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utilities.m"; sourceTree = "<group>"; };
@@ -319,6 +326,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F49F0E61CFD8D5700C6B209 /* Cast */ = {
+			isa = PBXGroup;
+			children = (
+				5F49F0E71CFD8D7E00C6B209 /* KCastDevice.h */,
+				5F49F0E81CFD8D7E00C6B209 /* KCastDevice.m */,
+				5F49F0EA1CFD8DD700C6B209 /* KCastProvider.h */,
+				5F49F0EB1CFD8DD700C6B209 /* KCastProvider.m */,
+				5F49F0ED1CFD917C00C6B209 /* KChromeCastWrapper.h */,
+			);
+			name = Cast;
+			sourceTree = "<group>";
+		};
 		B30BADEE1A223142008E5E67 /* ShareStrategies */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +506,7 @@
 		BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */ = {
 			isa = PBXGroup;
 			children = (
+				5F49F0E61CFD8D5700C6B209 /* Cast */,
 				BF0EA73F1C1051F100BD3CD1 /* KCCPlayer.h */,
 				BF0EA7401C1051F100BD3CD1 /* KCCPlayer.m */,
 				BF1C07531C0DA7F800A67462 /* NSBundle+Kaltura.h */,
@@ -691,11 +711,13 @@
 				BFBE8E9A1C0B139400649BDF /* NSMutableDictionary+AdSupport.m in Sources */,
 				BFBE8E901C0B139400649BDF /* KPLog.m in Sources */,
 				BFBE8E9C1C0B139400649BDF /* NSString+Utilities.m in Sources */,
+				5F49F0EC1CFD8DD700C6B209 /* KCastProvider.m in Sources */,
 				BFBE8E921C0B139400649BDF /* KPShareManager.m in Sources */,
 				BF1C07581C0DA7F800A67462 /* NSBundle+Kaltura.m in Sources */,
 				BF1C076C1C0DA8A600A67462 /* KPlayerFactory.m in Sources */,
 				FB7D10701C46E81500FBB906 /* KPLocalAssetsManager.m in Sources */,
 				BFBE8E891C0B139400649BDF /* GoogleplusStrategy.m in Sources */,
+				5F49F0E91CFD8D7E00C6B209 /* KCastDevice.m in Sources */,
 				BF1C077E1C0DA95600A67462 /* KPViewController.m in Sources */,
 				BFBE8E931C0B139400649BDF /* KPURLProtocol.m in Sources */,
 				BFBE8E8E1C0B139400649BDF /* KPControlsView.m in Sources */,
