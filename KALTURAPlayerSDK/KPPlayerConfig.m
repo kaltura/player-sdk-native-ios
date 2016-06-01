@@ -14,12 +14,14 @@
 
 
 #define DEFAULT_CACHE_SIZE_MB   100
+#define SERVER_CACHE_TIME       10*24*60*60 // 10 days?
 
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
 }
 
 @property (nonatomic) NSTimeInterval startFrom;
+@property (nonatomic, readonly) BOOL playerUrlResolved;
 
 @end
 
@@ -48,9 +50,31 @@
         _uiConfId = uiConfId;
         _partnerId = partnerId;
         _cacheSize = DEFAULT_CACHE_SIZE_MB;   // Default 100 MB
+        
+        [self resolveEmbedFrameUrlWithCompletionHandler:^(BOOL success) {
+            _playerUrlResolved = YES;
+        }];
+        
         return self;
     }
     return nil;
+}
+
+-(BOOL)waitForPlayerRootUrl {
+    // start the process, if not started yet.
+    [self resolveEmbedFrameUrlWithCompletionHandler:nil];
+    
+    // TODO: use semaphores. But sleep is simpler and good enough.
+    
+    // wait for completion, up to 30 seconds.
+    for (int i=0; i<30*1000/50 && !self.playerUrlResolved; i++) {
+        struct timespec delay;
+        delay.tv_nsec = 50*1000*1000; // 50 millisec
+        delay.tv_sec = 0;
+        nanosleep(&delay, &delay);
+    }
+    
+    return [_server hasSuffix:@"/mwEmbedFrame.php"];
 }
 
 // Deprecated
@@ -145,6 +169,12 @@
 }
 
 - (NSURL *)videoURL {
+    
+    if (![self waitForPlayerRootUrl]) {
+        KPLogError(@"Can't resolve player root URL");
+        return nil;
+    }
+    
     NSURLComponents* url = [NSURLComponents componentsWithString:_server];
     NSMutableString* path = [url.path mutableCopy];
     [path appendFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@", _partnerId, _partnerId, _uiConfId];
@@ -197,6 +227,132 @@
 
 -(id)configValueForKey:(NSString*)key {
     return _extraConfig[key];
+}
+
+- (void)resolveEmbedFrameUrlWithCompletionHandler:(void (^)(BOOL success))handler {
+    // In some cases, the config's server property does not point to mwEmbedFrame.php. Instead,
+    // it points at "http://cdnapi.kaltura.com" or similar, and the path to mwEmbedFrame.php is taken
+    // from the uiconf.
+    
+    NSURL *serverURL = [NSURL URLWithString:_server];
+    
+    if (!handler) {
+        handler = ^(BOOL s) {};
+    }
+    
+    if (_playerUrlResolved || [serverURL.path hasSuffix:@"/mwEmbedFrame.php"]) {
+        // done -- pre-resolved
+        _playerUrlResolved = YES;
+        handler(YES);
+        return;
+    }
+    
+    // Could be cached, based on partnerId and uiconfId -- if not, we will cache later.
+    NSString* serverConfId = [NSString stringWithFormat:@"%@/p/%@/conf/%@", serverURL, self.partnerId, self.uiConfId];
+    NSDictionary* serverConf = [[NSUserDefaults standardUserDefaults] dictionaryForKey:serverConfId];
+    
+    
+    NSString* cachedServerUrl = serverConf[@"mwEmbedFrame.php"];
+    
+    if (cachedServerUrl) {
+        KPLogDebug(@"Cached serverURL for %@ is: %@", serverConfId, cachedServerUrl);
+        _server = cachedServerUrl;
+        _playerUrlResolved = YES;
+        handler(YES);
+    }
+    
+    // Load uiConf from Kaltrua API, get the path from there.
+    [self loadUIConfWithCompletionHandler:^(NSDictionary * _Nullable uiConf, NSError * _Nullable error) {
+        if (!uiConf) {
+            if (!cachedServerUrl) {
+                handler(NO);
+            }
+            return;
+        }
+        
+        NSString *embedLoaderUrl = uiConf[@"html5Url"];
+        if (![embedLoaderUrl hasSuffix:@"/mwEmbedLoader.php"]) {
+            KPLogError(@"Bad html5Url property in uiConf: %@", embedLoaderUrl);
+            if (!cachedServerUrl) {
+                handler(NO);
+            }
+            return;
+        }
+        
+        // embedLoaderUrl is something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
+        // We need "/html5/html5lib/v2.38.3/mwEmbedFrame.php"
+        
+        NSString* embedFrameUrl = [[embedLoaderUrl stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"mwEmbedFrame.php"];
+        
+        if ([embedFrameUrl hasPrefix:@"/"]) {
+            // Relative to original server URL
+            embedFrameUrl = [_server stringByAppendingPathComponent:embedFrameUrl];
+        }
+        
+        // Cache for later
+        NSDictionary* newServerConf = @{
+                       @"mwEmbedFrame.php": serverURL.absoluteString,
+                       };
+        [[NSUserDefaults standardUserDefaults] setObject:newServerConf forKey:serverConfId];
+        
+        if (!cachedServerUrl) {
+            _playerUrlResolved = YES;
+            handler(YES);
+        }
+    }];
+}
+
+- (void)loadUIConfWithCompletionHandler:(void (^)(NSDictionary * __nullable uiconf, NSError * __nullable error))handler {
+    
+    NSURL *serverURL = [NSURL URLWithString:self.server];
+    serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
+    NSURLComponents *urlComps = [NSURLComponents componentsWithURL:serverURL resolvingAgainstBaseURL:NO];
+    
+    NSMutableArray *items = [NSMutableArray arrayWithArray:@[
+                                                             [NSURLQueryItem queryItemWithName:@"service"   value:@"uiconf"],
+                                                             [NSURLQueryItem queryItemWithName:@"action"    value:@"get"],
+                                                             [NSURLQueryItem queryItemWithName:@"format"    value:@"1"],   // json
+                                                             [NSURLQueryItem queryItemWithName:@"p"         value:self.partnerId],
+                                                             [NSURLQueryItem queryItemWithName:@"id"        value:self.uiConfId],
+                                                             ]];
+    
+    if (self.ks) {
+        [items addObject:[NSURLQueryItem queryItemWithName:@"ks" value:self.ks]];
+    }
+    
+    urlComps.queryItems = items;
+    
+    NSURL* apiCall = urlComps.URL;
+    
+    [[[NSURLSession sharedSession] dataTaskWithURL:apiCall completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        if (error) {
+            KPLogError(@"Failed loading uiConf: %@", error);
+            handler(nil, error);
+            return;
+        }
+        
+        NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:data
+                                                               options:0
+                                                                 error:&error];
+        
+        if (!uiConf) {
+            KPLogError(@"Error parsing uiConf json: %@", error);
+            handler(nil, error);
+            return;
+        }
+        NSString *serviceError = uiConf[@"message"];
+        if (serviceError) {
+            error = [NSError errorWithDomain:@"KPLocalAssetsManager"
+                                         code:'uice'
+                                     userInfo:@{NSLocalizedDescriptionKey: @"UIConf service error",
+                                                @"UIConfID": self.uiConfId ? self.uiConfId : @"<none>",
+                                                @"ServiceError": serviceError ? serviceError : @"<none>"}];
+            KPLogError(@"uiConf service reported error: %@", serviceError);
+            handler(nil, error);
+        }
+
+        handler(uiConf, nil);
+    }] resume];
 }
 
 @end

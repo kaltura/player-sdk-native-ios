@@ -58,6 +58,15 @@ static NSString *localContentID = nil;
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
     KPLogTrace(@"Enter::request:%@", request.URL.absoluteString);
     
+    KCacheManager* cacheManager = [KCacheManager shared];
+    NSString* baseURL = cacheManager.baseURL;
+    
+    if (!baseURL) {
+        // CacheManager is not configured yet
+        KPLogTrace(@"Exit::NO (CacheManager.baseURL)");
+        return NO;
+    }
+    
     if ([request.URL.absoluteString containsString:LocalContentIDKey]) {
         NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
         if (![localContentID isEqualToString:newContentID]) {
@@ -78,22 +87,22 @@ static NSString *localContentID = nil;
         return NO;  // only GET
     }
     
-    if ([request.URL.absoluteString containsString:CacheManager.baseURL]) {
-        for (NSString *key in CacheManager.withDomain.allKeys) {
+    if ([request.URL.absoluteString containsString:baseURL]) {
+        for (NSString *key in cacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
                 KPLogTrace(@"Exit::YES, key(baseURL):%@",key);
                 return YES;
             }
         }
     } else if (![Utilities hasConnectivity]) {
-        for (NSString *key in CacheManager.offlineSubStr.allKeys) {
+        for (NSString *key in cacheManager.offlineSubStr.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
                 KPLogTrace(@"Exit::YES, key(subStrings):%@",key);
                 return YES;
             }
         }
     } else {
-        for (NSString *key in CacheManager.subStrings.allKeys) {
+        for (NSString *key in cacheManager.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
                 KPLogTrace(@"Exit::YES, key(subStrings):%@",key);
                 return YES;
@@ -121,7 +130,7 @@ static NSString *localContentID = nil;
     }
     
     if (![Utilities hasConnectivity]) {
-        for (NSString *key in CacheManager.offlineSubStr.allKeys) {
+        for (NSString *key in [KCacheManager shared].offlineSubStr.allKeys) {
             if ([requestStr containsString:key]) {
                 NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                                           statusCode:200

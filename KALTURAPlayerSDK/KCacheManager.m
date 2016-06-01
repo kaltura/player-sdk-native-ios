@@ -162,7 +162,7 @@ static void cacheRemove(NSString* url) {
 - (float)cachedSize {
     KPLogTrace(@"Enter");
     long long fileSize = 0;
-    NSArray *files = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:CacheManager.cachePath error:nil];
+    NSArray *files = [[NSFileManager defaultManager] subpathsOfDirectoryAtPath:self.cachePath error:nil];
     for (NSString *file in files) {
         fileSize += [[[NSFileManager defaultManager] attributesOfItemAtPath:file.pathForFile error:nil][NSFileSize] integerValue];
     }
@@ -334,12 +334,11 @@ static void cacheRemove(NSString* url) {
             pageFolderPath = self.url.absoluteString.extractLocalContentId.appendPath;
         }
 
-        [[NSFileManager defaultManager] createDirectoryAtPath:pageFolderPath
-                                  withIntermediateDirectories:YES
-                                                   attributes:nil
-                                                        error:&error];
-        if (error) {
-            [self raise:@"Failed to create Directory"];
+        if (![[NSFileManager defaultManager] createDirectoryAtPath:pageFolderPath
+                                      withIntermediateDirectories:YES
+                                                       attributes:nil
+                                                            error:&error]) {
+            [self raise:@"Failed to create pageFolderPath"];
         }
         
         // Store the page
@@ -362,7 +361,7 @@ static void cacheRemove(NSString* url) {
         cacheSave(self.url.absoluteString);
 
     } @catch (NSException *exception) {
-        KPLogError([exception reason]);
+        KPLogError(@"%@ (%@)", [exception reason], error);
     }
     
     KPLogTrace(@"Exit");

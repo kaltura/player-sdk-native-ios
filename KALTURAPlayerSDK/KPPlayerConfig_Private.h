@@ -10,5 +10,6 @@
 
 
 @interface KPPlayerConfig ()
+-(BOOL)waitForPlayerRootUrl;
 @property (nonatomic) NSTimeInterval startFrom;
 @end

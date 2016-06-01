@@ -106,6 +106,12 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             wvInitialized = @NO;
             break;
             
+        case WViOsApiEvent_NullEvent:
+            if ((WViOsApiStatus)[attributes[@"WVStatusKey"] intValue] == WViOsApiStatus_FileNotPresent) {
+                cdmEvent = KCDMEvent_FileNotFound;
+            }
+            break;
+            
         case WViOsApiEvent_EMMFailed:
             cdmEvent = KCDMEvent_LicenseFailed;
             break;
