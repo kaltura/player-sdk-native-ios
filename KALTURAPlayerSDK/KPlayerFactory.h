@@ -50,6 +50,9 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)prepareForChangeConfiguration;
 - (void)setAssetParam:(NSString*)key toValue:(id)value;
 - (void)backToForeground;
+- (void)selectAudioTrack:(int)trackId;
+- (void)selectTextTrack:(NSString *)locale;
+
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
@@ -63,4 +66,6 @@ static NSString *PostrollEndedKey = @"postEnded";
 @property (nonatomic, assign) BOOL isReleasePlayerPositionEnabled;
 @property (nonatomic, strong) KPIMAPlayerViewController *adController;
 @property (nonatomic, strong) id kIMAWebOpenerDelegate;
+@property (nonatomic, assign) BOOL preferSubtitles;
+
 @end

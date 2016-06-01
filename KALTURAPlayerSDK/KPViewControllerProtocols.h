@@ -40,7 +40,9 @@ typedef enum{
     nativeAction,
     doubleClickRequestAds,
     language,
-    captions
+    captions,
+    audioTrackSelected,
+    textTrackSelected
 } Attribute;
 
 @protocol KPlayerDelegate;
@@ -54,6 +56,8 @@ typedef enum{
 @property (nonatomic) float volume NS_AVAILABLE(10_7, 7_0);
 @property (nonatomic, getter=isMuted) BOOL mute NS_AVAILABLE(10_7, 7_0);
 @property (nonatomic, readonly) BOOL isKPlayer;
+@property (nonatomic) BOOL preferSubtitles;
+
 
 
 - (instancetype)initWithParentView:(UIView *)parentView;
@@ -70,6 +74,9 @@ typedef enum{
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)setSourceWithAsset:(AVURLAsset*)asset;
 - (void)hidePlayer;
+- (void)selectAudioTrack:(int)trackId;
+- (void)selectTextTrack:(NSString *)locale;
+
 
 @end
 
