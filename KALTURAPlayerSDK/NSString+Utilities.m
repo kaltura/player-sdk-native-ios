@@ -76,6 +76,7 @@ NSString *const LocalContentId = @"localContentId";
                             @"nativeAction",
                             @"doubleClickRequestAds",
                             @"language",
+                            @"chromecastAppId",
                             @"textTrackSelected"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];

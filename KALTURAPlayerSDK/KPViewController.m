@@ -29,6 +29,7 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "NSDictionary+Utilities.h"
 #import "KPAssetBuilder.h"
 #import "KPPlayerConfig_Private.h"
+#import "KCastChannel.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -76,6 +77,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 #pragma mark - chromecast
 @property  id<KPGCDevice>selectedDevice;
 
+@end
+
+@interface KCastProvider ()
+@property (nonatomic, readonly) KCastChannel *castChannel;
 @end
 
 @implementation KPViewController 
@@ -314,6 +319,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     // Initialize player factory
     if (!_playerFactory) {
         _playerFactory = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
+        _playerFactory.castProvider = _castProvider;
         [_playerFactory addPlayerToController:self];
         _playerFactory.delegate = self;
         _playerFactory.kIMAWebOpenerDelegate = _kIMAWebOpenerDelegate;
@@ -357,20 +363,20 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         }
     }];
     
-    self.castDeviceController = [ChromecastDeviceController sharedInstance];
-    if (self.castDeviceController) {
-        [[NSNotificationCenter defaultCenter] addObserver: self
-                                                 selector: @selector(handleCastScanStatusUpdated)
-                                                     name: @"castScanStatusUpdated"
-                                                   object: nil];
-        [self.castDeviceController clearPreviousSession];
-        // Assign ourselves as the delegate.
-        self.castDeviceController.delegate = self;
-        // Turn on the Cast logging for debug purposes.
-        [self.castDeviceController enableLogging];
-        // Set the receiver application ID to initialise scanning.
-        [self.castDeviceController setApplicationID:@"DB6462E9"];
-    }
+//    self.castDeviceController = [ChromecastDeviceController sharedInstance];
+//    if (self.castDeviceController) {
+//        [[NSNotificationCenter defaultCenter] addObserver: self
+//                                                 selector: @selector(handleCastScanStatusUpdated)
+//                                                     name: @"castScanStatusUpdated"
+//                                                   object: nil];
+//        [self.castDeviceController clearPreviousSession];
+//        // Assign ourselves as the delegate.
+//        self.castDeviceController.delegate = self;
+//        // Turn on the Cast logging for debug purposes.
+//        [self.castDeviceController enableLogging];
+//        // Set the receiver application ID to initialise scanning.
+//        [self.castDeviceController setApplicationID:@"DB6462E9"];
+//    }
     
     [super viewDidLoad];
     KPLogTrace(@"Exit");
@@ -786,7 +792,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
     SEL selector = NSSelectorFromString(functionName);
     if ([self respondsToSelector:selector]) {
-        KPLogDebug(@"html5 call::%@ %@",functionName, args);
         [self performSelector:selector withObject:args];
     } else if ([_playerFactory respondsToSelector:selector]) {
         [_playerFactory performSelector:selector withObject:args];
@@ -845,6 +850,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         case language:
             _playerFactory.locale = attributeVal;
             break;
+        case chromecastAppId:
+            [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+            break;
         case doubleClickRequestAds: {
             __weak KPViewController *weakSelf = self;
             [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
@@ -863,6 +871,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             break;
     }
     KPLogTrace(@"Exit");
+}
+
+- (void)sendCCRecieverMessage:(NSDictionary *)message {
+    BOOL check = [_castProvider.castChannel sendTextMessage:message.toJson];
+    if (check) {
+        NSLog(@"%@", message.toJson);
+    }
 }
 
 -(void)visible:(NSString *)boolVal{

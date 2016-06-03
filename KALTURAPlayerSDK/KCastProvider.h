@@ -12,6 +12,7 @@
 @class KCastProvider;
 @protocol KCastProviderDelegate <NSObject>
 
+- (void)castProvider:(KCastProvider *)provider devicesInRange:(BOOL)foundDevices;
 - (void)castProvider:(KCastProvider *)provider didDeviceComeOnline:(KCastDevice *)device;
 - (void)castProvider:(KCastProvider *)provider didDeviceGoOffline:(KCastDevice *)device;
 - (void)didConnectToDevice:(KCastProvider *)provider;
@@ -26,6 +27,9 @@
 @property (nonatomic, getter=isCastButtonEnabled) BOOL castButtonEnabled;
 @property (nonatomic) BOOL passiveScan;
 @property (nonatomic, weak) id<KCastProviderDelegate> delegate;
+@property (nonatomic, copy, readonly) NSArray<KCastDevice *> *devices;
+@property (nonatomic, readonly) KCastDevice *selectedDevice;
+@property (nonatomic, readonly) BOOL isConnected;
 
 - (void)startScan:(NSString *)appID;
 - (void)stopScan;

@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "KPIMAPlayerViewController.h"
 #import "KPViewControllerProtocols.h"
+#import "KCastProvider.h"
 
 static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
@@ -52,6 +53,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)backToForeground;
 
 @property (nonatomic, strong) id<KPlayer> player;
+@property (nonatomic, strong) KCastProvider *castProvider;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;

@@ -206,11 +206,6 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 - (void)pause;
 @end
 
-@protocol KPGCCastChannel <NSObject>
-
-
-@end
-
 @protocol KPGCDeviceManager <NSObject>
 @property(nonatomic, readonly) id<KPGCDevice> device;
 @property(nonatomic, weak) id delegate;
@@ -219,8 +214,10 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 - (NSInteger)stopApplicationWithSessionID:(NSString *)sessionID;
 - (void)connect;
 - (void)disconnect;
+- (BOOL)leaveApplication;
+- (void)disconnectWithLeave:(BOOL)leaveApplication;
 - (NSInteger)launchApplication:(NSString *)applicationID;
-- (BOOL)addChannel:(id<KPGCMediaControlChannel>)channel;
+- (BOOL)addChannel:(id)channel;
 @end
 
 @protocol KPGCDeviceScannerListener;
@@ -293,6 +290,81 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 - (void)deviceDidChange:(id<KPGCDevice>)device;
 
 @end
+
+@protocol KPGCCastChannel <NSObject>
+@optional
+/** The channel's namespace. */
+@property(nonatomic, copy, readonly) NSString *protocolNamespace;
+
+/** A flag indicating whether this channel is currently connected. */
+@property(nonatomic, readonly) BOOL isConnected;
+
+/** The device manager with which this channel is registered, if any. */
+@property(nonatomic, weak, readonly) id<KPGCDeviceManager> deviceManager;
+
+/**
+ * Designated initializer. Constructs a new GCKCastChannel with the given namespace.
+ *
+ * @param protocolNamespace The namespace.
+ */
+- (instancetype)initWithNamespace:(NSString *)protocolNamespace;
+
+/**
+ * Called when a text message has been received on this channel. The default implementation is a
+ * no-op.
+ *
+ * @param message The message.
+ */
+- (void)didReceiveTextMessage:(NSString *)message;
+
+/**
+ * Sends a text message on this channel.
+ *
+ * @param message The message.
+ * @return <code>YES</code> on success or <code>NO</code> if the message could not be sent (because
+ * the channel is not connected, or because the send buffer is too full at the moment).
+ */
+- (BOOL)sendTextMessage:(NSString *)message;
+
+/**
+ * Sends a text message on this channel.
+ *
+ * @param message The message.
+ * @param error A pointer at which to store the error result. May be nil.
+ * @return <code>YES</code> on success or <code>NO</code> if the message could not be sent.
+ */
+//- (BOOL)sendTextMessage:(NSString *)message
+//                  error:(GCKError **)error;
+
+/**
+ * Generates a request ID for a new message.
+ *
+ * @return The generated ID, or <code>kGCKInvalidRequestID</code> if the channel is not currently
+ * connected.
+ */
+- (NSInteger)generateRequestID;
+
+/**
+ * A convenience method which wraps generateRequestID in an NSNumber.
+ *
+ * @return The generated ID, or <code>nil</code> if the channel is not currently connected.
+ */
+- (NSNumber *)generateRequestNumber;
+
+/**
+ * Called when this channel has been connected, indicating that messages can now be exchanged with
+ * the Cast device over this channel. The default implementation is a no-op.
+ */
+- (void)didConnect;
+
+/**
+ * Called when this channel has been disconnected, indicating that messages can no longer be
+ * exchanged with the Cast device over this channel. The default implementation is a no-op.
+ */
+- (void)didDisconnect;
+
+@end
+
 // limitations under the License.
 
 #import <Foundation/Foundation.h>

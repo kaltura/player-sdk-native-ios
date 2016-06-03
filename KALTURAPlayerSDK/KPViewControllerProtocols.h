@@ -40,6 +40,7 @@ typedef enum{
     nativeAction,
     doubleClickRequestAds,
     language,
+    chromecastAppId,
     captions
 } Attribute;
 
