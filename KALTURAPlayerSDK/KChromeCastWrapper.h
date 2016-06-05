@@ -189,6 +189,12 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 @protocol KPGCMediaInformation;
 @protocol KPGCMediaStatus <NSObject>
 @property(nonatomic, readonly) KPGCMediaPlayerState playerState;
+/**
+ * Gets the current stream playback rate. This will be negative if the stream is seeking
+ * backwards, 0 if the stream is paused, 1 if the stream is playing normally, and some other
+ * postive value if the stream is seeking forwards.
+ */
+@property(nonatomic, readonly) float playbackRate;
 @property(nonatomic, readonly) KPGCMediaPlayerIdleReason idleReason;
 @property(nonatomic, strong, readonly) id<KPGCMediaInformation> mediaInformation;
 @end
@@ -204,6 +210,7 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
           playPosition:(NSTimeInterval)playPosition;
 - (void)play;
 - (void)pause;
+- (NSInteger)stop;
 @end
 
 @protocol KPGCDeviceManager <NSObject>
@@ -259,7 +266,11 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 @end
 
 
+@protocol KCastChannel <NSObject>
 
+- (BOOL)sendTextMessage:(NSString *)message;
+
+@end
 
 @protocol KPGCDeviceScannerListener <NSObject>
 

@@ -29,7 +29,6 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "NSDictionary+Utilities.h"
 #import "KPAssetBuilder.h"
 #import "KPPlayerConfig_Private.h"
-#import "KCastChannel.h"
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
@@ -77,10 +76,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 #pragma mark - chromecast
 @property  id<KPGCDevice>selectedDevice;
 
-@end
-
-@interface KCastProvider ()
-@property (nonatomic, readonly) KCastChannel *castChannel;
 @end
 
 @implementation KPViewController 
@@ -874,10 +869,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (void)sendCCRecieverMessage:(NSDictionary *)message {
-    BOOL check = [_castProvider.castChannel sendTextMessage:message.toJson];
-    if (check) {
-        NSLog(@"%@", message.toJson);
-    }
+    [_playerFactory sendCastRecieverTextMessage:message.toJson];
 }
 
 -(void)visible:(NSString *)boolVal{

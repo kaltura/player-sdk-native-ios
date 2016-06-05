@@ -12,6 +12,7 @@
 @class KCastProvider;
 @protocol KCastProviderDelegate <NSObject>
 
+@optional
 - (void)castProvider:(KCastProvider *)provider devicesInRange:(BOOL)foundDevices;
 - (void)castProvider:(KCastProvider *)provider didDeviceComeOnline:(KCastDevice *)device;
 - (void)castProvider:(KCastProvider *)provider didDeviceGoOffline:(KCastDevice *)device;
@@ -23,7 +24,8 @@
 @end
 
 @interface KCastProvider : NSObject
-
+- (instancetype)initWithCastChannel:(id)channel;
+@property (nonatomic, readonly) id castChannel;
 @property (nonatomic, getter=isCastButtonEnabled) BOOL castButtonEnabled;
 @property (nonatomic) BOOL passiveScan;
 @property (nonatomic, weak) id<KCastProviderDelegate> delegate;

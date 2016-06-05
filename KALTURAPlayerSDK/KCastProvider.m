@@ -7,8 +7,10 @@
 //
 
 #import "KCastProvider.h"
-#import "KCastChannel.h"
 #import "KPLog.h"
+#import "KChromeCastWrapper.h"
+#import "CastProviderInternalDelegate.h"
+
 
 @interface KCastDevice ()
 - (instancetype)initWithDevice:(id<KPGCDevice>)device;
@@ -24,8 +26,9 @@
 @property (nonatomic, strong) id<KPGCDeviceScanner> deviceScanner;
 @property (nonatomic, strong) id<KPGCDeviceManager> deviceManager;
 @property (nonatomic, strong) id<KPGCMediaControlChannel> mediaControlChannel;
-@property (nonatomic, strong) KCastChannel *castChannel;
+@property (nonatomic, strong) id castChannel;
 @property (nonatomic, copy) NSString *appID;
+@property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
 @end
 
 @implementation KCastProvider
@@ -38,6 +41,16 @@
     }
     self = [super init];
     if (self) {
+        return self;
+    }
+    return nil;
+}
+
+- (instancetype)initWithCastChannel:(id)channel {
+    self = [self init];
+    if (self) {
+        _castChannel = channel;
+        [_castChannel setDelegate:self];
         return self;
     }
     return nil;
@@ -103,9 +116,7 @@
     _deviceManager = nil;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context {
-    
-}
+
 
 #pragma mark KPGCDeviceScannerListener
 - (void)deviceDidComeOnline:(id<KPGCDevice>)device {
@@ -143,10 +154,19 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
     _mediaControlChannel.delegate = self;
     [_deviceManager addChannel:_mediaControlChannel];
     [_mediaControlChannel requestStatus];
-    _castChannel = [[KCastChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
-    [_castChannel addObserver:self forKeyPath:@"didReceiveTextMessage:" options:0 context:nil];
+    _castChannel = [[NSClassFromString(@"GCKGenericChannel") alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
+    [_castChannel setDelegate:self];
     [deviceManager addChannel:_castChannel];
     [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
+}
+
+- (void)castChannel:(id)channel
+didReceiveTextMessage:(NSString *)message
+      withNamespace:(NSString *)protocolNamespace {
+    if ([message isEqualToString:@"readyForMedia"]) {
+        [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
+        [_internalDelegate startCasting:_mediaControlChannel];
+    }
 }
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
