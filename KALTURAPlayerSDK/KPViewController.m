@@ -846,7 +846,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             _playerFactory.locale = attributeVal;
             break;
         case chromecastAppId:
-            [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+            if (_playerFactory.castProvider.isConnected) {
+                [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+            }
             break;
         case doubleClickRequestAds: {
             __weak KPViewController *weakSelf = self;

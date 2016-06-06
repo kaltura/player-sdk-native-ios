@@ -219,6 +219,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     _castPlayer.videoUrl = _src;
 }
 
+- (void)updateCastState:(NSString *)state {
+    [_delegate player:_player eventName:state value:nil];
+}
+
 - (void)readyToPlay:(id<KPGCMediaControlChannel>)mediaControlChannel {
     currentPlayerType = CurrentPlyerTypeCast;
     [self.delegate player:_player

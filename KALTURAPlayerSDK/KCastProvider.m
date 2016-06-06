@@ -158,6 +158,7 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
     [_castChannel setDelegate:self];
     [deviceManager addChannel:_castChannel];
     [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
+    [_internalDelegate updateCastState:@"chromecastDeviceConnected"];
 }
 
 - (void)castChannel:(id)channel
