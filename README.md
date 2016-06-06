@@ -170,7 +170,7 @@ Using Kaltura player
         config.entryId = @"1_o426d3i4";
         
         // Setting this property will cache the html pages in the limit size
-        config.cacheSize = 0.8;
+        config.cacheSize = 100;
         _player = [[KPViewController alloc] initWithConfiguration:config];
     }
     return _player;
