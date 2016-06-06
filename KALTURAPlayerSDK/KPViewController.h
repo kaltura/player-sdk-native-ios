@@ -40,7 +40,6 @@
 
 @end
 
-#import "ChromecastDeviceController.h"
 
 
 @interface KPViewController : UIViewController
@@ -292,8 +291,6 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 /// Wraps triggerEvent:withValue: method by block syntax.
 @property (nonatomic, copy, readonly) void (^triggerEvent)(NSString *event, NSString *value);
 
-/* The device manager used for the currently casting media. */
-@property(weak, nonatomic) ChromecastDeviceController *castDeviceController;
 
 @end
 

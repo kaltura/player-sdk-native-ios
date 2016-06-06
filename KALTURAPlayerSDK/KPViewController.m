@@ -21,7 +21,6 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "KPIMAPlayerViewController.h"
 #import "KPlayerFactory.h"
 #import "KPControlsView.h"
-#import "KCCPlayer.h"
 #import "KPController_Private.h"
 #import "KPURLProtocol.h"
 #import "KCacheManager.h"
@@ -48,7 +47,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 @interface KPViewController() <KPlayerFactoryDelegate,
                                 KPControlsViewDelegate,
                                 UIActionSheetDelegate,
-                                ChromecastDeviceControllerDelegate, KPControllerDelegate> {
+                                KPControllerDelegate> {
     // Player Params
     BOOL isFullScreen, isPlaying, isResumePlayer;
     NSDictionary *appConfigDict;
@@ -72,9 +71,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
 @property (nonatomic) NSTimeInterval seekValue;
-
-#pragma mark - chromecast
-@property  id<KPGCDevice>selectedDevice;
 
 @end
 
@@ -279,7 +275,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:NO];
     // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
-    [ChromecastDeviceController sharedInstance].delegate = self;
     NSLog(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
 }
 
@@ -357,139 +352,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             });
         }
     }];
-    
-//    self.castDeviceController = [ChromecastDeviceController sharedInstance];
-//    if (self.castDeviceController) {
-//        [[NSNotificationCenter defaultCenter] addObserver: self
-//                                                 selector: @selector(handleCastScanStatusUpdated)
-//                                                     name: @"castScanStatusUpdated"
-//                                                   object: nil];
-//        [self.castDeviceController clearPreviousSession];
-//        // Assign ourselves as the delegate.
-//        self.castDeviceController.delegate = self;
-//        // Turn on the Cast logging for debug purposes.
-//        [self.castDeviceController enableLogging];
-//        // Set the receiver application ID to initialise scanning.
-//        [self.castDeviceController setApplicationID:@"DB6462E9"];
-//    }
-    
     [super viewDidLoad];
     KPLogTrace(@"Exit");
 }
 
-- (void)handleCastScanStatusUpdated {
 
-}
 
-#pragma mark - GCKDeviceScannerListener
-- (void)didDiscoverDeviceOnNetwork {
-    KPLogChromeCast(@"");
-    __weak KPViewController *weakSelf = self;
-    [self registerReadyEvent:^{
-        [weakSelf setKDPAttribute:@"chromecast" propertyName:@"visible" value:@"true"];
-    }];
-}
-
-- (void)chooseDevice {
-    UIActionSheet *sheet;
-    //Choose device
-    if (!self.selectedDevice) {
-        //Choose device
-       sheet =
-        [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"Connect to Device", nil)
-                                    delegate:self
-                           cancelButtonTitle:nil
-                      destructiveButtonTitle:nil
-                           otherButtonTitles:nil];
-        
-        for (id<KPGCDevice> device in self.castDeviceController.deviceScanner.devices) {
-            [sheet addButtonWithTitle:device.friendlyName];
-        }
-        
-        [sheet addButtonWithTitle:NSLocalizedString(@"Cancel", nil)];
-//        sheet.cancelButtonIndex = sheet.numberOfButtons - 1;
-        
-        //show device selection
-//    }
-    } else {
-        // Gather stats from device.
-//        [self updateStatsFromDevice];
-        
-        NSString *friendlyName = [NSString stringWithFormat:NSLocalizedString(@"Casting to %@", nil),
-                            self.selectedDevice.friendlyName];
-        /**
-         *  @todo replace Title with GoogleCast constant
-         */
-        NSString *mediaTitle = [self.castDeviceController.mediaInformation.metadata stringForKey:@"Title"];
-        
-        sheet = [[UIActionSheet alloc] init];
-        sheet.title = friendlyName;
-        sheet.delegate = self;
-        if (mediaTitle != nil) {
-            [sheet addButtonWithTitle:mediaTitle];
-        }
-        
-        //Offer disconnect option
-        [sheet addButtonWithTitle:@"Disconnect"];
-        [sheet addButtonWithTitle:@"Cancel"];
-        sheet.destructiveButtonIndex = (mediaTitle != nil ? 1 : 0);
-        sheet.cancelButtonIndex = (mediaTitle != nil ? 2 : 1);
-    }
-    
-    [sheet showInView:[[[[UIApplication sharedApplication] keyWindow] subviews] lastObject]];
-}
-
-- (void)willPresentActionSheet:(UIActionSheet *)actionSheet {
-    isActionSheetPresented = YES;
-}
-
--(void)showChromecastDeviceList {
-    NSLog(@"showChromecastDeviceList Enter");
-    
-    if (!isActionSheetPresented) {
-        [self chooseDevice];
-    }
-    
-    NSLog(@"showChromecastDeviceList Exit");
-}
-
-#pragma mark UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    isActionSheetPresented = NO;
-    
-    if (self.selectedDevice == nil) {
-        if (buttonIndex < self.castDeviceController.deviceScanner.devices.count) {
-            self.selectedDevice = self.castDeviceController.deviceScanner.devices[buttonIndex];
-            [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:ChromeCastPlayerClassName]];
-            [((KCCPlayer *)_playerFactory.player).chromecastDeviceController connectToDevice:self.selectedDevice];
-        }
-    } else {
-        if (buttonIndex == 0) {  //Disconnect button
-            NSLog(@"Disconnecting device:%@", self.selectedDevice.friendlyName);
-            // New way of doing things: We're not going to stop the applicaton. We're just going
-            // to leave it.
-//            [self.castDeviceController.deviceManager leaveApplication];
-            // If you want to force application to stop, uncomment below
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//            [defaults setObject:sessionID forKey:@"lastSessionID"];
-            [self.castDeviceController.deviceManager stopApplicationWithSessionID: [defaults objectForKey:@"lastSessionID"]];
-            
-            [self.castDeviceController.deviceManager disconnect];
-            [self deviceDisconnect];
-        }
-//        else if (buttonIndex == 0) {
-//            // Join the existing session.
-//            
-//        }
-    }
-}
-
-- (void)deviceDisconnect {
-    self.selectedDevice = nil;
-    self.castDeviceController.deviceManager = nil;
-//    [_playerFactory switchPlayer:PlayerClassName key:nil];
-    [_playerFactory changePlayer:[_playerFactory createPlayerFromClassName:PlayerClassName]];
-}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -517,14 +385,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     isResumePlayer = YES;
     [super viewDidDisappear:animated];
     KPLogTrace(@"Exit");
-}
-
-#pragma mark - GCKDeviceScannerListener
-- (void)deviceDidComeOnline:(id<KPGCDevice>)device {
-    KPLogChromeCast(@"device found!! %@", device.friendlyName);
-}
-
-- (void)deviceDidGoOffline:(id<KPGCDevice>)device {
 }
 
 - (void)applicationDidEnterBackground: (NSNotification *)not {

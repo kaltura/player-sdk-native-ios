@@ -29,6 +29,7 @@
 @property (nonatomic, strong) id castChannel;
 @property (nonatomic, copy) NSString *appID;
 @property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
+@property (nonatomic, copy) NSString *sessionID;
 @end
 
 @implementation KCastProvider
@@ -108,10 +109,10 @@
 }
 
 - (void)disconnectFromDevice {
-    id<KPGCDevice> selectedDevice = _deviceManager.device;
-    [_deviceManager stopApplicationWithSessionID:_appID];
+    [_deviceManager removeChannel:_castChannel];
+    [_deviceManager removeChannel:_mediaControlChannel];
+    [_deviceManager stopApplicationWithSessionID:_sessionID];
     [_deviceManager disconnect];
-    selectedDevice = nil;
     _deviceManager.delegate = nil;
     _deviceManager = nil;
 }
@@ -150,6 +151,7 @@
 didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
             sessionID:(NSString *)sessionID
   launchedApplication:(BOOL)launchedApplication {
+    _sessionID = sessionID;
     _mediaControlChannel = [NSClassFromString(@"GCKMediaControlChannel") new];
     _mediaControlChannel.delegate = self;
     [_deviceManager addChannel:_mediaControlChannel];
