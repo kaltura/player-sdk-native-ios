@@ -21,7 +21,7 @@
 }
 
 @property (nonatomic) NSTimeInterval startFrom;
-@property (nonatomic, readonly) BOOL playerUrlResolved;
+@property (nonatomic, copy) NSString* resolvedPlayerURL;
 
 @end
 
@@ -52,7 +52,7 @@
         _cacheSize = DEFAULT_CACHE_SIZE_MB;   // Default 100 MB
         
         [self resolveEmbedFrameUrlWithCompletionHandler:^(BOOL success) {
-            _playerUrlResolved = YES;
+            KPLogDebug(@"Resolved player URL");
         }];
         
         return self;
@@ -67,14 +67,14 @@
     // TODO: use semaphores. But sleep is simpler and good enough.
     
     // wait for completion, up to 30 seconds.
-    for (int i=0; i<30*1000/50 && !self.playerUrlResolved; i++) {
+    for (int i=0; i<30*1000/50 && !_resolvedPlayerURL; i++) {
         struct timespec delay;
         delay.tv_nsec = 50*1000*1000; // 50 millisec
         delay.tv_sec = 0;
         nanosleep(&delay, &delay);
     }
     
-    return [_server hasSuffix:@"/mwEmbedFrame.php"];
+    return [_resolvedPlayerURL hasSuffix:@"/mwEmbedFrame.php"];
 }
 
 // Deprecated
@@ -175,7 +175,7 @@
         return nil;
     }
     
-    NSURLComponents* url = [NSURLComponents componentsWithString:_server];
+    NSURLComponents* url = [NSURLComponents componentsWithString:_resolvedPlayerURL];
     NSMutableString* path = [url.path mutableCopy];
     [path appendFormat:@"/p/%@/sp/%@00/embedIframeJs/uiconf_id/%@", _partnerId, _partnerId, _uiConfId];
     
@@ -240,9 +240,14 @@
         handler = ^(BOOL s) {};
     }
     
-    if (_playerUrlResolved || [serverURL.path hasSuffix:@"/mwEmbedFrame.php"]) {
+    if (_resolvedPlayerURL) {
+        handler(YES);
+        return;
+    }
+    
+    if ([serverURL.path hasSuffix:@"/mwEmbedFrame.php"]) {
         // done -- pre-resolved
-        _playerUrlResolved = YES;
+        _resolvedPlayerURL = _server;
         handler(YES);
         return;
     }
@@ -256,10 +261,19 @@
     
     if (cachedServerUrl) {
         KPLogDebug(@"Cached serverURL for %@ is: %@", serverConfId, cachedServerUrl);
-        _server = cachedServerUrl;
-        _playerUrlResolved = YES;
-        handler(YES);
+        // make sure the cached url is ok
+        NSURL* parsedServerUrl = [NSURL URLWithString:cachedServerUrl];
+        
+        if ([[parsedServerUrl lastPathComponent] isEqualToString:@"mwEmbedFrame.php"]) {
+            _resolvedPlayerURL = cachedServerUrl;
+            handler(YES);
+        } else {
+            // cached url is wrong, reset it.
+            cachedServerUrl = nil;
+        }
     }
+    
+    // Even if cached, load the config to refresh the cache.
     
     // Load uiConf from Kaltrua API, get the path from there.
     [self loadUIConfWithCompletionHandler:^(NSDictionary * _Nullable uiConf, NSError * _Nullable error) {
@@ -283,20 +297,22 @@
         // We need "/html5/html5lib/v2.38.3/mwEmbedFrame.php"
         
         NSString* embedFrameUrl = [[embedLoaderUrl stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"mwEmbedFrame.php"];
-        
         if ([embedFrameUrl hasPrefix:@"/"]) {
             // Relative to original server URL
-            embedFrameUrl = [_server stringByAppendingPathComponent:embedFrameUrl];
+            NSString* url = [_server stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
+            embedFrameUrl = [url stringByAppendingString:embedFrameUrl];
         }
         
         // Cache for later
         NSDictionary* newServerConf = @{
-                       @"mwEmbedFrame.php": serverURL.absoluteString,
+                       @"mwEmbedFrame.php": embedFrameUrl,
                        };
         [[NSUserDefaults standardUserDefaults] setObject:newServerConf forKey:serverConfId];
         
+        // If not resolved by cache, mark resolved now.
+        _resolvedPlayerURL = embedFrameUrl;
         if (!cachedServerUrl) {
-            _playerUrlResolved = YES;
+            // Call handler if it wasn't called already.
             handler(YES);
         }
     }];
