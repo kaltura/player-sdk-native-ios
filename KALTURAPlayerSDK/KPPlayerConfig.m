@@ -7,6 +7,7 @@
 //
 
 #import "KPPlayerConfig.h"
+#import "KPPlayerConfig_Private.h"
 #import "DeviceParamsHandler.h"
 #import "NSString+Utilities.h"
 #import "NSMutableArray+QueryItems.h"
@@ -19,9 +20,6 @@
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
 }
-
-@property (nonatomic) NSTimeInterval startFrom;
-@property (nonatomic, copy) NSString* resolvedPlayerURL;
 
 @end
 

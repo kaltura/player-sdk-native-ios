@@ -207,7 +207,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         return nil;
     }
     
-    NSURL *serverURL = [NSURL URLWithString:assetConfig.server];
+    NSURL *serverURL = [NSURL URLWithString:assetConfig.resolvedPlayerURL];
     serverURL = [serverURL URLByDeletingLastPathComponent];
 
     if (!serverURL) {
@@ -303,7 +303,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     
     KCacheManager* cacheManager = [KCacheManager shared];
     
-    cacheManager.baseURL = assetConfig.server;
+    cacheManager.baseURL = assetConfig.resolvedPlayerURL;
     cacheManager.maxCacheSize = assetConfig.cacheSize;
 
     NSURL* url = assetConfig.videoURL;
