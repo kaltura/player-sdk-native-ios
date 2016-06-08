@@ -277,9 +277,10 @@
     [self loadUIConfWithCompletionHandler:^(NSDictionary * _Nullable uiConf, NSError * _Nullable error) {
         if (!uiConf) {
             if (!cachedServerUrl) {
+                KPLogError(@"Failed loading uiConf: %@", error);
                 handler(NO);
             }
-            return;
+            return; // handler was already called, based on cache
         }
         
         NSString *embedLoaderUrl = uiConf[@"html5Url"];
@@ -288,7 +289,7 @@
             if (!cachedServerUrl) {
                 handler(NO);
             }
-            return;
+            return; // handler was already called, based on cache
         }
         
         // embedLoaderUrl is something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
@@ -310,7 +311,7 @@
         // If not resolved by cache, mark resolved now.
         _resolvedPlayerURL = embedFrameUrl;
         if (!cachedServerUrl) {
-            // Call handler if it wasn't called already.
+            // Call handler if it wasn't called already based on cache
             handler(YES);
         }
     }];
@@ -340,7 +341,7 @@
     
     [[[NSURLSession sharedSession] dataTaskWithURL:apiCall completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
         if (error) {
-            KPLogError(@"Failed loading uiConf: %@", error);
+            // Error log is printed by caller, only if needed.
             handler(nil, error);
             return;
         }

@@ -56,6 +56,12 @@ static NSString *localContentID = nil;
 }
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
+    
+    // To prevent duplicates, make this condition first and don't log anything.
+    if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
+        return NO;
+    }
+    
     KPLogTrace(@"Enter::request:%@", request.URL.absoluteString);
     
     KCacheManager* cacheManager = [KCacheManager shared];
@@ -74,37 +80,34 @@ static NSString *localContentID = nil;
         }
     }
     
-    if ([NSURLProtocol propertyForKey:KPURLProtocolHandledKey inRequest:request]) {
-        KPLogTrace(@"Exit::NO (KPURLProtocolHandledKey)");
-        return NO;
-    }
-    
     if (!([request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"])) {
+        KPLogTrace(@"Exit::NO (scheme=%@)", request.URL.scheme);
         return NO;  // only http(s)
     }
     
     if (![[request HTTPMethod] isEqualToString:@"GET"]) {
+        KPLogTrace(@"Exit::NO (method=%@)", request.HTTPMethod);
         return NO;  // only GET
     }
     
     if ([request.URL.absoluteString containsString:baseURL]) {
         for (NSString *key in cacheManager.withDomain.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                KPLogTrace(@"Exit::YES, key(baseURL):%@",key);
+                KPLogTrace(@"Exit::YES, key(withDomain=%@)",key);
                 return YES;
             }
         }
     } else if (![Utilities hasConnectivity]) {
         for (NSString *key in cacheManager.offlineSubStr.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                KPLogTrace(@"Exit::YES, key(subStrings):%@",key);
+                KPLogTrace(@"Exit::YES, key(offlineSubStr=%@)",key);
                 return YES;
             }
         }
     } else {
         for (NSString *key in cacheManager.subStrings.allKeys) {
             if ([request.URL.absoluteString containsString:key]) {
-                KPLogTrace(@"Exit::YES, key(subStrings):%@",key);
+                KPLogTrace(@"Exit::YES, key(subStrings=%@)",key);
                 return YES;
             }
         }
@@ -123,6 +126,7 @@ static NSString *localContentID = nil;
 - (void)startLoading {
     KPLogTrace(@"Enter");
     NSString *requestStr = self.request.URL.absoluteString;
+    KPLogTrace(@"requestStr: %@", requestStr);
     
     // TODO:: optimize 
     if (self.class.localContentID && [requestStr containsString:@"mwEmbedFrame.php"] && ![requestStr containsString:LocalContentIDKey]) {
@@ -161,7 +165,7 @@ static NSString *localContentID = nil;
               cacheStoragePolicy:NSURLCacheStorageNotAllowed];
         [self.client URLProtocol:self didLoadData:cachedPage];
         [self.client URLProtocolDidFinishLoading:self];
-        KPLogTrace(@"Exit::request:%@", self.request.URL.absoluteString);
+        KPLogTrace(@"Exit::finishedLoadingFromCache:%@", self.request.URL);
         
     } else {
         _cacheParams = [CachedURLParams new];
