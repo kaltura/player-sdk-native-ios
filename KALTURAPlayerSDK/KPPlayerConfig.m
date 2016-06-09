@@ -17,8 +17,12 @@
 #define DEFAULT_CACHE_SIZE_MB   100
 #define SERVER_CACHE_TIME       10*24*60*60 // 10 days?
 
+#define EMBEDFRAME_PAGE @"mwEmbedFrame.php"
+#define EMBEDFRAME_PAGE_WITH_SLASH @"/mwEmbedFrame.php"
+
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
+    BOOL _errorResolvingPlayerURL;
 }
 
 @end
@@ -64,15 +68,15 @@
     
     // TODO: use semaphores. But sleep is simpler and good enough.
     
-    // wait for completion, up to 30 seconds.
-    for (int i=0; i<30*1000/50 && !_resolvedPlayerURL; i++) {
+    // wait for completion, up to 30 seconds. Also stop if there was an error, such as no network.
+    for (int i=0; i<30*1000/50 && !_resolvedPlayerURL && !_errorResolvingPlayerURL; i++) {
         struct timespec delay;
         delay.tv_nsec = 50*1000*1000; // 50 millisec
         delay.tv_sec = 0;
         nanosleep(&delay, &delay);
     }
     
-    return [_resolvedPlayerURL hasSuffix:@"/mwEmbedFrame.php"];
+    return [_resolvedPlayerURL hasSuffix:EMBEDFRAME_PAGE_WITH_SLASH];
 }
 
 // Deprecated
@@ -243,9 +247,10 @@
         return;
     }
     
-    if ([serverURL.path hasSuffix:@"/mwEmbedFrame.php"]) {
+    if ([serverURL.path hasSuffix:EMBEDFRAME_PAGE_WITH_SLASH]) {
         // done -- pre-resolved
         _resolvedPlayerURL = _server;
+        _errorResolvingPlayerURL = NO;
         handler(YES);
         return;
     }
@@ -255,15 +260,16 @@
     NSDictionary* serverConf = [[NSUserDefaults standardUserDefaults] dictionaryForKey:serverConfId];
     
     
-    NSString* cachedServerUrl = serverConf[@"mwEmbedFrame.php"];
+    NSString* cachedServerUrl = serverConf[EMBEDFRAME_PAGE];
     
     if (cachedServerUrl) {
         KPLogDebug(@"Cached serverURL for %@ is: %@", serverConfId, cachedServerUrl);
         // make sure the cached url is ok
         NSURL* parsedServerUrl = [NSURL URLWithString:cachedServerUrl];
         
-        if ([[parsedServerUrl lastPathComponent] isEqualToString:@"mwEmbedFrame.php"]) {
+        if ([[parsedServerUrl lastPathComponent] isEqualToString:EMBEDFRAME_PAGE]) {
             _resolvedPlayerURL = cachedServerUrl;
+            _errorResolvingPlayerURL = NO;
             handler(YES);
         } else {
             // cached url is wrong, reset it.
@@ -278,6 +284,7 @@
         if (!uiConf) {
             if (!cachedServerUrl) {
                 KPLogError(@"Failed loading uiConf: %@", error);
+                _errorResolvingPlayerURL = YES;
                 handler(NO);
             }
             return; // handler was already called, based on cache
@@ -287,6 +294,7 @@
         if (![embedLoaderUrl hasSuffix:@"/mwEmbedLoader.php"]) {
             KPLogError(@"Bad html5Url property in uiConf: %@", embedLoaderUrl);
             if (!cachedServerUrl) {
+                _errorResolvingPlayerURL = YES;
                 handler(NO);
             }
             return; // handler was already called, based on cache
@@ -295,7 +303,7 @@
         // embedLoaderUrl is something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
         // We need "/html5/html5lib/v2.38.3/mwEmbedFrame.php"
         
-        NSString* embedFrameUrl = [[embedLoaderUrl stringByDeletingLastPathComponent] stringByAppendingPathComponent:@"mwEmbedFrame.php"];
+        NSString* embedFrameUrl = [[embedLoaderUrl stringByDeletingLastPathComponent] stringByAppendingPathComponent:EMBEDFRAME_PAGE];
         if ([embedFrameUrl hasPrefix:@"/"]) {
             // Relative to original server URL
             NSString* url = [_server stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
@@ -304,12 +312,13 @@
         
         // Cache for later
         NSDictionary* newServerConf = @{
-                       @"mwEmbedFrame.php": embedFrameUrl,
+                       EMBEDFRAME_PAGE: embedFrameUrl,
                        };
         [[NSUserDefaults standardUserDefaults] setObject:newServerConf forKey:serverConfId];
         
         // If not resolved by cache, mark resolved now.
         _resolvedPlayerURL = embedFrameUrl;
+        _errorResolvingPlayerURL = NO;
         if (!cachedServerUrl) {
             // Call handler if it wasn't called already based on cache
             handler(YES);
