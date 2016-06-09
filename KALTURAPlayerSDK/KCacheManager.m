@@ -38,23 +38,29 @@ static void cacheMiss(NSString* url) {
     NSLog(@"CACHE MISS: %@", url);
 }
 
-static void cacheSave(NSString* url) {
-    NSLog(@"CACHE SAVE: %@", url);
+static void cacheSaved(NSString* url) {
+    NSLog(@"CACHE SAVED: %@", url);
 }
 
 static void cacheWillSave(NSString* url) {
-    NSLog(@"CACHE willSAVE: %@", url);
+    NSLog(@"CACHE WILLSAVE: %@", url);
 }
 
-static void cacheRemove(NSString* url) {
-    NSLog(@"CACHE REM: %@", url);
+static void cacheRemoved(NSString* url) {
+    NSLog(@"CACHE REMOVED: %@", url);
 }
+
+static void cacheWillRemove(NSString* url) {
+    NSLog(@"CACHE WILLREMOVE: %@", url);
+}
+
 #else
 #define cacheHit(x)
 #define cacheMiss(x)
-#define cacheSave(x)
+#define cacheSaved(x)
 #define cacheWillSave(x)
-#define cacheRemove(x)
+#define cacheRemoved(x)
+#define cacheWillRemove(x)
 #endif
 
 @implementation KCacheManager
@@ -271,7 +277,7 @@ static void cacheRemove(NSString* url) {
  */
 - (BOOL)deleteFile {
     KPLogTrace(@"Enter");
-    cacheRemove(self);
+    cacheWillRemove(self);
     NSString *path = self.pathForFile;
     if ([[NSFileManager defaultManager] isDeletableFileAtPath:path]) {
         NSError *error = nil;
@@ -279,9 +285,10 @@ static void cacheRemove(NSString* url) {
                                                    error:&error];
         if (!error) {
             KPLogTrace(@"Exit");
+            cacheRemoved(self);
             return YES;
         } else {
-            KPLogError(@"%@", error);
+            KPLogError(@"Failed to remove cache file: %@", error);
         }
     }
     
@@ -308,8 +315,7 @@ static void cacheRemove(NSString* url) {
     float cachedSize = CacheManager.cachedSize;
     
     // if the cache size is too big, erases the least used files
-    if (cachedSize > ((float)[self freeDiskSpace] / MB) ||
-        cachedSize > CacheManager.maxCacheSize) {
+    if (cachedSize > ((float)[self freeDiskSpace] / MB) || cachedSize > CacheManager.maxCacheSize) {
         float overflowSize = cachedSize - CacheManager.maxCacheSize + (float)self.data.length / MB;
         NSArray *files = CacheManager.files;
         for (NSString *fileName in files) {
@@ -358,7 +364,7 @@ static void cacheRemove(NSString* url) {
         if (![self.data writeToFile:pathForData options:NSDataWritingAtomic error:&error]) {
             [self raise:@"Failed to store response data"];
         }
-        cacheSave(self.url.absoluteString);
+        cacheSaved(self.url.absoluteString);
 
     } @catch (NSException *exception) {
         KPLogError(@"%@ (%@)", [exception reason], error);
