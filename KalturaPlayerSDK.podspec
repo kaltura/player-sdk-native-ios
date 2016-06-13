@@ -33,7 +33,7 @@ s.platform     = :ios, "8.0"
 
 
 # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source       = { :git => 'https://github.com/SachinAhujaWork/player-sdk-native-ios.git', :tag => 'v' + s.version.to_s }
+s.source       = { :git => 'https://github.com/SachinAhujaWork/player-sdk-native-ios.git' }
 s.libraries      = 'stdc++', 'z', 'System', 'stdc++.6', 'xml2.2', 'c++', 'stdc++.6.0.9', 'xml2', 'WViPhoneAPI'
 s.framework    = 'MediaPlayer', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit'
 
