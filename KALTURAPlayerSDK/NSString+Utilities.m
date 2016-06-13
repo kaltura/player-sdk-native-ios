@@ -56,9 +56,9 @@ NSString *const LocalContentId = @"localContentId";
     if (components.count == 2) {
         NSArray *hashTagParams = [components.lastObject componentsSeparatedByString:@"&"];
         for (NSString *hashTagParam in hashTagParams) {
-            NSArray *param = [hashTagParam componentsSeparatedByString:@"="];
+            NSArray<NSString*> *param = [hashTagParam componentsSeparatedByString:@"="];
             if (param.count == 2 && [param.firstObject isEqualToString:LocalContentId]) {
-                return param.lastObject;
+                return param.lastObject.length > 0 ? param.lastObject : nil;
             }
         }
     }
