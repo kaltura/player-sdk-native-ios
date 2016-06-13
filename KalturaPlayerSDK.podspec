@@ -12,7 +12,7 @@ s.summary      = "The Kaltura player-sdk-native component enables embedding the 
 #s.description  = <<-DESC
 #                 The Kaltura player-sdk-native component enables embedding the kaltura player into native environments.
 #                 DESC
-s.homepage     = "https://github.com/kaltura/player-sdk-native-ios"
+s.homepage     = "https://github.com/SachinAhujaWork/player-sdk-native-ios"
 
 
 
@@ -33,10 +33,12 @@ s.platform     = :ios, "8.0"
 
 
 # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source       = { :git => 'https://github.com/kaltura/player-sdk-native-ios.git', :tag => 'v' + s.version.to_s }
+s.source       = { :git => 'https://github.com/SachinAhujaWork/player-sdk-native-ios.git', :tag => 'v' + s.version.to_s }
 s.libraries      = 'stdc++', 'z', 'System', 'stdc++.6', 'xml2.2', 'c++', 'stdc++.6.0.9', 'xml2', 'WViPhoneAPI'
 s.framework    = 'MediaPlayer', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit'
 
+s.dependency 'google-cast-sdk'
+s.dependency 'GoogleAds-IMA-iOS-SDK-For-AdMob', "~> 3.0.beta.16"
 s.requires_arc = true
 
 
