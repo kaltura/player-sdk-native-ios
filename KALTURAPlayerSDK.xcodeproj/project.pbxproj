@@ -953,7 +953,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
 					"\"$(SRCROOT)/libGoogleIMA3.a\"",
@@ -992,8 +992,8 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
 					"\"$(SRCROOT)/libGoogleIMA3.a\"",
