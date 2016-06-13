@@ -212,13 +212,19 @@ static void cacheWillRemove(NSString* url) {
         path = [contentId appendPath];
     }
     
-    NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers"];
+    NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers.json"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
+    NSError* error;
     
     if (data) {
         cacheHit(self);
-        [self setDateAttributeAtPath:pathForHeaders];
-        NSDictionary *cached = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        [self setDateAttributeAtPath:pathForHeaders];   // touch
+        NSDictionary *cached = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (!cached) {
+            KPLogError(@"Failed to unarchive headers: %@", error);
+            KPLogTrace(@"Exit");
+            return nil;
+        }
         
         KPLogTrace(@"Exit");
         return cached;
@@ -352,10 +358,15 @@ static void cacheWillRemove(NSString* url) {
         NSMutableDictionary *attributes = [NSMutableDictionary new];
         attributes.allHeaderFields = self.response.allHeaderFields;
         attributes.statusCode = self.response.statusCode;
-        NSString *pathForHeaders = [pageFolderPath stringByAppendingPathComponent:@"headers"];
+        attributes.url = self.url.absoluteString;  // useful for debugging
+        
+        NSString *pathForHeaders = [pageFolderPath stringByAppendingPathComponent:@"headers.json"];
         NSString *pathForData = [pageFolderPath stringByAppendingPathComponent:@"data"];
         
-        NSData* headersArchive = [NSKeyedArchiver archivedDataWithRootObject:attributes];
+        NSData* headersArchive = [NSJSONSerialization dataWithJSONObject:attributes options:0 error:&error];
+        if (!headersArchive) {
+            [self raise:@"Failed to archive response headers"];
+        }
         
         if (![headersArchive writeToFile:pathForHeaders options:NSDataWritingAtomic error:&error]) {
             [self raise:@"Failed to store response headers"];
