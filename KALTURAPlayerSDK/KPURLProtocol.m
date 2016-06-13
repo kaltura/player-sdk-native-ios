@@ -14,6 +14,8 @@
 #import "Utilities.h"
 #import "KPLog.h"
 
+#define KPLogTrace KPLogDebug
+
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 static NSString * const LocalContentIDKey = @"localContentId";
 static int32_t enableCount;

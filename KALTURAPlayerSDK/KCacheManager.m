@@ -209,7 +209,7 @@ static void cacheWillRemove(NSString* url) {
     NSString *contentId = self.extractLocalContentId;
     NSString *path = self.md5.appendPath;
     if (contentId.length) {
-        path = [contentId appendPath];
+        path = [@"contentId:" stringByAppendingString:contentId].md5.appendPath;
     }
     
     NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers.json"];
@@ -242,7 +242,7 @@ static void cacheWillRemove(NSString* url) {
     NSString *path = self.md5.appendPath;
     
     if (contentId) {
-        path = contentId.appendPath;
+        path = [@"contentId:" stringByAppendingString:contentId].md5.appendPath;
     }
     
     NSString *pathForData = [path stringByAppendingPathComponent:@"data"];
@@ -342,8 +342,9 @@ static void cacheWillRemove(NSString* url) {
     @try {
         // Create Kaltura's folder if not already exists
         NSString *pageFolderPath = self.url.absoluteString.md5.appendPath;
-        if (self.url.absoluteString.extractLocalContentId) {
-            pageFolderPath = self.url.absoluteString.extractLocalContentId.appendPath;
+        NSString *localContentId = self.url.absoluteString.extractLocalContentId;
+        if (localContentId) {
+            pageFolderPath = localContentId.appendPath;
         }
 
         if (![[NSFileManager defaultManager] createDirectoryAtPath:pageFolderPath
