@@ -593,12 +593,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDK" */;
 			buildPhases = (
-				B09DAB7EA7BD3AF43FE02EE3 /* 📦 Check Pods Manifest.lock */,
+				B09DAB7EA7BD3AF43FE02EE3 /* [CP] Check Pods Manifest.lock */,
 				BFFFA723182F9E31005B3B24 /* Sources */,
 				BFFFA724182F9E31005B3B24 /* Frameworks */,
 				BFFFA725182F9E31005B3B24 /* CopyFiles */,
 				B39BEC961A0BC7510085BA26 /* Resources */,
-				95FDF13322A650D85620D461 /* 📦 Copy Pods Resources */,
+				95FDF13322A650D85620D461 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -675,14 +675,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		95FDF13322A650D85620D461 /* 📦 Copy Pods Resources */ = {
+		95FDF13322A650D85620D461 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -690,14 +690,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KALTURAPlayerSDK/Pods-KALTURAPlayerSDK-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B09DAB7EA7BD3AF43FE02EE3 /* 📦 Check Pods Manifest.lock */ = {
+		B09DAB7EA7BD3AF43FE02EE3 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
