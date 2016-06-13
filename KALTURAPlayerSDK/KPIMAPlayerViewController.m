@@ -11,7 +11,9 @@
 #import "KPLog.h"
 #import "IMAHandler.h"
 
-@interface KPIMAPlayerViewController ()
+@import GoogleInteractiveMediaAds;
+
+@interface KPIMAPlayerViewController () <IMAAdsLoaderDelegate, IMAAdsManagerDelegate>
 
 /// Contains the params for the logic layer
 @property (nonatomic, copy) NSMutableDictionary *adEventParams;
