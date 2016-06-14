@@ -41,6 +41,7 @@ NSString * const StatusKeyPath = @"status";
 @synthesize duration = _duration;
 @synthesize volume = _volume;
 @synthesize mute = _mute;
+@synthesize isPlaying = _isPlaying;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -162,10 +163,12 @@ NSString * const StatusKeyPath = @"status";
             [self.delegate player:self
                         eventName:PlayKey
                             value:nil];
+            _isPlaying = YES;
         } else {
             [self.delegate player:self
                         eventName:PauseKey
                             value:nil];
+            _isPlaying = NO;
         }
     } else if ([keyPath isEqualToString:StatusKeyPath]) {
         switch (self.currentItem.status) {

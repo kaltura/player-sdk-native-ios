@@ -109,6 +109,7 @@
 }
 
 - (void)disconnectFromDevice {
+    [_internalDelegate stopCasting];
     [_deviceManager removeChannel:_castChannel];
     [_deviceManager removeChannel:_mediaControlChannel];
     [_deviceManager stopApplicationWithSessionID:_sessionID];
@@ -137,9 +138,6 @@
 - (void)deviceManagerDidConnect:(id<KPGCDeviceManager>)deviceManager {
     _selectedDevice = [[KCastDevice alloc] initWithDevice:deviceManager.device];
     _isConnected = YES;
-    if ([_delegate respondsToSelector:@selector(didConnectToDevice:)]) {
-        [_delegate didConnectToDevice:self];
-    }
     
     
     
@@ -169,6 +167,18 @@ didReceiveTextMessage:(NSString *)message
     if ([message isEqualToString:@"readyForMedia"]) {
         [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
         [_internalDelegate startCasting:_mediaControlChannel];
+    }
+}
+
+- (void)castChannelDidConnect:(id)channel {
+    if ([_delegate respondsToSelector:@selector(didConnectToDevice:)]) {
+        [_delegate didConnectToDevice:self];
+    }
+}
+
+- (void)castChannelDidDisconnect:(id)channel {
+    if ([_delegate respondsToSelector:@selector(didDisconnectFromDevice:)]) {
+        [_delegate didDisconnectFromDevice:self];
     }
 }
 

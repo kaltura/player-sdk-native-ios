@@ -7,6 +7,7 @@
 //
 
 #import "KChromecastPlayer.h"
+#import "NSString+Utilities.h"
 
 typedef NS_ENUM(NSInteger, PlayerState) {
     PlayerStatePause,
@@ -32,16 +33,17 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     return nil;
 }
 
-- (void)setVideoUrl:(NSString *)videoUrl {
-    id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:@"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+- (void)setVideoUrl:(NSString *)videoUrl
+      startPosition:(NSTimeInterval)startPosition {
+    id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:videoUrl
                                                                                                           streamType:0
-                                                                                                         contentType:@"video/mp4"
+                                                                                                         contentType:videoUrl.mimeType
                                                                                                             metadata:nil
                                                                                                       streamDuration:0
                                                                                                           customData:nil];
     
     // Cast the video.
-    [_mediaChannel loadMedia:mediaInformation autoplay:NO playPosition:0];
+    [_mediaChannel loadMedia:mediaInformation autoplay:NO playPosition:startPosition];
 }
 
 - (void)play {
@@ -80,23 +82,23 @@ typedef NS_ENUM(NSInteger, PlayerState) {
             break;
         case KPGCMediaPlayerStateIdle:
             if ([[mediaControlChannel mediaStatus] idleReason] == KPGCMediaPlayerIdleReasonFinished) {
-                [_delegate stateChanged:@"ended"];
+                [_delegate castPlayerState:@"ended"];
             }
             break;
         case KPGCMediaPlayerStatePlaying:
             if (_playerState == PlayerStateSeeking) {
-                [_delegate stateChanged:@"seeked"];
+                [_delegate castPlayerState:@"seeked"];
             } else {
-                [_delegate stateChanged:@"play"];
+                [_delegate castPlayerState:@"play"];
             }
             _playerState = PlayerStatePlaying;
             [self startUpdateTime];
             break;
         case KPGCMediaPlayerStatePaused:
             if (_playerState == PlayerStateSeeking) {
-                [_delegate stateChanged:@"seeked"];
+                [_delegate castPlayerState:@"seeked"];
             } else {
-                [_delegate stateChanged:@"pause"];
+                [_delegate castPlayerState:@"pause"];
             }
             _playerState = PlayerStatePause;
             [self stopUpdateTime];

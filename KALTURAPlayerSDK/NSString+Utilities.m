@@ -164,10 +164,23 @@ NSString *const LocalContentId = @"localContentId";
 }
 
 - (BOOL)isWV {
+    return [self.streamType isEqualToString:@"wvm"];
+}
+
+- (NSString *)mimeType {
+    NSDictionary *mimeTypes = @{@"m3u8": @"application/vnd.apple.mpegurl",
+                                @"mp4": @"video/mp4"};
+    if (self.streamType) {
+        return mimeTypes[self.streamType];
+    }
+    return nil;
+}
+
+- (NSString *)streamType {
     NSURLComponents *comp = [NSURLComponents componentsWithURL:[NSURL URLWithString:self]
                                        resolvingAgainstBaseURL:NO];
     NSArray *videoNameComp = [comp.path.lastPathComponent componentsSeparatedByString:@"."];
-    return [videoNameComp.lastObject isEqualToString:@"wvm"];
+    return videoNameComp.lastObject;
 }
 
 - (NSString *)documentPath {

@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     BOOL _backToForeground;
     NSTimeInterval _lastPosition;
     CurrentPlyerType currentPlayerType;
+    BOOL isPlaying;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
@@ -216,11 +217,20 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
         _castPlayer = [[KChromecastPlayer alloc] initWithMediaChannel:mediaControlChannel];
         _castPlayer.delegate = self;
     }
-    _castPlayer.videoUrl = _src;
+    [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime];
 }
 
 - (void)updateCastState:(NSString *)state {
+    isPlaying = _player.isPlaying;
     [_delegate player:_player eventName:state value:nil];
+}
+
+- (void)stopCasting {
+    [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    [_player setCurrentPlaybackTime:_castPlayer.currentTime];
+    _castPlayer = nil;
+    currentPlayerType = CurrentPlyerTypeDefault;
+    [self play];
 }
 
 - (void)readyToPlay:(id<KPGCMediaControlChannel>)mediaControlChannel {
@@ -233,9 +243,12 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
                     value:@""];
     [self.delegate player:_player eventName:CanPlayKey value:nil];
     [_delegate player:_player eventName:@"hideConnectingMessage" value:nil];
+    if (isPlaying) {
+        [_castPlayer play];
+    }
 }
 
-- (void)stateChanged:(NSString *)state {
+- (void)castPlayerState:(NSString *)state {
     [_delegate player:_player eventName:state value:nil];
 }
 

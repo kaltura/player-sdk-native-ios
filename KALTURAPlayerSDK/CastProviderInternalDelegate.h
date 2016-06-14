@@ -12,4 +12,5 @@
 @protocol CastProviderInternalDelegate <NSObject>
 - (void)startCasting:(id<KPGCMediaControlChannel>)mediaControlChannel;
 - (void)updateCastState:(NSString *)state;
+- (void)stopCasting;
 @end
