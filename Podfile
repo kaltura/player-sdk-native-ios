@@ -3,6 +3,6 @@
 
 target 'KALTURAPlayerSDK' do
     pod "google-cast-sdk"
-    pod "GoogleAds-IMA-iOS-SDK-For-AdMob", "~> 3.0.beta.16"
+    pod "GoogleAds-IMA-iOS-SDK-For-AdMob", "3.2.1"
 end
 
