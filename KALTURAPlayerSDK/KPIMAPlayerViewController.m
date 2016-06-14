@@ -172,7 +172,6 @@
 - (void)adsLoader:(id<AdsLoader>)loader failedWithErrorData:(id<AdLoadingErrorData>)adErrorData {
     // Something went wrong loading ads. Log the error and play the content.
     KPLogError(@"Error loading ads: %@", adErrorData.adError.message);
-    self.view.hidden = YES;
     
      NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
     [self.delegate player:nil
@@ -190,7 +189,6 @@
                      JSON:eventParams.allValues.firstObject];
     
     NSLog(@"AdsManager error: %@", error.message);
-    self.view.hidden = YES;
     [self.contentPlayer play];
 }
 
