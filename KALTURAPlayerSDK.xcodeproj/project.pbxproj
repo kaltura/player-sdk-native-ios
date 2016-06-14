@@ -114,6 +114,7 @@
 		BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E601C0B139400649BDF /* KPControlsView.h */; };
 		BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */; };
 		BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */; };
+		EFE2C56E0569F6ABA07EFFBD /* libPods-KALTURAPlayerSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CFB27D189704B3679840E50C /* libPods-KALTURAPlayerSDK.a */; };
 		FB0B5AAE1C7FB3BE0067872E /* KPWidevineClassicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */; };
 		FB48BCB41C7B53E300B2E1B7 /* KPFairPlayHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FB48BCB31C7B53E300B2E1B7 /* KPFairPlayHandler.m */; };
 		FB48BCB71C7C8A4800B2E1B7 /* KPAssetBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = FB48BCB61C7C8A4800B2E1B7 /* KPAssetBuilder.m */; };
@@ -199,9 +200,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0B763B2703DBDB4330D555CB /* Pods-KALTURAPlayerSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KALTURAPlayerSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-KALTURAPlayerSDK/Pods-KALTURAPlayerSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		0B94380941711CC7A6654CD9 /* Pods-KALTURAPlayerSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KALTURAPlayerSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-KALTURAPlayerSDK/Pods-KALTURAPlayerSDK.release.xcconfig"; sourceTree = "<group>"; };
 		5F6879D41C271304003E5DF7 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		5F9A80181C1CCC0800DD930E /* NSDictionary+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+Utilities.h"; sourceTree = "<group>"; };
 		5F9A80191C1CCC0800DD930E /* NSDictionary+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDictionary+Utilities.m"; sourceTree = "<group>"; };
+		9E2156ADFA169243A768B874 /* libPods-KALTURAPlayerSDKResources.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KALTURAPlayerSDKResources.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B372892E1A8787D00076DD33 /* KALTURAPlayerSDKResources.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KALTURAPlayerSDKResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		B37289311A8787D00076DD33 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BF0394EF1CA975C90090BF66 /* Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utilities.m; sourceTree = "<group>"; };
@@ -283,6 +287,7 @@
 		BFBE8E841C0B139400649BDF /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = KALTURAPlayerSDK/Utilities.h; sourceTree = SOURCE_ROOT; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		CFB27D189704B3679840E50C /* libPods-KALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-KALTURAPlayerSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB0B5AAC1C7FB3BE0067872E /* KPWidevineClassicHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPWidevineClassicHandler.h; sourceTree = "<group>"; };
 		FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPWidevineClassicHandler.m; sourceTree = "<group>"; };
 		FB48BCB21C7B53E300B2E1B7 /* KPFairPlayHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPFairPlayHandler.h; sourceTree = "<group>"; };
@@ -313,12 +318,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */,
+				EFE2C56E0569F6ABA07EFFBD /* libPods-KALTURAPlayerSDK.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2BB5D0748F67A5576E4AFB2F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				0B763B2703DBDB4330D555CB /* Pods-KALTURAPlayerSDK.debug.xcconfig */,
+				0B94380941711CC7A6654CD9 /* Pods-KALTURAPlayerSDK.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		778FFEFEA9A63E802DCF7BF8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CFB27D189704B3679840E50C /* libPods-KALTURAPlayerSDK.a */,
+				9E2156ADFA169243A768B874 /* libPods-KALTURAPlayerSDKResources.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B30BADEE1A223142008E5E67 /* ShareStrategies */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,6 +496,8 @@
 				BFFFA72C182F9E31005B3B24 /* KALTURAPlayerSDK */,
 				B372892F1A8787D00076DD33 /* KPlayerResources */,
 				BFFFA728182F9E31005B3B24 /* Products */,
+				2BB5D0748F67A5576E4AFB2F /* Pods */,
+				778FFEFEA9A63E802DCF7BF8 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -567,10 +593,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = BFFFA74C182F9E31005B3B24 /* Build configuration list for PBXNativeTarget "KALTURAPlayerSDK" */;
 			buildPhases = (
+				B09DAB7EA7BD3AF43FE02EE3 /* [CP] Check Pods Manifest.lock */,
 				BFFFA723182F9E31005B3B24 /* Sources */,
 				BFFFA724182F9E31005B3B24 /* Frameworks */,
 				BFFFA725182F9E31005B3B24 /* CopyFiles */,
 				B39BEC961A0BC7510085BA26 /* Resources */,
+				95FDF13322A650D85620D461 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -647,6 +675,36 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		95FDF13322A650D85620D461 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-KALTURAPlayerSDK/Pods-KALTURAPlayerSDK-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B09DAB7EA7BD3AF43FE02EE3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 		B3166DD41AF26C4D00E99B77 /* MultiPlatform Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -895,7 +953,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
 					"\"$(SRCROOT)/libGoogleIMA3.a\"",
@@ -934,8 +992,8 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
 					"\"$(SRCROOT)/libGoogleIMA3.a\"",
@@ -951,6 +1009,7 @@
 		};
 		BFFFA74D182F9E31005B3B24 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B763B2703DBDB4330D555CB /* Pods-KALTURAPlayerSDK.debug.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -973,6 +1032,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -982,6 +1042,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PROJECT_NAME)";
@@ -993,6 +1054,7 @@
 		};
 		BFFFA74E182F9E31005B3B24 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0B94380941711CC7A6654CD9 /* Pods-KALTURAPlayerSDK.release.xcconfig */;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
 				CLANG_CXX_LIBRARY = "compiler-default";
@@ -1015,7 +1077,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 				);
-				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1024,6 +1087,7 @@
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
+					"$(inherited)",
 				);
 				PRODUCT_NAME = KALTURAPlayerSDK;
 				PUBLIC_HEADERS_FOLDER_PATH = "include/$(PROJECT_NAME)";
