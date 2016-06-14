@@ -118,6 +118,10 @@ typedef NS_ENUM(NSInteger, IMAAdEventType){
      */
     kIMAAdEvent_COMPLETE,
     /**
+     *  Cuepoints changed for VOD stream (only used for dynamic ad insertion).
+     */
+    kIMAAdEvent_CUEPOINTS_CHANGED,
+    /**
      *  First quartile of a linear ad was reached.
      */
     kIMAAdEvent_FIRST_QUARTILE,
