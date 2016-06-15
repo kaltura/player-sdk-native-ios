@@ -268,6 +268,7 @@
 
 - (void)adsManagerDidRequestContentResume:(id<AdsManager>)adsManager {
     // The SDK is done playing ads (at least for now), so resume the content.
+    self.view.hidden = YES;
     [self.contentPlayer play];
     NSDictionary *eventParams = ContentResumeRequestedKey.nullVal;
     [self.delegate player:nil
