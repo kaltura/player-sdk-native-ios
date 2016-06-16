@@ -10,6 +10,8 @@
 // License: http://corp.kaltura.com/terms-of-use
 //
 
+#import <Foundation/Foundation.h>
+
 static NSString *AppConfigurationFileName = @"AppConfigurations";
 
 #import "KPViewController.h"

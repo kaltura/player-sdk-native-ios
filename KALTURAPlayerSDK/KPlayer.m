@@ -608,9 +608,11 @@ NSString * const StatusKeyPath = @"status";
     KPLogTrace(@"Enter");
     // Add airplay
     _parentView.backgroundColor = [UIColor clearColor];
+    
     if ( !volumeView ) {
-        volumeView = [ [MPVolumeView alloc] init ];
+        volumeView = [[MPVolumeView alloc] init];
         [volumeView setShowsVolumeSlider: NO];
+        [volumeView setShowsRouteButton:YES];
     }
     KPLogTrace(@"Exit");
 }

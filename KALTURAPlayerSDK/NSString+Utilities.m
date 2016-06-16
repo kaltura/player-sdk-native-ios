@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Kaltura. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 static NSString *SRC = @"src";
 static NSString *CurrentTimeKey = @"currentTime";
 static NSString *licenseUriKey = @"licenseUri";
