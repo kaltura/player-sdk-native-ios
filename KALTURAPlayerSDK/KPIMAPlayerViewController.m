@@ -11,6 +11,8 @@
 #import "KPLog.h"
 #import "IMAHandler.h"
 
+NSString * const KPAdStateDidChangeNotification = @"KPAdStateDidChangeNotification";
+
 @interface KPIMAPlayerViewController ()
 
 /// Contains the params for the logic layer
@@ -173,6 +175,7 @@
     // Something went wrong loading ads. Log the error and play the content.
     KPLogError(@"Error loading ads: %@", adErrorData.adError.message);
     
+    [self postAdStateChangeNotification];
     self.view.hidden = YES;
     [self.contentPlayer play];
     
@@ -192,6 +195,7 @@
                      JSON:eventParams.allValues.firstObject];
     
     NSLog(@"AdsManager error: %@", error.message);
+    [self postAdStateChangeNotification];
     self.view.hidden = YES;
 
     [self.contentPlayer play];
@@ -213,6 +217,7 @@
             
             break;
         case kIMAAdEvent_STARTED:
+            [self postAdStateChangeNotification];
             self.view.hidden = NO;
             self.adEventParams.duration = event.ad.duration;
             eventParams = self.adEventParams.toJSON.adStart;
@@ -305,6 +310,10 @@
     if (_adsManager) {
         [_adsManager resume];
     }
+}
+
+- (void)postAdStateChangeNotification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:KPAdStateDidChangeNotification object:Nil];
 }
 
 @end
