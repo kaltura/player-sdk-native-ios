@@ -120,6 +120,7 @@ NSString * const KPAdStateDidChangeNotification = @"KPAdStateDidChangeNotificati
         _adsRenderingSettings = [NSClassFromString(@"IMAAdsRenderingSettings") new];
         _adsRenderingSettings.webOpenerPresentingController = self;
         _adsRenderingSettings.webOpenerDelegate = _datasource;
+        _adsRenderingSettings.bitrate = 2048; // kbits
     }
     return _adsRenderingSettings;
 }

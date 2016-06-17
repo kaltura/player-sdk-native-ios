@@ -47,6 +47,7 @@
 
 @property (nonatomic, strong) id webOpenerPresentingController;
 @property (nonatomic, strong) id webOpenerDelegate;
+@property (nonatomic, assign) int bitrate;
 
 @end
 
