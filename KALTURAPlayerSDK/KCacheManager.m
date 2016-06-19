@@ -206,11 +206,7 @@ static void cacheWillRemove(NSString* url) {
 // Unarchive the stored headers
 - (NSDictionary *)cachedResponseHeaders {
     KPLogTrace(@"Enter");
-    NSString *contentId = self.extractLocalContentId;
-    NSString *path = self.md5.appendPath;
-    if (contentId.length) {
-        path = [@"contentId:" stringByAppendingString:contentId].md5.appendPath;
-    }
+    NSString *path = [self.cacheId appendPath];
     
     NSString *pathForHeaders = [path stringByAppendingPathComponent:@"headers.json"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForHeaders];
@@ -235,15 +231,22 @@ static void cacheWillRemove(NSString* url) {
     }    
 }
 
+
+-(NSString*)cacheId {
+    NSString *contentId = self.extractLocalContentId;
+    if (contentId) {
+        return [@"contentId:" stringByAppendingString:contentId].hexedMD5;
+    } else {
+        return self.urlWithSortedParams.absoluteString.hexedMD5;
+    }
+}
+
+
 // Fetches the page content from the file system
 - (NSData *)cachedPage {
     KPLogTrace(@"Enter");
-    NSString *contentId = self.extractLocalContentId;
-    NSString *path = self.md5.appendPath;
-    
-    if (contentId) {
-        path = [@"contentId:" stringByAppendingString:contentId].md5.appendPath;
-    }
+
+    NSString *path = [self.cacheId appendPath];
     
     NSString *pathForData = [path stringByAppendingPathComponent:@"data"];
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:pathForData];
@@ -341,11 +344,8 @@ static void cacheWillRemove(NSString* url) {
     NSError *error = nil;
     @try {
         // Create Kaltura's folder if not already exists
-        NSString *pageFolderPath = self.url.absoluteString.md5.appendPath;
-        NSString *localContentId = self.url.absoluteString.extractLocalContentId;
-        if (localContentId) {
-            pageFolderPath = localContentId.appendPath;
-        }
+        
+        NSString *pageFolderPath = [self.url.absoluteString.cacheId appendPath];
 
         if (![[NSFileManager defaultManager] createDirectoryAtPath:pageFolderPath
                                       withIntermediateDirectories:YES

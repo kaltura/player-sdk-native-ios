@@ -25,6 +25,7 @@
 @interface NSString(CoreData)
 @property (nonatomic, readonly) NSDictionary *cachedResponseHeaders;
 @property (nonatomic, readonly) NSData *cachedPage;
+@property (nonatomic, readonly) NSString *cacheId;
 @end
 
 @interface CachedURLParams: NSObject

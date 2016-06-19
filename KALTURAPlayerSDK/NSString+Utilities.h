@@ -48,9 +48,9 @@ typedef struct FunctionComponents {
 @property (nonatomic, readonly) BOOL isMetadata;
 @property (nonatomic, readonly) BOOL isFrameKeypath;
 
-@property (nonatomic, copy, readonly) NSString *md5;
+@property (nonatomic, copy, readonly) NSString *hexedMD5;
 @property (nonatomic, copy, readonly) NSString *documentPath;
-@property (nonatomic, copy, readonly) NSURL *sorted;
+@property (nonatomic, copy, readonly) NSURL *urlWithSortedParams;
 
 @property (nonatomic, readonly) BOOL isWV;
 #pragma mark
