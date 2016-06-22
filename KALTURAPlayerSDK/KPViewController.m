@@ -19,7 +19,6 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
-#import "KPlayerFactory.h"
 #import "KPControlsView.h"
 #import "KCCPlayer.h"
 #import "KPController_Private.h"
@@ -68,7 +67,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
-@property (nonatomic, strong) KPlayerFactory *playerFactory;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
