@@ -176,7 +176,6 @@ NSString * const KPAdStateDidChangeNotification = @"KPAdStateDidChangeNotificati
     // Something went wrong loading ads. Log the error and play the content.
     KPLogError(@"Error loading ads: %@", adErrorData.adError.message);
     
-    [self postAdStateChangeNotification];
     self.view.hidden = YES;
     [self.contentPlayer play];
     
@@ -184,6 +183,9 @@ NSString * const KPAdStateDidChangeNotification = @"KPAdStateDidChangeNotificati
     [self.delegate player:nil
                 eventName:eventParams.allKeys.firstObject
                      JSON:eventParams.allValues.firstObject];
+    
+    [self postAdStateChangeNotification];
+
 }
 
 - (void)adsManager:(id<AdsManager>)adsManager
@@ -196,10 +198,11 @@ NSString * const KPAdStateDidChangeNotification = @"KPAdStateDidChangeNotificati
                      JSON:eventParams.allValues.firstObject];
     
     NSLog(@"AdsManager error: %@", error.message);
-    [self postAdStateChangeNotification];
     self.view.hidden = YES;
 
     [self.contentPlayer play];
+    
+    [self postAdStateChangeNotification];
 }
 
 #pragma mark AdsManager Delegates
