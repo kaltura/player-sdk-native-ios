@@ -61,6 +61,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     void (^_seekedEventHandler)();
                                     
     BOOL isActionSheetPresented;
+    BOOL shouldReplayVideo;
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
@@ -974,13 +975,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     __block KPMediaPlaybackState playbackState = KPMediaPlaybackStateUnknown;
     
-    if ([event isEqualToString:@"seeked"]) {
-        if (_seekedEventHandler) {
-            KPLogDebug(@"call seekedEventHandler");
-            _seekedEventHandler();
-            _seekedEventHandler = nil;
-        }
-    }
+//    if ([event isEqualToString:@"seeked"]) {
+//        if (_seekedEventHandler) {
+//            KPLogDebug(@"call seekedEventHandler");
+//            _seekedEventHandler();
+//            _seekedEventHandler = nil;
+//        }
+//    }
     
     void(^kPlayerStateBlock)() = @{
                                       CanPlayKey:
@@ -1032,6 +1033,22 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
     
     [self.controlsView triggerEvent:event withValue:value];
+    
+    if ([event isEqualToString:@"seeked"]) {
+        if (shouldReplayVideo) {
+            //[self.playerFactory.player setCurrentPlaybackTime:1.0];
+            [self.playerFactory.player play];
+            shouldReplayVideo = NO;
+        }
+        else  if (_seekedEventHandler){
+            KPLogDebug(@"call seekedEventHandler");
+            _seekedEventHandler();
+            _seekedEventHandler = nil;
+        }
+    }
+    else if([event isEqualToString:@"ended"]){
+        shouldReplayVideo = YES;
+    }
 }
 
 - (void)playerPlaybackStateDidChange:(KPMediaPlaybackState)playbackState {
