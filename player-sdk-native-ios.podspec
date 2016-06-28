@@ -39,7 +39,7 @@ s.framework    = 'MediaPlayer', 'SystemConfiguration', 'QuartzCore', 'CoreFounda
 
 s.xcconfig = {'OTHER_LDFLAGS' => '-ObjC -all_load'}
 
-s.dependency 'google-cast-sdk'
+s.dependency 'google-cast-sdk', '2.10.4.1'
 s.dependency 'GoogleAds-IMA-iOS-SDK-For-AdMob', '3.2.1'
 s.requires_arc = true
 
