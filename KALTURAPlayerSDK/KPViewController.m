@@ -309,7 +309,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     // Initialize player factory
     if (!_playerFactory) {
         _playerFactory = [[KPlayerFactory alloc] initWithPlayerClassName:PlayerClassName];
-        _playerFactory.castProvider = _castProvider;
         [_playerFactory addPlayerToController:self];
         _playerFactory.delegate = self;
         _playerFactory.kIMAWebOpenerDelegate = _kIMAWebOpenerDelegate;
@@ -356,6 +355,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     KPLogTrace(@"Exit");
 }
 
+
+- (void)setCastProvider:(KCastProvider *)castProvider {
+    _playerFactory.castProvider = castProvider;
+    if (_playerFactory.castProvider.isConnected) {
+        [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+    }
+}
 
 
 
