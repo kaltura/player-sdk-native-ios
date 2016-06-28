@@ -10,6 +10,7 @@
 #import "KPLog.h"
 #import "KChromeCastWrapper.h"
 #import "CastProviderInternalDelegate.h"
+#import "NSString+Utilities.h"
 
 
 @interface KCastDevice ()
@@ -164,8 +165,19 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
 - (void)castChannel:(id)channel
 didReceiveTextMessage:(NSString *)message
       withNamespace:(NSString *)protocolNamespace {
-    if ([message isEqualToString:@"readyForMedia"]) {
+    if ([message hasPrefix:@"readyForMedia"]) {
         [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
+        NSArray *castParams = message.castParams;
+        if (castParams) {
+            _mediaControlChannel.delegate = _internalDelegate;
+            id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:castParams.firstObject
+                                                                                                                  streamType:0
+                                                                                                                 contentType:castParams.lastObject
+                                                                                                                    metadata:nil
+                                                                                                              streamDuration:0
+                                                                                                                  customData:nil];
+            [_mediaControlChannel loadMedia:mediaInformation autoplay:NO playPosition:0];
+        }
         [_internalDelegate startCasting:_mediaControlChannel];
     }
 }

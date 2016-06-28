@@ -30,6 +30,8 @@ typedef struct FunctionComponents {
 
 @property (nonatomic, copy, readonly) NSString *extractLocalContentId;
 
+@property (nonatomic, readonly) NSArray *castParams;
+
 - (NSString *)appendIDFA:(NSString *)IDFA;
 
 @property (nonatomic, readonly) Attribute attributeEnumFromString;

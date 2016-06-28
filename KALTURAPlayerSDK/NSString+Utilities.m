@@ -176,6 +176,16 @@ NSString *const LocalContentId = @"localContentId";
     return nil;
 }
 
+- (NSArray *)castParams {
+    NSString *test = @"|";
+    NSArray *comps = [self componentsSeparatedByString:test];
+    if (comps.count == 3) {
+        NSArray *temp = [comps subarrayWithRange:(NSRange){1, 2}];
+        return temp;
+    }
+    return nil;
+}
+
 - (NSString *)streamType {
     NSURLComponents *comp = [NSURLComponents componentsWithURL:[NSURL URLWithString:self]
                                        resolvingAgainstBaseURL:NO];
