@@ -153,7 +153,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     _delegate = nil;
     _playerController = nil;
     _currentConfiguration = nil;
-    _kdpAPIState = nil;
+    _kdpAPIState = KDPAPIStateUnknown;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.view removeFromSuperview];
@@ -830,7 +830,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             [self visible: attributeVal];
             break;
         case audioTrackSelected:
-            [_playerFactory selectAudioTrack:[attributeVal integerValue]];
+            [_playerFactory selectAudioTrack:(int)[attributeVal integerValue]];
             break;
         case textTrackSelected:
             [_playerFactory selectTextTrack:attributeVal];
