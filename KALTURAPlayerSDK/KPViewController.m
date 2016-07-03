@@ -358,7 +358,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)setCastProvider:(KCastProvider *)castProvider {
     _playerFactory.castProvider = castProvider;
-    if (_playerFactory.castProvider.isConnected) {
+    if (castProvider && _playerFactory.castProvider.isConnected) {
         [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
     }
 }

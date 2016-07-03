@@ -200,8 +200,12 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 #pragma mark
 #pragma mark Casting
 - (void)setCastProvider:(KCastProvider *)castProvider {
-    _castProvider = castProvider;
-    _castProvider.internalDelegate = self;
+    if (castProvider) {
+        _castProvider = castProvider;
+        _castProvider.internalDelegate = self;
+    } else {
+        [self stopCasting];
+    }
 }
 
 - (void)sendCastRecieverTextMessage:(NSString *)message {

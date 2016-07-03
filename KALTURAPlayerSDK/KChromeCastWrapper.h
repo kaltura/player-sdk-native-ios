@@ -213,6 +213,13 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 - (NSInteger)stop;
 @end
 
+@protocol KPGCLaunchOptions <NSObject>
+
+/** Initializes the object with the system's language and the given relaunch behavior. */
+- (instancetype)initWithRelaunchIfRunning:(BOOL)relaunchIfRunning;
+
+@end
+
 @protocol KPGCDeviceManager <NSObject>
 @property(nonatomic, readonly) id<KPGCDevice> device;
 @property(nonatomic, weak) id delegate;
@@ -224,6 +231,8 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 - (BOOL)leaveApplication;
 - (void)disconnectWithLeave:(BOOL)leaveApplication;
 - (NSInteger)launchApplication:(NSString *)applicationID;
+- (NSInteger)launchApplication:(NSString *)applicationID
+             withLaunchOptions:(id<KPGCLaunchOptions>)launchOptions;
 - (BOOL)addChannel:(id)channel;
 - (BOOL)removeChannel:(id)channel;
 @end

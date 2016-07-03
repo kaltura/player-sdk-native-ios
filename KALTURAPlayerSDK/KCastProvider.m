@@ -143,7 +143,8 @@
     
     
 //    // Launch application after getting connected.
-    [_deviceManager launchApplication:_appID];
+    id launchOptions = [[NSClassFromString(@"GCKLaunchOptions") alloc] initWithRelaunchIfRunning:YES];
+    [_deviceManager launchApplication:_appID withLaunchOptions:launchOptions];
 }
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
@@ -151,14 +152,16 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
             sessionID:(NSString *)sessionID
   launchedApplication:(BOOL)launchedApplication {
     _sessionID = sessionID;
-    _mediaControlChannel = [NSClassFromString(@"GCKMediaControlChannel") new];
-    _mediaControlChannel.delegate = self;
-    [_deviceManager addChannel:_mediaControlChannel];
-    [_mediaControlChannel requestStatus];
-    _castChannel = [[NSClassFromString(@"GCKGenericChannel") alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
-    [_castChannel setDelegate:self];
-    [deviceManager addChannel:_castChannel];
-    [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
+    if (!_mediaControlChannel) {
+        _mediaControlChannel = [NSClassFromString(@"GCKMediaControlChannel") new];
+        _mediaControlChannel.delegate = self;
+        [_deviceManager addChannel:_mediaControlChannel];
+        [_mediaControlChannel requestStatus];
+        _castChannel = [[NSClassFromString(@"GCKGenericChannel") alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
+        [_castChannel setDelegate:self];
+        [deviceManager addChannel:_castChannel];
+        [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
+    }
     [_internalDelegate updateCastState:@"chromecastDeviceConnected"];
 }
 
