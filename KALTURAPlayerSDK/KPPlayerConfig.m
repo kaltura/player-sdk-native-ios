@@ -15,7 +15,6 @@
 
 
 #define DEFAULT_CACHE_SIZE_MB   100
-#define SERVER_CACHE_TIME       10*24*60*60 // 10 days?
 
 #define EMBEDFRAME_PAGE @"mwEmbedFrame.php"
 #define EMBEDFRAME_PAGE_WITH_SLASH @"/mwEmbedFrame.php"
@@ -51,7 +50,7 @@
         _server = serverURL;
         _uiConfId = uiConfId;
         _partnerId = partnerId;
-        _cacheSize = DEFAULT_CACHE_SIZE_MB;   // Default 100 MB
+        _cacheSize = DEFAULT_CACHE_SIZE_MB;
         
         [self resolveEmbedFrameUrlWithCompletionHandler:^(BOOL success) {
             KPLogDebug(@"Resolved player URL");
