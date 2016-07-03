@@ -583,7 +583,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (void)changeConfiguration:(KPPlayerConfig *)config {
     if (config) {
         _currentConfiguration = config;
+        _currentConfiguration.supportedMediaFormats = [KPAssetBuilder supportedMediaFormats];
+
         [self.playerFactory prepareForChangeConfiguration];
+        
         [self.controlsView loadRequest:[NSURLRequest requestWithURL:config.videoURL]];
         isJsCallbackReady = NO;
         [self registerReadyEvent:^{
