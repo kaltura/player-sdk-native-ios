@@ -270,6 +270,7 @@ NSString * const StatusKeyPath = @"status";
                     [self.delegate player:self
                                 eventName:ErrorKey
                                     value:[self.error localizedDescription]];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:@"KPStatusFailedNotification" object:Nil];
                     break;
                 case AVPlayerItemStatusReadyToPlay: {
                     if (oldValue.intValue != newValue.intValue) {

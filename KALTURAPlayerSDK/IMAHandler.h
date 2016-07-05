@@ -47,6 +47,7 @@
 
 @property (nonatomic, strong) id webOpenerPresentingController;
 @property (nonatomic, strong) id webOpenerDelegate;
+@property (nonatomic, assign) int bitrate;
 
 @end
 
@@ -117,6 +118,10 @@ typedef NS_ENUM(NSInteger, IMAAdEventType){
      *  Single ad has finished.
      */
     kIMAAdEvent_COMPLETE,
+    /**
+     *  Cuepoints changed for VOD stream (only used for dynamic ad insertion).
+     */
+    kIMAAdEvent_CUEPOINTS_CHANGED,
     /**
      *  First quartile of a linear ad was reached.
      */

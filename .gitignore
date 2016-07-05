@@ -41,3 +41,7 @@ xcuserdata
 # Carthage/Checkouts
 
 Carthage/Build
+
+Pods/
+Podfile.lock
+.DS_Store

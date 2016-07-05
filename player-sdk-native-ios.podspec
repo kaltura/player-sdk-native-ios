@@ -5,14 +5,14 @@ Pod::Spec.new do |s|
 
 
 # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.name         = "KalturaPlayerSDK"
+s.name         = "player-sdk-native-ios"
 s.version      = "2.3.5"
 s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
 
 #s.description  = <<-DESC
 #                 The Kaltura player-sdk-native component enables embedding the kaltura player into native environments.
 #                 DESC
-s.homepage     = "https://github.com/kaltura/player-sdk-native-ios"
+s.homepage     = "https://github.com/SachinAhujaWork/player-sdk-native-ios"
 
 
 
@@ -33,10 +33,14 @@ s.platform     = :ios, "8.0"
 
 
 # ――― Source Location ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-s.source       = { :git => 'https://github.com/kaltura/player-sdk-native-ios.git', :tag => 'v' + s.version.to_s }
+s.source       = { :git => 'https://github.com/SachinAhujaWork/player-sdk-native-ios.git' }
 s.libraries      = 'stdc++', 'z', 'System', 'stdc++.6', 'xml2.2', 'c++', 'stdc++.6.0.9', 'xml2', 'WViPhoneAPI'
 s.framework    = 'MediaPlayer', 'SystemConfiguration', 'QuartzCore', 'CoreFoundation', 'AVFoundation', 'AudioToolbox', 'CFNetwork', 'AdSupport', 'WebKit', 'MessageUI', 'Social', 'MediaAccessibility', 'Foundation', 'CoreGraphics', 'UIKit'
 
+s.xcconfig = {'OTHER_LDFLAGS' => '-ObjC -all_load'}
+
+s.dependency 'google-cast-sdk', '2.10.4.1'
+s.dependency 'GoogleAds-IMA-iOS-SDK-For-AdMob', '3.2.1'
 s.requires_arc = true
 
 
@@ -59,5 +63,4 @@ s.resource_bundle = { 'KALTURAPlayerSDKResources' => 'KALTURAPlayerSDK/*.{xib,pl
 
 # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 end

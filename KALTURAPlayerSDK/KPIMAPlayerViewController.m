@@ -11,6 +11,8 @@
 #import "KPLog.h"
 #import "IMAHandler.h"
 
+NSString * const KPAdStateDidChangeNotification = @"KPAdStateDidChangeNotification";
+
 @interface KPIMAPlayerViewController ()
 
 /// Contains the params for the logic layer
@@ -118,6 +120,7 @@
         _adsRenderingSettings = [NSClassFromString(@"IMAAdsRenderingSettings") new];
         _adsRenderingSettings.webOpenerPresentingController = self;
         _adsRenderingSettings.webOpenerDelegate = _datasource;
+        _adsRenderingSettings.bitrate = 2048; // kbits
     }
     return _adsRenderingSettings;
 }
@@ -173,10 +176,16 @@
     // Something went wrong loading ads. Log the error and play the content.
     KPLogError(@"Error loading ads: %@", adErrorData.adError.message);
     
+    self.view.hidden = YES;
+    [self.contentPlayer play];
+    
      NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
     [self.delegate player:nil
                 eventName:eventParams.allKeys.firstObject
                      JSON:eventParams.allValues.firstObject];
+    
+    [self postAdStateChangeNotification];
+
 }
 
 - (void)adsManager:(id<AdsManager>)adsManager
@@ -189,7 +198,11 @@
                      JSON:eventParams.allValues.firstObject];
     
     NSLog(@"AdsManager error: %@", error.message);
+    self.view.hidden = YES;
+
     [self.contentPlayer play];
+    
+    [self postAdStateChangeNotification];
 }
 
 #pragma mark AdsManager Delegates
@@ -208,6 +221,7 @@
             
             break;
         case kIMAAdEvent_STARTED:
+            [self postAdStateChangeNotification];
             self.view.hidden = NO;
             self.adEventParams.duration = event.ad.duration;
             eventParams = self.adEventParams.toJSON.adStart;
@@ -263,6 +277,7 @@
 
 - (void)adsManagerDidRequestContentResume:(id<AdsManager>)adsManager {
     // The SDK is done playing ads (at least for now), so resume the content.
+    self.view.hidden = YES;
     [self.contentPlayer play];
     NSDictionary *eventParams = ContentResumeRequestedKey.nullVal;
     [self.delegate player:nil
@@ -299,6 +314,10 @@
     if (_adsManager) {
         [_adsManager resume];
     }
+}
+
+- (void)postAdStateChangeNotification{
+    [[NSNotificationCenter defaultCenter] postNotificationName:KPAdStateDidChangeNotification object:Nil];
 }
 
 @end

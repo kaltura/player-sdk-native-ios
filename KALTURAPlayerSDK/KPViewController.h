@@ -20,6 +20,7 @@
 #import "KPViewControllerProtocols.h"
 #import "KPPlayerConfig.h"
 #import "KPController.h"
+#import "KPlayerFactory.h"
 
 @class KPViewController;
 @protocol KPViewControllerDelegate <NSObject>
@@ -118,6 +119,8 @@
 @property (nonatomic, weak) id<KPSourceURLProvider> customSourceURLProvider;
 
 @property (nonatomic, strong) KPController *playerController;
+
+@property (nonatomic, strong) KPlayerFactory *playerFactory;
 
 /**
  *  Block which notifies that the full screen has been toggeled, when assigning to this block the default full screen behaviour will be canceled and the full screen handling will be your reponsibility. 

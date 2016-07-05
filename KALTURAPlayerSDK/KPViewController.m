@@ -19,7 +19,6 @@ static NSString *AppConfigurationFileName = @"AppConfigurations";
 #import "NSString+Utilities.h"
 #import "DeviceParamsHandler.h"
 #import "KPIMAPlayerViewController.h"
-#import "KPlayerFactory.h"
 #import "KPControlsView.h"
 #import "KCCPlayer.h"
 #import "KPController_Private.h"
@@ -62,13 +61,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     void (^_seekedEventHandler)();
                                     
     BOOL isActionSheetPresented;
+    BOOL shouldReplayVideo;
 }
 
 @property (nonatomic, strong) id<KPControlsView> controlsView;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEventsDict;
 @property (nonatomic, copy) NSMutableDictionary *kPlayerEvaluatedDict;
 @property (nonatomic, strong) KPShareManager *shareManager;
-@property (nonatomic, strong) KPlayerFactory *playerFactory;
 @property (nonatomic) BOOL isModifiedFrame;
 @property (nonatomic) BOOL isFullScreenToggled;
 @property (nonatomic, strong) UIView *superView;
@@ -984,13 +983,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     __block KPMediaPlaybackState playbackState = KPMediaPlaybackStateUnknown;
     
-    if ([event isEqualToString:@"seeked"]) {
-        if (_seekedEventHandler) {
-            KPLogDebug(@"call seekedEventHandler");
-            _seekedEventHandler();
-            _seekedEventHandler = nil;
-        }
-    }
+//    if ([event isEqualToString:@"seeked"]) {
+//        if (_seekedEventHandler) {
+//            KPLogDebug(@"call seekedEventHandler");
+//            _seekedEventHandler();
+//            _seekedEventHandler = nil;
+//        }
+//    }
     
     void(^kPlayerStateBlock)() = @{
                                       CanPlayKey:
@@ -1042,6 +1041,22 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
     
     [self.controlsView triggerEvent:event withValue:value];
+    
+    if ([event isEqualToString:@"seeked"]) {
+        if (shouldReplayVideo) {
+            //[self.playerFactory.player setCurrentPlaybackTime:1.0];
+            [self.playerFactory.player play];
+            shouldReplayVideo = NO;
+        }
+        else  if (_seekedEventHandler){
+            KPLogDebug(@"call seekedEventHandler");
+            _seekedEventHandler();
+            _seekedEventHandler = nil;
+        }
+    }
+    else if([event isEqualToString:@"ended"]){
+        shouldReplayVideo = YES;
+    }
 }
 
 - (void)playerPlaybackStateDidChange:(KPMediaPlaybackState)playbackState {
