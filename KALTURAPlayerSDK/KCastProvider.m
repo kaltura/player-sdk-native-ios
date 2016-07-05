@@ -110,6 +110,7 @@
 }
 
 - (void)disconnectFromDevice {
+    [_internalDelegate stopCasting];
     [_deviceManager disconnect];
 }
 
