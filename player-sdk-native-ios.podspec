@@ -63,5 +63,4 @@ s.resource_bundle = { 'KALTURAPlayerSDKResources' => 'KALTURAPlayerSDK/*.{xib,pl
 
 # s.preserve_paths = "FilesToSave", "MoreFilesToSave"
 
-s.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO' }
 end
