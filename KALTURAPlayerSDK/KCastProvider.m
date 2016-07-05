@@ -86,7 +86,7 @@
     id<FilterCriteria> filterCriteria = [NSClassFromString(@"GCKFilterCriteria") criteriaForAvailableApplicationWithID:appID];
     
     // Initialize device scanner.
-    self.deviceScanner = [[NSClassFromString(@"GCKDeviceScanner") alloc] initWithFilterCriteria:filterCriteria];
+    self.deviceScanner = [[NSClassFromString(@"GCKDeviceScanner") alloc] init];
     [_deviceScanner addListener:self];
     [_deviceScanner startScan];
     _deviceScanner.passiveScan = _passiveScan;
@@ -110,16 +110,19 @@
 }
 
 - (void)disconnectFromDevice {
+    [_deviceManager disconnect];
+}
+
+- (void)disconnectFromDeviceWithLeave {
     [_internalDelegate stopCasting];
+    [_deviceManager stopApplicationWithSessionID:_sessionID];
     [_deviceManager removeChannel:_castChannel];
     [_deviceManager removeChannel:_mediaControlChannel];
-    [_deviceManager stopApplicationWithSessionID:_sessionID];
     [_deviceManager disconnect];
     _deviceManager.delegate = nil;
     _deviceManager = nil;
+
 }
-
-
 
 #pragma mark KPGCDeviceScannerListener
 - (void)deviceDidComeOnline:(id<KPGCDevice>)device {
@@ -142,7 +145,7 @@
     
     
     
-//    // Launch application after getting connected.
+    // Launch application after getting connected.
     id launchOptions = [[NSClassFromString(@"GCKLaunchOptions") alloc] initWithRelaunchIfRunning:YES];
     [_deviceManager launchApplication:_appID withLaunchOptions:launchOptions];
 }

@@ -240,7 +240,7 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 @protocol KPGCDeviceScannerListener;
 
 @protocol KPGCDeviceScanner <NSObject>
-- (id)initWithFilterCriteria:(id)criteria;
+//- (id)initWithFilterCriteria:(id)criteria;
 - (void)addListener:(id<KPGCDeviceScannerListener>)listener;
 @property(nonatomic, readonly, copy) NSArray<id<KPGCDevice>> *devices;
 @property (nonatomic) BOOL passiveScan;

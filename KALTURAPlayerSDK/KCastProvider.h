@@ -37,5 +37,6 @@
 - (void)stopScan;
 - (void)connectToDevice:(KCastDevice *)device;
 - (void)disconnectFromDevice;
+- (void)disconnectFromDeviceWithLeave;
 
 @end
