@@ -45,6 +45,7 @@ NSString * const StatusKeyPath = @"status";
 @synthesize volume = _volume;
 @synthesize mute = _mute;
 @synthesize preferSubtitles = _preferSubtitles;
+@synthesize isPlaying = _isPlaying;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -249,8 +250,7 @@ NSString * const StatusKeyPath = @"status";
             } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
                 KPLogTrace(@"PlaybackLikelyToKeepUp");
                 [self playerHanging];
-            }
-            else if (self.currentItem.isPlaybackBufferFull) {
+            } else if (self.currentItem.isPlaybackBufferFull) {
                 [self stopBuffering];
             }
         } else if ([keyPath isEqual:RateKeyPath]) {
@@ -258,10 +258,12 @@ NSString * const StatusKeyPath = @"status";
                 [self.delegate player:self
                             eventName:PlayKey
                                 value:nil];
+                _isPlaying = YES;
             } else {
                 [self.delegate player:self
                             eventName:PauseKey
                                 value:nil];
+                _isPlaying = NO;
             }
         } else if ([keyPath isEqualToString:StatusKeyPath]) {
             switch (self.currentItem.status) {

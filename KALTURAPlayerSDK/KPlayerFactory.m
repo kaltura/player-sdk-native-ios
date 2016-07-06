@@ -11,19 +11,36 @@
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 #import "KPAssetBuilder.h"
+#import "CastProviderInternalDelegate.h"
+#import "KChromeCastWrapper.h"
+#import "KChromecastPlayer.h"
 
-@interface KPlayerFactory() <KPlayerDelegate> {
+typedef NS_ENUM(NSInteger, CurrentPlyerType) {
+    CurrentPlyerTypeDefault,
+    CurrentPlyerTypeIMA,
+    CurrentPlyerTypeCast
+};
+
+@interface KCastProvider ()
+//@property (nonatomic, readonly) id<KCastChannel> castChannel;
+@property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
+@end
+
+@interface KPlayerFactory() <KPlayerDelegate, CastProviderInternalDelegate, KChromecastPlayerDelegate> {
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
     BOOL _backToForeground;
     NSTimeInterval _lastPosition;
+    CurrentPlyerType currentPlayerType;
+    BOOL isPlaying;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
 @property (nonatomic, retain) KPAssetBuilder* assetBuilder;
+@property (nonatomic, strong) KChromecastPlayer *castPlayer;
 @end
 
 @implementation KPlayerFactory
@@ -114,6 +131,10 @@
 }
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
+    if (currentPlayerType == CurrentPlyerTypeCast) {
+        [_castPlayer seek:currentPlayBackTime];
+        return;
+    }
     if (isReady) {
         _player.currentPlaybackTime = currentPlayBackTime;
     } else {
@@ -189,6 +210,75 @@
     _src = nil;
     _playerClassName = nil;
 }
+
+#pragma mark
+#pragma mark Casting
+- (void)setCastProvider:(KCastProvider *)castProvider {
+    if (castProvider) {
+        _castProvider = castProvider;
+        _castProvider.internalDelegate = self;
+    }
+}
+
+- (void)sendCastRecieverTextMessage:(NSString *)message {
+    BOOL check = [_castProvider.castChannel sendTextMessage:message];
+    if (check) {
+        NSLog(@"%@", message);
+    }
+}
+
+#pragma mark CastProviderInternalDelegate
+- (void)startCasting:(id<KPGCMediaControlChannel>)mediaControlChannel {
+    if (!_castPlayer) {
+        _castPlayer = [[KChromecastPlayer alloc] initWithMediaChannel:mediaControlChannel];
+        _castPlayer.delegate = self;
+    }
+    [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
+//    [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime];
+    if (self.currentPlayBackTime > 0) {
+        [_castPlayer seek:self.currentPlayBackTime];
+    }
+}
+
+- (void)updateCastState:(NSString *)state {
+    isPlaying = _player.isPlaying;
+    [_delegate player:_player eventName:state value:nil];
+}
+
+- (void)stopCasting {
+    [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    [_player setCurrentPlaybackTime:_castPlayer.currentTime];
+    _castPlayer = nil;
+    currentPlayerType = CurrentPlyerTypeDefault;
+    [self play];
+}
+
+- (void)readyToPlay:(id<KPGCMediaControlChannel>)mediaControlChannel {
+    currentPlayerType = CurrentPlyerTypeCast;
+    [self.delegate player:_player
+                eventName:DurationChangedKey
+                    value:@(mediaControlChannel.mediaStatus.mediaInformation.streamDuration).stringValue];
+    [self.delegate player:_player
+                eventName:LoadedMetaDataKey
+                    value:@""];
+    [self.delegate player:_player eventName:CanPlayKey value:nil];
+    [_delegate player:_player eventName:@"hideConnectingMessage" value:nil];
+    if (isPlaying) {
+        [_castPlayer play];
+    }
+}
+
+- (void)castPlayerState:(NSString *)state {
+    [_delegate player:_player eventName:state value:nil];
+}
+
+#pragma mark KChromecastPlayerDelegate
+- (void)updateProgress:(NSTimeInterval)currentTime {
+    [self.delegate player:_player
+                eventName:TimeUpdateKey
+                    value:@(currentTime).stringValue];
+}
+
 
 
 #pragma mark KPlayerEventsDelegate
@@ -267,7 +357,11 @@
         [self.adController resume];
     }
     
-    if ([self.player respondsToSelector:@selector(play)]) {
+    if (currentPlayerType == CurrentPlyerTypeCast) {
+        [_castPlayer play];
+    }
+    
+    if (currentPlayerType == CurrentPlyerTypeDefault && [self.player respondsToSelector:@selector(play)]) {
         [self.player play];
     }
 }
@@ -275,6 +369,10 @@
 - (void)pause {
     if (_adController) {
         [self.adController pause];
+    }
+    
+    if (currentPlayerType == CurrentPlyerTypeCast) {
+        [_castPlayer pause];
     }
     
     if ([self.player respondsToSelector:@selector(pause)]) {
