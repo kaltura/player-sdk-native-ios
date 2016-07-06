@@ -203,8 +203,6 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     if (castProvider) {
         _castProvider = castProvider;
         _castProvider.internalDelegate = self;
-    } else {
-        [self stopCasting];
     }
 }
 
