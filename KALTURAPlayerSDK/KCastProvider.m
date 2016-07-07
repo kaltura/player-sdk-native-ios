@@ -189,8 +189,8 @@ didReceiveTextMessage:(NSString *)message
                                                                                                                     metadata:nil
                                                                                                               streamDuration:0
                                                                                                                   customData:nil];
-            [_mediaControlChannel loadMedia:mediaInformation autoplay:NO playPosition:0];
         }
+        
         [_internalDelegate startCasting:_mediaControlChannel];
     }
 }
