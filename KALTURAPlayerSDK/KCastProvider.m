@@ -254,4 +254,12 @@ didReceiveStatusForApplication:(id<KPGCMediaMetadata>)applicationMetadata {
     return nil;
 }
 
+- (id)mediaStatus {
+    if (_mediaControlChannel) {
+        return [_mediaControlChannel mediaStatus];
+    }
+    
+    return nil;
+}
+
 @end
