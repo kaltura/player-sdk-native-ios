@@ -211,6 +211,8 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 - (void)play;
 - (void)pause;
 - (NSInteger)stop;
+- (NSInteger)setStreamVolume:(float)volume;
+- (NSInteger)setStreamMuted:(BOOL)muted;
 @end
 
 @protocol KPGCLaunchOptions <NSObject>

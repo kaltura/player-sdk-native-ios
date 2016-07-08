@@ -10,6 +10,16 @@
 #import "KCastDevice.h"
 
 @class KCastProvider;
+
+@protocol KCastMediaRemoteControl <NSObject>
+- (NSInteger)seekToTimeInterval:(NSTimeInterval)position;
+- (void)play;
+- (void)pause;
+- (NSInteger)stop;
+- (NSInteger)setStreamVolume:(float)volume;
+- (NSInteger)setStreamMuted:(BOOL)muted;
+@end
+
 @protocol KCastProviderDelegate <NSObject>
 
 @optional
@@ -20,10 +30,9 @@
 - (void)didDisconnectFromDevice:(KCastProvider *)provider;
 - (void)castProvider:(KCastProvider *)provider didFailToConnectToDevice:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider didFailToDisconnectFromDevice:(NSError *)error;
-
 @end
 
-@interface KCastProvider : NSObject
+@interface KCastProvider : NSObject <KCastMediaRemoteControl>
 - (instancetype)initWithCastChannel:(id)channel;
 @property (nonatomic, readonly) id castChannel;
 @property (nonatomic, getter=isCastButtonEnabled) BOOL castButtonEnabled;

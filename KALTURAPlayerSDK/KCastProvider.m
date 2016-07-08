@@ -210,8 +210,48 @@ didReceiveStatusForApplication:(id<KPGCMediaMetadata>)applicationMetadata {
     _isConnected = NO;
 }
 
-- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager didFailToStopApplicationWithError:(NSError *)error {
+- (void)play {
+    if (_mediaControlChannel) {
+        [_mediaControlChannel play];
+    }
+}
+
+- (void)pause {
+    if (_mediaControlChannel) {
+        [_mediaControlChannel pause];
+    }
+}
+
+- (NSInteger)stop {
+    if (_mediaControlChannel) {
+        return [_mediaControlChannel stop];
+    }
     
+    return nil;
+}
+
+- (NSInteger)seekToTimeInterval:(NSTimeInterval)position {
+    if (_mediaControlChannel) {
+        return [_mediaControlChannel seekToTimeInterval:position];
+    }
+    
+    return nil;
+}
+
+- (NSInteger)setStreamVolume:(float)volume {
+    if (_mediaControlChannel) {
+        return [_mediaControlChannel setStreamVolume:volume];
+    }
+    
+    return nil;
+}
+
+- (NSInteger)setStreamMuted:(BOOL)muted {
+    if (_mediaControlChannel) {
+        return [_mediaControlChannel setStreamMuted:muted];
+    }
+    
+    return nil;
 }
 
 @end
