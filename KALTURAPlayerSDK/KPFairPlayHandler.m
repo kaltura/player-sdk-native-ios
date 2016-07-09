@@ -40,7 +40,7 @@ static dispatch_queue_t	globalNotificationQueue( void )
     switch (key.attributeEnumFromString) {
         case fpsCertificate:
             // value is a base64-encoded string
-            _certificate = [[NSData alloc] initWithBase64Encoding:value];
+            _certificate = [[NSData alloc] initWithBase64EncodedString:value options:0];
             break;
             
         default:
@@ -68,7 +68,6 @@ static dispatch_queue_t	globalNotificationQueue( void )
 }
 
 - (NSData *)getContentKeyAndLeaseExpiryfromKeyServerModuleWithRequest:(NSData *)requestBytes contentIdentifierHost:(NSString *)assetStr leaseExpiryDuration:(NSTimeInterval *)expiryDuration error:(NSError **)errorOut {
-    NSData *decodedData = nil;
     
     NSString* licenseUri = _licenseUri;
     
@@ -79,7 +78,15 @@ static dispatch_queue_t	globalNotificationQueue( void )
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
     
     NSHTTPURLResponse* response = nil;
+    
+    KPLogDebug(@"Sending license request");
+    NSTimeInterval licenseResponseTime = [NSDate timeIntervalSinceReferenceDate];
+    
     NSData* responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:errorOut];
+    
+    licenseResponseTime = [NSDate timeIntervalSinceReferenceDate] - licenseResponseTime;
+    KPLogDebug(@"Received license response (%.3f)", licenseResponseTime);
+    
     if (!responseData) {
         KPLogError(@"No license response, error=%@", *errorOut);
         return nil;
@@ -136,14 +143,22 @@ static dispatch_queue_t	globalNotificationQueue( void )
     // Use the SKD URL as assetId.
     NSString *assetId = url.absoluteString;
     
-    NSData *certificate = _certificate;
-    if (!certificate) {
+    // Wait for licenseUri and certificate, up to 5 seconds. In particular, the certificate might not be ready yet.
+    // TODO: a better way of doing it is semaphores of some kind. 
+    for (int i=0; i < 5*1000/50 && !(_certificate && _licenseUri); i++) {
+        struct timespec delay;
+        delay.tv_nsec = 50*1000*1000; // 50 millisec
+        delay.tv_sec = 0;
+        nanosleep(&delay, &delay);
+    }
+    
+    if (!self.certificate) {
         KPLogError(@"Certificate is invalid or not set, can't continue");
         return NO;
     }
     
     // Get SPC
-    NSData *requestBytes = [loadingRequest streamingContentKeyRequestDataForApp:certificate
+    NSData *requestBytes = [loadingRequest streamingContentKeyRequestDataForApp:self.certificate
                                                       contentIdentifier:[assetId dataUsingEncoding:NSUTF8StringEncoding]
                                                                 options:nil
                                                                   error:&error];
