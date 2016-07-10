@@ -160,18 +160,14 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
     if (!_mediaControlChannel) {
         _mediaControlChannel = [NSClassFromString(@"GCKMediaControlChannel") new];
         _mediaControlChannel.delegate = self;
-        [_deviceManager addChannel:_mediaControlChannel];
-        [_mediaControlChannel requestStatus];
         _castChannel = [[NSClassFromString(@"GCKGenericChannel") alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
         [_castChannel setDelegate:self];
-        [_deviceManager addChannel:_castChannel];
-        [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
-    } else {
-        [_deviceManager addChannel:_mediaControlChannel];
-        [_mediaControlChannel requestStatus];
-        [_deviceManager addChannel:_castChannel];
-        [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
     }
+    
+    [_deviceManager addChannel:_mediaControlChannel];
+    [_mediaControlChannel requestStatus];
+    [_deviceManager addChannel:_castChannel];
+    [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
     [_internalDelegate updateCastState:@"chromecastDeviceConnected"];
 }
 
