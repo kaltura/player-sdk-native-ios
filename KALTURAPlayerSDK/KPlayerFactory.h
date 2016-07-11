@@ -13,12 +13,8 @@
 #import "KPViewControllerProtocols.h"
 #import "KCastProvider.h"
 
-static NSString *ChromecastClassName = @"KPChromecast";
 static NSString *PlayerClassName = @"KPlayer";
-
-static NSString *ChromeCastPlayerClassName = @"KCCPlayer";
 static NSString *WideVinePlayerClass = @"WVPlayer";
-
 static NSString *PlayKey = @"play";
 static NSString *PauseKey = @"pause";
 static NSString *StopKey = @"stop";

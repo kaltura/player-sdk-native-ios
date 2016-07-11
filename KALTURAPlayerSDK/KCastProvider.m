@@ -11,6 +11,7 @@
 #import "KChromeCastWrapper.h"
 #import "CastProviderInternalDelegate.h"
 #import "NSString+Utilities.h"
+#import "KChromecastPlayer.h"
 
 
 @interface KCastDevice ()
@@ -31,10 +32,11 @@
 @property (nonatomic, copy) NSString *appID;
 @property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
 @property (nonatomic, copy) NSString *sessionID;
+@property (nonatomic, strong) KChromecastPlayer *castPlayer;
 @end
 
 @implementation KCastProvider
-@synthesize selectedDevice = _selectedDevice, isConnected = _isConnected;
+@synthesize selectedDevice = _selectedDevice, isConnected = _isConnected, mediaRemoteControl = _mediaRemoteControl;
 
 - (instancetype)init {
     if (!NSClassFromString(@"GCKDeviceScanner")) {
@@ -78,6 +80,14 @@
     if ([_delegate respondsToSelector:@selector(castProvider:devicesInRange:)]) {
         [_delegate castProvider:self devicesInRange:_deviceScanner.devices.count];
     }
+}
+
+- (id<KCastMediaRemoteControl>)mediaRemoteControl {
+    if (_castPlayer) {
+        return _castPlayer;
+    }
+    
+    return nil;
 }
 
 - (void)startScan:(NSString *)appID {
@@ -166,6 +176,7 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
         [deviceManager addChannel:_castChannel];
         [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
     }
+    
     [_internalDelegate updateCastState:@"chromecastDeviceConnected"];
 }
 
@@ -175,17 +186,16 @@ didReceiveTextMessage:(NSString *)message
     if ([message hasPrefix:@"readyForMedia"]) {
         [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
         NSArray *castParams = message.castParams;
+        
         if (castParams) {
             _mediaControlChannel.delegate = _internalDelegate;
-            id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:castParams.firstObject
-                                                                                                                  streamType:0
-                                                                                                                 contentType:castParams.lastObject
-                                                                                                                    metadata:nil
-                                                                                                              streamDuration:0
-                                                                                                                  customData:nil];
-            [_mediaControlChannel loadMedia:mediaInformation autoplay:NO playPosition:0];
+            
+            if (!_castPlayer) {
+                _castPlayer = [[KChromecastPlayer alloc] initWithMediaChannel:_mediaControlChannel
+                                                                andCastParams:message.castParams];
+            }
         }
-        [_internalDelegate startCasting:_mediaControlChannel];
+        [_internalDelegate startCasting:_castPlayer];
     }
 }
 
@@ -208,58 +218,6 @@ didReceiveStatusForApplication:(id<KPGCMediaMetadata>)applicationMetadata {
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager didDisconnectWithError:(NSError *)error {
     _isConnected = NO;
-}
-
-- (void)play {
-    if (_mediaControlChannel) {
-        [_mediaControlChannel play];
-    }
-}
-
-- (void)pause {
-    if (_mediaControlChannel) {
-        [_mediaControlChannel pause];
-    }
-}
-
-- (NSInteger)stop {
-    if (_mediaControlChannel) {
-        return [_mediaControlChannel stop];
-    }
-    
-    return nil;
-}
-
-- (NSInteger)seekToTimeInterval:(NSTimeInterval)position {
-    if (_mediaControlChannel) {
-        return [_mediaControlChannel seekToTimeInterval:position];
-    }
-    
-    return nil;
-}
-
-- (NSInteger)setStreamVolume:(float)volume {
-    if (_mediaControlChannel) {
-        return [_mediaControlChannel setStreamVolume:volume];
-    }
-    
-    return nil;
-}
-
-- (NSInteger)setStreamMuted:(BOOL)muted {
-    if (_mediaControlChannel) {
-        return [_mediaControlChannel setStreamMuted:muted];
-    }
-    
-    return nil;
-}
-
-- (id)mediaStatus {
-    if (_mediaControlChannel) {
-        return [_mediaControlChannel mediaStatus];
-    }
-    
-    return nil;
 }
 
 @end

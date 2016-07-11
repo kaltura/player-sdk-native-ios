@@ -10,7 +10,7 @@
 #import "KChromeCastWrapper.h"
 
 @protocol CastProviderInternalDelegate <NSObject>
-- (void)startCasting:(id<KPGCMediaControlChannel>)mediaControlChannel;
+- (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer;
 - (void)updateCastState:(NSString *)state;
 - (void)stopCasting;
 @end
