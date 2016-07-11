@@ -11,6 +11,7 @@
 #import "KChromeCastWrapper.h"
 #import "CastProviderInternalDelegate.h"
 #import "NSString+Utilities.h"
+#import "KChromecastPlayer.h"
 
 
 @interface KCastDevice ()
@@ -31,10 +32,11 @@
 @property (nonatomic, copy) NSString *appID;
 @property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
 @property (nonatomic, copy) NSString *sessionID;
+@property (nonatomic, strong) KChromecastPlayer *castPlayer;
 @end
 
 @implementation KCastProvider
-@synthesize selectedDevice = _selectedDevice, isConnected = _isConnected;
+@synthesize selectedDevice = _selectedDevice, isConnected = _isConnected, mediaRemoteControl = _mediaRemoteControl;
 
 - (instancetype)init {
     if (!NSClassFromString(@"GCKDeviceScanner")) {
@@ -80,6 +82,14 @@
     }
 }
 
+- (id<KCastMediaRemoteControl>)mediaRemoteControl {
+    if (_castPlayer) {
+        return _castPlayer;
+    }
+    
+    return nil;
+}
+
 - (void)startScan:(NSString *)appID {
     _appID = appID;
 
@@ -112,6 +122,8 @@
 - (void)disconnectFromDevice {
     [_internalDelegate stopCasting];
     [_deviceManager disconnect];
+    [_deviceManager removeChannel:_castChannel];
+    [_deviceManager removeChannel:_mediaControlChannel];
     _deviceManager.delegate = nil;
     _deviceManager = nil;
     _isConnected = NO;
@@ -119,8 +131,6 @@
 
 - (void)disconnectFromDeviceWithLeave {
     [_deviceManager stopApplicationWithSessionID:_sessionID];
-    [_deviceManager removeChannel:_castChannel];
-    [_deviceManager removeChannel:_mediaControlChannel];
     _castChannel = nil;
     _mediaControlChannel = nil;
     [self disconnectFromDevice];
@@ -159,7 +169,6 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
     _sessionID = sessionID;
     if (!_mediaControlChannel) {
         _mediaControlChannel = [NSClassFromString(@"GCKMediaControlChannel") new];
-        _mediaControlChannel.delegate = self;
         _castChannel = [[NSClassFromString(@"GCKGenericChannel") alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
         [_castChannel setDelegate:self];
     }
@@ -177,17 +186,15 @@ didReceiveTextMessage:(NSString *)message
     if ([message hasPrefix:@"readyForMedia"]) {
         [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
         NSArray *castParams = message.castParams;
+        
         if (castParams) {
-            _mediaControlChannel.delegate = _internalDelegate;
-            id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:castParams.firstObject
-                                                                                                                  streamType:0
-                                                                                                                 contentType:castParams.lastObject
-                                                                                                                    metadata:nil
-                                                                                                              streamDuration:0
-                                                                                                                  customData:nil];
+            if (!_castPlayer) {
+                _castPlayer = [[KChromecastPlayer alloc] initWithMediaChannel:_mediaControlChannel
+                                                                andCastParams:message.castParams];
+            }
         }
         
-        [_internalDelegate startCasting:_mediaControlChannel];
+        [_internalDelegate startCasting:_castPlayer];
     }
 }
 

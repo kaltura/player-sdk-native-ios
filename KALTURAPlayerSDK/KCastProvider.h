@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import "KCastDevice.h"
+#import "KCastMediaRemoteControl.h"
 
 @class KCastProvider;
+
 @protocol KCastProviderDelegate <NSObject>
 
 @optional
@@ -20,7 +22,6 @@
 - (void)didDisconnectFromDevice:(KCastProvider *)provider;
 - (void)castProvider:(KCastProvider *)provider didFailToConnectToDevice:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider didFailToDisconnectFromDevice:(NSError *)error;
-
 @end
 
 @interface KCastProvider : NSObject
@@ -32,6 +33,7 @@
 @property (nonatomic, copy, readonly) NSArray<KCastDevice *> *devices;
 @property (nonatomic, readonly) KCastDevice *selectedDevice;
 @property (nonatomic, readonly) BOOL isConnected;
+@property (nonatomic, weak, readonly) id<KCastMediaRemoteControl> mediaRemoteControl;
 
 - (void)startScan:(NSString *)appID;
 - (void)stopScan;

@@ -12,8 +12,7 @@
 #import "NSString+Utilities.h"
 #import "KPAssetBuilder.h"
 #import "CastProviderInternalDelegate.h"
-#import "KChromeCastWrapper.h"
-#import "KChromecastPlayer.h"
+#import "KCastMediaRemoteControl.h"
 
 typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     CurrentPlyerTypeDefault,
@@ -22,11 +21,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 };
 
 @interface KCastProvider ()
-//@property (nonatomic, readonly) id<KCastChannel> castChannel;
 @property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
 @end
 
-@interface KPlayerFactory() <KPlayerDelegate, CastProviderInternalDelegate, KChromecastPlayerDelegate> {
+@interface KPlayerFactory() <KPlayerDelegate, CastProviderInternalDelegate, KCastMediaRemoteControlDelegate> {
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
@@ -40,7 +38,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
 @property (nonatomic, retain) KPAssetBuilder* assetBuilder;
-@property (nonatomic, strong) KChromecastPlayer *castPlayer;
+@property (nonatomic, strong) id<KCastMediaRemoteControl> castPlayer;
 @end
 
 @implementation KPlayerFactory
@@ -132,7 +130,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        [_castPlayer seek:currentPlayBackTime];
+        [_castPlayer seekToTimeInterval:currentPlayBackTime];
         return;
     }
     if (isReady) {
@@ -228,11 +226,12 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 #pragma mark CastProviderInternalDelegate
-- (void)startCasting:(id<KPGCMediaControlChannel>)mediaControlChannel {
+- (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer {
     if (!_castPlayer) {
-        _castPlayer = [[KChromecastPlayer alloc] initWithMediaChannel:mediaControlChannel];
-        _castPlayer.delegate = self;
+        _castPlayer = castPlayer;
+        [_castPlayer addObserver:self];
     }
+    
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
     [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime];
 }
@@ -244,22 +243,24 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)stopCasting {
     [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    [_castPlayer removeObserver:self];
     [_player setCurrentPlaybackTime:_castPlayer.currentTime];
     _castPlayer = nil;
     currentPlayerType = CurrentPlyerTypeDefault;
     [self play];
 }
 
-- (void)readyToPlay:(id<KPGCMediaControlChannel>)mediaControlChannel {
+- (void)readyToPlay:(NSTimeInterval)streamDuration{
     currentPlayerType = CurrentPlyerTypeCast;
     [self.delegate player:_player
                 eventName:DurationChangedKey
-                    value:@(mediaControlChannel.mediaStatus.mediaInformation.streamDuration).stringValue];
+                    value:@(streamDuration).stringValue];
     [self.delegate player:_player
                 eventName:LoadedMetaDataKey
                     value:@""];
     [self.delegate player:_player eventName:CanPlayKey value:nil];
     [_delegate player:_player eventName:@"hideConnectingMessage" value:nil];
+    
     if (isPlaying) {
         [_castPlayer play];
     }

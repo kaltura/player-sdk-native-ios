@@ -8,25 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "KChromeCastWrapper.h"
+#import "KCastMediaRemoteControl.h"
 
-@protocol KChromecastPlayerDelegate <NSObject>
-
-- (void)updateProgress:(NSTimeInterval)currentTime;
-- (void)readyToPlay:(id<KPGCMediaControlChannel>)mediaControlChannel;
-- (void)castPlayerState:(NSString *)state;
-
-@end
-
-@interface KChromecastPlayer : NSObject
-- (instancetype)initWithMediaChannel:(id<KPGCMediaControlChannel>)mediaChannel;
-@property (nonatomic, weak) id<KChromecastPlayerDelegate> delegate;
-@property (nonatomic) NSTimeInterval currentTime;
-
-- (void)play;
-- (void)pause;
-- (void)seek:(NSTimeInterval)time;
-
-- (void)setVideoUrl:(NSString *)videoUrl
-      startPosition:(NSTimeInterval)startPosition;
-
+@interface KChromecastPlayer : NSObject <KCastMediaRemoteControl >
+- (instancetype)initWithMediaChannel:(id<KPGCMediaControlChannel>)mediaChannel andCastParams:(NSArray *)castParams;
 @end
