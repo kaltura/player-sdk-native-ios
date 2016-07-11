@@ -10,6 +10,7 @@
 #import "NSString+Utilities.h"
 #import "KPLog.h"
 #import "NSMutableDictionary+Cache.h"
+#import "Utilities.h"
 
 NSString *const CacheDirectory = @"KalturaPlayerCache";
 
@@ -94,6 +95,55 @@ static void cacheWillRemove(NSString* url) {
     
     KPLogTrace(@"Exit");
     return _bundle;
+}
+
+
+-(BOOL)shouldCacheRequest:(NSURLRequest*)request {
+
+    NSString* baseURL = self.baseURL;
+
+    if (!baseURL) {
+        // CacheManager is not configured yet
+        KPLogTrace(@"Exit::NO (!CacheManager.baseURL)");
+        return NO;
+    }
+    
+    NSString* requestString = request.URL.absoluteString;
+    NSString* scheme = request.URL.scheme.lowercaseString;
+
+    if (!([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"])) {
+        KPLogTrace(@"Exit::NO (scheme=%@)", request.URL.scheme);
+        return NO;  // only http(s)
+    }
+    
+    if (![[request HTTPMethod] isEqualToString:@"GET"]) {
+        KPLogTrace(@"Exit::NO (method=%@)", request.HTTPMethod);
+        return NO;  // only GET
+    }
+    
+    NSDictionary* dict;
+    NSString* name; // for logging
+    if ([requestString containsString:baseURL]) {
+        dict = self.withDomain;
+        name = @"withDomain";
+        
+    } else if (![Utilities hasConnectivity]) {
+        dict = self.offlineSubStr;
+        name = @"offlineSubStr";
+        
+    } else {
+        dict = self.subStrings;
+        name = @"subStrings";
+    }
+    
+    for (NSString *key in dict.allKeys) {
+        if ([request.URL.absoluteString containsString:key]) {
+            KPLogTrace(@"Exit::YES, %@.%@", name, key);
+            return YES;
+        }
+    }
+    
+    return NO;
 }
 
 - (void)setBaseURL:(NSString *)host {

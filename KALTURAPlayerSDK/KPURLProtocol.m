@@ -66,56 +66,20 @@ static NSString *localContentID = nil;
     KPLogTrace(@"Enter::request:%@", request.URL.absoluteString);
     
     KCacheManager* cacheManager = [KCacheManager shared];
-    NSString* baseURL = cacheManager.baseURL;
+    NSString* requestString = request.URL.absoluteString;
     
-    if (!baseURL) {
-        // CacheManager is not configured yet
-        KPLogTrace(@"Exit::NO (CacheManager.baseURL)");
-        return NO;
-    }
-    
-    if ([request.URL.absoluteString containsString:LocalContentIDKey]) {
+    if ([requestString containsString:LocalContentIDKey]) {
         NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
         if (![localContentID isEqualToString:newContentID]) {
             self.localContentID = newContentID;
         }
     }
+
+    BOOL result = [cacheManager shouldCacheRequest:request];
+
     
-    if (!([request.URL.scheme isEqualToString:@"http"] || [request.URL.scheme isEqualToString:@"https"])) {
-        KPLogTrace(@"Exit::NO (scheme=%@)", request.URL.scheme);
-        return NO;  // only http(s)
-    }
-    
-    if (![[request HTTPMethod] isEqualToString:@"GET"]) {
-        KPLogTrace(@"Exit::NO (method=%@)", request.HTTPMethod);
-        return NO;  // only GET
-    }
-    
-    if ([request.URL.absoluteString containsString:baseURL]) {
-        for (NSString *key in cacheManager.withDomain.allKeys) {
-            if ([request.URL.absoluteString containsString:key]) {
-                KPLogTrace(@"Exit::YES, key(withDomain=%@)",key);
-                return YES;
-            }
-        }
-    } else if (![Utilities hasConnectivity]) {
-        for (NSString *key in cacheManager.offlineSubStr.allKeys) {
-            if ([request.URL.absoluteString containsString:key]) {
-                KPLogTrace(@"Exit::YES, key(offlineSubStr=%@)",key);
-                return YES;
-            }
-        }
-    } else {
-        for (NSString *key in cacheManager.subStrings.allKeys) {
-            if ([request.URL.absoluteString containsString:key]) {
-                KPLogTrace(@"Exit::YES, key(subStrings=%@)",key);
-                return YES;
-            }
-        }
-    }
-    
-    KPLogTrace(@"Exit::NO");
-    return NO;
+    KPLogTrace(@"Exit::%d", result);
+    return result;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
@@ -134,8 +98,10 @@ static NSString *localContentID = nil;
         requestStr = [NSString stringWithFormat:@"%@#localContentId=%@",self.request.URL.absoluteString, self.class.localContentID];
     }
     
+    KCacheManager* cacheManager = [KCacheManager shared];
+    
     if (![Utilities hasConnectivity]) {
-        for (NSString *key in [KCacheManager shared].offlineSubStr.allKeys) {
+        for (NSString *key in cacheManager.offlineSubStr.allKeys) {
             if ([requestStr containsString:key]) {
                 NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                                           statusCode:200

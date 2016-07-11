@@ -19,6 +19,8 @@
 @property (strong, nonatomic, readonly) NSDictionary *withDomain;
 @property (strong, nonatomic, readonly) NSDictionary *subStrings;
 @property (strong, nonatomic, readonly) NSDictionary *offlineSubStr;
+
+-(BOOL)shouldCacheRequest:(NSURLRequest*)request;
 @end
 
 
