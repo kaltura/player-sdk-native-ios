@@ -37,21 +37,13 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     if (self) {
         _mediaChannel = mediaChannel;
         _mediaChannel.delegate = self;
-        
-        id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:castParams.firstObject
-                                                                                                              streamType:0
-                                                                                                             contentType:castParams.lastObject
-                                                                                                                metadata:nil
-                                                                                                          streamDuration:0
-                                                                                                              customData:nil];
-        [mediaChannel loadMedia:mediaInformation autoplay:NO playPosition:0];
+
         return self;
     }
     return nil;
 }
 
-- (void)setVideoUrl:(NSString *)videoUrl
-      startPosition:(NSTimeInterval)startPosition {
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition {
     id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:videoUrl
                                                                                                           streamType:0
                                                                                                          contentType:videoUrl.mimeType

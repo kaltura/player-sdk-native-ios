@@ -28,4 +28,7 @@
 - (NSInteger)setStreamMuted:(BOOL)muted;
 - (void)addObserver:(id<KCastMediaRemoteControlDelegate>)observer;
 - (void)removeObserver:(id<KCastMediaRemoteControlDelegate>)observer;
+
+@optional
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition;
 @end

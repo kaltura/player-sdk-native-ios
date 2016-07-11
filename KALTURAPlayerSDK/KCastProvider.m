@@ -92,9 +92,7 @@
 
 - (void)startScan:(NSString *)appID {
     _appID = appID;
-    // Establish filter criteria.
-    id<FilterCriteria> filterCriteria = [NSClassFromString(@"GCKFilterCriteria") criteriaForAvailableApplicationWithID:appID];
-    
+
     // Initialize device scanner.
     self.deviceScanner = [[NSClassFromString(@"GCKDeviceScanner") alloc] init];
     [_deviceScanner addListener:self];
@@ -110,29 +108,32 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"deviceID == %@", device.routerId];
     NSArray<id<KPGCDevice>> *matches = [_deviceScanner.devices filteredArrayUsingPredicate:predicate];
     if (matches.count) {
-        NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
-        NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
-        _deviceManager = [[NSClassFromString(@"GCKDeviceManager") alloc] initWithDevice:matches.firstObject
-                                                                      clientPackageName:appIdentifier];
-        _deviceManager.delegate = self;
-        [_deviceManager connect];
+        if (_deviceManager.applicationConnectionState != KPGCConnectionStateConnected) {
+            NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
+            NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
+            _deviceManager = [[NSClassFromString(@"GCKDeviceManager") alloc] initWithDevice:matches.firstObject
+                clientPackageName:appIdentifier];
+            _deviceManager.delegate = self;
+            [_deviceManager connect];
+        }
     }
 }
 
 - (void)disconnectFromDevice {
     [_internalDelegate stopCasting];
     [_deviceManager disconnect];
+    [_deviceManager removeChannel:_castChannel];
+    [_deviceManager removeChannel:_mediaControlChannel];
+    _deviceManager.delegate = nil;
+    _deviceManager = nil;
+    _isConnected = NO;
 }
 
 - (void)disconnectFromDeviceWithLeave {
-    [_internalDelegate stopCasting];
     [_deviceManager stopApplicationWithSessionID:_sessionID];
-    [_deviceManager removeChannel:_castChannel];
-    [_deviceManager removeChannel:_mediaControlChannel];
-    [_deviceManager disconnect];
-    _deviceManager.delegate = nil;
-    _deviceManager = nil;
-
+    _castChannel = nil;
+    _mediaControlChannel = nil;
+    [self disconnectFromDevice];
 }
 
 #pragma mark KPGCDeviceScannerListener
@@ -168,15 +169,14 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
     _sessionID = sessionID;
     if (!_mediaControlChannel) {
         _mediaControlChannel = [NSClassFromString(@"GCKMediaControlChannel") new];
-        _mediaControlChannel.delegate = self;
-        [_deviceManager addChannel:_mediaControlChannel];
-        [_mediaControlChannel requestStatus];
         _castChannel = [[NSClassFromString(@"GCKGenericChannel") alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
         [_castChannel setDelegate:self];
-        [deviceManager addChannel:_castChannel];
-        [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
     }
     
+    [_deviceManager addChannel:_mediaControlChannel];
+    [_mediaControlChannel requestStatus];
+    [_deviceManager addChannel:_castChannel];
+    [_castChannel sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
     [_internalDelegate updateCastState:@"chromecastDeviceConnected"];
 }
 
@@ -188,13 +188,12 @@ didReceiveTextMessage:(NSString *)message
         NSArray *castParams = message.castParams;
         
         if (castParams) {
-            _mediaControlChannel.delegate = _internalDelegate;
-            
             if (!_castPlayer) {
                 _castPlayer = [[KChromecastPlayer alloc] initWithMediaChannel:_mediaControlChannel
                                                                 andCastParams:message.castParams];
             }
         }
+        
         [_internalDelegate startCasting:_castPlayer];
     }
 }

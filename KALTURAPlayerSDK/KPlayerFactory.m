@@ -233,10 +233,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
     
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    
-    if (self.currentPlayBackTime > 0) {
-        [_castPlayer seekToTimeInterval:self.currentPlayBackTime];
-    }
+    [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime];
 }
 
 - (void)updateCastState:(NSString *)state {

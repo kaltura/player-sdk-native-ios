@@ -10,6 +10,6 @@
 #import "KChromeCastWrapper.h"
 #import "KCastMediaRemoteControl.h"
 
-@interface KChromecastPlayer : NSObject <KCastMediaRemoteControl>
+@interface KChromecastPlayer : NSObject <KCastMediaRemoteControl >
 - (instancetype)initWithMediaChannel:(id<KPGCMediaControlChannel>)mediaChannel andCastParams:(NSArray *)castParams;
 @end
