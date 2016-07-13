@@ -21,6 +21,8 @@
 @property (strong, nonatomic, readonly) NSDictionary *offlineSubStr;
 
 -(BOOL)shouldCacheRequest:(NSURLRequest*)request;
+-(void)setIncludePatterns:(NSArray<NSString*>*)patterns;
+
 @end
 
 

@@ -40,6 +40,7 @@
     if (self) {
         _supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
         _extraConfig = [NSMutableDictionary dictionary];
+        _cacheConfig = [[KPCacheConfig alloc] init];
     }
     return self;
 }

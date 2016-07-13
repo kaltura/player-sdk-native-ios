@@ -111,6 +111,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         if (_currentConfiguration.cacheSize > 0) {
             [KPURLProtocol enable];
             CacheManager.baseURL = configuration.resolvedPlayerURL;
+            CacheManager.includePatterns = configuration.cacheConfig.includePatterns;
             CacheManager.maxCacheSize = _currentConfiguration.cacheSize;
         }
         return self;

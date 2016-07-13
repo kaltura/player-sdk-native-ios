@@ -13,11 +13,14 @@
 #import "Utilities.h"
 
 NSString *const CacheDirectory = @"KalturaPlayerCache";
+NSString *const KALTURAPlayerSDKResourcesBundle = @"KALTURAPlayerSDKResources.bundle";
 
 #define MB (1024*1024)
 #define GB (MB*1024)
 
-@interface KCacheManager ()
+@interface KCacheManager () {
+    NSArray<NSRegularExpression*>* _includeExpressions;
+}
 @property (nonatomic, readonly) NSString *cachePath;
 
 @property (strong, nonatomic, readonly) NSBundle *bundle;
@@ -85,10 +88,10 @@ static void cacheWillRemove(NSString* url) {
     KPLogTrace(@"Enter");
     if (!_bundle) {
         NSURL* bundleURL = [[NSBundle bundleForClass:self.classForCoder]
-                            URLForResource:@"KALTURAPlayerSDKResources"
-                            withExtension:@"bundle"];
+                            URLForResource:KALTURAPlayerSDKResourcesBundle
+                            withExtension:nil];
                 
-        NSAssert(bundleURL, @"KALTURAPlayerSDKResources.bundle is not found, can't continue");
+        NSAssert(bundleURL, @"KALTURAPlayerSDKResourcesBundle is not found, can't continue");
         
         _bundle = [NSBundle bundleWithURL:bundleURL];
     }
@@ -97,6 +100,32 @@ static void cacheWillRemove(NSString* url) {
     return _bundle;
 }
 
+-(void)setIncludePatterns:(NSArray<NSString *> *)patterns {
+    NSMutableArray<NSRegularExpression*>* expressions = [NSMutableArray array];
+    NSError* error;
+    for (NSString* pattern in patterns) {
+        NSRegularExpression* regexp = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
+        if (regexp) {
+            [expressions addObject:regexp];
+        }
+    }
+    _includeExpressions = expressions;
+}
+
+-(NSNumber*)shouldCacheAppSpecificURL:(NSString*)url {
+    
+    if (!_includeExpressions) {
+        return nil;
+    }
+    
+    for (NSRegularExpression* regexp in _includeExpressions) {
+        if ([regexp firstMatchInString:url options:0 range:NSMakeRange(0, url.length)]) {
+            return @YES;
+        }
+    }
+
+    return nil;
+}
 
 -(BOOL)shouldCacheRequest:(NSURLRequest*)request {
 
@@ -119,6 +148,11 @@ static void cacheWillRemove(NSString* url) {
     if (![[request HTTPMethod] isEqualToString:@"GET"]) {
         KPLogTrace(@"Exit::NO (method=%@)", request.HTTPMethod);
         return NO;  // only GET
+    }
+    
+    NSNumber* includeURL = [self shouldCacheAppSpecificURL:requestString];
+    if (includeURL) {
+        return includeURL.boolValue;
     }
     
     NSDictionary* dict;

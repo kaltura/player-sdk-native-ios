@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import "KPCacheConfig.h"
 
 /// KPPlayerConfig keys
 static NSString *KPPlayerConfigNativeCallOutKey = @"nativeCallout";
@@ -43,7 +44,7 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 
 @property (nonatomic, copy) NSDictionary* supportedMediaFormats;
 
-
+@property (nonatomic, readonly) KPCacheConfig* cacheConfig;
 
 
 /// Enables the SDK user to define interface orientation of the player
