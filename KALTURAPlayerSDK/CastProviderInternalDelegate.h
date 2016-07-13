@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "KChromeCastWrapper.h"
+#import "KCastMediaRemoteControl.h"
 
 @protocol CastProviderInternalDelegate <NSObject>
 - (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer;
