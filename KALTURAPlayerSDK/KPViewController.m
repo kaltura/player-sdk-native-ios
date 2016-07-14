@@ -364,7 +364,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
 }
 
-
+- (KCastProvider *)castProvider {
+    return _playerFactory.castProvider;
+}
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
