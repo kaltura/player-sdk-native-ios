@@ -234,6 +234,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
     [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime];
+    
+    if ([_castProvider.delegate respondsToSelector:@selector(castProvider:mediaRemoteControlReady:)]) {
+        [_castProvider.delegate castProvider:_castProvider mediaRemoteControlReady:_castPlayer];
+    }
 }
 
 - (void)updateCastState:(NSString *)state {

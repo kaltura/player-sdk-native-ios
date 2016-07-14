@@ -22,6 +22,7 @@
 - (void)didDisconnectFromDevice:(KCastProvider *)provider;
 - (void)castProvider:(KCastProvider *)provider didFailToConnectToDevice:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider didFailToDisconnectFromDevice:(NSError *)error;
+- (void)castProvider:(KCastProvider *)provider mediaRemoteControlReady:(id<KCastMediaRemoteControl>)mediaRemoteControl;
 @end
 
 @interface KCastProvider : NSObject
