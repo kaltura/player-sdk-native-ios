@@ -42,7 +42,8 @@ typedef enum{
     language,
     captions,
     audioTrackSelected,
-    textTrackSelected
+    textTrackSelected,
+    chromecastAppId
 } Attribute;
 
 @protocol KPlayerDelegate;
@@ -57,8 +58,7 @@ typedef enum{
 @property (nonatomic, getter=isMuted) BOOL mute NS_AVAILABLE(10_7, 7_0);
 @property (nonatomic, readonly) BOOL isKPlayer;
 @property (nonatomic) BOOL preferSubtitles;
-
-
+@property (nonatomic, readonly) BOOL isPlaying;
 
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (void)setPlayerSource:(NSURL *)playerSource;

@@ -30,6 +30,8 @@ typedef struct FunctionComponents {
 
 @property (nonatomic, copy, readonly) NSString *extractLocalContentId;
 
+@property (nonatomic, readonly) NSArray *castParams;
+
 - (NSString *)appendIDFA:(NSString *)IDFA;
 
 @property (nonatomic, readonly) Attribute attributeEnumFromString;
@@ -53,6 +55,7 @@ typedef struct FunctionComponents {
 @property (nonatomic, copy, readonly) NSURL *urlWithSortedParams;
 
 @property (nonatomic, readonly) BOOL isWV;
+@property (nonatomic, copy, readonly) NSString *mimeType;
 #pragma mark
 #pragma mark JavaScriptEvents Double Click helpers
 @property (nonatomic, copy, readonly) NSDictionary *nullVal;

@@ -78,7 +78,8 @@ NSString *const LocalContentId = @"localContentId";
                             @"language",
                             @"captions",
                             @"audioTrackSelected",
-                              @"textTrackSelected"];
+                            @"chromecastAppId",
+                            @"textTrackSelected"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }
@@ -166,10 +167,33 @@ NSString *const LocalContentId = @"localContentId";
 }
 
 - (BOOL)isWV {
+    return [self.streamType isEqualToString:@"wvm"];
+}
+
+- (NSString *)mimeType {
+    NSDictionary *mimeTypes = @{@"m3u8": @"application/vnd.apple.mpegurl",
+                                @"mp4": @"video/mp4"};
+    if (self.streamType) {
+        return mimeTypes[self.streamType];
+    }
+    return nil;
+}
+
+- (NSArray *)castParams {
+    NSString *test = @"|";
+    NSArray *comps = [self componentsSeparatedByString:test];
+    if (comps.count == 3) {
+        NSArray *temp = [comps subarrayWithRange:(NSRange){1, 2}];
+        return temp;
+    }
+    return nil;
+}
+
+- (NSString *)streamType {
     NSURLComponents *comp = [NSURLComponents componentsWithURL:[NSURL URLWithString:self]
                                        resolvingAgainstBaseURL:NO];
     NSArray *videoNameComp = [comp.path.lastPathComponent componentsSeparatedByString:@"."];
-    return [videoNameComp.lastObject isEqualToString:@"wvm"];
+    return videoNameComp.lastObject;
 }
 
 - (NSString *)documentPath {
