@@ -68,8 +68,8 @@
     
     // TODO: use semaphores. But sleep is simpler and good enough.
     
-    // wait for completion, up to 30 seconds. Also stop if there was an error, such as no network.
-    for (int i=0; i<30*1000/50 && !_resolvedPlayerURL && !_errorResolvingPlayerURL; i++) {
+    // wait for completion, up to 10 seconds. Also stop if there was an error, such as no network.
+    for (int i=0; i<10*1000/50 && !_resolvedPlayerURL && !_errorResolvingPlayerURL; i++) {
         struct timespec delay;
         delay.tv_nsec = 50*1000*1000; // 50 millisec
         delay.tv_sec = 0;
