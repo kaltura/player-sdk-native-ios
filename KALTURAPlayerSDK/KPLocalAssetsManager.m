@@ -8,6 +8,7 @@
 
 #import "KPLocalAssetsManager.h"
 #import "KPPlayerConfig.h"
+#import "KPPlayerConfig_Private.h"
 #import "WidevineClassicCDM.h"
 #import "NSMutableArray+QueryItems.h"
 #import "KPLog.h"
@@ -28,16 +29,14 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 };
 
 @interface KPPlayerConfig (Asset)
-@property (nonatomic, copy, readonly) NSData *loadUIConf;
-@property (nonatomic, copy, readonly) NSURL *resolvePlayerRootURL;
 @property (nonatomic, copy, readonly) NSString* overrideLicenseUri;
 @end
 
 
 @implementation KPLocalAssetsManager
 
-#define CHECK_NOT_NULL(v)   if (!(v)) return NO
-#define CHECK_NOT_EMPTY(v)  if ((v).length == 0) return NO
+#define CHECK_NOT_NULL(v)   if (!(v)) {KPLogError(@"Invalid argument for " # v); return NO;}
+#define CHECK_NOT_EMPTY(v)  if (!((v).length))  {KPLogError(@"Invalid argument for " # v); return NO;}
 
 + (BOOL)registerAsset:(KPPlayerConfig *)assetConfig
                flavor:(NSString *)flavorId
@@ -46,23 +45,24 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
     // NOTE: this method currently only supports Widevine Classic DRM.
     
+    
+    
     // Preflight: check that all parameters are valid.
+    // TODO: not supplying these args is a programmer error, consider using NSAssert() instead.
     CHECK_NOT_NULL(assetConfig);
     CHECK_NOT_EMPTY(assetConfig.server);
     CHECK_NOT_EMPTY(assetConfig.entryId);
     CHECK_NOT_NULL(assetConfig.partnerId);
     CHECK_NOT_EMPTY(assetConfig.uiConfId);
+    CHECK_NOT_EMPTY(assetConfig.localContentId);
     CHECK_NOT_EMPTY(flavorId);
     CHECK_NOT_EMPTY(localPath);
     
     __block int32_t count = localPath.isWV ? 2 : 1;
     kLocalAssetRegistrationBlock done  = ^(NSError* error) {
-        NSLog(@"count=%d", count);
         if (OSAtomicDecrement32(&count) == 0) {
-            assert(count==0);
             completed(error);
         }
-        NSLog(@"count=%d", count);
     };
     
     [self storeLocalContentPage:assetConfig callback:done];
@@ -81,7 +81,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
                flavor:(NSString *)flavorId
                  path:(NSString *)localPath
              callback:(kLocalAssetRegistrationBlock)completed {
-    
+    [KPURLProtocol enable];
+
     return [self registerAsset:assetConfig flavor:flavorId path:localPath callback:completed refresh:NO];
 }
 
@@ -149,6 +150,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
                               drmScheme:(kDRMScheme)drmScheme
                                   error:(NSError **)error {
     
+    
+    
     // If license uri is overriden, don't use our server.
     NSString* overrideUri = assetConfig.overrideLicenseUri;
     if (overrideUri) {
@@ -159,31 +162,24 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     // load license data
     NSURL *getLicenseDataURL = [self prepareGetLicenseDataURLForAsset:assetConfig
                                                              flavorId:flavorId
-                                                            drmScheme:drmScheme];
+                                                            drmScheme:drmScheme error:error];
     
     if (!getLicenseDataURL) {
         return nil;
     }
     
-    NSError* readError = nil;
-    NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL options:0 error:&readError];
+    NSData *licenseData = [NSData dataWithContentsOfURL:getLicenseDataURL options:0 error:error];
     if (!licenseData) {
-        KPLogError(@"Error getting licenseData: %@", readError);
-        if (error) {
-            *error = readError;
-        }
+        KPLogError(@"Error getting licenseData: %@", *error);
         return nil;
     }
-    NSError *jsonError = nil;
+
     NSDictionary *licenseDataDict = [NSJSONSerialization JSONObjectWithData:licenseData
                                                                     options:0
-                                                                      error:&jsonError];
+                                                                      error:error];
     
     if (!licenseDataDict) {
-        KPLogError(@"Error parsing licenseData json: %@", jsonError);
-        if (error) {
-            *error = jsonError;
-        }
+        KPLogError(@"Error parsing licenseData json: %@", *error);
         return nil;
     }
     
@@ -191,13 +187,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     NSDictionary *licenseDataError = licenseDataDict[@"error"];
     if (licenseDataError) {
         NSString *message = [licenseDataError isKindOfClass:[NSDictionary class]] ? licenseDataError[@"message"] : @"<none>";
-        if (error) {
-            *error = [NSError errorWithDomain:@"KPLocalAssetsManager"
-                                         code:'lder'
-                                     userInfo:@{NSLocalizedDescriptionKey: @"License data error",
-                                                @"EntryId": assetConfig.entryId ? assetConfig.entryId : @"<none>",
-                                                @"ServiceError": message ? message : @"<none>"}];
-        }
+        *error = [self errorWithCode:'lder' userInfo:@{NSLocalizedDescriptionKey: @"License data error",
+                                                               @"EntryId": assetConfig.entryId ? assetConfig.entryId : @"<none>",
+                                                       @"ServiceError": message ? message : @"<none>"}];
         return nil;
     }
     
@@ -208,17 +200,16 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 + (NSURL *)prepareGetLicenseDataURLForAsset:(KPPlayerConfig *)assetConfig
                                    flavorId:(NSString *)flavorId
-                                  drmScheme:(kDRMScheme)drmScheme {
+                                  drmScheme:(kDRMScheme)drmScheme error:(NSError**)error {
     
-    NSURL *serverURL = [NSURL URLWithString:assetConfig.server];
-    
-    // URL may either point to the root of the server or to mwEmbedFrame.php. Resolve this.
-    if ([serverURL.path hasSuffix:@"/mwEmbedFrame.php"]) {
-        serverURL = [serverURL URLByDeletingLastPathComponent];
-    } else {
-        serverURL = assetConfig.resolvePlayerRootURL;
+    if (![assetConfig waitForPlayerRootUrl]) {
+        *error = [self errorWithCode:'purl' userInfo:@{NSLocalizedDescriptionKey: @"Failed to resolve player URL, can't continue"}];
+        return nil;
     }
     
+    NSURL *serverURL = [NSURL URLWithString:assetConfig.resolvedPlayerURL];
+    serverURL = [serverURL URLByDeletingLastPathComponent];
+
     if (!serverURL) {
         return nil;
     }
@@ -257,6 +248,12 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
                      flavorId:(NSString *)flavorId
                      callback:(kLocalAssetRegistrationBlock)callback refresh:(BOOL)refresh {
     
+    
+    if (!localPath) {
+        KPLogError(@"No localPath specified");
+        return;
+    }
+    
     NSError *error = nil;
     NSString *licenseUri = [self prepareLicenseURLForAsset:assetConfig
                                                   flavorId:flavorId
@@ -274,6 +271,10 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
             case KCDMEvent_LicenseAcquired:
                     callback(nil);
                 break;
+            case KCDMEvent_FileNotFound:
+                callback([self errorWithCode:'fnfd' userInfo:@{NSLocalizedDescriptionKey: @"Widevine file not found",
+                                                               @"LocalPath": localPath}]);
+                break;
                 
             default:
                 break;
@@ -289,20 +290,35 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     
 }
 
++(NSError*)errorWithCode:(NSInteger)code userInfo:(NSDictionary*)userInfo {
+    return [NSError errorWithDomain:@"KPLocalAssetsManager"
+                               code:code
+                           userInfo:userInfo];
+}
+
 + (void)storeLocalContentPage:(KPPlayerConfig *)assetConfig
                      callback:(kLocalAssetRegistrationBlock)callback {
 
     [KPURLProtocol enable];
     
-    CacheManager.baseURL = assetConfig.server;
-    CacheManager.maxCacheSize = assetConfig.cacheSize;
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:assetConfig.videoURL]
-                                       queue:[NSOperationQueue new]
-                           completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+    KCacheManager* cacheManager = [KCacheManager shared];
+    
+    cacheManager.baseURL = assetConfig.resolvedPlayerURL;
+    cacheManager.maxCacheSize = assetConfig.cacheSize;
 
-                               callback(connectionError);
-                               [KPURLProtocol disable];
-                           }];
+    NSURL* url = assetConfig.videoURL;
+    if (!url) {
+        KPLogError(@"Failed to get videoURL for asset");
+        NSError* error = [self errorWithCode:'vdur' userInfo:@{NSLocalizedDescriptionKey: @"Content page error",
+                                                               @"EntryId": assetConfig.entryId ? assetConfig.entryId : @"<none>"}];
+        callback(error);
+        [KPURLProtocol disable];
+    } else {
+        [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            callback(error);
+            [KPURLProtocol disable];
+        }] resume];
+    }
 }
 
 + (void)addQueryParameters:(NSDictionary *)queryParams
@@ -333,73 +349,6 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     return [override isKindOfClass:[NSString class]] ? override : nil;
 }
 
-- (NSData *)loadUIConf {
-    NSURL *serverURL = [NSURL URLWithString:self.server];
-    serverURL = [serverURL URLByAppendingPathComponent:@"api_v3/index.php"];
-    NSURLComponents *urlComps = [NSURLComponents componentsWithURL:serverURL resolvingAgainstBaseURL:NO];
-    
-    NSMutableArray *items = [NSMutableArray arrayWithArray:@[
-                                                             [KPLocalAssetsManager queryItem:@"service" :@"uiconf"],
-                                                             [KPLocalAssetsManager queryItem:@"action" :@"get"],
-                                                             [KPLocalAssetsManager queryItem:@"format" :@"1"],
-                                                             [KPLocalAssetsManager queryItem:@"p" :self.partnerId],
-                                                             [KPLocalAssetsManager queryItem:@"id" :self.uiConfId],
-                                                             ]];
-    
-    if (self.ks) {
-        [items addObject:[KPLocalAssetsManager queryItem:@"ks" :self.ks]];
-    }
-    
-    urlComps.queryItems = items;
-    
-    NSURL* apiCall = urlComps.URL;
-    
-    return [NSData dataWithContentsOfURL:apiCall];
-}
-
-- (NSURL *)resolvePlayerRootURL {
-    // serverURL is something like "http://cdnapi.kaltura.com";
-    // we need to get to "http://cdnapi.kaltura.com/html5/html5lib/v2.38.3".
-    // This is done by loading UIConf data, and looking at "html5Url" property.
-    
-    NSData *jsonData = self.loadUIConf;
-    
-    if (!jsonData) {
-        return nil;
-    }
-    
-    NSError *jsonError = nil;
-    NSDictionary *uiConf = [NSJSONSerialization JSONObjectWithData:jsonData
-                                                           options:0
-                                                             error:&jsonError];
-    
-    if (!uiConf) {
-        KPLogError(@"Error parsing uiConf json: %@", jsonError);
-        return nil;
-    }
-    NSString *serviceError = uiConf[@"message"];
-    if (serviceError) {
-        KPLogError(@"uiConf service reported error: %@", serviceError);
-        return nil;
-    }
-    
-    NSString *embedLoaderUrl = uiConf[@"html5Url"];
-    
-    // embedLoaderUrl is typically something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
-    
-    if (!embedLoaderUrl) {
-        KPLogError(@"No html5Url in uiConf");
-        return nil;
-    }
-    NSURL *serverURL = [NSURL URLWithString:self.server];
-    if ([embedLoaderUrl hasPrefix:@"/"]) {
-        serverURL = [serverURL URLByAppendingPathComponent:embedLoaderUrl];
-    } else {
-        serverURL = [NSURL URLWithString:embedLoaderUrl];
-    }
-    
-    return [serverURL URLByDeletingLastPathComponent];
-}
 
 @end
 

@@ -56,9 +56,9 @@ NSString *const LocalContentId = @"localContentId";
     if (components.count == 2) {
         NSArray *hashTagParams = [components.lastObject componentsSeparatedByString:@"&"];
         for (NSString *hashTagParam in hashTagParams) {
-            NSArray *param = [hashTagParam componentsSeparatedByString:@"="];
+            NSArray<NSString*> *param = [hashTagParam componentsSeparatedByString:@"="];
             if (param.count == 2 && [param.firstObject isEqualToString:LocalContentId]) {
-                return param.lastObject;
+                return param.lastObject.length > 0 ? param.lastObject : nil;
             }
         }
     }
@@ -152,15 +152,16 @@ NSString *const LocalContentId = @"localContentId";
     return function;
 }
 
-- (NSString *)md5 {
-    const char *cStr = [self.sorted.absoluteString UTF8String];
+- (NSString *)hexedMD5 {
+    const char *cStr = self.UTF8String;
     unsigned char digest[16];
-    CC_MD5( cStr, (int)strlen(cStr), digest ); // This is the md5 call
+    CC_MD5( cStr, (int)strlen(cStr), digest);
     
     NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
     
-    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++)
+    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
         [output appendFormat:@"%02x", digest[i]];
+    }
     
     return  output;
 }
@@ -200,7 +201,7 @@ NSString *const LocalContentId = @"localContentId";
     return ([paths count] > 0) ? [paths.firstObject stringByAppendingPathComponent:self] : nil;
 }
 
-- (NSURL *)sorted {
+- (NSURL *)urlWithSortedParams {
     NSURL *url = [NSURL URLWithString:self];
     NSString *query = [url.query stringByRemovingPercentEncoding];
     NSMutableArray *params = [[NSMutableArray alloc] initWithArray:[query componentsSeparatedByString:@"&"]];

@@ -3,10 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>substrings</key>
-	<dict>
-		<key>data:image</key>
-		<string>14</string>
-	</dict>
+	<dict/>
 	<key>withDomain</key>
 	<dict>
 		<key>thumbnail</key>
