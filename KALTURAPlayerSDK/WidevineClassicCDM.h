@@ -16,6 +16,7 @@ typedef enum : NSUInteger {
     KCDMEvent_LicenseAcquired,
     KCDMEvent_LicenseFailed,
     KCDMEvent_Unregistered,
+    KCDMEvent_FileNotFound,
 } KCDMEventType;
 
 typedef void(^KCDMAssetEventBlock)(KCDMEventType event, NSDictionary* data);

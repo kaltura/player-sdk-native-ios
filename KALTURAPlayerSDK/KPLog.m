@@ -11,7 +11,7 @@ NSString *const KPLogMessageLevelKey = @"KPLogMessageLevelKey";
 
 
 void _KPLog(KPLogLevel logLevel,  NSString *methodName, int lineNumber,NSString *format, ...) {
-    format = [NSString stringWithFormat:@"\n::%@:: %@ (line:%d)\n%@\n",KPLogManager.levelNames[logLevel / 10], methodName, lineNumber,format];
+    format = [NSString stringWithFormat:@"::%@:: %@ (line:%d) -- %@",KPLogManager.levelNames[logLevel / 10], methodName, lineNumber,format];
     va_list args;
     va_start(args, format);
     notifyListener([[[NSString alloc] initWithFormat:format arguments:args] init], logLevel);

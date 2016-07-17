@@ -19,12 +19,17 @@
 @property (strong, nonatomic, readonly) NSDictionary *withDomain;
 @property (strong, nonatomic, readonly) NSDictionary *subStrings;
 @property (strong, nonatomic, readonly) NSDictionary *offlineSubStr;
+
+-(BOOL)shouldCacheRequest:(NSURLRequest*)request;
+-(void)setIncludePatterns:(NSArray<NSString*>*)patterns;
+
 @end
 
 
 @interface NSString(CoreData)
 @property (nonatomic, readonly) NSDictionary *cachedResponseHeaders;
 @property (nonatomic, readonly) NSData *cachedPage;
+@property (nonatomic, readonly) NSString *cacheId;
 @end
 
 @interface CachedURLParams: NSObject

@@ -106,7 +106,8 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         // If the developer set the cache size, the cache system is triggered.
         if (_currentConfiguration.cacheSize > 0) {
             [KPURLProtocol enable];
-            CacheManager.baseURL = configuration.server;
+            CacheManager.baseURL = configuration.resolvedPlayerURL;
+            CacheManager.includePatterns = configuration.cacheConfig.includePatterns;
             CacheManager.maxCacheSize = _currentConfiguration.cacheSize;
         }
         return self;
@@ -149,7 +150,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     _delegate = nil;
     _playerController = nil;
     _currentConfiguration = nil;
-    _kdpAPIState = nil;
+    _kdpAPIState = KDPAPIStateUnknown;
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self.view removeFromSuperview];
@@ -709,7 +710,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             [self visible: attributeVal];
             break;
         case audioTrackSelected:
-            [_playerFactory selectAudioTrack:[attributeVal integerValue]];
+            [_playerFactory selectAudioTrack:(int)[attributeVal integerValue]];
             break;
         case textTrackSelected:
             [_playerFactory selectTextTrack:attributeVal];

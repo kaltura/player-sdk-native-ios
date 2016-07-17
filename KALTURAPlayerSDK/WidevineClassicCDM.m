@@ -106,6 +106,12 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             wvInitialized = @NO;
             break;
             
+        case WViOsApiEvent_NullEvent:
+            if ((WViOsApiStatus)[attributes[@"WVStatusKey"] intValue] == WViOsApiStatus_FileNotPresent) {
+                cdmEvent = KCDMEvent_FileNotFound;
+            }
+            break;
+            
         case WViOsApiEvent_EMMFailed:
             cdmEvent = KCDMEvent_LicenseFailed;
             break;
@@ -223,16 +229,16 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
             wvStatus = WViOsApiStatus_FileNotPresent;
         }
         
-        if (wvStatus == 4100) {
+        if ((int)wvStatus == 4100) {
             // Already registered -- not an error.
             wvStatus = WV_RenewAsset(assetPath);
         }
 
         if (wvStatus == WViOsApiStatus_FileNotPresent) {
-            [self widevineErrorWithEvent:WViOsApiStatus_NotRegistered status:wvStatus asset:assetPath];
+            [self widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
             return;
         } else if (wvStatus != WViOsApiStatus_OK) {
-            [self widevineErrorWithEvent:WViOsApiStatus_NotRegistered status:wvStatus asset:assetPath];
+            [self widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
         }
         WV_NowOnline(); 
         WV_QueryAssetStatus(assetPath);
