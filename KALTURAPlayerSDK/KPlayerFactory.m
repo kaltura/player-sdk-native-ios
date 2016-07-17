@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     NSTimeInterval _lastPosition;
     CurrentPlyerType currentPlayerType;
     BOOL isPlaying;
+    BOOL _isCastAutoPlay;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
@@ -213,9 +214,15 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 #pragma mark Casting
 - (void)setCastProvider:(KCastProvider *)castProvider {
     if (castProvider) {
+        _isCastAutoPlay = NO;
         _castProvider = castProvider;
         _castProvider.internalDelegate = self;
     }
+}
+
+- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
+    _isCastAutoPlay = autoPlay;
+    [self setCastProvider:castProvider];
 }
 
 - (void)sendCastRecieverTextMessage:(NSString *)message {
@@ -233,7 +240,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
     
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime];
+    [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime autoPlay:_isCastAutoPlay];
     
     if ([_castProvider.delegate respondsToSelector:@selector(castProvider:mediaRemoteControlReady:)]) {
         [_castProvider.delegate castProvider:_castProvider mediaRemoteControlReady:_castPlayer];

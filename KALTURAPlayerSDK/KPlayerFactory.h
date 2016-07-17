@@ -52,6 +52,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 
 - (void)sendCastRecieverTextMessage:(NSString *)message;
+- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, strong) KCastProvider *castProvider;

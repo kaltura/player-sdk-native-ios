@@ -30,5 +30,5 @@
 - (void)removeObserver:(id<KCastMediaRemoteControlDelegate>)observer;
 
 @optional
-- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition;
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay;
 @end

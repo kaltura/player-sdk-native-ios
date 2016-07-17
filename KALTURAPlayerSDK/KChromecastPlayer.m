@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     return nil;
 }
 
-- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition {
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay {
     id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:videoUrl
                                                                                                           streamType:0
                                                                                                          contentType:videoUrl.mimeType
@@ -52,7 +52,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
                                                                                                           customData:nil];
     
     // Cast the video.
-    [_mediaChannel loadMedia:mediaInformation autoplay:NO playPosition:startPosition];
+    [_mediaChannel loadMedia:mediaInformation autoplay:isAutoPlay playPosition:startPosition];
 }
 
 - (void)play {

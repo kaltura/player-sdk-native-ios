@@ -122,6 +122,8 @@
 
 @property (nonatomic, assign) KCastProvider *castProvider;
 
+- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay;
+
 /**
  *  Block which notifies that the full screen has been toggeled, when assigning to this block the default full screen behaviour will be canceled and the full screen handling will be your reponsibility. 
  */
