@@ -221,8 +221,8 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
-    _isCastAutoPlay = autoPlay;
     [self setCastProvider:castProvider];
+    _isCastAutoPlay = autoPlay;
 }
 
 - (void)sendCastRecieverTextMessage:(NSString *)message {
