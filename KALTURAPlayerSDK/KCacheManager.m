@@ -107,6 +107,8 @@ static void cacheWillRemove(NSString* url) {
         NSRegularExpression* regexp = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:&error];
         if (regexp) {
             [expressions addObject:regexp];
+        } else {
+            KPLogError(@"Invalid pattern: `%@`: %@", pattern, error);
         }
     }
     _includeExpressions = expressions;
