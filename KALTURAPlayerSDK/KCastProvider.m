@@ -121,6 +121,7 @@
 
 - (void)disconnectFromDevice {
     [_internalDelegate stopCasting];
+    _internalDelegate = nil;
     [_deviceManager disconnect];
     [_deviceManager removeChannel:_castChannel];
     [_deviceManager removeChannel:_mediaControlChannel];
@@ -131,9 +132,12 @@
 
 - (void)disconnectFromDeviceWithLeave {
     [_deviceManager stopApplicationWithSessionID:_sessionID];
+    [self disconnectFromDevice];
     _castChannel = nil;
     _mediaControlChannel = nil;
-    [self disconnectFromDevice];
+    _sessionID = nil;
+    _selectedDevice = nil;
+    _castPlayer = nil;
 }
 
 #pragma mark KPGCDeviceScannerListener
@@ -159,7 +163,7 @@
     
     // Launch application after getting connected.
     id launchOptions = [[NSClassFromString(@"GCKLaunchOptions") alloc] initWithRelaunchIfRunning:YES];
-    [_deviceManager launchApplication:_appID withLaunchOptions:launchOptions];
+    [deviceManager launchApplication:_appID withLaunchOptions:launchOptions];
 }
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
@@ -167,6 +171,7 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
             sessionID:(NSString *)sessionID
   launchedApplication:(BOOL)launchedApplication {
     _sessionID = sessionID;
+    _deviceManager = deviceManager;
     if (!_mediaControlChannel) {
         _mediaControlChannel = [NSClassFromString(@"GCKMediaControlChannel") new];
         _castChannel = [[NSClassFromString(@"GCKGenericChannel") alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
