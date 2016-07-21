@@ -22,22 +22,28 @@
 
 @implementation WidevineClassicCDM
 
-#if TARGET_OS_SIMULATOR
-// The widevine library does not support the simulator, so the following are stubs that do nothing.
+#if TARGET_OS_SIMULATOR || !WIDEVINE_ENABLED
+// If the Widevine Classic library is not present, we need to stub it, to satisfy the linker.
 WViOsApiStatus WV_Initialize(const WViOsApiStatusCallback callback, NSDictionary *settings ) {
-    assert(!"FATAL error: Widevine Classic is not avaialble for Simulator");
+    
+    // Help developers find the misconfiguration by crashing.
+#if TARGET_OS_SIMULATOR || DEBUG
+    assert(!"FATAL error: Widevine Classic is not avaialble");
+#endif
+    
     callback(WViOsApiEvent_InitializeFailed, @{}); 
     return WViOsApiStatus_NotInitialized; 
 }
-WViOsApiStatus WV_Terminate() { return WViOsApiStatus_OK; }
-WViOsApiStatus WV_SetCredentials( NSDictionary *settings ) { return WViOsApiStatus_OK; }
-WViOsApiStatus WV_RegisterAsset (NSString *asset) { return WViOsApiStatus_OK; }
-WViOsApiStatus WV_UnregisterAsset (NSString *asset) { return WViOsApiStatus_OK; }
-WViOsApiStatus WV_QueryAssetStatus (NSString *asset ) { return WViOsApiStatus_OK; }
-WViOsApiStatus WV_NowOnline () { return WViOsApiStatus_OK; }
-WViOsApiStatus WV_RenewAsset (NSString *asset) { return WViOsApiStatus_OK; }
-WViOsApiStatus WV_Play (NSString *asset, NSMutableString *url, NSData *authentication ) {[url setString:asset]; return WViOsApiStatus_OK; }
-WViOsApiStatus WV_Stop () { return WViOsApiStatus_OK; }
+
+WViOsApiStatus WV_Terminate() { return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_SetCredentials( NSDictionary *settings ) { return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_RegisterAsset (NSString *asset) { return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_UnregisterAsset (NSString *asset) { return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_QueryAssetStatus (NSString *asset ) { return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_NowOnline () { return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_RenewAsset (NSString *asset) { return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_Play (NSString *asset, NSMutableString *url, NSData *authentication ) {[url setString:asset]; return WViOsApiStatus_NotInitialized; }
+WViOsApiStatus WV_Stop () { return WViOsApiStatus_NotInitialized; }
 NSString *NSStringFromWViOsApiEvent( WViOsApiEvent event ) { return @"Stub"; }
 #endif
 
