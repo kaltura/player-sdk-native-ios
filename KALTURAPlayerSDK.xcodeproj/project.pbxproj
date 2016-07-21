@@ -67,6 +67,7 @@
 		BF21F67F1C0DB0F9007890F6 /* KPPlayerConfig.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07791C0DA93700A67462 /* KPPlayerConfig.h */; };
 		BF21F6801C0DB0F9007890F6 /* KPViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C077C1C0DA95600A67462 /* KPViewController.h */; };
 		BF21F6821C0DB0F9007890F6 /* WViPhoneAPI.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BF1C07501C0DA7E800A67462 /* WViPhoneAPI.h */; };
+		BF45A7101D41213300638D5F /* KPCacheConfig.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = FBBBC6CA1D3B7F7200863C81 /* KPCacheConfig.h */; };
 		BFBE75871D3272AE0072F0D7 /* KCastMediaRemoteControl.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE75841D3271F70072F0D7 /* KCastMediaRemoteControl.h */; };
 		BFBE8E851C0B139400649BDF /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E501C0B139400649BDF /* CachedStrings.plist */; };
 		BFBE8E861C0B139400649BDF /* DeviceParamsHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E521C0B139400649BDF /* DeviceParamsHandler.m */; };
@@ -159,6 +160,7 @@
 			dstPath = "include/${PRODUCT_NAME}";
 			dstSubfolderSpec = 16;
 			files = (
+				BF45A7101D41213300638D5F /* KPCacheConfig.h in CopyFiles */,
 				BFBE75871D3272AE0072F0D7 /* KCastMediaRemoteControl.h in CopyFiles */,
 				5F07D8191CFEF3A200FC982C /* KCastDevice.h in CopyFiles */,
 				5F07D81A1CFEF3A200FC982C /* KChromeCastWrapper.h in CopyFiles */,
