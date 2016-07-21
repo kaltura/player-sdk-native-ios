@@ -46,15 +46,22 @@
 
 +(NSDictionary*)supportedMediaFormats {
     // We support FairPlay and Widevine Classic, as well as clear MP4 and HLS.
-    return @{
-#if TARGET_OS_SIMULATOR             
-             // No DRM support in the simulator.
-             @"all": @[@"hls",@"mp4"],
-             @"drm": @[],
-#else
-             @"all": @[@"hls",@"wvm",@"mp4"],
-             @"drm": @[@"hls",@"wvm"],
+    
+    NSMutableArray* all = [NSMutableArray arrayWithObjects:@"hls", @"mp4", nil];
+    NSMutableArray* drm = [NSMutableArray array];
+#if !TARGET_OS_SIMULATOR
+    [drm addObject:@"hls"]; // FairPlay is built-in
+    
+#if WIDEVINE_ENABLED
+    [drm addObject:@"wvm"]; // Widevine is optional
+    [all addObject:@"wvm"];
 #endif
+    
+#endif
+    
+    return @{
+             @"all": [all copy],
+             @"drm": [drm copy],
              };
 }
 
