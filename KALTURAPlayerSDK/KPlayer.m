@@ -268,7 +268,7 @@ NSString * const StatusKeyPath = @"status";
         } else if ([keyPath isEqualToString:StatusKeyPath]) {
             switch (self.currentItem.status) {
                 case AVPlayerItemStatusFailed:
-                    KPLogError(@"AVPlayerStatusFailed");
+                    KPLogError(@"AVPlayerItemStatusFailed");
                     [self.delegate player:self
                                 eventName:ErrorKey
                                     value:[self.error localizedDescription]];
