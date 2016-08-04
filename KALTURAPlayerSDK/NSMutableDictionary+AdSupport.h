@@ -22,6 +22,9 @@ static NSString *AdRemainingTimeChangeKey = @"adRemainingTimeChange";
 static NSString *AdClickedKey = @"adClicked";
 static NSString *AdSkippeddKey = @"adSkipped";
 static NSString *AdsLoadErrorKey = @"adsLoadError";
+static NSString *AdsSupportEndAdPlaybackKey = @"AdSupport_EndAdPlayback";
+static NSString *CastingKey = @"casting";
+
 
 
 @interface NSMutableDictionary (AdSupport)
