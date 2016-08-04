@@ -161,7 +161,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)resetPlayer {
     [self.controlsView reset];
-    [self.playerController pause];
     [self.playerFactory prepareForChangeConfiguration];
 }
 
