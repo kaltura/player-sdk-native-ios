@@ -111,8 +111,9 @@
         if (_deviceManager.applicationConnectionState != KPGCConnectionStateConnected) {
             NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
             NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
+            // TODO:: find another solution for backgtound mode (ignoreAppStateNotifications)
             _deviceManager = [[NSClassFromString(@"GCKDeviceManager") alloc] initWithDevice:matches.firstObject
-                clientPackageName:appIdentifier];
+                clientPackageName:appIdentifier ignoreAppStateNotifications:YES];
             _deviceManager.delegate = self;
             [_deviceManager connect];
         }
@@ -123,7 +124,6 @@
     [_internalDelegate stopCasting];
     _internalDelegate = nil;
     [_deviceManager disconnect];
-    _isConnected = NO;
 }
 
 - (void)disconnectFromDeviceWithLeave {
