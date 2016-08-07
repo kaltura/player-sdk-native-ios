@@ -59,6 +59,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     NSURL *videoURL;
     void(^_shareHandler)(NSDictionary *);
     void (^_seekedEventHandler)();
+    void (^_adRemovedEventHandler)();
                                     
     BOOL isActionSheetPresented;
 }
@@ -160,7 +161,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)resetPlayer {
     [self.controlsView reset];
-    [self.playerController pause];
     [self.playerFactory prepareForChangeConfiguration];
 }
 
@@ -359,8 +359,44 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 
 - (void)setCastProvider:(KCastProvider *)castProvider {
+    KPLogTrace(@"Enter setCastProvider");
+    
+    if (self.playerFactory.adController) {
+        __weak KPViewController *weakSelf = self;
+        [self removeAdPlayerWithCompletion:^{
+            KPLogTrace(@"AdPlayer was removed");
+            weakSelf.playerFactory.castProvider = castProvider;
+            [weakSelf triggerCastEvent:castProvider];
+        }];
+        
+        KPLogTrace(@"Exit setCastProvider");
+        return;
+    }
+    
     _playerFactory.castProvider = castProvider;
     [self triggerCastEvent:castProvider];
+    KPLogTrace(@"Exit setCastProvider");
+}
+
+- (void)removeAdPlayerWithCompletion:(void(^)())completion {
+    _adRemovedEventHandler = [completion copy];
+    
+    if (self.playerFactory.adController) {
+        [self allAdsCompleted];
+        [self.controlsView triggerEvent:CastingKey withJSON:nil];
+        __weak KPViewController *weakSelf = self;
+        [self addKPlayerEventListener:AdsSupportEndAdPlaybackKey eventID:AdsSupportEndAdPlaybackKey handler:^(NSString *eventName, NSString *params) {
+            [weakSelf removeKPlayerEventListener:AdsSupportEndAdPlaybackKey eventID:AdsSupportEndAdPlaybackKey];
+            if (_adRemovedEventHandler) {
+                KPLogDebug(@"call seekedEventHandler");
+                _adRemovedEventHandler();
+                _adRemovedEventHandler = nil;
+            }
+            KPLogTrace(@"AdsSupportEndAdPlaybackKey Fired");
+        }];
+        [self.playerFactory removeAdController];
+    }
+    
 }
 
 - (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
@@ -409,6 +445,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (void)applicationDidEnterBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
     
+    if (_playerFactory.castProvider.isConnected) {
+        return;
+    }
+    
     _activatedFromBackground = YES;
 
     if ([NSBundle mainBundle].isAudioBackgroundModesEnabled){
@@ -423,6 +463,11 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     KPLogTrace(@"Enter");
+    
+    if (_playerFactory.castProvider.isConnected) {
+        return;
+    }
+    
     NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
     
     if ([backgroundModes containsObject:@"audio"]) {
@@ -946,7 +991,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (void)allAdsCompleted {
-    [self.controlsView triggerEvent:PostrollEndedKey withJSON:nil];
+    [self.controlsView triggerEvent:AllAdsCompletedKey withJSON:nil];
 }
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{

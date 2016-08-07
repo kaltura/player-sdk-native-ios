@@ -111,8 +111,9 @@
         if (_deviceManager.applicationConnectionState != KPGCConnectionStateConnected) {
             NSDictionary *info = [[NSBundle mainBundle] infoDictionary];
             NSString *appIdentifier = [info objectForKey:@"CFBundleIdentifier"];
+            // TODO:: find another solution for backgtound mode (ignoreAppStateNotifications)
             _deviceManager = [[NSClassFromString(@"GCKDeviceManager") alloc] initWithDevice:matches.firstObject
-                clientPackageName:appIdentifier];
+                clientPackageName:appIdentifier ignoreAppStateNotifications:YES];
             _deviceManager.delegate = self;
             [_deviceManager connect];
         }
@@ -123,11 +124,6 @@
     [_internalDelegate stopCasting];
     _internalDelegate = nil;
     [_deviceManager disconnect];
-    [_deviceManager removeChannel:_castChannel];
-    [_deviceManager removeChannel:_mediaControlChannel];
-    _deviceManager.delegate = nil;
-    _deviceManager = nil;
-    _isConnected = NO;
 }
 
 - (void)disconnectFromDeviceWithLeave {
@@ -204,15 +200,16 @@ didReceiveTextMessage:(NSString *)message
 }
 
 - (void)castChannelDidConnect:(id)channel {
+    KPLogTrace(@"castChannelDidConnect");
     if ([_delegate respondsToSelector:@selector(didConnectToDevice:)]) {
         [_delegate didConnectToDevice:self];
     }
 }
 
 - (void)castChannelDidDisconnect:(id)channel {
-    if ([_delegate respondsToSelector:@selector(didDisconnectFromDevice:)]) {
-        [_delegate didDisconnectFromDevice:self];
-    }
+    KPLogTrace(@"castChannelDidDisconnect");
+    [_deviceManager removeChannel:_castChannel];
+    [_deviceManager removeChannel:_mediaControlChannel];
 }
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
@@ -221,7 +218,14 @@ didReceiveStatusForApplication:(id<KPGCMediaMetadata>)applicationMetadata {
 }
 
 - (void)deviceManager:(id<KPGCDeviceManager>)deviceManager didDisconnectWithError:(NSError *)error {
+    KPLogTrace(@"didDisconnectWithError");
+    _deviceManager.delegate = nil;
+    _deviceManager = nil;
     _isConnected = NO;
+    
+    if ([_delegate respondsToSelector:@selector(didDisconnectFromDevice:withError:)]) {
+        [_delegate didDisconnectFromDevice:self withError:error];
+    }
 }
 
 @end
