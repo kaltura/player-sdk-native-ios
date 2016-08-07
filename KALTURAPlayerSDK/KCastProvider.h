@@ -19,7 +19,7 @@
 - (void)castProvider:(KCastProvider *)provider didDeviceComeOnline:(KCastDevice *)device;
 - (void)castProvider:(KCastProvider *)provider didDeviceGoOffline:(KCastDevice *)device;
 - (void)didConnectToDevice:(KCastProvider *)provider;
-- (void)didDisconnectFromDevice:(KCastProvider *)provider;
+- (void)didDisconnectFromDevice:(KCastProvider *)provider withError:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider didFailToConnectToDevice:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider didFailToDisconnectFromDevice:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider mediaRemoteControlReady:(id<KCastMediaRemoteControl>)mediaRemoteControl;
