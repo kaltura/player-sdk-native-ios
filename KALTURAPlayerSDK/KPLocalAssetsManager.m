@@ -43,9 +43,8 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
                  path:(NSString *)localPath
              callback:(kLocalAssetRegistrationBlock)completed refresh:(BOOL)refresh {
 
-    // NOTE: this method currently only supports Widevine Classic DRM.
-    
-    
+    // NOTE: the only DRM scheme supported by this method is Widevine Classic.
+
     
     // Preflight: check that all parameters are valid.
     // TODO: not supplying these args is a programmer error, consider using NSAssert() instead.
