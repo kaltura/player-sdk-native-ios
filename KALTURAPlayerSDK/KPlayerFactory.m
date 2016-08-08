@@ -126,6 +126,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (NSTimeInterval)currentPlayBackTime {
+    if (currentPlayerType == CurrentPlyerTypeCast) {
+        return _castPlayer.currentTime;
+    }
+    
     return _player.currentPlaybackTime;
 }
 
