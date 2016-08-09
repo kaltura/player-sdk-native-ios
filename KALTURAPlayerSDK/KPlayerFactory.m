@@ -261,12 +261,13 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     [_castPlayer removeObserver:self];
     [_player setCurrentPlaybackTime:_castPlayer.currentTime];
     _castPlayer = nil;
-    currentPlayerType = CurrentPlyerTypeDefault;
+    [self updatePlayerType:CurrentPlyerTypeDefault];
     [self play];
 }
 
 - (void)readyToPlay:(NSTimeInterval)streamDuration{
-    currentPlayerType = CurrentPlyerTypeCast;
+    KPLogTrace(@"readyToPlay cast");
+    [self updatePlayerType:CurrentPlyerTypeCast];
     [self.delegate player:_player
                 eventName:DurationChangedKey
                     value:@(streamDuration).stringValue];
@@ -278,6 +279,24 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     
     if (isPlaying) {
         [_castPlayer play];
+    }
+}
+
+- (void)updatePlayerType:(CurrentPlyerType)type {
+    KPLogTrace(@"updatePlayerType");
+    switch (type) {
+        case CurrentPlyerTypeDefault:
+            currentPlayerType = CurrentPlyerTypeDefault;
+            _player.isIdle = NO;
+            break;
+        case CurrentPlyerTypeCast:
+            currentPlayerType = CurrentPlyerTypeCast;
+            _player.isIdle = YES;
+            break;
+        case CurrentPlyerTypeIMA:
+            currentPlayerType = CurrentPlyerTypeIMA;
+            _player.isIdle = YES;
+            break;
     }
 }
 
