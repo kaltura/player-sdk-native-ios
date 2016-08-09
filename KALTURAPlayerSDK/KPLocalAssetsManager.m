@@ -267,6 +267,12 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     [WidevineClassicCDM setEventBlock:^(KCDMEventType event, NSDictionary *data) {
         
         switch (event) {
+            case KCDMEvent_AssetStatus:
+                if ([data[@"WVEMMTimeRemainingKey"] integerValue] > 0) {
+                    // Report this as success, because if we already have a valid license, we may not get a new one.
+                    callback(nil);
+                }
+                break;
             case KCDMEvent_LicenseAcquired:
                     callback(nil);
                 break;
@@ -274,7 +280,10 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
                 callback([self errorWithCode:'fnfd' userInfo:@{NSLocalizedDescriptionKey: @"Widevine file not found",
                                                                @"LocalPath": localPath}]);
                 break;
-                
+            case KCDMEvent_LicenseFailed:
+                callback([self errorWithCode:'lcfl' userInfo:@{NSLocalizedDescriptionKey: @"Widevine License Failed",
+                                                               @"LocalPath": localPath}]);
+                break;
             default:
                 break;
         }

@@ -196,6 +196,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
     // register using widevine's assetPath
     assetUri = assetUri.wvAssetPath;
     if (assetUri) {
+        KPLogDebug(@"Setting eventBlock for asset %@", assetUri);
         assetBlocks[assetUri] = [block copy];
     }
 }
@@ -212,6 +213,8 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         dispatch_async(dispatch_get_main_queue(), ^{
             assetBlock(event, data);
         });
+    } else {
+        KPLogWarn(@"No eventBlock for asset %@, but event %d was triggered", assetPath, event);
     }
 }
 
@@ -237,6 +240,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         
         if ((int)wvStatus == 4100) {
             // Already registered -- not an error.
+            KPLogDebug(@"Asset is already registered: %@", assetPath);
             wvStatus = WV_RenewAsset(assetPath);
         }
 
@@ -246,7 +250,6 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         } else if (wvStatus != WViOsApiStatus_OK) {
             [self widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
         }
-        WV_NowOnline(); 
         WV_QueryAssetStatus(assetPath);
     }];
 }
