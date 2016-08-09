@@ -88,6 +88,10 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     return _mediaChannel.approximateStreamPosition;
 }
 
+- (NSTimeInterval)duration {
+    return _mediaChannel.mediaStatus.mediaInformation.streamDuration;
+}
+
 - (void)setCurrentTime:(NSTimeInterval)currentTime {
     [_mediaChannel seekToTimeInterval:currentTime];
 }
