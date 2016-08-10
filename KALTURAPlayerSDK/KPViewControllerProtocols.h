@@ -59,6 +59,7 @@ typedef enum{
 @property (nonatomic, readonly) BOOL isKPlayer;
 @property (nonatomic) BOOL preferSubtitles;
 @property (nonatomic, readonly) BOOL isPlaying;
+@property (nonatomic) BOOL isIdle;
 
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (void)setPlayerSource:(NSURL *)playerSource;

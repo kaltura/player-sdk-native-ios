@@ -122,7 +122,7 @@ static NSString *localContentID = nil;
     NSDictionary *cachedHeaders = requestStr.cachedResponseHeaders;
     NSData *cachedPage = requestStr.cachedPage;
     
-    if (cachedHeaders && cachedPage && cachedPage.length) {
+    if (self.request.cachePolicy!=NSURLRequestReloadIgnoringLocalCacheData && cachedHeaders && cachedPage && cachedPage.length) {
         NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                                   statusCode:[cachedHeaders[@"statusCode"] integerValue]
                                                                  HTTPVersion:nil

@@ -46,6 +46,7 @@ NSString * const StatusKeyPath = @"status";
 @synthesize mute = _mute;
 @synthesize preferSubtitles = _preferSubtitles;
 @synthesize isPlaying = _isPlaying;
+@synthesize isIdle = _isIdle;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -185,6 +186,13 @@ NSString * const StatusKeyPath = @"status";
     }
     
     KPLogTrace(@"Exit");
+}
+
+- (void)idleGuard {
+    KPLogTrace(@"idleGuard");
+    if (_isIdle) {
+        return;
+    }
 }
 
 /*!
@@ -547,12 +555,14 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)play {
+    [self idleGuard];
     if (!self.rate) {
         [super play];
     }
 }
 
 - (void)pause {
+    [self idleGuard];
     if (self.rate) {
         [super pause];
     }
