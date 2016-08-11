@@ -188,13 +188,6 @@ NSString * const StatusKeyPath = @"status";
     KPLogTrace(@"Exit");
 }
 
-- (void)idleGuard {
-    KPLogTrace(@"idleGuard");
-    if (_isIdle) {
-        return;
-    }
-}
-
 /*!
  * @function playerHanging:
  *
@@ -555,14 +548,20 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)play {
-    [self idleGuard];
+    if (_isIdle) {
+        return;
+    }
+    
     if (!self.rate) {
         [super play];
     }
 }
 
 - (void)pause {
-    [self idleGuard];
+    if (_isIdle) {
+        return;
+    }
+    
     if (self.rate) {
         [super pause];
     }
