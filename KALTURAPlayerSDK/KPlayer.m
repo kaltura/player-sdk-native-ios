@@ -422,10 +422,6 @@ NSString * const StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
-        [self.delegate player:self
-                    eventName:ErrorKey
-                        value:[NSString stringWithFormat:@"%@ ,%@",
-                               exception.name, exception.reason]];
     }
 }
 
@@ -577,10 +573,6 @@ NSString * const StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
-        [self.delegate player:self
-                    eventName:ErrorKey
-                        value:[NSString stringWithFormat:@"%@ ,%@",
-                               exception.name, exception.reason]];
     }
     
     [_layer removeFromSuperlayer];
@@ -733,10 +725,6 @@ NSString * const StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
-        [self.delegate player:self
-                    eventName:ErrorKey
-                        value:[NSString stringWithFormat:@"%@ ,%@",
-                               exception.name, exception.reason]];
     }
 }
 
