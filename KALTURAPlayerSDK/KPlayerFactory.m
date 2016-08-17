@@ -267,6 +267,11 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)readyToPlay:(NSTimeInterval)streamDuration{
     KPLogTrace(@"readyToPlay cast");
+    
+    if (_player) {
+        [self.player pause];
+    }
+    
     [self updatePlayerType:CurrentPlyerTypeCast];
     [self.delegate player:_player
                 eventName:DurationChangedKey
