@@ -22,7 +22,9 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     readyToPlay
 };
 
-@interface KChromecastPlayer()
+@interface KChromecastPlayer() {
+    BOOL isEnded;
+}
 @property (nonatomic, strong) id<KPGCMediaControlChannel> mediaChannel;
 @property (nonatomic, strong) NSMutableSet *observers;
 @property (nonatomic) PlayerState playerState;
@@ -59,11 +61,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     KPLogTrace(@"Video Url: ", videoUrl);
     
     id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:videoUrl
-                                                                                                          streamType:0
-                                                                                                         contentType:videoUrl.mimeType
-                                                                                                            metadata:nil
-                                                                                                      streamDuration:0
-                                                                                                          customData:nil];
+                                                                                                          streamType:0                                      contentType:videoUrl.mimeType                              metadata:nil                    streamDuration:0                             customData:nil];
     
     // Cast the video.
     [_mediaChannel loadMedia:mediaInformation autoplay:isAutoPlay playPosition:startPosition];
@@ -72,6 +70,11 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 }
 
 - (void)play {
+    if (isEnded && _playerState != PlayerStatePlaying) {
+        [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES];
+        isEnded = NO;
+        return;
+    }
     if (_playerState == PlayerStatePause) {
         [_mediaChannel play];
     }
@@ -129,6 +132,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
             break;
         case KPGCMediaPlayerStateIdle:
             if ([[mediaControlChannel mediaStatus] idleReason] == KPGCMediaPlayerIdleReasonFinished) {
+                isEnded = YES;
                 [self setDelegate:castPlayerState withValue:@"ended"];
             }
             break;
