@@ -258,8 +258,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)stopCasting {
     [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    if (_castPlayer.wasReadyToplay) {
+        [_player setCurrentPlaybackTime:_castPlayer.currentTime];
+    }
     [_castPlayer removeObserver:self];
-    [_player setCurrentPlaybackTime:_castPlayer.currentTime];
     _castPlayer = nil;
     [self updatePlayerType:CurrentPlyerTypeDefault];
     [self play];
