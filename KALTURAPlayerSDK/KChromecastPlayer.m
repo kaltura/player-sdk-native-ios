@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 
 @interface KChromecastPlayer() {
     BOOL isEnded;
+    BOOL wasReadyToplay;
 }
 @property (nonatomic, strong) id<KPGCMediaControlChannel> mediaChannel;
 @property (nonatomic, strong) NSMutableSet *observers;
@@ -107,6 +108,10 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     return _mediaChannel.approximateStreamPosition;
 }
 
+- (BOOL)wasReadyToplay {
+    return wasReadyToplay;
+}
+
 - (NSTimeInterval)duration {
     return _mediaChannel.mediaStatus.mediaInformation.streamDuration;
 }
@@ -161,6 +166,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 
 - (void)mediaControlChannel:(id<KPGCMediaControlChannel>)mediaControlChannel
 didCompleteLoadWithSessionID:(NSInteger)sessionID {
+    wasReadyToplay = YES;
     [self setDelegate:readyToPlay withValue:@(mediaControlChannel.mediaStatus.mediaInformation.streamDuration)];
 }
 
