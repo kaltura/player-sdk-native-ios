@@ -68,18 +68,22 @@ static NSString *localContentID = nil;
     KCacheManager* cacheManager = [KCacheManager shared];
     NSString* requestString = request.URL.absoluteString;
     
+    BOOL shouldCacheRequest = NO;
+    // Special case mwEmbedFrame.php with localContentId.
     if ([requestString containsString:LocalContentIDKey]) {
+        shouldCacheRequest = YES;
         NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
         if (![localContentID isEqualToString:newContentID]) {
             self.localContentID = newContentID;
         }
     }
-
-    BOOL result = [cacheManager shouldCacheRequest:request];
-
     
-    KPLogTrace(@"Exit::%d", result);
-    return result;
+    if (!shouldCacheRequest) {
+        shouldCacheRequest = [cacheManager shouldCacheRequest:request];
+    }
+
+    KPLogTrace(@"Exit::%d", shouldCacheRequest);
+    return shouldCacheRequest;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
@@ -112,7 +116,7 @@ static NSString *localContentID = nil;
                       cacheStoragePolicy:NSURLCacheStorageNotAllowed];
                 [self.client URLProtocol:self didLoadData:[NSData new]];
                 [self.client URLProtocolDidFinishLoading:self];
-                KPLogTrace(@"oflline mode - return status 200 & empty for key:%@", key);
+                KPLogTrace(@"offline mode - return status 200 & empty for key:%@", key);
                 
                 return;
             }
