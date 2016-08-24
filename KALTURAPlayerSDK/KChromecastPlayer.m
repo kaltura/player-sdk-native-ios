@@ -55,9 +55,12 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 }
 
 - (void)setMediaSrc:(NSString *)mediaSrc {
-    // called only when changing media
-    isChangeMedia = YES;
-    _mediaSrc = mediaSrc;
+    if (_mediaSrc != nil) {
+        isChangeMedia = YES;
+        _mediaSrc = mediaSrc;
+    } else {
+        _mediaSrc = mediaSrc;
+    }
 }
 
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay {
