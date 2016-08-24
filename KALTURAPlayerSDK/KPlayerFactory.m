@@ -238,13 +238,18 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 #pragma mark CastProviderInternalDelegate
 - (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer {
+    NSTimeInterval startPosition;
     if (!_castPlayer) {
         _castPlayer = castPlayer;
         [_castPlayer addObserver:self];
+        startPosition = self.currentPlayBackTime;
+    } else {
+        //TODO:: improve changemedia start position implimantion
+        startPosition = 0;
     }
     
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    [_castPlayer setVideoUrl:nil startPosition:self.currentPlayBackTime autoPlay:_isCastAutoPlay];
+    [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
     
     if ([_castProvider.delegate respondsToSelector:@selector(castProvider:mediaRemoteControlReady:)]) {
         [_castProvider.delegate castProvider:_castProvider mediaRemoteControlReady:_castPlayer];

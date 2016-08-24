@@ -24,12 +24,13 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 
 @interface KChromecastPlayer() {
     BOOL isEnded;
+    BOOL isChangeMedia;
     BOOL wasReadyToplay;
 }
 @property (nonatomic, strong) id<KPGCMediaControlChannel> mediaChannel;
+@property (nonatomic, strong) id<KPGCMediaInformation> currentMediaInformation;
 @property (nonatomic, strong) NSMutableSet *observers;
 @property (nonatomic) PlayerState playerState;
-@property (nonatomic, copy) NSString *mediaSrc;
 @end
 
 
@@ -45,11 +46,18 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
         
         if ([castParams count] > 0) {
             _mediaSrc = [castParams firstObject];
+            KPLogTrace(@"mediaSrc::%@", _mediaSrc);
         }
 
         return self;
     }
     return nil;
+}
+
+- (void)setMediaSrc:(NSString *)mediaSrc {
+    // called only when changing media
+    isChangeMedia = YES;
+    _mediaSrc = mediaSrc;
 }
 
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay {
@@ -64,16 +72,22 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:videoUrl
                                                                                                           streamType:0                                      contentType:videoUrl.mimeType                              metadata:nil                    streamDuration:0                             customData:nil];
     
+    
     // Cast the video.
-    [_mediaChannel loadMedia:mediaInformation autoplay:isAutoPlay playPosition:startPosition];
+    if (_currentMediaInformation.contentID != mediaInformation.contentID || isEnded) {
+        _currentMediaInformation = mediaInformation;
+        [self stop];
+        [_mediaChannel loadMedia:mediaInformation autoplay:isAutoPlay playPosition:startPosition];
+    }
     
     KPLogDebug(@"Exit setVideoUrl");
 }
 
 - (void)play {
-    if (isEnded && _playerState != PlayerStatePlaying) {
+    if ((isEnded || isChangeMedia) && _playerState != PlayerStatePlaying) {
         [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES];
         isEnded = NO;
+        isChangeMedia = NO;
         return;
     }
     if (_playerState == PlayerStatePause) {
