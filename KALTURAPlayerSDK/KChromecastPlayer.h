@@ -12,4 +12,5 @@
 
 @interface KChromecastPlayer : NSObject <KCastMediaRemoteControl >
 - (instancetype)initWithMediaChannel:(id<KPGCMediaControlChannel>)mediaChannel andCastParams:(NSArray *)castParams;
+@property (nonatomic, copy) NSString *mediaSrc;
 @end
