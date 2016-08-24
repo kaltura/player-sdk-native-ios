@@ -22,15 +22,14 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     readyToPlay
 };
 
-@interface KChromecastPlayer() {
-    BOOL isEnded;
-    BOOL isChangeMedia;
-    BOOL wasReadyToplay;
-}
+@interface KChromecastPlayer()
 @property (nonatomic, strong) id<KPGCMediaControlChannel> mediaChannel;
 @property (nonatomic, strong) id<KPGCMediaInformation> currentMediaInformation;
 @property (nonatomic, strong) NSMutableSet *observers;
 @property (nonatomic) PlayerState playerState;
+@property (nonatomic) BOOL isEnded;
+@property (nonatomic) BOOL isChangeMedia;
+@property (nonatomic) BOOL wasReadyToplay;
 @end
 
 
@@ -56,7 +55,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 
 - (void)setMediaSrc:(NSString *)mediaSrc {
     if (_mediaSrc != nil) {
-        isChangeMedia = YES;
+        _isChangeMedia = YES;
         _mediaSrc = mediaSrc;
     } else {
         _mediaSrc = mediaSrc;
@@ -77,7 +76,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     
     
     // Cast the video.
-    if (_currentMediaInformation.contentID != mediaInformation.contentID || isEnded) {
+    if (_currentMediaInformation.contentID != mediaInformation.contentID || _isEnded) {
         _currentMediaInformation = mediaInformation;
         [self stop];
         [_mediaChannel loadMedia:mediaInformation autoplay:isAutoPlay playPosition:startPosition];
@@ -87,10 +86,10 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 }
 
 - (void)play {
-    if ((isEnded || isChangeMedia) && _playerState != PlayerStatePlaying) {
+    if ((_isEnded || _isChangeMedia) && _playerState != PlayerStatePlaying) {
         [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES];
-        isEnded = NO;
-        isChangeMedia = NO;
+        _isEnded = NO;
+        _isChangeMedia = NO;
         return;
     }
     if (_playerState == PlayerStatePause) {
@@ -126,7 +125,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 }
 
 - (BOOL)wasReadyToplay {
-    return wasReadyToplay;
+    return _wasReadyToplay;
 }
 
 - (NSTimeInterval)duration {
@@ -154,7 +153,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
             break;
         case KPGCMediaPlayerStateIdle:
             if ([[mediaControlChannel mediaStatus] idleReason] == KPGCMediaPlayerIdleReasonFinished) {
-                isEnded = YES;
+                _isEnded = YES;
                 [self setDelegate:castPlayerState withValue:@"ended"];
             }
             break;
@@ -183,7 +182,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 
 - (void)mediaControlChannel:(id<KPGCMediaControlChannel>)mediaControlChannel
 didCompleteLoadWithSessionID:(NSInteger)sessionID {
-    wasReadyToplay = YES;
+    _wasReadyToplay = YES;
     [self setDelegate:readyToPlay withValue:@(mediaControlChannel.mediaStatus.mediaInformation.streamDuration)];
 }
 
