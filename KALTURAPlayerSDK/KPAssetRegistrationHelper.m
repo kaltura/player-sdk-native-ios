@@ -20,7 +20,7 @@
 #import <libkern/OSAtomic.h>
 
 @interface KPAssetRegistrationHelper ()
-@property (nonatomic, copy) KPFairPlayAssetResourceLoaderHandler* fairplayHandler;
+@property (nonatomic, retain) KPFairPlayAssetResourceLoaderHandler* fairplayHandler;
 @property (nonatomic, retain) KPPlayerConfig* config;
 @property (nonatomic, copy) NSString* flavorId;
 @property (nonatomic, copy) NSString* licenseUri;
@@ -125,7 +125,9 @@
     
     if (drmScheme == kDRMFairPlay) {
         self.fairplayHandler = [[KPFairPlayAssetResourceLoaderHandler alloc] init];
-        self.fairplayHandler.certificate = licenseDataDict[@"fpsCertificate"];
+        NSString* cert = licenseDataDict[@"fpsCertificate"];
+        
+        self.fairplayHandler.certificate = [[NSData alloc] initWithBase64EncodedString:cert options:0];
         self.fairplayHandler.licenseUri = self.licenseUri;
     }
 

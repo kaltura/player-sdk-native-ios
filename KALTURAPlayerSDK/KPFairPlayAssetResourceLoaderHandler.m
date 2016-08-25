@@ -61,7 +61,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     
     NSData* ckcData = [[NSData alloc] initWithBase64EncodedString:ckc options:0];
     
-    if (!ckcData) {
+    if (![ckcData length]) {
         *errorOut = [NSError errorWithDomain:TAG code:'ICKC' userInfo:nil];
         KPLogError(@"Invalid CKC in license response");
         return nil;
