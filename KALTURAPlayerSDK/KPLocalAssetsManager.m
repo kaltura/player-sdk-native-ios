@@ -7,6 +7,7 @@
 //
 
 #import "KPLocalAssetsManager.h"
+#import "KPLocalAssetsManager_Private.h"
 #import "KPPlayerConfig.h"
 #import "KPPlayerConfig_Private.h"
 #import "WidevineClassicCDM.h"
@@ -23,10 +24,6 @@
 + (NSURLQueryItem *)queryItem:(NSString *)name
                              :(NSString *)value;
 @end
-
-typedef NS_ENUM(NSUInteger, kDRMScheme) {
-    kDRMWidevineClassic, kDRMWidevineCENC
-};
 
 @interface KPPlayerConfig (Asset)
 @property (nonatomic, copy, readonly) NSString* overrideLicenseUri;
@@ -200,7 +197,7 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
 
 + (NSURL *)prepareGetLicenseDataURLForAsset:(KPPlayerConfig *)assetConfig
                                    flavorId:(NSString *)flavorId
-                                  drmScheme:(kDRMScheme)drmScheme error:(NSError**)error {
+                                  drmScheme:(kDRMScheme)drmScheme error:( NSError* _Nonnull *)error {
     
     if (![assetConfig waitForPlayerRootUrl]) {
         *error = [self errorWithCode:'purl' userInfo:@{NSLocalizedDescriptionKey: @"Failed to resolve player URL, can't continue"}];
@@ -218,12 +215,14 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     NSString* drmName = nil; 
     
     switch (drmScheme) {
-        case kDRMWidevineCENC:
-            drmName = @"wvcenc";
+        case kDRMFairPlay:
+            drmName = @"fps";
             break;
         case kDRMWidevineClassic:
             drmName = @"wvclassic";
             break;
+        case kDRMNull:
+            return nil;
     }
     
     // Build service URL
