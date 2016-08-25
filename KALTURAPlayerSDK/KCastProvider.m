@@ -185,6 +185,7 @@ didConnectToCastApplication:(id<KPGCMediaMetadata>)applicationMetadata
 didReceiveTextMessage:(NSString *)message
       withNamespace:(NSString *)protocolNamespace {
     if ([message hasPrefix:@"readyForMedia"]) {
+        KPLogTrace(@"message::%@", message);
         [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
         NSArray *castParams = message.castParams;
         
@@ -192,10 +193,16 @@ didReceiveTextMessage:(NSString *)message
             if (!_castPlayer) {
                 _castPlayer = [[KChromecastPlayer alloc] initWithMediaChannel:_mediaControlChannel
                                                                 andCastParams:message.castParams];
+            } else {
+                // set new media source - for change media
+                [_castPlayer setMediaSrc:[castParams firstObject]];
             }
         }
         
         [_internalDelegate startCasting:_castPlayer];
+    } else if ([message hasPrefix:@"changeMedia"]) {
+        // pause cast player before changing media
+        [_castPlayer pause];
     }
 }
 
