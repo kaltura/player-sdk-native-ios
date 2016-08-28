@@ -154,6 +154,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
         case KPGCMediaPlayerStateIdle:
             if ([[mediaControlChannel mediaStatus] idleReason] == KPGCMediaPlayerIdleReasonFinished) {
                 _isEnded = YES;
+                _playerState = PlayerStatePause;
                 [self setDelegate:castPlayerState withValue:@"ended"];
             }
             break;
