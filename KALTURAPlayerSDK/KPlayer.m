@@ -51,7 +51,7 @@ NSString * const StatusKeyPath = @"status";
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
     [self createAudioSession];
-    _playerTryCounter = -1;
+    _playerTryCounter = 0;
     
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
