@@ -160,8 +160,8 @@
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
     // Initialize the ads manager.
-    [self.adsManager initializeWithContentPlayhead:self.playhead
-                              adsRenderingSettings:self.adsRenderingSettings];
+    
+    [self.adsManager initializeWithAdsRenderingSettings: self.adsRenderingSettings];
     
     NSDictionary *eventParams = AdLoadedEventKey.nullVal;
     [self.delegate player:nil
