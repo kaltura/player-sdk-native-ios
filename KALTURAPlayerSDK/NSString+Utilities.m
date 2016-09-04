@@ -19,7 +19,7 @@ NSString *const LocalContentId = @"localContentId";
 #import <CommonCrypto/CommonDigest.h>
 #import "DeviceParamsHandler.h"
 
-@implementation NSString (Utilities)
+@implementation NSString (KPUtilities)
 - (NSString *)appendParam:(NSDictionary *)param {
     if (param) {
         return [self stringByAppendingFormat:@"&%@=%@", param.allKeys[0], param.allValues[0]];
@@ -172,7 +172,8 @@ NSString *const LocalContentId = @"localContentId";
 
 - (NSString *)mimeType {
     NSDictionary *mimeTypes = @{@"m3u8": @"application/vnd.apple.mpegurl",
-                                @"mp4": @"video/mp4"};
+                                @"mp4": @"video/mp4",
+                                @"mpd": @"application/dash+xml"};
     if (self.streamType) {
         return mimeTypes[self.streamType];
     }

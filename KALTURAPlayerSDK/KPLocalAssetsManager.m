@@ -40,9 +40,8 @@
                  path:(NSString *)localPath
              callback:(kLocalAssetRegistrationBlock)completed refresh:(BOOL)refresh {
 
-    // NOTE: this method currently only supports Widevine Classic DRM.
-    
-    
+    // NOTE: the only DRM scheme supported by this method is Widevine Classic.
+
     
     // Preflight: check that all parameters are valid.
     // TODO: not supplying these args is a programmer error, consider using NSAssert() instead.
@@ -313,7 +312,8 @@
         callback(error);
         [KPURLProtocol disable];
     } else {
-        [[[NSURLSession sharedSession] dataTaskWithURL:url completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+        NSURLRequest* req = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
+        [[[NSURLSession sharedSession] dataTaskWithRequest:req completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             callback(error);
             [KPURLProtocol disable];
         }] resume];

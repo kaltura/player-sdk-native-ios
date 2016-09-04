@@ -46,11 +46,12 @@ NSString * const StatusKeyPath = @"status";
 @synthesize mute = _mute;
 @synthesize preferSubtitles = _preferSubtitles;
 @synthesize isPlaying = _isPlaying;
+@synthesize isIdle = _isIdle;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
     [self createAudioSession];
-    _playerTryCounter = -1;
+    _playerTryCounter = 0;
     
     if (self) {
         _layer = [AVPlayerLayer playerLayerWithPlayer:self];
@@ -421,10 +422,6 @@ NSString * const StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
-        [self.delegate player:self
-                    eventName:ErrorKey
-                        value:[NSString stringWithFormat:@"%@ ,%@",
-                               exception.name, exception.reason]];
     }
 }
 
@@ -547,12 +544,20 @@ NSString * const StatusKeyPath = @"status";
 }
 
 - (void)play {
+    if (_isIdle) {
+        return;
+    }
+    
     if (!self.rate) {
         [super play];
     }
 }
 
 - (void)pause {
+    if (_isIdle) {
+        return;
+    }
+    
     if (self.rate) {
         [super pause];
     }
@@ -568,10 +573,6 @@ NSString * const StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
-        [self.delegate player:self
-                    eventName:ErrorKey
-                        value:[NSString stringWithFormat:@"%@ ,%@",
-                               exception.name, exception.reason]];
     }
     
     [_layer removeFromSuperlayer];
@@ -724,10 +725,6 @@ NSString * const StatusKeyPath = @"status";
     }
     @catch (NSException *exception) {
         KPLogError(@"%@", exception);
-        [self.delegate player:self
-                    eventName:ErrorKey
-                        value:[NSString stringWithFormat:@"%@ ,%@",
-                               exception.name, exception.reason]];
     }
 }
 

@@ -32,7 +32,6 @@ NSString *const KALTURAPlayerSDKResourcesBundle = @"KALTURAPlayerSDKResources.bu
 @property (nonatomic, readonly) NSString *pathForFile;
 @end
 
-//#define LOG_CACHE_EVENTS
 #ifdef LOG_CACHE_EVENTS
 static void cacheHit(NSString* url) {
     NSLog(@"CACHE HIT: %@", url);

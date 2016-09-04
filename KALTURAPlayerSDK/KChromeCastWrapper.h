@@ -226,7 +226,10 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
 @property(nonatomic, readonly) id<KPGCDevice> device;
 @property(nonatomic, weak) id delegate;
 @property(nonatomic, readonly) KPGCConnectionState applicationConnectionState;
-- (instancetype)initWithDevice:(id<KPGCDevice>)device clientPackageName:(NSString *)clientPackageName;
+//- (instancetype)initWithDevice:(id<KPGCDevice>)device clientPackageName:(NSString *)clientPackageName;
+- (instancetype)initWithDevice:(id<KPGCDevice>)device
+             clientPackageName:(NSString *)clientPackageName
+   ignoreAppStateNotifications:(BOOL)ignoreAppStateNotifications;
 - (NSInteger)stopApplicationWithSessionID:(NSString *)sessionID;
 - (void)connect;
 - (void)disconnect;
@@ -237,6 +240,8 @@ typedef NS_ENUM(NSInteger, KPGCMediaPlayerState) {
              withLaunchOptions:(id<KPGCLaunchOptions>)launchOptions;
 - (BOOL)addChannel:(id)channel;
 - (BOOL)removeChannel:(id)channel;
+- (void)deviceManager:(id<KPGCDeviceManager>)deviceManager
+didDisconnectWithError:(NSError *)error;
 @end
 
 @protocol KPGCDeviceScannerListener;

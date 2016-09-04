@@ -160,6 +160,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (void)resetPlayer {
+    [self.playerFactory.player pause];
     [self.controlsView reset];
     [self.playerFactory prepareForChangeConfiguration];
 }
@@ -445,6 +446,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 - (void)applicationDidEnterBackground: (NSNotification *)not {
     KPLogTrace(@"Enter");
     
+    if (_playerFactory.castProvider.isConnected) {
+        return;
+    }
+    
     _activatedFromBackground = YES;
 
     if ([NSBundle mainBundle].isAudioBackgroundModesEnabled){
@@ -459,6 +464,11 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     KPLogTrace(@"Enter");
+    
+    if (_playerFactory.castProvider.isConnected) {
+        return;
+    }
+    
     NSArray *backgroundModes = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"UIBackgroundModes"];
     
     if ([backgroundModes containsObject:@"audio"]) {
