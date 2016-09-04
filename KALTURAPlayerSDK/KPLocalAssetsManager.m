@@ -313,7 +313,9 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
         callback(error);
         [KPURLProtocol disable];
     } else {
-        NSURLRequest* req = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReloadIgnoringLocalCacheData timeoutInterval:60];
+        NSMutableURLRequest* req = [NSMutableURLRequest requestWithURL:url];
+        [KPURLProtocol ignoreLocalCacheForRequest:req];
+        
         [[[NSURLSession sharedSession] dataTaskWithRequest:req completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
             callback(error);
             [KPURLProtocol disable];
