@@ -20,7 +20,7 @@ typedef struct FunctionComponents {
 
 
 
-@interface NSString (Utilities)
+@interface NSString (KPUtilities)
 - (NSString *)appendParam:(NSDictionary *)param;
 
 @property (nonatomic, copy, readonly) NSString *appendVersion;
