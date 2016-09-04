@@ -19,7 +19,7 @@ NSString *const LocalContentId = @"localContentId";
 #import <CommonCrypto/CommonDigest.h>
 #import "DeviceParamsHandler.h"
 
-@implementation NSString (Utilities)
+@implementation NSString (KPUtilities)
 - (NSString *)appendParam:(NSDictionary *)param {
     if (param) {
         return [self stringByAppendingFormat:@"&%@=%@", param.allKeys[0], param.allValues[0]];
