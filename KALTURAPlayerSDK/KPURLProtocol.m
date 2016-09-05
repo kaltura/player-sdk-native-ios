@@ -17,7 +17,6 @@
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 static NSString * const LocalContentIDKey = @"localContentId";
-
 static int32_t enableCount;
 
 @interface KPURLProtocol()<NSURLConnectionDataDelegate>
@@ -101,23 +100,6 @@ static NSString *localContentID = nil;
     return request;
 }
 
-// This is hackish, so it needs explanation.
-// Setting the request's timeout to a nonstandard number is the most reliable way I found for marking 
-// it for ignoring local cache. The system's way of doing it (NSURLRequestReloadIgnoringLocalCacheData)
-// is not good enough for our purposes, because it may set it on regular requests. Sometimes.
-// The number: 60 (seconds) is the default timeout. So 61.0002 is almost the same, but different.
-
-static NSTimeInterval const MagicTimeoutForIgnoringLocalCache = 61.0002;
-
-// The caller has to call the next method on a request.
-+(void)ignoreLocalCacheForRequest:(NSMutableURLRequest*)request {
-    request.timeoutInterval = MagicTimeoutForIgnoringLocalCache;
-}
-
-+(BOOL)localCacheIgnoredForRequest:(NSURLRequest*)request {
-    return request.timeoutInterval == MagicTimeoutForIgnoringLocalCache;
-}
-
 - (void)startLoading {
     KPLogTrace(@"Enter");
     NSString *requestStr = self.request.URL.absoluteString;
@@ -153,10 +135,9 @@ static NSTimeInterval const MagicTimeoutForIgnoringLocalCache = 61.0002;
 
     NSDictionary *cachedHeaders;
     NSData *cachedPage;
-    
-    NSLog(@"timeout: %f", self.request.timeoutInterval);
-    if ([self.class localCacheIgnoredForRequest:self.request]) {
-        KPLogDebug(@"NOTE: local cache data explicitly ignored for request: %@", self.request);
+
+    if (self.request.cachePolicy==NSURLRequestReloadIgnoringLocalCacheData) {
+        KPLogDebug(@"NOTE: local cache data explicitly ignored for requestStr: %@", requestStr);
     } else {
         cachedHeaders = requestStr.cachedResponseHeaders;
         cachedPage = requestStr.cachedPage;

@@ -11,5 +11,4 @@
 @interface KPURLProtocol : NSURLProtocol
 +(void)enable;
 +(void)disable;
-+(void)ignoreLocalCacheForRequest:(NSMutableURLRequest*)request;
 @end
