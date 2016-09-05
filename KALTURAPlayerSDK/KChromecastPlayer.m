@@ -8,6 +8,7 @@
 
 #import "KChromecastPlayer.h"
 #import "NSString+Utilities.h"
+#import "KPLog.h"
 
 typedef NS_ENUM(NSInteger, PlayerState) {
     PlayerStatePause,
@@ -23,8 +24,12 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 
 @interface KChromecastPlayer()
 @property (nonatomic, strong) id<KPGCMediaControlChannel> mediaChannel;
+@property (nonatomic, strong) id<KPGCMediaInformation> currentMediaInformation;
 @property (nonatomic, strong) NSMutableSet *observers;
 @property (nonatomic) PlayerState playerState;
+@property (nonatomic) BOOL isEnded;
+@property (nonatomic) BOOL isChangeMedia;
+@property (nonatomic) BOOL wasReadyToplay;
 @end
 
 
@@ -37,25 +42,56 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     if (self) {
         _mediaChannel = mediaChannel;
         _mediaChannel.delegate = self;
+        
+        if ([castParams count] > 0) {
+            _mediaSrc = [castParams firstObject];
+            KPLogTrace(@"mediaSrc::%@", _mediaSrc);
+        }
 
         return self;
     }
     return nil;
 }
 
+- (void)setMediaSrc:(NSString *)mediaSrc {
+    if (_mediaSrc != nil) {
+        _isChangeMedia = YES;
+        _mediaSrc = mediaSrc;
+    } else {
+        _mediaSrc = mediaSrc;
+    }
+}
+
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay {
+    KPLogDebug(@"Enter setVideoUrl");
+    
+    if (!videoUrl && _mediaSrc) {
+        videoUrl = _mediaSrc;
+    }
+    
+    KPLogTrace(@"Video Url: ", videoUrl);
+    
     id<KPGCMediaInformation> mediaInformation = [[NSClassFromString(@"GCKMediaInformation") alloc] initWithContentID:videoUrl
-                                                                                                          streamType:0
-                                                                                                         contentType:videoUrl.mimeType
-                                                                                                            metadata:nil
-                                                                                                      streamDuration:0
-                                                                                                          customData:nil];
+                                                                                                          streamType:0                                      contentType:videoUrl.mimeType                              metadata:nil                    streamDuration:0                             customData:nil];
+    
     
     // Cast the video.
-    [_mediaChannel loadMedia:mediaInformation autoplay:isAutoPlay playPosition:startPosition];
+    if (_currentMediaInformation.contentID != mediaInformation.contentID || _isEnded) {
+        _currentMediaInformation = mediaInformation;
+        [self stop];
+        [_mediaChannel loadMedia:mediaInformation autoplay:isAutoPlay playPosition:startPosition];
+    }
+    
+    KPLogDebug(@"Exit setVideoUrl");
 }
 
 - (void)play {
+    if ((_isEnded || _isChangeMedia) && _playerState != PlayerStatePlaying) {
+        [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES];
+        _isEnded = NO;
+        _isChangeMedia = NO;
+        return;
+    }
     if (_playerState == PlayerStatePause) {
         [_mediaChannel play];
     }
@@ -88,6 +124,14 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     return _mediaChannel.approximateStreamPosition;
 }
 
+- (BOOL)wasReadyToplay {
+    return _wasReadyToplay;
+}
+
+- (NSTimeInterval)duration {
+    return _mediaChannel.mediaStatus.mediaInformation.streamDuration;
+}
+
 - (void)setCurrentTime:(NSTimeInterval)currentTime {
     [_mediaChannel seekToTimeInterval:currentTime];
 }
@@ -109,6 +153,8 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
             break;
         case KPGCMediaPlayerStateIdle:
             if ([[mediaControlChannel mediaStatus] idleReason] == KPGCMediaPlayerIdleReasonFinished) {
+                _isEnded = YES;
+                _playerState = PlayerStatePause;
                 [self setDelegate:castPlayerState withValue:@"ended"];
             }
             break;
@@ -137,6 +183,7 @@ typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
 
 - (void)mediaControlChannel:(id<KPGCMediaControlChannel>)mediaControlChannel
 didCompleteLoadWithSessionID:(NSInteger)sessionID {
+    _wasReadyToplay = YES;
     [self setDelegate:readyToPlay withValue:@(mediaControlChannel.mediaStatus.mediaInformation.streamDuration)];
 }
 

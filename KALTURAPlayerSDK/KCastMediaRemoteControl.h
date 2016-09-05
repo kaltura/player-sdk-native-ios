@@ -20,6 +20,8 @@
 @protocol KCastMediaRemoteControl <NSObject>
 @property(nonatomic, strong, readonly) id mediaStatus;
 @property (nonatomic) NSTimeInterval currentTime;
+@property (nonatomic, readonly) NSTimeInterval duration;
+@property (nonatomic, readonly) BOOL wasReadyToplay;
 - (NSInteger)seekToTimeInterval:(NSTimeInterval)position;
 - (void)play;
 - (void)pause;

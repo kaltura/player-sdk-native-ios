@@ -126,6 +126,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (NSTimeInterval)currentPlayBackTime {
+    if (currentPlayerType == CurrentPlyerTypeCast) {
+        return _castPlayer.currentTime;
+    }
+    
     return _player.currentPlaybackTime;
 }
 
@@ -234,13 +238,18 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 #pragma mark CastProviderInternalDelegate
 - (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer {
+    NSTimeInterval startPosition;
     if (!_castPlayer) {
         _castPlayer = castPlayer;
         [_castPlayer addObserver:self];
+        startPosition = self.currentPlayBackTime;
+    } else {
+        //TODO:: improve changemedia start position implimantion
+        startPosition = 0;
     }
     
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    [_castPlayer setVideoUrl:_src startPosition:self.currentPlayBackTime autoPlay:_isCastAutoPlay];
+    [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
     
     if ([_castProvider.delegate respondsToSelector:@selector(castProvider:mediaRemoteControlReady:)]) {
         [_castProvider.delegate castProvider:_castProvider mediaRemoteControlReady:_castPlayer];
@@ -254,15 +263,23 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)stopCasting {
     [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    if (_castPlayer.wasReadyToplay) {
+        [_player setCurrentPlaybackTime:_castPlayer.currentTime];
+    }
     [_castPlayer removeObserver:self];
-    [_player setCurrentPlaybackTime:_castPlayer.currentTime];
     _castPlayer = nil;
-    currentPlayerType = CurrentPlyerTypeDefault;
+    [self updatePlayerType:CurrentPlyerTypeDefault];
     [self play];
 }
 
 - (void)readyToPlay:(NSTimeInterval)streamDuration{
-    currentPlayerType = CurrentPlyerTypeCast;
+    KPLogTrace(@"readyToPlay cast");
+    
+    if (_player) {
+        [self.player pause];
+    }
+    
+    [self updatePlayerType:CurrentPlyerTypeCast];
     [self.delegate player:_player
                 eventName:DurationChangedKey
                     value:@(streamDuration).stringValue];
@@ -274,6 +291,24 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     
     if (isPlaying) {
         [_castPlayer play];
+    }
+}
+
+- (void)updatePlayerType:(CurrentPlyerType)type {
+    KPLogTrace(@"updatePlayerType");
+    switch (type) {
+        case CurrentPlyerTypeDefault:
+            currentPlayerType = CurrentPlyerTypeDefault;
+            _player.isIdle = NO;
+            break;
+        case CurrentPlyerTypeCast:
+            currentPlayerType = CurrentPlyerTypeCast;
+            _player.isIdle = YES;
+            break;
+        case CurrentPlyerTypeIMA:
+            currentPlayerType = CurrentPlyerTypeIMA;
+            _player.isIdle = YES;
+            break;
     }
 }
 
