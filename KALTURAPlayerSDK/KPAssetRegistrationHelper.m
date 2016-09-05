@@ -221,22 +221,25 @@
     __block int32_t asyncCallsLeft = 1;
     kLocalAssetRegistrationBlock done  = ^(NSError* error) {
         if (OSAtomicDecrement32(&asyncCallsLeft) == 0) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.assetRegistrationBlock(error);
-            });
+            KPLogDebug(@"Registration finished; error: %@", error);
+            if (self.assetRegistrationBlock) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    self.assetRegistrationBlock(error);
+                });
+            } else {
+                KPLogWarn(@"Registration finished but there's no assetRegistrationBlock.");
+            }
         }
     };
     
     // Initiate Widevine license only if the file extension is wvm and a FairPlay delegate wasn't requested.
     if (self.drmScheme != kDRMFairPlay && localPath.path.isWV) {
+        asyncCallsLeft++;
         NSError* error;
         if (![self loadDataForDrm:kDRMWidevineClassic error:&error]) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                self.assetRegistrationBlock(error);
-            });
+            done(error);
         }
         
-        asyncCallsLeft++;
         [self registerWidevineAssetAtPath:localPath.path callback:done refresh:NO];
     }
 
