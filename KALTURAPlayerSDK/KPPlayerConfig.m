@@ -18,6 +18,7 @@
 
 #define EMBEDFRAME_PAGE @"mwEmbedFrame.php"
 #define EMBEDFRAME_PAGE_WITH_SLASH @"/mwEmbedFrame.php"
+#define EMBEDLOADER_PAGE_WITH_SLASH @"/mwEmbedLoader.php"
 
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
@@ -303,13 +304,15 @@
         // embedLoaderUrl is something like "/html5/html5lib/v2.38.3/mwEmbedLoader.php".
         // We need "/html5/html5lib/v2.38.3/mwEmbedFrame.php"
         
-        NSString* embedFrameUrl = [[embedLoaderUrl stringByDeletingLastPathComponent] stringByAppendingPathComponent:EMBEDFRAME_PAGE];
+        NSString* embedFrameUrl = [embedLoaderUrl stringByReplacingOccurrencesOfString:EMBEDLOADER_PAGE_WITH_SLASH withString:EMBEDFRAME_PAGE_WITH_SLASH options:NSBackwardsSearch range:NSMakeRange(0, embedLoaderUrl.length)];
+        
+        // Usually it's relative to original server URL
         if ([embedFrameUrl hasPrefix:@"/"]) {
-            // Relative to original server URL
+            // Trim slash.
             NSString* url = [_server stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
             embedFrameUrl = [url stringByAppendingString:embedFrameUrl];
-        }
-        
+        }        
+
         // Cache for later
         NSDictionary* newServerConf = @{
                        EMBEDFRAME_PAGE: embedFrameUrl,
