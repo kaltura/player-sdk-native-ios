@@ -12,6 +12,7 @@
 @interface KPAssetRegistrationHelper : NSObject
 
 @property (nonatomic, copy) kLocalAssetRegistrationBlock assetRegistrationBlock;
+@property BOOL refresh;
 
 // Get an AVAssetResourceLoaderDelegate that can fetch and store a license.
 // Imp: create an object that implements the protocol and talks to the uDRM.

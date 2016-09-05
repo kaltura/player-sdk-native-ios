@@ -69,17 +69,7 @@
     return self;
 }
 
-//-(void)setDrmScheme:(kDRMScheme)drmScheme {
-//    if (drmScheme != _drmScheme) {
-//        _drmScheme = drmScheme;
-//        _licenseUri = nil;  // needs to be reloaded
-//    }
-//}
-
-
 -(BOOL)loadDataForDrm:(kDRMScheme)drmScheme error:(NSError* _Nonnull *)error {
-    
-//    NSError* error;
     
     // If license uri is overriden, don't use our server.
     // TODO: use category method
