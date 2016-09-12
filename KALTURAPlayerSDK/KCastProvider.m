@@ -94,7 +94,10 @@
     _appID = appID;
 
     // Initialize device scanner.
-    self.deviceScanner = [[NSClassFromString(@"GCKDeviceScanner") alloc] init];
+    
+    id<KPGFilterCriteria> filterCriteria = [NSClassFromString(@"GCKFilterCriteria") criteriaForAvailableApplicationWithID: _appID];
+    
+    self.deviceScanner = [[NSClassFromString(@"GCKDeviceScanner") alloc] initWithFilterCriteria: filterCriteria];
     [_deviceScanner addListener:self];
     [_deviceScanner startScan];
     _deviceScanner.passiveScan = _passiveScan;
