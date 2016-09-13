@@ -78,8 +78,8 @@ NSString *const LocalContentId = @"localContentId";
                             @"language",
                             @"captions",
                             @"audioTrackSelected",
-                            @"chromecastAppId",
-                            @"textTrackSelected"];
+                            @"textTrackSelected",
+                            @"chromecastAppId"];
     KPLogTrace(@"Exit");
     return (Attribute)[attributes indexOfObject:self];
 }
