@@ -23,6 +23,7 @@
 - (void)castProvider:(KCastProvider *)provider didFailToConnectToDevice:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider didFailToDisconnectFromDevice:(NSError *)error;
 - (void)castProvider:(KCastProvider *)provider mediaRemoteControlReady:(id<KCastMediaRemoteControl>)mediaRemoteControl;
+- (void)castProvider:(KCastProvider *)provider availableTextTracks:(NSDictionary *)availableTextTracks;
 @end
 
 @interface KCastProvider : NSObject
@@ -41,5 +42,6 @@
 - (void)connectToDevice:(KCastDevice *)device;
 - (void)disconnectFromDevice;
 - (void)disconnectFromDeviceWithLeave;
+- (void)switchTextTrack:(NSInteger)textTrackIndex;
 
 @end

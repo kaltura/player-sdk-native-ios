@@ -12,6 +12,7 @@
 #import "CastProviderInternalDelegate.h"
 #import "NSString+Utilities.h"
 #import "KChromecastPlayer.h"
+#import "NSDictionary+Utilities.h"
 
 
 @interface KCastDevice ()
@@ -203,6 +204,21 @@ didReceiveTextMessage:(NSString *)message
     } else if ([message hasPrefix:@"changeMedia"]) {
         // pause cast player before changing media
         [_castPlayer pause];
+    } else if ([message containsString:@"captions"]) {
+        KPLogTrace(@"message:: %@", message);
+        // Converting NSString to NSDictionary
+        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if ([_delegate respondsToSelector:@selector(castProvider:availableTextTracks:)]) {
+            [_delegate castProvider:self availableTextTracks:(NSDictionary *)json];
+        }
+    }
+}
+
+- (void)switchTextTrack:(NSInteger)textTrackIndex {
+    if (_castChannel) {
+        [_castChannel sendTextMessage:
+         [NSString stringWithFormat:@"{\"type\":\"ENABLE_CC\",\"trackNumber\":%@}", @(textTrackIndex).stringValue]];
     }
 }
 
