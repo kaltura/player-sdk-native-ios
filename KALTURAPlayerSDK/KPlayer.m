@@ -334,22 +334,26 @@ NSString * const StatusKeyPath = @"status";
                                       @"title": option.displayName}];
             }
         }
+        
+        BOOL isSubtitles;
         if ([subtitles count] > 0){
+            isSubtitles = YES;
             NSMutableDictionary *languages = @{@"languages": subtitles}.mutableCopy;
             [self.delegate player:self eventName:@"textTracksReceived" JSON:languages.toJSON];
-
-
         }
         if ([captions count] > 0){
-           NSMutableDictionary *closedCaptionLanguages = @{@"languages": captions}.mutableCopy;
-           [self.delegate player:self eventName:@"closedCaptionsRecived" JSON:closedCaptionLanguages.toJSON];
+            NSMutableDictionary *closedCaptionLanguages = @{@"languages": captions}.mutableCopy;
+            
+            if (!isSubtitles) {
+                [self.delegate player:self eventName:@"textTracksReceived" JSON:closedCaptionLanguages.toJSON];
+            }
+            
+            [self.delegate player:self eventName:@"closedCaptionsRecived" JSON:closedCaptionLanguages.toJSON];
         }
-       
-
     }
 }
 
--(void) selectTextTrack:(NSString *)locale {
+- (void)selectTextTrack:(NSString *)locale {
     NSString* mc = AVMediaCharacteristicLegible;
     int index = 0;
     AVMediaSelectionGroup *group  = [self.currentItem.asset mediaSelectionGroupForMediaCharacteristic:mc];
@@ -358,12 +362,12 @@ NSString * const StatusKeyPath = @"status";
         for (AVMediaSelectionOption *option in group.options){
             if ([[option.locale objectForKey:NSLocaleLanguageCode] isEqual:locale]){
                 if (_preferSubtitles){
-                    if ([option hasMediaCharacteristic:AVMediaCharacteristicContainsOnlyForcedSubtitles]){
+                    if ([option hasMediaCharacteristic:AVMediaCharacteristicVisual]){
                       [[self currentItem] selectMediaOption:option inMediaSelectionGroup:group ];
                        selected = YES;
                     }
                 } else {
-                    if (![option hasMediaCharacteristic:AVMediaCharacteristicContainsOnlyForcedSubtitles]){
+                    if (![option hasMediaCharacteristic:AVMediaCharacteristicVisual]){
                         [[self currentItem] selectMediaOption:option inMediaSelectionGroup:group ];
                         selected = YES;
                     }
@@ -374,7 +378,6 @@ NSString * const StatusKeyPath = @"status";
 
         if (!selected){
             [self.currentItem selectMediaOption:nil inMediaSelectionGroup:group];
-
         }
     }
 }
