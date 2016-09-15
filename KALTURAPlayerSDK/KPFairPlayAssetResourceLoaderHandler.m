@@ -8,14 +8,16 @@
 
 #import "KPFairPlayAssetResourceLoaderHandler.h"
 #import "KPLog.h"
+#import "NSString+Utilities.h"
 
 NSString* const TAG = @"com.kaltura.playersdk.drm.fps";
 NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
 @implementation KPFairPlayAssetResourceLoaderHandler
-- (NSData *)getContentKeyAndLeaseExpiryfromKeyServerModuleWithRequest:(NSData *)requestBytes contentIdentifierHost:(NSString *)assetStr leaseExpiryDuration:(NSTimeInterval *)expiryDuration error:(NSError **)errorOut {
+- (NSData *)performLicenseRequest:(NSData *)requestBytes leaseExpiryDuration:(NSTimeInterval *)expiryDuration error:(NSError **)errorOut {
     
     NSString* licenseUri = _licenseUri;
+    licenseUri = [licenseUri stringByReplacingOccurrencesOfString:@"udrm.kaltura.com" withString:@"udrm-stg.kaltura.com"];
     
     NSURL* reqUrl = [NSURL URLWithString:licenseUri];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:reqUrl];
@@ -73,12 +75,35 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
 }
 
 
+-(NSURL*)contentKeyFileURLForAsset:(NSString*)assetId {
+    NSError* error;
+    NSURL* libraryDir = [[NSFileManager defaultManager] URLForDirectory:NSLibraryDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:&error];
+    // TODO: error
+    
+    
+    
+    NSURL* keyStoreDir = [libraryDir URLByAppendingPathComponent:@"KalturaKeyStore" isDirectory:YES];
+    [[NSFileManager defaultManager] createDirectoryAtURL:keyStoreDir withIntermediateDirectories:YES attributes:nil error:&error];
+    
+    return [keyStoreDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.key", assetId.hexedMD5]];
+}
 
-- (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {
-    AVAssetResourceLoadingDataRequest *dataRequest = loadingRequest.dataRequest;
-    NSURL *url = loadingRequest.request.URL;
+-(NSData*)loadPersistentContentKeyForAsset:(NSString*)assetId error:(NSError**)error {
+    
+    NSURL* url = [self contentKeyFileURLForAsset:assetId];
+    
+    return [NSData dataWithContentsOfURL:url options:0 error:error];
+}
+
+-(BOOL)savePersistentContentKey:(NSData*)key forAsset:(NSString*)assetId error:(NSError**)error {
+    NSURL* url = [self contentKeyFileURLForAsset:assetId];
+    return [key writeToURL:url options:NSDataWritingAtomic error:error];
+}
+
+- (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)resourceLoadingRequest {
+
+    NSURL *url = resourceLoadingRequest.request.URL;
     NSError *error = nil;
-    BOOL handled = NO;
     
     // Must be a non-standard URI scheme for AVFoundation to invoke your AVAssetResourceLoader delegate
     // for help in loading it.
@@ -100,60 +125,116 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     
     if (!self.certificate) {
         KPLogError(@"Certificate is invalid or not set, can't continue");
-        return NO;
+        return YES;
     }
     
-    // Get SPC
-    NSData *requestBytes = [loadingRequest streamingContentKeyRequestDataForApp:self.certificate
-                                                              contentIdentifier:[assetId dataUsingEncoding:NSUTF8StringEncoding]
-                                                                        options:nil
-                                                                          error:&error];
     
     NSTimeInterval expiryDuration = 0.0;
     
-    // Send the SPC message to the Key Server.
-    NSData *responseData = [self getContentKeyAndLeaseExpiryfromKeyServerModuleWithRequest:requestBytes
-                                                                     contentIdentifierHost:assetId
-                                                                       leaseExpiryDuration:&expiryDuration
-                                                                                     error:&error];
-    
-    // The Key Server returns the CK inside an encrypted Content Key Context (CKC) message in response to
-    // the app’s SPC message.  This CKC message, containing the CK, was constructed from the SPC by a
-    // Key Security Module in the Key Server’s software.
-    if (responseData != nil) {
-        
-        // Provide the CKC message (containing the CK) to the loading request.
-        [dataRequest respondWithData:responseData];
-        
-        // Get the CK expiration time from the CKC. This is used to enforce the expiration of the CK.
-        if (expiryDuration != 0.0) {
-            
-            AVAssetResourceLoadingContentInformationRequest *infoRequest = loadingRequest.contentInformationRequest;
-            if (infoRequest) {
-                
-                // Set the date at which a renewal should be triggered.
-                // Before you finish loading an AVAssetResourceLoadingRequest, if the resource
-                // is prone to expiry you should set the value of this property to the date at
-                // which a renewal should be triggered. This value should be set sufficiently
-                // early enough to allow an AVAssetResourceRenewalRequest, delivered to your
-                // delegate via -resourceLoader:shouldWaitForRenewalOfRequestedResource:, to
-                // finish before the actual expiry time. Otherwise media playback may fail.
-                infoRequest.renewalDate = [NSDate dateWithTimeIntervalSinceNow:expiryDuration];
-                
-                infoRequest.contentType = @"application/octet-stream";
-                infoRequest.contentLength = responseData.length;
-                infoRequest.byteRangeAccessSupported = NO;
-            }
+    // Check if this reuqest is the result of a potential AVAssetDownloadTask.
+    BOOL shouldPersist = resourceLoader.preloadsEligibleContentKeys;
+    if (shouldPersist) {
+        if (resourceLoadingRequest.contentInformationRequest != nil) {
+            resourceLoadingRequest.contentInformationRequest.contentType = AVStreamingKeyDeliveryPersistentContentKeyType;
+        } else {
+            KPLogError(@"Unable to set contentType on contentInformationRequest.");
+            error = [NSError errorWithDomain:TAG code:'USCT' userInfo:nil];
+            [resourceLoadingRequest finishLoadingWithError:error];
+            return YES;
         }
-        [loadingRequest finishLoading]; // Treat the processing of the request as complete.
-    }
-    else {
-        [loadingRequest finishLoadingWithError:error];
     }
     
-    handled = YES;	// Request has been handled regardless of whether server returned an error.
+    // Check if we have an existing key on disk for this asset.
+    NSData* persistentKey = [self loadPersistentContentKeyForAsset:assetId error:&error];
+    if (persistentKey) {
+        AVAssetResourceLoadingDataRequest* dataRequest = [resourceLoadingRequest dataRequest];
+        [dataRequest respondWithData:persistentKey];
+        return YES;
+    }
     
-    return handled;
+    // Get SPC
+    NSDictionary* resourceLoadingRequestOptions;
+    // Check if this reuqest is the result of a potential AVAssetDownloadTask.
+    if (shouldPersist) {
+        // Since this request is the result of an AVAssetDownloadTask, we configure the options to request a persistent content key from the KSM.
+        resourceLoadingRequestOptions = @{AVAssetResourceLoadingRequestStreamingContentKeyRequestRequiresPersistentKey: @YES};
+    }
+    NSData *spcData = [resourceLoadingRequest streamingContentKeyRequestDataForApp:self.certificate
+                                                              contentIdentifier:[assetId dataUsingEncoding:NSUTF8StringEncoding]
+                                                                        options:resourceLoadingRequestOptions
+                                                                          error:&error];
+    
+
+    if (!spcData) {
+        KPLogError(@"Unable to get requestBytes. error=%@", error);
+        [resourceLoadingRequest finishLoadingWithError:error];
+        return YES;
+    }
+    
+    // Send the SPC message to the Key Server.
+    NSData *ckcData = [self performLicenseRequest:spcData leaseExpiryDuration:&expiryDuration error:&error];
+    
+    
+    if (ckcData == nil) {
+        [resourceLoadingRequest finishLoadingWithError:error];
+        return YES;
+    }
+    
+    NSData* contentKeyData;
+    
+    if (shouldPersist) {
+        // Since this request is the result of an AVAssetDownloadTask, we should get the secure persistent content key.
+
+        contentKeyData = [resourceLoadingRequest persistentContentKeyFromKeyVendorResponse:ckcData options:nil error:&error];
+        
+        if (!contentKeyData) {
+            // TODO: handle error
+            return YES;
+        }
+        
+        [self savePersistentContentKey:contentKeyData forAsset:assetId error:&error];
+        // TODO: handle error
+        
+    } else {
+        contentKeyData = ckcData;
+    }
+
+    
+    AVAssetResourceLoadingDataRequest *dataRequest = resourceLoadingRequest.dataRequest;
+    if (!dataRequest) {
+        //TODO: error
+        return YES;
+    }
+    
+    // Provide data to the loading request.
+    [dataRequest respondWithData:contentKeyData];
+    [resourceLoadingRequest finishLoading];    
+
+    
+    // Get the CK expiration time from the CKC. This is used to enforce the expiration of the CK.
+    if (expiryDuration != 0.0) {
+        
+        AVAssetResourceLoadingContentInformationRequest *infoRequest = resourceLoadingRequest.contentInformationRequest;
+        if (infoRequest) {
+            
+            // Set the date at which a renewal should be triggered.
+            // Before you finish loading an AVAssetResourceLoadingRequest, if the resource
+            // is prone to expiry you should set the value of this property to the date at
+            // which a renewal should be triggered. This value should be set sufficiently
+            // early enough to allow an AVAssetResourceRenewalRequest, delivered to your
+            // delegate via -resourceLoader:shouldWaitForRenewalOfRequestedResource:, to
+            // finish before the actual expiry time. Otherwise media playback may fail.
+            infoRequest.renewalDate = [NSDate dateWithTimeIntervalSinceNow:expiryDuration];
+            
+            infoRequest.contentType = @"application/octet-stream";
+            infoRequest.contentLength = ckcData.length;
+            infoRequest.byteRangeAccessSupported = NO;
+        }
+    }
+    [resourceLoadingRequest finishLoading]; // Treat the processing of the request as complete.
+    
+    
+    return YES;
 }
 
 
