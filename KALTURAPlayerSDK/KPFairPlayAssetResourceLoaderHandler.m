@@ -14,7 +14,8 @@ NSString* const TAG = @"com.kaltura.playersdk.drm.fps";
 NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
 @implementation KPFairPlayAssetResourceLoaderHandler
-- (NSData *)performLicenseRequest:(NSData *)requestBytes leaseExpiryDuration:(NSTimeInterval *)expiryDuration error:(NSError **)errorOut {
+
+- (NSData *)performLicenseRequest:(NSData *)requestBytes error:(NSError **)errorOut {
     
     NSString* licenseUri = _licenseUri;
     licenseUri = [licenseUri stringByReplacingOccurrencesOfString:@"udrm.kaltura.com" withString:@"udrm-stg.kaltura.com"];
@@ -53,8 +54,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
         return nil;
     }
     NSString* ckc = dict[@"ckc"];
-    NSString* expiry = dict[@"expiry"];
-    
+
     if (!ckc) {
         *errorOut = [NSError errorWithDomain:TAG code:'NCKC' userInfo:nil];
         KPLogError(@"No CKC in license response");
@@ -68,9 +68,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
         KPLogError(@"Invalid CKC in license response");
         return nil;
     }
-    
-    *expiryDuration = [expiry floatValue];
-    
+        
     return ckcData;
 }
 
@@ -172,7 +170,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     }
     
     // Send the SPC message to the Key Server.
-    NSData *ckcData = [self performLicenseRequest:spcData leaseExpiryDuration:&expiryDuration error:&error];
+    NSData *ckcData = [self performLicenseRequest:spcData error:&error];
     
     
     if (ckcData == nil) {
@@ -209,32 +207,6 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     // Provide data to the loading request.
     [dataRequest respondWithData:contentKeyData];
     [resourceLoadingRequest finishLoading];    
-
-    
-    // Get the CK expiration time from the CKC. This is used to enforce the expiration of the CK.
-    if (expiryDuration != 0.0) {
-        
-        AVAssetResourceLoadingContentInformationRequest *infoRequest = resourceLoadingRequest.contentInformationRequest;
-        if (infoRequest) {
-            
-            // Set the date at which a renewal should be triggered.
-            // Before you finish loading an AVAssetResourceLoadingRequest, if the resource
-            // is prone to expiry you should set the value of this property to the date at
-            // which a renewal should be triggered. This value should be set sufficiently
-            // early enough to allow an AVAssetResourceRenewalRequest, delivered to your
-            // delegate via -resourceLoader:shouldWaitForRenewalOfRequestedResource:, to
-            // finish before the actual expiry time. Otherwise media playback may fail.
-            infoRequest.renewalDate = [NSDate dateWithTimeIntervalSinceNow:expiryDuration];
-            
-            infoRequest.contentType = @"application/octet-stream";
-            infoRequest.contentLength = ckcData.length;
-            infoRequest.byteRangeAccessSupported = NO;
-        }
-    }
-    [resourceLoadingRequest finishLoading]; // Treat the processing of the request as complete.
-    
-    
-    return YES;
 }
 
 
