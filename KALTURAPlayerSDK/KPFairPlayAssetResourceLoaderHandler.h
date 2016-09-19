@@ -11,4 +11,5 @@
 @interface KPFairPlayAssetResourceLoaderHandler : NSObject <AVAssetResourceLoaderDelegate>
 @property (nonatomic, copy) NSString* licenseUri;
 @property (nonatomic, copy) NSData* certificate;
++(dispatch_queue_t)globalNotificationQueue;
 @end

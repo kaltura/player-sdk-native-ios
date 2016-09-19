@@ -19,16 +19,6 @@
 @property (nonatomic, strong) KPFairPlayAssetResourceLoaderHandler* handler;
 @end
 
-static dispatch_queue_t	globalNotificationQueue( void )
-{
-    static dispatch_queue_t globalQueue = 0;
-    static dispatch_once_t getQueueOnce = 0;
-    dispatch_once(&getQueueOnce, ^{
-        globalQueue = dispatch_queue_create("fairplay notify queue", NULL);
-    });
-    return globalQueue;
-}
-
 @implementation KPFairPlayHandler
 
 -(instancetype)initWithAssetReadyCallback:(KPAssetReadyCallback)callback {
@@ -54,9 +44,13 @@ static dispatch_queue_t	globalNotificationQueue( void )
 }
 
 -(void)setContentUrl:(NSString*)url {
-    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:[NSURL URLWithString:url] options:nil];
+    NSURL* assetURL = [NSURL URLWithString:url];
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:assetURL options:nil];
     
-    [asset.resourceLoader setDelegate:self.handler queue:globalNotificationQueue()];
+    [asset.resourceLoader setDelegate:self.handler queue:[KPFairPlayAssetResourceLoaderHandler globalNotificationQueue]];
+    if (assetURL.isFileURL) {   // local
+        asset.resourceLoader.preloadsEligibleContentKeys = YES;
+    }
     
     dispatch_async(dispatch_get_main_queue(), ^{
         _assetReadyCallback(asset);

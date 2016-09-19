@@ -139,6 +139,15 @@
 }
 
 
+-(BOOL)prepareAssetForDownload:(AVURLAsset*)asset error:(NSError**)error {
+    id<AVAssetResourceLoaderDelegate> delegate = [self createResourceLoaderDelegateWithError:error];
+    
+    [asset.resourceLoader setDelegate:delegate queue:KPFairPlayAssetResourceLoaderHandler.globalNotificationQueue];
+    asset.resourceLoader.preloadsEligibleContentKeys = YES;
+    
+    return YES;
+}
+
 -(void)registerWidevineAssetAtPath:(NSString *)localPath
                      callback:(kLocalAssetRegistrationBlock)callback refresh:(BOOL)refresh {
     

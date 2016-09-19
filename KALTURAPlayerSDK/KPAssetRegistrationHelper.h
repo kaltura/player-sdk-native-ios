@@ -16,7 +16,7 @@
 
 // Get an AVAssetResourceLoaderDelegate that can fetch and store a license.
 // Imp: create an object that implements the protocol and talks to the uDRM.
--(id<AVAssetResourceLoaderDelegate>)createResourceLoaderDelegateWithError:(NSError**)error;
+-(BOOL)prepareAssetForDownload:(AVURLAsset*)asset error:(NSError**)error;
 
 // Notify the SDK that download is complete.
 // Imp: register the asset (store metadata). Call the assetRegistrationBlock when done.

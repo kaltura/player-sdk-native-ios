@@ -15,6 +15,15 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
 @implementation KPFairPlayAssetResourceLoaderHandler
 
++(dispatch_queue_t)globalNotificationQueue {
+    static dispatch_queue_t globalQueue = 0;
+    static dispatch_once_t getQueueOnce = 0;
+    dispatch_once(&getQueueOnce, ^{
+        globalQueue = dispatch_queue_create("fairplay notify queue", NULL);
+    });
+    return globalQueue;
+}
+
 - (NSData *)performLicenseRequest:(NSData *)requestBytes error:(NSError **)errorOut {
     
     NSString* licenseUri = _licenseUri;
@@ -99,19 +108,19 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
 }
 
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)resourceLoadingRequest {
-
-    NSURL *url = resourceLoadingRequest.request.URL;
-    NSError *error = nil;
     
-    // Must be a non-standard URI scheme for AVFoundation to invoke your AVAssetResourceLoader delegate
-    // for help in loading it.
-    if (![[url scheme] isEqual:SKD_URL_SCHEME_NAME]) {
+    NSURL* url = resourceLoadingRequest.request.URL;
+    if (![url.scheme isEqual:SKD_URL_SCHEME_NAME]) {
         return NO;
     }
     
-    // Use the SKD URL as assetId.
-    NSString *assetId = url.host;
+    [self handleFairPlayLicenseRequest:resourceLoadingRequest resourceLoader:resourceLoader asset:url.host];
     
+    return YES; // we answer yes regardless of success/failure, because we handled the request.
+
+}
+
+-(void)waitForDrmParams {
     // Wait for licenseUri and certificate, up to 5 seconds. In particular, the certificate might not be ready yet.
     // TODO: a better way of doing it is semaphores of some kind. 
     for (int i=0; i < 5*1000/50 && !(_certificate && _licenseUri); i++) {
@@ -120,14 +129,11 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
         delay.tv_sec = 0;
         nanosleep(&delay, &delay);
     }
-    
-    if (!self.certificate) {
-        KPLogError(@"Certificate is invalid or not set, can't continue");
-        return YES;
-    }
-    
-    
-    NSTimeInterval expiryDuration = 0.0;
+}
+
+-(void)handleFairPlayLicenseRequest:(AVAssetResourceLoadingRequest *)resourceLoadingRequest resourceLoader:(AVAssetResourceLoader *)resourceLoader asset:(NSString*)assetId {
+
+    NSError *error = nil;
     
     // Check if this reuqest is the result of a potential AVAssetDownloadTask.
     BOOL shouldPersist = resourceLoader.preloadsEligibleContentKeys;
@@ -138,7 +144,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
             KPLogError(@"Unable to set contentType on contentInformationRequest.");
             error = [NSError errorWithDomain:TAG code:'USCT' userInfo:nil];
             [resourceLoadingRequest finishLoadingWithError:error];
-            return YES;
+            return;
         }
     }
     
@@ -147,7 +153,21 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     if (persistentKey) {
         AVAssetResourceLoadingDataRequest* dataRequest = [resourceLoadingRequest dataRequest];
         [dataRequest respondWithData:persistentKey];
-        return YES;
+        [resourceLoadingRequest finishLoading];
+        return;
+    }
+
+    if (error.domain != NSCocoaErrorDomain || error.code != NSFileReadNoSuchFileError) {
+        // NSFileReadNoSuchFileError is expected; something else indicates a real error.
+        KPLogError(@"Error loading persisted content key; failing the request with error: %@", error);
+        [resourceLoadingRequest finishLoadingWithError:error];
+        return;
+    }
+
+    [self waitForDrmParams];
+    if (!self.certificate) {
+        KPLogError(@"Certificate is invalid or not set, can't continue");
+        return;
     }
     
     // Get SPC
@@ -166,7 +186,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     if (!spcData) {
         KPLogError(@"Unable to get requestBytes. error=%@", error);
         [resourceLoadingRequest finishLoadingWithError:error];
-        return YES;
+        return;
     }
     
     // Send the SPC message to the Key Server.
@@ -175,7 +195,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     
     if (ckcData == nil) {
         [resourceLoadingRequest finishLoadingWithError:error];
-        return YES;
+        return;
     }
     
     NSData* contentKeyData;
@@ -186,12 +206,16 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
         contentKeyData = [resourceLoadingRequest persistentContentKeyFromKeyVendorResponse:ckcData options:nil error:&error];
         
         if (!contentKeyData) {
-            // TODO: handle error
-            return YES;
+            KPLogError(@"Unable to get persistent content key. error=%@", error);
+            [resourceLoadingRequest finishLoadingWithError:error];
+            return;
         }
         
-        [self savePersistentContentKey:contentKeyData forAsset:assetId error:&error];
-        // TODO: handle error
+        if (![self savePersistentContentKey:contentKeyData forAsset:assetId error:&error]) {
+            KPLogError(@"Unable to save persistent content key. error=%@", error);
+            [resourceLoadingRequest finishLoadingWithError:error];
+            return;
+        }
         
     } else {
         contentKeyData = ckcData;
@@ -201,7 +225,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     AVAssetResourceLoadingDataRequest *dataRequest = resourceLoadingRequest.dataRequest;
     if (!dataRequest) {
         //TODO: error
-        return YES;
+        return;
     }
     
     // Provide data to the loading request.
