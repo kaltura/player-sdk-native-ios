@@ -12,7 +12,6 @@
 #import "NSString+Utilities.h"
 #import "KPAssetBuilder.h"
 #import "CastProviderInternalDelegate.h"
-#import "KCastMediaRemoteControl.h"
 
 typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     CurrentPlyerTypeDefault,
@@ -20,11 +19,11 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     CurrentPlyerTypeCast
 };
 
-@interface KCastProvider ()
-@property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
-@end
+//@interface KCastProvider ()
+//@property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
+//@end
 
-@interface KPlayerFactory() <KPlayerDelegate, CastProviderInternalDelegate, KCastMediaRemoteControlDelegate> {
+@interface KPlayerFactory() <KPlayerDelegate, CastProviderInternalDelegate, KPCastProviderDelegate> {
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
@@ -32,14 +31,13 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     NSTimeInterval _lastPosition;
     CurrentPlyerType currentPlayerType;
     BOOL isPlaying;
-    BOOL _isCastAutoPlay;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
 @property (nonatomic, retain) KPAssetBuilder* assetBuilder;
-@property (nonatomic, strong) id<KCastMediaRemoteControl> castPlayer;
+@property (nonatomic, strong) id<KPCastProvider> castPlayer;
 @end
 
 @implementation KPlayerFactory
@@ -216,28 +214,22 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 #pragma mark
 #pragma mark Casting
-- (void)setCastProvider:(KCastProvider *)castProvider {
+- (void)setCastProvider:(id<KPCastProvider>)castProvider {
     if (castProvider) {
-        _isCastAutoPlay = NO;
         _castProvider = castProvider;
         _castProvider.internalDelegate = self;
     }
 }
 
-- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
-    [self setCastProvider:castProvider];
-    _isCastAutoPlay = autoPlay;
-}
-
 - (void)sendCastRecieverTextMessage:(NSString *)message {
-    BOOL check = [_castProvider.castChannel sendTextMessage:message];
+    BOOL check = [_castProvider sendTextMessage:message];
     if (check) {
         NSLog(@"%@", message);
     }
 }
 
 #pragma mark CastProviderInternalDelegate
-- (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer {
+- (void)startCasting:(id<KPCastProvider>)castPlayer {
     NSTimeInterval startPosition;
     if (!_castPlayer) {
         _castPlayer = castPlayer;
@@ -249,11 +241,8 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
     
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
-    
-    if ([_castProvider.delegate respondsToSelector:@selector(castProvider:mediaRemoteControlReady:)]) {
-        [_castProvider.delegate castProvider:_castProvider mediaRemoteControlReady:_castPlayer];
-    }
+    // TODO: handle start position
+   // [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
 }
 
 - (void)updateCastState:(NSString *)state {

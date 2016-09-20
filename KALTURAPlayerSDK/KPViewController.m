@@ -358,8 +358,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     KPLogTrace(@"Exit");
 }
 
-
-- (void)setCastProvider:(KCastProvider *)castProvider {
+- (void)setCastProvider:(id<KPCastProvider>)castProvider {
     KPLogTrace(@"Enter setCastProvider");
     
     if (self.playerFactory.adController) {
@@ -376,6 +375,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     _playerFactory.castProvider = castProvider;
     [self triggerCastEvent:castProvider];
+    
     KPLogTrace(@"Exit setCastProvider");
 }
 
@@ -400,18 +400,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
 }
 
-- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
-    [_playerFactory setCastProvider:castProvider autoPlay:autoPlay];
-    [self triggerCastEvent:castProvider];
-}
-
-- (void)triggerCastEvent:(KCastProvider *)castProvider {
+- (void)triggerCastEvent:(id<KPCastProvider>)castProvider {
     if (castProvider && _playerFactory.castProvider.isConnected) {
         [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
     }
 }
 
-- (KCastProvider *)castProvider {
+- (id<KPCastProvider>)castProvider {
     return _playerFactory.castProvider;
 }
 
@@ -425,15 +420,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         ((UIView *)self.controlsView).frame = screenBounds();
     }
     [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
-//    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
-//    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
-//    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
-//    [(UIView *)self.controlsView addSubview:reloadButton];
-}
-
-- (void)updateControlsView {
-//    ((UIView *)self.controlsView).frame = self.view.frame;
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
