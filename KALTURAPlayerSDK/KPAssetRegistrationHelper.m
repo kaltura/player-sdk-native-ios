@@ -72,7 +72,6 @@
 -(BOOL)loadDataForDrm:(kDRMScheme)drmScheme error:(NSError* _Nonnull *)error {
     
     // If license uri is overriden, don't use our server.
-    // TODO: use category method
     NSString* overrideUri = [self.config configValueForKey:@"Kaltura.overrideDrmServerURL"];
     if ([overrideUri isKindOfClass:[NSString class]]) {
         NSAssert(drmScheme != kDRMFairPlay, @"Kaltura.overrideDrmServerURL is not supported with FairPlay");         
