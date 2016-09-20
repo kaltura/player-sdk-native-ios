@@ -63,6 +63,10 @@
     return nil;
 }
 
++(instancetype)configWithServer:(NSString *)serverURL uiConfID:(NSString *)uiConfId partnerId:(NSString *)partnerId {
+    return [[self alloc] initWithServer:serverURL uiConfID:uiConfId partnerId:partnerId];
+}
+
 -(BOOL)waitForPlayerRootUrl {
     // start the process, if not started yet.
     [self resolveEmbedFrameUrlWithCompletionHandler:nil];
