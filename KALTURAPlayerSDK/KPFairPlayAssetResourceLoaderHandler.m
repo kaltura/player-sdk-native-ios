@@ -81,7 +81,6 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     return ckcData;
 }
 
-
 -(NSURL*)contentKeyLocationForAsset:(NSString*)assetId error:(NSError**)error {
 
     NSURL* libraryDir = [[NSFileManager defaultManager] URLForDirectory:NSLibraryDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:error];
@@ -143,9 +142,13 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
 -(void)waitForDrmParams {
     // Wait for licenseUri and certificate, up to 5 seconds. In particular, the certificate might not be ready yet.
     // TODO: a better way of doing it is semaphores of some kind. 
-    for (int i=0; i < 5*1000/50 && !(_certificate && _licenseUri); i++) {
+    
+    int totalWaitSeconds = 5;
+    int stepWaitMillis = 50;
+    
+    for (int i=0; i < totalWaitSeconds * 1000 / stepWaitMillis && !(_certificate && _licenseUri); i++) {
         struct timespec delay;
-        delay.tv_nsec = 50*1000*1000; // 50 millisec
+        delay.tv_nsec = stepWaitMillis*1000*1000;
         delay.tv_sec = 0;
         nanosleep(&delay, &delay);
     }
