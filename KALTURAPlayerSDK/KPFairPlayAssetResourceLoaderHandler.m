@@ -24,7 +24,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     return globalQueue;
 }
 
-- (NSData *)performLicenseRequest:(NSData *)requestBytes error:(NSError **)errorOut {
+- (NSData *)performLicenseRequest:(NSData *)requestBytes error:(NSError **)error {
     
     NSString* licenseUri = _licenseUri;
     
@@ -39,32 +39,32 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     KPLogDebug(@"Sending license request");
     NSTimeInterval licenseResponseTime = [NSDate timeIntervalSinceReferenceDate];
     
-    NSData* responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:errorOut];
+    NSData* responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:error];
     
     licenseResponseTime = [NSDate timeIntervalSinceReferenceDate] - licenseResponseTime;
     KPLogDebug(@"Received license response (%.3f)", licenseResponseTime);
     
     if (!responseData) {
-        KPLogError(@"No license response, error=%@", *errorOut);
+        KPLogError(@"No license response, error=%@", *error);
         return nil;
     }
     
-    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:errorOut];
+    NSDictionary* dict = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:error];
     if (!dict) {
-        KPLogError(@"Invalid license response, error=%@", *errorOut);
+        KPLogError(@"Invalid license response, error=%@", *error);
         return nil;
     }
     
     NSString* errMessage = dict[@"message"];
     if (errMessage) {
-        *errorOut = [NSError errorWithDomain:TAG code:'CKCE' userInfo:@{@"ServerMessage": errMessage}];
+        *error = [NSError errorWithDomain:TAG code:'CKCE' userInfo:@{@"ServerMessage": errMessage}];
         KPLogError(@"Error message from license server: %@", errMessage);
         return nil;
     }
     NSString* ckc = dict[@"ckc"];
 
     if (!ckc) {
-        *errorOut = [NSError errorWithDomain:TAG code:'NCKC' userInfo:nil];
+        *error = [NSError errorWithDomain:TAG code:'NCKC' userInfo:nil];
         KPLogError(@"No CKC in license response");
         return nil;
     }
@@ -72,7 +72,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     NSData* ckcData = [[NSData alloc] initWithBase64EncodedString:ckc options:0];
     
     if (![ckcData length]) {
-        *errorOut = [NSError errorWithDomain:TAG code:'ICKC' userInfo:nil];
+        *error = [NSError errorWithDomain:TAG code:'ICKC' userInfo:nil];
         KPLogError(@"Invalid CKC in license response");
         return nil;
     }
@@ -81,28 +81,48 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
 }
 
 
--(NSURL*)contentKeyFileURLForAsset:(NSString*)assetId {
-    NSError* error;
-    NSURL* libraryDir = [[NSFileManager defaultManager] URLForDirectory:NSLibraryDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:&error];
-    // TODO: error
+-(NSURL*)contentKeyLocationForAsset:(NSString*)assetId error:(NSError**)error {
+
+    NSURL* libraryDir = [[NSFileManager defaultManager] URLForDirectory:NSLibraryDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:error];
     
-    
+    if (!libraryDir) {
+        return nil;
+    }   
     
     NSURL* keyStoreDir = [libraryDir URLByAppendingPathComponent:@"KalturaKeyStore" isDirectory:YES];
-    [[NSFileManager defaultManager] createDirectoryAtURL:keyStoreDir withIntermediateDirectories:YES attributes:nil error:&error];
+    if (![[NSFileManager defaultManager] createDirectoryAtURL:keyStoreDir withIntermediateDirectories:YES attributes:nil error:error]) {
+        return nil;
+    }
     
     return [keyStoreDir URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.key", assetId.hexedMD5]];
 }
 
 -(NSData*)loadPersistentContentKeyForAsset:(NSString*)assetId error:(NSError**)error {
     
-    NSURL* url = [self contentKeyFileURLForAsset:assetId];
+    NSURL* url = [self contentKeyLocationForAsset:assetId error:error];
+    if (!url) {
+        KPLogError(@"Can't get contentkey location. Error: %@", *error);
+        return nil;
+    }
     
-    return [NSData dataWithContentsOfURL:url options:0 error:error];
+    NSError* readError;
+    NSData* data = [NSData dataWithContentsOfURL:url options:0 error:&readError];
+    
+    if (!data) {
+        if (readError.domain != NSCocoaErrorDomain || readError.code != NSFileReadNoSuchFileError) {
+            // NSFileReadNoSuchFileError is expected in this context; something else is more serious.
+            *error = readError;
+        }
+    }
+    
+    return data;
 }
 
 -(BOOL)savePersistentContentKey:(NSData*)key forAsset:(NSString*)assetId error:(NSError**)error {
-    NSURL* url = [self contentKeyFileURLForAsset:assetId];
+    NSURL* url = [self contentKeyLocationForAsset:assetId error:error];
+    if (!url) {
+        return NO;
+    }
     return [key writeToURL:url options:NSDataWritingAtomic error:error];
 }
 
@@ -150,22 +170,24 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     // Check if we have an existing key on disk for this asset.
     NSData* persistentKey = [self loadPersistentContentKeyForAsset:assetId error:&error];
     if (persistentKey) {
+        // We're done.
         AVAssetResourceLoadingDataRequest* dataRequest = [resourceLoadingRequest dataRequest];
         [dataRequest respondWithData:persistentKey];
         [resourceLoadingRequest finishLoading];
         return;
-    }
 
-    if (error.domain != NSCocoaErrorDomain || error.code != NSFileReadNoSuchFileError) {
-        // NSFileReadNoSuchFileError is expected; something else indicates a real error.
+    } else if (error) {
         KPLogError(@"Error loading persisted content key; failing the request with error: %@", error);
         [resourceLoadingRequest finishLoadingWithError:error];
         return;
     }
 
     [self waitForDrmParams];
+    
     if (!self.certificate) {
         KPLogError(@"Certificate is invalid or not set, can't continue");
+        error = [NSError errorWithDomain:TAG code:'ICRT' userInfo:nil];
+        [resourceLoadingRequest finishLoadingWithError:error];
         return;
     }
     
@@ -223,7 +245,10 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     
     AVAssetResourceLoadingDataRequest *dataRequest = resourceLoadingRequest.dataRequest;
     if (!dataRequest) {
-        //TODO: error
+        // This is not very likely to happen.
+        KPLogError(@"Can't get resourceLoadingRequest.dataRequest");
+        error = [NSError errorWithDomain:TAG code:'NRDR' userInfo:nil];
+        [resourceLoadingRequest finishLoadingWithError:error];
         return;
     }
     
