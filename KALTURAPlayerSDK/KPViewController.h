@@ -35,7 +35,6 @@
 @end
 
 @protocol KPSourceURLProvider <NSObject>
-
 - (NSString *)urlForEntryId:(NSString *)entryId currentURL:(NSString*)current;
 
 @end
@@ -270,6 +269,14 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 
 - (void)releaseAndSavePosition;
 - (void)resumePlayer;
+
+/*!
+ *  @function refreshLicenseIfNeeded:
+ *
+ *  @abstract
+ *  WidevineClassicHandler.setLicenseUri here will cause the stream to be closed and reopened (WV_Stop, WV_Play).
+ */
+- (void)refreshLicenseIfNeeded;
 
 
 /// Wraps registerReadyEvent: method by block syntax.
