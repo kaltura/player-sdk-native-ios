@@ -158,7 +158,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
 
     NSError *error = nil;
     
-    // Check if this reuqest is the result of a potential AVAssetDownloadTask.
+    // Check if this request is the result of an AVAssetDownloadTask.
     BOOL shouldPersist = resourceLoader.preloadsEligibleContentKeys;
     if (shouldPersist) {
         if (resourceLoadingRequest.contentInformationRequest != nil) {
@@ -196,10 +196,10 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     }
     
     // Get SPC
+    
     NSDictionary* resourceLoadingRequestOptions;
-    // Check if this reuqest is the result of a potential AVAssetDownloadTask.
     if (shouldPersist) {
-        // Since this request is the result of an AVAssetDownloadTask, we configure the options to request a persistent content key from the KSM.
+        // Configure the options to request a persistent content key from the KSM.
         resourceLoadingRequestOptions = @{AVAssetResourceLoadingRequestStreamingContentKeyRequestRequiresPersistentKey: @YES};
     }
     NSData *spcData = [resourceLoadingRequest streamingContentKeyRequestDataForApp:self.certificate
@@ -226,7 +226,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     NSData* contentKeyData;
     
     if (shouldPersist) {
-        // Since this request is the result of an AVAssetDownloadTask, we should get the secure persistent content key.
+        // Get a secure persistent content key.
 
         contentKeyData = [resourceLoadingRequest persistentContentKeyFromKeyVendorResponse:ckcData options:nil error:&error];
         
