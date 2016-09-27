@@ -419,7 +419,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         ((UIView *)self.controlsView).frame = screenBounds();
     }
-    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
+//    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

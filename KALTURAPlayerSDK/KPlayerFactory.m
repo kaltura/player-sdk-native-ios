@@ -217,14 +217,15 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 - (void)setCastProvider:(id<KPCastProvider>)castProvider {
     if (castProvider) {
         _castProvider = castProvider;
-        _castProvider.internalDelegate = self;
+//        _castProvider.internalDelegate = self;
     }
 }
 
 - (void)sendCastRecieverTextMessage:(NSString *)message {
+    NSLog(@"message:::: @%", message);
     BOOL check = [_castProvider sendTextMessage:message];
     if (check) {
-        NSLog(@"%@", message);
+        NSLog(@"sendCastRecieverTextMessage:: %@", message);
     }
 }
 

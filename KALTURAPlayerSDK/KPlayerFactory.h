@@ -55,7 +55,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)sendCastRecieverTextMessage:(NSString *)message;
 
 @property (nonatomic, strong) id<KPlayer> player;
-@property (nonatomic, weak) id<KPCastProvider> castProvider;
+@property (nonatomic, strong) id<KPCastProvider> castProvider;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
