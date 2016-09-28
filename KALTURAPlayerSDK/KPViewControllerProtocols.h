@@ -60,6 +60,7 @@ typedef enum{
 @property (nonatomic) BOOL preferSubtitles;
 @property (nonatomic, readonly) BOOL isPlaying;
 @property (nonatomic) BOOL isIdle;
+@property (nonatomic) BOOL userClickedPlay;
 
 - (instancetype)initWithParentView:(UIView *)parentView;
 - (void)setPlayerSource:(NSURL *)playerSource;
