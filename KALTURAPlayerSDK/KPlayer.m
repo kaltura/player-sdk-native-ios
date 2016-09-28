@@ -47,7 +47,7 @@ NSString * const StatusKeyPath = @"status";
 @synthesize preferSubtitles = _preferSubtitles;
 @synthesize isPlaying = _isPlaying;
 @synthesize isIdle = _isIdle;
-@synthesize userClickedPlay = _userClickedPlay;
+@synthesize shouldPlay = _shouldPlay;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -151,7 +151,7 @@ NSString * const StatusKeyPath = @"status";
 - (void)playerContinue {
     KPLogTrace(@"Enter");
     
-    if (!_userClickedPlay) {
+    if (!_shouldPlay) {
         return;
     }
     
