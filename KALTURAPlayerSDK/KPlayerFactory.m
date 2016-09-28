@@ -389,6 +389,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)play {
+    self.player.shouldPlay = YES;
     if (_backToForeground) {
         _isReleasePlayerPositionEnabled = YES;
     }
@@ -411,6 +412,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)pause {
+    self.player.shouldPlay = NO;
     if (_adController) {
         [self.adController pause];
     }

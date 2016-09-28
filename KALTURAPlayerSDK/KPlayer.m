@@ -47,6 +47,7 @@ NSString * const StatusKeyPath = @"status";
 @synthesize preferSubtitles = _preferSubtitles;
 @synthesize isPlaying = _isPlaying;
 @synthesize isIdle = _isIdle;
+@synthesize shouldPlay = _shouldPlay;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -149,6 +150,10 @@ NSString * const StatusKeyPath = @"status";
  */
 - (void)playerContinue {
     KPLogTrace(@"Enter");
+    
+    if (!_shouldPlay) {
+        return;
+    }
     
     if (CMTIME_COMPARE_INLINE(self.currentTime, ==, self.currentItem.duration)) { // we've reached the end
         [self reset];
