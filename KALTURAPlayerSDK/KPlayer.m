@@ -108,7 +108,8 @@ NSString * const StatusKeyPath = @"status";
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     
     NSError *setCategoryError = nil;
-    BOOL success = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    BOOL success = [audioSession setMode:AVAudioSessionModeMoviePlayback error:&setCategoryError];
+    [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
     
     if (!success) {
         /* handle the error condition */
