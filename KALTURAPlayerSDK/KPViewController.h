@@ -114,6 +114,16 @@
  */
 - (void)changeConfiguration:(KPPlayerConfig *)config;
 
+/*!
+ *  @function 	WithConfig:
+ *
+ *  @abstract
+ *  Prefetch player resources
+ *
+ *  @param KPPlayerConfig config is current configuration object
+ */
+- (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config;
+
 @property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
 
 @property (nonatomic, weak) id<KPSourceURLProvider> customSourceURLProvider;
