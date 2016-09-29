@@ -10,6 +10,10 @@
 
 #define CacheManager [KCacheManager shared]
 
+
+//#define LOG_CACHE_EVENTS
+
+
 @interface KCacheManager : NSObject
 + (KCacheManager *)shared;
 

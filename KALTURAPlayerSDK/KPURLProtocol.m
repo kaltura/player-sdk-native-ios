@@ -17,6 +17,7 @@
 
 static NSString * const KPURLProtocolHandledKey = @"KPURLProtocolHandledKey";
 static NSString * const LocalContentIDKey = @"localContentId";
+
 static int32_t enableCount;
 
 @interface KPURLProtocol()<NSURLConnectionDataDelegate>
@@ -68,18 +69,30 @@ static NSString *localContentID = nil;
     KCacheManager* cacheManager = [KCacheManager shared];
     NSString* requestString = request.URL.absoluteString;
     
-    if ([requestString containsString:LocalContentIDKey]) {
-        NSString *newContentID = request.URL.absoluteString.extractLocalContentId;
+    BOOL shouldCacheRequest = NO;
+    
+    // Special case mwEmbedFrame.php with localContentId.
+    NSString *newContentID = requestString.extractLocalContentId;
+    
+    if (newContentID) {
+        shouldCacheRequest = YES;
         if (![localContentID isEqualToString:newContentID]) {
             self.localContentID = newContentID;
         }
     }
-
-    BOOL result = [cacheManager shouldCacheRequest:request];
-
     
-    KPLogTrace(@"Exit::%d", result);
-    return result;
+    if (!shouldCacheRequest) {
+        shouldCacheRequest = [cacheManager shouldCacheRequest:request];
+    }
+    
+#ifdef LOG_CACHE_EVENTS
+    if (!shouldCacheRequest) {
+        NSLog(@"CACHE IGNORE: %@", requestString);
+    }
+#endif
+
+    KPLogTrace(@"Exit::%d", shouldCacheRequest);
+    return shouldCacheRequest;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request {
@@ -88,19 +101,38 @@ static NSString *localContentID = nil;
     return request;
 }
 
+// This is hackish, so it needs explanation.
+// Setting the request's timeout to a nonstandard number is the most reliable way I found for marking 
+// it for ignoring local cache. The system's way of doing it (NSURLRequestReloadIgnoringLocalCacheData)
+// is not good enough for our purposes, because it may set it on regular requests. Sometimes.
+// The number: 60 (seconds) is the default timeout. So 61.0002 is almost the same, but different.
+
+static NSTimeInterval const MagicTimeoutForIgnoringLocalCache = 61.0002;
+
+// The caller has to call the next method on a request.
++(void)ignoreLocalCacheForRequest:(NSMutableURLRequest*)request {
+    request.timeoutInterval = MagicTimeoutForIgnoringLocalCache;
+}
+
++(BOOL)localCacheIgnoredForRequest:(NSURLRequest*)request {
+    return request.timeoutInterval == MagicTimeoutForIgnoringLocalCache;
+}
+
 - (void)startLoading {
     KPLogTrace(@"Enter");
     NSString *requestStr = self.request.URL.absoluteString;
     KPLogTrace(@"requestStr: %@", requestStr);
     
     // TODO:: optimize 
-    if (self.class.localContentID && [requestStr containsString:@"mwEmbedFrame.php"] && ![requestStr containsString:LocalContentIDKey]) {
+    if (self.class.localContentID && [requestStr containsString:@"/mwEmbedFrame.php"] && ![requestStr containsString:LocalContentIDKey]) {
         requestStr = [NSString stringWithFormat:@"%@#localContentId=%@",self.request.URL.absoluteString, self.class.localContentID];
     }
     
     KCacheManager* cacheManager = [KCacheManager shared];
     
-    if (![Utilities hasConnectivity]) {
+    BOOL online = [Utilities hasConnectivity];
+    
+    if (!online) {
         for (NSString *key in cacheManager.offlineSubStr.allKeys) {
             if ([requestStr containsString:key]) {
                 NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
@@ -112,17 +144,25 @@ static NSString *localContentID = nil;
                       cacheStoragePolicy:NSURLCacheStorageNotAllowed];
                 [self.client URLProtocol:self didLoadData:[NSData new]];
                 [self.client URLProtocolDidFinishLoading:self];
-                KPLogTrace(@"oflline mode - return status 200 & empty for key:%@", key);
+                KPLogTrace(@"offline mode - return status 200 & empty for key:%@", key);
                 
                 return;
             }
         }
     }
+
+    NSDictionary *cachedHeaders;
+    NSData *cachedPage;
     
-    NSDictionary *cachedHeaders = requestStr.cachedResponseHeaders;
-    NSData *cachedPage = requestStr.cachedPage;
+    NSLog(@"timeout: %f", self.request.timeoutInterval);
+    if ([self.class localCacheIgnoredForRequest:self.request]) {
+        KPLogDebug(@"NOTE: local cache data explicitly ignored for request: %@", self.request);
+    } else {
+        cachedHeaders = requestStr.cachedResponseHeaders;
+        cachedPage = requestStr.cachedPage;
+    }
     
-    if (self.request.cachePolicy!=NSURLRequestReloadIgnoringLocalCacheData && cachedHeaders && cachedPage && cachedPage.length) {
+    if (cachedHeaders && cachedPage && cachedPage.length) {
         NSHTTPURLResponse *response = [[NSHTTPURLResponse alloc] initWithURL:self.request.URL
                                                                   statusCode:[cachedHeaders[@"statusCode"] integerValue]
                                                                  HTTPVersion:nil
@@ -135,8 +175,14 @@ static NSString *localContentID = nil;
         KPLogTrace(@"Exit::finishedLoadingFromCache:%@", self.request.URL);
         
     } else {
+        
+        if (!online) {
+            KPLogWarn(@"NOTE: device is offline and a whitelisted resource is missing (%@). Player may not function correctly.", requestStr);
+        }
+        
         _cacheParams = [CachedURLParams new];
         _cacheParams.url = self.request.URL;
+        
         NSMutableURLRequest *newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES forKey:KPURLProtocolHandledKey inRequest:newRequest];
         self.connection = [NSURLConnection connectionWithRequest:newRequest delegate:self];

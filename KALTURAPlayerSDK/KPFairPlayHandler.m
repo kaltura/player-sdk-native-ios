@@ -141,7 +141,7 @@ static dispatch_queue_t	globalNotificationQueue( void )
     }
     
     // Use the SKD URL as assetId.
-    NSString *assetId = url.absoluteString;
+    NSString *assetId = url.host;
     
     // Wait for licenseUri and certificate, up to 5 seconds. In particular, the certificate might not be ready yet.
     // TODO: a better way of doing it is semaphores of some kind. 

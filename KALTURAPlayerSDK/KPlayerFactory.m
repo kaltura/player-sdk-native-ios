@@ -238,13 +238,18 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 #pragma mark CastProviderInternalDelegate
 - (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer {
+    NSTimeInterval startPosition;
     if (!_castPlayer) {
         _castPlayer = castPlayer;
         [_castPlayer addObserver:self];
+        startPosition = self.currentPlayBackTime;
+    } else {
+        //TODO:: improve changemedia start position implimantion
+        startPosition = 0;
     }
     
     [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    [_castPlayer setVideoUrl:nil startPosition:self.currentPlayBackTime autoPlay:_isCastAutoPlay];
+    [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
     
     if ([_castProvider.delegate respondsToSelector:@selector(castProvider:mediaRemoteControlReady:)]) {
         [_castProvider.delegate castProvider:_castProvider mediaRemoteControlReady:_castPlayer];
@@ -258,8 +263,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)stopCasting {
     [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    if (_castPlayer.wasReadyToplay) {
+        [_player setCurrentPlaybackTime:_castPlayer.currentTime];
+    }
     [_castPlayer removeObserver:self];
-    [_player setCurrentPlaybackTime:_castPlayer.currentTime];
     _castPlayer = nil;
     [self updatePlayerType:CurrentPlyerTypeDefault];
     [self play];
@@ -267,6 +274,11 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)readyToPlay:(NSTimeInterval)streamDuration{
     KPLogTrace(@"readyToPlay cast");
+    
+    if (_player) {
+        [self.player pause];
+    }
+    
     [self updatePlayerType:CurrentPlyerTypeCast];
     [self.delegate player:_player
                 eventName:DurationChangedKey
@@ -377,6 +389,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)play {
+    self.player.shouldPlay = YES;
     if (_backToForeground) {
         _isReleasePlayerPositionEnabled = YES;
     }
@@ -399,6 +412,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)pause {
+    self.player.shouldPlay = NO;
     if (_adController) {
         [self.adController pause];
     }
