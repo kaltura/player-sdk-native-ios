@@ -77,6 +77,16 @@
 - (void)loadPlayerIntoViewController:(UIViewController *)parentViewController;
 
 /*!
+ *  @function prefetchPlayerResourcesWithConfig:
+ *
+ *  @abstract
+ *  Prefetch player resources
+ *
+ *  @param KPPlayerConfig config is current configuration object
+ */
+- (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config;
+
+/*!
  *  @function removePlayer
  *
  *  @abstract
