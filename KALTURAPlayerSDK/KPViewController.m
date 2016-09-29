@@ -137,7 +137,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     [playerViewController registerReadyEvent:^{
         
-        NSLog(@"Player ready after prefetch - will now destroy player");
+        KPLogTrace(@"Player ready after prefetch - will now destroy player");
         [playerViewController removePlayer];
         ownerViewController = nil;
     }];
