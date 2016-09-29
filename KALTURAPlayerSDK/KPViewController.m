@@ -124,7 +124,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
 }
 
-
 - (void)removePlayer {
     [self.controlsView removeControls];
     [self.playerFactory removePlayer];
