@@ -124,7 +124,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
 }
 
-
 - (void)removePlayer {
     [self.controlsView removeControls];
     [self.playerFactory removePlayer];
@@ -519,6 +518,25 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             }
         }];
     }
+}
+
+- (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config {
+    
+    __block UIViewController *ownerViewController = [[UIViewController alloc] init];
+    [config addConfigKey:@"EmbedPlayer.PreloadNativeComponent" withValue:@"true"];
+    [config addConfigKey:@"autoPlay" withValue:@"false"];
+    
+    KPViewController *playerViewController = [[KPViewController alloc] initWithConfiguration: config];
+    
+    [ownerViewController addChildViewController: playerViewController];
+    [ownerViewController.view addSubview: playerViewController.view];
+    
+    [playerViewController registerReadyEvent:^{
+        
+        KPLogTrace(@"Player ready after prefetch - will now destroy player");
+        [playerViewController removePlayer];
+        ownerViewController = nil;
+    }];
 }
 
 #pragma mark - Player Methods
