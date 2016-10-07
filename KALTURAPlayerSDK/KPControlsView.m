@@ -9,7 +9,7 @@
 #import "KPControlsView.h"
 #import "DeviceParamsHandler.h"
 
-#define KP_CONTROLS_WEBVIEW  SYSTEM_VERSION_EQUAL_TO(@"7") ? @"KPControlsUIWebview" : @"KPControlsWKWebview"
+#define KP_CONTROLS_WEBVIEW  SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10") ? @"KPControlsWKWebview" : @"KPControlsUIWebview"
 
 NSString *sendNotification(NSString *notification, NSString *params) {
     return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notification, params];
@@ -37,6 +37,6 @@ NSString *showChromecastComponent(BOOL show) {
 
 @implementation KPControlsView
 + (id<KPControlsView>)defaultControlsViewWithFrame:(CGRect)frame {
-    return (id<KPControlsView>)[[NSClassFromString(@"KPControlsUIWebview") alloc] initWithFrame:frame];
+    return (id<KPControlsView>)[[NSClassFromString(KP_CONTROLS_WEBVIEW) alloc] initWithFrame:frame];
 }
 @end
