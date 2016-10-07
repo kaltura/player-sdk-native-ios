@@ -9,7 +9,7 @@
 #import "KPControlsView.h"
 #import "DeviceParamsHandler.h"
 
-#define KP_CONTROLS_WEBVIEW  SYSTEM_VERSION_EQUAL_TO(@"7") ? @"KPControlsUIWebview" : @"KPControlsWKWebview"
+#define KP_CONTROLS_WEBVIEW  SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"10") ? @"KPControlsWKWebview" : @"KPControlsUIWebview"
 
 NSString *sendNotification(NSString *notification, NSString *params) {
     return [NSString stringWithFormat:@"NativeBridge.videoPlayer.sendNotification(\"%@\" ,%@);", notification, params];
