@@ -37,7 +37,6 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
 @property (nonatomic, retain) KPAssetBuilder* assetBuilder;
-@property (nonatomic, strong) id<KPCastProvider> castPlayer;
 @end
 
 @implementation KPlayerFactory
@@ -125,7 +124,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (NSTimeInterval)currentPlayBackTime {
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        return _castPlayer.currentTime;
+        return _castProvider.currentTime;
     }
     
     return _player.currentPlaybackTime;
@@ -133,7 +132,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        [_castPlayer seekToTimeInterval:currentPlayBackTime];
+        [_castProvider seekToTimeInterval:currentPlayBackTime];
         return;
     }
     if (isReady) {
@@ -248,6 +247,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 //}
 
 - (void)startCasting {
+    [_castProvider addObserver:self];
     [_castProvider setVideoUrl:nil startPosition:self.currentPlayBackTime autoPlay:YES];
 }
 
@@ -258,11 +258,11 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)stopCasting {
     [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
-    if (_castPlayer.wasReadyToplay) {
-        [_player setCurrentPlaybackTime:_castPlayer.currentTime];
+    if (_castProvider.wasReadyToplay) {
+        [_player setCurrentPlaybackTime:_castProvider.currentTime];
     }
-    [_castPlayer removeObserver:self];
-    _castPlayer = nil;
+    [_castProvider removeObserver:self];
+    _castProvider = nil;
     [self updatePlayerType:CurrentPlyerTypeDefault];
     [self play];
 }
@@ -285,7 +285,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     [_delegate player:_player eventName:@"hideConnectingMessage" value:nil];
     
     if (isPlaying) {
-        [_castPlayer play];
+        [_castProvider play];
     }
 }
 
@@ -398,7 +398,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
     
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        [_castPlayer play];
+        [_castProvider play];
     }
     
     if (currentPlayerType == CurrentPlyerTypeDefault && [self.player respondsToSelector:@selector(play)]) {
@@ -413,7 +413,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
     
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        [_castPlayer pause];
+        [_castProvider pause];
     }
     
     if ([self.player respondsToSelector:@selector(pause)]) {
