@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import "KPCastProvider.h"
+#if GOOGLE_CAST_ENABLED
 #import <GoogleCast/GoogleCast.h>
-
+#endif
 
 @interface GoogleCastProvider : NSObject <KPCastProvider>
 

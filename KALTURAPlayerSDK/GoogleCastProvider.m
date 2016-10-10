@@ -124,6 +124,7 @@ didReceiveTextMessage:(NSString *)message
         [self pause];
     } else if ([message containsString:@"captions"]) {
         KPLogTrace(@"message:: %@", message);
+        // TODO:: attach captions implimantation
         // Converting NSString to NSDictionary
 //        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
 //        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
