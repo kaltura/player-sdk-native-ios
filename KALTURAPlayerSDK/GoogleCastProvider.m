@@ -10,6 +10,8 @@
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 
+#if GOOGLE_CAST_ENABLED
+
 typedef NS_ENUM(NSInteger, PlayerDelegateMethod) {
     updateProgress,
     castPlayerState,
@@ -331,3 +333,4 @@ didStartMediaSessionWithID:(NSInteger)sessionID {
 }
 
 @end
+#endif
