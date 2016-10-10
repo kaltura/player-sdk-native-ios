@@ -7,14 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CastProviderInternalDelegate.h"
-
+//#import "CastProviderInternalDelegate.h"
 
 @protocol KPCastProviderDelegate <NSObject>
 
 - (void)updateProgress:(NSTimeInterval)currentTime;
 - (void)readyToPlay:(NSTimeInterval)streamDuration;
 - (void)castPlayerState:(NSString *)state;
+- (void)startCasting;
 
 @end
 
@@ -24,7 +24,7 @@
 @property (nonatomic, readonly) NSTimeInterval duration;
 @property (nonatomic, readonly) BOOL wasReadyToplay;
 @property (nonatomic, readonly) BOOL isConnected;
-@property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
+@property (nonatomic, weak) id<KPCastProviderDelegate> delegate;
 
 - (NSInteger)seekToTimeInterval:(NSTimeInterval)position;
 - (void)play;
@@ -35,5 +35,5 @@
 - (void)addObserver:(id<KPCastProviderDelegate>)observer;
 - (void)removeObserver:(id<KPCastProviderDelegate>)observer;
 - (BOOL)sendTextMessage:(NSString *)message;
-
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay;
 @end

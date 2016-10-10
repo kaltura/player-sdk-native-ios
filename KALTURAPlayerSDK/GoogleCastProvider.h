@@ -10,6 +10,7 @@
 #import "KPCastProvider.h"
 #import <GoogleCast/GoogleCast.h>
 
+
 @interface GoogleCastProvider : NSObject <KPCastProvider>
-- (instancetype)initWithSessionManager:(GCKSessionManager *)sessionManager;
+
 @end

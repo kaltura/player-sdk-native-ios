@@ -217,6 +217,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 - (void)setCastProvider:(id<KPCastProvider>)castProvider {
     if (castProvider) {
         _castProvider = castProvider;
+        _castProvider.delegate = self;
 //        _castProvider.internalDelegate = self;
     }
 }
@@ -230,20 +231,24 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 #pragma mark CastProviderInternalDelegate
-- (void)startCasting:(id<KPCastProvider>)castPlayer {
-    NSTimeInterval startPosition;
-    if (!_castPlayer) {
-        _castPlayer = castPlayer;
-        [_castPlayer addObserver:self];
-        startPosition = self.currentPlayBackTime;
-    } else {
-        //TODO:: improve changemedia start position implimantion
-        startPosition = 0;
-    }
-    
-    [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    // TODO: handle start position
-   // [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
+//- (void)startCasting:(id<KPCastProvider>)castPlayer {
+//    NSTimeInterval startPosition;
+//    if (!_castPlayer) {
+//        _castPlayer = castPlayer;
+//        [_castPlayer addObserver:self];
+//        startPosition = self.currentPlayBackTime;
+//    } else {
+//        //TODO:: improve changemedia start position implimantion
+//        startPosition = 0;
+//    }
+//    
+//    [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
+//    // TODO: handle start position
+//   // [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
+//}
+
+- (void)startCasting {
+    [_castProvider setVideoUrl:nil startPosition:self.currentPlayBackTime autoPlay:YES];
 }
 
 - (void)updateCastState:(NSString *)state {
