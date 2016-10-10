@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-//#import "CastProviderInternalDelegate.h"
 
 @protocol KPCastProviderDelegate <NSObject>
 
@@ -15,6 +14,7 @@
 - (void)readyToPlay:(NSTimeInterval)streamDuration;
 - (void)castPlayerState:(NSString *)state;
 - (void)startCasting;
+- (void)stopCasting;
 
 @end
 

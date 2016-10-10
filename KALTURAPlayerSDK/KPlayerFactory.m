@@ -11,7 +11,6 @@
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 #import "KPAssetBuilder.h"
-#import "CastProviderInternalDelegate.h"
 
 typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     CurrentPlyerTypeDefault,
@@ -19,11 +18,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     CurrentPlyerTypeCast
 };
 
-//@interface KCastProvider ()
-//@property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
-//@end
-
-@interface KPlayerFactory() <KPlayerDelegate, CastProviderInternalDelegate, KPCastProviderDelegate> {
+@interface KPlayerFactory() <KPlayerDelegate, KPCastProviderDelegate> {
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
@@ -217,7 +212,6 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     if (castProvider) {
         _castProvider = castProvider;
         _castProvider.delegate = self;
-//        _castProvider.internalDelegate = self;
     }
 }
 
@@ -229,42 +223,28 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
 }
 
-#pragma mark CastProviderInternalDelegate
-//- (void)startCasting:(id<KPCastProvider>)castPlayer {
-//    NSTimeInterval startPosition;
-//    if (!_castPlayer) {
-//        _castPlayer = castPlayer;
-//        [_castPlayer addObserver:self];
-//        startPosition = self.currentPlayBackTime;
-//    } else {
-//        //TODO:: improve changemedia start position implimantion
-//        startPosition = 0;
-//    }
-//    
-//    [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-//    // TODO: handle start position
-//   // [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
-//}
-
+#pragma mark KPCastProviderDelegate
 - (void)startCasting {
     [_castProvider addObserver:self];
     [_castProvider setVideoUrl:nil startPosition:self.currentPlayBackTime autoPlay:YES];
 }
 
-- (void)updateCastState:(NSString *)state {
-    isPlaying = _player.isPlaying;
-    [_delegate player:_player eventName:state value:nil];
-}
-
 - (void)stopCasting {
     [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    
     if (_castProvider.wasReadyToplay) {
         [_player setCurrentPlaybackTime:_castProvider.currentTime];
     }
+    
     [_castProvider removeObserver:self];
     _castProvider = nil;
     [self updatePlayerType:CurrentPlyerTypeDefault];
     [self play];
+}
+
+- (void)updateCastState:(NSString *)state {
+    isPlaying = _player.isPlaying;
+    [_delegate player:_player eventName:state value:nil];
 }
 
 - (void)readyToPlay:(NSTimeInterval)streamDuration{
@@ -317,8 +297,6 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
                 eventName:TimeUpdateKey
                     value:@(currentTime).stringValue];
 }
-
-
 
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
