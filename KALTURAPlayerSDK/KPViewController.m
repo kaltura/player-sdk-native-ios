@@ -461,6 +461,11 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     KPLogTrace(@"Exit");
 }
 
+- (void)refreshLicenseIfNeeded {
+    
+     [self.playerFactory backToForeground];
+}
+
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     KPLogTrace(@"Enter");
     
