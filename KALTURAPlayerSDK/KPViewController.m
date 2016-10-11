@@ -144,7 +144,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.view removeObserver:self forKeyPath:@"frame" context:nil];
     }
     @catch (NSException *exception) {
-        NSLog(@"frame not observed");
+        KPLogTrace(@"frame not observed");
     }
     
     _delegate = nil;
@@ -277,7 +277,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:NO];
     // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
-    NSLog(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
+    KPLogTrace(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
 }
 
 #pragma mark -

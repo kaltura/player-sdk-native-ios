@@ -216,10 +216,10 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)sendCastRecieverTextMessage:(NSString *)message {
-    NSLog(@"message:::: @%", message);
+    KPLogTrace(@"message:::: @%", message);
     BOOL check = [_castProvider sendTextMessage:message];
     if (check) {
-        NSLog(@"sendCastRecieverTextMessage:: %@", message);
+        KPLogTrace(@"sendCastRecieverTextMessage:: %@", message);
     }
 }
 
@@ -303,7 +303,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     if ([event isEqualToString:CanPlayKey]) {
         isReady = YES;
         
-        NSLog(@"_currentPlayBackTime::%f",_currentPlayBackTime);
+        KPLogTrace(@"_currentPlayBackTime::%f",_currentPlayBackTime);
         if (_backToForeground) {
             _backToForeground = NO;
             [self setCurrentPlayBackTime:_lastPosition];
