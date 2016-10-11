@@ -144,7 +144,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.view removeObserver:self forKeyPath:@"frame" context:nil];
     }
     @catch (NSException *exception) {
-        NSLog(@"frame not observed");
+        KPLogTrace(@"frame not observed");
     }
     
     _delegate = nil;
@@ -277,7 +277,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:NO];
     // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
-    NSLog(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
+    KPLogTrace(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
 }
 
 #pragma mark -
@@ -357,8 +357,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     KPLogTrace(@"Exit");
 }
 
-
-- (void)setCastProvider:(KCastProvider *)castProvider {
+- (void)setCastProvider:(id<KPCastProvider>)castProvider {
     KPLogTrace(@"Enter setCastProvider");
     
     if (self.playerFactory.adController) {
@@ -375,6 +374,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     _playerFactory.castProvider = castProvider;
     [self triggerCastEvent:castProvider];
+    
     KPLogTrace(@"Exit setCastProvider");
 }
 
@@ -399,18 +399,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
 }
 
-- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
-    [_playerFactory setCastProvider:castProvider autoPlay:autoPlay];
-    [self triggerCastEvent:castProvider];
-}
-
-- (void)triggerCastEvent:(KCastProvider *)castProvider {
+- (void)triggerCastEvent:(id<KPCastProvider>)castProvider {
     if (castProvider && _playerFactory.castProvider.isConnected) {
         [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
     }
 }
 
-- (KCastProvider *)castProvider {
+- (id<KPCastProvider>)castProvider {
     return _playerFactory.castProvider;
 }
 
@@ -423,16 +418,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         ((UIView *)self.controlsView).frame = screenBounds();
     }
-    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
-//    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
-//    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
-//    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
-//    [(UIView *)self.controlsView addSubview:reloadButton];
-}
-
-- (void)updateControlsView {
-//    ((UIView *)self.controlsView).frame = self.view.frame;
+//    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {

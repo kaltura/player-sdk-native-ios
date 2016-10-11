@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 
 # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.name         = "KalturaPlayerSDK"
-s.version      = "2.4.2-dev"
+s.version      = "2.5.0-dev"
 s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
 
 #s.description  = <<-DESC
@@ -49,6 +49,11 @@ s.subspec 'Widevine' do |sp|
     sp.libraries = 'WViPhoneAPI'
     sp.vendored_library = 'libWViPhoneAPI.a'
     sp.pod_target_xcconfig = { 'ENABLE_BITCODE' => 'NO', 'GCC_PREPROCESSOR_DEFINITIONS'=>'WIDEVINE_ENABLED=1' }
+end
+
+s.subspec 'GoogleCast' do |sp|
+    sp.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS'=>'GOOGLE_CAST_ENABLED=1' }
+    sp.dependency 'google-cast-sdk', '~> 3.2.0'
 end
 
 end
