@@ -11,8 +11,6 @@
 #import "KPLog.h"
 #import "NSString+Utilities.h"
 #import "KPAssetBuilder.h"
-#import "CastProviderInternalDelegate.h"
-#import "KCastMediaRemoteControl.h"
 
 typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     CurrentPlyerTypeDefault,
@@ -20,11 +18,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     CurrentPlyerTypeCast
 };
 
-@interface KCastProvider ()
-@property (nonatomic, weak) id<CastProviderInternalDelegate> internalDelegate;
-@end
-
-@interface KPlayerFactory() <KPlayerDelegate, CastProviderInternalDelegate, KCastMediaRemoteControlDelegate> {
+@interface KPlayerFactory() <KPlayerDelegate, KPCastProviderDelegate> {
     NSString *key;
     BOOL isSeeked;
     BOOL isReady;
@@ -32,14 +26,12 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     NSTimeInterval _lastPosition;
     CurrentPlyerType currentPlayerType;
     BOOL isPlaying;
-    BOOL _isCastAutoPlay;
 }
 
 @property (nonatomic, strong) UIViewController *parentViewController;
 @property (nonatomic) BOOL isContentEnded;
 @property (nonatomic) BOOL isAllAdsCompleted;
 @property (nonatomic, retain) KPAssetBuilder* assetBuilder;
-@property (nonatomic, strong) id<KCastMediaRemoteControl> castPlayer;
 @end
 
 @implementation KPlayerFactory
@@ -127,7 +119,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (NSTimeInterval)currentPlayBackTime {
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        return _castPlayer.currentTime;
+        return _castProvider.currentTime;
     }
     
     return _player.currentPlaybackTime;
@@ -135,7 +127,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)setCurrentPlayBackTime:(NSTimeInterval)currentPlayBackTime {
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        [_castPlayer seekToTimeInterval:currentPlayBackTime];
+        [_castProvider seekToTimeInterval:currentPlayBackTime];
         return;
     }
     if (isReady) {
@@ -216,60 +208,43 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 #pragma mark
 #pragma mark Casting
-- (void)setCastProvider:(KCastProvider *)castProvider {
+- (void)setCastProvider:(id<KPCastProvider>)castProvider {
     if (castProvider) {
-        _isCastAutoPlay = NO;
         _castProvider = castProvider;
-        _castProvider.internalDelegate = self;
+        _castProvider.delegate = self;
     }
-}
-
-- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
-    [self setCastProvider:castProvider];
-    _isCastAutoPlay = autoPlay;
 }
 
 - (void)sendCastRecieverTextMessage:(NSString *)message {
-    BOOL check = [_castProvider.castChannel sendTextMessage:message];
+    KPLogTrace(@"message:::: @%", message);
+    BOOL check = [_castProvider sendTextMessage:message];
     if (check) {
-        NSLog(@"%@", message);
+        KPLogTrace(@"sendCastRecieverTextMessage:: %@", message);
     }
 }
 
-#pragma mark CastProviderInternalDelegate
-- (void)startCasting:(id<KCastMediaRemoteControl>)castPlayer {
-    NSTimeInterval startPosition;
-    if (!_castPlayer) {
-        _castPlayer = castPlayer;
-        [_castPlayer addObserver:self];
-        startPosition = self.currentPlayBackTime;
-    } else {
-        //TODO:: improve changemedia start position implimantion
-        startPosition = 0;
+#pragma mark KPCastProviderDelegate
+- (void)startCasting {
+    [_castProvider addObserver:self];
+    [_castProvider setVideoUrl:nil startPosition:self.currentPlayBackTime autoPlay:YES];
+}
+
+- (void)stopCasting {
+    [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
+    
+    if (_castProvider.wasReadyToplay) {
+        [_player setCurrentPlaybackTime:_castProvider.currentTime];
     }
     
-    [_delegate player:_player eventName:@"chromecastDeviceConnected" value:nil];
-    [_castPlayer setVideoUrl:nil startPosition:startPosition autoPlay:_isCastAutoPlay];
-    
-    if ([_castProvider.delegate respondsToSelector:@selector(castProvider:mediaRemoteControlReady:)]) {
-        [_castProvider.delegate castProvider:_castProvider mediaRemoteControlReady:_castPlayer];
-    }
+    [_castProvider removeObserver:self];
+    _castProvider = nil;
+    [self updatePlayerType:CurrentPlyerTypeDefault];
+    [self play];
 }
 
 - (void)updateCastState:(NSString *)state {
     isPlaying = _player.isPlaying;
     [_delegate player:_player eventName:state value:nil];
-}
-
-- (void)stopCasting {
-    [_delegate player:_player eventName:@"chromecastDeviceDisConnected" value:nil];
-    if (_castPlayer.wasReadyToplay) {
-        [_player setCurrentPlaybackTime:_castPlayer.currentTime];
-    }
-    [_castPlayer removeObserver:self];
-    _castPlayer = nil;
-    [self updatePlayerType:CurrentPlyerTypeDefault];
-    [self play];
 }
 
 - (void)readyToPlay:(NSTimeInterval)streamDuration{
@@ -290,7 +265,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     [_delegate player:_player eventName:@"hideConnectingMessage" value:nil];
     
     if (isPlaying) {
-        [_castPlayer play];
+        [_castProvider play];
     }
 }
 
@@ -323,14 +298,12 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
                     value:@(currentTime).stringValue];
 }
 
-
-
 #pragma mark KPlayerEventsDelegate
 - (void)player:(id<KPlayer>)currentPlayer eventName:(NSString *)event value:(NSString *)value {
     if ([event isEqualToString:CanPlayKey]) {
         isReady = YES;
         
-        NSLog(@"_currentPlayBackTime::%f",_currentPlayBackTime);
+        KPLogTrace(@"_currentPlayBackTime::%f",_currentPlayBackTime);
         if (_backToForeground) {
             _backToForeground = NO;
             [self setCurrentPlayBackTime:_lastPosition];
@@ -403,7 +376,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
     
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        [_castPlayer play];
+        [_castProvider play];
     }
     
     if (currentPlayerType == CurrentPlyerTypeDefault && [self.player respondsToSelector:@selector(play)]) {
@@ -418,7 +391,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
     
     if (currentPlayerType == CurrentPlyerTypeCast) {
-        [_castPlayer pause];
+        [_castProvider pause];
     }
     
     if ([self.player respondsToSelector:@selector(pause)]) {
