@@ -282,7 +282,7 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 
 - (void)releaseAndSavePosition;
 - (void)resumePlayer;
-
+- (void)toggleFullscreen;
 
 /// Wraps registerReadyEvent: method by block syntax.
 @property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());
