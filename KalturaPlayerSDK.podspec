@@ -52,8 +52,8 @@ s.subspec 'Widevine' do |sp|
 end
 
 s.subspec 'GoogleCast' do |sp|
-    sp.dependency = 'google-cast-sdk', '~> 3.2.0'
     sp.pod_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS'=>'GOOGLE_CAST_ENABLED=1' }
+    sp.dependency 'google-cast-sdk', '~> 3.2.0'
 end
 
 end
