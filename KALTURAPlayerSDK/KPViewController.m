@@ -793,6 +793,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             }
             break;
         case doubleClickRequestAds: {
+            if ([_currentConfiguration
+                 configValueForKey:@"EmbedPlayer.UseExternalAdPlayer"]) {
+                return;
+            }
             __weak KPViewController *weakSelf = self;
             [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
                 dispatch_async(dispatch_get_main_queue(), ^{
