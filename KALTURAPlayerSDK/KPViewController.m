@@ -401,7 +401,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)triggerCastEvent:(id<KPCastProvider>)castProvider {
     if (castProvider && _playerFactory.castProvider.isConnected) {
-        [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+        [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:[NSString stringWithFormat:@"%f", self.currentPlaybackTime]];
     }
 }
 
@@ -789,7 +789,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             break;
         case chromecastAppId:
             if (_playerFactory.castProvider.isConnected) {
-                [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+                [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:[NSString stringWithFormat:@"%f", self.currentPlaybackTime]];
             }
             break;
         case doubleClickRequestAds: {
