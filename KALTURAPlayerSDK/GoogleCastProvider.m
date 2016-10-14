@@ -153,12 +153,21 @@ didReceiveTextMessage:(NSString *)message
 
 - (void)play {
     
-    if ((_isEnded || _isChangeMedia) && _playerState != PlayerStatePlaying) {
-        [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: nil];
-        _isEnded = NO;
-        _isChangeMedia = NO;
+    if (_playerState != PlayerStatePlaying) {
+        
+        if (_isEnded || _isChangeMedia) {
+            
+            NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
+            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
+            _isEnded = NO;
+            _isChangeMedia = NO;
+        } else {
+            
+            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: nil];
+        }
         return;
     }
+    
     if (_playerState == PlayerStatePause) {
         [self.currentSession.remoteMediaClient play];
     }
@@ -233,6 +242,9 @@ didReceiveTextMessage:(NSString *)message
     
     GCKMediaMetadata *metadata = nil;
     if (value) {
+        
+        [[NSUserDefaults standardUserDefaults] setObject: value forKey: @"MetaDataCC"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
