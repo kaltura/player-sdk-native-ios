@@ -226,7 +226,18 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 #pragma mark KPCastProviderDelegate
 - (void)startCasting {
     [_castProvider addObserver:self];
-    [_castProvider setVideoUrl:nil startPosition:self.currentPlayBackTime autoPlay:YES];
+
+    __weak KPlayerFactory *weakSelf = self;
+    [self.delegate startCastingWithHandler:^(NSString *value) {
+        if (value) {
+            __strong KPlayerFactory *strongSelf = weakSelf;
+            [strongSelf.castProvider setVideoUrl: nil
+                                   startPosition: strongSelf.currentPlayBackTime
+                                        autoPlay: YES
+                                        metaData: value];
+        }
+    }];
+
 }
 
 - (void)stopCasting {
