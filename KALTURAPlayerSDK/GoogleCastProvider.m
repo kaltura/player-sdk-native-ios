@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 @property (nonatomic, strong)  GCKCastSession *session;
 @property (nonatomic, strong, readonly)  GCKCastSession *currentSession;
 @property (nonatomic, copy) NSString *mediaSrc;
+@property (nonatomic, copy) NSString *customLogo;
 @property (nonatomic) PlayerState playerState;
 @property (nonatomic, strong) NSMutableSet *observers;
 @property (nonatomic) BOOL isChangeMedia;
@@ -64,6 +65,11 @@ typedef NS_ENUM(NSInteger, PlayerState) {
         _session = session;
         [_session.remoteMediaClient addListener:self];
         [_session addChannel:_castChannel];
+        
+        if (_customLogo) {
+            [self sendTextMessage:@"{\"type\":\"setLogo\",\"logo\":\"%@\"", _customLogo];
+        }
+        
         [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
     }
 }
@@ -391,6 +397,12 @@ didStartMediaSessionWithID:(NSInteger)sessionID {
 }
 - (void)removeObserver:(id<KPCastProviderDelegate>)observer {
     [self.observers removeObject:observer];
+}
+
+- (void)setLogo:(NSURL *)logoUrl {
+    _customLogo = [logoUrl absoluteString];
+}
+
 }
 
 @end
