@@ -1003,6 +1003,17 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     [self.controlsView triggerEvent:AllAdsCompletedKey withJSON:nil];
 }
 
+- (void)startCastingWithHandler:(void (^)(NSString *))handler {
+    
+    [self asyncEvaluate:@"{mediaProxy.entry}" expressionID:@"MediaProxy" handler:^(NSString *value) {
+        
+        if (handler != nil && value.length > 0) {
+            
+            handler(value);
+        }
+    }];
+}
+
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     KPLogTrace(@"Enter");
     isPlaying = note.name.isPlay || (!note.name.isPause && !note.name.isStop);

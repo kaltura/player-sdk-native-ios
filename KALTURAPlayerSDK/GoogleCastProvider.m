@@ -154,7 +154,7 @@ didReceiveTextMessage:(NSString *)message
 - (void)play {
     
     if ((_isEnded || _isChangeMedia) && _playerState != PlayerStatePlaying) {
-        [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES];
+        [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: nil];
         _isEnded = NO;
         _isChangeMedia = NO;
         return;
@@ -202,7 +202,7 @@ didReceiveTextMessage:(NSString *)message
     return NO;
 }
 
-- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay {
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info {
     KPLogTrace(@"setVideoUrl::: Position:%@, AutoPlay:%@", startPosition, isAutoPlay);
     
     if (!videoUrl && _mediaSrc) {
@@ -215,7 +215,7 @@ didReceiveTextMessage:(NSString *)message
                                       initWithContentID:videoUrl
                                       streamType:GCKMediaStreamTypeBuffered
                                       contentType:@"video/mp4"
-                                      metadata:nil
+                                      metadata:[self p_metadataWithString: info]
                                       streamDuration:0
                                       mediaTracks:nil
                                       textTrackStyle:nil
@@ -227,6 +227,55 @@ didReceiveTextMessage:(NSString *)message
         [self.currentSession.remoteMediaClient
          loadMedia:mediaInfo autoplay:isAutoPlay playPosition:startPosition];
     }
+}
+
+- (GCKMediaMetadata *) p_metadataWithString:(NSString *)value {
+    
+    GCKMediaMetadata *metadata = nil;
+    if (value) {
+        
+        NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        
+        if (dictionary != nil) {
+            
+            NSString *mediaId = @"";
+            NSString *title = @"";
+            NSString *thumbnailUrl = @"";
+            NSString *description = @"";
+            
+            id media_id = [[[dictionary objectForKey:@"partnerData"] objectForKey:@"requestData"] objectForKey:@"MediaID"];
+            if ([media_id isKindOfClass: [NSString class]]) {
+                mediaId = (NSString *)media_id;
+            }
+            
+            id title_ = [dictionary objectForKey:@"name"];
+            if ([title_ isKindOfClass: [NSString class]]) {
+                title = (NSString *)title_;
+            }
+            
+            id thumbnailUrl_ = [dictionary objectForKey:@"thumbnailUrl"];
+            if ([thumbnailUrl_ isKindOfClass: [NSString class]]) {
+                thumbnailUrl = (NSString *)thumbnailUrl_;
+            }
+            
+            id description_ = [dictionary objectForKey:@"description"];
+            if ([description_ isKindOfClass: [NSString class]]) {
+                description = (NSString *)description_;
+            }
+            
+            metadata = [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
+            [metadata setString: title forKey:kGCKMetadataKeyTitle];
+            [metadata setString: description forKey:kGCKMetadataKeySubtitle];
+            [metadata setString: mediaId forKey: @"KEY_ENTRY_ID"];
+            
+            [metadata addImage:[[GCKImage alloc] initWithURL:[NSURL URLWithString:thumbnailUrl]
+                                                       width:480
+                                                      height:720]];
+        }
+    }
+    
+    return metadata;
 }
 
 - (void)startUpdateTime {

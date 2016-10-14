@@ -31,6 +31,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 @protocol KPlayerFactoryDelegate <KPlayerDelegate>
 - (void)allAdsCompleted;
+- (void)startCastingWithHandler:(void(^)(NSString *value))handler;
 @end
 
 @interface KPlayerFactory : NSObject 
