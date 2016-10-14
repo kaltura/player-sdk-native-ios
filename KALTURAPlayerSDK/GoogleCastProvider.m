@@ -67,7 +67,7 @@ typedef NS_ENUM(NSInteger, PlayerState) {
         [_session addChannel:_castChannel];
         
         if (_customLogo) {
-            [self sendTextMessage:@"{\"type\":\"setLogo\",\"logo\":\"%@\"", _customLogo];
+            [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"",_customLogo]];
         }
         
         [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     if (error) {
         KPLogError(@"JS Error %@", error.description);
     }
-
+    
     [self sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
     [session removeChannel:_castChannel];
     _castChannel = nil;
@@ -134,14 +134,14 @@ didReceiveTextMessage:(NSString *)message
         KPLogTrace(@"message:: %@", message);
         // TODO:: attach captions implimantation
         // Converting NSString to NSDictionary
-//        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
-//        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-//        if ([_delegate respondsToSelector:@selector(castProvider:availableTextTracks:)]) {
-//            [_delegate castProvider:self availableTextTracks:(NSDictionary *)json];
-//        }
+        //        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+        //        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        //        if ([_delegate respondsToSelector:@selector(castProvider:availableTextTracks:)]) {
+        //            [_delegate castProvider:self availableTextTracks:(NSDictionary *)json];
+        //        }
     }
-
-
+    
+    
 }
 
 - (GCKCastSession *)currentSession {
@@ -223,7 +223,7 @@ didReceiveTextMessage:(NSString *)message
     if (!videoUrl && _mediaSrc) {
         videoUrl = _mediaSrc;
     }
-
+    
     KPLogTrace(@"Video Url: ", videoUrl);
     
     GCKMediaInformation *mediaInfo = [[GCKMediaInformation alloc]
@@ -235,7 +235,7 @@ didReceiveTextMessage:(NSString *)message
                                       mediaTracks:nil
                                       textTrackStyle:nil
                                       customData:nil];
-
+    
     // Cast video
     if (self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.contentID != mediaInfo.contentID || _isEnded) {
         [self stop];
@@ -345,7 +345,7 @@ didReceiveTextMessage:(NSString *)message
         case GCKMediaPlayerStateBuffering:
             break;
     }
-
+    
 }
 
 - (void)remoteMediaClient:(GCKRemoteMediaClient *)client
@@ -401,8 +401,6 @@ didStartMediaSessionWithID:(NSInteger)sessionID {
 
 - (void)setLogo:(NSURL *)logoUrl {
     _customLogo = [logoUrl absoluteString];
-}
-
 }
 
 @end
