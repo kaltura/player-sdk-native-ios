@@ -35,5 +35,5 @@
 - (void)addObserver:(id<KPCastProviderDelegate>)observer;
 - (void)removeObserver:(id<KPCastProviderDelegate>)observer;
 - (BOOL)sendTextMessage:(NSString *)message;
-- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay;
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info;
 @end
