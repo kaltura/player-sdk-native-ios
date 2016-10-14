@@ -334,21 +334,22 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification object:weakSelf userInfo:@{KMediaPlaybackStateKey: @(KPMediaPlaybackStateLoaded)}];
-        [weakSelf.playerController setPlaybackState:KPMediaPlaybackStateLoaded];
-        if (!weakSelf.isModifiedFrame) {
-            weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
+        __strong KPViewController *strongSelf = weakSelf;
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification object:strongSelf userInfo:@{KMediaPlaybackStateKey: @(KPMediaPlaybackStateLoaded)}];
+        [strongSelf.playerController setPlaybackState:KPMediaPlaybackStateLoaded];
+        if (!strongSelf.isModifiedFrame) {
+            strongSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         } else {
-            weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
-                weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
-                weakSelf.controlsView.shouldUpdateLayout = YES;
-                if (weakSelf.isFullScreenToggled) {
-                    weakSelf.view.frame = screenBounds();
-                    [weakSelf.topWindow makeKeyAndVisible];
-                    [weakSelf.topWindow.rootViewController.view addSubview:weakSelf.view];
+            strongSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
+                strongSelf.isFullScreenToggled = !self.isFullScreenToggled;
+                strongSelf.controlsView.shouldUpdateLayout = YES;
+                if (strongSelf.isFullScreenToggled) {
+                    strongSelf.view.frame = screenBounds();
+                    [strongSelf.topWindow makeKeyAndVisible];
+                    [strongSelf.topWindow.rootViewController.view addSubview:strongSelf.view];
                 } else {
-                    weakSelf.view.frame = weakSelf.superView.bounds;
-                    [weakSelf.superView addSubview:weakSelf.view];
+                    strongSelf.view.frame = strongSelf.superView.bounds;
+                    [strongSelf.superView addSubview:strongSelf.view];
                 }
             });
         }
@@ -363,9 +364,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     if (self.playerFactory.adController) {
         __weak KPViewController *weakSelf = self;
         [self removeAdPlayerWithCompletion:^{
+            __strong KPViewController *strongSelf = weakSelf;
             KPLogTrace(@"AdPlayer was removed");
-            weakSelf.playerFactory.castProvider = castProvider;
-            [weakSelf triggerCastEvent:castProvider];
+            strongSelf.playerFactory.castProvider = castProvider;
+            [strongSelf triggerCastEvent:castProvider];
         }];
         
         KPLogTrace(@"Exit setCastProvider");
@@ -932,12 +934,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             _seekedEventHandler = nil;
         }
     }
-    
+    __weak KPViewController *weakSelf = self;
     void(^kPlayerStateBlock)() = @{
                                       CanPlayKey:
                                           ^{
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaLoadStatePlayable)}];
                                               
                                               if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange:)]) {
@@ -948,21 +950,21 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                           ^{
                                               playbackState = KPMediaPlaybackStatePlaying;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
                                       PauseKey:
                                           ^{
                                               playbackState = KPMediaPlaybackStatePaused;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
                                       EndedKey:
                                           ^{
                                               playbackState = KPMediaPlaybackStateEnded;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
                                       TimeUpdateKey:
