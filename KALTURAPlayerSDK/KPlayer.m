@@ -449,7 +449,8 @@ NSString * const StatusKeyPath = @"status";
     [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
         dispatch_async( dispatch_get_main_queue(),
                        ^{
-                           [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
+                            __strong KPlayer *strongSelf = weakSelf;
+                           [strongSelf prepareToPlayAsset:asset withKeys:requestedKeys];
                        });
     }];
 }
@@ -545,7 +546,8 @@ NSString * const StatusKeyPath = @"status";
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
                    completionHandler:^(BOOL finished) {
-                       [weakSelf.delegate player:self eventName:SeekedKey value:nil];
+                       __strong KPlayer *strongSelf = weakSelf;
+                       [strongSelf.delegate player:strongSelf eventName:SeekedKey value:nil];
                    }];
     }
 }

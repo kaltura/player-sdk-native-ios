@@ -66,11 +66,13 @@ typedef NS_ENUM(NSUInteger, kDRMScheme) {
     
     [self storeLocalContentPage:assetConfig callback:done];
     if (localPath.isWV) {
+        __weak KPLocalAssetsManager *weakSelf = self;
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^{
-            [self registerWidevineAsset:assetConfig
-                              localPath:localPath
-                               flavorId:flavorId
-                               callback:done refresh:refresh];
+            __strong KPLocalAssetsManager *strongSelf = weakSelf;
+            [[strongSelf class] registerWidevineAsset:assetConfig
+                                              localPath:localPath
+                                               flavorId:flavorId
+                                               callback:done refresh:refresh];
         });
     }
     return YES;    
