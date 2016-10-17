@@ -154,6 +154,15 @@
     
 }
 
+- (void)reset {
+    if (self.isLoading) {
+        [self stopLoading];
+    }
+    
+    [self loadRequest:[NSURLRequest requestWithURL:
+                       [NSURL URLWithString:@"about:blank"]]];
+}
+
 - (void)dealloc {
     [configuration.userContentController removeAllUserScripts];
     configuration = nil;
