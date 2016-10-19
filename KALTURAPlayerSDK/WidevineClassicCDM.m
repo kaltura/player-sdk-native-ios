@@ -223,9 +223,7 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         return;
     }
     
-    __weak WidevineClassicCDM *weakSelf = self;
     [self dispatchAfterInit:^{
-        __strong WidevineClassicCDM *strongSelf = weakSelf;
         WV_SetCredentials(@{WVDRMServerKey: licenseUri});
         
         NSString* assetPath = assetUri.wvAssetPath;
@@ -243,10 +241,10 @@ static WViOsApiStatus widevineCallback(WViOsApiEvent event, NSDictionary *attrib
         }
 
         if (wvStatus == WViOsApiStatus_FileNotPresent) {
-            [[strongSelf class] widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
+            [self widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
             return;
         } else if (wvStatus != WViOsApiStatus_OK) {
-            [[strongSelf class] widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
+            [self widevineErrorWithEvent:WViOsApiEvent_NullEvent status:wvStatus asset:assetPath];
         }
         WV_NowOnline(); 
         WV_QueryAssetStatus(assetPath);
