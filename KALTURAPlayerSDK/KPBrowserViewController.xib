@@ -18,15 +18,10 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DRR-o0-0Sn">
-                    <frame key="frameInset" width="320" height="524"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRR-o0-0Sn">
                     <subviews>
                         <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hj5-xj-OPn">
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="524" id="Evc-Be-oNP"/>
-                                <constraint firstAttribute="width" constant="320" id="Peu-15-Jbq"/>
-                            </constraints>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="Bq7-7i-kzZ"/>
                             </connections>
@@ -37,9 +32,7 @@
                             </subviews>
                             <color key="backgroundColor" red="0.20000000298023224" green="0.20000000298023224" blue="0.20000000298023224" alpha="0.75" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="320" id="0Q4-Fa-gsr"/>
                                 <constraint firstAttribute="centerX" secondItem="yKi-vo-eUL" secondAttribute="centerX" constant="-0.5" id="1yQ-PU-Tm9"/>
-                                <constraint firstAttribute="height" constant="524" id="4ay-hi-sAe"/>
                                 <constraint firstAttribute="centerY" secondItem="yKi-vo-eUL" secondAttribute="centerY" constant="0.5" id="njp-cn-35u"/>
                             </constraints>
                         </view>
@@ -51,14 +44,12 @@
                         <constraint firstAttribute="trailing" secondItem="hj5-xj-OPn" secondAttribute="trailing" id="Z5u-49-pfg"/>
                         <constraint firstAttribute="bottom" secondItem="rSd-ou-uYM" secondAttribute="bottom" id="a5k-kT-Syr"/>
                         <constraint firstItem="hj5-xj-OPn" firstAttribute="leading" secondItem="DRR-o0-0Sn" secondAttribute="leading" id="hGf-Dq-eQB"/>
-                        <constraint firstAttribute="height" constant="524" id="lJd-WH-Vhw"/>
                         <constraint firstAttribute="trailing" secondItem="rSd-ou-uYM" secondAttribute="trailing" id="mhk-g4-UvM"/>
                         <constraint firstItem="rSd-ou-uYM" firstAttribute="leading" secondItem="DRR-o0-0Sn" secondAttribute="leading" id="uzn-9u-lrn"/>
                         <constraint firstItem="hj5-xj-OPn" firstAttribute="top" secondItem="DRR-o0-0Sn" secondAttribute="top" id="vMJ-1R-AA3"/>
                     </constraints>
                 </view>
-                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XsV-Mu-rHR">
-                    <frame key="frameInset" minY="524" width="320" height="44"/>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XsV-Mu-rHR">
                     <constraints>
                         <constraint firstAttribute="height" constant="44" id="f76-A7-kR6"/>
                     </constraints>
