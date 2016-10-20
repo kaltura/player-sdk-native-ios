@@ -367,6 +367,8 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             __strong KPViewController *strongSelf = weakSelf;
             KPLogTrace(@"AdPlayer was removed");
             strongSelf.playerFactory.castProvider = castProvider;
+            strongSelf.playerFactory.castProvider.thumbnailUrl =
+            [self.currentConfiguration configValueForKey:@"chromecast.defaultThumbnail"];
             [strongSelf triggerCastEvent:castProvider];
         }];
         
@@ -375,6 +377,8 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
     
     _playerFactory.castProvider = castProvider;
+    _playerFactory.castProvider.thumbnailUrl =
+    [self.currentConfiguration configValueForKey:@"chromecast.defaultThumbnail"];
     [self triggerCastEvent:castProvider];
     
     KPLogTrace(@"Exit setCastProvider");
