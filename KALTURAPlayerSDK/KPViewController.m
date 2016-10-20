@@ -485,10 +485,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     return [UIApplication sharedApplication].windows.firstObject;
 }
 
-- (void)changeMedia:(NSString *)mediaID {
-    if (mediaID) {
-        NSDictionary *mediaDict = @{@"entryId": mediaID};
+- (void)changeMedia:(NSObject *)media {
+    if ([media isKindOfClass:[NSString class]]) {
+        NSDictionary *mediaDict = @{@"entryId": media};
         [self sendNotification:@"changeMedia" withParams:mediaDict.toJson];
+    } else {
+        [self sendNotification:@"changeMedia" withParams:((NSDictionary *)media).toJson];
     }
 }
 

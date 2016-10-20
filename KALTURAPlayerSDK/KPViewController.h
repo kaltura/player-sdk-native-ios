@@ -102,7 +102,7 @@
  *
  *  @param NSString entryID the entryID of the new video
  */
-- (void)changeMedia:(NSString *)entryID;
+- (void)changeMedia:(NSObject *)media;
 
 /*!
  *  @function changeConfiguration:
