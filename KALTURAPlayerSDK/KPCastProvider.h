@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @protocol KPCastProviderDelegate <NSObject>
-
 - (void)updateProgress:(NSTimeInterval)currentTime;
 - (void)readyToPlay:(NSTimeInterval)streamDuration;
 - (void)castPlayerState:(NSString *)state;
@@ -25,6 +24,7 @@
 @property (nonatomic, readonly) BOOL wasReadyToplay;
 @property (nonatomic, readonly) BOOL isConnected;
 @property (nonatomic, weak) id<KPCastProviderDelegate> delegate;
+@property (nonatomic, copy) NSString *thumbnailUrl;
 
 - (NSInteger)seekToTimeInterval:(NSTimeInterval)position;
 - (void)play;

@@ -45,6 +45,7 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 @synthesize currentTime = _currentTime;
 @synthesize delegate = _delegate;
 @synthesize wasReadyToplay = _wasReadyToplay;
+@synthesize thumbnailUrl = _thumbnailUrl;
 
 - (instancetype)init {
     self = [super init];
@@ -204,6 +205,10 @@ didReceiveTextMessage:(NSString *)message
     return _currentTime;
 }
 
+- (void)setThumbnailUrl:(NSString *)thumbnailUrl {
+    _thumbnailUrl = thumbnailUrl;
+}
+
 - (BOOL)wasReadyToplay {
     return _wasReadyToplay;
 }
@@ -249,7 +254,7 @@ didReceiveTextMessage:(NSString *)message
     GCKMediaMetadata *metadata = nil;
     if (value) {
         
-        [[NSUserDefaults standardUserDefaults] setObject: value forKey: @"MetaDataCC"];
+        [[NSUserDefaults standardUserDefaults] setObject:value forKey:@"MetaDataCC"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         
         NSData *data = [value dataUsingEncoding:NSUTF8StringEncoding];
@@ -263,6 +268,11 @@ didReceiveTextMessage:(NSString *)message
             NSString *description = @"";
             
             id media_id = [[[dictionary objectForKey:@"partnerData"] objectForKey:@"requestData"] objectForKey:@"MediaID"];
+            
+            if (!mediaId || [(NSString *)mediaId isEqualToString:@""]) {
+                id media_id = [dictionary objectForKey:@"id"];
+            }
+            
             if ([media_id isKindOfClass: [NSString class]]) {
                 mediaId = (NSString *)media_id;
             }
@@ -273,8 +283,15 @@ didReceiveTextMessage:(NSString *)message
             }
             
             id thumbnailUrl_ = [dictionary objectForKey:@"thumbnailUrl"];
+            
             if ([thumbnailUrl_ isKindOfClass: [NSString class]]) {
                 thumbnailUrl = (NSString *)thumbnailUrl_;
+            }
+            
+            if(!thumbnailUrl_ || [(NSString *)thumbnailUrl_ isEqualToString:@""]) {
+                if (_thumbnailUrl) {
+                    thumbnailUrl = _thumbnailUrl;
+                }
             }
             
             id description_ = [dictionary objectForKey:@"description"];
