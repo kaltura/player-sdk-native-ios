@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 
 # ―――  Spec Metadata  ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
 s.name         = "KalturaPlayerSDK"
-s.version      = "2.5.0.rc6"
+s.version      = "2.5.0.rc7"
 s.summary      = "The Kaltura player-sdk-native component enables embedding the kaltura player into native environments."
 
 #s.description  = <<-DESC
