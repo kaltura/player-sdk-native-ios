@@ -36,8 +36,6 @@
 /* Begin PBXBuildFile section */
 		5F60F1FC1C2721DD0079D752 /* CachedStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E501C0B139400649BDF /* CachedStrings.plist */; };
 		5F6879D51C271304003E5DF7 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F6879D41C271304003E5DF7 /* CoreFoundation.framework */; };
-		5F6879F01C27165A003E5DF7 /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */; };
-		5F6879F11C27165A003E5DF7 /* KPWebKitBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E721C0B139400649BDF /* KPWebKitBrowserViewController.xib */; };
 		5F9A801A1C1CCC0800DD930E /* NSDictionary+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9A80191C1CCC0800DD930E /* NSDictionary+Utilities.m */; };
 		B3410D481A6C12E300275F00 /* libWViPhoneAPI.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BFC574A41997C296000511B8 /* libWViPhoneAPI.a */; };
 		BF0159C01D8EAEC600BA81E3 /* GoogleCastProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0159BF1D8EAEC600BA81E3 /* GoogleCastProvider.m */; };
@@ -72,7 +70,6 @@
 		BFBE8E891C0B139400649BDF /* GoogleplusStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E581C0B139400649BDF /* GoogleplusStrategy.m */; };
 		BFBE8E8A1C0B139400649BDF /* KCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E5A1C0B139400649BDF /* KCacheManager.m */; };
 		BFBE8E8B1C0B139400649BDF /* KPBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E5C1C0B139400649BDF /* KPBrowserViewController.m */; };
-		BFBE8E8C1C0B139400649BDF /* KPBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */; };
 		BFBE8E8D1C0B139400649BDF /* KPControlsUIWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E5F1C0B139400649BDF /* KPControlsUIWebView.m */; };
 		BFBE8E8E1C0B139400649BDF /* KPControlsView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E611C0B139400649BDF /* KPControlsView.m */; };
 		BFBE8E8F1C0B139400649BDF /* KPControlsWKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E631C0B139400649BDF /* KPControlsWKWebView.m */; };
@@ -81,7 +78,6 @@
 		BFBE8E921C0B139400649BDF /* KPShareManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E6A1C0B139400649BDF /* KPShareManager.m */; };
 		BFBE8E931C0B139400649BDF /* KPURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E6C1C0B139400649BDF /* KPURLProtocol.m */; };
 		BFBE8E951C0B139400649BDF /* KPWebKitBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E711C0B139400649BDF /* KPWebKitBrowserViewController.m */; };
-		BFBE8E961C0B139400649BDF /* KPWebKitBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFBE8E721C0B139400649BDF /* KPWebKitBrowserViewController.xib */; };
 		BFBE8E971C0B139400649BDF /* linkedinStrategy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E741C0B139400649BDF /* linkedinStrategy.m */; };
 		BFBE8E981C0B139400649BDF /* NSDictionary+Cache.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E761C0B139400649BDF /* NSDictionary+Cache.m */; };
 		BFBE8E991C0B139400649BDF /* NSDictionary+Strategy.m in Sources */ = {isa = PBXBuildFile; fileRef = BFBE8E781C0B139400649BDF /* NSDictionary+Strategy.m */; };
@@ -115,6 +111,8 @@
 		BFBE8EC01C0B174400649BDF /* KPControlsView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E601C0B139400649BDF /* KPControlsView.h */; };
 		BFBE8EC11C0B174400649BDF /* KPControlsUIWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */; };
 		BFBE8EC21C0B174400649BDF /* KPControlsWKWebView.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = BFBE8E621C0B139400649BDF /* KPControlsWKWebView.h */; };
+		DF3080181DBA0883006DE9A0 /* ShareStory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF3080171DBA0883006DE9A0 /* ShareStory.storyboard */; };
+		DF3080191DBA0883006DE9A0 /* ShareStory.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DF3080171DBA0883006DE9A0 /* ShareStory.storyboard */; };
 		FB0B5AAE1C7FB3BE0067872E /* KPWidevineClassicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */; };
 		FB48BCB41C7B53E300B2E1B7 /* KPFairPlayHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = FB48BCB31C7B53E300B2E1B7 /* KPFairPlayHandler.m */; };
 		FB48BCB71C7C8A4800B2E1B7 /* KPAssetBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = FB48BCB61C7C8A4800B2E1B7 /* KPAssetBuilder.m */; };
@@ -246,7 +244,6 @@
 		BFBE8E5A1C0B139400649BDF /* KCacheManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KCacheManager.m; path = KALTURAPlayerSDK/KCacheManager.m; sourceTree = SOURCE_ROOT; };
 		BFBE8E5B1C0B139400649BDF /* KPBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPBrowserViewController.h; path = KALTURAPlayerSDK/KPBrowserViewController.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E5C1C0B139400649BDF /* KPBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPBrowserViewController.m; path = KALTURAPlayerSDK/KPBrowserViewController.m; sourceTree = SOURCE_ROOT; };
-		BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KPBrowserViewController.xib; path = KALTURAPlayerSDK/KPBrowserViewController.xib; sourceTree = SOURCE_ROOT; };
 		BFBE8E5E1C0B139400649BDF /* KPControlsUIWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPControlsUIWebView.h; path = KALTURAPlayerSDK/KPControlsUIWebView.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E5F1C0B139400649BDF /* KPControlsUIWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPControlsUIWebView.m; path = KALTURAPlayerSDK/KPControlsUIWebView.m; sourceTree = SOURCE_ROOT; };
 		BFBE8E601C0B139400649BDF /* KPControlsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPControlsView.h; path = KALTURAPlayerSDK/KPControlsView.h; sourceTree = SOURCE_ROOT; };
@@ -265,7 +262,6 @@
 		BFBE8E6F1C0B139400649BDF /* KPViewControllerProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPViewControllerProtocols.h; path = KALTURAPlayerSDK/KPViewControllerProtocols.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E701C0B139400649BDF /* KPWebKitBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KPWebKitBrowserViewController.h; path = KALTURAPlayerSDK/KPWebKitBrowserViewController.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E711C0B139400649BDF /* KPWebKitBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KPWebKitBrowserViewController.m; path = KALTURAPlayerSDK/KPWebKitBrowserViewController.m; sourceTree = SOURCE_ROOT; };
-		BFBE8E721C0B139400649BDF /* KPWebKitBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KPWebKitBrowserViewController.xib; path = KALTURAPlayerSDK/KPWebKitBrowserViewController.xib; sourceTree = SOURCE_ROOT; };
 		BFBE8E731C0B139400649BDF /* linkedinStrategy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = linkedinStrategy.h; path = KALTURAPlayerSDK/linkedinStrategy.h; sourceTree = SOURCE_ROOT; };
 		BFBE8E741C0B139400649BDF /* linkedinStrategy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = linkedinStrategy.m; path = KALTURAPlayerSDK/linkedinStrategy.m; sourceTree = SOURCE_ROOT; };
 		BFBE8E751C0B139400649BDF /* NSDictionary+Cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Cache.h"; path = "KALTURAPlayerSDK/NSDictionary+Cache.h"; sourceTree = SOURCE_ROOT; };
@@ -286,6 +282,7 @@
 		BFBE8E841C0B139400649BDF /* Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = KALTURAPlayerSDK/Utilities.h; sourceTree = SOURCE_ROOT; };
 		BFC574A41997C296000511B8 /* libWViPhoneAPI.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWViPhoneAPI.a; sourceTree = SOURCE_ROOT; };
 		BFFFA727182F9E31005B3B24 /* libKALTURAPlayerSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libKALTURAPlayerSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DF3080171DBA0883006DE9A0 /* ShareStory.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ShareStory.storyboard; sourceTree = "<group>"; };
 		FB0B5AAC1C7FB3BE0067872E /* KPWidevineClassicHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPWidevineClassicHandler.h; sourceTree = "<group>"; };
 		FB0B5AAD1C7FB3BE0067872E /* KPWidevineClassicHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KPWidevineClassicHandler.m; sourceTree = "<group>"; };
 		FB48BCB21C7B53E300B2E1B7 /* KPFairPlayHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KPFairPlayHandler.h; sourceTree = "<group>"; };
@@ -389,10 +386,9 @@
 			children = (
 				BFBE8E5B1C0B139400649BDF /* KPBrowserViewController.h */,
 				BFBE8E5C1C0B139400649BDF /* KPBrowserViewController.m */,
-				BFBE8E5D1C0B139400649BDF /* KPBrowserViewController.xib */,
 				BFBE8E701C0B139400649BDF /* KPWebKitBrowserViewController.h */,
 				BFBE8E711C0B139400649BDF /* KPWebKitBrowserViewController.m */,
-				BFBE8E721C0B139400649BDF /* KPWebKitBrowserViewController.xib */,
+				DF3080171DBA0883006DE9A0 /* ShareStory.storyboard */,
 			);
 			name = ShareViewContrller;
 			sourceTree = "<group>";
@@ -595,7 +591,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastTestingUpgradeCheck = 0610;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Kaltura;
 				TargetAttributes = {
 					B3166DD01AF26C4700E99B77 = {
@@ -634,9 +630,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DF3080191DBA0883006DE9A0 /* ShareStory.storyboard in Resources */,
 				5F60F1FC1C2721DD0079D752 /* CachedStrings.plist in Resources */,
-				5F6879F01C27165A003E5DF7 /* KPBrowserViewController.xib in Resources */,
-				5F6879F11C27165A003E5DF7 /* KPWebKitBrowserViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -644,8 +639,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFBE8E8C1C0B139400649BDF /* KPBrowserViewController.xib in Resources */,
-				BFBE8E961C0B139400649BDF /* KPWebKitBrowserViewController.xib in Resources */,
+				DF3080181DBA0883006DE9A0 /* ShareStory.storyboard in Resources */,
 				BFBE8E851C0B139400649BDF /* CachedStrings.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -875,33 +869,42 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/libWViPhoneAPI.a\"",
 					"\"$(SRCROOT)/libGoogleIMA3.a\"",
@@ -922,25 +925,34 @@
 				CLANG_CXX_LIBRARY = "compiler-default";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = NO;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = NO;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = NO;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = NO;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"\"$(SRCROOT)/WViPhoneAPI.h\"",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=iphoneos*]" = 5.1.1;
 				LIBRARY_SEARCH_PATHS = (
 					"\"$(SRCROOT)/libWViPhoneAPI.a\"",

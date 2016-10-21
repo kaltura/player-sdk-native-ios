@@ -74,6 +74,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 @property (nonatomic, strong) UIView *superView;
 @property (nonatomic) NSTimeInterval seekValue;
 
+@property (copy) void (^adRemovedEventHandler)();
+//@property (copy) void (^_seekedEventHandler)();
+//@property (copy) void(^_shareHandler)(NSDictionary *);
+
 @end
 
 @implementation KPViewController 
@@ -385,18 +389,19 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (void)removeAdPlayerWithCompletion:(void(^)())completion {
-    _adRemovedEventHandler = [completion copy];
+    self.adRemovedEventHandler = [completion copy];
     
     if (self.playerFactory.adController) {
         [self allAdsCompleted];
         [self.controlsView triggerEvent:CastingKey withJSON:nil];
         __weak KPViewController *weakSelf = self;
         [self addKPlayerEventListener:AdsSupportEndAdPlaybackKey eventID:AdsSupportEndAdPlaybackKey handler:^(NSString *eventName, NSString *params) {
-            [weakSelf removeKPlayerEventListener:AdsSupportEndAdPlaybackKey eventID:AdsSupportEndAdPlaybackKey];
-            if (_adRemovedEventHandler) {
+            __strong KPViewController *strongSelf = weakSelf;
+            [strongSelf removeKPlayerEventListener:AdsSupportEndAdPlaybackKey eventID:AdsSupportEndAdPlaybackKey];
+            if (strongSelf.adRemovedEventHandler) {
                 KPLogDebug(@"call seekedEventHandler");
-                _adRemovedEventHandler();
-                _adRemovedEventHandler = nil;
+                strongSelf.adRemovedEventHandler();
+                strongSelf.adRemovedEventHandler = nil;
             }
             KPLogTrace(@"AdsSupportEndAdPlaybackKey Fired");
         }];

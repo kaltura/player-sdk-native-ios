@@ -21,7 +21,8 @@
 
 + (id)currentBrowser {
     NSString *nibName = isIOS(8) ? @"KPWebKitBrowserViewController" : @"KPBrowserViewController";
-    return [[NSClassFromString(nibName) alloc] initWithNibName:nibName bundle:nil];
+    UIStoryboard *story = [UIStoryboard storyboardWithName:@"ShareStory" bundle:nil];
+    return [story instantiateViewControllerWithIdentifier: nibName];
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
