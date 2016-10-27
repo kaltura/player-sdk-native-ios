@@ -158,8 +158,13 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
     KPLogError(@"Error: %@", [error localizedDescription]);
+    NSString *errPrefix = @"WebViewError:";
+    NSDictionary *dict = @{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"%@", error.localizedDescription],
+                           NSLocalizedFailureReasonErrorKey:error.localizedFailureReason};
+    NSError *err = [NSError errorWithDomain:error.domain code:error.code userInfo:dict];
+    
     if ([self.controlsDelegate respondsToSelector:@selector(handleKPControlsError:)]) {
-        [self.controlsDelegate handleKPControlsError:error];
+        [self.controlsDelegate handleKPControlsError:err];
     }
 }
 

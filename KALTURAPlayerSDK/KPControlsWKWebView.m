@@ -147,7 +147,25 @@
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    KPLogError(@"Error: %@", [error localizedDescription]);
+    [self handleError:error];
+}
+
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    KPLogError(@"Error: %@", [error localizedDescription]);
+    [self handleError:error];
+
+}
+
+- (void)handleError:(NSError *)error {
+    NSString *errPrefix = @"WebViewError:";
+    NSDictionary *dict = @{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"%@", error.localizedDescription],
+                           NSLocalizedFailureReasonErrorKey:error.localizedFailureReason};
+    NSError *err = [NSError errorWithDomain:error.domain code:error.code userInfo:dict];
     
+    if ([self.controlsDelegate respondsToSelector:@selector(handleKPControlsError:)]) {
+        [self.controlsDelegate handleKPControlsError:err];
+    }
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
