@@ -6,12 +6,13 @@
 //  Copyright © 2016 Kaltura. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "KPPlayerConfig.h"
 
+@import AVFoundation;
+#import "KPPlayerConfig.h"
 
 typedef void(^kLocalAssetRegistrationBlock)(NSError* error);
 typedef void(^kLocalAssetStatusBlock)(NSError* error, NSTimeInterval expiryTime, NSTimeInterval availableTime);
+
 
 @interface KPLocalAssetsManager : NSObject
 + (BOOL)registerAsset:(KPPlayerConfig *)assetConfig
@@ -33,3 +34,5 @@ typedef void(^kLocalAssetStatusBlock)(NSError* error, NSTimeInterval expiryTime,
                    callback:(kLocalAssetStatusBlock)completed;
 
 @end
+
+
