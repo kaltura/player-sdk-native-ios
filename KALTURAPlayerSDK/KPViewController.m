@@ -124,7 +124,6 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
 }
 
-
 - (void)removePlayer {
     [self.controlsView removeControls];
     [self.playerFactory removePlayer];
@@ -145,7 +144,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.view removeObserver:self forKeyPath:@"frame" context:nil];
     }
     @catch (NSException *exception) {
-        NSLog(@"frame not observed");
+        KPLogTrace(@"frame not observed");
     }
     
     _delegate = nil;
@@ -278,7 +277,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:NO];
     // Assign ourselves as delegate ONLY in viewWillAppear of a view controller.
-    NSLog(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
+    KPLogTrace(@"%@", [NSValue valueWithCGRect:((UIView *)self.controlsView).frame]);
 }
 
 #pragma mark -
@@ -335,21 +334,22 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     // Handle full screen events
     __weak KPViewController *weakSelf = self;
     [self registerReadyEvent:^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification object:weakSelf userInfo:@{KMediaPlaybackStateKey: @(KPMediaPlaybackStateLoaded)}];
-        [weakSelf.playerController setPlaybackState:KPMediaPlaybackStateLoaded];
-        if (!weakSelf.isModifiedFrame) {
-            weakSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
+        __strong KPViewController *strongSelf = weakSelf;
+        [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification object:strongSelf userInfo:@{KMediaPlaybackStateKey: @(KPMediaPlaybackStateLoaded)}];
+        [strongSelf.playerController setPlaybackState:KPMediaPlaybackStateLoaded];
+        if (!strongSelf.isModifiedFrame) {
+            strongSelf.setKDPAttribute(@"fullScreenBtn", @"visible", @"false");
         } else {
-            weakSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
-                weakSelf.isFullScreenToggled = !self.isFullScreenToggled;
-                weakSelf.controlsView.shouldUpdateLayout = YES;
-                if (weakSelf.isFullScreenToggled) {
-                    weakSelf.view.frame = screenBounds();
-                    [weakSelf.topWindow makeKeyAndVisible];
-                    [weakSelf.topWindow.rootViewController.view addSubview:weakSelf.view];
+            strongSelf.addEventListener(KPlayerEventToggleFullScreen, @"defaultFS", ^(NSString *eventId, NSString *params) {
+                strongSelf.isFullScreenToggled = !self.isFullScreenToggled;
+                strongSelf.controlsView.shouldUpdateLayout = YES;
+                if (strongSelf.isFullScreenToggled) {
+                    strongSelf.view.frame = screenBounds();
+                    [strongSelf.topWindow makeKeyAndVisible];
+                    [strongSelf.topWindow.rootViewController.view addSubview:strongSelf.view];
                 } else {
-                    weakSelf.view.frame = weakSelf.superView.bounds;
-                    [weakSelf.superView addSubview:weakSelf.view];
+                    strongSelf.view.frame = strongSelf.superView.bounds;
+                    [strongSelf.superView addSubview:strongSelf.view];
                 }
             });
         }
@@ -358,16 +358,18 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     KPLogTrace(@"Exit");
 }
 
-
-- (void)setCastProvider:(KCastProvider *)castProvider {
+- (void)setCastProvider:(id<KPCastProvider>)castProvider {
     KPLogTrace(@"Enter setCastProvider");
     
     if (self.playerFactory.adController) {
         __weak KPViewController *weakSelf = self;
         [self removeAdPlayerWithCompletion:^{
+            __strong KPViewController *strongSelf = weakSelf;
             KPLogTrace(@"AdPlayer was removed");
-            weakSelf.playerFactory.castProvider = castProvider;
-            [weakSelf triggerCastEvent:castProvider];
+            strongSelf.playerFactory.castProvider = castProvider;
+            strongSelf.playerFactory.castProvider.thumbnailUrl =
+            [self.currentConfiguration configValueForKey:@"chromecast.defaultThumbnail"];
+            [strongSelf triggerCastEvent:castProvider];
         }];
         
         KPLogTrace(@"Exit setCastProvider");
@@ -375,7 +377,10 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     }
     
     _playerFactory.castProvider = castProvider;
+    _playerFactory.castProvider.thumbnailUrl =
+    [self.currentConfiguration configValueForKey:@"chromecast.defaultThumbnail"];
     [self triggerCastEvent:castProvider];
+    
     KPLogTrace(@"Exit setCastProvider");
 }
 
@@ -400,18 +405,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
 }
 
-- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay {
-    [_playerFactory setCastProvider:castProvider autoPlay:autoPlay];
-    [self triggerCastEvent:castProvider];
-}
-
-- (void)triggerCastEvent:(KCastProvider *)castProvider {
+- (void)triggerCastEvent:(id<KPCastProvider>)castProvider {
     if (castProvider && _playerFactory.castProvider.isConnected) {
-        [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+        [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:[NSString stringWithFormat:@"%f", self.currentPlaybackTime]];
     }
 }
 
-- (KCastProvider *)castProvider {
+- (id<KPCastProvider>)castProvider {
     return _playerFactory.castProvider;
 }
 
@@ -424,16 +424,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         [self.view.layer.sublayers.firstObject setFrame:screenBounds()];
         ((UIView *)self.controlsView).frame = screenBounds();
     }
-    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
-//    UIButton *reloadButton = [[UIButton alloc] initWithFrame:(CGRect){20, 60, 60, 30}];
-//    [reloadButton addTarget:self action:@selector(reload:) forControlEvents:UIControlEventTouchUpInside];
-//    [reloadButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [reloadButton setTitle:@"reload" forState:UIControlStateNormal];
-//    [(UIView *)self.controlsView addSubview:reloadButton];
-}
-
-- (void)updateControlsView {
-//    ((UIView *)self.controlsView).frame = self.view.frame;
+//    [self performSelector:@selector(updateControlsView) withObject:nil afterDelay:1];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -498,10 +489,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     return [UIApplication sharedApplication].windows.firstObject;
 }
 
-- (void)changeMedia:(NSString *)mediaID {
-    if (mediaID) {
-        NSDictionary *mediaDict = @{@"entryId": mediaID};
+- (void)changeMedia:(NSObject *)media {
+    if ([media isKindOfClass:[NSString class]]) {
+        NSDictionary *mediaDict = @{@"entryId": media};
         [self sendNotification:@"changeMedia" withParams:mediaDict.toJson];
+    } else {
+        [self sendNotification:@"changeMedia" withParams:((NSDictionary *)media).toJson];
     }
 }
 
@@ -519,6 +512,25 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             }
         }];
     }
+}
+
+- (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config {
+    
+    __block UIViewController *ownerViewController = [[UIViewController alloc] init];
+    [config addConfigKey:@"EmbedPlayer.PreloadNativeComponent" withValue:@"true"];
+    [config addConfigKey:@"autoPlay" withValue:@"false"];
+    
+    KPViewController *playerViewController = [[KPViewController alloc] initWithConfiguration: config];
+    
+    [ownerViewController addChildViewController: playerViewController];
+    [ownerViewController.view addSubview: playerViewController.view];
+    
+    [playerViewController registerReadyEvent:^{
+        
+        KPLogTrace(@"Player ready after prefetch - will now destroy player");
+        [playerViewController removePlayer];
+        ownerViewController = nil;
+    }];
 }
 
 #pragma mark - Player Methods
@@ -785,10 +797,14 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             break;
         case chromecastAppId:
             if (_playerFactory.castProvider.isConnected) {
-                [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:nil];
+                [self.controlsView triggerEvent:@"chromecastDeviceConnected" withValue:[NSString stringWithFormat:@"%f", self.currentPlaybackTime]];
             }
             break;
         case doubleClickRequestAds: {
+            if ([_currentConfiguration
+                 configValueForKey:@"EmbedPlayer.UseExternalAdPlayer"]) {
+                return;
+            }
             __weak KPViewController *weakSelf = self;
             [self.controlsView fetchvideoHolderHeight:^(CGFloat height) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -924,12 +940,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             _seekedEventHandler = nil;
         }
     }
-    
+    __weak KPViewController *weakSelf = self;
     void(^kPlayerStateBlock)() = @{
                                       CanPlayKey:
                                           ^{
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(KPMediaLoadStatePlayable)}];
                                               
                                               if ([_delegate respondsToSelector:@selector(kPlayer:playerLoadStateDidChange:)]) {
@@ -940,21 +956,21 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
                                           ^{
                                               playbackState = KPMediaPlaybackStatePlaying;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
                                       PauseKey:
                                           ^{
                                               playbackState = KPMediaPlaybackStatePaused;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
                                       EndedKey:
                                           ^{
                                               playbackState = KPMediaPlaybackStateEnded;
                                               [[NSNotificationCenter defaultCenter] postNotificationName:KPMediaPlaybackStateDidChangeNotification
-                                                                                                  object:self
+                                                                                                  object:weakSelf
                                                                                                 userInfo:@{KMediaPlaybackStateKey:@(playbackState)}];
                                           },
                                       TimeUpdateKey:
@@ -993,6 +1009,17 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)allAdsCompleted {
     [self.controlsView triggerEvent:AllAdsCompletedKey withJSON:nil];
+}
+
+- (void)startCastingWithHandler:(void (^)(NSString *))handler {
+    
+    [self asyncEvaluate:@"{mediaProxy.entry}" expressionID:@"MediaProxy" handler:^(NSString *value) {
+        
+        if (handler != nil && value.length > 0) {
+            
+            handler(value);
+        }
+    }];
 }
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{

@@ -47,6 +47,7 @@ NSString * const StatusKeyPath = @"status";
 @synthesize preferSubtitles = _preferSubtitles;
 @synthesize isPlaying = _isPlaying;
 @synthesize isIdle = _isIdle;
+@synthesize shouldPlay = _shouldPlay;
 
 - (instancetype)initWithParentView:(UIView *)parentView {
     self = [super init];
@@ -109,14 +110,17 @@ NSString * const StatusKeyPath = @"status";
     
     NSError *setCategoryError = nil;
     BOOL success = [audioSession setMode:AVAudioSessionModeMoviePlayback error:&setCategoryError];
+    BOOL successCategory = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
     
-    if (!success) {
+    if (!success || !successCategory) {
         /* handle the error condition */
         KPLogError(@"Audio Session error %@, %@", setCategoryError, [setCategoryError userInfo]);
         [self.delegate player:self
                     eventName:ErrorKey
                         value:[setCategoryError localizedDescription]];
     }
+    
+    
     
     NSError *activationError = nil;
     success = [audioSession setActive:YES error:&activationError];
@@ -149,6 +153,10 @@ NSString * const StatusKeyPath = @"status";
  */
 - (void)playerContinue {
     KPLogTrace(@"Enter");
+    
+    if (!_shouldPlay) {
+        return;
+    }
     
     if (CMTIME_COMPARE_INLINE(self.currentTime, ==, self.currentItem.duration)) { // we've reached the end
         [self reset];
@@ -441,7 +449,8 @@ NSString * const StatusKeyPath = @"status";
     [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
         dispatch_async( dispatch_get_main_queue(),
                        ^{
-                           [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
+                            __strong KPlayer *strongSelf = weakSelf;
+                           [strongSelf prepareToPlayAsset:asset withKeys:requestedKeys];
                        });
     }];
 }
@@ -537,7 +546,8 @@ NSString * const StatusKeyPath = @"status";
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
                    completionHandler:^(BOOL finished) {
-                       [weakSelf.delegate player:self eventName:SeekedKey value:nil];
+                       __strong KPlayer *strongSelf = weakSelf;
+                       [strongSelf.delegate player:strongSelf eventName:SeekedKey value:nil];
                    }];
     }
 }

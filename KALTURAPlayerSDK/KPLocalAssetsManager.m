@@ -33,7 +33,6 @@
              callback:(kLocalAssetRegistrationBlock)completed refresh:(BOOL)refresh {
 
     // NOTE: the only DRM scheme supported by this method is Widevine Classic.
-    
     [KPURLProtocol enable];
 
     KPAssetRegistrationHelper* helper = [KPAssetRegistrationHelper helperForAsset:assetConfig flavor:flavorId];
@@ -42,6 +41,7 @@
     }
     helper.refresh = refresh;
     helper.assetRegistrationBlock = completed;
+    
     return [helper saveAssetAtPath:[NSURL fileURLWithPath:localPath]];
 }
 

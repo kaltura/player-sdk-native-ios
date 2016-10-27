@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "KPIMAPlayerViewController.h"
 #import "KPViewControllerProtocols.h"
-#import "KCastProvider.h"
+#import "KPCastProvider.h"
 
 static NSString *PlayerClassName = @"KPlayer";
 static NSString *WideVinePlayerClass = @"WVPlayer";
@@ -31,6 +31,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 @protocol KPlayerFactoryDelegate <KPlayerDelegate>
 - (void)allAdsCompleted;
+- (void)startCastingWithHandler:(void(^)(NSString *value))handler;
 @end
 
 @interface KPlayerFactory : NSObject 
@@ -53,10 +54,9 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 
 - (void)sendCastRecieverTextMessage:(NSString *)message;
-- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay;
 
 @property (nonatomic, strong) id<KPlayer> player;
-@property (nonatomic, strong) KCastProvider *castProvider;
+@property (nonatomic, strong) id<KPCastProvider> castProvider;
 @property (nonatomic, weak) id<KPlayerFactoryDelegate> delegate;
 @property (nonatomic, copy) NSString *playerClassName;
 @property (nonatomic, copy) NSString *src;
