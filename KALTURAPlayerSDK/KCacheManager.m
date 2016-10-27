@@ -172,7 +172,7 @@ static void cacheWillRemove(NSString* url) {
     }
     
     for (NSString *key in dict.allKeys) {
-        if ([request.URL.absoluteString containsString:key]) {
+        if ([requestString containsString:key]) {
             KPLogTrace(@"Exit::YES, %@.%@", name, key);
             return YES;
         }
