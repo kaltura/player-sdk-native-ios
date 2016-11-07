@@ -934,6 +934,9 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     __block KPMediaPlaybackState playbackState = KPMediaPlaybackStateUnknown;
     
     if ([event isEqualToString:@"seeked"]) {
+        
+        playbackState = [self p_seekStateModeratorWithValue: value];
+        
         if (_seekedEventHandler) {
             KPLogDebug(@"call seekedEventHandler");
             _seekedEventHandler();
@@ -1028,6 +1031,18 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     [self.controlsView triggerEvent:note.name withValue:note.userInfo[note.name]];
     KPLogDebug(@"%@\n%@", note.name, note.userInfo[note.name]);
     KPLogTrace(@"Exit");
+}
+
+- (KPMediaPlaybackState)p_seekStateModeratorWithValue:(NSString *)value {
+    
+    KPMediaPlaybackState playbackState = KPMediaPlaybackStateUnknown;
+    if ([value isEqualToString:@"SeekingBackward"]) {
+        playbackState = KPMediaPlaybackStateSeekingBackward;
+    } else if ([value isEqualToString:@"SeekingForward"]) {
+        playbackState = KPMediaPlaybackStateSeekingForward;
+    }
+    
+    return playbackState;
 }
 
 #pragma mark -

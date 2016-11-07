@@ -36,6 +36,7 @@ NSString * const StatusKeyPath = @"status";
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, weak) UIView *parentView;
 @property (nonatomic, strong) AVMediaSelectionGroup *audioSelectionGroup;
+@property (nonatomic, assign) NSTimeInterval lastPlaybackTime;
 @end
 
 @implementation KPlayer
@@ -540,14 +541,24 @@ NSString * const StatusKeyPath = @"status";
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     if (self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
-        _currentPlaybackTime = currentPlaybackTime;
+        self.lastPlaybackTime = _currentPlaybackTime;
+        self.currentPlaybackTime = currentPlaybackTime;
     } else if (currentPlaybackTime < self.duration) {
-        _currentPlaybackTime = currentPlaybackTime;
+        self.lastPlaybackTime = _currentPlaybackTime;
+        self.currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
                    completionHandler:^(BOOL finished) {
+                       
                        __strong KPlayer *strongSelf = weakSelf;
-                       [strongSelf.delegate player:strongSelf eventName:SeekedKey value:nil];
+                       NSString *seekingPosition = @"";
+                       if (strongSelf.lastPlaybackTime < strongSelf.currentPlaybackTime) {
+                           seekingPosition = @"SeekingForward";
+                       } else if (strongSelf.lastPlaybackTime > strongSelf.currentPlaybackTime) {
+                           seekingPosition = @"SeekingBackward";
+                       }
+                       
+                       [strongSelf.delegate player:self eventName:SeekedKey value:seekingPosition];
                    }];
     }
 }
