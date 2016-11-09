@@ -542,14 +542,13 @@ NSString * const StatusKeyPath = @"status";
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     if (self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
         self.lastPlaybackTime = _currentPlaybackTime;
-        self.currentPlaybackTime = currentPlaybackTime;
+        _currentPlaybackTime = currentPlaybackTime;
     } else if (currentPlaybackTime < self.duration) {
         self.lastPlaybackTime = _currentPlaybackTime;
-        self.currentPlaybackTime = currentPlaybackTime;
+        _currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
                    completionHandler:^(BOOL finished) {
-                       
                        __strong KPlayer *strongSelf = weakSelf;
                        NSString *seekingPosition = @"";
                        if (strongSelf.lastPlaybackTime < strongSelf.currentPlaybackTime) {
