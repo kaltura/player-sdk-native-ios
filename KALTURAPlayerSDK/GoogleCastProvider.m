@@ -47,6 +47,17 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 @synthesize wasReadyToplay = _wasReadyToplay;
 @synthesize thumbnailUrl = _thumbnailUrl;
 
++ (GoogleCastProvider *)sharedInstance {
+    
+    static GoogleCastProvider *sharedClass = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedClass = [[self alloc] init];
+    });
+    
+    return sharedClass;
+}
+
 - (instancetype)init {
     self = [super init];
     
@@ -60,19 +71,7 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 - (void)sessionManager:(GCKSessionManager *)sessionManager
    didStartCastSession:(GCKCastSession *)session {
     KPLogTrace(@"didStartCastSession Enter");
-    if (!_castChannel) {
-        _castChannel = [[GCKGenericChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
-        _castChannel.delegate = self;
-        _session = session;
-        [_session.remoteMediaClient addListener:self];
-        [_session addChannel:_castChannel];
-        
-        if (_customLogo) {
-            [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"",_customLogo]];
-        }
-        
-        [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
-    }
+    [self castChannelModerator];
 }
 
 - (BOOL)isConnected {
@@ -143,6 +142,70 @@ didReceiveTextMessage:(NSString *)message
     }
     
     
+}
+
+#pragma mark -
+
+/**
+ * Called when a session is about to be resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager willResumeSession:(GCKSession *)session {
+    KPLogTrace(@"willResumeSession");
+}
+
+/**
+ * Called when a session has been successfully resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager didResumeSession:(GCKSession *)session {
+    KPLogTrace(@"didResumeSession");
+}
+
+/**
+ * Called when a Cast session is about to be resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+ willResumeCastSession:(GCKCastSession *)session {
+    KPLogTrace(@"willResumeCastSession");
+}
+
+/**
+ * Called when a Cast session has been successfully resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The Cast session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+  didResumeCastSession:(GCKCastSession *)session {
+    KPLogTrace(@"didResumeCastSession");
+    
+    [self castChannelModerator];
+}
+
+#pragma mark -
+
+- (void)castChannelModerator {
+    if (!_castChannel) {
+        _castChannel = [[GCKGenericChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
+        _castChannel.delegate = self;
+        _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
+        [_session.remoteMediaClient addListener:self];
+        [_session addChannel:_castChannel];
+        
+        if (_customLogo) {
+            [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"}",_customLogo]];
+        }
+        
+        [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
+    }
 }
 
 - (GCKCastSession *)currentSession {
