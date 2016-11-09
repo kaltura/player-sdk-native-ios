@@ -13,5 +13,5 @@
 #endif
 
 @interface GoogleCastProvider : NSObject <KPCastProvider>
-
++ (GoogleCastProvider *)sharedInstance;
 @end

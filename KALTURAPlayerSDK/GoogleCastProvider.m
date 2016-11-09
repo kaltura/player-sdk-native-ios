@@ -47,6 +47,17 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 @synthesize wasReadyToplay = _wasReadyToplay;
 @synthesize thumbnailUrl = _thumbnailUrl;
 
++ (GoogleCastProvider *)sharedInstance {
+    
+    static GoogleCastProvider *sharedClass = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedClass = [[self alloc] init];
+    });
+    
+    return sharedClass;
+}
+
 - (instancetype)init {
     self = [super init];
     
