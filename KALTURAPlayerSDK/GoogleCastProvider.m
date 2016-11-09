@@ -190,7 +190,7 @@ didReceiveTextMessage:(NSString *)message
         [_session addChannel:_castChannel];
         
         if (_customLogo) {
-            [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"",_customLogo]];
+            [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"}",_customLogo]];
         }
         
         [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
