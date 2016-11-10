@@ -330,10 +330,19 @@ didReceiveTextMessage:(NSString *)message
             NSString *thumbnailUrl = @"";
             NSString *description = @"";
             
-            id media_id = [[[dictionary objectForKey:@"partnerData"] objectForKey:@"requestData"] objectForKey:@"MediaID"];
+            id media_id = nil;
             
-            if (!mediaId || [(NSString *)mediaId isEqualToString:@""]) {
-                id media_id = [dictionary objectForKey:@"id"];
+            id partner_data = [dictionary objectForKey:@"partnerData"];
+            if ([partner_data isKindOfClass: [NSDictionary class]]) {
+                //OTT
+                id requestData = [((NSDictionary *)partner_data) objectForKey: @"requestData"];
+                if ([requestData isKindOfClass: [NSDictionary class]]) {
+                    
+                    media_id = [((NSDictionary *)requestData) objectForKey: @"MediaID"];
+                }
+            } else {
+                //OVP
+                mediaId =  [dictionary objectForKey:@"id"];
             }
             
             if ([media_id isKindOfClass: [NSString class]]) {
