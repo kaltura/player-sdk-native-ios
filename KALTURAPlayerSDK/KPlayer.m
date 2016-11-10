@@ -36,6 +36,7 @@ NSString * const StatusKeyPath = @"status";
 @property (nonatomic, strong) AVPlayerLayer *layer;
 @property (nonatomic, weak) UIView *parentView;
 @property (nonatomic, strong) AVMediaSelectionGroup *audioSelectionGroup;
+@property (nonatomic, assign) NSTimeInterval lastPlaybackTime;
 @end
 
 @implementation KPlayer
@@ -449,7 +450,8 @@ NSString * const StatusKeyPath = @"status";
     [asset loadValuesAsynchronouslyForKeys:requestedKeys completionHandler:^() {
         dispatch_async( dispatch_get_main_queue(),
                        ^{
-                           [weakSelf prepareToPlayAsset:asset withKeys:requestedKeys];
+                            __strong KPlayer *strongSelf = weakSelf;
+                           [strongSelf prepareToPlayAsset:asset withKeys:requestedKeys];
                        });
     }];
 }
@@ -539,13 +541,23 @@ NSString * const StatusKeyPath = @"status";
 
 - (void)setCurrentPlaybackTime:(NSTimeInterval)currentPlaybackTime {
     if (self.currentItem.status != AVPlayerItemStatusReadyToPlay) {
+        self.lastPlaybackTime = _currentPlaybackTime;
         _currentPlaybackTime = currentPlaybackTime;
     } else if (currentPlaybackTime < self.duration) {
+        self.lastPlaybackTime = _currentPlaybackTime;
         _currentPlaybackTime = currentPlaybackTime;
         __weak KPlayer *weakSelf = self;
         [self.currentItem seekToTime:CMTimeMake(currentPlaybackTime, 1)
                    completionHandler:^(BOOL finished) {
-                       [weakSelf.delegate player:self eventName:SeekedKey value:nil];
+                       __strong KPlayer *strongSelf = weakSelf;
+                       NSString *seekingPosition = @"";
+                       if (strongSelf.lastPlaybackTime < strongSelf.currentPlaybackTime) {
+                           seekingPosition = @"SeekingForward";
+                       } else if (strongSelf.lastPlaybackTime > strongSelf.currentPlaybackTime) {
+                           seekingPosition = @"SeekingBackward";
+                       }
+                       
+                       [strongSelf.delegate player:self eventName:SeekedKey value:seekingPosition];
                    }];
     }
 }

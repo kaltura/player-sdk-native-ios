@@ -20,6 +20,8 @@
 #define EMBEDFRAME_PAGE_WITH_SLASH @"/mwEmbedFrame.php"
 #define EMBEDLOADER_PAGE_WITH_SLASH @"/mwEmbedLoader.php"
 
+#define AppVersion [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"]
+
 @interface KPPlayerConfig() {
     NSMutableDictionary *_extraConfig;
     BOOL _errorResolvingPlayerURL;
@@ -36,12 +38,37 @@
 @implementation KPPlayerConfig
 
 
+- (NSBundle *)bundle {
+    return  [NSBundle bundleWithURL:[[NSBundle bundleForClass:self.classForCoder]
+                                        URLForResource:@"KALTURAPlayerSDKResources.bundle"
+                                        withExtension:nil]];
+}
+
+- (NSString *)getVersion {
+    if (self.bundle) {
+        NSString *path = [self.bundle pathForResource:@"Info" ofType:@"plist"];
+        
+        if (path) {
+            NSMutableDictionary *dictplist =[[NSMutableDictionary alloc] initWithContentsOfFile:path];
+            
+            if ([dictplist count] > 0) {
+                KPLogTrace(@"----SDK Version:: v%@----", [dictplist objectForKey:@"CFBundleShortVersionString"]);
+                return [dictplist objectForKey:@"CFBundleShortVersionString"];
+            }
+        }
+    }
+    
+    return nil;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
         _supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
         _extraConfig = [NSMutableDictionary dictionary];
         _cacheConfig = [[KPCacheConfig alloc] init];
+        
+        [self addConfigKey:@"nativeVersion" withValue:[NSString stringWithFormat:@"v%@", [self getVersion]]];
     }
     return self;
 }
@@ -61,6 +88,10 @@
         return self;
     }
     return nil;
+}
+
++(instancetype)configWithServer:(NSString *)serverURL uiConfID:(NSString *)uiConfId partnerId:(NSString *)partnerId {
+    return [[self alloc] initWithServer:serverURL uiConfID:uiConfId partnerId:partnerId];
 }
 
 -(BOOL)waitForPlayerRootUrl {

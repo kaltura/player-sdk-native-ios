@@ -27,6 +27,7 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 
 + (instancetype)configWithEmbedFrameURL:(NSString*)url;
 
++(instancetype)configWithServer:(NSString *)serverURL uiConfID:(NSString *)uiConfId partnerId:(NSString *)partnerId;
 
 +(instancetype)configWithDictionary:(NSDictionary*)configDict;
 

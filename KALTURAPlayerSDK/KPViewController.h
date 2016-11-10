@@ -20,8 +20,7 @@
 #import "KPViewControllerProtocols.h"
 #import "KPPlayerConfig.h"
 #import "KPController.h"
-#import "KCastDevice.h"
-#import "KCastProvider.h"
+#import "KPCastProvider.h"
 
 @class KPViewController;
 @protocol KPViewControllerDelegate <NSObject>
@@ -103,7 +102,7 @@
  *
  *  @param NSString entryID the entryID of the new video
  */
-- (void)changeMedia:(NSString *)entryID;
+- (void)changeMedia:(NSObject *)media;
 
 /*!
  *  @function changeConfiguration:
@@ -130,10 +129,6 @@
 @property (nonatomic, weak) id<KPSourceURLProvider> customSourceURLProvider;
 
 @property (nonatomic, strong) KPController *playerController;
-
-@property (nonatomic, assign) KCastProvider *castProvider;
-
-- (void)setCastProvider:(KCastProvider *)castProvider autoPlay:(BOOL)autoPlay;
 
 /**
  *  Block which notifies that the full screen has been toggeled, when assigning to this block the default full screen behaviour will be canceled and the full screen handling will be your reponsibility. 
@@ -178,6 +173,12 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 	@abstract	The player from which to source the media content for the view controller.
  */
 @property (nonatomic, readonly) id<KPlayer> kPlayer;
+
+/*!
+	@property	kpCastProvider
+	@abstract	cast provider
+ */
+@property (nonatomic, weak) id<KPCastProvider> castProvider;
 
 /*!
  * @function registerReadyEvent
@@ -281,7 +282,7 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
 
 - (void)releaseAndSavePosition;
 - (void)resumePlayer;
-
+- (void)toggleFullscreen;
 
 /// Wraps registerReadyEvent: method by block syntax.
 @property (nonatomic, copy) void (^registerReadyEvent)(void(^readyCallback)());
