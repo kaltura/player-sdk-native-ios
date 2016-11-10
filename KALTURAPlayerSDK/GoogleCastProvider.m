@@ -354,15 +354,20 @@ didReceiveTextMessage:(NSString *)message
                 title = (NSString *)title_;
             }
             
-            id thumbnailUrl_ = [dictionary objectForKey:@"thumbnailUrl"];
-            
-            if ([thumbnailUrl_ isKindOfClass: [NSString class]]) {
-                thumbnailUrl = (NSString *)thumbnailUrl_;
-            }
-            
-            if(!thumbnailUrl_ || [(NSString *)thumbnailUrl_ isEqualToString:@""]) {
-                if (_thumbnailUrl) {
-                    thumbnailUrl = _thumbnailUrl;
+            if (_thumbnailUrl) {
+                thumbnailUrl = _thumbnailUrl;
+            } else {
+                id thumbnailUrl_ = [dictionary objectForKey:@"thumbnailUrl"];
+                
+                if ([thumbnailUrl_ isKindOfClass: [NSString class]]) {
+                    thumbnailUrl = (NSString *)thumbnailUrl_;
+                    thumbnailUrl = [NSString stringWithFormat: @"%@/width/1200/hight/780", thumbnailUrl];
+                }
+                
+                if(!thumbnailUrl_ || [(NSString *)thumbnailUrl_ isEqualToString:@""]) {
+                    if (_thumbnailUrl) {
+                        thumbnailUrl = _thumbnailUrl;
+                    }
                 }
             }
             
