@@ -37,6 +37,7 @@ NSString * const StatusKeyPath = @"status";
 @property (nonatomic, weak) UIView *parentView;
 @property (nonatomic, strong) AVMediaSelectionGroup *audioSelectionGroup;
 @property (nonatomic, assign) NSTimeInterval lastPlaybackTime;
+@property (nonatomic) BOOL isEnded;
 @end
 
 @implementation KPlayer
@@ -254,13 +255,16 @@ NSString * const StatusKeyPath = @"status";
          [keyPath isEqualToString:playbackBufferFullKeyPath])) {
             
             if (self.currentItem.isPlaybackBufferEmpty) {
+                _isEnded = NO;
                 if (self.rate > 0) {
                     [self startBuffering];
                 }
             } else if (self.currentItem.isPlaybackLikelyToKeepUp) {
+                _isEnded = NO;
                 KPLogTrace(@"PlaybackLikelyToKeepUp");
                 [self playerHanging];
             } else if (self.currentItem.isPlaybackBufferFull) {
+                _isEnded = NO;
                 [self stopBuffering];
             }
         } else if ([keyPath isEqual:RateKeyPath]) {
@@ -268,8 +272,14 @@ NSString * const StatusKeyPath = @"status";
                 [self.delegate player:self
                             eventName:PlayKey
                                 value:nil];
+                _isEnded = NO;
                 _isPlaying = YES;
             } else {
+                
+                if (_isEnded) {
+                    return;
+                }
+                
                 [self.delegate player:self
                             eventName:PauseKey
                                 value:nil];
@@ -421,6 +431,7 @@ NSString * const StatusKeyPath = @"status";
 - (void)videoEnded:(NSNotification *)notification {
     // Make sure we don't call contentCompleted as a result of an ad completing.
     if (notification.object == self.currentItem) {
+        _isEnded = YES;
         [_delegate contentCompleted:self];
     }
 }
