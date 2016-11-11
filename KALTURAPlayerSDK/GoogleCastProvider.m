@@ -379,7 +379,7 @@ didReceiveTextMessage:(NSString *)message
             metadata = [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
             [metadata setString: title forKey:kGCKMetadataKeyTitle];
             [metadata setString: description forKey:kGCKMetadataKeySubtitle];
-            [metadata setString: mediaId forKey: @"KEY_ENTRY_ID"];
+            [metadata setString: mediaId forKey: @"entryid"];
             
             [metadata addImage:[[GCKImage alloc] initWithURL:[NSURL URLWithString:thumbnailUrl]
                                                        width:480
