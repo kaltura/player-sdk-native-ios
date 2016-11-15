@@ -281,6 +281,7 @@ typedef NS_ENUM(NSInteger, KDPAPIState) {
            withValue:(NSString *)value;
 
 - (void)releaseAndSavePosition;
+- (void)releaseAndSavePositionWithPauseForCast:(BOOL)pause;
 - (void)resumePlayer;
 - (void)toggleFullscreen;
 

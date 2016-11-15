@@ -395,19 +395,23 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
 }
 
-- (void)pause {
+- (void)pauseAndActivatePauseForCast:(BOOL)pauseForCast {
     self.player.shouldPlay = NO;
     if (_adController) {
         [self.adController pause];
     }
     
-    if (currentPlayerType == CurrentPlyerTypeCast) {
+    if (currentPlayerType == CurrentPlyerTypeCast && pauseForCast) {
         [_castProvider pause];
     }
     
     if ([self.player respondsToSelector:@selector(pause)]) {
         [self.player pause];
     }
+}
+
+- (void)pause {
+    [self pauseAndActivatePauseForCast: YES];
 }
 
 - (void)prepareForChangeConfiguration {
