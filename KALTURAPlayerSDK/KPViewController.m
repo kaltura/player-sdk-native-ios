@@ -254,12 +254,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 
 - (void)releaseAndSavePositionWithPauseForCast:(BOOL)pause {
     self.playerFactory.isReleasePlayerPositionEnabled = YES;
-//    [self.playerController pause];
     [self.playerFactory pauseAndActivatePauseForCast: pause];
 }
 
 - (void)releaseAndSavePosition {
-    [self releaseAndSavePositionWithPauseForCast: YES];
+    self.playerFactory.isReleasePlayerPositionEnabled = YES;
+    [self.playerController pause];
 }
 
 - (void)resumePlayer {
