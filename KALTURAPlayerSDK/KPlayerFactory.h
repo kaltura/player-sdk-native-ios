@@ -52,7 +52,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)selectTextTrack:(NSString *)locale;
 - (void)removeAdController;
 
-
+- (void)pauseAndActivatePauseForCast:(BOOL)pauseForCast;
 - (void)sendCastRecieverTextMessage:(NSString *)message;
 
 @property (nonatomic, strong) id<KPlayer> player;
