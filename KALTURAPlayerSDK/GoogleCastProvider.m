@@ -223,19 +223,14 @@ didReceiveTextMessage:(NSString *)message
 
 - (void)play {
     
-    if (_playerState != PlayerStatePlaying) {
+    if ((_isEnded || _isChangeMedia) && _playerState != PlayerStatePlaying) {
         
-        if (_isEnded || _isChangeMedia) {
-            
-            NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
-            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
-            _isEnded = NO;
-            _isChangeMedia = NO;
-        } else {
-            
-            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: nil];
-        }
-        return;
+        NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
+        [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
+        _isEnded = NO;
+        _isChangeMedia = NO;
+
+        return; 
     }
     
     if (_playerState == PlayerStatePause) {
