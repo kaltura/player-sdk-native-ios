@@ -214,7 +214,6 @@ didReceiveTextMessage:(NSString *)message
 
 - (void)setMediaSrc:(NSString *)mediaSrc {
     if (_mediaSrc != nil) {
-        _isChangeMedia = YES;
         _mediaSrc = mediaSrc;
     } else {
         _mediaSrc = mediaSrc;
@@ -223,13 +222,12 @@ didReceiveTextMessage:(NSString *)message
 
 - (void)play {
     
-    if ((_isEnded || _isChangeMedia) && _playerState != PlayerStatePlaying) {
+    if (_isEnded && _playerState != PlayerStatePlaying) {
         
         NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
         [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
         _isEnded = NO;
-        _isChangeMedia = NO;
-
+        
         return; 
     }
     
@@ -302,8 +300,8 @@ didReceiveTextMessage:(NSString *)message
     // Cast video
     if (self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.contentID != mediaInfo.contentID || _isEnded) {
         [self stop];
-        [self.currentSession.remoteMediaClient
-         loadMedia:mediaInfo autoplay:isAutoPlay playPosition:startPosition];
+        
+        [self.currentSession.remoteMediaClient loadMedia:mediaInfo autoplay:isAutoPlay playPosition:startPosition];
     }
 }
 
