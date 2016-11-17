@@ -62,6 +62,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 @property (nonatomic, copy) NSString *src;
 @property (nonatomic, copy) NSString *adTagURL;
 @property (nonatomic) NSTimeInterval currentPlayBackTime;
+@property (nonatomic) NSTimeInterval lastPlayBackTime;
 @property (nonatomic) CGFloat adPlayerHeight;
 @property (nonatomic, copy) NSString *locale;
 @property (nonatomic, copy) NSString *licenseUri;

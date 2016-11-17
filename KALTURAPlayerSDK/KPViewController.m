@@ -385,6 +385,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     _playerFactory.castProvider.thumbnailUrl =
     [self.currentConfiguration configValueForKey:@"chromecast.defaultThumbnail"];
     [self triggerCastEvent:castProvider];
+    _playerFactory.lastPlayBackTime = _playerFactory.currentPlayBackTime;
     
     KPLogTrace(@"Exit setCastProvider");
 }
