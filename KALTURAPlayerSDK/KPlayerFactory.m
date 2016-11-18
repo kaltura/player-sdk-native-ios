@@ -226,18 +226,26 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 #pragma mark KPCastProviderDelegate
 - (void)startCasting {
     [_castProvider addObserver:self];
+   
+    NSTimeInterval playbackTime = 0.0;
+    if (_currentPlayBackTime <= 0) {
+    
+        playbackTime = _lastPlayBackTime;
+    } else {
+        
+        playbackTime = _currentPlayBackTime;
+    }
 
     __weak KPlayerFactory *weakSelf = self;
     [self.delegate startCastingWithHandler:^(NSString *value) {
         if (value) {
             __strong KPlayerFactory *strongSelf = weakSelf;
             [strongSelf.castProvider setVideoUrl: nil
-                                   startPosition: strongSelf.currentPlayBackTime
+                                   startPosition: playbackTime
                                         autoPlay: YES
                                         metaData: value];
         }
     }];
-
 }
 
 - (void)stopCasting {
@@ -395,19 +403,23 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     }
 }
 
-- (void)pause {
+- (void)pauseAndActivatePauseForCast:(BOOL)pauseForCast {
     self.player.shouldPlay = NO;
     if (_adController) {
         [self.adController pause];
     }
     
-    if (currentPlayerType == CurrentPlyerTypeCast) {
+    if (currentPlayerType == CurrentPlyerTypeCast && pauseForCast) {
         [_castProvider pause];
     }
     
     if ([self.player respondsToSelector:@selector(pause)]) {
         [self.player pause];
     }
+}
+
+- (void)pause {
+    [self pauseAndActivatePauseForCast: YES];
 }
 
 - (void)prepareForChangeConfiguration {

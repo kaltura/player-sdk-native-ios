@@ -252,8 +252,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     return platform;
 }
 
+- (void)releaseAndSavePositionWithPauseForCast:(BOOL)pause {
+    self.playerFactory.isReleasePlayerPositionEnabled = YES;
+    [self.playerFactory pauseAndActivatePauseForCast: pause];
+}
+
 - (void)releaseAndSavePosition {
-    self.playerFactory.isReleasePlayerPositionEnabled = YES; 
+    self.playerFactory.isReleasePlayerPositionEnabled = YES;
     [self.playerController pause];
 }
 
@@ -380,6 +385,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     _playerFactory.castProvider.thumbnailUrl =
     [self.currentConfiguration configValueForKey:@"chromecast.defaultThumbnail"];
     [self triggerCastEvent:castProvider];
+    _playerFactory.lastPlayBackTime = _playerFactory.currentPlayBackTime;
     
     KPLogTrace(@"Exit setCastProvider");
 }
