@@ -496,6 +496,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (void)changeMedia:(NSObject *)media {
+    if (_playerFactory.castProvider != nil) {
+        NSString *newAdTagUrl = [_currentConfiguration configValueForKey:@"doubleClick.adTagUrl"];
+        if (newAdTagUrl != nil) {
+            [_playerFactory updateAdTagUrlWhenCasting:newAdTagUrl];
+        }
+    }
     if ([media isKindOfClass:[NSString class]]) {
         NSDictionary *mediaDict = @{@"entryId": media};
         [self sendNotification:@"changeMedia" withParams:mediaDict.toJson];

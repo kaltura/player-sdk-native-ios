@@ -435,6 +435,12 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     [self.player hidePlayer];
 }
 
+- (void)updateAdTagUrlWhenCasting:(NSString *)newAdTagUrl {
+    if (currentPlayerType == CurrentPlyerTypeCast) {
+        [_castProvider updateAdTagUrl:newAdTagUrl];
+    }
+}
+
 - (void)dealloc {
     KPLogInfo(@"Dealloc");
 }

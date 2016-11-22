@@ -54,6 +54,7 @@ static NSString *PostrollEndedKey = @"postEnded";
 
 - (void)pauseAndActivatePauseForCast:(BOOL)pauseForCast;
 - (void)sendCastRecieverTextMessage:(NSString *)message;
+- (void)updateAdTagUrlWhenCasting:(NSString *)newAdTagUrl;
 
 @property (nonatomic, strong) id<KPlayer> player;
 @property (nonatomic, strong) id<KPCastProvider> castProvider;
