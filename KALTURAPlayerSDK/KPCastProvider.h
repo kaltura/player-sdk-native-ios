@@ -37,4 +37,5 @@
 - (BOOL)sendTextMessage:(NSString *)message;
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info;
 - (void)setLogo:(NSURL *)logoUrl;
+- (void)updateAdTagUrl:(NSString *)newAdTagUrl;
 @end
