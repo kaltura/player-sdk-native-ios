@@ -436,7 +436,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)updateAdTagUrlWhenCasting:(NSString *)newAdTagUrl {
-    if (currentPlayerType == CurrentPlyerTypeCast) {
+    if (_castProvider) {
         [_castProvider updateAdTagUrl:newAdTagUrl];
     }
 }

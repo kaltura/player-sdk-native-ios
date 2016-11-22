@@ -286,8 +286,10 @@ didReceiveTextMessage:(NSString *)message
 }
 
 - (void)updateAdTagUrl:(NSString *)newAdTagUrl {
-    NSString *changeAdTagUrlMsg = [NSString stringWithFormat:@"{\"type\":\"setKDPAttribute\",\"plugin\":\"doubleClick\",\"property\":\"adTagUrl\",\"value\":\"%@\"}", newAdTagUrl];
-    [self sendTextMessage:changeAdTagUrlMsg];
+    if (newAdTagUrl && [GCKCastContext sharedInstance].sessionManager.currentSession.remoteMediaClient.mediaStatus != nil) {
+        NSString *changeAdTagUrlMsg = [NSString stringWithFormat:@"{\"type\":\"setKDPAttribute\",\"plugin\":\"doubleClick\",\"property\":\"adTagUrl\",\"value\":\"%@\"}", newAdTagUrl];
+        [self sendTextMessage:changeAdTagUrlMsg];
+    }
 }
 
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info {
