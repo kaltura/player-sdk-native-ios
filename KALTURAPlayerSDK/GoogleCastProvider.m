@@ -285,6 +285,11 @@ didReceiveTextMessage:(NSString *)message
     return NO;
 }
 
+- (void)updateAdTagUrl:(NSString *)newAdTagUrl {
+    NSString *changeAdTagUrlMsg = [NSString stringWithFormat:@"{\"type\":\"setKDPAttribute\",\"plugin\":\"doubleClick\",\"property\":\"adTagUrl\",\"value\":\"%@\"}", newAdTagUrl];
+    [self sendTextMessage:changeAdTagUrlMsg];
+}
+
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info {
     KPLogTrace(@"setVideoUrl::: Position:%@, AutoPlay:%@", startPosition, isAutoPlay);
     
