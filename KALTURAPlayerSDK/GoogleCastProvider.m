@@ -193,7 +193,7 @@ didReceiveTextMessage:(NSString *)message
 #pragma mark -
 
 - (void)castChannelModerator {
-    if (!_castChannel) {
+//    if (!_castChannel) {
         _castChannel = [[GCKGenericChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
         _castChannel.delegate = self;
         _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
@@ -205,7 +205,7 @@ didReceiveTextMessage:(NSString *)message
         }
         
         [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
-    }
+//    }
 }
 
 - (GCKCastSession *)currentSession {
