@@ -193,7 +193,7 @@ didReceiveTextMessage:(NSString *)message
 #pragma mark -
 
 - (void)castChannelModerator {
-    if (!_castChannel) {
+//    if (!_castChannel) {
         _castChannel = [[GCKGenericChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
         _castChannel.delegate = self;
         _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
@@ -205,7 +205,7 @@ didReceiveTextMessage:(NSString *)message
         }
         
         [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
-    }
+//    }
 }
 
 - (GCKCastSession *)currentSession {
@@ -286,8 +286,10 @@ didReceiveTextMessage:(NSString *)message
 }
 
 - (void)updateAdTagUrl:(NSString *)newAdTagUrl {
-    NSString *changeAdTagUrlMsg = [NSString stringWithFormat:@"{\"type\":\"setKDPAttribute\",\"plugin\":\"doubleClick\",\"property\":\"adTagUrl\",\"value\":\"%@\"}", newAdTagUrl];
-    [self sendTextMessage:changeAdTagUrlMsg];
+    if (newAdTagUrl && [GCKCastContext sharedInstance].sessionManager.currentSession.remoteMediaClient.mediaStatus != nil) {
+        NSString *changeAdTagUrlMsg = [NSString stringWithFormat:@"{\"type\":\"setKDPAttribute\",\"plugin\":\"doubleClick\",\"property\":\"adTagUrl\",\"value\":\"%@\"}", newAdTagUrl];
+        [self sendTextMessage:changeAdTagUrlMsg];
+    }
 }
 
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info {
