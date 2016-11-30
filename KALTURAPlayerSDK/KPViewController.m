@@ -1030,9 +1030,13 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     [self asyncEvaluate:@"{mediaProxy.entry}" expressionID:@"MediaProxy" handler:^(NSString *value) {
         
-        if (handler != nil && value.length > 0) {
+        BOOL valueIsString = [value isKindOfClass: [NSString class]];
+        if (valueIsString) {
             
-            handler(value);
+            if (handler != nil && value.length > 0) {
+                
+                handler(value);
+            }
         }
     }];
 }
