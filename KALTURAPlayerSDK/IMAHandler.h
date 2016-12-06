@@ -17,12 +17,14 @@
 
 @end
 
+@protocol AVPlayerContentPlayhead;
+
 @protocol AdsRequest <NSObject>
 
 - (instancetype)initWithAdTagUrl:(NSString *)adTagUrl
               adDisplayContainer:(id<AdDisplayContainer>)adDisplayContainer
+                 contentPlayhead:(id<AVPlayerContentPlayhead>)contentPlayhead
                      userContext:(id)userContext;
-
 @end
 
 @protocol Settings <NSObject>

@@ -13,6 +13,7 @@
 
 @interface KPIMAPlayerViewController ()
 
+
 /// Contains the params for the logic layer
 @property (nonatomic, copy) NSMutableDictionary *adEventParams;
 
@@ -31,6 +32,7 @@
 /// Main point of interaction with the SDK. Created by the SDK as the result of an ad request.
 @property(nonatomic, strong) id<AdsManager> adsManager;
 
+/// Playhead used by the SDK to track content video progress and insert mid-rolls.
 @property (nonatomic, strong) id<AVPlayerContentPlayhead> playhead;
 @end
 
@@ -57,9 +59,8 @@
     
     // Load AVPlayer with path to our content.
     self.contentPlayer = contentPlayer;
-    id<AdsRequest> request = [[NSClassFromString(@"IMAAdsRequest") alloc] initWithAdTagUrl:adLink
-                                                                        adDisplayContainer:self.adDisplayContainer
-                                                                               userContext:nil];
+    
+    id<AdsRequest> request = [[NSClassFromString(@"IMAAdsRequest") alloc] initWithAdTagUrl: adLink adDisplayContainer:_adDisplayContainer contentPlayhead:_playhead userContext: nil];
     
     [self.adsLoader requestAdsWithRequest:request];
 }
@@ -115,7 +116,7 @@
 // Create ads rendering settings to tell the SDK to use the in-app browser.
 - (id<AdsRenderingSettings>)adsRenderingSettings {
     if (!_adsRenderingSettings) {
-        _adsRenderingSettings = [NSClassFromString(@"IMAAdsRenderingSettings") new];
+        _adsRenderingSettings = [[NSClassFromString(@"IMAAdsRenderingSettings") alloc] init];
         _adsRenderingSettings.webOpenerPresentingController = self;
         _adsRenderingSettings.webOpenerDelegate = _datasource;
     }
@@ -134,12 +135,12 @@
 
 - (id<AdsLoader>)adsLoader {
     if (!_adsLoader) {
-        id<Settings> settings = nil;
-        if (![_locale isKindOfClass:[NSNull class]] && _locale.length) {
-            settings = [NSClassFromString(@"IMASettings") new];
-            settings.language = _locale;
-        }
-        _adsLoader = [(id<AdsLoader>)[NSClassFromString(@"IMAAdsLoader") alloc] initWithSettings:settings];
+//        id<Settings> settings = nil;
+//        if (![_locale isKindOfClass:[NSNull class]] && _locale.length) {
+//            settings = [NSClassFromString(@"IMASettings") new];
+//            settings.language = _locale;
+//        }
+        _adsLoader = [(id<AdsLoader>)[NSClassFromString(@"IMAAdsLoader") alloc] initWithSettings:nil];
         _adsLoader.delegate = self;
     }
     return _adsLoader;
@@ -147,7 +148,7 @@
 
 - (id<AVPlayerContentPlayhead>)playhead {
     if (!_playhead) {
-        _playhead = [[NSClassFromString(@"IMAAVPlayerContentPlayhead") alloc] initWithAVPlayer:self.contentPlayer];
+        _playhead = [[NSClassFromString(@"IMAAVPlayerContentPlayhead") alloc] initWithAVPlayer:_contentPlayer];
     }
     return _playhead;
 }
