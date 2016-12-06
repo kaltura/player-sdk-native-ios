@@ -57,10 +57,10 @@
     
     // Load AVPlayer with path to our content.
     self.contentPlayer = contentPlayer;
-    id<AdsRequest> request = [[NSClassFromString(@"IMAAdsRequest") alloc] initWithAdTagUrl:adLink
-                                                                        adDisplayContainer:self.adDisplayContainer
-                                                                               userContext:nil];
     
+    // Set up our content playhead and contentComplete callback.
+    id<AdsRequest> request = [[NSClassFromString(@"IMAAdsRequest") alloc] initWithAdTagUrl: adLink adDisplayContainer: self.adDisplayContainer contentPlayhead: self.playhead userContext: nil];
+
     [self.adsLoader requestAdsWithRequest:request];
 }
 
@@ -151,8 +151,6 @@
     }
     return _playhead;
 }
-
-
 
 #pragma mark IMAAdsLoaderDelegate
 - (void)adsLoader:(id<AdsLoader>)loader adsLoadedWithData:(id<AdsLoadedData>)adsLoadedData {
