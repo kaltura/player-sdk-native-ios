@@ -27,7 +27,6 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
 - (NSData *)performLicenseRequest:(NSData *)requestBytes error:(NSError **)errorOut {
     
     NSString* licenseUri = _licenseUri;
-    licenseUri = [licenseUri stringByReplacingOccurrencesOfString:@"udrm.kaltura.com" withString:@"udrm-stg.kaltura.com"];
     
     NSURL* reqUrl = [NSURL URLWithString:licenseUri];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:reqUrl];
