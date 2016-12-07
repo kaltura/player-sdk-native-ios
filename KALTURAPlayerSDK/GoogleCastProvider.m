@@ -121,7 +121,7 @@ didReceiveTextMessage:(NSString *)message
         
         if (castParams) {
             // set new media source - for change media
-            [self setMediaSrc:[castParams firstObject]];
+            self.mediaSrc = [castParams firstObject];
         }
         
         if ([self.delegate respondsToSelector:@selector(startCasting)]) {
@@ -210,14 +210,6 @@ didReceiveTextMessage:(NSString *)message
 
 - (GCKCastSession *)currentSession {
     return [GCKCastContext sharedInstance].sessionManager.currentCastSession;
-}
-
-- (void)setMediaSrc:(NSString *)mediaSrc {
-    if (_mediaSrc != nil) {
-        _mediaSrc = mediaSrc;
-    } else {
-        _mediaSrc = mediaSrc;
-    }
 }
 
 - (void)play {
