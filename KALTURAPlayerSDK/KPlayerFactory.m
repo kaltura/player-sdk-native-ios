@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 -(void)selectAudioTrack:(int)trackId{
-    KPLogDebug(@"Change audio track Id:%@",trackId);
+    KPLogDebug(@"Change audio track Id:%i",trackId);
     [_player selectAudioTrack:trackId];
 }
 
