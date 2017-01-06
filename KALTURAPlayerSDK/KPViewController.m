@@ -377,6 +377,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             [strongSelf triggerCastEvent:castProvider];
         }];
         
+        [self restartCurrentMedia];
         KPLogTrace(@"Exit setCastProvider");
         return;
     }
@@ -387,6 +388,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     [self triggerCastEvent:castProvider];
     _playerFactory.lastPlayBackTime = _playerFactory.currentPlayBackTime;
     
+    [self restartCurrentMedia];
     KPLogTrace(@"Exit setCastProvider");
 }
 
@@ -1022,6 +1024,8 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     [self player:currentPlayer eventName:EndedKey value:nil];
 }
 
+#pragma mark - Factory
+
 - (void)allAdsCompleted {
     [self.controlsView triggerEvent:AllAdsCompletedKey withJSON:nil];
 }
@@ -1040,6 +1044,17 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
         }
     }];
 }
+
+- (void)restartCurrentMedia {
+    
+    if (_currentConfiguration) {
+        if (_currentConfiguration.entryId != nil) {
+            [self changeMedia: _currentConfiguration.entryId];
+        }
+    }
+}
+
+#pragma mark -
 
 - (void)triggerKPlayerNotification: (NSNotification *)note{
     KPLogTrace(@"Enter");

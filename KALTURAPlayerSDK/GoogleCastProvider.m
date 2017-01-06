@@ -64,6 +64,7 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     self = [super init];
     
     if (self) {
+        [self castChannelModerator];
         [[GCKCastContext sharedInstance].sessionManager addListener:self];
     }
     
@@ -71,20 +72,25 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 }
 
 - (void)castChannelModerator {
+    
     if (!_castChannel) {
+        
         _castChannel = [[GCKGenericChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
         _castChannel.delegate = self;
-        
-        self.session = [GCKCastContext sharedInstance].sessionManager.currentCastSession;
-        [_session.remoteMediaClient addListener:self];
-        [_session addChannel:_castChannel];
-        
-        if (_customLogo) {
-            [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"}",_customLogo]];
-        }
-        
-        [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
     }
+}
+
+- (void)p_sessionModerator {
+    
+    _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
+    [_session.remoteMediaClient addListener:self];
+    [_session addChannel:_castChannel];
+    
+    if (_customLogo) {
+        [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"}",_customLogo]];
+    }
+    
+    [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
 }
 
 #pragma mark -
@@ -284,7 +290,7 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 - (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info {
     KPLogTrace(@"setVideoUrl::: Position:%@, AutoPlay:%@", startPosition, isAutoPlay);
     
-    self.session = [GCKCastContext sharedInstance].sessionManager.currentCastSession;
+    _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
     
     NSString *mediaUrl = [self videoUrlModeratorWithString: videoUrl];
     GCKMediaInformation *mediaInfo = [self p_buildMediaInformationWithVideoUrl: mediaUrl info: info];
@@ -297,16 +303,12 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     } else {
         
         // Cast video
-        if (_session.remoteMediaClient.mediaStatus.mediaInformation.contentID != mediaInfo.contentID || _isEnded) {
+        if (self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.contentID != mediaInfo.contentID || _isEnded) {
             [self stop];
             
-            if (_session) {
-                [_session.remoteMediaClient loadMedia:mediaInfo
-                                             autoplay:YES 
+                [self.currentSession.remoteMediaClient loadMedia:mediaInfo
+                                             autoplay:isAutoPlay 
                                          playPosition:startPosition];
-                
-                return;
-            }
         }
     }
 }
@@ -363,14 +365,10 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     if (_playerState != PlayerStatePlaying) {
         
         if (_isEnded || _isChangeMedia) {
-            
-            NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
-            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
+        
+            [_delegate restartCurrentCasting];
             _isEnded = NO;
             _isChangeMedia = NO;
-        } else {
-            
-            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: nil];
         }
         return;
     }
@@ -493,7 +491,8 @@ didReceiveTextMessage:(NSString *)message
 - (void)sessionManager:(GCKSessionManager *)sessionManager
    didStartCastSession:(GCKCastSession *)session {
     KPLogTrace(@"didStartCastSession Enter");
-    [self castChannelModerator];
+    
+    [self p_sessionModerator];
 }
 
 - (void)sessionManager:(GCKSessionManager *)sessionManager
@@ -505,8 +504,6 @@ didReceiveTextMessage:(NSString *)message
     }
     
     [self sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
-    [session removeChannel:_castChannel];
-    _castChannel = nil;
     
     if ([self.delegate respondsToSelector:@selector(stopCasting)]) {
         [self.delegate stopCasting];
@@ -558,7 +555,7 @@ didReceiveTextMessage:(NSString *)message
 - (void)sessionManager:(GCKSessionManager *)sessionManager
   didResumeCastSession:(GCKCastSession *)session {
     KPLogTrace(@"didResumeCastSession");
-    
+
     [_session addChannel:_castChannel];
     [self p_switchToRemotePlayback];
 }
@@ -576,7 +573,6 @@ didReceiveTextMessage:(NSString *)message
     }
     
     [self sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
-    _castChannel = nil;
 }
 
 @end
