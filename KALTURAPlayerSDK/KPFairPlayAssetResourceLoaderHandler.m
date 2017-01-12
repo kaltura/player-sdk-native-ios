@@ -36,7 +36,7 @@ NSString* const SKD_URL_SCHEME_NAME = @"skd";
     
     NSHTTPURLResponse* response = nil;
     
-    KPLogDebug(@"Sending license request");
+    KPLogDebug(@"Sending license request; url=%@", licenseUri);
     NSTimeInterval licenseResponseTime = [NSDate timeIntervalSinceReferenceDate];
     
     NSData* responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:error];

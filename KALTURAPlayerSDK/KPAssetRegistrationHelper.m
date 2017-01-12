@@ -61,7 +61,6 @@
         CHECK_NOT_NULL(assetConfig.partnerId);
         CHECK_NOT_EMPTY(assetConfig.uiConfId);
         CHECK_NOT_EMPTY(assetConfig.localContentId);
-        CHECK_NOT_EMPTY(flavorId);
         
         self.config = assetConfig;
         self.flavorId = flavorId;
