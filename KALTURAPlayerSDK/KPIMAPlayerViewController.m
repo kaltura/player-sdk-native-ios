@@ -57,15 +57,15 @@
     
     // Load AVPlayer with path to our content.
     self.contentPlayer = contentPlayer;
-    id<AdsRequest> request = [[NSClassFromString(@"IMAAdsRequest") alloc] initWithAdTagUrl:adLink
-                                                                        adDisplayContainer:self.adDisplayContainer
-                                                                               userContext:nil];
+    
+    // Set up our content playhead and contentComplete callback.
+    id<AdsRequest> request = [[NSClassFromString(@"IMAAdsRequest") alloc] initWithAdTagUrl: adLink adDisplayContainer: self.adDisplayContainer contentPlayhead: self.playhead userContext: nil];
     
     [self.adsLoader requestAdsWithRequest:request];
 }
 
 - (void)contentCompleted {
-// Notify IMA SDK when content is done for post-rolls.
+    // Notify IMA SDK when content is done for post-rolls.
     [self.adsLoader contentComplete];
 }
 
@@ -152,16 +152,14 @@
     return _playhead;
 }
 
-
-
 #pragma mark IMAAdsLoaderDelegate
 - (void)adsLoader:(id<AdsLoader>)loader adsLoadedWithData:(id<AdsLoadedData>)adsLoadedData {
     // Grab the instance of the IMAAdsManager and set ourselves as the delegate.
     self.adsManager = adsLoadedData.adsManager;
     self.adsManager.delegate = self;
     // Initialize the ads manager.
-    [self.adsManager initializeWithContentPlayhead:self.playhead
-                              adsRenderingSettings:self.adsRenderingSettings];
+    
+    [self.adsManager initializeWithAdsRenderingSettings: self.adsRenderingSettings];
     
     NSDictionary *eventParams = AdLoadedEventKey.nullVal;
     [self.delegate player:nil
@@ -173,7 +171,7 @@
     // Something went wrong loading ads. Log the error and play the content.
     KPLogError(@"Error loading ads: %@", adErrorData.adError.message);
     
-     NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
+    NSDictionary *eventParams = AdsLoadErrorKey.nullVal;
     [self.delegate player:nil
                 eventName:eventParams.allKeys.firstObject
                      JSON:eventParams.allValues.firstObject];
@@ -302,4 +300,3 @@
 }
 
 @end
-

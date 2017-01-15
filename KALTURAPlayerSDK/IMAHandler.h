@@ -17,10 +17,12 @@
 
 @end
 
+@protocol AVPlayerContentPlayhead;
 @protocol AdsRequest <NSObject>
 
 - (instancetype)initWithAdTagUrl:(NSString *)adTagUrl
               adDisplayContainer:(id<AdDisplayContainer>)adDisplayContainer
+                 contentPlayhead:(id<AVPlayerContentPlayhead>)contentPlayhead
                      userContext:(id)userContext;
 
 @end
@@ -60,8 +62,8 @@
 
 @property (nonatomic, strong) id delegate;
 
-- (void)initializeWithContentPlayhead:(id<AVPlayerContentPlayhead>)contentPlayhead
-                 adsRenderingSettings:(id<AdsRenderingSettings>)adsRenderingSettings;
+- (void)initializeWithAdsRenderingSettings:(id<AdsRenderingSettings>)adsRenderingSettings;
+
 - (void)start;
 - (void)pause;
 - (void)resume;
@@ -98,11 +100,11 @@ typedef NS_ENUM(NSInteger, IMAAdEventType){
      */
     kIMAAdEvent_AD_BREAK_READY,
     /**
-     *  Ad break ended (only used for server side ad insertion).
+     *  Ad break ended (only used for dynamic ad insertion).
      */
     kIMAAdEvent_AD_BREAK_ENDED,
     /**
-     *  Ad break started (only used for server side ad insertion).
+     *  Ad break started (only used for dynamic ad insertion).
      */
     kIMAAdEvent_AD_BREAK_STARTED,
     /**
@@ -117,6 +119,10 @@ typedef NS_ENUM(NSInteger, IMAAdEventType){
      *  Single ad has finished.
      */
     kIMAAdEvent_COMPLETE,
+    /**
+     *  Cuepoints changed for VOD stream (only used for dynamic ad insertion).
+     */
+    kIMAAdEvent_CUEPOINTS_CHANGED,
     /**
      *  First quartile of a linear ad was reached.
      */
@@ -154,7 +160,6 @@ typedef NS_ENUM(NSInteger, IMAAdEventType){
      */
     kIMAAdEvent_THIRD_QUARTILE
 };
-
 
 @protocol AdPodInfo <NSObject>
 
