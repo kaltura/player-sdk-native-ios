@@ -148,9 +148,9 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 - (void)setAdTagURL:(NSString *)adTagURL {
     if (!_adController) {
         _adController = [KPIMAPlayerViewController new];
-
-        if (!_adController) {
         
+        if (!_adController) {
+            
             return;
         }
         
@@ -204,7 +204,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     if (_adController) {
         [_adController removeIMAPlayer];
     }
-
+    
     [_player removePlayer];
     _adController = nil;
     _player = nil;
@@ -368,15 +368,15 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 
 - (void)contentCompleted:(id<KPlayer>)currentPlayer {
     self.isContentEnded = YES;
-// Notify IMA SDK when content is done for post-rolls.
+    // Notify IMA SDK when content is done for post-rolls.
     if (_adController) {
         [_adController contentCompleted];
     }
     
     if (!self.adController || self.isAllAdsCompleted) {
         [self.player.delegate player:self.player
-                               eventName:EndedKey
-                                   value:nil];
+                           eventName:EndedKey
+                               value:nil];
     }
 }
 
@@ -389,6 +389,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)play {
+    self.player.shouldPlay = YES;
     if (_backToForeground) {
         _isReleasePlayerPositionEnabled = YES;
     }
@@ -411,6 +412,7 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
 }
 
 - (void)pause {
+    self.player.shouldPlay = NO;
     if (_adController) {
         [self.adController pause];
     }
