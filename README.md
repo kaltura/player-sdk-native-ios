@@ -28,19 +28,13 @@ Future support will include:
 * Offline viewing
 
 ## Table of Contents
-
-* [**Architecture Overview**](#architecture-overview)  
+ 
 * [**Getting Started**](#getting-started)
 * [**Using Kaltura player**](#using-kaltura-player)  
 * [**Linking GoogleAds**](#linking-googleads)
 * [**Linking GoogleCast**](#linking-googlecast)
 * [**Troubleshooting**](#troubleshooting)   
 * [**License and Copyright Information**](#license-and-copyright-information)  
-
-Architecture Overview
-=====
-![alt text](http://html5video.org/presentations/HTML5PartDeux.FOSDEM.2014/koverview.jpg "Architecture Overview")
-
 
 Getting Started
 ======
