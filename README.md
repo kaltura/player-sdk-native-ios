@@ -5,10 +5,10 @@
 
 Player SDK Native iOS
 =================
-
-> <font color="red">**Note: A new version of the Kaltura Player SDK (V3) will be available for beta very soon. The new SDK will be fully native and will introduce significant performance improvements. 
-If you are planning to begin a new project based on the SDK, you may want to wait for the new version.**</font>
-
+```diff
+- **Note: A new version of the Kaltura Player SDK (V3) will be available for beta very soon. The new SDK will be fully native and will introduce significant performance improvements. 
+If you are planning to begin a new project based on the SDK, you may want to wait for the new version.**
+```
 The Kaltura player-sdk-native component enables embedding the [kaltura player](http://player.kaltura.com) into native environments. This enables the full HTML5 player platform, without limitations of HTML5 video tag API in iOS platforms. Currently, for iOS this enables: 
 * Inline playback with HTML controls ( disable controls during ads etc. ) 
 * Widevine DRM support
