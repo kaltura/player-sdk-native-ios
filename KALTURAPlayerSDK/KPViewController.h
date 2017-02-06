@@ -122,7 +122,12 @@
  *
  *  @param KPPlayerConfig config is current configuration object
  */
-- (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config;
++ (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config;
+
+// Deprecated -- use static version instead.
+- (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config
+DEPRECATED_MSG_ATTRIBUTE("Use +prefetchPlayerResourcesWithConfig:");
+
 
 @property (nonatomic, weak) id<KPViewControllerDelegate> delegate;
 
