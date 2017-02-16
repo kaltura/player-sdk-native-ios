@@ -14,14 +14,14 @@ void _KPLog(KPLogLevel logLevel,  NSString *methodName, int lineNumber,NSString 
     format = [NSString stringWithFormat:@"::%@:: %@ (line:%d) -- %@",KPLogManager.levelNames[logLevel / 10], methodName, lineNumber,format];
     va_list args;
     va_start(args, format);
-    notifyListener([[[NSString alloc] initWithFormat:format arguments:args] init], logLevel);
+    KPNotifyListener([[[NSString alloc] initWithFormat:format arguments:args] init], logLevel);
     va_end(args);
     va_start(args, format);
     NSLogv(format, args);
     va_end(args);
 }
 
-void notifyListener(NSString *message, NSInteger messageLevel) {
+void KPNotifyListener(NSString *message, NSInteger messageLevel) {
     [[NSNotificationCenter defaultCenter] postNotificationName:KPLoggingNotification
                                                         object:nil
                                                       userInfo:@{KPLogMessageKey: message,

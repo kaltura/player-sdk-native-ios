@@ -159,8 +159,12 @@
 
 - (void)handleError:(NSError *)error {
     NSString *errPrefix = @"WebViewError:";
-    NSDictionary *dict = @{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"%@", error.localizedDescription],
-                           NSLocalizedFailureReasonErrorKey:error.localizedFailureReason};
+    
+    NSString *localizedDescription = !error.localizedDescription ? @"" : error.localizedDescription;
+    NSString *localizedFailureReason = !error.localizedFailureReason ? @"" : error.localizedFailureReason;
+    
+    NSDictionary *dict = @{NSLocalizedDescriptionKey:[NSString stringWithFormat:@"%@", localizedDescription],
+                           NSLocalizedFailureReasonErrorKey: localizedFailureReason};
     NSError *err = [NSError errorWithDomain:error.domain code:error.code userInfo:dict];
     
     if ([self.controlsDelegate respondsToSelector:@selector(handleKPControlsError:)]) {
