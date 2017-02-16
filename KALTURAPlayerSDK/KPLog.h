@@ -16,7 +16,7 @@ extern NSString *const KPLogMessageLevelKey;
 
 
 void _KPLog(KPLogLevel logLevel, NSString *methodName, int lineNumber, NSString *format, ...);
-void KPNotifyListener(NSString *message, NSInteger messageLevel);
+void notifyListener(NSString *message, NSInteger messageLevel);
 
 #ifdef DEBUG
 #define __FileName__ [[NSString stringWithUTF8String:__FILE__] lastPathComponent]
