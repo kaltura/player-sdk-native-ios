@@ -1,3 +1,4 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3c95a3b285d9447cb525be42647af4f8)](https://www.codacy.com/app/PlayKit/player-sdk-native-ios?utm_source=github.com&utm_medium=referral&utm_content=kaltura/player-sdk-native-ios&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/kaltura/player-sdk-native-ios.svg?branch=master)](https://travis-ci.org/kaltura/player-sdk-native-ios)
 [![Version](https://img.shields.io/cocoapods/v/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
 [![License](https://img.shields.io/cocoapods/l/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
