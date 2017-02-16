@@ -14,7 +14,6 @@
 - (void)castPlayerState:(NSString *)state;
 - (void)startCasting;
 - (void)stopCasting;
-- (void)restartCurrentCasting;
 
 @end
 

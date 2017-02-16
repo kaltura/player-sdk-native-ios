@@ -144,7 +144,6 @@
         NSLog(@"HTTP:: %@", requestString);
     }
     decisionHandler(WKNavigationActionPolicyAllow);
-
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
