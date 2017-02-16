@@ -261,11 +261,6 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     [self play];
 }
 
-- (void)restartCurrentCasting {
-    
-    [_delegate restartCurrentMedia];
-}
-
 - (void)updateCastState:(NSString *)state {
     isPlaying = _player.isPlaying;
     [_delegate player:_player eventName:state value:nil];

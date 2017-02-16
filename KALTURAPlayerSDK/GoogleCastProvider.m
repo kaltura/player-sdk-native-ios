@@ -47,8 +47,6 @@ typedef NS_ENUM(NSInteger, PlayerState) {
 @synthesize wasReadyToplay = _wasReadyToplay;
 @synthesize thumbnailUrl = _thumbnailUrl;
 
-#pragma mark - Life cycle
-
 + (GoogleCastProvider *)sharedInstance {
     
     static GoogleCastProvider *sharedClass = nil;
@@ -64,36 +62,151 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     self = [super init];
     
     if (self) {
-        [self castChannelModerator];
         [[GCKCastContext sharedInstance].sessionManager addListener:self];
     }
     
     return self;
 }
 
-- (void)castChannelModerator {
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+   didStartCastSession:(GCKCastSession *)session {
+    KPLogTrace(@"didStartCastSession Enter");
+    [self castChannelModerator];
+}
+
+- (BOOL)isConnected {
+    return _castChannel.isConnected;
+}
+
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+     didEndCastSession:(GCKCastSession *)session
+             withError:(NSError * GCK_NULLABLE_TYPE)error {
+    KPLogTrace(@"didEndCastSession Enter");
+    if (error) {
+        KPLogError(@"JS Error %@", error.description);
+    }
     
-    if (!_castChannel) {
-        
-        _castChannel = [[GCKGenericChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
-        _castChannel.delegate = self;
+    [self sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
+    [session removeChannel:_castChannel];
+    _castChannel = nil;
+    
+    if ([self.delegate respondsToSelector:@selector(stopCasting)]) {
+        [self.delegate stopCasting];
     }
 }
 
-- (void)p_sessionModerator {
-    
-    _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
-    [_session.remoteMediaClient addListener:self];
-    [_session addChannel:_castChannel];
-    
-    if (_customLogo) {
-        [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"}",_customLogo]];
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+       didStartSession:(GCKSession *)session {
+    KPLogTrace(@"MediaViewController: sessionManager didStartSession %@", session);
+}
+
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+ didFailToStartSession:(GCKSession *)session withError:(NSError *)error {
+    if (error) {
+        KPLogError(@"JS Error %@", error.description);
     }
     
-    [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
+    [self sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
+    _castChannel = nil;
+}
+
+- (void)castChannel:(GCKGenericChannel *)channel
+didReceiveTextMessage:(NSString *)message
+      withNamespace:(NSString *)protocolNamespace {
+    NSLog(@"didReceiveTextMessage::%@", message);
+    if ([message hasPrefix:@"readyForMedia"]) {
+        KPLogTrace(@"message::%@", message);
+        [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
+        NSArray *castParams = message.castParams;
+        
+        if (castParams) {
+            // set new media source - for change media
+            [self setMediaSrc:[castParams firstObject]];
+        }
+        
+        if ([self.delegate respondsToSelector:@selector(startCasting)]) {
+            [self.delegate startCasting];
+        }
+    } else if ([message hasPrefix:@"changeMedia"]) {
+        // pause cast player before changing media
+        [self pause];
+    } else if ([message containsString:@"captions"]) {
+        KPLogTrace(@"message:: %@", message);
+        // TODO:: attach captions implimantation
+        // Converting NSString to NSDictionary
+        //        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
+        //        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        //        if ([_delegate respondsToSelector:@selector(castProvider:availableTextTracks:)]) {
+        //            [_delegate castProvider:self availableTextTracks:(NSDictionary *)json];
+        //        }
+    }
+    
+    
 }
 
 #pragma mark -
+
+/**
+ * Called when a session is about to be resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager willResumeSession:(GCKSession *)session {
+    KPLogTrace(@"willResumeSession");
+}
+
+/**
+ * Called when a session has been successfully resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager didResumeSession:(GCKSession *)session {
+    KPLogTrace(@"didResumeSession");
+}
+
+/**
+ * Called when a Cast session is about to be resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+ willResumeCastSession:(GCKCastSession *)session {
+    KPLogTrace(@"willResumeCastSession");
+}
+
+/**
+ * Called when a Cast session has been successfully resumed.
+ *
+ * @param sessionManager The session manager.
+ * @param session The Cast session.
+ */
+- (void)sessionManager:(GCKSessionManager *)sessionManager
+  didResumeCastSession:(GCKCastSession *)session {
+    KPLogTrace(@"didResumeCastSession");
+    
+    [self castChannelModerator];
+}
+
+#pragma mark -
+
+- (void)castChannelModerator {
+//    if (!_castChannel) {
+        _castChannel = [[GCKGenericChannel alloc] initWithNamespace:@"urn:x-cast:com.kaltura.cast.player"];
+        _castChannel.delegate = self;
+        _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
+        [_session.remoteMediaClient addListener:self];
+        [_session addChannel:_castChannel];
+        
+        if (_customLogo) {
+            [self sendTextMessage:[NSString stringWithFormat:@"{\"type\":\"setLogo\",\"logo\":\"%@\"}",_customLogo]];
+        }
+        
+        [self sendTextMessage:@"{\"type\":\"show\",\"target\":\"logo\"}"];
+//    }
+}
 
 - (GCKCastSession *)currentSession {
     return [GCKCastContext sharedInstance].sessionManager.currentCastSession;
@@ -108,91 +221,105 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     }
 }
 
-- (void)startUpdateTime {
-    if (self.currentSession.remoteMediaClient.mediaStatus.playerState
-        == GCKMediaPlayerStatePlaying) {
-        _currentTime = self.currentSession.remoteMediaClient.approximateStreamPosition;
-        [self setDelegate:updateProgress
-                withValue:[NSNumber numberWithDouble:self.currentSession.remoteMediaClient.approximateStreamPosition]];
-        [self performSelector:@selector(startUpdateTime) withObject:nil afterDelay:0.2];
-    }
-}
-
-- (void)stopUpdateTime {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(startUpdateTime) object:nil];
-}
-
-- (void)setDelegate:(PlayerDelegateMethod)dMethod withValue:(id)value {
-    if (_observers) {
-        for (id<KPCastProviderDelegate>observer in _observers.allObjects) {
-            switch (dMethod) {
-                case updateProgress:{
-                    if ([observer respondsToSelector:@selector(updateProgress:)]) {
-                        [observer updateProgress:[(NSNumber *)value doubleValue]];
-                    }
-                    break;
-                }
-                case castPlayerState:{
-                    if ([observer respondsToSelector:@selector(castPlayerState:)]) {
-                        [observer castPlayerState:value];
-                    }
-                    break;
-                }
-                case readyToPlay:{
-                    if ([observer respondsToSelector:@selector(readyToPlay:)]) {
-                        [observer readyToPlay:[(NSNumber *)value doubleValue]];
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
+- (void)play {
+    
+    if (_playerState != PlayerStatePlaying) {
+        
+        if (_isEnded || _isChangeMedia) {
+            
+            NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
+            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
+            _isEnded = NO;
+            _isChangeMedia = NO;
+        } else {
+            
+            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: nil];
         }
+        return;
+    }
+    
+    if (_playerState == PlayerStatePause) {
+        [self.currentSession.remoteMediaClient play];
     }
 }
 
-#pragma mark - Private methods
+- (void)pause {
+    [self.currentSession.remoteMediaClient pause];
+}
 
-- (NSString *)videoUrlModeratorWithString: (NSString *)url {
-    
-    NSString *videoUrl = url;
-    
-    NSString *videoUrlUD = [[NSUserDefaults standardUserDefaults] valueForKey: @"videoUrl"];
-    
-    if (_mediaSrc == nil) {
-        self.mediaSrc = videoUrlUD;
+- (void)stop {
+    [self.currentSession.remoteMediaClient stop];
+}
+
+- (NSInteger)seekToTimeInterval:(NSTimeInterval)position {
+    _playerState = PlayerStateSeeking;
+    return [self.currentSession.remoteMediaClient seekToTimeInterval:position];
+}
+
+- (NSInteger)setStreamVolume:(float)volume {
+    return [self.currentSession.remoteMediaClient setStreamVolume:volume];
+}
+
+- (NSInteger)setStreamMuted:(BOOL)muted {
+    return [self.currentSession.remoteMediaClient setStreamMuted:muted];
+}
+
+- (NSTimeInterval)currentTime {
+    return _currentTime;
+}
+
+- (void)setThumbnailUrl:(NSString *)thumbnailUrl {
+    _thumbnailUrl = thumbnailUrl;
+}
+
+- (BOOL)wasReadyToplay {
+    return _wasReadyToplay;
+}
+
+- (BOOL)sendTextMessage:(NSString *)message {
+    NSLog(@"sendmessage::: %@", message);
+    if (_castChannel) {
+        return [_castChannel sendTextMessage:message];
     }
+    
+    return NO;
+}
+
+- (void)updateAdTagUrl:(NSString *)newAdTagUrl {
+    if (newAdTagUrl && [GCKCastContext sharedInstance].sessionManager.currentSession.remoteMediaClient.mediaStatus != nil) {
+        NSString *changeAdTagUrlMsg = [NSString stringWithFormat:@"{\"type\":\"setKDPAttribute\",\"plugin\":\"doubleClick\",\"property\":\"adTagUrl\",\"value\":\"%@\"}", newAdTagUrl];
+        [self sendTextMessage:changeAdTagUrlMsg];
+    }
+}
+
+- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info {
+    KPLogTrace(@"setVideoUrl::: Position:%@, AutoPlay:%@", startPosition, isAutoPlay);
     
     if (!videoUrl && _mediaSrc) {
         videoUrl = _mediaSrc;
     }
     
-    return videoUrl;
-}
-
-- (GCKMediaInformation *)p_buildMediaInformationWithVideoUrl:(NSString *)videoUrl info:(NSString *)value {
     KPLogTrace(@"Video Url: ", videoUrl);
     
-//    NSInteger duration = [metaData objectForKey:@"duration"];
-//    NSTimeInterval dur = duration;
-    
-    GCKMediaMetadata *metaData = [self p_metadataWithString: value];
-    
     GCKMediaInformation *mediaInfo = [[GCKMediaInformation alloc]
-                                          initWithContentID: videoUrl
-                                          streamType: GCKMediaStreamTypeBuffered
-                                          contentType: @"video/mp4"
-                                          metadata: metaData
-                                          streamDuration: 0
-                                          mediaTracks:nil
-                                          textTrackStyle:nil
-                                          customData:nil];
+                                      initWithContentID:videoUrl
+                                      streamType:GCKMediaStreamTypeBuffered
+                                      contentType:@"video/mp4"
+                                      metadata:[self p_metadataWithString: info]
+                                      streamDuration:0
+                                      mediaTracks:nil
+                                      textTrackStyle:nil
+                                      customData:nil];
     
-    return mediaInfo;
+    // Cast video
+    if (self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.contentID != mediaInfo.contentID || _isEnded) {
+        [self stop];
+        [self.currentSession.remoteMediaClient
+         loadMedia:mediaInfo autoplay:isAutoPlay playPosition:startPosition];
+    }
 }
 
-- (GCKMediaMetadata *)p_metadataWithString:(NSString *)value {
+- (GCKMediaMetadata *) p_metadataWithString:(NSString *)value {
     
     GCKMediaMetadata *metadata = nil;
     if (value) {
@@ -209,7 +336,6 @@ typedef NS_ENUM(NSInteger, PlayerState) {
             NSString *title = @"";
             NSString *thumbnailUrl = @"";
             NSString *description = @"";
-            NSNumber *duration = @0;
             
             id media_id = nil;
             
@@ -257,17 +383,10 @@ typedef NS_ENUM(NSInteger, PlayerState) {
                 description = (NSString *)description_;
             }
             
-            id duration_ = [dictionary objectForKey: @"duration"];
-            if ([duration_ isKindOfClass: [NSNumber class]]) {
-                
-                duration = (NSNumber *)duration_;
-            }
-            
             metadata = [[GCKMediaMetadata alloc] initWithMetadataType:GCKMediaMetadataTypeMovie];
             [metadata setString: title forKey:kGCKMetadataKeyTitle];
             [metadata setString: description forKey:kGCKMetadataKeySubtitle];
             [metadata setString: mediaId forKey: @"entryid"];
-            [metadata setInteger:duration.integerValue forKey:@"duration"];
             
             [metadata addImage:[[GCKImage alloc] initWithURL:[NSURL URLWithString:thumbnailUrl]
                                                        width:480
@@ -278,138 +397,19 @@ typedef NS_ENUM(NSInteger, PlayerState) {
     return metadata;
 }
 
-- (void)p_switchToRemotePlayback {
-    
-    if ([self.delegate respondsToSelector:@selector(startCasting)]) {
-        [self.delegate startCasting];
+- (void)startUpdateTime {
+    if (self.currentSession.remoteMediaClient.mediaStatus.playerState
+        == GCKMediaPlayerStatePlaying) {
+        _currentTime = self.currentSession.remoteMediaClient.approximateStreamPosition;
+        [self setDelegate:updateProgress
+                withValue:[NSNumber numberWithDouble:self.currentSession.remoteMediaClient.approximateStreamPosition]];
+        [self performSelector:@selector(startUpdateTime) withObject:nil afterDelay:0.2];
     }
 }
 
-#pragma mark - KPCastProvider
-
-- (void)setVideoUrl:(NSString *)videoUrl startPosition:(NSTimeInterval)startPosition autoPlay:(BOOL)isAutoPlay metaData:(NSString *)info {
-    KPLogTrace(@"setVideoUrl::: Position:%@, AutoPlay:%@", startPosition, isAutoPlay);
-    
-    _session = [GCKCastContext sharedInstance].sessionManager.currentSession;
-    
-    NSString *mediaUrl = [self videoUrlModeratorWithString: videoUrl];
-    GCKMediaInformation *mediaInfo = [self p_buildMediaInformationWithVideoUrl: mediaUrl info: info];
-    
-    KPLogTrace(@"Video Url: ", mediaUrl);
-    
-    if (mediaUrl == nil) {
-        
-        [self p_switchToRemotePlayback];
-    } else {
-        
-        // Cast video
-        if (self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.contentID != mediaInfo.contentID || _isEnded) {
-            [self stop];
-            
-                [self.currentSession.remoteMediaClient loadMedia:mediaInfo
-                                             autoplay:isAutoPlay 
-                                         playPosition:startPosition];
-        }
-    }
-}
-
-- (NSMutableSet *)observers {
-    if (!_observers) {
-        _observers = [NSMutableSet new];
-    }
-    
-    return _observers;
-}
-
-- (void)addObserver:(id<KPCastProviderDelegate>)observer {
-    [self.observers addObject:observer];
-}
-- (void)removeObserver:(id<KPCastProviderDelegate>)observer {
-    [self.observers removeObject:observer];
-}
-
-- (void)setLogo:(NSURL *)logoUrl {
-    _customLogo = [logoUrl absoluteString];
-}
-
-- (BOOL)isConnected {
-    return _castChannel.isConnected;
-}
-
-- (void)updateAdTagUrl:(NSString *)newAdTagUrl {
-    if (newAdTagUrl && self.currentSession.remoteMediaClient.mediaStatus != nil) {
-        NSString *changeAdTagUrlMsg = [NSString stringWithFormat:@"{\"type\":\"setKDPAttribute\",\"plugin\":\"doubleClick\",\"property\":\"adTagUrl\",\"value\":\"%@\"}", newAdTagUrl];
-        [self sendTextMessage:changeAdTagUrlMsg];
-    }
-}
-
-- (void)setThumbnailUrl:(NSString *)thumbnailUrl {
-    _thumbnailUrl = thumbnailUrl;
-}
-
-- (BOOL)wasReadyToplay {
-    return _wasReadyToplay;
-}
-
-- (NSTimeInterval)currentTime {
-    return _currentTime;
-}
-
-- (NSInteger)seekToTimeInterval:(NSTimeInterval)position {
-    _playerState = PlayerStateSeeking;
-    return [self.currentSession.remoteMediaClient seekToTimeInterval:position];
-}
-
-- (void)play {
-    
-    if (_playerState != PlayerStatePlaying) {
-        
-        if (_isEnded || _isChangeMedia) {
-        
-            [_delegate restartCurrentCasting];
-            _isEnded = NO;
-            _isChangeMedia = NO;
-        }
-        return;
-    }
-    
-    if (_playerState == PlayerStatePause) {
-        [self.currentSession.remoteMediaClient play];
-    }
-}
-
-- (void)pause {
-    [self.currentSession.remoteMediaClient pause];
-}
-
-- (void)stop {
-    [self.currentSession.remoteMediaClient stop];
-}
-
-- (NSInteger)setStreamVolume:(float)volume {
-    return [self.currentSession.remoteMediaClient setStreamVolume:volume];
-}
-
-- (NSInteger)setStreamMuted:(BOOL)muted {
-    return [self.currentSession.remoteMediaClient setStreamMuted:muted];
-}
-
-- (BOOL)sendTextMessage:(NSString *)message {
-    NSLog(@"sendmessage::: %@", message);
-    if (_castChannel) {
-        return [_castChannel sendTextMessage:message];
-    }
-    
-    return NO;
-}
-
-#pragma mark - GCKRemoteMediaClientListener
-
-- (void)remoteMediaClient:(GCKRemoteMediaClient *)client
-didStartMediaSessionWithID:(NSInteger)sessionID {
-    _wasReadyToplay = YES;
-    [self setDelegate:readyToPlay withValue:
-     @(self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.streamDuration)];
+- (void)stopUpdateTime {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(startUpdateTime) object:nil];
 }
 
 - (void)remoteMediaClient:(GCKRemoteMediaClient *)client
@@ -446,133 +446,62 @@ didStartMediaSessionWithID:(NSInteger)sessionID {
         case GCKMediaPlayerStateBuffering:
             break;
     }
+    
 }
 
-#pragma mark - GCKGenericChannelDelegate
+- (void)remoteMediaClient:(GCKRemoteMediaClient *)client
+didStartMediaSessionWithID:(NSInteger)sessionID {
+    _wasReadyToplay = YES;
+    [self setDelegate:readyToPlay withValue:
+     @(self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.streamDuration)];
+}
 
-- (void)castChannel:(GCKGenericChannel *)channel
-didReceiveTextMessage:(NSString *)message
-      withNamespace:(NSString *)protocolNamespace {
-    NSLog(@"didReceiveTextMessage::%@", message);
-    if ([message hasPrefix:@"readyForMedia"]) {
-        KPLogTrace(@"message::%@", message);
-        [_castChannel sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
-        NSArray *castParams = message.castParams;
-        
-        if (castParams) {
-            // set new media source - for change media
-            
-            NSString *mediaUrl = [castParams firstObject];
-            [self setMediaSrc:mediaUrl];
-            [[NSUserDefaults standardUserDefaults] setObject:mediaUrl forKey:@"mediaUrl"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
+- (void)setDelegate:(PlayerDelegateMethod)dMethod withValue:(id)value {
+    if (_observers) {
+        for (id<KPCastProviderDelegate>observer in _observers.allObjects) {
+            switch (dMethod) {
+                case updateProgress:{
+                    if ([observer respondsToSelector:@selector(updateProgress:)]) {
+                        [observer updateProgress:[(NSNumber *)value doubleValue]];
+                    }
+                    break;
+                }
+                case castPlayerState:{
+                    if ([observer respondsToSelector:@selector(castPlayerState:)]) {
+                        [observer castPlayerState:value];
+                    }
+                    break;
+                }
+                case readyToPlay:{
+                    if ([observer respondsToSelector:@selector(readyToPlay:)]) {
+                        [observer readyToPlay:[(NSNumber *)value doubleValue]];
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
         }
-        
-        if ([self.delegate respondsToSelector:@selector(startCasting)]) {
-            [self.delegate startCasting];
-        }
-    } else if ([message hasPrefix:@"changeMedia"]) {
-        // pause cast player before changing media
-        [self pause];
-    } else if ([message containsString:@"captions"]) {
-        KPLogTrace(@"message:: %@", message);
-        // TODO:: attach captions implimantation
-        // Converting NSString to NSDictionary
-        //        NSData *data = [message dataUsingEncoding:NSUTF8StringEncoding];
-        //        id json = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        //        if ([_delegate respondsToSelector:@selector(castProvider:availableTextTracks:)]) {
-        //            [_delegate castProvider:self availableTextTracks:(NSDictionary *)json];
-        //        }
     }
 }
 
-#pragma mark - GCKSessionManagerListener
-
-- (void)sessionManager:(GCKSessionManager *)sessionManager
-   didStartCastSession:(GCKCastSession *)session {
-    KPLogTrace(@"didStartCastSession Enter");
-    
-    [self p_sessionModerator];
-}
-
-- (void)sessionManager:(GCKSessionManager *)sessionManager
-     didEndCastSession:(GCKCastSession *)session
-             withError:(NSError * GCK_NULLABLE_TYPE)error {
-    KPLogTrace(@"didEndCastSession Enter");
-    if (error) {
-        KPLogError(@"JS Error %@", error.description);
+- (NSMutableSet *)observers {
+    if (!_observers) {
+        _observers = [NSMutableSet new];
     }
     
-    [self sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
-    
-    if ([self.delegate respondsToSelector:@selector(stopCasting)]) {
-        [self.delegate stopCasting];
-    }
+    return _observers;
 }
 
-- (void)sessionManager:(GCKSessionManager *)sessionManager
-       didStartSession:(GCKSession *)session {
-    KPLogTrace(@"MediaViewController: sessionManager didStartSession %@", session);
+- (void)addObserver:(id<KPCastProviderDelegate>)observer {
+    [self.observers addObject:observer];
+}
+- (void)removeObserver:(id<KPCastProviderDelegate>)observer {
+    [self.observers removeObject:observer];
 }
 
-/**
- * Called when a session is about to be resumed.
- *
- * @param sessionManager The session manager.
- * @param session The session.
- */
-- (void)sessionManager:(GCKSessionManager *)sessionManager willResumeSession:(GCKSession *)session {
-    KPLogTrace(@"willResumeSession");
-}
-
-/**
- * Called when a session has been successfully resumed.
- *
- * @param sessionManager The session manager.
- * @param session The session.
- */
-- (void)sessionManager:(GCKSessionManager *)sessionManager didResumeSession:(GCKSession *)session {
-    KPLogTrace(@"didResumeSession");
-}
-
-/**
- * Called when a Cast session is about to be resumed.
- *
- * @param sessionManager The session manager.
- * @param session The session.
- */
-- (void)sessionManager:(GCKSessionManager *)sessionManager
- willResumeCastSession:(GCKCastSession *)session {
-    KPLogTrace(@"willResumeCastSession");
-}
-
-/**
- * Called when a Cast session has been successfully resumed.
- *
- * @param sessionManager The session manager.
- * @param session The Cast session.
- */
-- (void)sessionManager:(GCKSessionManager *)sessionManager
-  didResumeCastSession:(GCKCastSession *)session {
-    KPLogTrace(@"didResumeCastSession");
-
-    [_session addChannel:_castChannel];
-    [self p_switchToRemotePlayback];
-}
-
-- (void)sessionManager:(GCKSessionManager *)sessionManager
-         didEndSession:(GCKSession *)session
-             withError:(NSError *)error {
-    KPLogTrace(@"session ended with error: %@", error);
-}
-
-- (void)sessionManager:(GCKSessionManager *)sessionManager
- didFailToStartSession:(GCKSession *)session withError:(NSError *)error {
-    if (error) {
-        KPLogError(@"JS Error %@", error.description);
-    }
-    
-    [self sendTextMessage:@"{\"type\":\"hide\",\"target\":\"logo\"}"];
+- (void)setLogo:(NSURL *)logoUrl {
+    _customLogo = [logoUrl absoluteString];
 }
 
 @end
