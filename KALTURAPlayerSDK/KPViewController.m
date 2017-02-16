@@ -527,10 +527,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
 }
 
 - (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config {
-    [KPViewController prefetchPlayerResourcesWithConfig:config];
-}
-
-+ (void) prefetchPlayerResourcesWithConfig:(KPPlayerConfig *)config {
+    
     __block UIViewController *ownerViewController = [[UIViewController alloc] init];
     [config addConfigKey:@"EmbedPlayer.PreloadNativeComponent" withValue:@"true"];
     [config addConfigKey:@"autoPlay" withValue:@"false"];
@@ -539,13 +536,12 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
     
     [ownerViewController addChildViewController: playerViewController];
     [ownerViewController.view addSubview: playerViewController.view];
-        
+    
     [playerViewController registerReadyEvent:^{
+        
         KPLogTrace(@"Player ready after prefetch - will now destroy player");
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [playerViewController removePlayer];
-            ownerViewController = nil;
-        });
+        [playerViewController removePlayer];
+        ownerViewController = nil;
     }];
 }
 

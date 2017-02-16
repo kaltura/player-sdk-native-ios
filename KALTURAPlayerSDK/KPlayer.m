@@ -362,7 +362,12 @@ NSString * const StatusKeyPath = @"status";
         }
         if ([captions count] > 0){
             NSMutableDictionary *closedCaptionLanguages = @{@"languages": captions}.mutableCopy;
-            [self.delegate player:self eventName:@"textTracksReceived" JSON:closedCaptionLanguages.toJSON];
+            
+            if (!isSubtitles) {
+                [self.delegate player:self eventName:@"textTracksReceived" JSON:closedCaptionLanguages.toJSON];
+            }
+            
+            [self.delegate player:self eventName:@"closedCaptionsRecived" JSON:closedCaptionLanguages.toJSON];
         }
     }
 }
