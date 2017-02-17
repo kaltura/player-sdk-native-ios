@@ -121,7 +121,7 @@ didReceiveTextMessage:(NSString *)message
         
         if (castParams) {
             // set new media source - for change media
-            [self setMediaSrc:[castParams firstObject]];
+            self.mediaSrc = [castParams firstObject];
         }
         
         if ([self.delegate respondsToSelector:@selector(startCasting)]) {
@@ -212,30 +212,15 @@ didReceiveTextMessage:(NSString *)message
     return [GCKCastContext sharedInstance].sessionManager.currentCastSession;
 }
 
-- (void)setMediaSrc:(NSString *)mediaSrc {
-    if (_mediaSrc != nil) {
-        _isChangeMedia = YES;
-        _mediaSrc = mediaSrc;
-    } else {
-        _mediaSrc = mediaSrc;
-    }
-}
-
 - (void)play {
     
-    if (_playerState != PlayerStatePlaying) {
+    if (_isEnded && _playerState != PlayerStatePlaying) {
         
-        if (_isEnded || _isChangeMedia) {
-            
-            NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
-            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
-            _isEnded = NO;
-            _isChangeMedia = NO;
-        } else {
-            
-            [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: nil];
-        }
-        return;
+        NSString *metaData = [[NSUserDefaults standardUserDefaults] objectForKey: @"MetaDataCC"];
+        [self setVideoUrl:_mediaSrc startPosition:0 autoPlay:YES metaData: metaData];
+        _isEnded = NO;
+        
+        return; 
     }
     
     if (_playerState == PlayerStatePause) {
@@ -314,8 +299,8 @@ didReceiveTextMessage:(NSString *)message
     // Cast video
     if (self.currentSession.remoteMediaClient.mediaStatus.mediaInformation.contentID != mediaInfo.contentID || _isEnded) {
         [self stop];
-        [self.currentSession.remoteMediaClient
-         loadMedia:mediaInfo autoplay:isAutoPlay playPosition:startPosition];
+        
+        [self.currentSession.remoteMediaClient loadMedia:mediaInfo autoplay:isAutoPlay playPosition:startPosition];
     }
 }
 
