@@ -48,7 +48,8 @@ static NSString *PostrollEndedKey = @"postEnded";
 - (void)prepareForChangeConfiguration;
 - (void)setAssetParam:(NSString*)key toValue:(id)value;
 - (void)backToForeground;
-- (void)selectAudioTrack:(int)trackId;
+- (void)selectAudioTrack:(NSUInteger)trackId;
+- (void)selectAudioTrack:(NSUInteger)trackId after:(NSUInteger)delayMillis;
 - (void)selectTextTrack:(NSString *)locale;
 - (void)removeAdController;
 

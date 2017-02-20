@@ -98,10 +98,17 @@ typedef NS_ENUM(NSInteger, CurrentPlyerType) {
     [_assetBuilder setContentUrl:src];
 }
 
--(void)selectAudioTrack:(int)trackId{
+-(void)selectAudioTrack:(NSUInteger)trackId{
     KPLogDebug(@"Change audio track Id:%i",trackId);
     [_player selectAudioTrack:trackId];
 }
+    
+- (void)selectAudioTrack:(NSUInteger)trackId after:(NSUInteger)delayMillis {
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayMillis * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        [self selectAudioTrack:trackId];
+    });
+}
+
 
 -(void)selectTextTrack:(NSString*)locale{
     KPLogDebug(@"Change text track Id:%@",locale);

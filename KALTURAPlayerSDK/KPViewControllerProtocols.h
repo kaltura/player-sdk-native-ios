@@ -76,7 +76,7 @@ typedef enum{
 - (void)changeSubtitleLanguage:(NSString *)languageCode;
 - (void)setSourceWithAsset:(AVURLAsset*)asset;
 - (void)hidePlayer;
-- (void)selectAudioTrack:(int)trackId;
+- (void)selectAudioTrack:(NSUInteger)trackId;
 - (void)selectTextTrack:(NSString *)locale;
 
 

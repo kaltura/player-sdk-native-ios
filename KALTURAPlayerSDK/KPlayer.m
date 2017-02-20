@@ -612,20 +612,20 @@ NSString * const StatusKeyPath = @"status";
     //    self.currentItem selectMediaOption:<#(AVMediaSelectionOption *)#> inMediaSelectionGroup:<#(AVMediaSelectionGroup *)#>
 }
 
--(void) selectAudioTrack:(int)trackId{
+-(void) selectAudioTrack:(NSUInteger)trackId{
     AVMediaSelectionGroup *audioSelectionGroup = [[[self currentItem] asset] mediaSelectionGroupForMediaCharacteristic: AVMediaCharacteristicAudible];
-    int index = 0;
-    if (audioSelectionGroup.options.count > 1){
-        //we have more than one audio assest - lets send events and be ready for a switch
-        for (AVMediaSelectionOption *option in audioSelectionGroup.options){
-            if (index == trackId){
-                [[self currentItem] selectMediaOption:option inMediaSelectionGroup:audioSelectionGroup ];
-                break;
-            }
-            index++;
-        }
-    }
+    AVMediaSelectionOption *previousOption = [[self.currentItem currentMediaSelection] selectedMediaOptionInMediaSelectionGroup:audioSelectionGroup];
+    AVMediaSelectionOption *defaultOption = audioSelectionGroup.defaultOption;
     
+    KPLogTrace(@"*** Before changing audio option; group: %@\nprevious option: %@\ndefault option: %@", audioSelectionGroup, previousOption, defaultOption);
+
+    if (trackId >= audioSelectionGroup.options.count) {
+        KPLogWarn(@"Invalid track index %d -- there are %d options", trackId, audioSelectionGroup.options.count);
+        return;
+    }
+    AVMediaSelectionOption* nextOption = audioSelectionGroup.options[trackId];
+    KPLogDebug(@"*** Selecting audio option: %@", nextOption);
+    [[self currentItem] selectMediaOption:nextOption inMediaSelectionGroup:audioSelectionGroup];
 }
 
 - (void)removeAirPlayIcon {

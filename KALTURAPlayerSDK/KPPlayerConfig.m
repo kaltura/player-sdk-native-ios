@@ -15,6 +15,7 @@
 
 
 #define DEFAULT_CACHE_SIZE_MB   100
+#define DEFAULT_AUDIO_TRACK_SELECTION_DELAY_MILLIS  500
 
 #define EMBEDFRAME_PAGE @"mwEmbedFrame.php"
 #define EMBEDFRAME_PAGE_WITH_SLASH @"/mwEmbedFrame.php"
@@ -67,6 +68,8 @@
         _supportedInterfaceOrientations = UIInterfaceOrientationMaskAll;
         _extraConfig = [NSMutableDictionary dictionary];
         _cacheConfig = [[KPCacheConfig alloc] init];
+        _audioTrackSelectionDelayMillis = DEFAULT_AUDIO_TRACK_SELECTION_DELAY_MILLIS;
+        _cacheSize = DEFAULT_CACHE_SIZE_MB;
         
         [self addConfigKey:@"nativeVersion" withValue:[NSString stringWithFormat:@"v%@", [self getVersion]]];
     }
@@ -79,7 +82,6 @@
         _server = serverURL;
         _uiConfId = uiConfId;
         _partnerId = partnerId;
-        _cacheSize = DEFAULT_CACHE_SIZE_MB;
         
         [self resolveEmbedFrameUrlWithCompletionHandler:^(BOOL success) {
             KPLogDebug(@"Resolved player URL");

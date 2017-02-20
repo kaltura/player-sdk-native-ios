@@ -784,7 +784,7 @@ NSString *const KPErrorDomain = @"com.kaltura.player";
             [self visible: attributeVal];
             break;
         case audioTrackSelected:
-            [_playerFactory selectAudioTrack:(int)[attributeVal integerValue]];
+            [_playerFactory selectAudioTrack:(int)[attributeVal integerValue] after:self.currentConfiguration.audioTrackSelectionDelayMillis];
             break;
         case textTrackSelected:
             [_playerFactory selectTextTrack:attributeVal];

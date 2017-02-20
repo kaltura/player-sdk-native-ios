@@ -33,6 +33,8 @@ DEPRECATED_MSG_ATTRIBUTE("Use initWithServer:uiConfID:partnerId:");
 
 @property (nonatomic, readonly) NSString *server;
 @property (nonatomic, readonly) NSString *partnerId;
+    
+@property (nonatomic)   NSUInteger audioTrackSelectionDelayMillis;
 
 @property (nonatomic, readonly) NSString *uiConfId;
 
