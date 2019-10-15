@@ -1,3 +1,6 @@
+:heavy_exclamation_mark: Please note this project is **deprecated**, please see [playkit iOS](https://github.com/kaltura/playkit-ios).
+
+---------------------------
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/3c95a3b285d9447cb525be42647af4f8)](https://www.codacy.com/app/PlayKit/player-sdk-native-ios?utm_source=github.com&utm_medium=referral&utm_content=kaltura/player-sdk-native-ios&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/kaltura/player-sdk-native-ios.svg?branch=master)](https://travis-ci.org/kaltura/player-sdk-native-ios)
 [![Version](https://img.shields.io/cocoapods/v/KalturaPlayerSDK.svg?style=flat)](http://cocoadocs.org/docsets/KalturaPlayerSDK)
@@ -32,6 +35,7 @@ Future support will include:
 ## Table of Contents
  
 * [**Getting Started**](#getting-started)
+
 * [**Using Kaltura player**](#using-kaltura-player)  
 * [**Linking GoogleAds**](#linking-googleads)
 * [**Linking GoogleCast**](#linking-googlecast)
