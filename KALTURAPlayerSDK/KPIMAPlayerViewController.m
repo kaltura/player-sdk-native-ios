@@ -11,6 +11,8 @@
 #import "KPLog.h"
 #import "IMAHandler.h"
 
+#define IS_IPAD  (UI_USER_INTERFACE_IDIOM()==UIUserInterfaceIdiomPad)
+
 @interface KPIMAPlayerViewController ()
 
 /// Contains the params for the logic layer
@@ -260,6 +262,10 @@
 }
 
 - (void)adsManagerDidRequestContentResume:(id<AdsManager>)adsManager {
+    if (IS_IPAD){
+        [self.adsManager destroy];
+    }
+    
     // The SDK is done playing ads (at least for now), so resume the content.
     [self.contentPlayer play];
     NSDictionary *eventParams = ContentResumeRequestedKey.nullVal;
